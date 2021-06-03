@@ -19,6 +19,7 @@ import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaUnspecifiedVersion
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaParser
 import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.parse.JsonSchemaParsePlugin
 import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -39,29 +40,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    val newCtx = context(document.location, document.references, ctx.parsingOptions, ctx)
-    val parsed =
-      new JsonSchemaParser().parse(document, WebApiShapeParserContextAdapter(newCtx), ctx.parsingOptions)
-    wrapInDataTypeFragment(document, parsed)
-  }
-
-  private def wrapInDataTypeFragment(document: Root, parsed: AnyShape): DataTypeFragment = {
-    val unit: DataTypeFragment =
-      DataTypeFragment().withId(document.location).withLocation(document.location).withEncodes(parsed)
-    unit.withRaw(document.raw)
-    unit
-  }
-
-  def context(loc: String,
-              refs: Seq[ParsedReference],
-              options: ParsingOptions,
-              wrapped: ParserContext,
-              ds: Option[OasWebApiDeclarations] = None): JsonSchemaWebApiContext = {
-    // todo: we can set this default as this plugin is hardcoded to not parse
-    // todo 2: we should debate the default version to use in the Plugin if we are to use it.
-    new JsonSchemaWebApiContext(loc, refs, wrapped, ds, options, JSONSchemaUnspecifiedVersion)
-  }
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = JsonSchemaParsePlugin.parse(document, ctx)
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
@@ -86,8 +65,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     * to decide which one will parse the document base on information from
     * the document structure
     */
-  override def canParse(document: Root): Boolean =
-    false // we invoke this explicitly, we don't want the registry to load it
+  override def canParse(document: Root): Boolean = JsonSchemaParsePlugin.applies(document)
 
   /**
     * Decides if this plugin can unparse the provided model document instance.

@@ -1,22 +1,11 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
-import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.Root
 import amf.core.errorhandling.AMFErrorHandler
-import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
-import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{
-  EmptyFutureDeclarations,
-  LibraryReference,
-  LinkReference,
-  ParsedReference,
-  ParserContext,
-  RefContainer,
-  UnspecifiedReference
-}
+import amf.core.parser.ParserContext
 import amf.core.remote.Vendor
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.core.ValidationProfile
@@ -25,146 +14,35 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{
   Raml10SpecEmitterContext,
   RamlSpecEmitterContext
 }
-import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model._
-import amf.plugins.document.webapi.parser.RamlFragmentHeader._
-import amf.plugins.document.webapi.parser.RamlHeader.{Raml08, Raml10, Raml10Extension, Raml10Library, Raml10Overlay}
-import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
-import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
-import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
+import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter}
 import amf.plugins.document.webapi.references.RamlReferenceHandler
 import amf.plugins.document.webapi.resolution.pipelines._
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.Raml10CompatibilityPipeline
 import amf.plugins.document.webapi.validation.ApiValidationProfiles._
 import amf.plugins.domain.webapi.models.api.{Api, WebApi}
-import amf.plugins.features.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
-import org.yaml.model.YNode.MutRef
+import amf.plugins.parse.{Raml08ParsePlugin, Raml10ParsePlugin}
 import org.yaml.model.{YDocument, YNode}
 
-sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
-
-  override def referenceHandler(eh: AMFErrorHandler) = new RamlReferenceHandler(AMFParsePluginAdapter(this))
-
-  def context(wrapped: ParserContext,
-              root: Root,
-              options: ParsingOptions,
-              ds: Option[WebApiDeclarations] = None): RamlWebApiContext
-
-  // context that opens a new context for declarations and copies the global JSON Schema declarations
-  def cleanContext(wrapped: ParserContext, root: Root, options: ParsingOptions): RamlWebApiContext = {
-    val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.config)
-    val clean       = context(cleanNested, root, options)
-    clean.globalSpace = wrapped.globalSpace
-    clean
-  }
+sealed trait RamlPlugin extends BaseWebApiPlugin {
 
   override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext
-
-  override def parse(root: Root, ctx: ParserContext): BaseUnit = {
-
-    val updated = context(ctx, root, ctx.parsingOptions)
-    restrictCrossSpecReferences(root, updated)
-    inlineExternalReferences(root, updated)
-    val clean = cleanContext(ctx, root, ctx.parsingOptions)
-
-    validateReferences(root.references, ctx)
-    RamlHeader(root) match { // todo review this, should we use the raml web api context for get the version parser?
-      case Some(Raml08)          => Raml08DocumentParser(root)(updated).parseDocument()
-      case Some(Raml10)          => Raml10DocumentParser(root)(updated).parseDocument()
-      case Some(Raml10Overlay)   => ExtensionLikeParser.apply(root, updated).parseOverlay()
-      case Some(Raml10Extension) => ExtensionLikeParser.apply(root, updated).parseExtension()
-      case Some(Raml10Library)   => RamlModuleParser(root)(clean).parseModule()
-      case Some(f: RamlFragment) => RamlFragmentParser(root, f)(updated).parseFragment()
-      case _ => // unreachable as it is covered in canParse()
-        throw new InvalidDocumentHeaderException(vendor.name)
-    }
-  }
-
-  private def validateReferences(references: Seq[ParsedReference], ctx: ParserContext): Unit = references.foreach {
-    ref =>
-      validateJsonPointersToFragments(ref, ctx)
-      validateReferencesToLibraries(ref, ctx)
-  }
-
-  private def validateJsonPointersToFragments(reference: ParsedReference, ctx: ParserContext): Unit = {
-    reference.unit.sourceVendor match {
-      case Some(v) if v.isRaml =>
-        reference.origin.refs.filter(_.uriFragment.isDefined).foreach { r =>
-          ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.node)
-        }
-      case _ => // Nothing to do
-    }
-  }
-
-  private def validateReferencesToLibraries(reference: ParsedReference, ctx: ParserContext): Unit = {
-    val refs: Seq[RefContainer] = reference.origin.refs
-    val allKinds                = refs.map(_.linkType)
-    val definedKind             = if (allKinds.size > 1) UnspecifiedReference else allKinds.head
-    val nodes                   = refs.map(_.node)
-    reference.unit match {
-      case _: Module => // if is a library, kind should be LibraryReference
-        if (allKinds.contains(LibraryReference) && allKinds.contains(LinkReference))
-          nodes.foreach(
-            ctx.eh
-              .violation(ExpectedModule,
-                         reference.unit.id,
-                         "The !include tag must be avoided when referencing a library",
-                         _))
-        else if (!LibraryReference.eq(definedKind))
-          nodes.foreach(
-            ctx.eh.violation(ExpectedModule, reference.unit.id, "Libraries must be applied by using 'uses'", _))
-      case _ =>
-        // if is not a library, kind should not be LibraryReference
-        if (LibraryReference.eq(definedKind))
-          nodes.foreach(
-            ctx.eh.violation(InvalidInclude, reference.unit.id, "Fragments must be imported by using '!include'", _))
-    }
-  }
-
-  private def inlineExternalReferences(root: Root, ctx: ParserContext): Unit = {
-    root.references.foreach { ref =>
-      ref.unit match {
-        case e: ExternalFragment =>
-          inlineFragment(ref.origin.refs, ref.ast, e.encodes, ref.unit.references, ctx)
-        case _ =>
-      }
-    }
-  }
-
-  private def inlineFragment(origins: Seq[RefContainer],
-                             document: Option[YNode],
-                             encodes: ExternalDomainElement,
-                             elementRef: Seq[BaseUnit],
-                             ctx: ParserContext): Unit = {
-    origins.foreach { refContainer =>
-      refContainer.node match {
-        case mut: MutRef =>
-          elementRef.foreach(u => ctx.addSonRef(u))
-          document match {
-            case None => mut.target = Some(YNode(encodes.raw.value()))
-            case _    => mut.target = document
-          }
-        case _ =>
-      }
-    }
-  }
 }
 
 object Raml08Plugin extends RamlPlugin {
 
-  override protected def vendor: Vendor = amf.core.remote.Raml08
+  override def referenceHandler(eh: AMFErrorHandler) = new RamlReferenceHandler(Raml08ParsePlugin)
+
+  override protected def vendor: Vendor = Raml08ParsePlugin.vendor
 
   override val validationProfile: ProfileName = Raml08Profile
 
-  def canParse(root: Root): Boolean = {
-    RamlHeader(root) exists {
-      // Partial raml0.8 fragment with RAML header but linked through !include
-      // we need to generate an external fragment and inline it in the parent document
-      case Raml08 if root.referenceKind != LinkReference => true
-      case _: RamlFragment                               => false
-      case _                                             => false
-    }
-  }
+  def canParse(root: Root): Boolean = Raml08ParsePlugin.applies(root)
+
+  /**
+    * Parses an accepted document returning an optional BaseUnit
+    */
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = Raml08ParsePlugin.parse(document, ctx)
 
   // fix for 08
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
@@ -194,16 +72,6 @@ object Raml08Plugin extends RamlPlugin {
       case _ => None
     }
 
-  override def context(wrapped: ParserContext,
-                       root: Root,
-                       options: ParsingOptions,
-                       ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
-    new Raml08WebApiContext(root.location,
-                            root.references ++ wrapped.refs,
-                            wrapped,
-                            ds.map(d => RamlWebApiDeclarations(d)),
-                            options = options)
-
   def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext =
     new Raml08SpecEmitterContext(errorHandler)
 
@@ -214,7 +82,7 @@ object Raml08Plugin extends RamlPlugin {
 
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Raml08ValidationProfile)
 
-  override val vendors: Seq[String] = Seq("application/raml08", "application/raml08+yaml")
+  override val vendors: Seq[String] = Raml08ParsePlugin.mediaTypes
 
   /**
     * List of media types used to encode serialisations of
@@ -228,17 +96,15 @@ object Raml08Plugin extends RamlPlugin {
 
 object Raml10Plugin extends RamlPlugin {
 
-  override protected def vendor: Vendor = amf.core.remote.Raml10
+  override protected def vendor: Vendor = Raml10ParsePlugin.vendor
+
+  override def referenceHandler(eh: AMFErrorHandler) = new RamlReferenceHandler(Raml10ParsePlugin)
 
   override val validationProfile: ProfileName = Raml10Profile
 
-  def canParse(root: Root): Boolean = RamlHeader(root) exists {
-    case Raml10 | Raml10Overlay | Raml10Extension | Raml10Library => true
-    case Raml10DocumentationItem | Raml10NamedExample | Raml10DataType | Raml10ResourceType | Raml10Trait |
-        Raml10AnnotationTypeDeclaration | Raml10SecurityScheme =>
-      true
-    case _ => false
-  }
+  def canParse(root: Root): Boolean = Raml10ParsePlugin.applies(root)
+
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = Raml10ParsePlugin.parse(document, ctx)
 
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
     case _: Overlay                           => true
@@ -269,16 +135,6 @@ object Raml10Plugin extends RamlPlugin {
       case _ => None
     }
 
-  override def context(wrapped: ParserContext,
-                       root: Root,
-                       options: ParsingOptions,
-                       ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
-    new Raml10WebApiContext(root.location,
-                            root.references ++ wrapped.refs,
-                            wrapped,
-                            ds.map(d => RamlWebApiDeclarations(d)),
-                            options = options)
-
   def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext =
     new Raml10SpecEmitterContext(errorHandler)
 
@@ -291,8 +147,7 @@ object Raml10Plugin extends RamlPlugin {
 
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Raml10ValidationProfile, AmfValidationProfile)
 
-  override val vendors: Seq[String] =
-    Seq("application/raml10", "application/raml10+yaml", "application/raml", "application/raml+yaml")
+  override val vendors: Seq[String] = Raml10ParsePlugin.mediaTypes
 
   /**
     * List of media types used to encode serialisations of

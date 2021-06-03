@@ -13,7 +13,7 @@ import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.annotations.serializable.WebAPISerializableAnnotations
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.entities.WebAPIEntities
-import amf.plugins.document.webapi.references.WebApiReferenceHandler
+import amf.plugins.document.webapi.references.ApiReferenceHandler
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
 
@@ -25,7 +25,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with P
 
   override val ID: String = vendor.name
 
-  override def referenceHandler(eh: AMFErrorHandler) = new WebApiReferenceHandler(ID)
+  override def referenceHandler(eh: AMFErrorHandler) = new ApiReferenceHandler(ID)
 
   override def dependencies(): Seq[AMFPlugin] = Seq(
     APIDomainPlugin,

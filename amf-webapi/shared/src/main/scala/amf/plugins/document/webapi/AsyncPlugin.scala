@@ -23,36 +23,15 @@ import amf.plugins.document.webapi.resolution.pipelines.{
 }
 import amf.plugins.document.webapi.validation.ApiValidationProfiles.Async20ValidationProfile
 import amf.plugins.domain.webapi.models.api.Api
+import amf.plugins.parse.Async20ParsePlugin
 import amf.{Async20Profile, ProfileName}
 import org.yaml.model.YDocument
 
-sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
+sealed trait AsyncPlugin extends OasLikePlugin {
 
   override val vendors: Seq[String] = Seq(vendor.name, AsyncApi.name)
 
   override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext
-
-  def context(loc: String,
-              refs: Seq[ParsedReference],
-              options: ParsingOptions,
-              wrapped: ParserContext,
-              ds: Option[AsyncWebApiDeclarations] = None): AsyncWebApiContext
-
-  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    implicit val newCtx: AsyncWebApiContext = context(document.location, document.references, ctx.parsingOptions, ctx)
-    restrictCrossSpecReferences(document, ctx)
-    val parsed = parseAsyncUnit(document)
-    promoteFragments(parsed, newCtx)
-  }
-
-  private def parseAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
-    AsyncHeader(root) match {
-      case Some(Async20Header) => AsyncApi20DocumentParser(root).parseDocument()
-//    case f             => AsyncFragmentParser(root, Some(f)).parseFragment()
-      case _ => // unreachable as it is covered in canParse()
-        throw new InvalidDocumentHeaderException(vendor.name)
-    }
-  }
 
   /**
     * List of media types used to encode serialisations of
@@ -79,11 +58,16 @@ object Async20Plugin extends AsyncPlugin {
   override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext =
     new Async20SpecEmitterContext(errorHandler)
 
-  override val vendors = Seq("application/asyncapi20", "application/asyncapi20+json", "application/asyncapi20+yaml")
+  override val vendors = Async20ParsePlugin.mediaTypes
 
   override def validVendorsToReference: Seq[String] =
     super.validVendorsToReference :+ "application/raml10+yaml" :+
       "application/raml10"
+
+  /**
+    * Parses an accepted document returning an optional BaseUnit
+    */
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = Async20ParsePlugin.parse(document, ctx)
 
   override val validationProfile: ProfileName = Async20Profile
 
@@ -93,7 +77,7 @@ object Async20Plugin extends AsyncPlugin {
     * to decide which one will parse the document base on information fromt
     * the document structure
     */
-  override def canParse(root: Root): Boolean = AsyncHeader(root).contains(Async20Header)
+  override def canParse(root: Root): Boolean = Async20ParsePlugin.applies(root)
 
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
     case document: Document => document.encodes.isInstanceOf[Api]
@@ -122,19 +106,8 @@ object Async20Plugin extends AsyncPlugin {
     Async20CachePipeline.name          -> Async20CachePipeline()
   )
 
-  override def context(loc: String,
-                       refs: Seq[ParsedReference],
-                       options: ParsingOptions,
-                       wrapped: ParserContext,
-                       ds: Option[AsyncWebApiDeclarations]): Async20WebApiContext = {
-    // ensure unresolved references in external fragments are not resolved with main api definitions
-    val cleanContext = wrapped.copy(futureDeclarations = EmptyFutureDeclarations())
-    cleanContext.globalSpace = wrapped.globalSpace
-    new Async20WebApiContext(loc, refs, cleanContext, ds, options = options)
-  }
-
   // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Async20ValidationProfile)
 
-  override protected def vendor: Vendor = AsyncApi20
+  override protected def vendor: Vendor = Async20ParsePlugin.vendor
 }

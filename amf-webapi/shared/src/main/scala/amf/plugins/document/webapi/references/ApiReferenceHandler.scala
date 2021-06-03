@@ -12,7 +12,7 @@ import org.yaml.model._
 
 import scala.util.matching.Regex
 
-class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
+class ApiReferenceHandler(vendor: String) extends ReferenceHandler {
 
   private val references = CompilerReferenceCollector()
 

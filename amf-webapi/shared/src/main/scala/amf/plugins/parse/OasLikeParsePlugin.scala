@@ -1,0 +1,19 @@
+package amf.plugins.parse
+
+import amf.core.model.document.BaseUnit
+import amf.core.parser.DefaultReferenceCollector
+import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+
+trait OasLikeParsePlugin extends ApiParsePlugin {
+
+  protected def promoteFragments(unit: BaseUnit, ctx: OasLikeWebApiContext): BaseUnit = {
+    val collector = DefaultReferenceCollector[BaseUnit]()
+    unit.references.foreach(baseUnit => collector += (baseUnit.location().getOrElse(baseUnit.id), baseUnit))
+    ctx.declarations.promotedFragments.foreach { promoted =>
+      val key = promoted.location().getOrElse(promoted.id)
+      collector += (key, promoted)
+    }
+    if (collector.nonEmpty) unit.withReferences(collector.references())
+    else unit
+  }
+}

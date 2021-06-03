@@ -13,6 +13,7 @@ import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.parser.spec.common.PayloadEmitter
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
+import amf.plugins.parse.PayloadParsePlugin
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}
 import org.yaml.model.{YDocument, YMap, YScalar}
 
@@ -43,41 +44,10 @@ object PayloadPlugin extends AMFDocumentPlugin {
     "application/payload+yaml"
   )
 
-  override def parse(root: Root, ctx: ParserContext): PayloadFragment = {
-    root.parsed match {
-      case parsed: SyamlParsedDocument =>
-        implicit val newCtx: PayloadContext =
-          new PayloadContext(root.location, ctx.refs, ctx, options = ctx.parsingOptions)
-        PayloadParser(parsed.document, root.location, root.mediatype).parseUnit()
-      case _ => throw UnsupportedParsedDocumentException
-    }
-  }
+  override def parse(root: Root, ctx: ParserContext): PayloadFragment = PayloadParsePlugin.parse(root, ctx)
 
-  override def canParse(root: Root): Boolean =
-    notRAML(root) && notOAS(root) && notAsync(root) // any document can be parsed as a Payload
+  override def canParse(root: Root): Boolean                                      = PayloadParsePlugin.applies(root)
   override def referenceHandler(eh: AMFErrorHandler): SimpleReferenceHandler.type = SimpleReferenceHandler
-
-  private def notRAML(root: Root) = root.parsed match {
-    case parsed: SyamlParsedDocument => parsed.comment.isEmpty || !parsed.comment.exists(_.startsWith("%"))
-    case _                           => false
-  }
-
-  private def notAsync(root: Root) = containsHeader(root, List("asyncapi"))
-  private def notOAS(root: Root)   = containsHeader(root, List("swagger", "openapi"))
-
-  private def containsHeader(root: Root, validHeaders: Seq[String]) = root.parsed match {
-    case parsed: SyamlParsedDocument =>
-      parsed.document.node.value match {
-        case map: YMap =>
-          !map.entries.exists { entry =>
-            val text = entry.key.value.asInstanceOf[YScalar].text
-            validHeaders.exists(text.startsWith)
-          }
-        case _ => true
-      }
-    case _ =>
-      false
-  }
 
   /* Unparsing payloads not supported */
   override def emit[T](unit: BaseUnit,

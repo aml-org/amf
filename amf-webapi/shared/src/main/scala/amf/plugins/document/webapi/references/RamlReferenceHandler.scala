@@ -16,7 +16,7 @@ import org.yaml.parser.YamlParser
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class RamlReferenceHandler(plugin: AMFParsePlugin) extends WebApiReferenceHandler(plugin.id) {
+class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(plugin.id) {
 
   /** Update parsed reference if needed. */
   override def update(reference: ParsedReference, compilerContext: CompilerContext)(

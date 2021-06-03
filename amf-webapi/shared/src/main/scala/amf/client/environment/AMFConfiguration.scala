@@ -35,6 +35,16 @@ import amf.plugins.domain.shapes.entities.ShapeEntities
 import amf.plugins.domain.webapi.annotations.serializable.APISerializableAnnotations
 import amf.plugins.domain.webapi.entities.APIEntities
 import amf.plugins.features.validation.AMFValidatorPlugin
+import amf.plugins.parse.{
+  Async20ParsePlugin,
+  ExternalJsonYamlRefsParsePlugin,
+  JsonSchemaParsePlugin,
+  Oas20ParsePlugin,
+  Oas30ParsePlugin,
+  PayloadParsePlugin,
+  Raml08ParsePlugin,
+  Raml10ParsePlugin
+}
 
 import scala.concurrent.Future
 
