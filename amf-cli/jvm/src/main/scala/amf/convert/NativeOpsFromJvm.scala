@@ -5,10 +5,13 @@ import amf.cli.convert.NativeOps
 import java.util
 import java.util.concurrent.CompletableFuture
 
+import amf.client.convert.VocabulariesClientConverter.{ClientFuture, ClientList, ClientOption}
+
 import scala.collection.JavaConverters._
 import scala.compat.java8.FutureConverters._
 import scala.compat.java8.OptionConverters._
 import scala.concurrent.Future
+
 import scala.language.implicitConversions
 
 private[amf] trait NativeOpsFromJvm extends NativeOps {

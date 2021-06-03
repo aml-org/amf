@@ -2,6 +2,7 @@ package amf.client.exported
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.client.environment.{AMFClient => InternalAMFClient}
+import amf.client.convert.ApiClientConverters._
 
 import scala.concurrent.ExecutionContext
 

@@ -524,7 +524,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
     case class BadIRIResourceLoader() extends ResourceLoader {
 
-      import amf.client.convert.ApiClientConverters$._
+      import amf.client.convert.ApiClientConverters._
 
       override def fetch(resource: String): Future[Content] =
         Future.successful(new Content(input, resource))

@@ -17,9 +17,9 @@ import amf.client.model.domain.{
   SchemaShape => ClientSchemaShape,
   TupleShape => ClientTupleShape,
   UnionShape => ClientUnionShape,
-  XMLSerializer => ClientXMLSerializer
+  XMLSerializer => ClientXMLSerializer,
+  CreativeWork => ClientCreativeWork
 }
-import amf.client.model.domain.{CreativeWork => ClientCreativeWork}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.apicontract.models.{DiscriminatorValueMapping, IriTemplateMapping}
 

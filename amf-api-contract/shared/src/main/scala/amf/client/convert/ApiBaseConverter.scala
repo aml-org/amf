@@ -1,5 +1,6 @@
 package amf.client.convert
 
+import amf.client.convert.shapeconverters.ShapesBaseConverter
 import amf.client.environment.{AMFConfiguration, AMFDocumentResult, AMFLibraryResult}
 import amf.client.model.domain.{
   Amqp091ChannelBinding => ClientAmqp091ChannelBinding,
