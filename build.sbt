@@ -15,7 +15,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf"
 
-version in ThisBuild := versions("amf.webapi")
+version in ThisBuild := versions("amf.apicontract")
 
 publish := {}
 
@@ -31,13 +31,13 @@ sonarProperties ++= Map(
   "sonar.login"                      -> sonarToken,
   "sonar.projectKey"                 -> "mulesoft.amf",
   "sonar.projectName"                -> "AMF",
-  "sonar.projectVersion"             -> versions("amf.webapi"),
+  "sonar.projectVersion"             -> versions("amf.apicontract"),
   "sonar.sourceEncoding"             -> "UTF-8",
   "sonar.github.repository"          -> "mulesoft/amf",
   "sonar.branch.name"                -> branch,
-  "sonar.scala.coverage.reportPaths" -> "amf-client/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-webapi/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
-  "sonar.sources"                    -> "amf-client/shared/src/main/scala,amf-webapi/shared/src/main/scala",
-  "sonar.tests"                      -> "amf-client/shared/src/test/scala"
+  "sonar.scala.coverage.reportPaths" -> "amf-cli/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-api-contract/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
+  "sonar.sources"                    -> "amf-cli/shared/src/main/scala,amf-api-contract/shared/src/main/scala",
+  "sonar.tests"                      -> "amf-cli/shared/src/test/scala"
 )
 
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
@@ -97,6 +97,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
 
 lazy val shapesJVM =
   shapes.jvm.in(file("./amf-shapes/jvm")).sourceDependency(customValidationJVMRef, customValidationLibJVM)
+
 lazy val shapesJS =
   shapes.js
     .in(file("./amf-shapes/js"))
@@ -105,45 +106,44 @@ lazy val shapesJS =
 
 
 /** **********************************************
-  * AMF-WebAPI
+  * AMF-Api-contract
   * ********************************************* */
-lazy val webapi = crossProject(JSPlatform, JVMPlatform)
+lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
-      name := "amf-webapi"
+      name := "amf-api-contract"
     ))
-  .in(file("./amf-webapi"))
+  .in(file("./amf-api-contract"))
   .settings(commonSettings)
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar",
-    mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions"
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-api-contract-javadoc.jar",
+    mappings in (Compile, packageBin) += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js",
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-api-contract-module.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations"
   )
   .disablePlugins(SonarPlugin)
 
-lazy val webapiJVM =
-  webapi.jvm
-    .in(file("./amf-webapi/jvm"))
-lazy val webapiJS =
-  webapi.js
-    .in(file("./amf-webapi/js"))
-
+lazy val apiContractJVM =
+  apiContract.jvm
+    .in(file("./amf-api-contract/jvm"))
+lazy val apiContractJS =
+  apiContract.js
+    .in(file("./amf-api-contract/js"))
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 /** **********************************************
-  * AMF Client
+  * AMF CLI
   * ********************************************* */
-lazy val client = crossProject(JSPlatform, JVMPlatform)
-  .settings(name := "amf-client")
+lazy val cli = crossProject(JSPlatform, JVMPlatform)
+  .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(webapi)
-  .in(file("./amf-client"))
+  .dependsOn(apiContract)
+  .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
     libraryDependencies += "com.github.scopt" %%% "scopt" % "3.7.0"
@@ -155,7 +155,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.apache.commons"     % "commons-compress"    % "1.18",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
-    mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions",
+    mappings in (Compile, packageBin) += file("amf-apicontract.versions") -> "amf-apicontract.versions",
     aggregate in assembly := true,
     test in assembly := {},
     mainClass in assembly := Some("amf.Main"),
@@ -216,19 +216,19 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
   )
   .disablePlugins(SonarPlugin)
 
-lazy val clientJVM =
-  client.jvm.in(file("./amf-client/jvm"))
-lazy val clientJS = client.js.in(file("./amf-client/js"))
+lazy val cliJVM =
+  cli.jvm.in(file("./amf-cli/jvm"))
+lazy val cliJS = cli.js.in(file("./amf-cli/js"))
 
 // Tasks
 
 val buildJS = TaskKey[Unit]("buildJS", "Build npm module")
 buildJS := {
-  val _ = (fullOptJS in Compile in clientJS).value
-  "./amf-client/js/build-scripts/buildjs.sh" !
+  val _ = (fullOptJS in Compile in cliJS).value
+  "./amf-cli/js/build-scripts/buildjs.sh" !
 }
 
 addCommandAlias(
   "buildCommandLine",
-  "; clean; clientJVM/assembly"
+  "; clean; cliJVM/assembly"
 )

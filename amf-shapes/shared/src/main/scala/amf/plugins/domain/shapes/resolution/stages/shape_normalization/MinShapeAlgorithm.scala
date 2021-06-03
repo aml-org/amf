@@ -11,8 +11,8 @@ import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.{Annotations, Value}
 import amf.core.utils.IdCounter
 import amf.core.validation.AMFValidationResult
-import amf.plugins.document.webapi.annotations.ParsedJSONSchema
-import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
+import amf.plugins.document.apicontract.annotations.ParsedJSONSchema
+import amf.plugins.document.apicontract.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.validations.ShapeResolutionSideValidations.{

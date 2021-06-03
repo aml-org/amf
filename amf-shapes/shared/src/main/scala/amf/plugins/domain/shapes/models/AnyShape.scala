@@ -5,10 +5,10 @@ import amf.core.model.StrField
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.annotations.InlineDefinition
+import amf.plugins.document.apicontract.annotations.InlineDefinition
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
-import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YPart
 
 import scala.collection.mutable

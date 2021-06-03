@@ -173,8 +173,8 @@ The AML Vocabulary that could be found in this repository under the **vocabulari
 ## AMF ecosystem modules
 The following image shows each module in the AMF ecosystem as a dependency graph. 
 
-For AMF adopters it is recommended to use the `amf-client` module which contains transitive dependencies with every
-module in the ecosystem. For AML adopters (with no Web API nor Custom validation features usage) it is recommended to 
+For AMF adopters it is recommended to use the `amf-api-contract` module which contains transitive dependencies with every
+module in the ecosystem except the CLI. For AML adopters (with no Web API nor Custom validation features usage) it is recommended to 
 adopt the `amf-aml` module which includes parsing, validation & resolution for AML documents only. For more details on 
 AML visit the [AML repository]("https://github.com/aml-org/amf-aml").
 
