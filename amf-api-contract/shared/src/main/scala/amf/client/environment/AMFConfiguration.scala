@@ -35,6 +35,8 @@ import amf.plugins.domain.shapes.entities.ShapeEntities
 import amf.plugins.domain.apicontract.annotations.serializable.APISerializableAnnotations
 import amf.plugins.domain.apicontract.entities.APIEntities
 import amf.plugins.features.validation.AMFValidatorPlugin
+import amf.plugins.parse._
+import amf.plugins.render._
 
 import scala.concurrent.Future
 

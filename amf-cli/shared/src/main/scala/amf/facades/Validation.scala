@@ -5,17 +5,13 @@ import amf.core.remote.Platform
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.EffectiveValidations
 import amf.core.validation.core.ValidationSpecification
-import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
-import amf.plugins.document.apicontract.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.VocabulariesRegister
-import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.apicontract.APIDomainPlugin
-import amf.plugins.features.validation.{AMFValidatorPlugin, CoreValidations}
+import amf.plugins.domain.shapes.DataShapesDomainPlugin
+import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.emitters.ShaclJsonLdShapeGraphEmitter
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.validation.DialectValidations
-import amf.validations._
 import amf.{ProfileName, Raml10Profile}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -27,14 +23,6 @@ class Validation(platform: Platform) {
     // Remod registering
     VocabulariesRegister.register(platform)
     amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Async20Plugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
     amf.core.registries.AMFPluginsRegistry.registerFeaturePlugin(AMFValidatorPlugin)

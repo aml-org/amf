@@ -5,11 +5,8 @@ import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.resolution.pipelines.TransformationPipeline._
-import amf.core.services.RuntimeResolver
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.apicontract.Raml10Plugin
 
 // This test suite test the generation of RAML unions
 class UnionRamlEmissionTest extends FunSuiteCycleTests {

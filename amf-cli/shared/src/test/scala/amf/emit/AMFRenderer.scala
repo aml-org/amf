@@ -8,8 +8,6 @@ import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.apicontract.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.apicontract.APIDomainPlugin
@@ -25,14 +23,6 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
   // Remod registering
   VocabulariesRegister.register(platform)
   amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Async20Plugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 

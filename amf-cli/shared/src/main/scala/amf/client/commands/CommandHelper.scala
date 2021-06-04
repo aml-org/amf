@@ -24,11 +24,6 @@ trait CommandHelper {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     ApiRegister.register(platform)
     VocabulariesRegister.register(platform) // validation dialect was not being parsed by static config.
-    amf.core.AMF.registerPlugin(Raml10Plugin)
-    amf.core.AMF.registerPlugin(Raml08Plugin)
-    amf.core.AMF.registerPlugin(Oas20Plugin)
-    amf.core.AMF.registerPlugin(Oas30Plugin)
-    amf.core.AMF.registerPlugin(Async20Plugin)
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init()
   }

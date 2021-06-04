@@ -7,7 +7,6 @@ import amf.core.model.domain.{ExternalDomainElement, Shape}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
-import amf.plugins.document.apicontract.ExternalJsonYamlRefsPlugin
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.OasHeader._
@@ -18,6 +17,7 @@ import amf.plugins.document.apicontract.parser.spec.domain.{ExampleOptions, Raml
 import amf.plugins.document.apicontract.parser.{OasHeader, WebApiShapeParserContextAdapter}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
+import amf.plugins.parse.ExternalJsonYamlRefsParsePlugin
 import amf.validations.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
@@ -45,7 +45,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Oas20AnnotationTypeDeclaration => Some(AnnotationFragmentParser(map).parse())
       case Oas20SecurityScheme            => Some(SecuritySchemeFragmentParser(map).parse())
       case Oas20NamedExample              => Some(NamedExampleFragmentParser(map).parse())
-      case Oas20Header | Oas30Header      => Some(new ExternalJsonYamlRefsPlugin().parse(root, ctx))
+      case Oas20Header | Oas30Header      => Some(ExternalJsonYamlRefsParsePlugin.parse(root, ctx))
       case _                              => None
     }).getOrElse {
       val fragment = ExternalFragment()

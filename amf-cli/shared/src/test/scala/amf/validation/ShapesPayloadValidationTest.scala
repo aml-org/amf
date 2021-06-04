@@ -6,7 +6,6 @@ import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.AMFSerializer
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.services.RuntimeValidator
-import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.TypeDef.{IntType, StrType}
 import amf.plugins.domain.shapes.models._
@@ -28,7 +27,6 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
 
   amf.Core.registerPlugin(PayloadValidatorPlugin)
   RuntimeValidator.register(AMFValidatorPlugin)
-  AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
   AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
 
   case class ShapeInfo(shape: AnyShape, examples: Seq[ExampleInfo], mode: ValidationMode = StrictValidationMode)

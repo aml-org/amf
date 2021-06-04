@@ -4,6 +4,7 @@ import amf._
 import amf.client.environment.{AMFConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.annotations.SourceVendor
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
@@ -13,7 +14,7 @@ import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.RuntimeResolver
 import amf.core.validation.AMFValidationReport
 import amf.emit.AMFRenderer
-import amf.plugins.document.apicontract.resolution.pipelines.AmfEditingPipeline
+import amf.plugins.document.apicontract.resolution.pipelines.{AmfEditingPipeline, Raml10EditingPipeline}
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 
@@ -106,8 +107,7 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        // TODO: use AMFTransformer
-        RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, DefaultErrorHandler())
+        amfConfig.createClient().transform(unit, PipelineName.from(Raml10.name, EDITING_PIPELINE)).bu
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit

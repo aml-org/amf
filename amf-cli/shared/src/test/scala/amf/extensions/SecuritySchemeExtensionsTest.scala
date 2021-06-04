@@ -1,15 +1,12 @@
 package amf.extensions
 
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote._
 import amf.core.{AMF, AMFSerializer}
-import amf.facades.AMFCompiler
 import amf.io.FileAssertionTest
-import amf.plugins.document.apicontract.{Oas20Plugin, Oas30Plugin, Raml10Plugin}
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
@@ -116,10 +113,7 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
   private def withBaseUnitPair(url: String, originalVendor: Vendor, otherVendor: Vendor)(
       assertion: List[BaseUnit] => Assertion) = {
     val fileName = url.split("/").last
-    AMF.registerPlugin(Oas30Plugin)
-    AMF.registerPlugin(Oas20Plugin)
-    AMF.registerPlugin(Raml10Plugin)
-    val config = WebAPIConfiguration.WebAPI().withParsingOptions(ParsingOptions().withAmfJsonLdSerialization)
+    val config   = WebAPIConfiguration.WebAPI().withParsingOptions(ParsingOptions().withAmfJsonLdSerialization)
     for {
       _             <- AMF.init()
       originalUnit  <- parse(url, originalVendor.mediaType, hint(originalVendor), config)
