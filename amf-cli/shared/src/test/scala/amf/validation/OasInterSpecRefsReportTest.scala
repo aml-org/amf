@@ -4,8 +4,8 @@ import amf.core.remote.{Hint, Oas20JsonHint}
 
 class OasInterSpecRefsReportTest extends UniquePlatformReportGenTest {
 
-  override val basePath    = "file://amf-client/shared/src/test/resources/production/inter-spec-refs/"
-  override val reportsPath = "amf-client/shared/src/test/resources/production/inter-spec-refs/reports/"
+  override val basePath    = "file://amf-cli/shared/src/test/resources/production/inter-spec-refs/"
+  override val reportsPath = "amf-cli/shared/src/test/resources/production/inter-spec-refs/reports/"
 
   test("Oas refs Raml datatype fragment") {
     validate("oas-raml-datatype/api.json", Some("oas-raml-datatype.report"))

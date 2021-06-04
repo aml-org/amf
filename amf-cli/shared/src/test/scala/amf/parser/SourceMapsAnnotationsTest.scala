@@ -22,7 +22,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext = ExecutionContext.Implicits.global
-  private val directory: String          = "amf-client/shared/src/test/resources/parser/annotations/"
+  private val directory: String          = "amf-cli/shared/src/test/resources/parser/annotations/"
 
   test("Test raml 1.0 annotations") {
     runTest("raml10.raml", Raml10YamlHint)

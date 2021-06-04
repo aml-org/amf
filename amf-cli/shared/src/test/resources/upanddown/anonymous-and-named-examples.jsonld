@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -30,7 +30,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -56,7 +56,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -72,7 +72,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -87,7 +87,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -101,7 +101,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -121,7 +121,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -129,7 +129,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -155,7 +155,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -181,7 +181,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -189,7 +189,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -203,7 +203,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -217,7 +217,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -237,7 +237,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -245,7 +245,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -271,7 +271,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -297,7 +297,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -305,7 +305,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -326,7 +326,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#examples": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -343,7 +343,7 @@
             ],
             "http://a.ml/vocabularies/document#structuredValue": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1",
                 "@type": [
                   "http://a.ml/vocabularies/data#Object",
                   "http://a.ml/vocabularies/data#Node",
@@ -351,7 +351,7 @@
                 ],
                 "http://a.ml/vocabularies/data#name": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_2",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -374,7 +374,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_2/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_2/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -382,7 +382,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_2"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_2"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -398,7 +398,7 @@
                 ],
                 "http://a.ml/vocabularies/data#lastname": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_3",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_3",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -421,7 +421,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_3/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_3/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -429,7 +429,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_3"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_3"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -450,7 +450,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -470,7 +470,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -503,7 +503,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -549,7 +549,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -575,7 +575,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -592,7 +592,7 @@
             ],
             "http://a.ml/vocabularies/document#structuredValue": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1",
                 "@type": [
                   "http://a.ml/vocabularies/data#Object",
                   "http://a.ml/vocabularies/data#Node",
@@ -600,7 +600,7 @@
                 ],
                 "http://a.ml/vocabularies/data#name": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_2",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -623,7 +623,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_2/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_2/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -631,7 +631,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_2"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_2"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -647,7 +647,7 @@
                 ],
                 "http://a.ml/vocabularies/data#lastname": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_3",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_3",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -670,7 +670,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_3/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_3/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -678,7 +678,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_3"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_3"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -699,7 +699,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -719,7 +719,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -752,7 +752,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -798,7 +798,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -826,7 +826,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -834,7 +834,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -860,7 +860,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

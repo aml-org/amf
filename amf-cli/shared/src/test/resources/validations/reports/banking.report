@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/banking-api-error.raml
+Model: file://amf-cli/shared/src/test/resources/validations/banking-api-error.raml
 Profile: Banking
 Conforms? true
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#raml-root-schemes-values
   Message: Protocols property must be http or https
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/banking-api-error.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/banking-api-error.raml#/web-api
   Property: http://a.ml/vocabularies/apiContract#scheme
   Position: Some(LexicalInformation([(6,10)-(9,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/banking-api-error.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/banking-api-error.raml

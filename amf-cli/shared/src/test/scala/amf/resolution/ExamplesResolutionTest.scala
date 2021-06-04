@@ -7,8 +7,8 @@ import amf.core.remote.{Amf, Oas20JsonHint, Oas20YamlHint, Raml10, Raml10YamlHin
   *
   */
 class ExamplesResolutionTest extends ResolutionTest {
-  override val basePath      = "amf-client/shared/src/test/resources/resolution/examples/"
-  val validationPath: String = "amf-client/shared/src/test/resources/validations/"
+  override val basePath      = "amf-cli/shared/src/test/resources/resolution/examples/"
+  val validationPath: String = "amf-cli/shared/src/test/resources/validations/"
 
   multiGoldenTest("Response examples oas to AMF", "response-examples.json.%s") { config =>
     cycle("response-examples.json",

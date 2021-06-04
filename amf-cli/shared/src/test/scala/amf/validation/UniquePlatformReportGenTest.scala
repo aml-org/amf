@@ -125,7 +125,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
 }
 
 trait ValidModelTest extends MultiPlatformReportGenTest {
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
+  override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath: String = ""
 
   protected def checkValid(api: String, profile: ProfileName = Raml10Profile): Future[Assertion] =

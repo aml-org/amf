@@ -4,7 +4,7 @@ import amf.core.remote.Syntax.Yaml
 import amf.core.remote.{Hint, Raml08}
 
 /**
-  * Cycle by directory test for dir: [[amf-client/shared/src/test/resources/production/raml08/]]
+  * Cycle by directory test for dir: [[amf-cli/shared/src/test/resources/production/raml08/]]
   *   origin: Raml08
   *   target: Raml08
   */
@@ -14,5 +14,5 @@ class ProductionRaml08CycleTestByDirectory extends CycleTestByDirectory {
   override def fileExtension: String = ".raml"
 
   override def basePath: String =
-    "amf-client/shared/src/test/resources/production/raml08/"
+    "amf-cli/shared/src/test/resources/production/raml08/"
 }

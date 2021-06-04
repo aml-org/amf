@@ -35,7 +35,7 @@
 //
 //  test("Without resolve - Simple API") {
 //
-//    val path        = "file://amf-client/shared/src/test/resources/cache/api-library/"
+//    val path        = "file://amf-cli/shared/src/test/resources/cache/api-library/"
 //    val libraryPath = path + "library.raml"
 //    val mainPath    = path + "api.raml"
 //
@@ -59,7 +59,7 @@
 //
 //  test("Without resolve - Multiple References Mixed") {
 //
-//    val path        = "file://amf-client/shared/src/test/resources/cache/api-multiple-references/"
+//    val path        = "file://amf-cli/shared/src/test/resources/cache/api-multiple-references/"
 //    val libraryPath = path + "library.raml"
 //    val type1Path   = path + "datatypeC.raml"
 //    val mainPath    = path + "api.raml"
@@ -86,7 +86,7 @@
 //
 //  test("Without resolve - rt with reference of root type declaration") {
 //
-//    val path     = "file://amf-client/shared/src/test/resources/cache/api-rt/"
+//    val path     = "file://amf-cli/shared/src/test/resources/cache/api-rt/"
 //    val rtPath   = path + "rt.raml"
 //    val mainPath = path + "api.raml"
 //
@@ -109,7 +109,7 @@
 //
 //  test("Without resolve - trait with reference of root type declaration") {
 //
-//    val path      = "file://amf-client/shared/src/test/resources/cache/api-trait/"
+//    val path      = "file://amf-cli/shared/src/test/resources/cache/api-trait/"
 //    val traitPath = path + "trait.raml"
 //    val mainPath  = path + "api.raml"
 //
@@ -132,7 +132,7 @@
 //
 //  test("Resolved - Library fragment with complex types") {
 //
-//    val path     = "file://amf-client/shared/src/test/resources/cache/api-complex-lib-1/"
+//    val path     = "file://amf-cli/shared/src/test/resources/cache/api-complex-lib-1/"
 //    val libPath  = path + "library.raml"
 //    val mainPath = path + "api.raml"
 //
@@ -175,7 +175,7 @@
 //
 //  test("Resolved - Library fragment with complex rt") {
 //
-//    val path     = "file://amf-client/shared/src/test/resources/cache/api-complex-lib-2/"
+//    val path     = "file://amf-cli/shared/src/test/resources/cache/api-complex-lib-2/"
 //    val libPath  = path + "library.raml"
 //    val mainPath = path + "api.raml"
 //
@@ -218,7 +218,7 @@
 //
 //  test("Test API with repeated file names in different paths") {
 //
-//    val path     = "file://amf-client/shared/src/test/resources/cache/api-inner-directories/"
+//    val path     = "file://amf-cli/shared/src/test/resources/cache/api-inner-directories/"
 //    val libPath  = path + "pseudo-exchange-modules/lib.raml"
 //    val typePath = path + "pseudo-exchange-modules/type.raml"
 //    val mainPath = path + "api.raml"
@@ -245,7 +245,7 @@
 //
 //  test("Test cached library with included trait") {
 //
-//    val path      = "file://amf-client/shared/src/test/resources/cache/lib-with-trait/"
+//    val path      = "file://amf-cli/shared/src/test/resources/cache/lib-with-trait/"
 //    val libPath   = path + "lib.raml"
 //    val traitPath = path + "trait.raml"
 //    val mainPath  = path + "api.raml"
@@ -272,7 +272,7 @@
 //
 //  test("Test cached library with spaces at name (encode)") {
 //
-//    val path     = "file://amf-client/shared/src/test/resources/cache/ref-with-spaces/"
+//    val path     = "file://amf-cli/shared/src/test/resources/cache/ref-with-spaces/"
 //    val refPath  = path + "name spaced.raml"
 //    val mainPath = path + "api.raml"
 //
@@ -295,7 +295,7 @@
 //
 //  test("Test multiple resolved types cached") {
 //
-//    val path      = "file://amf-client/shared/src/test/resources/cache/multiples-types-cached/"
+//    val path      = "file://amf-cli/shared/src/test/resources/cache/multiples-types-cached/"
 //    val type1Path = path + "types/Account.raml"
 //    val type2Path = path + "types/AccountOwner.raml"
 //    val mainPath  = path + "api.raml"
@@ -322,7 +322,7 @@
 //
 //  test("Test multiple resolved types (1 cached 1 not)") {
 //
-//    val path      = "file://amf-client/shared/src/test/resources/cache/multiples-types-cached/"
+//    val path      = "file://amf-cli/shared/src/test/resources/cache/multiples-types-cached/"
 //    val type1Path = path + "types/Account.raml"
 //    val mainPath  = path + "api.raml"
 //

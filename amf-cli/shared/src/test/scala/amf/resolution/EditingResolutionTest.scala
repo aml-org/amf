@@ -17,12 +17,12 @@ class EditingResolutionTest extends ResolutionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val extendsPath     = "amf-client/shared/src/test/resources/resolution/extends/"
-  val productionPath  = "amf-client/shared/src/test/resources/production/"
-  val resolutionPath  = "amf-client/shared/src/test/resources/resolution/"
-  val cyclePath       = "amf-client/shared/src/test/resources/upanddown/"
-  val referencesPath  = "amf-client/shared/src/test/resources/references/"
-  val validationsPath = "amf-client/shared/src/test/resources/validations/"
+  val extendsPath     = "amf-cli/shared/src/test/resources/resolution/extends/"
+  val productionPath  = "amf-cli/shared/src/test/resources/production/"
+  val resolutionPath  = "amf-cli/shared/src/test/resources/resolution/"
+  val cyclePath       = "amf-cli/shared/src/test/resources/upanddown/"
+  val referencesPath  = "amf-cli/shared/src/test/resources/references/"
+  val validationsPath = "amf-cli/shared/src/test/resources/validations/"
 
   multiGoldenTest("API with recursive shapes", "recursive3.editing.%s") { config =>
     cycle("recursive3.raml",
@@ -123,7 +123,7 @@ class EditingResolutionTest extends ResolutionTest {
       config.golden,
       Raml10YamlHint,
       target = Amf,
-      "amf-client/shared/src/test/resources/resolution/extension/traits/",
+      "amf-cli/shared/src/test/resources/resolution/extension/traits/",
       renderOptions = Some(config.renderOptions)
     )
   }

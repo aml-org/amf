@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/overlay.raml
+Model: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/overlay.raml
 Profile: 
 Conforms? false
 Number of results: 2
@@ -8,15 +8,15 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-api not allowed in target Extension, allowed targets: API
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/extension.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/extension.raml#/web-api
   Property: 
   Position: Some(LexicalInformation([(10,0)-(11,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/extension.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/extension.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-api not allowed in target Overlay, allowed targets: API
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/overlay.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/overlay.raml#/web-api
   Property: 
   Position: Some(LexicalInformation([(11,0)-(11,30)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/overlay.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/overlay.raml

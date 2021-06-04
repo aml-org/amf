@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -55,7 +55,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -82,7 +82,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -107,16 +107,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -128,7 +128,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -141,7 +141,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -154,10 +154,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -173,13 +173,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -194,10 +194,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -207,7 +207,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -228,16 +228,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -253,16 +253,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -272,7 +272,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -289,7 +289,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -301,7 +301,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -313,7 +313,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -321,7 +321,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -348,7 +348,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -373,16 +373,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -394,7 +394,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -407,7 +407,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -420,10 +420,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/default-binding/userId/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -439,13 +439,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map/synthesized-field/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#name"
@@ -458,7 +458,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -473,10 +473,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -486,7 +486,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userId/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -503,7 +503,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -530,7 +530,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -555,16 +555,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -576,7 +576,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -589,7 +589,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -602,10 +602,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -621,13 +621,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -642,10 +642,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -655,7 +655,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/path/userName/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -676,16 +676,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -701,31 +701,31 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/parent-end-point/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/parent-end-point/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
                       }
                     ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -735,7 +735,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -752,7 +752,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -764,7 +764,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -776,7 +776,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -784,7 +784,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -811,7 +811,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -836,16 +836,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -857,7 +857,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -870,7 +870,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -883,10 +883,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -902,13 +902,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -923,10 +923,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -936,7 +936,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userName/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -953,7 +953,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -980,7 +980,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1005,16 +1005,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1026,7 +1026,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -1039,7 +1039,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -1052,10 +1052,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/default-binding/userId/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1071,13 +1071,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map/synthesized-field/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#name"
@@ -1090,7 +1090,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -1105,10 +1105,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1118,7 +1118,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userId/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -1135,7 +1135,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -1162,7 +1162,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/scalar/userLastName",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/scalar/userLastName",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1184,13 +1184,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map/synthesized-field/element_3",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map/synthesized-field/element_3",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#required"
@@ -1203,7 +1203,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map/synthesized-field/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#paramName"
@@ -1216,7 +1216,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -1229,7 +1229,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map/synthesized-field/element_2",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/path/userLastName/source-map/synthesized-field/element_2",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#name"
@@ -1250,16 +1250,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1275,31 +1275,31 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/parent-end-point/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/parent-end-point/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
                       }
                     ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1309,7 +1309,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -1326,7 +1326,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1338,7 +1338,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -1350,7 +1350,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -1358,7 +1358,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -1385,7 +1385,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1410,16 +1410,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1431,7 +1431,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -1444,7 +1444,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -1457,10 +1457,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/default-binding/userId/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1476,13 +1476,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map/synthesized-field/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#name"
@@ -1495,7 +1495,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -1510,10 +1510,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1523,7 +1523,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/path/userId/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -1544,16 +1544,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1569,31 +1569,31 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/parent-end-point/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/parent-end-point/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
                       }
                     ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1603,7 +1603,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -1620,7 +1620,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1632,7 +1632,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/get",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -1644,16 +1644,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1669,16 +1669,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1688,7 +1688,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -1707,16 +1707,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1728,10 +1728,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1741,7 +1741,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"

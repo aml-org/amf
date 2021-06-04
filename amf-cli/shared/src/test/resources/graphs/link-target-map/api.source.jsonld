@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -11,16 +11,16 @@
       "http://a.ml/vocabularies/core#name": "Something"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml",
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myArray"
+          "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myArray"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myTypeExpression"
+          "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myTypeExpression"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person"
+          "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person"
         }
       ],
       "@type": [
@@ -30,13 +30,13 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/web-api"
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/web-api"
       },
       "http://a.ml/vocabularies/document#version": "3.0.0",
       "http://a.ml/vocabularies/document#root": true
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myArray",
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myArray",
       "@type": [
         "http://a.ml/vocabularies/shapes#ArrayShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -45,13 +45,13 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#items": {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myArray/items/items"
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myArray/items/items"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "myArray"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myTypeExpression",
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myTypeExpression",
       "@type": [
         "http://a.ml/vocabularies/shapes#ArrayShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -60,13 +60,13 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#items": {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/link--29927588"
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/link--29927588"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "myTypeExpression"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person",
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -77,13 +77,13 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/property/name"
+          "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/property/name"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "Person"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myArray/items/items",
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myArray/items/items",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -92,13 +92,13 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#link-target": {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person"
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person"
       },
       "http://a.ml/vocabularies/document#link-label": "Person",
       "http://www.w3.org/ns/shacl#name": "items"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/link--29927588",
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/link--29927588",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -107,12 +107,12 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#link-target": {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person"
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person"
       },
       "http://a.ml/vocabularies/document#link-label": "Person"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/property/name",
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/property/name",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -125,13 +125,13 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/property/name/scalar/name"
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/property/name/scalar/name"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "name"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/property/name/scalar/name",
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/Person/property/name/scalar/name",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",

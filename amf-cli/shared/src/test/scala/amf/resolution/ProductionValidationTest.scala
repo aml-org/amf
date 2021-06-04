@@ -13,7 +13,7 @@ import scala.concurrent.Future
 
 class ProductionValidationTest extends RamlResolutionTest {
   override val basePath =
-    "amf-client/shared/src/test/resources/production/"
+    "amf-cli/shared/src/test/resources/production/"
 
   override def build(config: CycleConfig, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
     amfConfig

@@ -5,8 +5,8 @@ import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class RamlInterSpecRefsReportTest extends UniquePlatformReportGenTest {
 
-  override val basePath    = "file://amf-client/shared/src/test/resources/production/inter-spec-refs/"
-  override val reportsPath = "amf-client/shared/src/test/resources/production/inter-spec-refs/reports/"
+  override val basePath    = "file://amf-cli/shared/src/test/resources/production/inter-spec-refs/"
+  override val reportsPath = "amf-cli/shared/src/test/resources/production/inter-spec-refs/reports/"
 
   test("Raml refs json schema fragment") {
     validate("raml-json-schema/api.raml", None)

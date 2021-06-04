@@ -12,7 +12,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "amf-client/shared/src/test/resources/resolution/extends/"
+  val basePath = "amf-cli/shared/src/test/resources/resolution/extends/"
 
   test("Simple extends resolution to Raml") {
     cycle("simple-merge.raml", "simple-merge.raml.raml", Raml10YamlHint, Raml10)

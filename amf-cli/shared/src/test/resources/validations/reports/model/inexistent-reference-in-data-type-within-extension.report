@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/references-in-fragments-within-extension/datatype-fragment-non-existent/extension.raml
+Model: file://amf-cli/shared/src/test/resources/validations/references-in-fragments-within-extension/datatype-fragment-non-existent/extension.raml
 Profile: 
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'openid.configuration'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/references-in-fragments-within-extension/datatype-fragment-non-existent/dataType.raml#/shape/property/configuration/any/configuration/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/references-in-fragments-within-extension/datatype-fragment-non-existent/dataType.raml#/shape/property/configuration/any/configuration/unresolved
   Property: 
   Position: Some(LexicalInformation([(4,10)-(4,30)]))
-  Location: file://amf-client/shared/src/test/resources/validations/references-in-fragments-within-extension/datatype-fragment-non-existent/dataType.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/references-in-fragments-within-extension/datatype-fragment-non-existent/dataType.raml

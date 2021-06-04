@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/facets/min-max-items-between.raml
+Model: file://amf-cli/shared/src/test/resources/validations/facets/min-max-items-between.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#min-max-items
   Message: MaxItems must be greater than or equal to minItems
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/facets/min-max-items-between.raml#/declarations/types/array/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/min-max-items-between.raml#/declarations/types/array/invalid
   Property: 
   Position: Some(LexicalInformation([(9,4)-(12,20)]))
-  Location: file://amf-client/shared/src/test/resources/validations/facets/min-max-items-between.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/min-max-items-between.raml

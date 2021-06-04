@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml
 Profile: 
 Conforms? false
 Number of results: 2
@@ -8,10 +8,10 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#exclusive-properties-error
   Message: Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml#/declarations/securitySchemes/custom_with_query_param
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml#/declarations/securitySchemes/custom_with_query_param
   Property: 
   Position: Some(LexicalInformation([(8,0)-(12,0)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml
 
 - Source: http://a.ml/vocabularies/amf/core#syaml-error
   Message: YAML map expected
@@ -19,4 +19,4 @@ Level: Violation
   Target: 
   Property: 
   Position: Some(LexicalInformation([(11,22)-(11,22)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml

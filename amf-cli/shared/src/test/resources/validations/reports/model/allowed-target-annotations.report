@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+Model: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
 Profile: 
 Conforms? false
 Number of results: 9
@@ -8,18 +8,18 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-doc-item not allowed in target API, allowed targets: DocumentationItem
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api
   Property: 
   Position: Some(LexicalInformation([(45,0)-(46,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation multiple not allowed in target API, allowed targets: ResourceType, Method
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api
   Property: 
   Position: Some(LexicalInformation([(46,0)-(48,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-api not allowed in target DocumentationItem, allowed targets: API
@@ -27,52 +27,52 @@ Level: Violation
   Target: null
   Property: 
   Position: Some(LexicalInformation([(63,6)-(64,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-security-scheme-settings not allowed in target SecurityScheme, allowed targets: SecuritySchemeSettings
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/declarations/securitySchemes/oauth_1_0
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/declarations/securitySchemes/oauth_1_0
   Property: 
   Position: Some(LexicalInformation([(71,4)-(72,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-security-scheme not allowed in target SecuritySchemeSettings, allowed targets: SecurityScheme
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1
   Property: 
   Position: Some(LexicalInformation([(78,6)-(80,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-method not allowed in target Resource, allowed targets: Method
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api/end-points/%2Fuser
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api/end-points/%2Fuser
   Property: 
   Position: Some(LexicalInformation([(82,2)-(83,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-resource not allowed in target Method, allowed targets: Resource
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api/end-points/%2Fuser/post
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api/end-points/%2Fuser/post
   Property: 
   Position: Some(LexicalInformation([(84,4)-(85,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-response not allowed in target Example, allowed targets: Response
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api/end-points/%2Fuser/post/request/default/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api/end-points/%2Fuser/post/request/default/example/default-example
   Property: 
   Position: Some(LexicalInformation([(92,8)-(93,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-method not allowed in target Response, allowed targets: Method
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api/end-points/%2Fuser/post/200
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml#/web-api/end-points/%2Fuser/post/200
   Property: 
   Position: Some(LexicalInformation([(97,8)-(98,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml

@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/08/invalid-payload.raml
+Model: file://amf-cli/shared/src/test/resources/validations/08/invalid-payload.raml
 Profile: 
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-payload
   Message: Invalid payload. Payload must be a map or null
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/08/invalid-payload.raml#/web-api/end-points/%2Fv2/get/200/application%2Fjson
+  Target: file://amf-cli/shared/src/test/resources/validations/08/invalid-payload.raml#/web-api/end-points/%2Fv2/get/200/application%2Fjson
   Property: 
   Position: None
-  Location: file://amf-client/shared/src/test/resources/validations/08/invalid-payload.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/08/invalid-payload.raml

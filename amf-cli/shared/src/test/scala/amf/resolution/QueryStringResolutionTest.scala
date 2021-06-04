@@ -7,7 +7,7 @@ import amf.core.remote.{Amf, Oas20JsonHint, Raml10, Raml10YamlHint}
   *
   */
 class QueryStringResolutionTest extends ResolutionTest {
-  override val basePath = "amf-client/shared/src/test/resources/resolution/queryString/"
+  override val basePath = "amf-cli/shared/src/test/resources/resolution/queryString/"
 
   multiGoldenTest("QueryString raml to AMF", "query-string.raml.%s") { config =>
     cycle("query-string.raml",

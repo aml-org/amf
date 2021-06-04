@@ -17,7 +17,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest with Matchers {
 
-  val basePath = "file://amf-client/shared/src/test/resources/extensions/security-schemes"
+  val basePath = "file://amf-cli/shared/src/test/resources/extensions/security-schemes"
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

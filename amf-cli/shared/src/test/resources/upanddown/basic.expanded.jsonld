@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.jsonld",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.jsonld",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.jsonld#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.jsonld#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -56,13 +56,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_4",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_4",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#version"
@@ -75,10 +75,10 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/basic.jsonld#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/basic.jsonld#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -88,7 +88,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#termsOfService"
@@ -101,7 +101,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#description"
@@ -114,7 +114,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.jsonld#/web-api/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"

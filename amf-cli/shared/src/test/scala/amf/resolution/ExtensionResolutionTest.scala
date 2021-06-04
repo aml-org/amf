@@ -11,7 +11,7 @@ class ExtensionResolutionTest extends ResolutionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "amf-client/shared/src/test/resources/resolution/extension/"
+  val basePath = "amf-cli/shared/src/test/resources/resolution/extension/"
 
   test("Extension with annotations to Raml") {
     cycle("input.raml", "output.raml", Raml10YamlHint, target = Raml10, directory = s"${basePath}annotations/")

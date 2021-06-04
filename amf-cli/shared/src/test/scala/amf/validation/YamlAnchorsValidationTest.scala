@@ -196,7 +196,7 @@
 //  }
 //
 //  test("inlcuding external yaml payload") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/external-yaml-payload/api.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/external-yaml-payload/api.raml"
 //    for {
 //      _    <- AMF.init().asFuture
 //      unit <- new RamlParser().parseFileAsync(file, ParsingOptions().setMaxYamlReferences(50)).asFuture

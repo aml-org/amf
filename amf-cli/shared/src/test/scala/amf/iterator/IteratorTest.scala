@@ -60,7 +60,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Full api with complete iterator") {
     build(
-      "file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
+      "file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
       Raml10YamlHint,
       WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()),
       None
@@ -75,7 +75,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Full api with complete iterator using instance collector") {
     build(
-      "file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
+      "file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
       Raml10YamlHint,
       WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()),
       None
@@ -96,7 +96,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Full api with domain element iterator") {
     build(
-      "file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
+      "file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
       Raml10YamlHint,
       WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()),
       None
@@ -111,7 +111,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Full api with domain element iterator using instance collector") {
     build(
-      "file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
+      "file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
       Raml10YamlHint,
       WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()),
       None

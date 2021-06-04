@@ -6,8 +6,8 @@ import amf.core.remote.{Amf, AsyncApi20, Async20YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class Async20CycleTest extends FunSuiteCycleTests {
-  override val basePath: String = "amf-client/shared/src/test/resources/validations/async20/"
-  val upanddown: String         = "amf-client/shared/src/test/resources/upanddown/cycle/async20/"
+  override val basePath: String = "amf-cli/shared/src/test/resources/validations/async20/"
+  val upanddown: String         = "amf-cli/shared/src/test/resources/upanddown/cycle/async20/"
 
   case class FixtureData(name: String, apiFrom: String, apiTo: String)
 

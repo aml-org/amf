@@ -1,5 +1,7 @@
 package amf.client.model.domain
 
+import amf.client.convert.CoreRegister
+import amf.client.convert.ApiClientConverters._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.{WebApi => WebApiObject}
 import org.scalatest.{FunSuite, Matchers}

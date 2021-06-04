@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/parser/overlays/scalar-invalid/master.raml
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/overlays/scalar-invalid/master.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 2
@@ -11,7 +11,7 @@ Level: Violation
   Target: http://a.ml/vocabularies/core#version
   Property: 
   Position: Some(LexicalInformation([(3,0)-(4,0)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/overlays/scalar-invalid/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/overlays/scalar-invalid/input.raml
 
 - Source: http://a.ml/vocabularies/amf/core#resolution-validation
   Message: Property 'ValueType(Namespace(http://a.ml/vocabularies/apiContract#),server)' of type 'AmfArray' is not allowed to be overriden or added in overlays
@@ -19,4 +19,4 @@ Level: Violation
   Target: ValueType(Namespace(http://a.ml/vocabularies/apiContract#),server)
   Property: 
   Position: Some(LexicalInformation([(4,0)-(5,0)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/overlays/scalar-invalid/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/overlays/scalar-invalid/input.raml

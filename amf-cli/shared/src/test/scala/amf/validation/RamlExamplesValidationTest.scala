@@ -5,8 +5,8 @@ import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
 
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/examples/"
+  override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/examples/"
 
   test("Array minCount 1") {
     validate("examples/arrayItems1.raml", Some("array-items1.report"))

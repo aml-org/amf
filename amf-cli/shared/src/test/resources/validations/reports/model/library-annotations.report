@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/raml/library-annotations.raml
+Model: file://amf-cli/shared/src/test/resources/validations/raml/library-annotations.raml
 Profile: 
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation aSuperCoolResourceAnnotation not allowed in target Library, allowed targets: Resource
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/library-annotations.raml
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/library-annotations.raml
   Property: 
   Position: Some(LexicalInformation([(4,0)-(6,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/library-annotations.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/library-annotations.raml

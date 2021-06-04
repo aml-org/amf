@@ -1,6 +1,6 @@
 [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json",
 "@type": [
 "http://a.ml/vocabularies/document#Document",
 "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
 ],
 "http://a.ml/vocabularies/document#encodes": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api",
 "@type": [
 "http://a.ml/vocabularies/apiContract#WebAPI",
 "http://a.ml/vocabularies/document#RootDomainElement",
@@ -27,7 +27,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#endpoint": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest",
 "@type": [
 "http://a.ml/vocabularies/apiContract#EndPoint",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -39,7 +39,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#supportedOperation": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -51,7 +51,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#returns": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -73,7 +73,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#payload": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -85,7 +85,7 @@
 ],
 "http://a.ml/vocabularies/shapes#schema": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default",
 "@type": [
 "http://www.w3.org/ns/shacl#NodeShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -99,7 +99,7 @@
 ],
 "http://www.w3.org/ns/shacl#property": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a",
 "@type": [
 "http://www.w3.org/ns/shacl#PropertyShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -112,7 +112,7 @@
 ],
 "http://a.ml/vocabularies/shapes#range": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a/scalar/a",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a/scalar/a",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -121,7 +121,7 @@
 ],
 "http://a.ml/vocabularies/document#link-target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A"
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A"
 }
 ],
 "http://a.ml/vocabularies/document#link-label": [
@@ -141,7 +141,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a/scalar/a/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a/scalar/a/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -149,7 +149,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a/scalar/a"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a/scalar/a"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -175,7 +175,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -195,7 +195,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/a"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -209,7 +209,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b",
 "@type": [
 "http://www.w3.org/ns/shacl#PropertyShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -222,7 +222,7 @@
 ],
 "http://a.ml/vocabularies/shapes#range": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b/scalar/b",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b/scalar/b",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -231,7 +231,7 @@
 ],
 "http://a.ml/vocabularies/document#link-target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B"
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B"
 }
 ],
 "http://a.ml/vocabularies/document#link-label": [
@@ -251,7 +251,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b/scalar/b/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b/scalar/b/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -259,7 +259,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b/scalar/b"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b/scalar/b"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -285,7 +285,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -305,7 +305,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/property/b"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -326,7 +326,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -334,7 +334,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -360,7 +360,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/default"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -376,7 +376,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -412,7 +412,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -432,7 +432,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/200"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -448,7 +448,7 @@
 ],
 "http://a.ml/vocabularies/security#security": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20",
 "@type": [
 "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -460,7 +460,7 @@
 ],
 "http://a.ml/vocabularies/security#scheme": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20",
 "@type": [
 "http://a.ml/vocabularies/security#SecurityScheme",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -472,7 +472,7 @@
 ],
 "http://a.ml/vocabularies/document#link-target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
 }
 ],
 "http://a.ml/vocabularies/document#link-label": [
@@ -482,7 +482,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -490,7 +490,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -504,7 +504,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -520,7 +520,7 @@
 ],
 "http://a.ml/vocabularies/security#settings": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/settings/oauth2",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/settings/oauth2",
 "@type": [
 "http://a.ml/vocabularies/security#OAuth2Settings",
 "http://a.ml/vocabularies/security#Settings",
@@ -529,7 +529,7 @@
 "http://a.ml/vocabularies/security#scope": [],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/settings/oauth2/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/settings/oauth2/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -553,7 +553,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -561,7 +561,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -575,13 +575,13 @@
 ]
 }
 ],
-"file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA": {
+"file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA": {
 "http://a.ml/vocabularies/document#name": [
 {
 "@value": "annotA"
 }
 ],
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotA/scalar_1",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotA/scalar_1",
 "@type": [
 "http://a.ml/vocabularies/data#Scalar"
 ],
@@ -593,7 +593,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotA/scalar_1/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotA/scalar_1/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -601,7 +601,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotA/scalar_1"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotA/scalar_1"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -614,13 +614,13 @@
 }
 ]
 },
-"file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB": {
+"file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB": {
 "http://a.ml/vocabularies/document#name": [
 {
 "@value": "annotB"
 }
 ],
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotB/scalar_1",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotB/scalar_1",
 "@type": [
 "http://a.ml/vocabularies/data#Scalar"
 ],
@@ -632,7 +632,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotB/scalar_1/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotB/scalar_1/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -640,7 +640,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotB/scalar_1"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/annotB/scalar_1"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -655,15 +655,15 @@
 },
 "http://a.ml/vocabularies/document#customDomainProperties": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA"
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA"
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB"
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -683,7 +683,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -711,7 +711,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -719,7 +719,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -733,7 +733,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2",
 "@type": [
 "http://a.ml/vocabularies/apiContract#EndPoint",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -745,7 +745,7 @@
 ],
 "http://a.ml/vocabularies/document#extends": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/ta",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/ta",
 "@type": [
 "http://a.ml/vocabularies/document#ParametrizedResourceType",
 "http://a.ml/vocabularies/document#ParametrizedDeclaration",
@@ -758,7 +758,7 @@
 ],
 "http://a.ml/vocabularies/document#target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/ta/default-abstract",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/ta/default-abstract",
 "@type": [
 "http://a.ml/vocabularies/document#ResourceType",
 "http://a.ml/vocabularies/document#AbstractDeclaration",
@@ -766,7 +766,7 @@
 ],
 "http://a.ml/vocabularies/document#link-target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta"
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta"
 }
 ],
 "http://a.ml/vocabularies/document#link-label": [
@@ -778,7 +778,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/ta/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/ta/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -786,7 +786,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/ta"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/ta"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -802,7 +802,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -810,7 +810,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest2"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -824,7 +824,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3",
 "@type": [
 "http://a.ml/vocabularies/apiContract#EndPoint",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -836,7 +836,7 @@
 ],
 "http://a.ml/vocabularies/document#extends": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/tb",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/tb",
 "@type": [
 "http://a.ml/vocabularies/document#ParametrizedResourceType",
 "http://a.ml/vocabularies/document#ParametrizedDeclaration",
@@ -849,7 +849,7 @@
 ],
 "http://a.ml/vocabularies/document#target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/tb/default-abstract",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/tb/default-abstract",
 "@type": [
 "http://a.ml/vocabularies/document#ResourceType",
 "http://a.ml/vocabularies/document#AbstractDeclaration",
@@ -857,7 +857,7 @@
 ],
 "http://a.ml/vocabularies/document#link-target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/tb"
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/tb"
 }
 ],
 "http://a.ml/vocabularies/document#link-label": [
@@ -869,7 +869,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/tb/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/tb/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -877,7 +877,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/tb"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/tb"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -893,7 +893,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -901,7 +901,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest3"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -917,7 +917,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -925,7 +925,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -963,7 +963,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -991,7 +991,7 @@
 ],
 "http://a.ml/vocabularies/document#references": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml",
 "@type": [
 "http://a.ml/vocabularies/shapes#DataTypeFragment",
 "http://a.ml/vocabularies/document#Fragment",
@@ -999,7 +999,7 @@
 ],
 "http://a.ml/vocabularies/document#encodes": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -1018,7 +1018,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type#/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type#/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1026,7 +1026,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1052,7 +1052,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1066,7 +1066,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1082,7 +1082,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml#/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml#/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1090,7 +1090,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1104,7 +1104,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml",
 "@type": [
 "http://a.ml/vocabularies/apiContract#AnnotationTypeDeclarationFragment",
 "http://a.ml/vocabularies/document#Fragment",
@@ -1112,7 +1112,7 @@
 ],
 "http://a.ml/vocabularies/document#encodes": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation",
 "@type": [
 "http://a.ml/vocabularies/document#DomainProperty",
 "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -1120,7 +1120,7 @@
 ],
 "http://a.ml/vocabularies/shapes#schema": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/scalar/schema",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/scalar/schema",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -1139,7 +1139,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/scalar/schema/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/scalar/schema/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1147,7 +1147,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/scalar/schema"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/scalar/schema"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1173,7 +1173,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/scalar/schema"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/scalar/schema"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1194,7 +1194,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1202,7 +1202,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1228,7 +1228,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1244,7 +1244,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1252,7 +1252,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1266,7 +1266,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#",
 "@type": [
 "http://a.ml/vocabularies/apiContract#ResourceTypeFragment",
 "http://a.ml/vocabularies/document#Fragment",
@@ -1274,7 +1274,7 @@
 ],
 "http://a.ml/vocabularies/document#encodes": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType",
 "@type": [
 "http://a.ml/vocabularies/document#ResourceType",
 "http://a.ml/vocabularies/document#AbstractDeclaration",
@@ -1287,13 +1287,13 @@
 ],
 "http://a.ml/vocabularies/document#dataNode": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1",
 "@type": [
 "http://a.ml/vocabularies/data#Object"
 ],
 "http://a.ml/vocabularies/data#description": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1/scalar_2",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1/scalar_2",
 "@type": [
 "http://a.ml/vocabularies/data#Scalar"
 ],
@@ -1305,7 +1305,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1/scalar_2/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1/scalar_2/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1313,7 +1313,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1/scalar_2"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1/scalar_2"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1329,7 +1329,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1337,7 +1337,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1351,7 +1351,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1367,7 +1367,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1375,7 +1375,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1389,7 +1389,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1405,7 +1405,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1413,7 +1413,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1427,7 +1427,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml",
 "@type": [
 "http://a.ml/vocabularies/security#SecuritySchemeFragment",
 "http://a.ml/vocabularies/document#Fragment",
@@ -1435,7 +1435,7 @@
 ],
 "http://a.ml/vocabularies/document#encodes": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#fragment",
 "@type": [
 "http://a.ml/vocabularies/security#SecurityScheme",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -1447,7 +1447,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#header": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -1479,7 +1479,7 @@
 ],
 "http://a.ml/vocabularies/shapes#schema": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -1503,7 +1503,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1511,7 +1511,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1537,7 +1537,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1565,7 +1565,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1585,7 +1585,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1613,7 +1613,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#parameter": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -1645,7 +1645,7 @@
 ],
 "http://a.ml/vocabularies/shapes#schema": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -1669,7 +1669,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1677,7 +1677,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1703,7 +1703,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1719,7 +1719,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1739,7 +1739,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1767,7 +1767,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#response": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -1789,7 +1789,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1809,7 +1809,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1825,7 +1825,7 @@
 ],
 "http://a.ml/vocabularies/security#settings": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2",
 "@type": [
 "http://a.ml/vocabularies/security#OAuth2Settings",
 "http://a.ml/vocabularies/security#Settings",
@@ -1851,7 +1851,7 @@
 ],
 "http://a.ml/vocabularies/security#scope": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/profile",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/profile",
 "@type": [
 "http://a.ml/vocabularies/security#Scope",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -1863,7 +1863,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/history",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/history",
 "@type": [
 "http://a.ml/vocabularies/security#Scope",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -1877,7 +1877,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1909,7 +1909,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1949,7 +1949,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#fragment/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -1957,7 +1957,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2007,7 +2007,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2047,7 +2047,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2055,7 +2055,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml"
+"@value": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2071,7 +2071,7 @@
 ],
 "http://a.ml/vocabularies/document#declares": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA",
 "@type": [
 "http://a.ml/vocabularies/document#DomainProperty",
 "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -2079,7 +2079,7 @@
 ],
 "http://a.ml/vocabularies/shapes#schema": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/scalar/schema",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/scalar/schema",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -2098,7 +2098,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/scalar/schema/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/scalar/schema/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2106,7 +2106,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/scalar/schema"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/scalar/schema"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2132,7 +2132,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/scalar/schema"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/scalar/schema"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2153,7 +2153,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2161,7 +2161,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2187,7 +2187,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotA"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2201,7 +2201,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB",
 "@type": [
 "http://a.ml/vocabularies/document#DomainProperty",
 "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
@@ -2214,7 +2214,7 @@
 ],
 "http://a.ml/vocabularies/document#link-target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation"
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml#/annotation"
 }
 ],
 "http://a.ml/vocabularies/document#link-label": [
@@ -2224,7 +2224,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2232,7 +2232,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2246,7 +2246,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/annotB"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2260,7 +2260,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -2279,7 +2279,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2287,7 +2287,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2313,7 +2313,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2339,7 +2339,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/A"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2353,7 +2353,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://www.w3.org/ns/shacl#Shape",
@@ -2362,7 +2362,7 @@
 ],
 "http://a.ml/vocabularies/document#link-target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type"
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/scalar/type"
 }
 ],
 "http://a.ml/vocabularies/document#link-label": [
@@ -2382,7 +2382,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2390,7 +2390,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2416,7 +2416,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/types/scalar/B"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2430,7 +2430,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta",
 "@type": [
 "http://a.ml/vocabularies/document#ResourceType",
 "http://a.ml/vocabularies/document#AbstractDeclaration",
@@ -2443,13 +2443,13 @@
 ],
 "http://a.ml/vocabularies/document#dataNode": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1",
 "@type": [
 "http://a.ml/vocabularies/data#Object"
 ],
 "http://a.ml/vocabularies/data#description": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1/scalar_2",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1/scalar_2",
 "@type": [
 "http://a.ml/vocabularies/data#Scalar"
 ],
@@ -2461,7 +2461,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1/scalar_2/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1/scalar_2/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2469,7 +2469,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1/scalar_2"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1/scalar_2"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2485,7 +2485,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2493,7 +2493,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2507,7 +2507,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/object_1"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2523,7 +2523,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2531,7 +2531,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/ta"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2545,7 +2545,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/tb",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/tb",
 "@type": [
 "http://a.ml/vocabularies/document#ResourceType",
 "http://a.ml/vocabularies/document#AbstractDeclaration",
@@ -2558,7 +2558,7 @@
 ],
 "http://a.ml/vocabularies/document#link-target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType"
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType"
 }
 ],
 "http://a.ml/vocabularies/document#link-label": [
@@ -2568,7 +2568,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/tb/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/tb/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2576,7 +2576,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/tb"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/declarations/resourceTypes/tb"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2590,7 +2590,7 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20",
 "@type": [
 "http://a.ml/vocabularies/security#SecurityScheme",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -2602,7 +2602,7 @@
 ],
 "http://a.ml/vocabularies/document#link-target": [
 {
-"@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
+"@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
 }
 ],
 "http://a.ml/vocabularies/document#link-label": [
@@ -2612,7 +2612,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
-"@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20/source-map",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20/source-map",
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
@@ -2620,7 +2620,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2634,7 +2634,7 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20"
+"@value": "file://amf-cli/shared/src/test/resources/upanddown/with_references.json#/web-api/end-points/%2Ftest/get/oauth20/oauth20"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [

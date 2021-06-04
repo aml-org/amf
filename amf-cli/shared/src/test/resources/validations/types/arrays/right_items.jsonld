@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/validations/facets/test.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/validations/facets/test.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/validations/facets/test.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/validations/facets/test.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -37,7 +37,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/validations/facets/test.raml#/declarations/array/a",
+        "@id": "file://amf-cli/shared/src/test/resources/validations/facets/test.raml#/declarations/array/a",
         "@type": [
           "http://a.ml/vocabularies/shapes#ArrayShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -46,7 +46,7 @@
         ],
         "http://a.ml/vocabularies/shapes#items": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/validations/facets/test.raml#/declarations/array/a/scalar/items",
+            "@id": "file://amf-cli/shared/src/test/resources/validations/facets/test.raml#/declarations/array/a/scalar/items",
             "@type": [
               "http://a.ml/vocabularies/shapes#ScalarShape",
               "http://www.w3.org/ns/shacl#Shape",

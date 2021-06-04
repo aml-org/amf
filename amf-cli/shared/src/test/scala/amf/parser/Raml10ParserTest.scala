@@ -6,7 +6,7 @@ import amf.io.FunSuiteCycleTests
 
 class Raml10ParserTest extends FunSuiteCycleTests {
 
-  override def basePath: String = "amf-client/shared/src/test/resources/upanddown/raml10/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/raml10/"
 
   multiGoldenTest("Type with json schema in it's type facet has an inheritance to it",
                   "type-with-json-schema-in-type-facet.%s") { config =>

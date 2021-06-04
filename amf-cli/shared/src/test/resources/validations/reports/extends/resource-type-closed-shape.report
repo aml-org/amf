@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/resource_types/invalid/resource-type-closed-shape.raml
+Model: file://amf-cli/shared/src/test/resources/validations/resource_types/invalid/resource-type-closed-shape.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'a' not supported in a RAML 1.0 resourceType node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/resource_types/invalid/resource-type-closed-shape.raml#/web-api/end-points/%2Fendpoint1/rt1/applied
+  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/invalid/resource-type-closed-shape.raml#/web-api/end-points/%2Fendpoint1/rt1/applied
   Property: 
   Position: Some(LexicalInformation([(6,4)-(6,6)]))
-  Location: file://amf-client/shared/src/test/resources/validations/resource_types/invalid/resource-type-closed-shape.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/resource_types/invalid/resource-type-closed-shape.raml

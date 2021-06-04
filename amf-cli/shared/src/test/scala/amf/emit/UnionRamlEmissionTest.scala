@@ -14,7 +14,7 @@ import amf.plugins.document.apicontract.Raml10Plugin
 // This test suite test the generation of RAML unions
 class UnionRamlEmissionTest extends FunSuiteCycleTests {
 
-  override val basePath = "amf-client/shared/src/test/resources/union/"
+  override val basePath = "amf-cli/shared/src/test/resources/union/"
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res: BaseUnit = config.pipeline match {

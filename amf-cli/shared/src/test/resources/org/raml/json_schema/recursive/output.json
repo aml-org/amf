@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/json_schema/recursive/input.raml
+Model: file://amf-cli/shared/src/test/resources/org/raml/json_schema/recursive/input.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/json_schema/recursive/input.raml#/declarations/types/root
+  Target: file://amf-cli/shared/src/test/resources/org/raml/json_schema/recursive/input.raml#/declarations/types/root
   Property: 
   Position: Some(LexicalInformation([(4,2)-(9,17)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/json_schema/recursive/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/json_schema/recursive/input.raml

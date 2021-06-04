@@ -21,19 +21,19 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   override def defaultConfig: AMFConfiguration =
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
   test("test full raml") {
-    build("file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml", Raml10YamlHint) map {
+    build("file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml", Raml10YamlHint) map {
       checkAnnotation
     }
   }
 
   test("test full oas") {
-    build("file://amf-client/shared/src/test/resources/upanddown/full-example.json", Oas20JsonHint) map {
+    build("file://amf-cli/shared/src/test/resources/upanddown/full-example.json", Oas20JsonHint) map {
       checkAnnotation
     }
   }
 
   test("test full raml with type xml tag") {
-    build("file://amf-client/shared/src/test/resources/org/raml/api/v10/xmlbodyinlinewithfacet/input.raml",
+    build("file://amf-cli/shared/src/test/resources/org/raml/api/v10/xmlbodyinlinewithfacet/input.raml",
           Raml10YamlHint) map { checkAnnotation }
   }
 
@@ -55,7 +55,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   test("test node and entry annotation in oas parameters") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
                     Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
@@ -76,7 +76,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   test("test node and entry annotation in oas path items") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
                     Oas20YamlHint)
     } yield {
       val endpoint = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.head
@@ -90,7 +90,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   test("test node and entry annotation in oas operations") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
                     Oas20YamlHint)
     } yield {
       val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
@@ -105,7 +105,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   test("test node and entry annotation in oas responses") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",
                     Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
@@ -141,7 +141,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   test("test node and entry annotation in oas definitions and schemes") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-schemes.yaml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-schemes.yaml",
                     Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
@@ -165,7 +165,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   test("test node and entry annotation in oas xml shape property") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-xmlSerializer.yaml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-xmlSerializer.yaml",
                     Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]

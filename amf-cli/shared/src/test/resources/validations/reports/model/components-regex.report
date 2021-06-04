@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/upanddown/oas3/components/invalid-component-keys.json
+Model: file://amf-cli/shared/src/test/resources/upanddown/oas3/components/invalid-component-keys.json
 Profile: 
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name some$Link does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/components/invalid-component-keys.json#/declarations/links/templatedLink/some%24Link
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/components/invalid-component-keys.json#/declarations/links/templatedLink/some%24Link
   Property: 
   Position: Some(LexicalInformation([(9,6)-(11,7)]))
-  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/components/invalid-component-keys.json
+  Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/components/invalid-component-keys.json

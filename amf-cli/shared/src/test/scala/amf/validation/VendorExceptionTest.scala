@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 // This suite is to test that AMF throws an UnsupportedMediaTypeException when the master API is an empty file
 class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
 
-  val basePath                                             = "file://amf-client/shared/src/test/resources/validations/"
+  val basePath                                             = "file://amf-cli/shared/src/test/resources/validations/"
   implicit override def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 
   test("Empty RAML master API file to test vendor exception") {

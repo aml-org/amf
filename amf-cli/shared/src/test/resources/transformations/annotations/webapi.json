@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/rootAsset",
+        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/rootAsset",
         "@type": [
           "http://a.ml/vocabularies/document#Document",
           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Document",
@@ -29,7 +29,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api",
             "@type": [
               "http://a.ml/vocabularies/apiContract#WebAPI",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/WebAPI",
@@ -43,7 +43,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#server": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/falsedomain.com%2Fapis",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/falsedomain.com%2Fapis",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Server",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Server",
@@ -69,7 +69,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#endpoint": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#EndPoint",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/EndPoint",
@@ -78,7 +78,7 @@
                 ],
                 "http://a.ml/vocabularies/document#designAnnotation": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_1",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#DomainExtension",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/DomainExtension",
@@ -87,7 +87,7 @@
                     ],
                     "http://a.ml/vocabularies/document#extension": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/arrAnot/array_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/arrAnot/array_1",
                         "@type": [
                           "http://a.ml/vocabularies/data#Array",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ArrayNode",
@@ -96,7 +96,7 @@
                         ],
                         "http://www.w3.org/2000/01/rdf-schema#member": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/arrAnot/array_1/scalar_3",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/arrAnot/array_1/scalar_3",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -115,7 +115,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/arrAnot/array_1/scalar_2",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/arrAnot/array_1/scalar_2",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -138,7 +138,7 @@
                     ],
                     "http://a.ml/vocabularies/document#definedBy": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_1_link",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_1_link",
                         "@type": [
                           "http://a.ml/vocabularies/document#DomainProperty",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/CustomDomainProperty",
@@ -152,14 +152,14 @@
                         ],
                         "http://a.ml/vocabularies/document#design-link-target": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot"
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot"
                           }
                         ]
                       }
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_0",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#DomainExtension",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/DomainExtension",
@@ -168,7 +168,7 @@
                     ],
                     "http://a.ml/vocabularies/document#extension": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1",
                         "@type": [
                           "http://a.ml/vocabularies/data#Object",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ObjectNode",
@@ -177,7 +177,7 @@
                         ],
                         "http://a.ml/vocabularies/data#properties": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1_prop_signature",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1_prop_signature",
                             "@type": [
                               "http://a.ml/vocabularies/data#Property",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyNode",
@@ -186,7 +186,7 @@
                             ],
                             "http://a.ml/vocabularies/data#range": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1/scalar_3",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1/scalar_3",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Scalar",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -212,7 +212,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1_prop_level",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1_prop_level",
                             "@type": [
                               "http://a.ml/vocabularies/data#Property",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyNode",
@@ -221,7 +221,7 @@
                             ],
                             "http://a.ml/vocabularies/data#range": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1/scalar_2",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1/scalar_2",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Scalar",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -251,7 +251,7 @@
                     ],
                     "http://a.ml/vocabularies/document#definedBy": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_0_link",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_0_link",
                         "@type": [
                           "http://a.ml/vocabularies/document#DomainProperty",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/CustomDomainProperty",
@@ -265,7 +265,7 @@
                         ],
                         "http://a.ml/vocabularies/document#design-link-target": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel"
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel"
                           }
                         ]
                       }
@@ -274,7 +274,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#supportedOperation": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Operation",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Operation",
@@ -288,7 +288,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#returns": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Response",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Response",
@@ -297,7 +297,7 @@
                         ],
                         "http://a.ml/vocabularies/document#designAnnotation": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200_annotations_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200_annotations_1",
                             "@type": [
                               "http://a.ml/vocabularies/apiContract#DomainExtension",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/DomainExtension",
@@ -306,7 +306,7 @@
                             ],
                             "http://a.ml/vocabularies/document#extension": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/simple/scalar_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/simple/scalar_1",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Scalar",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -327,7 +327,7 @@
                             ],
                             "http://a.ml/vocabularies/document#definedBy": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200_annotations_1_link",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200_annotations_1_link",
                                 "@type": [
                                   "http://a.ml/vocabularies/document#DomainProperty",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/CustomDomainProperty",
@@ -341,14 +341,14 @@
                                 ],
                                 "http://a.ml/vocabularies/document#design-link-target": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple"
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple"
                                   }
                                 ]
                               }
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200_annotations_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200_annotations_0",
                             "@type": [
                               "http://a.ml/vocabularies/apiContract#DomainExtension",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/DomainExtension",
@@ -357,7 +357,7 @@
                             ],
                             "http://a.ml/vocabularies/document#extension": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/annot/object_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/annot/object_1",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Object",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ObjectNode",
@@ -366,7 +366,7 @@
                                 ],
                                 "http://a.ml/vocabularies/data#properties": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/annot/object_1_prop_lala",
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/annot/object_1_prop_lala",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Property",
                                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyNode",
@@ -375,7 +375,7 @@
                                     ],
                                     "http://a.ml/vocabularies/data#range": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/annot/object_1/scalar_2",
+                                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/annot/object_1/scalar_2",
                                         "@type": [
                                           "http://a.ml/vocabularies/data#Scalar",
                                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -405,7 +405,7 @@
                             ],
                             "http://a.ml/vocabularies/document#definedBy": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200_annotations_0_link",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200_annotations_0_link",
                                 "@type": [
                                   "http://a.ml/vocabularies/document#DomainProperty",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/CustomDomainProperty",
@@ -419,7 +419,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#design-link-target": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot"
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot"
                                   }
                                 ]
                               }
@@ -438,7 +438,7 @@
                         ],
                         "http://a.ml/vocabularies/apiContract#payload": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson",
                             "@type": [
                               "http://a.ml/vocabularies/apiContract#Payload",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Payload",
@@ -447,7 +447,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#schema": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
@@ -456,7 +456,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#property": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c",
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#PropertyShape",
                                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -465,7 +465,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#range": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c/scalar/c",
+                                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c/scalar/c",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#ScalarShape",
                                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -508,7 +508,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#inherits": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/link-1777247175",
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/link-1777247175",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#NodeShape",
                                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
@@ -522,7 +522,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document#design-link-target": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A"
+                                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A"
                                       }
                                     ],
                                     "http://www.w3.org/ns/shacl#name": [
@@ -571,7 +571,7 @@
         ],
         "http://a.ml/vocabularies/document#declares": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
@@ -580,7 +580,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/property/b",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/property/b",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -589,7 +589,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/property/b/scalar/b",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/property/b/scalar/b",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -625,7 +625,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/property/a",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/property/a",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -634,7 +634,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/property/a/scalar/a",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/property/a/scalar/a",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -682,7 +682,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple",
             "@type": [
               "http://a.ml/vocabularies/document#DomainProperty",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/CustomDomainProperty",
@@ -696,7 +696,7 @@
             ],
             "http://a.ml/vocabularies/shapes#schema": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple/scalar/schema",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple/scalar/schema",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -717,7 +717,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel",
             "@type": [
               "http://a.ml/vocabularies/document#DomainProperty",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/CustomDomainProperty",
@@ -731,7 +731,7 @@
             ],
             "http://a.ml/vocabularies/shapes#schema": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
@@ -740,7 +740,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/signature",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/signature",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -749,7 +749,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/signature/scalar/signature",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/signature/scalar/signature",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -790,7 +790,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -799,7 +799,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -818,11 +818,11 @@
                         ],
                         "http://www.w3.org/ns/shacl#in": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/list",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/list",
                             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                             "http://www.w3.org/2000/01/rdf-schema#_1": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/enum/scalar_3",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/enum/scalar_3",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Scalar",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -843,7 +843,7 @@
                             ],
                             "http://www.w3.org/2000/01/rdf-schema#_2": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/enum/scalar_2",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/enum/scalar_2",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Scalar",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -864,7 +864,7 @@
                             ],
                             "http://www.w3.org/2000/01/rdf-schema#_3": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/enum/scalar_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/enum/scalar_1",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Scalar",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -918,7 +918,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot",
             "@type": [
               "http://a.ml/vocabularies/document#DomainProperty",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/CustomDomainProperty",
@@ -932,7 +932,7 @@
             ],
             "http://a.ml/vocabularies/shapes#schema": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot/array/schema",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot/array/schema",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ArrayShape",
@@ -941,7 +941,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot/array/schema/items/scalar/items",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot/array/schema/items/scalar/items",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -969,7 +969,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot",
             "@type": [
               "http://a.ml/vocabularies/document#DomainProperty",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/CustomDomainProperty",
@@ -983,7 +983,7 @@
             ],
             "http://a.ml/vocabularies/shapes#schema": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
@@ -997,7 +997,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#inherits": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
@@ -1006,7 +1006,7 @@
                     ],
                     "http://www.w3.org/ns/shacl#property": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type/property/lala",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type/property/lala",
                         "@type": [
                           "http://www.w3.org/ns/shacl#PropertyShape",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -1015,7 +1015,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#range": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type/property/lala/scalar/lala",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type/property/lala/scalar/lala",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",

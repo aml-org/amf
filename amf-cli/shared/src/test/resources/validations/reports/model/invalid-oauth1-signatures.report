@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/securitySchemes/invalid-oauth1-signatures.raml
+Model: file://amf-cli/shared/src/test/resources/validations/securitySchemes/invalid-oauth1-signatures.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Settings-signature-pattern
   Message: Invalid OAuth 1.0 signature. The options are: HMAC-SHA1, RSA-SHA1, or PLAINTEXT
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/securitySchemes/invalid-oauth1-signatures.raml#/declarations/securitySchemes/oauth1-invalid-signatures/settings/oauth1
+  Target: file://amf-cli/shared/src/test/resources/validations/securitySchemes/invalid-oauth1-signatures.raml#/declarations/securitySchemes/oauth1-invalid-signatures/settings/oauth1
   Property: http://a.ml/vocabularies/security#signature
   Position: Some(LexicalInformation([(14,6)-(16,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/securitySchemes/invalid-oauth1-signatures.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/securitySchemes/invalid-oauth1-signatures.raml

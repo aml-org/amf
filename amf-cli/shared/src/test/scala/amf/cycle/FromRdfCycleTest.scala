@@ -20,7 +20,7 @@ trait FromRdfCycleTest extends AsyncBeforeAndAfterEach with FileAssertionTest wi
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "amf-client/shared/src/test/resources/rdf/"
+  val basePath = "amf-cli/shared/src/test/resources/rdf/"
 
   test("Modular recursion") {
     cycle("modular-recursion.nt", "file://api.raml")

@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/rootAsset",
+        "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/rootAsset",
         "@type": [
           "http://a.ml/vocabularies/document#Document",
           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Document",
@@ -29,7 +29,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api",
             "@type": [
               "http://a.ml/vocabularies/apiContract#WebAPI",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/WebAPI",
@@ -43,7 +43,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#server": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/https%3A%2F%2Fapi.github.com",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api/https%3A%2F%2Fapi.github.com",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Server",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Server",
@@ -64,7 +64,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#endpoint": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#EndPoint",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/EndPoint",
@@ -73,7 +73,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#parameter": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/parameter/userid",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/parameter/userid",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Parameter",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Parameter",
@@ -102,7 +102,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#schema": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/parameter/userid/scalar/userid",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/parameter/userid/scalar/userid",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -125,7 +125,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#supportedOperation": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Operation",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Operation",
@@ -134,7 +134,7 @@
                     ],
                     "http://a.ml/vocabularies/security#security": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_2",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_2",
                         "@type": [
                           "http://a.ml/vocabularies/security#SecurityRequirement",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/SecurityRequirement",
@@ -143,7 +143,7 @@
                         ],
                         "http://a.ml/vocabularies/security#schemes": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_2/oauth_2_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_2/oauth_2_0",
                             "@type": [
                               "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ParametrizedSecurityScheme",
@@ -152,7 +152,7 @@
                             ],
                             "http://a.ml/vocabularies/security#scheme": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0",
                                 "@type": [
                                   "http://a.ml/vocabularies/security#SecurityScheme",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/SecurityScheme",
@@ -171,7 +171,7 @@
                                 ],
                                 "http://a.ml/vocabularies/apiContract#response": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/401",
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/401",
                                     "@type": [
                                       "http://a.ml/vocabularies/apiContract#Response",
                                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Response",
@@ -202,7 +202,7 @@
                                 ],
                                 "http://a.ml/vocabularies/security#settings": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2",
                                     "@type": [
                                       "http://a.ml/vocabularies/security#OAuth2Settings",
                                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/OAuth2Settings",
@@ -211,7 +211,7 @@
                                     ],
                                     "http://a.ml/vocabularies/security#flows": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow",
+                                        "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow",
                                         "@type": [
                                           "http://a.ml/vocabularies/security#OAuth2Flow",
                                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/OAuth2Flow",
@@ -225,7 +225,7 @@
                                         ],
                                         "http://a.ml/vocabularies/security#scope": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow/ADMINISTRATOR",
+                                            "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow/ADMINISTRATOR",
                                             "@type": [
                                               "http://a.ml/vocabularies/security#Scope",
                                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Scope",
@@ -261,7 +261,7 @@
                                 ],
                                 "http://a.ml/vocabularies/apiContract#header": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
                                     "@type": [
                                       "http://a.ml/vocabularies/apiContract#Parameter",
                                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Parameter",
@@ -295,7 +295,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#schema": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
+                                        "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#ScalarShape",
                                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -332,7 +332,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_1",
                         "@type": [
                           "http://a.ml/vocabularies/security#SecurityRequirement",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/SecurityRequirement",
@@ -341,7 +341,7 @@
                         ],
                         "http://a.ml/vocabularies/security#schemes": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_1/null",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_1/null",
                             "@type": [
                               "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ParametrizedSecurityScheme",
@@ -375,7 +375,7 @@
         ],
         "http://a.ml/vocabularies/document#declares": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0",
             "@type": [
               "http://a.ml/vocabularies/security#SecurityScheme",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/SecurityScheme",
@@ -394,7 +394,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#response": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/401",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/401",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Response",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Response",
@@ -425,7 +425,7 @@
             ],
             "http://a.ml/vocabularies/security#settings": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2",
                 "@type": [
                   "http://a.ml/vocabularies/security#OAuth2Settings",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/OAuth2Settings",
@@ -434,7 +434,7 @@
                 ],
                 "http://a.ml/vocabularies/security#flows": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow",
                     "@type": [
                       "http://a.ml/vocabularies/security#OAuth2Flow",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/OAuth2Flow",
@@ -448,7 +448,7 @@
                     ],
                     "http://a.ml/vocabularies/security#scope": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow/ADMINISTRATOR",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow/ADMINISTRATOR",
                         "@type": [
                           "http://a.ml/vocabularies/security#Scope",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Scope",
@@ -484,7 +484,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#header": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Parameter",
@@ -518,7 +518,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",

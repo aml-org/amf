@@ -7,7 +7,7 @@ import amf.io.FunSuiteCycleTests
 
 class JapaneseCycleTest extends FunSuiteCycleTests {
 
-  override def basePath = "amf-client/shared/src/test/resources/validations/japanese/cycle/"
+  override def basePath = "amf-cli/shared/src/test/resources/validations/japanese/cycle/"
 
   multiGoldenTest("Raml10 to Json-LD resolves", "ramlapi.%s") { config =>
     cycle("ramlapi.raml", config.golden, Raml10YamlHint, target = Amf, renderOptions = Some(config.renderOptions))

@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -30,7 +30,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -56,7 +56,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -72,7 +72,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -106,7 +106,7 @@
         ],
         "http://www.w3.org/ns/shacl#defaultValue": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1",
             "@type": [
               "http://a.ml/vocabularies/data#Scalar"
             ],
@@ -118,7 +118,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -126,7 +126,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -142,11 +142,11 @@
         ],
         "http://www.w3.org/ns/shacl#in": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/list",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/list",
             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
             "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar"
                 ],
@@ -158,7 +158,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -166,7 +166,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -182,7 +182,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_2",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar"
                 ],
@@ -194,7 +194,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_2/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_2/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -202,7 +202,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_2"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/scalar_2"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -225,7 +225,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -233,7 +233,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -295,7 +295,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -357,7 +357,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/ScalarTest"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -371,7 +371,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -420,7 +420,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -428,7 +428,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -490,7 +490,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -552,7 +552,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/scalar/IntegerTest"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -566,7 +566,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -600,7 +600,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -613,7 +613,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/scalar/name",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -632,7 +632,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/scalar/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/scalar/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -640,7 +640,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -666,7 +666,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -697,7 +697,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -717,7 +717,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -748,13 +748,13 @@
         ],
         "http://www.w3.org/ns/shacl#defaultValue": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1",
             "@type": [
               "http://a.ml/vocabularies/data#Object"
             ],
             "http://a.ml/vocabularies/data#name": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1/scalar_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1/scalar_2",
                 "@type": [
                   "http://a.ml/vocabularies/data#Scalar"
                 ],
@@ -766,7 +766,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1/scalar_2/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1/scalar_2/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -774,7 +774,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1/scalar_2"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1/scalar_2"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -790,7 +790,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -798,7 +798,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -812,7 +812,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/object_1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -833,7 +833,7 @@
         ],
         "http://a.ml/vocabularies/core#documentation": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/creative-work/externalDocsUrl",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/creative-work/externalDocsUrl",
             "@type": [
               "http://a.ml/vocabularies/core#CreativeWork",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -850,7 +850,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/creative-work/externalDocsUrl/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/creative-work/externalDocsUrl/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -870,7 +870,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/creative-work/externalDocsUrl"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/creative-work/externalDocsUrl"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -898,7 +898,7 @@
         ],
         "http://a.ml/vocabularies/shapes#xmlSerialization": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/xml",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/xml",
             "@type": [
               "http://a.ml/vocabularies/shapes#XMLSerializer",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -930,7 +930,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/xml/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/xml/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -974,7 +974,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/xml"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/xml"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1014,7 +1014,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1022,7 +1022,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1120,7 +1120,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/types-facet.raml#/declarations/types/ObjectTest"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

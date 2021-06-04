@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/security-schemes/oauth-2/implicit.raml
+Model: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/implicit.raml
 Profile: RAML 1.0
 Conforms? true
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#missing-field-oauth-2-grant-type
   Message: 'authorizationUri' is required when 'implicit' grant type is used
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/security-schemes/oauth-2/implicit.raml#/declarations/securitySchemes/invalid/settings/oauth2
+  Target: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/implicit.raml#/declarations/securitySchemes/invalid/settings/oauth2
   Property: 
   Position: Some(LexicalInformation([(9,0)-(11,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/security-schemes/oauth-2/implicit.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/implicit.raml

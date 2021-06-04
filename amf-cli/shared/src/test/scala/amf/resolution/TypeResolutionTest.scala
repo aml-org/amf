@@ -173,7 +173,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
     assert(array.items.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
   }
 
-  override val basePath = "amf-client/shared/src/test/resources/resolution/"
+  override val basePath = "amf-cli/shared/src/test/resources/resolution/"
 
   val examples: Seq[String] = Seq(
     "union1",

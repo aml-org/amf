@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml
+Model: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml
 Profile: 
 Conforms? false
 Number of results: 2
@@ -8,15 +8,15 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#expected-module
   Message: Libraries must be applied by using 'uses'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-references-to-library/library.raml
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/library.raml
   Property: 
   Position: Some(LexicalInformation([(5,7)-(5,28)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml
 
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'library.raml'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml#/declarations/types/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml#/declarations/types/unresolved
   Property: 
   Position: Some(LexicalInformation([(5,7)-(5,28)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml

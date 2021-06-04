@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/api.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/transformations/modular-recursion/api.raml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/api.raml#/rootAsset",
+        "@id": "file://amf-cli/shared/src/test/resources/transformations/modular-recursion/api.raml#/rootAsset",
         "@type": [
           "http://a.ml/vocabularies/document#Document",
           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Document",
@@ -29,7 +29,7 @@
         ],
         "http://a.ml/vocabularies/document#references": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/libs/user.raml",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/modular-recursion/libs/user.raml",
             "@type": [
               "http://a.ml/vocabularies/document#Module",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Module",
@@ -48,7 +48,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/libs/base.raml",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/modular-recursion/libs/base.raml",
             "@type": [
               "http://a.ml/vocabularies/document#Module",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Module",
@@ -62,7 +62,7 @@
             ],
             "http://a.ml/vocabularies/document#references": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/libs/user.raml",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/modular-recursion/libs/user.raml",
                 "@type": [
                   "http://a.ml/vocabularies/document#Module",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Module",
@@ -90,7 +90,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/api.raml#/web-api",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/modular-recursion/api.raml#/web-api",
             "@type": [
               "http://a.ml/vocabularies/apiContract#WebAPI",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/WebAPI",

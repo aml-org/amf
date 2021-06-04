@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/read-only-property-marked-required.json
+Model: file://amf-cli/shared/src/test/resources/validations/read-only-property-marked-required.json
 Profile: OAS 2.0
 Conforms? true
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#read-only-property-marked-required
   Message: Read only property should not be marked as required by a schema
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/read-only-property-marked-required.json#/declarations/types/User/property/canLogin
+  Target: file://amf-cli/shared/src/test/resources/validations/read-only-property-marked-required.json#/declarations/types/User/property/canLogin
   Property: 
   Position: Some(LexicalInformation([(14,10)-(14,26)]))
-  Location: file://amf-client/shared/src/test/resources/validations/read-only-property-marked-required.json
+  Location: file://amf-cli/shared/src/test/resources/validations/read-only-property-marked-required.json

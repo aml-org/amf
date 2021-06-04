@@ -1,16 +1,16 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/complex/input.raml
 Profile: RAML
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application%2Fjson/schema_validation
+- Source: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application%2Fjson/schema_validation
   Message: Object at / must be valid
 Object at //onCall/union_0 must be valid
 Data at //onCall/union_0/phone must match pattern ^[0-9|-]+$
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application%2Fjson/schema/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application%2Fjson/schema/example/default-example
   Property: http://a.ml/vocabularies/data#Head
   Position: Some(LexicalInformation([(44,0)-(59,31)]))

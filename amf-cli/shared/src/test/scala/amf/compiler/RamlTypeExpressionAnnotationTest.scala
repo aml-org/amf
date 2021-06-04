@@ -13,7 +13,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with CompilerTestBuilder {
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.global
 
-  val rootPath = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/raml-type-expressions"
+  val rootPath = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/raml-type-expressions"
 
   behavior of "RAML type expression annotations"
 

@@ -105,6 +105,6 @@ class ValidAsyncModelParserTest extends ValidModelTest {
     checkValid("raml-data-type-references/ref-external-json.yaml", Async20Profile)
   }
 
-  override val basePath: String = "file://amf-client/shared/src/test/resources/validations/async20/"
+  override val basePath: String = "file://amf-cli/shared/src/test/resources/validations/async20/"
   override val hint: Hint       = Async20YamlHint
 }

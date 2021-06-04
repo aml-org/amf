@@ -20,7 +20,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://amf-client/shared/src/test/resources/maker/"
+  val basePath = "file://amf-cli/shared/src/test/resources/maker/"
 
   test("Generate complete web api instance") {
 
@@ -878,7 +878,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
-      .withId("amf-client/shared/src/test/resources/maker/types-dependency.raml#/web-api")
+      .withId("amf-cli/shared/src/test/resources/maker/types-dependency.raml#/web-api")
 
     api.withServer("api.example.com/path")
 
@@ -1033,7 +1033,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
-      .withId("amf-client/shared/src/test/resources/maker/types-dependency.json#/web-api")
+      .withId("amf-cli/shared/src/test/resources/maker/types-dependency.json#/web-api")
 
     api.withServer("api.example.com/path")
 

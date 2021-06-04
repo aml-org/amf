@@ -10,8 +10,8 @@ import amf.core.services.RuntimeResolver
 import amf.plugins.document.apicontract.resolution.pipelines.Oas20TransformationPipeline
 
 class OASProductionResolutionTest extends ResolutionTest {
-  override val basePath = "amf-client/shared/src/test/resources/production/"
-  val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
+  override val basePath = "amf-cli/shared/src/test/resources/production/"
+  val completeCyclePath = "amf-cli/shared/src/test/resources/upanddown/"
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 

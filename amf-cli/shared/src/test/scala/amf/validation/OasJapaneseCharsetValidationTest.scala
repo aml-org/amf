@@ -6,8 +6,8 @@ import amf.core.remote.{Hint, Oas20YamlHint, Oas30JsonHint, Oas30YamlHint}
 // TODO: Add test to check for Japanese characters in OAS 3 Component schema name. @author: Tomás Fernández
 class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
 
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/japanese/oas/"
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/japanese/oas/"
+  override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/japanese/oas/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/japanese/oas/"
   override val hint: Hint          = Oas20YamlHint
 
   test("Documentation server params") {

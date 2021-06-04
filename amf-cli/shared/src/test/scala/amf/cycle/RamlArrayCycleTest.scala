@@ -5,7 +5,7 @@ import amf.core.remote.{Amf, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class RamlArrayCycleTest extends FunSuiteCycleTests {
-  override def basePath: String = "amf-client/shared/src/test/resources/parser/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/parser/"
   val arrayExpression           = "array-type-expressions/"
   val unions                    = "union-expressions/"
   val unionsLib                 = "union-with-lib/"

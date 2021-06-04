@@ -17,7 +17,7 @@ import scala.concurrent.Future
   */
 class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with CompilerTestBuilder {
 
-  override val basePath = "amf-client/shared/src/test/resources/references/"
+  override val basePath = "amf-cli/shared/src/test/resources/references/"
 
   private val fixture = Seq(
     "Simple library raml"                         -> ("libraries.raml", Raml10YamlHint)                -> ("lib/lib.raml", Raml10),

@@ -38,14 +38,14 @@ trait TypeToJsonSchemaTest extends ModelValidationTest {
 }
 
 class RamlTypeToNormalJsonSchemaTest extends TypeToJsonSchemaTest {
-  override def path: String                         = "amf-client/shared/src/test/resources/org/raml/json_schema/"
+  override def path: String                         = "amf-cli/shared/src/test/resources/org/raml/json_schema/"
   override def inputFileName: String                = "input.raml"
   override def outputFileName: String               = "output.json"
   override def renderShape(shape: AnyShape): String = toJsonSchema(shape, WebAPIConfiguration.WebAPI())
 }
 
 class RamlTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
-  override def path: String           = "amf-client/shared/src/test/resources/org/raml/json_schema/"
+  override def path: String           = "amf-cli/shared/src/test/resources/org/raml/json_schema/"
   override def inputFileName: String  = "input.raml"
   override def outputFileName: String = "compact-output.json"
   override def renderShape(shape: AnyShape): String =
@@ -59,7 +59,7 @@ class RamlTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
 // Uncomment to add suite
 
 //class OasTypeToNormalJsonSchemaTest extends TypeToJsonSchemaTest {
-//  override def path: String                         = "amf-client/shared/src/test/resources/org/oas/json_schema/"
+//  override def path: String                         = "amf-cli/shared/src/test/resources/org/oas/json_schema/"
 //  override def inputFileName: String                = "input.json"
 //  override def outputFileName: String               = "output.json"
 //  override def hint: Hint                           = OasJsonHint
@@ -80,11 +80,11 @@ trait OasTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
 }
 
 case class Oas20TypeToCompactJsonSchemaTest() extends OasTypeToCompactJsonSchemaTest {
-  override def path: String = "amf-client/shared/src/test/resources/org/oas/json_schema/oas20/"
+  override def path: String = "amf-cli/shared/src/test/resources/org/oas/json_schema/oas20/"
   override def hint: Hint   = Oas20YamlHint
 }
 
 case class Oas30TypeToCompactJsonSchemaTest() extends OasTypeToCompactJsonSchemaTest {
-  override def path: String = "amf-client/shared/src/test/resources/org/oas/json_schema/oas30/"
+  override def path: String = "amf-cli/shared/src/test/resources/org/oas/json_schema/oas30/"
   override def hint: Hint   = Oas30YamlHint
 }

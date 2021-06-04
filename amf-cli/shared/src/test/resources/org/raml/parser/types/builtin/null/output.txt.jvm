@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 2
@@ -10,15 +10,15 @@ Level: Violation
 /middlename expected: null, found: String
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/wrong-type
-  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/wrong-type
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/wrong-type
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/wrong-type
   Position: Some(LexicalInformation([(15,0)-(18,0)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: required key [middlename] not found
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/missing-field
-  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/missing-field
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/missing-field
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/missing-field
   Position: Some(LexicalInformation([(19,0)-(21,0)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml

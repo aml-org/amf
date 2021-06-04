@@ -4,8 +4,8 @@ import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{Amf, Oas20, Oas20YamlHint, Raml10, Raml10YamlHint}
 
 class ReferencesResolutionTest extends ResolutionTest {
-  override val basePath: String = "amf-client/shared/src/test/resources/upanddown/"
-  val resolutionPath: String    = "amf-client/shared/src/test/resources/resolution/"
+  override val basePath: String = "amf-cli/shared/src/test/resources/upanddown/"
+  val resolutionPath: String    = "amf-cli/shared/src/test/resources/resolution/"
 
   multiGoldenTest("References resolution", "with_references_resolved.%s") { config =>
     cycle("with_references.raml",

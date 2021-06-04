@@ -14,13 +14,13 @@ trait ApiModelParserTestCase extends ModelResolutionTest {
 }
 
 case class Raml10ApiModelParserTestCase() extends ApiModelParserTestCase {
-  override def path: String = "amf-client/shared/src/test/resources/org/raml/api/v10"
+  override def path: String = "amf-cli/shared/src/test/resources/org/raml/api/v10"
 
   override def hint: Hint = Raml10YamlHint
 }
 
 case class Raml08ApiModelParserTestCase() extends ApiModelParserTestCase {
-  override def path: String = "amf-client/shared/src/test/resources/org/raml/api/v08"
+  override def path: String = "amf-cli/shared/src/test/resources/org/raml/api/v08"
 
   override def hint: Hint = Raml08YamlHint
 }

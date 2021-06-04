@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/inheritance/invalid/input.raml
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/invalid/input.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://www.w3.org/2001/XMLSchema#boolean < http://www.w3.org/2001/XMLSchema#string 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/inheritance/invalid/input.raml#/declarations/types/PropertyType3/property/name/scalar/name
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/invalid/input.raml#/declarations/types/PropertyType3/property/name/scalar/name
   Property: http://a.ml/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(11,6)-(12,0)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/inheritance/invalid/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/invalid/input.raml

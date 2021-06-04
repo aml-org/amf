@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -55,7 +55,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -87,7 +87,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -112,16 +112,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -133,7 +133,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -146,7 +146,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#description"
@@ -159,10 +159,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -178,13 +178,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -199,7 +199,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map/lexical/element_2",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map/lexical/element_2",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#description"
@@ -212,7 +212,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -225,10 +225,10 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/element"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -242,7 +242,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -274,7 +274,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -299,13 +299,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -320,10 +320,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -333,7 +333,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#description"
@@ -352,13 +352,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -373,7 +373,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map/lexical/element_2",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map/lexical/element_2",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#description"
@@ -386,7 +386,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -399,10 +399,10 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/parameter/query/another"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -418,13 +418,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/request/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#parameter"
@@ -443,16 +443,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -468,16 +468,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -487,7 +487,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/end-points/%2Fparam/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -506,16 +506,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -527,10 +527,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -540,7 +540,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/08/trait-with-quoted-value.raml#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"

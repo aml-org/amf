@@ -8,10 +8,10 @@ import amf.plugins.domain.apicontract.models.security.SecurityScheme
 
 class Raml10ElementCycleTest extends DomainElementCycleTest {
 
-  val basePath: String        = "amf-client/shared/src/test/resources/cycle/raml10/"
-  val jsonSchemaPath: String  = "amf-client/shared/src/test/resources/org/raml/json_schema/"
-  val parserPath: String      = "amf-client/shared/src/test/resources/org/raml/parser/"
-  val validationsPath: String = "amf-client/shared/src/test/resources/validations/"
+  val basePath: String        = "amf-cli/shared/src/test/resources/cycle/raml10/"
+  val jsonSchemaPath: String  = "amf-cli/shared/src/test/resources/org/raml/json_schema/"
+  val parserPath: String      = "amf-cli/shared/src/test/resources/org/raml/parser/"
+  val validationsPath: String = "amf-cli/shared/src/test/resources/validations/"
   val vendor: Vendor          = Vendor.RAML10
 
   test("type - multiple inheritance with union and properties") {

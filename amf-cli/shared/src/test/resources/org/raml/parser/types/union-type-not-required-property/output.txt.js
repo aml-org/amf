@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -24,7 +24,7 @@ testProperty[9] should match some schema in anyOf
 testProperty[9].theProperty should be equal to one of the allowed values
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
-  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
   Position: Some(LexicalInformation([(20,0)-(38,0)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml

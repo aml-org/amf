@@ -5,7 +5,7 @@ import amf.javaparser.org.raml.ModelResolutionTest
 class RamlBuilderTestCase extends ModelResolutionTest {
 
   override val basePath: String = path
-  override def path: String     = "amf-client/shared/src/test/resources/org/raml/parser"
+  override def path: String     = "amf-cli/shared/src/test/resources/org/raml/parser"
 
   override def inputFileName: String = "input.raml"
 

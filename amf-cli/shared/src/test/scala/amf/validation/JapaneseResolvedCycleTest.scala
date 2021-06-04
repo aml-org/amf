@@ -13,7 +13,7 @@ import amf.plugins.document.apicontract.resolution.pipelines.AmfEditingPipeline
 
 class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
 
-  override def basePath = "amf-client/shared/src/test/resources/validations/japanese/resolve/"
+  override def basePath = "amf-cli/shared/src/test/resources/validations/japanese/resolve/"
 
   multiGoldenTest("Raml10 to Json-LD resolves", "ramlapi.%s") { config =>
     cycle("ramlapi.raml", config.golden, Raml10YamlHint, target = Amf, renderOptions = Some(config.renderOptions))

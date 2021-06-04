@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/oas3/invalid-status-code.yaml
+Model: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-status-code.yaml
 Profile: 
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-status-code
   Message: Status code for a Response object must be a string
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-status-code.yaml#/web-api/end-points/%2Fresource1/get/200
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-status-code.yaml#/web-api/end-points/%2Fresource1/get/200
   Property: 
   Position: Some(LexicalInformation([(9,8)-(9,11)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-status-code.yaml
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-status-code.yaml

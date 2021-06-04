@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -11,7 +11,7 @@
       "http://a.ml/vocabularies/core#name": "FileUpload Petstore",
       "http://a.ml/vocabularies/apiContract#server": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1"
         }
       ],
       "http://a.ml/vocabularies/apiContract#accepts": [
@@ -25,21 +25,21 @@
       ],
       "http://a.ml/vocabularies/core#version": "1.0.0",
       "http://a.ml/vocabularies/core#license": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license"
       },
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Server",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -47,12 +47,12 @@
       "http://a.ml/vocabularies/core#urlTemplate": "petstore.swagger.io/v1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license",
       "@type": [
         "http://a.ml/vocabularies/core#License",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -60,12 +60,12 @@
       "http://a.ml/vocabularies/core#name": "MIT",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -73,89 +73,89 @@
       "http://a.ml/vocabularies/apiContract#path": "/upload",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/source-vendor/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_7"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_7"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_5"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_5"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_4"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_6"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_6"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#host-lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/host-lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/host-lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#base-path-lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/base-path-lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/base-path-lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -167,106 +167,106 @@
       ],
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request"
         }
       ],
       "http://a.ml/vocabularies/apiContract#returns": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_7",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_7",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#license",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(7,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_5",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#accepts",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,0)-(13,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,0)-(37,52)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#contentType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,0)-(16,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_4",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(37,52)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_6",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/source-map/lexical/element_6",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#scheme",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(11,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/host-lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/host-lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(8,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/base-path-lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/petstore.swagger.io%2Fv1/source-map/base-path-lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,0)-(9,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(7,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/license/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(7,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -274,17 +274,17 @@
       ],
       "http://a.ml/vocabularies/apiContract#payload": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -295,12 +295,12 @@
       "http://a.ml/vocabularies/core#description": "OK",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -311,129 +311,129 @@
       "http://a.ml/vocabularies/core#description": "Error",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_4"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_3"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(17,2)-(37,52)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "formData",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_4",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,0)-(37,52)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,4)-(37,52)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,6)-(25,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#accepts",
       "http://a.ml/vocabularies/document-source-maps#value": "[(25,6)-(27,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#guiSummary",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,6)-(20,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -443,67 +443,67 @@
       ],
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "formData"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#form-body-parameter": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/source-map/form-body-parameter/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/source-map/form-body-parameter/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,0)-(37,52)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,6)-(37,52)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,8)-(21,13)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(22,10)-(23,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,8)-(23,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,8)-(23,13)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,10)-(25,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,8)-(25,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -511,13 +511,13 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "upfile"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -525,18 +525,18 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "note"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/source-map/form-body-parameter/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/source-map/form-body-parameter/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -553,12 +553,12 @@
       "http://a.ml/vocabularies/core#description": "The file to upload.",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -575,112 +575,112 @@
       "http://a.ml/vocabularies/core#description": "Description of file contents.",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile",
       "http://a.ml/vocabularies/document-source-maps#value": "[(30,10)-(30,14)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(29,10)-(30,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(30,10)-(31,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(32,10)-(33,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/upfile/scalar/upfile",
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,10)-(33,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note",
       "http://a.ml/vocabularies/document-source-maps#value": "[(35,10)-(35,14)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(34,10)-(35,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(35,10)-(36,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(37,10)-(37,52)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request/formData/formData/property/note/scalar/note",
       "http://a.ml/vocabularies/document-source-maps#value": "[(33,10)-(37,52)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml",
       "@type": [
         "http://a.ml/vocabularies/document#Document",
         "http://a.ml/vocabularies/document#Fragment",
@@ -688,7 +688,7 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true

@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/rootAsset",
+        "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/rootAsset",
         "@type": [
           "http://a.ml/vocabularies/document#Document",
           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Document",
@@ -29,7 +29,7 @@
         ],
         "http://a.ml/vocabularies/document#references": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/schema.json",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/schema.json",
             "@type": [
               "http://a.ml/vocabularies/document#ExternalFragment",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ExternalFragment",
@@ -43,7 +43,7 @@
             ],
             "http://a.ml/vocabularies/document#encodes": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/schema.json#/external",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/schema.json#/external",
                 "@type": [
                   "http://a.ml/vocabularies/document#ExternalDomainElement",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ExternalDomainElement",
@@ -71,7 +71,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api",
             "@type": [
               "http://a.ml/vocabularies/apiContract#WebAPI",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/WebAPI",
@@ -85,7 +85,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#endpoint": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#EndPoint",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/EndPoint",
@@ -94,7 +94,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#supportedOperation": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Operation",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Operation",
@@ -108,7 +108,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#returns": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Response",
                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Response",
@@ -127,7 +127,7 @@
                         ],
                         "http://a.ml/vocabularies/apiContract#payload": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson",
                             "@type": [
                               "http://a.ml/vocabularies/apiContract#Payload",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Payload",
@@ -136,7 +136,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#schema": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema",
+                                "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
@@ -145,12 +145,12 @@
                                 ],
                                 "http://a.ml/vocabularies/document#reference-id": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/schema.json#/external"
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/schema.json#/external"
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#property": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp",
+                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#PropertyShape",
                                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -159,7 +159,7 @@
                                     ],
                                     "http://a.ml/vocabularies/shapes#range": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/itemsTuple1/array/parentProp",
+                                        "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/itemsTuple1/array/parentProp",
                                         "@type": [
                                           "http://a.ml/vocabularies/shapes#TupleShape",
                                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/TupleShape",
@@ -168,11 +168,11 @@
                                         ],
                                         "http://a.ml/vocabularies/shapes#items": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/itemsTuple1/array/parentProp/list",
+                                            "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/itemsTuple1/array/parentProp/list",
                                             "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                                             "http://www.w3.org/2000/01/rdf-schema#_1": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/member0",
+                                                "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/member0",
                                                 "@type": [
                                                   "http://www.w3.org/ns/shacl#NodeShape",
                                                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
@@ -181,7 +181,7 @@
                                                 ],
                                                 "http://www.w3.org/ns/shacl#property": [
                                                   {
-                                                    "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/member0/property/childProp",
+                                                    "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/member0/property/childProp",
                                                     "@type": [
                                                       "http://www.w3.org/ns/shacl#PropertyShape",
                                                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -190,7 +190,7 @@
                                                     ],
                                                     "http://a.ml/vocabularies/shapes#range": [
                                                       {
-                                                        "@id": "file://amf-client/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/member0/property/childProp/scalar/childProp",
+                                                        "@id": "file://amf-cli/shared/src/test/resources/transformations/tuple-shape-schema/api.raml#/web-api/end-points/%2Flist/get/200/application%2Fjson/schema/property/parentProp/array/parentProp/member0/property/childProp/scalar/childProp",
                                                         "@type": [
                                                           "http://a.ml/vocabularies/shapes#ScalarShape",
                                                           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",

@@ -95,6 +95,6 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
     case _ => Future.failed(fail("Not a named example fragment"))
   }
 
-  private val basePath: String   = "file://amf-client/shared/src/test/resources/tojson/examples/source/"
-  private val goldenPath: String = "amf-client/shared/src/test/resources/tojson/examples/generated/"
+  private val basePath: String   = "file://amf-cli/shared/src/test/resources/tojson/examples/source/"
+  private val goldenPath: String = "amf-cli/shared/src/test/resources/tojson/examples/generated/"
 }

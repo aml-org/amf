@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -30,7 +30,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -56,7 +56,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -72,7 +72,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -86,7 +86,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -99,7 +99,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/scalar/name",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -118,7 +118,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/scalar/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/scalar/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -126,7 +126,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -152,7 +152,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -178,7 +178,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -186,7 +186,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -207,7 +207,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -215,7 +215,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -253,7 +253,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/types/ClosedType"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

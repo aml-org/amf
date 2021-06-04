@@ -9,8 +9,8 @@ import org.yaml.builder.YamlOutputBuilder
 
 class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
 
-  override def basePath: String = "amf-client/shared/src/test/resources/cycle/oas30/"
-  val upanddownPath: String     = "amf-client/shared/src/test/resources/upanddown/oas3/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/cycle/oas30/"
+  val upanddownPath: String     = "amf-cli/shared/src/test/resources/upanddown/oas3/"
   val vendor: Vendor            = Vendor.OAS30
 
   test("type - composition with refs and inlined") {
@@ -43,8 +43,8 @@ class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
 
 class ClientRaml10ElementCycleTest extends ClientDomainElementCycleTest {
 
-  val basePath: String       = "amf-client/shared/src/test/resources/cycle/raml10/"
-  val jsonSchemaPath: String = "amf-client/shared/src/test/resources/org/raml/json_schema/"
+  val basePath: String       = "amf-cli/shared/src/test/resources/cycle/raml10/"
+  val jsonSchemaPath: String = "amf-cli/shared/src/test/resources/org/raml/json_schema/"
   val vendor: Vendor         = Vendor.RAML10
 
   test("type - multiple inheritance with union and properties") {

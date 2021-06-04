@@ -5,7 +5,7 @@ import amf.io.FunSuiteCycleTests
 
 class YamlSpecCycleTest extends FunSuiteCycleTests {
 
-  override val basePath = "amf-client/shared/src/test/resources/yaml/"
+  override val basePath = "amf-cli/shared/src/test/resources/yaml/"
 
   test("Example 5.3 - Mapping key structure indicator") {
     cycle("example-5.3.raml", "example-5.3.raml.raml", Raml10YamlHint, Raml10)

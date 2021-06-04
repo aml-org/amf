@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -30,7 +30,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -56,7 +56,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -72,14 +72,14 @@
     ],
     "http://a.ml/vocabularies/document#references": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml",
+        "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml",
         "@type": [
           "http://a.ml/vocabularies/document#Module",
           "http://a.ml/vocabularies/document#Unit"
         ],
         "http://a.ml/vocabularies/document#declares": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person",
+            "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -93,7 +93,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name",
+                "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -106,7 +106,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -125,7 +125,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -133,7 +133,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name"
+                                "@value": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -159,7 +159,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name"
+                                "@value": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -185,7 +185,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -193,7 +193,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/property/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -214,7 +214,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -222,7 +222,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -248,7 +248,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -281,7 +281,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -289,7 +289,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -315,7 +315,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -331,7 +331,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/source-map",
+        "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
@@ -339,12 +339,12 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml"
+                "@value": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "lib->file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml::lib/lib-declaration.raml,lib2->file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml::lib/lib-declaration.raml,lib3->file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml::lib/lib-declaration.raml"
+                "@value": "lib->file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml::lib/lib-declaration.raml,lib2->file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml::lib/lib-declaration.raml,lib3->file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml::lib/lib-declaration.raml"
               }
             ]
           }
@@ -353,7 +353,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person",
+        "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -362,7 +362,7 @@
         ],
         "http://a.ml/vocabularies/document#link-target": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
+            "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
           }
         ],
         "http://a.ml/vocabularies/document#link-label": [
@@ -377,7 +377,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -385,7 +385,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -399,7 +399,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -413,7 +413,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person2",
+        "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person2",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -422,7 +422,7 @@
         ],
         "http://a.ml/vocabularies/document#link-target": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
+            "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
           }
         ],
         "http://a.ml/vocabularies/document#link-label": [
@@ -437,7 +437,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person2/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person2/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -445,7 +445,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person2"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -459,7 +459,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person2"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -473,7 +473,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person3",
+        "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person3",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -482,7 +482,7 @@
         ],
         "http://a.ml/vocabularies/document#link-target": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
+            "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/types/Person"
           }
         ],
         "http://a.ml/vocabularies/document#link-label": [
@@ -497,7 +497,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person3/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person3/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -505,7 +505,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person3"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person3"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -519,7 +519,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person3"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/libraries-3-alias.raml#/declarations/types/person3"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
+Model: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 6
@@ -8,47 +8,47 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: [2015-13-33T25:61:61] is not a valid date-time-only. Expected yyyy-MM-dd'T'HH:mm:ss
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/fireworks/example/bad
-  Property: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/fireworks/example/bad
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/fireworks/example/bad
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/fireworks/example/bad
   Position: Some(LexicalInformation([(8,11)-(8,30)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: [2018-03-34] is not a valid date. Expected [yyyy-MM-dd]
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/birthday/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/birthday/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/birthday/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/birthday/example/default-example
   Position: Some(LexicalInformation([(11,13)-(11,23)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: [34:80:90] is not a valid time. Expected HH:mm:ss
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/lunchtime/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/lunchtime/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/lunchtime/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/lunchtime/example/default-example
   Position: Some(LexicalInformation([(14,13)-(14,21)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: [2016-66-66T66:66:66.090Z] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/created/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/created/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/created/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/created/example/default-example
   Position: Some(LexicalInformation([(17,13)-(17,37)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: Invalid RFC2616 string, 'Sun, 28 Feb 2016 66:66:66 GMT' does not match the expected format '^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since/example/default-example
   Position: Some(LexicalInformation([(21,13)-(21,42)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: [2002-66-66T66:66:66-06:00] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since2/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since2/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since2/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since2/example/default-example
   Position: Some(LexicalInformation([(25,13)-(25,38)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/date_time_validations2.raml

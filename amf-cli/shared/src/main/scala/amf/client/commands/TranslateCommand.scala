@@ -1,4 +1,4 @@
-package amf.cli.commands
+package amf.client.commands
 
 import amf.ProfileName
 import amf.client.environment.{AMFConfiguration, AMLConfiguration}

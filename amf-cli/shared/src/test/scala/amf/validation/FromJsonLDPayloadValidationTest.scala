@@ -12,7 +12,7 @@ import scala.concurrent.ExecutionContext
 class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val path = "file://amf-client/shared/src/test/resources/validations/"
+  val path = "file://amf-cli/shared/src/test/resources/validations/"
 
   val testValidations = Map(
     "bad_domain/valid.jsonld"                                -> ExpectedReport(conforms = true, 0, Oas20Profile),

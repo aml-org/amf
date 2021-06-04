@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/raml/oauth1/missing-requestTokenUri-oauth1.raml
+Model: file://amf-cli/shared/src/test/resources/validations/raml/oauth1/missing-requestTokenUri-oauth1.raml
 Profile: RAML 1.0
 Conforms? true
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#OAuth1Settings-requestTokenUri-minCount
   Message: requestTokenUri is required when security type is OAuth 1.0
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/raml/oauth1/missing-requestTokenUri-oauth1.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/oauth1/missing-requestTokenUri-oauth1.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1
   Property: http://a.ml/vocabularies/security#requestTokenUri
   Position: Some(LexicalInformation([(9,13)-(13,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/oauth1/missing-requestTokenUri-oauth1.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/oauth1/missing-requestTokenUri-oauth1.raml

@@ -16,8 +16,8 @@ import scala.concurrent.ExecutionContext
   */
 class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
 
-  private val referencesPath = "file://amf-client/shared/src/test/resources/references/"
-  private val basePath       = "file://amf-client/shared/src/test/resources/upanddown/"
+  private val referencesPath = "file://amf-cli/shared/src/test/resources/references/"
+  private val basePath       = "file://amf-cli/shared/src/test/resources/upanddown/"
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -28,7 +28,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
         undefined.severityLevel should be("Violation")
         undefined.message should be("Unresolved reference 'UndefinedType'")
         undefined.location should be(
-          Some("file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error.raml"))
+          Some("file://amf-cli/shared/src/test/resources/upanddown/forward-references-types-error.raml"))
         undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 27))))
       }
     )
@@ -41,7 +41,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
         undefined.severityLevel should be("Violation")
         undefined.message should be("Unresolved reference 'UndefinedType'")
         undefined.location should be(
-          Some("file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error-expression.raml"))
+          Some("file://amf-cli/shared/src/test/resources/upanddown/forward-references-types-error-expression.raml"))
         undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 40))))
       }
     )
@@ -54,7 +54,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
         undefined.severityLevel should be("Violation")
         undefined.message should be("Unresolved reference 'UndefinedType'")
         undefined.location should be(
-          Some("file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error-array.raml"))
+          Some("file://amf-cli/shared/src/test/resources/upanddown/forward-references-types-error-array.raml"))
         undefined.position.map(_.range) should be(Some(Range((5, 26), (5, 39))))
       }
     )
@@ -66,13 +66,13 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       a => {
         a.severityLevel should be("Violation")
         a.message should be("Unresolved reference 'A'")
-        a.location should be(Some("file://amf-client/shared/src/test/resources/references/contexts/library.raml"))
+        a.location should be(Some("file://amf-cli/shared/src/test/resources/references/contexts/library.raml"))
         a.position.map(_.range) should be(Some(Range((4, 5), (4, 6))))
       },
       c => {
         c.severityLevel should be("Violation")
         c.message should be("Unresolved reference 'C'")
-        c.location should be(Some("file://amf-client/shared/src/test/resources/references/contexts/nested.raml"))
+        c.location should be(Some("file://amf-cli/shared/src/test/resources/references/contexts/nested.raml"))
         c.position.map(_.range) should be(Some(Range((6, 5), (6, 6))))
       }
     )

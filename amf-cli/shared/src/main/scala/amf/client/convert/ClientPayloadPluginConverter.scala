@@ -1,7 +1,6 @@
-package amf.cli.convert
+package amf.client.convert
 
 import amf.client.convert.ApiClientConverters._
-import amf.client.convert.ClientInternalMatcher
 import amf.client.environment.{DefaultEnvironment, Environment => ClientEnvironment}
 import amf.client.plugins._
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration

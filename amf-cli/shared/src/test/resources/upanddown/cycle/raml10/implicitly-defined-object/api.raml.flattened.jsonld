@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -11,49 +11,49 @@
       "http://a.ml/vocabularies/core#name": "Implicitly define the type not using the `type` node",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/source-vendor/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(5,13)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(4,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo"
         }
       ],
       "@type": [
@@ -63,13 +63,13 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/web-api"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -80,41 +80,41 @@
       "http://www.w3.org/ns/shacl#name": "Foo",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,13)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/implicitly-defined-object/api.raml#/declarations/types/Foo/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,5)]"
     }

@@ -4,9 +4,9 @@ import amf.Raml08Profile
 import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
-  override val basePath = "file://amf-client/shared/src/test/resources/validations/jsonschema/"
+  override val basePath = "file://amf-cli/shared/src/test/resources/validations/jsonschema/"
 
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/jsonschema-examples/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/jsonschema-examples/"
   test("JSON Schema allOf test1") {
     validate("allOf/api1.raml", Some("allOf-api1.report"))
   }

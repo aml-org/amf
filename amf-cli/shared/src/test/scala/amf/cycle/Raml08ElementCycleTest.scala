@@ -6,10 +6,10 @@ import amf.plugins.domain.shapes.models.AnyShape
 
 class Raml08ElementCycleTest extends DomainElementCycleTest {
 
-  override def basePath: String = "amf-client/shared/src/test/resources/upanddown/"
-  val cyclePath: String         = "amf-client/shared/src/test/resources/cycle/raml08/"
-  val validationsPath: String   = "amf-client/shared/src/test/resources/validations/"
-  val resourcesPath: String     = "amf-client/shared/src/test/resources/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/"
+  val cyclePath: String         = "amf-cli/shared/src/test/resources/cycle/raml08/"
+  val validationsPath: String   = "amf-cli/shared/src/test/resources/validations/"
+  val resourcesPath: String     = "amf-cli/shared/src/test/resources/"
   val vendor: Vendor            = Vendor.RAML08
 
   test("type - inlined json schema") {

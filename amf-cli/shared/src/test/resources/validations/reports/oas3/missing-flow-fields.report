@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/oas3/missing-flow-fields.json
+Model: file://amf-cli/shared/src/test/resources/validations/oas3/missing-flow-fields.json
 Profile: 
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
   Message: Missing tokenUrl for clientCredentials flow
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/missing-flow-fields.json#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/missing-flow-fields.json#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials
   Property: 
   Position: Some(LexicalInformation([(12,10)-(16,11)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/missing-flow-fields.json
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/missing-flow-fields.json

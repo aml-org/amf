@@ -3,7 +3,7 @@ package amf.cycle
 import amf.core.remote.{Hint, Oas20JsonHint, Oas20YamlHint}
 
 /**
-  * Cycle by directory test for dir: [[amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml]]
+  * Cycle by directory test for dir: [[amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml]]
   *   origin: Oas20
   *   target: Oas20
   */
@@ -15,11 +15,11 @@ class Oas20YamlCycleTestByDirectory extends CycleTestByDirectory {
   override lazy val withEnableValidations: Seq[String] = Seq("multiple-form-data", "invalid-param-ref")
 
   override def basePath: String =
-    "amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/" // todo: move one level up
+    "amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/" // todo: move one level up
 }
 
 /**
-  * Cycle by directory test for dir: [[amf-client/shared/src/test/resources/upanddown/cycle/oas20/json]]
+  * Cycle by directory test for dir: [[amf-cli/shared/src/test/resources/upanddown/cycle/oas20/json]]
   *   origin: Oas20
   *   target: Oas20
   */
@@ -29,5 +29,5 @@ class Oas20JsonCycleTestByDirectory extends CycleTestByDirectory {
   override def fileExtension: String = ".json"
 
   override def basePath: String =
-    "amf-client/shared/src/test/resources/upanddown/cycle/oas20/json/" // todo: move one level up
+    "amf-cli/shared/src/test/resources/upanddown/cycle/oas20/json/" // todo: move one level up
 }

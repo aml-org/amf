@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml
+Model: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml
 Profile: 
 Conforms? false
 Number of results: 3
@@ -8,23 +8,23 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'properties' not supported in a RAML 1.0 module node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
   Property: 
   Position: Some(LexicalInformation([(3,0)-(5,16)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
 
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'financeDetail.raml'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml#/web-api/end-points/%2Fclaims%2F%7Bclaim-id%7D/patch/request/application%2Fjson/any/schema/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml#/web-api/end-points/%2Fclaims%2F%7Bclaim-id%7D/patch/request/application%2Fjson/any/schema/unresolved
   Property: 
   Position: Some(LexicalInformation([(8,16)-(8,43)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml
 
 - Source: http://a.ml/vocabularies/amf/core#expected-module
   Message: Libraries must be applied by using 'uses'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
   Property: 
   Position: Some(LexicalInformation([(8,16)-(8,43)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml

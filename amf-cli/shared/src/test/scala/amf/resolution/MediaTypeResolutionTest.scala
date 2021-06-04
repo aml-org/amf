@@ -4,7 +4,7 @@ import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{Amf, Oas20, Oas20JsonHint, Oas30, Raml10, Raml10YamlHint}
 
 class MediaTypeResolutionTest extends ResolutionTest {
-  override val basePath = "amf-client/shared/src/test/resources/resolution/media-type/"
+  override val basePath = "amf-cli/shared/src/test/resources/resolution/media-type/"
 
   multiGoldenTest("One mediaType raml to AMF", "media-type.raml.%s") { config =>
     cycle("media-type.raml",

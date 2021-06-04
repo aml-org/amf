@@ -10,12 +10,12 @@ import amf.plugins.document.apicontract.resolution.pipelines.AmfEditingPipeline
 import scala.concurrent.Future
 
 class ProductionResolutionTest extends RamlResolutionTest {
-  override val basePath = "amf-client/shared/src/test/resources/production/"
-  val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
-  val validationPath    = "amf-client/shared/src/test/resources/validations/"
-  val resolutionPath    = "amf-client/shared/src/test/resources/resolution/"
-  val productionRaml10  = "amf-client/shared/src/test/resources/production/raml10/"
-  val productionRaml08  = "amf-client/shared/src/test/resources/production/raml08/"
+  override val basePath = "amf-cli/shared/src/test/resources/production/"
+  val completeCyclePath = "amf-cli/shared/src/test/resources/upanddown/"
+  val validationPath    = "amf-cli/shared/src/test/resources/validations/"
+  val resolutionPath    = "amf-cli/shared/src/test/resources/resolution/"
+  val productionRaml10  = "amf-cli/shared/src/test/resources/production/raml10/"
+  val productionRaml08  = "amf-cli/shared/src/test/resources/production/raml08/"
 
   override def renderOptions() = RenderOptions().withPrettyPrint.withSourceMaps
   multiGoldenTest("Test declared type with facet added", "add-facet.raml.%s") { config =>
@@ -124,7 +124,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
           "input.resolved.raml",
           Raml10YamlHint,
           Raml10,
-          "amf-client/shared/src/test/resources/org/raml/api/v10/library-references-absolute/")
+          "amf-cli/shared/src/test/resources/org/raml/api/v10/library-references-absolute/")
   }
 
   test("test resource type non string scalar parameter example") {
@@ -133,7 +133,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
       "input.resolved.raml",
       Raml10YamlHint,
       Raml10,
-      "amf-client/shared/src/test/resources/org/raml/parser/resource-types/non-string-scalar-parameter/"
+      "amf-cli/shared/src/test/resources/org/raml/parser/resource-types/non-string-scalar-parameter/"
     )
   }
 

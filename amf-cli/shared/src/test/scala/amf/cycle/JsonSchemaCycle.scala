@@ -24,7 +24,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssertionTest with JsonSchemaSuite {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  private val basePath                                     = "amf-client/shared/src/test/resources/cycle/jsonschema/"
+  private val basePath                                     = "amf-cli/shared/src/test/resources/cycle/jsonschema/"
   private val JSON                                         = "application/json"
 
   test("PoC Test") {

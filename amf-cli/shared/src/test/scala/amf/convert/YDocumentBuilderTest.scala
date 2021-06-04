@@ -22,7 +22,7 @@ import scala.concurrent.{ExecutionContext, Future}
 // TODO add more test cases
 abstract class DocBuilderTest extends FunSuiteCycleTests {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  override def basePath: String                            = "amf-client/shared/src/test/resources/render/"
+  override def basePath: String                            = "amf-cli/shared/src/test/resources/render/"
 
   override def defaultRenderOptions: RenderOptions =
     RenderOptions().withSourceMaps.withPrettyPrint.withAmfJsonLdSerialization

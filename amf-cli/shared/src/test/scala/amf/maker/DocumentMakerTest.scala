@@ -22,13 +22,13 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   test("Raml declared types ") {
     val doc = documentWithTypes(Raml10)
-      .withLocation("file://amf-client/shared/src/test/resources/maker/declared-types.raml")
+      .withLocation("file://amf-cli/shared/src/test/resources/maker/declared-types.raml")
     assertFixture(doc, "declared-types.raml", Raml10YamlHint)
   }
 
   test("Oas declared types ") {
     val doc = documentWithTypes(Oas20)
-      .withLocation("file://amf-client/shared/src/test/resources/maker/declared-types.json")
+      .withLocation("file://amf-cli/shared/src/test/resources/maker/declared-types.json")
 
     doc.encodes.set(WebApiModel.EndPoints, AmfArray(Seq()))
 
@@ -37,13 +37,13 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   test("Raml inherits declared types ") {
     val doc = documentWithInheritsTypes(Raml10)
-      .withLocation("file://amf-client/shared/src/test/resources/maker/inherits-declared-types.raml")
+      .withLocation("file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.raml")
     assertFixture(doc, "inherits-declared-types.raml", Raml10YamlHint)
   }
 
   test("Oas inherits declared types ") {
     val doc = documentWithInheritsTypes(Oas20)
-      .withLocation("file://amf-client/shared/src/test/resources/maker/inherits-declared-types.json")
+      .withLocation("file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.json")
     assertFixture(doc, "inherits-declared-types.json", Oas20YamlHint)
   }
 
@@ -137,9 +137,9 @@ class DocumentMakerTest extends WebApiMakerTest {
 
     val id = vendor match {
       case _: Oas =>
-        "file://amf-client/shared/src/test/resources/maker/inherits-declared-types.json#/declarations/types/Human"
+        "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.json#/declarations/types/Human"
       case _ =>
-        "file://amf-client/shared/src/test/resources/maker/inherits-declared-types.raml#/declarations/types/Human"
+        "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.raml#/declarations/types/Human"
     }
 
     val linkLabel = vendor match {

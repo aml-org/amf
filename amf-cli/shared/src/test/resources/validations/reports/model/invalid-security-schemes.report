@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
+Model: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 Profile: OAS 3.0
 Conforms? false
 Number of results: 6
@@ -8,47 +8,47 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-type-minCount
   Message: Type is mandatory in a Security Scheme Object
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-noType
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-noType
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(9,6)-(11,7)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
 - Source: http://a.ml/vocabularies/amf/parser#HttpSettings-scheme-minCount
   Message: 'scheme' field is mandatory in http security scheme
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-httpType/settings/http
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-httpType/settings/http
   Property: http://a.ml/vocabularies/security#scheme
   Position: Some(LexicalInformation([(12,26)-(15,7)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
 - Source: http://a.ml/vocabularies/amf/parser#ApiKeySettings-name-minCount
   Message: 'name' field is mandatory in apiKey security scheme
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-apiKeyType/settings/api-key
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-apiKeyType/settings/api-key
   Property: http://a.ml/vocabularies/core#name
   Position: Some(LexicalInformation([(16,28)-(18,7)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
 - Source: http://a.ml/vocabularies/amf/parser#ApiKeySettings-in-minCount
   Message: 'in' field is mandatory in apiKey security scheme
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-apiKeyType/settings/api-key
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-apiKeyType/settings/api-key
   Property: http://a.ml/vocabularies/security#in
   Position: Some(LexicalInformation([(16,28)-(18,7)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
 - Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredOpenIdConnectUrl
   Message: 'openIdConnectUrl' field is mandatory in openIdConnect security scheme
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-openIdConnectType
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-openIdConnectType
   Property: 
   Position: Some(LexicalInformation([(19,6)-(21,7)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
 - Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredFlowsInOAuth2
   Message: 'flows' field is mandatory in OAuth2 security scheme
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-oauth2Type
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-oauth2Type
   Property: 
   Position: Some(LexicalInformation([(22,6)-(24,7)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-security-schemes.json

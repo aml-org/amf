@@ -5,8 +5,8 @@ import amf.core.remote.{Hint, Oas20JsonHint, Oas30JsonHint, Oas30YamlHint}
 
 class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
-  override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
-  override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/model/"
+  override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
+  override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/model/"
 
   test("Tags in oas") {
     validate("/webapi/tags.json", Some("webapi-tags.report"))

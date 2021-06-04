@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  val basePath                                             = "amf-client/shared/src/test/resources/resolution/merge"
+  val basePath                                             = "amf-cli/shared/src/test/resources/resolution/merge"
   val operationBuilder: OperationDocumentHandler           = OperationDocumentHandler()
   val messageBuilder: MessageDocumentHandler               = MessageDocumentHandler()
   val dataNodeBuilder: DataNodeDocumentHandler             = DataNodeDocumentHandler()

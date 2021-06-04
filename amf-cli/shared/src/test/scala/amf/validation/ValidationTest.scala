@@ -27,14 +27,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath         = "file://amf-client/shared/src/test/resources/vocabularies2/production/validation/"
-  val vocabulariesPath = "file://amf-client/shared/src/test/resources/vocabularies2/production/validation/"
-  val examplesPath     = "file://amf-client/shared/src/test/resources/validations/"
-  val productionPath   = "file://amf-client/shared/src/test/resources/production/"
-  val validationsPath  = "file://amf-client/shared/src/test/resources/validations/"
-  val upDownPath       = "file://amf-client/shared/src/test/resources/upanddown/"
-  val parserPath       = "file://amf-client/shared/src/test/resources/org/raml/parser/"
-  val jsonSchemaPath   = "file://amf-client/shared/src/test/resources/validations/jsonschema"
+  val basePath         = "file://amf-cli/shared/src/test/resources/vocabularies2/production/validation/"
+  val vocabulariesPath = "file://amf-cli/shared/src/test/resources/vocabularies2/production/validation/"
+  val examplesPath     = "file://amf-cli/shared/src/test/resources/validations/"
+  val productionPath   = "file://amf-cli/shared/src/test/resources/production/"
+  val validationsPath  = "file://amf-cli/shared/src/test/resources/validations/"
+  val upDownPath       = "file://amf-cli/shared/src/test/resources/upanddown/"
+  val parserPath       = "file://amf-cli/shared/src/test/resources/org/raml/parser/"
+  val jsonSchemaPath   = "file://amf-cli/shared/src/test/resources/validations/jsonschema"
 
   // todo serialize json of validation report?
   // Example validations test and Example model validation test were the same, because the resolution runs always for validation

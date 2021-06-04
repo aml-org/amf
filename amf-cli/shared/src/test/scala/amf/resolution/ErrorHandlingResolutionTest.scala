@@ -23,7 +23,7 @@ import org.scalatest.Matchers._
 import scala.concurrent.Future
 
 class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
-  override def basePath: String = "amf-client/shared/src/test/resources/resolution/error-apis/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/resolution/error-apis/"
 
   test("Unexisting include for resource type") {
     errorCycle(
@@ -52,7 +52,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
         AMFValidationResult(
           "Security scheme 'oauth_2_0' not found in declarations.",
           SeverityLevels.VIOLATION,
-          "file://amf-client/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection/applied/get/default-requirement_1/oauth_2_0",
+          "file://amf-cli/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection/applied/get/default-requirement_1/oauth_2_0",
           None,
           UnknownSecuritySchemeErrorSpecification.id,
           None,

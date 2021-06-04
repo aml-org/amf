@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#server": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -34,7 +34,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#variable": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -56,7 +56,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -80,7 +80,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -88,7 +88,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -114,7 +114,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -142,7 +142,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -150,7 +150,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -164,7 +164,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -186,7 +186,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year/scalar/year",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year/scalar/year",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -207,7 +207,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -215,7 +215,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -231,7 +231,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -265,7 +265,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -286,7 +286,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -298,7 +298,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -310,14 +310,14 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#header": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -344,7 +344,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -368,7 +368,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -392,7 +392,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -412,7 +412,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -428,7 +428,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -452,7 +452,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -460,7 +460,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/post"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -476,7 +476,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -484,7 +484,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/end-points/%2Frequired"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -500,7 +500,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -508,7 +508,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -546,7 +546,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/base-uri-params-implicit.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

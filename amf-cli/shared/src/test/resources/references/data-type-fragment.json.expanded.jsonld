@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json",
+    "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -29,16 +29,16 @@
         "http://a.ml/vocabularies/apiContract#endpoint": [],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -50,7 +50,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#version"
@@ -63,7 +63,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"
@@ -76,7 +76,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/apiContract#endpoint"
@@ -89,10 +89,10 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -118,7 +118,7 @@
     ],
     "http://a.ml/vocabularies/document#references": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json",
+        "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json",
         "@type": [
           "http://a.ml/vocabularies/shapes#DataTypeFragment",
           "http://a.ml/vocabularies/document#Fragment",
@@ -126,7 +126,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type",
+            "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -141,7 +141,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name",
+                "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -155,7 +155,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -175,16 +175,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name"
+                                "@value": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -196,10 +196,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name"
+                                "@value": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -209,7 +209,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -238,16 +238,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -257,7 +257,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -281,13 +281,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#closed"
@@ -302,10 +302,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -315,7 +315,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#property"
@@ -330,10 +330,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/source-map/type-property-lexical-info/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type/source-map/type-property-lexical-info/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -359,16 +359,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/fragments/person.json"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -384,7 +384,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person",
+        "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -394,7 +394,7 @@
         ],
         "http://a.ml/vocabularies/document#link-target": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type"
+            "@id": "file://amf-cli/shared/src/test/resources/references/fragments/person.json#/type"
           }
         ],
         "http://a.ml/vocabularies/document#link-label": [
@@ -414,13 +414,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/synthesized-field/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/synthesized-field/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/document#link-label"
@@ -433,7 +433,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/synthesized-field/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/document#recursive"
@@ -448,10 +448,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -461,7 +461,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -476,10 +476,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
