@@ -1,18 +1,17 @@
-package amf.plugins.document.apicontract
+package amf.plugins.parse
 
-import amf.client.plugins.AMFDocumentPlugin
 import amf.core.Root
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser.{ParserContext, Reference}
 import amf.core.remote.Vendor
 import amf.plugins.features.validation.CoreValidations.InvalidCrossSpec
 
-trait CrossSpecRestriction { this: AMFDocumentPlugin =>
+trait CrossSpecRestriction { this: ApiParsePlugin =>
 
   // TODO: all documents should have a Vendor
   protected def restrictCrossSpecReferences(optionalReferencedVendor: Option[Vendor], reference: Reference)(
       implicit errorHandler: AMFErrorHandler): Unit = {
-    val possibleReferencedVendors = vendors ++ validVendorsToReference
+    val possibleReferencedVendors = mediaTypes ++ validMediaTypesToReference
     optionalReferencedVendor.foreach { referencedVendor =>
       if (!possibleReferencedVendors.contains(referencedVendor.mediaType)) {
         referenceNodes(reference).foreach(node =>

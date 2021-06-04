@@ -1,16 +1,9 @@
 package amf.resolution
 
 import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote.{AsyncApi20, Async20YamlHint, Vendor}
 import amf.core.remote.Vendor._
+import amf.core.remote.{Async20YamlHint, AsyncApi20, Vendor}
 import amf.core.resolution.pipelines.TransformationPipeline
-import amf.emit.AMFRenderer
-import amf.io.FunSuiteCycleTests
-import amf.plugins.document.apicontract.Async20Plugin
-
-import scala.concurrent.Future
 
 class Async20ResolutionTest extends ResolutionTest {
   override def basePath: String       = "amf-cli/shared/src/test/resources/resolution/async20/"

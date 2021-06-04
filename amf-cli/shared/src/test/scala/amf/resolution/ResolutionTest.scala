@@ -1,13 +1,10 @@
 package amf.resolution
 
 import amf.client.environment.AMFConfiguration
-import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
-import amf.io.{FunSuiteCycleTests, MultiJsonldAsyncFunSuite}
-import amf.plugins.document.apicontract.resolution.pipelines.{AmfEditingPipeline, AmfTransformationPipeline}
-import amf.plugins.document.apicontract.{Async20Plugin, Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
+import amf.io.FunSuiteCycleTests
 
 abstract class ResolutionTest extends FunSuiteCycleTests with ResolutionCapabilities {
 
