@@ -1,18 +1,17 @@
 package amf.parser
 
-import amf.client.environment.ShapesConfiguration
 import amf.client.remod.AMFParser
 import amf.core.model.document.Document
-import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.plugins.domain.shapes.models.ScalarShape
-import amf.plugins.domain.webapi.models.api.WebApi
+import amf.client.environment.ShapesConfiguration
+import amf.core.model.domain.{AmfObject, DomainElement}
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class AMFGraphPartialParsingTest extends AsyncFunSuite with Matchers {
   override implicit val executionContext = ExecutionContext.Implicits.global
-  val basePath: String                   = "file://amf-client/shared/src/test/resources/graphs/"
+  val basePath: String                   = "file://amf-cli/shared/src/test/resources/graphs/"
 
   test("test read declared shape from api") {
     parse(
