@@ -2,14 +2,29 @@ package amf.client.convert.shapeconverters
 
 import amf.client.convert.{BidirectionalMatcher, CoreBaseConverter}
 import amf.core.unsafe.PlatformSecrets
-import amf.client.model.domain.{AnyShape => ClientAnyShape, ArrayShape => ClientArrayShape, DiscriminatorValueMapping => ClientDiscriminatorValueMapping, Example => ClientExample, FileShape => ClientFileShape, IriTemplateMapping => ClientIriTemplateMapping, NilShape => ClientNilShape, NodeShape => ClientNodeShape, PropertyDependencies => ClientPropertyDependencies, ScalarShape => ClientScalarShape, SchemaDependencies => ClientSchemaDependencies, SchemaShape => ClientSchemaShape, TupleShape => ClientTupleShape, UnionShape => ClientUnionShape, XMLSerializer => ClientXMLSerializer}
-import amf.client.model.domain.{CreativeWork => ClientCreativeWork}
+import amf.client.model.domain.{
+  AnyShape => ClientAnyShape,
+  ArrayShape => ClientArrayShape,
+  DiscriminatorValueMapping => ClientDiscriminatorValueMapping,
+  Example => ClientExample,
+  FileShape => ClientFileShape,
+  IriTemplateMapping => ClientIriTemplateMapping,
+  NilShape => ClientNilShape,
+  NodeShape => ClientNodeShape,
+  PropertyDependencies => ClientPropertyDependencies,
+  ScalarShape => ClientScalarShape,
+  SchemaDependencies => ClientSchemaDependencies,
+  SchemaShape => ClientSchemaShape,
+  TupleShape => ClientTupleShape,
+  UnionShape => ClientUnionShape,
+  XMLSerializer => ClientXMLSerializer,
+  CreativeWork => ClientCreativeWork
+}
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.webapi.models.{DiscriminatorValueMapping, IriTemplateMapping}
-
+import amf.plugins.domain.apicontract.models.{DiscriminatorValueMapping, IriTemplateMapping}
 
 trait ShapesBaseConverter
-  extends CoreBaseConverter
+    extends CoreBaseConverter
     with NilShapeConverter
     with SchemaShapeConverter
     with NodeShapeConverter
@@ -117,7 +132,7 @@ trait UnionShapeConverter extends PlatformSecrets {
 trait PropertyDependenciesConverter extends PlatformSecrets {
 
   implicit object PropertyDependenciesMatcher
-    extends BidirectionalMatcher[PropertyDependencies, ClientPropertyDependencies] {
+      extends BidirectionalMatcher[PropertyDependencies, ClientPropertyDependencies] {
     override def asClient(from: PropertyDependencies): ClientPropertyDependencies =
       platform.wrap[ClientPropertyDependencies](from)
     override def asInternal(from: ClientPropertyDependencies): PropertyDependencies = from._internal
@@ -127,7 +142,7 @@ trait PropertyDependenciesConverter extends PlatformSecrets {
 trait SchemaDependenciesConverter extends PlatformSecrets {
 
   implicit object SchemaDependenciesMatcher
-    extends BidirectionalMatcher[SchemaDependencies, ClientSchemaDependencies] {
+      extends BidirectionalMatcher[SchemaDependencies, ClientSchemaDependencies] {
     override def asClient(from: SchemaDependencies): ClientSchemaDependencies =
       platform.wrap[ClientSchemaDependencies](from)
     override def asInternal(from: ClientSchemaDependencies): SchemaDependencies = from._internal
@@ -145,7 +160,7 @@ trait CreativeWorkConverter extends PlatformSecrets {
 trait IriTemplateMappingConverter extends PlatformSecrets {
 
   implicit object IriTemplateMappingConverter
-    extends BidirectionalMatcher[IriTemplateMapping, ClientIriTemplateMapping] {
+      extends BidirectionalMatcher[IriTemplateMapping, ClientIriTemplateMapping] {
     override def asClient(from: IriTemplateMapping): ClientIriTemplateMapping =
       platform.wrap[ClientIriTemplateMapping](from)
     override def asInternal(from: ClientIriTemplateMapping): IriTemplateMapping = from._internal
@@ -155,7 +170,7 @@ trait IriTemplateMappingConverter extends PlatformSecrets {
 trait DiscriminatorValueMappingConverter extends PlatformSecrets {
 
   implicit object DiscriminatorValueMappingConverter
-    extends BidirectionalMatcher[DiscriminatorValueMapping, ClientDiscriminatorValueMapping] {
+      extends BidirectionalMatcher[DiscriminatorValueMapping, ClientDiscriminatorValueMapping] {
     override def asClient(from: DiscriminatorValueMapping): ClientDiscriminatorValueMapping =
       platform.wrap[ClientDiscriminatorValueMapping](from)
     override def asInternal(from: ClientDiscriminatorValueMapping): DiscriminatorValueMapping = from._internal

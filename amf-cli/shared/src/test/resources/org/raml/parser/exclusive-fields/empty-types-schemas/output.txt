@@ -1,0 +1,24 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/empty-types-schemas/input.raml
+Profile: 
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exclusive-schemas-type
+  Message: 'schemas' and 'types' properties are mutually exclusive
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(4,0)-(4,7)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/empty-types-schemas/input.raml
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#schemas-deprecated
+  Message: 'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead
+  Level: Warning
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(4,0)-(4,7)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/empty-types-schemas/input.raml

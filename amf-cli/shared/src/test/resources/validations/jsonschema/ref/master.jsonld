@@ -1,0 +1,1407 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "test"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#endpoint": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/ep1"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#foo"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://a.ml/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "foo"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#or": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#closed": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#property": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                                            "@type": [
+                                              "http://www.w3.org/ns/shacl#PropertyShape",
+                                              "http://www.w3.org/ns/shacl#Shape",
+                                              "http://a.ml/vocabularies/shapes#Shape"
+                                            ],
+                                            "http://www.w3.org/ns/shacl#path": [
+                                              {
+                                                "@id": "http://a.ml/vocabularies/data#foo"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/shapes#range": [
+                                              {
+                                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                                                "@type": [
+                                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                                  "http://www.w3.org/ns/shacl#Shape",
+                                                  "http://a.ml/vocabularies/shapes#Shape"
+                                                ],
+                                                "http://www.w3.org/ns/shacl#name": [
+                                                  {
+                                                    "@value": "foo"
+                                                  }
+                                                ],
+                                                "http://www.w3.org/ns/shacl#or": [
+                                                  {
+                                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                                    "@type": [
+                                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://a.ml/vocabularies/shapes#Shape"
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#link-target": [
+                                                      {
+                                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#link-label": [
+                                                      {
+                                                        "@value": "#"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#recursive": [
+                                                      {
+                                                        "@value": true
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item0"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                                    "@type": [
+                                                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://a.ml/vocabularies/shapes#Shape",
+                                                      "http://a.ml/vocabularies/document#DomainElement"
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item1"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#minCount": [
+                                              {
+                                                "@value": 0
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#name": [
+                                              {
+                                                "@value": "foo"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item0"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "foo"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "test1"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/apiContract#examples": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document#Example",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#structuredValue": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object"
+                                    ],
+                                    "http://a.ml/vocabularies/data#foo": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example/object_1/scalar_2",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Scalar"
+                                        ],
+                                        "http://a.ml/vocabularies/data#value": [
+                                          {
+                                            "@value": "false",
+                                            "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#raw": [
+                                  {
+                                    "@value": "              foo: false\n\n"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/ep2"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#foo"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://a.ml/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "foo"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#or": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#closed": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#property": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                                            "@type": [
+                                              "http://www.w3.org/ns/shacl#PropertyShape",
+                                              "http://www.w3.org/ns/shacl#Shape",
+                                              "http://a.ml/vocabularies/shapes#Shape"
+                                            ],
+                                            "http://www.w3.org/ns/shacl#path": [
+                                              {
+                                                "@id": "http://a.ml/vocabularies/data#foo"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/shapes#range": [
+                                              {
+                                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                                                "@type": [
+                                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                                  "http://www.w3.org/ns/shacl#Shape",
+                                                  "http://a.ml/vocabularies/shapes#Shape"
+                                                ],
+                                                "http://www.w3.org/ns/shacl#name": [
+                                                  {
+                                                    "@value": "foo"
+                                                  }
+                                                ],
+                                                "http://www.w3.org/ns/shacl#or": [
+                                                  {
+                                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                                    "@type": [
+                                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://a.ml/vocabularies/shapes#Shape"
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#link-target": [
+                                                      {
+                                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#link-label": [
+                                                      {
+                                                        "@value": "#"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#recursive": [
+                                                      {
+                                                        "@value": true
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item0"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                                    "@type": [
+                                                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://a.ml/vocabularies/shapes#Shape",
+                                                      "http://a.ml/vocabularies/document#DomainElement"
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item1"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#minCount": [
+                                              {
+                                                "@value": 0
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#name": [
+                                              {
+                                                "@value": "foo"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item0"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "foo"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "test1"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/apiContract#examples": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document#Example",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#structuredValue": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object"
+                                    ],
+                                    "http://a.ml/vocabularies/data#foo": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example/object_1/object_2",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Object"
+                                        ],
+                                        "http://a.ml/vocabularies/data#foo": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example/object_1/object_2/scalar_3",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/data#Scalar"
+                                            ],
+                                            "http://a.ml/vocabularies/data#value": [
+                                              {
+                                                "@value": "false",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#raw": [
+                                  {
+                                    "@value": "              foo:\n                foo: false\n\n"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/ep3"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#foo"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://a.ml/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "foo"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#or": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#closed": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#property": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                                            "@type": [
+                                              "http://www.w3.org/ns/shacl#PropertyShape",
+                                              "http://www.w3.org/ns/shacl#Shape",
+                                              "http://a.ml/vocabularies/shapes#Shape"
+                                            ],
+                                            "http://www.w3.org/ns/shacl#path": [
+                                              {
+                                                "@id": "http://a.ml/vocabularies/data#foo"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/shapes#range": [
+                                              {
+                                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                                                "@type": [
+                                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                                  "http://www.w3.org/ns/shacl#Shape",
+                                                  "http://a.ml/vocabularies/shapes#Shape"
+                                                ],
+                                                "http://www.w3.org/ns/shacl#name": [
+                                                  {
+                                                    "@value": "foo"
+                                                  }
+                                                ],
+                                                "http://www.w3.org/ns/shacl#or": [
+                                                  {
+                                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                                    "@type": [
+                                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://a.ml/vocabularies/shapes#Shape"
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#link-target": [
+                                                      {
+                                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#link-label": [
+                                                      {
+                                                        "@value": "#"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#recursive": [
+                                                      {
+                                                        "@value": true
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item0"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                                    "@type": [
+                                                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://a.ml/vocabularies/shapes#Shape",
+                                                      "http://a.ml/vocabularies/document#DomainElement"
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item1"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#minCount": [
+                                              {
+                                                "@value": 0
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#name": [
+                                              {
+                                                "@value": "foo"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item0"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "foo"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "test1"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/apiContract#examples": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document#Example",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#structuredValue": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object"
+                                    ],
+                                    "http://a.ml/vocabularies/data#foo": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example/object_1/object_2",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Object"
+                                        ],
+                                        "http://a.ml/vocabularies/data#bar": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example/object_1/object_2/scalar_3",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/data#Scalar"
+                                            ],
+                                            "http://a.ml/vocabularies/data#value": [
+                                              {
+                                                "@value": "false",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#raw": [
+                                  {
+                                    "@value": "              foo:\n                bar: false\n\n"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/ep4"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#foo"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://a.ml/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "foo"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#or": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#closed": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#property": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                                            "@type": [
+                                              "http://www.w3.org/ns/shacl#PropertyShape",
+                                              "http://www.w3.org/ns/shacl#Shape",
+                                              "http://a.ml/vocabularies/shapes#Shape"
+                                            ],
+                                            "http://www.w3.org/ns/shacl#path": [
+                                              {
+                                                "@id": "http://a.ml/vocabularies/data#foo"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/shapes#range": [
+                                              {
+                                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                                                "@type": [
+                                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                                  "http://www.w3.org/ns/shacl#Shape",
+                                                  "http://a.ml/vocabularies/shapes#Shape"
+                                                ],
+                                                "http://www.w3.org/ns/shacl#name": [
+                                                  {
+                                                    "@value": "foo"
+                                                  }
+                                                ],
+                                                "http://www.w3.org/ns/shacl#or": [
+                                                  {
+                                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                                    "@type": [
+                                                      "http://a.ml/vocabularies/shapes#AnyShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://a.ml/vocabularies/shapes#Shape"
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#link-target": [
+                                                      {
+                                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#link-label": [
+                                                      {
+                                                        "@value": "#"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document#recursive": [
+                                                      {
+                                                        "@value": true
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item0"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                                    "@type": [
+                                                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://a.ml/vocabularies/shapes#Shape",
+                                                      "http://a.ml/vocabularies/document#DomainElement"
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item1"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#minCount": [
+                                              {
+                                                "@value": 0
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#name": [
+                                              {
+                                                "@value": "foo"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item0"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://a.ml/vocabularies/shapes#Shape",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "foo"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "test1"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/apiContract#examples": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document#Example",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#structuredValue": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/data#Object"
+                                    ],
+                                    "http://a.ml/vocabularies/data#foo": [
+                                      {
+                                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example/object_1/object_2",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Object"
+                                        ],
+                                        "http://a.ml/vocabularies/data#foo": [
+                                          {
+                                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example/object_1/object_2/scalar_3",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/data#Scalar"
+                                            ],
+                                            "http://a.ml/vocabularies/data#value": [
+                                              {
+                                                "@value": "test",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#raw": [
+                                  {
+                                    "@value": "              foo:\n                foo: \"test\""
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": true
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#foo"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape"
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "foo"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#or": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#closed": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#property": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape"
+                        ],
+                        "http://www.w3.org/ns/shacl#path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#foo"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#range": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape"
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "foo"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#or": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#RecursiveShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape"
+                                ],
+                                "http://a.ml/vocabularies/shapes#fixPoint": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#link-target": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#link-label": [
+                                  {
+                                    "@value": "#"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#recursive": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "item0"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "item1"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#minCount": [
+                          {
+                            "@value": 0
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "foo"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "item0"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "item1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "foo"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "test1"
+          }
+        ]
+      }
+    ]
+  }
+]

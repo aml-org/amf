@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-key-operation.yaml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property '$ref' not supported in a ASYNC 2.0 operation node
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-key-operation.yaml#/async-api/end-points/%2Fa/publish
+  Property: 
+  Position: Some(LexicalInformation([(12,6)-(16,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-key-operation.yaml

@@ -1,0 +1,4 @@
+Model: file://amf-cli/shared/src/test/resources/validations/examples/complex-inheritance/api.raml
+Profile: RAML 1.0
+Conforms? true
+Number of results: 0

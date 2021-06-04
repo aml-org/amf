@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/08/invalid-baseUriParameter-version.raml
+Profile: RAML 0.8
+Conforms? true
+Number of results: 1
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-version-base-uri-parameter-definition
+  Message: 'version' baseUriParameter can't be defined if present in baseUri as variable
+  Level: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/08/invalid-baseUriParameter-version.raml#/web-api
+  Property: 
+  Position: Some(LexicalInformation([(5,0)-(6,17)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/08/invalid-baseUriParameter-version.raml

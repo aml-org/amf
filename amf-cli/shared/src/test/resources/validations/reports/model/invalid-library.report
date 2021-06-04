@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/invalid-library/invalid-library.raml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'title' not supported in a RAML 1.0 module node
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library/invalid-library.raml
+  Property: 
+  Position: Some(LexicalInformation([(2,0)-(3,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-library/invalid-library.raml

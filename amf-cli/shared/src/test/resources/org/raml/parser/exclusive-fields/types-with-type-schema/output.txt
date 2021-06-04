@@ -1,0 +1,24 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/types-with-type-schema/input.raml
+Profile: 
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exclusive-schema-type
+  Message: 'schema' and 'type' properties are mutually exclusive
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(7,4)-(7,10)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/types-with-type-schema/input.raml
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#schema-deprecated
+  Message: 'schema' keyword it's deprecated for 1.0 version, should use 'type' instead
+  Level: Warning
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(7,4)-(7,10)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/types-with-type-schema/input.raml

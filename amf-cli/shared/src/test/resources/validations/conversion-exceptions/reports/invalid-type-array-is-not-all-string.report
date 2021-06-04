@@ -1,0 +1,22 @@
+Model: null
+Profile: 
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#parse-document-fail
+  Message: Unable to parse Document: [{"@id": "", "@type": ["doc:Document", "doc:Fragment", ["aSeq", "in", "the", "middle"], "doc:Unit"]}]
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-type-array-is-not-all-string.jsonld
+  Property: 
+  Position: Some(LexicalInformation([(1,0)-(12,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-type-array-is-not-all-string.jsonld
+
+- Source: http://a.ml/vocabularies/amf/core#parse-node-fail
+  Message: Error parsing JSON-LD node, unknown @types ArrayBuffer(doc:Document, doc:Fragment, doc:Unit)
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(2,2)-(10,3)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-type-array-is-not-all-string.jsonld

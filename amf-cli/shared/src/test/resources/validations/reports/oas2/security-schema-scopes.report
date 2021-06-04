@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/oas2/security-schema-scopes.yaml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#unknown-scope
+  Message: Scope 'USER' not found in settings of declared secured by auth_2_0.
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas2/security-schema-scopes.yaml#/web-api/end-points/%2Fresource1/get/requirement_1/auth_2_0/settings/oauth2/default-flow/USER
+  Property: ValueType(Namespace(http://a.ml/vocabularies/security#),scope)
+  Position: Some(LexicalInformation([(27,14)-(27,18)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/oas2/security-schema-scopes.yaml

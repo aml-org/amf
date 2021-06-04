@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/types/schema_inheritance.raml
+Profile: RAML 1.0
+Conforms? true
+Number of results: 1
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#json-schema-inheritance
+  Message: Inheritance from JSON Schema
+  Level: Warning
+  Target: 
+  Property: http://a.ml/vocabularies/shapes#inherits
+  Position: Some(LexicalInformation([(6,0)-(16,21)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/types/schema_inheritance.raml

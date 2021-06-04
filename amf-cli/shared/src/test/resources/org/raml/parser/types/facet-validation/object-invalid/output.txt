@@ -1,0 +1,30 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 3
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
+  Message: Maximum must be greater than or equal to minimum
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declarations/types/scalar/invalid-range
+  Property: 
+  Position: Some(LexicalInformation([(8,4)-(12,0)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
+  Message: Maximum must be greater than or equal to minimum
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declarations/types/object-range/property/range-invalid-through-extension/scalar/range-invalid-through-extension
+  Property: 
+  Position: Some(LexicalInformation([(15,12)-(18,0)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#min-max-properties
+  Message: MaxProperties must be greater than or equal to minProperties
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declarations/types/object-props1
+  Property: 
+  Position: Some(LexicalInformation([(18,4)-(23,0)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml

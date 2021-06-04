@@ -1,0 +1,22 @@
+Model: file://amf-cli/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-path.json
+Profile: OAS 2.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-consumes-with-file-parameter
+  Message: Consumes must be either 'multipart/form-data', 'application/x-www-form-urlencoded', or both when a file parameter is present
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-path.json#/web-api/end-points/%2FaPath/formData/formData/property/file-parameter
+  Property: 
+  Position: Some(LexicalInformation([(10,8)-(15,9)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-path.json
+
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-consumes-with-file-parameter
+  Message: Consumes must be either 'multipart/form-data', 'application/x-www-form-urlencoded', or both when a file parameter is present
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-path.json#/web-api/end-points/%2FaPath/formData/formData/property/second-file-parameter
+  Property: 
+  Position: Some(LexicalInformation([(16,8)-(21,9)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-path.json

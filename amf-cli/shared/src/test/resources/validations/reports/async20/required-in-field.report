@@ -1,0 +1,22 @@
+Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-in-field.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#ApiKeySettings-in-minCount
+  Message: 'in' field is mandatory in HttpApiKey scheme
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-in-field.yaml#/declarations/securitySchemes/invalidType/settings/api-key
+  Property: http://a.ml/vocabularies/security#in
+  Position: Some(LexicalInformation([(9,0)-(10,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-in-field.yaml
+
+- Source: http://a.ml/vocabularies/amf/parser#HttpApiKeySettings-in-minCount
+  Message: 'in' field is mandatory in ApiKey scheme
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-in-field.yaml#/declarations/securitySchemes/anotherInvalidType/settings/http-api-key
+  Property: http://a.ml/vocabularies/security#in
+  Position: Some(LexicalInformation([(11,0)-(13,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-in-field.yaml

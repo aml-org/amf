@@ -1,0 +1,87 @@
+{
+  "@graph": [
+    {
+      "@id": "#/async-api",
+      "@type": [
+        "apiContract:AsyncAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "asdasd",
+      "core:version": "asdasd",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/async-api/end-points/someChannel"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#/async-api": "ASYNC 2.0"
+        },
+        "lexical": {
+          "apiContract:endpoint": "[(5,0)-(14,0)]",
+          "core:name": "[(3,2)-(4,0)]",
+          "#/async-api": "[(1,0)-(20,36)]",
+          "core:version": "[(4,2)-(5,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/async-api/end-points/someChannel",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "someChannel",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/async-api/end-points/someChannel/publish"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:supportedOperation": "[(7,0)-(14,0)]",
+          "#/async-api/end-points/someChannel": "[(6,2)-(14,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/async-api/end-points/someChannel/publish",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "publish",
+      "core:description": "secondDescription",
+      "apiContract:guiSummary": "firstSummary",
+      "apiContract:operationId": "baseId",
+      "smaps": {
+        "lexical": {
+          "apiContract:operationId": "[(8,6)-(9,0)]",
+          "#/async-api/end-points/someChannel/publish": "[(7,4)-(14,0)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/async-api"
+      },
+      "doc:version": "3.1.0",
+      "doc:root": true
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

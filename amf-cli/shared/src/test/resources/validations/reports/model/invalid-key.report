@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/security-schemes/invalid-key.raml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#syaml-error
+  Message: Expected scalar but found: [oAuth_1]
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(5,2)-(5,11)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/security-schemes/invalid-key.raml

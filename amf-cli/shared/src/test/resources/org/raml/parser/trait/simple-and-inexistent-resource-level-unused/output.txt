@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/trait/simple-and-inexistent-resource-level-unused/input.raml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#declaration-not-found
+  Message: Trait nonexistent not found
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(14,17)-(14,28)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/trait/simple-and-inexistent-resource-level-unused/input.raml

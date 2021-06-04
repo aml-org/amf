@@ -3,7 +3,7 @@ package amf.client.model.domain
 import amf.client.model.StrField
 import amf.client.convert.shapeconverters.ShapeClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-import amf.plugins.domain.webapi.models.{IriTemplateMapping => InternalIriTemplateMapping}
+import amf.plugins.domain.apicontract.models.{IriTemplateMapping => InternalIriTemplateMapping}
 
 @JSExportAll
 case class IriTemplateMapping(override private[amf] val _internal: InternalIriTemplateMapping) extends DomainElement {

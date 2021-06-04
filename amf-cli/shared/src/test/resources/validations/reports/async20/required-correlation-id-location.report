@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-correlation-id-location.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#CorrelationId-location-minCount
+  Message: 'location' field is mandatory in CorrelationId
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-correlation-id-location.yaml#/async-api/end-points/user%2F%7B%24%24%7D%2Fsignup/publish/request/default-id
+  Property: http://a.ml/vocabularies/core#location
+  Position: Some(LexicalInformation([(10,0)-(10,27)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-correlation-id-location.yaml

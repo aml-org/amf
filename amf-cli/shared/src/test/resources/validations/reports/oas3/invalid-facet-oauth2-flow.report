@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-facet-oauth2-flow.json
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'authorizationUrl' not supported in a OAS 3.0 clientCredentials node
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-facet-oauth2-flow.json#/declarations/securitySchemes/public_oauth2/settings/oauth2/clientCredentials
+  Property: 
+  Position: Some(LexicalInformation([(15,12)-(15,78)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-facet-oauth2-flow.json

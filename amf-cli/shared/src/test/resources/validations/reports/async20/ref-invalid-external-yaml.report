@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-invalid-external-yaml.yaml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'OtherType'
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/ref-invalid-external-yaml.yaml#/async-api/end-points/users%2Fsignup/subscribe/default-response/default/unresolved
+  Property: 
+  Position: Some(LexicalInformation([(5,15)-(5,24)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/external-yaml.yaml

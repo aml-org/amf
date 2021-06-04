@@ -1,0 +1,50 @@
+{
+  "@context": {
+    "raml-doc": "http://a.ml/vocabularies/document#",
+    "raml-http": "http://a.ml/vocabularies/apiContract#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "hydra": "http://a.ml/vocabularies/apiContract#",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "schema-org": "http://a.ml/vocabularies/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "https://mulesoft-labs.github.io/amf-playground/raml/tck/raml-1.0/Api/test001/api.raml",
+  "@type": [
+    "raml-doc:Document",
+    "raml-doc:Fragment",
+    "raml-doc:Module",
+    "raml-doc:Unit"
+  ],
+  "raml-doc:encodes": {
+    "@id": "https://mulesoft-labs.github.io/amf-playground/raml/tck/raml-1.0/Api/test001/api.raml#/api-documentation",
+    "@type": [
+      "raml-http:WebAPI",
+      "raml-doc:DomainElement"
+    ],
+    "raml-http:host": "domain.com",
+    "schema-org:version": "1.0",
+    "schema-org:name": "test",
+    "raml-http:scheme": [
+      {"@value": "http"},
+      {"@value": "https"}
+    ]
+  },
+  "raml-doc:declares": [{
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+      "http://a.ml/vocabularies/document#DomainProperty",
+      "http://a.ml/vocabularies/document#DomainElement"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "http://a.ml/vocabularies/apiContract#EndPoint"
+      }
+    ],
+    "http://a.ml/vocabularies/document#name": [
+      {
+        "@value": "Wadus"
+      }
+    ]
+  }]
+}

@@ -1,0 +1,28 @@
+Model: file://amf-cli/shared/src/test/resources/validations/examples/examples-in-oas.json
+Profile: OAS 2.0
+Conforms? true
+Number of results: 2
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: /dateOfBirth [bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
+/phoneNo expected type: Integer, found: String
+
+  Level: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
+  Position: Some(LexicalInformation([(257,18)-(284,7)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/examples-in-oas.json
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: /application/user/dateOfBirth [bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
+/application/user/monthsAtCurrAdd expected type: Integer, found: String
+/user/dateOfBirth [bla bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
+/user/monthsAtCurrAdd expected type: Integer, found: String
+
+  Level: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example
+  Position: Some(LexicalInformation([(340,18)-(438,7)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/examples-in-oas.json

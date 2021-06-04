@@ -1,0 +1,22 @@
+Model: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/multiple-grants.raml
+Profile: RAML 1.0
+Conforms? true
+Number of results: 2
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#missing-field-oauth-2-grant-type
+  Message: 'accessTokenUri' is required when 'authorization_code' grant type is used
+  Level: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/multiple-grants.raml#/declarations/securitySchemes/invalid/settings/oauth2
+  Property: 
+  Position: Some(LexicalInformation([(9,0)-(11,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/multiple-grants.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#missing-field-oauth-2-grant-type
+  Message: 'authorizationUri' is required when 'authorization_code' grant type is used
+  Level: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/multiple-grants.raml#/declarations/securitySchemes/invalid/settings/oauth2
+  Property: 
+  Position: Some(LexicalInformation([(9,0)-(11,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/multiple-grants.raml

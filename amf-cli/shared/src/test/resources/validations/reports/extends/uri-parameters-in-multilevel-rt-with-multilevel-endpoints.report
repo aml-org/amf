@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/extends/uri-parameters/multi-level-endpoints.raml
+Profile: RAML 1.0
+Conforms? true
+Number of results: 1
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#unused-base-uri-parameter
+  Message: Unused uri parameter param3
+  Level: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/extends/uri-parameters/multi-level-endpoints.raml#/web-api/end-points/%2Finvalid%2F%7Bparam1%7D%2F%7Bparam2%7D/rt3/applied/parameter/path/param3
+  Property: 
+  Position: Some(LexicalInformation([(16,6)-(16,20)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/extends/uri-parameters/multi-level-endpoints.raml

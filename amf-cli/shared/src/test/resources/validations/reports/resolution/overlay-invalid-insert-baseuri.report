@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/overlays/invalid-insertion-baseuri/overlay.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#resolution-validation
+  Message: Property 'ValueType(Namespace(http://a.ml/vocabularies/apiContract#),server)' of type 'AmfArray' is not allowed to be overriden or added in overlays
+  Level: Violation
+  Target: ValueType(Namespace(http://a.ml/vocabularies/apiContract#),server)
+  Property: 
+  Position: Some(LexicalInformation([(3,0)-(3,30)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/overlays/invalid-insertion-baseuri/overlay.raml

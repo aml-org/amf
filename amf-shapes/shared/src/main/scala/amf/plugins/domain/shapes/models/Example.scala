@@ -8,10 +8,10 @@ import amf.core.model.domain._
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.parser.spec.common.PayloadSerializer
+import amf.plugins.document.apicontract.parser.spec.common.PayloadSerializer
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
-import amf.plugins.domain.webapi.models.Key
+import amf.plugins.domain.apicontract.models.Key
 import org.yaml.model.YPart
 
 /**

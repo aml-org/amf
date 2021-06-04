@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/oas2/missing-schema-body-parameter.json
+Profile: OAS 2.0
+Conforms? true
+Number of results: 1
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#oas-invalid-parameter-binding
+  Message: Schema is required for a parameter in body
+  Level: Warning
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(11,10)-(15,11)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/oas2/missing-schema-body-parameter.json

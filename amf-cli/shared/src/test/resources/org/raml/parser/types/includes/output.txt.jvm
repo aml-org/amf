@@ -1,0 +1,18 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/includes/input.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: /chapters/0/name expected maxLength: 10, actual: 12
+/chapters/3/content expected type: String, found: Integer
+/chapters/3/name expected type: String, found: Integer
+/name expected maxLength: 10, actual: 18
+
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/type/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/type/example/default-example
+  Position: Some(LexicalInformation([(14,0)-(23,16)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/includes/book.raml

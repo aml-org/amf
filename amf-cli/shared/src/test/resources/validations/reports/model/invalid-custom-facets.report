@@ -1,0 +1,78 @@
+Model: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml
+Profile: 
+Conforms? false
+Number of results: 9
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-fragment-type
+  Message: User defined facet name '(format' must not begin with open parenthesis
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml#/declarations/types/scalar/facet-name-must-not-begin-with-open-parenthesis/property/(format
+  Property: 
+  Position: Some(LexicalInformation([(7,4)-(10,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#missing-user-defined-facet
+  Message: Missing required facet 'object-facet'
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml#/declarations/types/any/missing-required-facet
+  Property: 
+  Position: Some(LexicalInformation([(11,0)-(14,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#user-defined-facets-matches-built-in
+  Message: Custom defined facet 'maxLength' matches built-in type facets
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml#/declarations/types/any/declaring-built-in-facet-from-inherit
+  Property: 
+  Position: Some(LexicalInformation([(15,0)-(19,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#user-defined-facets-matches-ancestor
+  Message: Custom defined facet 'camel-case' matches custom facet from inherited type
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml#/declarations/types/any/declaring-custom-facet-defined-from-inherits
+  Property: 
+  Position: Some(LexicalInformation([(20,0)-(28,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#user-defined-facets-matches-built-in
+  Message: Custom defined facet 'format' matches built-in type facets
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml#/declarations/types/scalar/number-type
+  Property: 
+  Position: Some(LexicalInformation([(53,0)-(58,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#user-defined-facets-matches-built-in
+  Message: Custom defined facet 'maxLength' matches built-in type facets
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml#/declarations/types/scalar/string-type
+  Property: 
+  Position: Some(LexicalInformation([(59,0)-(65,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#user-defined-facets-matches-built-in
+  Message: Custom defined facet 'pattern' matches built-in type facets
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml#/declarations/types/scalar/string-type
+  Property: 
+  Position: Some(LexicalInformation([(59,0)-(65,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#user-defined-facets-matches-built-in
+  Message: Custom defined facet 'fileTypes' matches built-in type facets
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml#/declarations/types/file-type
+  Property: 
+  Position: Some(LexicalInformation([(72,0)-(77,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#user-defined-facets-matches-built-in
+  Message: Custom defined facet 'minLength' matches built-in type facets
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml#/declarations/types/file-type
+  Property: 
+  Position: Some(LexicalInformation([(72,0)-(77,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/facets/invalid-custom-facets.raml

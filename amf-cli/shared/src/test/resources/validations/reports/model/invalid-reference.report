@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/invalid-reference/api.raml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#invalid-fragment-ref
+  Message: Cannot use reference with # in a RAML fragment
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(17,19)-(17,51)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-reference/api.raml

@@ -1,0 +1,48 @@
+[
+  {
+    "@id": "custom://custom.uri",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "custom://custom.uri#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "api"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0"
+          }
+        ]
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.3.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-cli/shared/src/test/resources/graphs/base-and-absolute-iris/api.raml",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

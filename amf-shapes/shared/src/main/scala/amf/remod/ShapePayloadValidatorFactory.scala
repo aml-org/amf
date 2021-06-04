@@ -5,19 +5,15 @@ import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.PayloadValidator
-import amf.plugins.domain.webapi.unsafe.JsonSchemaValidatorBuilder
+import amf.plugins.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
 
 object ShapePayloadValidatorFactory extends PlatformSecrets {
 
-  def createPayloadValidator(
-      shape: Shape,
-      config: ValidationConfiguration): PayloadValidator = {
+  def createPayloadValidator(shape: Shape, config: ValidationConfiguration): PayloadValidator = {
     validator(shape, config, StrictValidationMode)
   }
 
-  def createParameterValidator(
-      shape: Shape,
-      config: ValidationConfiguration): PayloadValidator = {
+  def createParameterValidator(shape: Shape, config: ValidationConfiguration): PayloadValidator = {
     validator(shape, config, ScalarRelaxedValidationMode)
   }
 
@@ -27,9 +23,7 @@ object ShapePayloadValidatorFactory extends PlatformSecrets {
     validator(shape, config, validationMode)
   }
 
-  private def validator(shape: Shape,
-                        config: ValidationConfiguration,
-                        mode: ValidationMode): PayloadValidator = {
+  private def validator(shape: Shape, config: ValidationConfiguration, mode: ValidationMode): PayloadValidator = {
     shape match {
       case recursive: RecursiveShape =>
         recursive.fixpointTarget

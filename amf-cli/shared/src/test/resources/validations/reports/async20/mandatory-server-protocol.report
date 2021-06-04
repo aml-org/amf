@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/mandatory-server-protocol.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#Server-protocol-minCount
+  Message: Server 'protocol' field is mandatory
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/mandatory-server-protocol.yaml#/async-api/development.gigantic-server.com
+  Property: http://a.ml/vocabularies/apiContract#protocol
+  Position: Some(LexicalInformation([(7,2)-(9,26)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/mandatory-server-protocol.yaml

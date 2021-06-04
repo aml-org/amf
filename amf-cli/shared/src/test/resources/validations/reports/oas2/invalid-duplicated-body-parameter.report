@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-duplicated-body-parameter.json
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#oas-invalid-body-parameter
+  Message: Cannot declare more than one 'body' parameter for a request or a resource
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-duplicated-body-parameter.json#/web-api/end-points/%2F/body%20parameter%202
+  Property: 
+  Position: Some(LexicalInformation([(15,8)-(19,9)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-duplicated-body-parameter.json

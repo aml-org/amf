@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-type/input.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Error recursive shape
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-type/input.raml#/declarations/types/any/SomeType
+  Property: 
+  Position: Some(LexicalInformation([(5,2)-(6,18)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/recursive-type/input.raml

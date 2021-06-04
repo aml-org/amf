@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/duplicate-operation-id.yaml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#duplicated-operation-id
+  Message: Duplicated operation id 'sameId'
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/duplicate-operation-id.yaml#/async-api/end-points/mychannel/subscribe
+  Property: 
+  Position: Some(LexicalInformation([(10,19)-(10,25)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/duplicate-operation-id.yaml

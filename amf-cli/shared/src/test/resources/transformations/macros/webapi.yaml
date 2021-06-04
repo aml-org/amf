@@ -1,0 +1,185 @@
+#%WebAPI Spec 1.0
+unitType: Document
+$id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/rootAsset
+declares:
+  -
+    elementType: Trait
+    $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable
+    name: traceable
+    dataNode:
+      elementType: Object
+      $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1
+      properties:
+        -
+          $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1_prop_headers
+          name: headers
+          range:
+            elementType: Object
+            $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1/object_2
+            properties:
+              -
+                $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1/object_2_prop_X-Tracker
+                name: X-Tracker
+                range:
+                  elementType: Object
+                  $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1/object_2/object_3
+                  properties:
+                    -
+                      $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1/object_2/object_3_prop_pattern
+                      name: pattern
+                      range:
+                        elementType: Scalar
+                        $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1/object_2/object_3/scalar_5
+                        value: ^\w{16}$
+                        dataType: http://www.w3.org/2001/XMLSchema#string
+                    -
+                      $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1/object_2/object_3_prop_example
+                      name: example
+                      range:
+                        elementType: Scalar
+                        $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1/object_2/object_3/scalar_6
+                        value: abcdefghijklmnop
+                        dataType: http://www.w3.org/2001/XMLSchema#string
+                    -
+                      $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1/object_2/object_3_prop_description
+                      name: description
+                      range:
+                        elementType: Scalar
+                        $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable/object_1/object_2/object_3/scalar_4
+                        value: A code to track API calls end to end
+                        dataType: http://www.w3.org/2001/XMLSchema#string
+  -
+    elementType: ResourceType
+    $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection
+    name: collection
+    variable:
+      - resourcePathName
+      - param
+    description: This resourceType should be used for any collection of items
+    dataNode:
+      elementType: Object
+      $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1
+      properties:
+        -
+          $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1_prop_post
+          name: post
+          range:
+            elementType: Object
+            $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_5
+            properties:
+              -
+                $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_5_prop_description
+                name: description
+                range:
+                  elementType: Scalar
+                  $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_5/scalar_6
+                  value: Create a new <<resourcePathName | !singularize>>
+                  dataType: http://www.w3.org/2001/XMLSchema#string
+        -
+          $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1_prop_get
+          name: get
+          range:
+            elementType: Object
+            $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_3
+            properties:
+              -
+                $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_3_prop_description
+                name: description
+                range:
+                  elementType: Scalar
+                  $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_3/scalar_4
+                  value: Get all <<param>>, optionally filtered
+                  dataType: http://www.w3.org/2001/XMLSchema#string
+        -
+          $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1_prop_description
+          name: description
+          range:
+            elementType: Scalar
+            $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/scalar_2
+            value: The collection of <<resourcePathName>>
+            dataType: http://www.w3.org/2001/XMLSchema#string
+version: 2.1.0
+root: true
+encodes:
+  elementType: WebAPI
+  $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/web-api
+  name: Example with headers
+  endpoint:
+    -
+      $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/web-api/end-points/%2Fusers
+      extends:
+        -
+          type: AppliedResourceType
+          $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/web-api/end-points/%2Fusers/collection
+          name: collection
+          variable:
+            -
+              $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/web-api/end-points/%2Fusers/collection/param
+              name: param
+              value:
+                elementType: Scalar
+                $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/web-api/end-points/%2Fusers/collection_0/scalar_1
+                value: usuarios
+                dataType: http://www.w3.org/2001/XMLSchema#string
+          target:
+            $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection
+            name: collection
+            variable:
+              - resourcePathName
+              - param
+            description: This resourceType should be used for any collection of items
+            dataNode:
+              elementType: Object
+              $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1
+              properties:
+                -
+                  $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1_prop_post
+                  name: post
+                  range:
+                    elementType: Object
+                    $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_5
+                    properties:
+                      -
+                        $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_5_prop_description
+                        name: description
+                        range:
+                          elementType: Scalar
+                          $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_5/scalar_6
+                          value: Create a new <<resourcePathName | !singularize>>
+                          dataType: http://www.w3.org/2001/XMLSchema#string
+                -
+                  $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1_prop_get
+                  name: get
+                  range:
+                    elementType: Object
+                    $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_3
+                    properties:
+                      -
+                        $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_3_prop_description
+                        name: description
+                        range:
+                          elementType: Scalar
+                          $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/object_3/scalar_4
+                          value: Get all <<param>>, optionally filtered
+                          dataType: http://www.w3.org/2001/XMLSchema#string
+                -
+                  $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1_prop_description
+                  name: description
+                  range:
+                    elementType: Scalar
+                    $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/resourceTypes/collection/object_1/scalar_2
+                    value: The collection of <<resourcePathName>>
+                    dataType: http://www.w3.org/2001/XMLSchema#string
+      supportedOperation:
+        -
+          $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/web-api/end-points/%2Fusers/get
+          extends:
+            -
+              type: AppliedTrait
+              $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/web-api/end-points/%2Fusers/get/traceable
+              name: traceable
+              target:
+                $id: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/web-api/end-points/%2Fusers/get/traceable/default-abstract
+                designLink: file://amf-cli/shared/src/test/resources/transformations/macros/api.raml#/declarations/traits/traceable
+          method: get
+      path: /users

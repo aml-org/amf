@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/parameter-name-regex.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#Parameter-name-pattern
+  Message: Parameter name must comply with regex '^[A-Za-z0-9_\-]+$'
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/parameter-name-regex.yaml#/async-api/end-points/user%2F%7B%24%24%7D%2Fsignup/parameter/path/%24%24
+  Property: http://a.ml/vocabularies/core#name
+  Position: Some(LexicalInformation([(8,6)-(8,8)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/parameter-name-regex.yaml

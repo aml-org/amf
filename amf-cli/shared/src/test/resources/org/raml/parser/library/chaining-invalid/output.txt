@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/library/chaining-invalid/input.raml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#declaration-not-found
+  Message: Trait lib1.lib2.trait not found
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(7,25)-(7,40)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/library/chaining-invalid/input.raml

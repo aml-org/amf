@@ -1,0 +1,114 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/async-api",
+        "@type": [
+          "apiContract:AsyncAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "asdasd"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "asdasd"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/async-api/end-points/someChannel",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "someChannel"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/async-api/end-points/someChannel/publish",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "publish"
+                  }
+                ],
+                "core:description": [
+                  {
+                    "@value": "secondDescription"
+                  }
+                ],
+                "apiContract:guiSummary": [
+                  {
+                    "@value": "firstSummary"
+                  }
+                ],
+                "apiContract:operationId": [
+                  {
+                    "@value": "baseId"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:operationId": "[(8,6)-(9,0)]",
+                    "#/async-api/end-points/someChannel/publish": "[(7,4)-(14,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "apiContract:supportedOperation": "[(7,0)-(14,0)]",
+                "#/async-api/end-points/someChannel": "[(6,2)-(14,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#/async-api": "ASYNC 2.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(5,0)-(14,0)]",
+            "core:name": "[(3,2)-(4,0)]",
+            "#/async-api": "[(1,0)-(20,36)]",
+            "core:version": "[(4,2)-(5,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "3.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-cli/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

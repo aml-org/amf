@@ -1,0 +1,27 @@
+Model: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: /foo expected type: Boolean, found: JSONObject
+/foo extraneous key [bar] is not permitted
+
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example
+  Position: Some(LexicalInformation([(48,0)-(51,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: /foo expected type: Boolean, found: JSONObject
+/foo/foo expected type: Boolean, found: String
+/foo/foo expected type: JSONObject, found: String
+
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example
+  Position: Some(LexicalInformation([(59,0)-(60,27)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api1.raml

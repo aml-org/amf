@@ -1,0 +1,22 @@
+Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/channel-name-format.yaml
+Profile: 
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-endpoint-path
+  Message: 'someChannel{asdasd}-}' is not a valid template uri.
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/channel-name-format.yaml#/async-api/end-points/someChannel%7Basdasd%7D-%7D
+  Property: 
+  Position: Some(LexicalInformation([(6,25)-(6,27)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/channel-name-format.yaml
+
+- Source: http://a.ml/vocabularies/amf/parser#path-template-unbalanced-parameters
+  Message: Invalid path template syntax
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/channel-name-format.yaml#/async-api/end-points/someChannel%7Basdasd%7D-%7D
+  Property: http://a.ml/vocabularies/apiContract#path
+  Position: Some(LexicalInformation([(6,25)-(6,27)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/channel-name-format.yaml

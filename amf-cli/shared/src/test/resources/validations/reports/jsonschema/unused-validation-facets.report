@@ -1,0 +1,22 @@
+Model: file://amf-cli/shared/src/test/resources/validations/jsonschema/unused-validation-facets.json
+Profile: OAS 2.0
+Conforms? true
+Number of results: 2
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#ArrayShape-unevaluatedItemsSchema-maxCount
+  Message: Unevaluated items facet won't be taken into account in validation
+  Level: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/unused-validation-facets.json#/array/main
+  Property: http://a.ml/vocabularies/shapes#unevaluatedItemsSchema
+  Position: Some(LexicalInformation([(10,6)-(12,7)]))
+  Location: amf-cli/shared/src/test/resources/validations/jsonschema/unused-validation-facets.json
+
+- Source: http://a.ml/vocabularies/amf/parser#NodeShape-unevaluatedPropertiesSchema-maxCount
+  Message: Unevaluated properties facet won't be taken into account in validation
+  Level: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/unused-validation-facets.json#/array/main/items/other
+  Property: http://a.ml/vocabularies/shapes#unevaluatedPropertiesSchema
+  Position: Some(LexicalInformation([(16,6)-(19,7)]))
+  Location: amf-cli/shared/src/test/resources/validations/jsonschema/unused-validation-facets.json

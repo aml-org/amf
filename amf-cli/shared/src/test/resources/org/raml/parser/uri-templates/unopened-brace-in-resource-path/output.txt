@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/uri-templates/unopened-brace-in-resource-path/input.raml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-endpoint-path
+  Message: '/root/}{id' is not a valid template uri.
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/uri-templates/unopened-brace-in-resource-path/input.raml#/web-api/end-points/%2Froot%2F%7D%7Bid
+  Property: 
+  Position: Some(LexicalInformation([(4,11)-(4,11)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/uri-templates/unopened-brace-in-resource-path/input.raml

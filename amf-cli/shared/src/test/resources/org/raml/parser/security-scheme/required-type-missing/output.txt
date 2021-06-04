@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/required-type-missing/input.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-type-minCount
+  Message: Type is mandatory in a Security Scheme Object
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/required-type-missing/input.raml#/declarations/securitySchemes/custom_without_type
+  Property: http://a.ml/vocabularies/security#type
+  Position: Some(LexicalInformation([(5,2)-(7,0)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/required-type-missing/input.raml

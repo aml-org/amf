@@ -1,0 +1,22 @@
+Model: file://amf-cli/shared/src/test/resources/validations/resource_types/invalid/resource-type-missing-parameter-in-value.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-operation-type
+  Message: Invalid node <<missingParameterInValue>> for method post
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/invalid/resource-type-missing-parameter-in-value.raml#/web-api/end-points/%2Fendpoint1/rt1/applied/post
+  Property: 
+  Position: Some(LexicalInformation([(6,10)-(6,37)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/resource_types/invalid/resource-type-missing-parameter-in-value.raml
+
+- Source: http://a.ml/vocabularies/amf/core#resolution-validation
+  Message: Cannot find variable 'missingParameterInValue'.
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/invalid/resource-type-missing-parameter-in-value.raml#/web-api/end-points/%2Fendpoint1/rt1
+  Property: 
+  Position: Some(LexicalInformation([(11,4)-(12,0)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/resource_types/invalid/resource-type-missing-parameter-in-value.raml

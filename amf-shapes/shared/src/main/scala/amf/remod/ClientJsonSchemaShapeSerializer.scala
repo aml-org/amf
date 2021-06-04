@@ -7,7 +7,7 @@ import amf.client.model.domain.AnyShape
 import amf.client.render.ShapeRenderOptions
 import amf.core.emitter.ShapeRenderOptions.toImmutable
 import amf.core.emitter.{ShapeRenderOptions => CoreShapeRenderOptions}
-import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
+import amf.plugins.document.apicontract.parser.spec.common.JsonSchemaSerializer
 
 object ClientJsonSchemaShapeSerializer extends JsonSchemaSerializer {
 

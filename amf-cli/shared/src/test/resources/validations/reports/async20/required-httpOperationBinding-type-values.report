@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-httpOperationBinding-type-values.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#HttpOperationBinding-operationType-pattern
+  Message: Http operation binding must be either 'request' or 'response'
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-httpOperationBinding-type-values.yaml#/async-api/end-points/%2Finvalid/subscribe/operation-bindings/http-operation
+  Property: http://a.ml/vocabularies/apiBinding#operationType
+  Position: Some(LexicalInformation([(22,16)-(22,27)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-httpOperationBinding-type-values.yaml

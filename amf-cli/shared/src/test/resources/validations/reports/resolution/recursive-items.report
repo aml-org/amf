@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/types/arrays/recursive-items.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#recursive-shape
+  Message: Error recursive shape
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/types/arrays/recursive-items.raml#/declarations/types/Person
+  Property: 
+  Position: Some(LexicalInformation([(5,2)-(10,19)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/types/arrays/recursive-items.raml

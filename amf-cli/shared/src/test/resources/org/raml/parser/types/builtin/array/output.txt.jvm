@@ -1,0 +1,49 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 5
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: /employees/0/age -1 is not greater or equal to 0
+/employees/1/email string [john@] does not match pattern ^.+@.+\..+$
+/employees/2/name expected type: String, found: Integer
+
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/Office/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/Office/example/default-example
+  Position: Some(LexicalInformation([(19,12)-(42,13)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: expected minimum item count: 2, found: 1
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-min
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-min
+  Position: Some(LexicalInformation([(49,15)-(49,21)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: expected maximum item count: 3, found: 4
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-max
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-max
+  Position: Some(LexicalInformation([(50,15)-(50,39)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: expected type: JSONArray, found: String
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type
+  Position: Some(LexicalInformation([(51,16)-(51,20)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: expected type: JSONArray, found: JSONObject
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type2
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type2
+  Position: Some(LexicalInformation([(53,0)-(54,19)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml

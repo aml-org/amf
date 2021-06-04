@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/exclusive-examples-node/input.raml
+Profile: 
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exclusive-properties-error
+  Message: Properties 'example' and 'examples' are exclusive and cannot be declared together
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/exclusive-examples-node/input.raml#/declarations/types/User
+  Property: 
+  Position: Some(LexicalInformation([(5,0)-(19,24)]))
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/exclusive-examples-node/input.raml

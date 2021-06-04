@@ -1,0 +1,209 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": false,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Warning"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpath/get/200/application%2Fxml"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://a.ml/vocabularies/core#mediaType"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/data#json-payloads"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 16,
+          "http://a.ml/vocabularies/amf/parser#column": 10
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 16,
+          "http://a.ml/vocabularies/amf/parser#column": 25
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Warning"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpathxml/get/request/application%2Fxml"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://a.ml/vocabularies/core#mediaType"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/data#json-payloads"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 26,
+          "http://a.ml/vocabularies/amf/parser#column": 6
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 26,
+          "http://a.ml/vocabularies/amf/parser#column": 21
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpathxml/get/200/application%2Fblah"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://a.ml/vocabularies/core#mediaType"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/data#allowed-payloads"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 31,
+          "http://a.ml/vocabularies/amf/parser#column": 10
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 31,
+          "http://a.ml/vocabularies/amf/parser#column": 26
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Warning"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpathxml/get/200/application%2Fblah"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://a.ml/vocabularies/core#mediaType"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/data#json-payloads"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 31,
+          "http://a.ml/vocabularies/amf/parser#column": 10
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 31,
+          "http://a.ml/vocabularies/amf/parser#column": 26
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.5%2Fresource%2Fnested"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://a.ml/vocabularies/core#name"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Identifiers must be camel-cased",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/data#resource-camel-case-identifiers"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 36,
+          "http://a.ml/vocabularies/amf/parser#column": 15
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 36,
+          "http://a.ml/vocabularies/amf/parser#column": 31
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.5%2Fresource%2Fnested/get/request/application%2Fjson/schema/property/underscored_property"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://www.w3.org/ns/shacl#name"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Property keys must be camel cased",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/data#json-properties"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 45,
+          "http://a.ml/vocabularies/amf/parser#column": 10
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 45,
+          "http://a.ml/vocabularies/amf/parser#column": 30
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fpath%2Fduplicated"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://a.ml/vocabularies/apiContract#path"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "The version must be before the resource name, for example v1.3/payments/",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/data#version-in-urls"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 56,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 56,
+          "http://a.ml/vocabularies/amf/parser#column": 16
+        }
+      }
+    }
+  ]
+}

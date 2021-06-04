@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: API
+/test:
+  get:
+    body:
+      application/json:
+        anyOf:
+          -
+            type: array
+            items:
+              type: object
+              (amf-recursive): file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declarations/types/any/SomeType
+          -
+            type: array
+            items:
+              type: object
+              (amf-recursive): file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/declarations/types/any/SomeType
