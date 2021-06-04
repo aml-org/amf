@@ -12,7 +12,7 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.plugins.document.apicontract._
-import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
+import amf.remod.PayloadValidatorPlugin
 import amf.plugins.domain.VocabulariesRegister
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -11,7 +11,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.{AnyDefaultType,
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Request}
-import amf.validations.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
+import amf.validations.ShapeParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
 import amf.validations.ShapeParserSideValidations.ExclusivePropertiesSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 

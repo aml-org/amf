@@ -19,7 +19,6 @@ import amf.plugins.domain.apicontract.metamodel.{
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.{
   ParserSideValidations,
-  PayloadValidations,
   RenderSideValidations,
   ResolutionSideValidations,
   ShapeParserSideValidations,

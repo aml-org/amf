@@ -4,10 +4,13 @@ import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode, Va
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.PayloadValidator
-import amf.plugins.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
+import amf.core.validation.{AMFPayloadValidationPlugin, PayloadValidator, SeverityLevels}
 
-object ShapePayloadValidatorFactory extends PlatformSecrets {
+object ShapePayloadValidatorFactory {
+  def apply(): ShapePayloadValidatorFactory = new ShapePayloadValidatorFactory(Seq(PayloadValidatorPlugin))
+}
+
+class ShapePayloadValidatorFactory(plugins: Seq[AMFPayloadValidationPlugin]) extends PlatformSecrets {
 
   def createPayloadValidator(shape: Shape, config: ValidationConfiguration): PayloadValidator = {
     validator(shape, config, StrictValidationMode)
@@ -29,7 +32,11 @@ object ShapePayloadValidatorFactory extends PlatformSecrets {
         recursive.fixpointTarget
           .map(target => validator(target, config, mode))
           .getOrElse(throw new Exception("Can't validate RecursiveShape with no fixpointTarget"))
-      case _ => JsonSchemaValidatorBuilder.payloadValidator(shape, mode, config)
+      case _ =>
+        plugins
+          .find(_.canValidate(shape, config: ValidationConfiguration))
+          .getOrElse(AnyMatchPayloadPlugin(SeverityLevels.VIOLATION))
+          .validator(shape, ValidationConfiguration.predefined())
     }
   }
 }

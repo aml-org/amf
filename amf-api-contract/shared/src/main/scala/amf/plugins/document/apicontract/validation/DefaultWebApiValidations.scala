@@ -12,7 +12,6 @@ import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations
 import amf.validations.{
   ParserSideValidations,
-  PayloadValidations,
   RenderSideValidations,
   ResolutionSideValidations,
   ShapeParserSideValidations,
@@ -72,7 +71,6 @@ object DefaultAMFValidations extends ImportUtils {
 
   val staticValidations: Seq[ValidationSpecification] = AMFDialectValidations.staticValidations ++
     ParserSideValidations.validations ++
-    PayloadValidations.validations ++
     RenderSideValidations.validations ++
     ResolutionSideValidations.validations ++
     ShapePayloadValidations.validations ++
@@ -80,7 +78,6 @@ object DefaultAMFValidations extends ImportUtils {
 
   private val levels: ConstraintSeverityOverrides = AMFDialectValidations.levels ++
     ParserSideValidations.levels ++
-    PayloadValidations.levels ++
     RenderSideValidations.levels ++
     ResolutionSideValidations.levels ++
     ShapePayloadValidations.levels ++

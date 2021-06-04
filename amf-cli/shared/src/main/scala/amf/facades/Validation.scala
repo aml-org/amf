@@ -6,7 +6,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.EffectiveValidations
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
+import amf.remod.PayloadValidatorPlugin
 import amf.plugins.document.apicontract.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.DataShapesDomainPlugin

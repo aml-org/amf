@@ -4,7 +4,7 @@ import amf.client.model.DataTypes
 import amf.client.model.domain.{NodeShape, ScalarShape}
 import amf.convert.NativeOpsFromJvm
 import amf.core.AMF
-import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
+import amf.remod.PayloadValidatorPlugin
 import org.json.JSONException
 import org.scalatest.Matchers.a
 import org.scalatest.concurrent.ScalaFutures

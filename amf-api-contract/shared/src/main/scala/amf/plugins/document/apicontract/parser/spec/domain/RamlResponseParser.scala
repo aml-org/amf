@@ -13,7 +13,7 @@ import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Response}
-import amf.validations.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
+import amf.validations.ShapeParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable

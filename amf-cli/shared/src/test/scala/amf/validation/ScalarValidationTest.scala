@@ -7,7 +7,7 @@ import amf.core.AMF
 import amf.core.annotations.ScalarType
 import amf.core.model.DataType._
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
+import amf.remod.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape, NodeShape, ScalarShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
 

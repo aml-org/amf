@@ -1,11 +1,11 @@
-package amf.plugins.document.apicontract.validation
+package amf.remod
 
 import amf.client.plugins._
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.domain._
 import amf.core.validation._
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
-import amf.remod.ShapePayloadValidatorFactory
+import amf.plugins.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -28,5 +28,5 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 
   override def validator(s: Shape, config: ValidationConfiguration, validationMode: ValidationMode): PayloadValidator =
-    ShapePayloadValidatorFactory.createValidator(s, config, validationMode)
+    JsonSchemaValidatorBuilder.payloadValidator(s, validationMode, config)
 }

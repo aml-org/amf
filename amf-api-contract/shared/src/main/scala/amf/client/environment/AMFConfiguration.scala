@@ -24,7 +24,7 @@ import amf.plugins.document.apicontract.resolution.pipelines.compatibility.{
   Raml10CompatibilityPipeline
 }
 import amf.plugins.document.apicontract.validation.ApiValidationProfiles._
-import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
+import amf.remod.PayloadValidatorPlugin
 import amf.plugins.document.apicontract.validation.plugins.{
   CustomShaclModelValidationPlugin,
   FullShaclModelValidationPlugin,
