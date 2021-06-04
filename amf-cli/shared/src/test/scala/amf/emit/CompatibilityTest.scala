@@ -21,7 +21,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  private val basePath = "amf-client/shared/src/test/resources/upanddown/"
+  private val basePath = "amf-cli/shared/src/test/resources/upanddown/"
 
   test("leagues raml to oas") {
     compatibility("leagues-api.raml", Raml10YamlHint, Oas20JsonHint)

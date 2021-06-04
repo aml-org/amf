@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -30,7 +30,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -56,7 +56,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -72,7 +72,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker",
         "@type": [
           "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -90,7 +90,7 @@
         ],
         "http://a.ml/vocabularies/shapes#inherits": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person/linked_1",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person/linked_1",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -99,7 +99,7 @@
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person"
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person"
               }
             ],
             "http://a.ml/vocabularies/document#link-label": [
@@ -109,7 +109,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person/linked_1/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person/linked_1/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -117,7 +117,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person/linked_1"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person/linked_1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -131,7 +131,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member/linked_1",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member/linked_1",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -140,7 +140,7 @@
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member"
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member"
               }
             ],
             "http://a.ml/vocabularies/document#link-label": [
@@ -150,7 +150,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member/linked_1/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member/linked_1/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -158,7 +158,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member/linked_1"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member/linked_1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -174,7 +174,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -182,7 +182,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -220,7 +220,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -246,7 +246,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/any/Speaker"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -260,7 +260,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -284,7 +284,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -292,7 +292,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -318,7 +318,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -344,7 +344,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -358,7 +358,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -382,7 +382,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -390,7 +390,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -416,7 +416,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -442,7 +442,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/forward-inherits-reference.raml#/declarations/types/Member"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

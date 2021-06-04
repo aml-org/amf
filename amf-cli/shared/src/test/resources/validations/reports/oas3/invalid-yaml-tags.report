@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/oas3/invalid-yaml-tags.yaml
+Model: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-yaml-tags.yaml
 Profile: OAS 3.0
 Conforms? true
 Number of results: 3
@@ -11,7 +11,7 @@ Level: Warning
   Target: 
   Property: 
   Position: Some(LexicalInformation([(4,2)-(4,16)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-yaml-tags.yaml
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-yaml-tags.yaml
 
 - Source: http://a.ml/vocabularies/amf/parser#unknown-yaml-tag
   Message: Unknown tag '!!secondInvalid', must be allowed by json schema ruleset
@@ -19,7 +19,7 @@ Level: Warning
   Target: 
   Property: 
   Position: Some(LexicalInformation([(4,26)-(4,41)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-yaml-tags.yaml
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-yaml-tags.yaml
 
 - Source: http://a.ml/vocabularies/amf/parser#unknown-yaml-tag
   Message: Unknown tag '!finalInvalid', must be allowed by json schema ruleset
@@ -27,4 +27,4 @@ Level: Warning
   Target: 
   Property: 
   Position: Some(LexicalInformation([(6,9)-(6,22)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-yaml-tags.yaml
+  Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-yaml-tags.yaml

@@ -3,8 +3,8 @@ import amf.Raml08Profile
 import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTest {
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/extends/"
+  override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/extends/"
   override val hint: Hint          = Raml10YamlHint
 
   // Closed shape
@@ -271,8 +271,8 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
 }
 
 class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest {
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/extends/"
+  override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/extends/"
   override val hint: Hint          = Raml10YamlHint
 
   // Payload merging

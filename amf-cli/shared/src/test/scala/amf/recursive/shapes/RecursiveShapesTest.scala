@@ -16,8 +16,8 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/recursives/"
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/recursives/"
+  override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/recursives/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/recursives/"
   override val hint: Hint          = Raml10YamlHint
 
   override protected lazy val defaultProfile: ProfileName = Raml10Profile

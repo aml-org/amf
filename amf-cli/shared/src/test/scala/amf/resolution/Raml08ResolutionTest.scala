@@ -5,9 +5,9 @@ import amf.core.remote.{Amf, Raml08, Raml08YamlHint, Raml10}
 
 class Raml08ResolutionTest extends RamlResolutionTest {
   override val basePath: String =
-    "amf-client/shared/src/test/resources/resolution/08/"
+    "amf-cli/shared/src/test/resources/resolution/08/"
   val productionPath: String =
-    "amf-client/shared/src/test/resources/production/"
+    "amf-cli/shared/src/test/resources/production/"
 
   test("Resolve WebForm 08 Types test") {
     cycle("mincount-webform-types.raml", "mincount-webform-types.resolved.raml", Raml08YamlHint, Raml08)
@@ -39,7 +39,7 @@ class Raml08ResolutionTest extends RamlResolutionTest {
       config.golden,
       Raml08YamlHint,
       Amf,
-      directory = "amf-client/shared/src/test/resources/validations/api-with-xml-examples/",
+      directory = "amf-cli/shared/src/test/resources/validations/api-with-xml-examples/",
       renderOptions = Some(config.renderOptions.withCompactUris),
       transformWith = Some(Raml08)
     )

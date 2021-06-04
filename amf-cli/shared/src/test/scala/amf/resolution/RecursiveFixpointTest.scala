@@ -21,7 +21,7 @@ class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with Re
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "amf-client/shared/src/test/resources/resolution/"
+  val basePath = "amf-cli/shared/src/test/resources/resolution/"
 
   case class RecursiveTestCase(path: String, hint: Hint)
 

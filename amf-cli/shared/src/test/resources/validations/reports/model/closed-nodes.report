@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
+Model: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
 Profile: 
 Conforms? false
 Number of results: 6
@@ -8,47 +8,47 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'a' not supported in a RAML 1.0 webApi node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api
   Property: 
   Position: Some(LexicalInformation([(10,0)-(11,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'b' not supported in a RAML 1.0 endPoint node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested
   Property: 
   Position: Some(LexicalInformation([(13,2)-(14,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'c' not supported in a RAML 1.0 operation node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get
   Property: 
   Position: Some(LexicalInformation([(16,4)-(17,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'd' not supported in a RAML 1.0 response node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200
   Property: 
   Position: Some(LexicalInformation([(20,8)-(21,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'e' not supported in a RAML 1.0 object node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200/application%2Fjson/schema
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200/application%2Fjson/schema
   Property: 
   Position: Some(LexicalInformation([(24,12)-(25,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'f' not supported in a RAML 1.0 string node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200/application%2Fjson/schema/property/a/scalar/a
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200/application%2Fjson/schema/property/a/scalar/a
   Property: 
   Position: Some(LexicalInformation([(30,16)-(30,24)]))
-  Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml

@@ -1,4 +1,4 @@
-package amf.cli.convert
+package amf.client.convert
 
 import amf.client.convert.CoreClientConverters._
 

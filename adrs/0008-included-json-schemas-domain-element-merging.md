@@ -9,7 +9,7 @@ Accepted
 ## Context
 
 APIMF-2622 reports a StackOverflowError in Domain Element Merging when merging the same included recursive JSON Schema
-in a trait/resource type and an operation/endpoint. See `amf-client/shared/src/test/resources/resolution/merge-recursive-json-schemas-raml10`
+in a trait/resource type and an operation/endpoint. See `amf-cli/shared/src/test/resources/resolution/merge-recursive-json-schemas-raml10`
 as an example.
 
 Why does this happen? Two reasons:

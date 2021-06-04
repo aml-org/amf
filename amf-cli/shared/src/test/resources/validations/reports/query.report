@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/query.raml
+Model: file://amf-cli/shared/src/test/resources/validations/query.raml
 Profile: query
 Conforms? false
 Number of results: 2
@@ -8,15 +8,15 @@ Level: Violation
 - Source: http://a.ml/vocabularies/data#todo-query
   Message: No todo references in the spec
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/query.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/query.raml#/web-api
   Property: 
   Position: Some(LexicalInformation([(3,0)-(15,24)]))
-  Location: file://amf-client/shared/src/test/resources/validations/query.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/query.raml
 
 - Source: http://a.ml/vocabularies/data#todo-query
   Message: No todo references in the spec
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/query.raml#/web-api/end-points/%2Fendpoint1/get
+  Target: file://amf-cli/shared/src/test/resources/validations/query.raml#/web-api/end-points/%2Fendpoint1/get
   Property: 
   Position: Some(LexicalInformation([(6,2)-(15,24)]))
-  Location: file://amf-client/shared/src/test/resources/validations/query.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/query.raml

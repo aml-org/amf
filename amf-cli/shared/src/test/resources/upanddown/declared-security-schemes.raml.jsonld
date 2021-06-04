@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -30,7 +30,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -56,7 +56,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -72,7 +72,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth",
         "@type": [
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -89,20 +89,20 @@
         ],
         "http://a.ml/vocabularies/security#settings": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default",
             "@type": [
               "http://a.ml/vocabularies/security#Settings",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/security#additionalProperties": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1",
                 "@type": [
                   "http://a.ml/vocabularies/data#Object"
                 ],
                 "http://a.ml/vocabularies/data#custom": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1/scalar_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1/scalar_2",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar"
                     ],
@@ -114,7 +114,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1/scalar_2/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1/scalar_2/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -122,7 +122,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1/scalar_2"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1/scalar_2"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -138,7 +138,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -146,7 +146,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -160,7 +160,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -176,7 +176,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -184,7 +184,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/settings/default"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -200,7 +200,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -208,7 +208,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -246,7 +246,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/custom_auth"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -272,7 +272,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/basic_auth",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/basic_auth",
         "@type": [
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -289,7 +289,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/basic_auth/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/basic_auth/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -297,7 +297,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/basic_auth"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/basic_auth"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -323,7 +323,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/basic_auth"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/basic_auth"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -349,7 +349,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0",
         "@type": [
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -366,7 +366,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#header": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Parameter",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -398,7 +398,7 @@
             ],
             "http://a.ml/vocabularies/shapes#schema": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -422,7 +422,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -430,7 +430,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -456,7 +456,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -484,7 +484,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -504,7 +504,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -532,7 +532,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#parameter": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Parameter",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -564,7 +564,7 @@
             ],
             "http://a.ml/vocabularies/shapes#schema": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -588,7 +588,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -596,7 +596,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -622,7 +622,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -650,7 +650,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -670,7 +670,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -698,7 +698,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#response": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/401",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/401",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Response",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -720,7 +720,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/401/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/401/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -740,7 +740,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/401"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/401"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -754,7 +754,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/403",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/403",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Response",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -776,7 +776,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/403/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/403/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -796,7 +796,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/403"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/403"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -812,7 +812,7 @@
         ],
         "http://a.ml/vocabularies/security#settings": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2",
             "@type": [
               "http://a.ml/vocabularies/security#OAuth2Settings",
               "http://a.ml/vocabularies/security#Settings",
@@ -838,7 +838,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -870,7 +870,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -898,7 +898,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -906,7 +906,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -956,7 +956,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1006,7 +1006,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key",
         "@type": [
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -1023,7 +1023,7 @@
         ],
         "http://a.ml/vocabularies/security#settings": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key/settings/api-key",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key/settings/api-key",
             "@type": [
               "http://a.ml/vocabularies/security#ApiKeySettings",
               "http://a.ml/vocabularies/security#Settings",
@@ -1041,7 +1041,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key/settings/api-key/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key/settings/api-key/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1061,7 +1061,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key/settings/api-key"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key/settings/api-key"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1089,7 +1089,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1097,7 +1097,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1135,7 +1135,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/api_key"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1161,7 +1161,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/digest_auth",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/digest_auth",
         "@type": [
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -1178,7 +1178,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/digest_auth/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/digest_auth/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1186,7 +1186,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/digest_auth"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/digest_auth"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1212,7 +1212,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/digest_auth"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/digest_auth"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1238,7 +1238,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0",
         "@type": [
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -1260,7 +1260,7 @@
         ],
         "http://a.ml/vocabularies/security#settings": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1",
             "@type": [
               "http://a.ml/vocabularies/security#OAuth1Settings",
               "http://a.ml/vocabularies/security#Settings",
@@ -1283,7 +1283,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1315,7 +1315,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1343,7 +1343,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1351,7 +1351,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1389,7 +1389,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_1_0"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

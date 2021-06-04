@@ -37,5 +37,5 @@ class MutateModelCycleTest extends FunSuiteCycleTests {
       .flatMap(assertDifferences(_, config.goldenPath))
   }
 
-  override val basePath = "amf-client/shared/src/test/resources/upanddown/mutate-tests/"
+  override val basePath = "amf-cli/shared/src/test/resources/upanddown/mutate-tests/"
 }

@@ -5,7 +5,7 @@ import amf.core.remote._
 
 class ParameterResolutionTest extends ResolutionTest {
 
-  override val basePath = "amf-client/shared/src/test/resources/resolution/"
+  override val basePath = "amf-cli/shared/src/test/resources/resolution/"
 
   multiGoldenTest("resolution AMF", "parameters.raml.%s") { config =>
     cycle("parameters.raml", config.golden, Raml10YamlHint, target = Amf, renderOptions = Some(config.renderOptions))

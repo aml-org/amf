@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest",
+            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get",
+                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -55,7 +55,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -82,7 +82,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -102,7 +102,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#defaultValue": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Scalar",
                                   "http://a.ml/vocabularies/data#Node",
@@ -125,13 +125,13 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/source-map/synthesized-field/element_1",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/source-map/synthesized-field/element_1",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -144,7 +144,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/source-map/synthesized-field/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/source-map/synthesized-field/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://a.ml/vocabularies/core#name"
@@ -159,10 +159,10 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -178,11 +178,11 @@
                             ],
                             "http://www.w3.org/ns/shacl#in": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/list",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/list",
                                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -205,13 +205,13 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum/source-map/synthesized-field/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum/source-map/synthesized-field/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -224,7 +224,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum/source-map/synthesized-field/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum/source-map/synthesized-field/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -239,10 +239,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum"
+                                                "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/scalar_1/enum"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -265,7 +265,7 @@
                             ],
                             "http://a.ml/vocabularies/apiContract#examples": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example",
                                 "@type": [
                                   "http://a.ml/vocabularies/apiContract#Example",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -277,7 +277,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#structuredValue": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -300,13 +300,13 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1/source-map/synthesized-field/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1/source-map/synthesized-field/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -319,7 +319,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1/source-map/synthesized-field/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1/source-map/synthesized-field/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -334,10 +334,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1"
+                                                "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/scalar_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -358,13 +358,13 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map/synthesized-field/element_1",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map/synthesized-field/element_1",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://a.ml/vocabularies/document#strict"
@@ -377,7 +377,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map/synthesized-field/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map/synthesized-field/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://a.ml/vocabularies/document#raw"
@@ -392,10 +392,10 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -407,15 +407,15 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#tracked-element": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map/tracked-element/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example/source-map/tracked-element/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/example/default-example"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/declarations/traits/trait/testtrait/applied/testtrait/request/parameter/query/testType"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/declarations/traits/trait/testtrait/applied/testtrait/request/parameter/query/testType"
                                           }
                                         ]
                                       }
@@ -426,13 +426,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -447,7 +447,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_4",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_4",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#defaultValueStr"
@@ -460,10 +460,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -473,7 +473,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/apiContract#examples"
@@ -486,7 +486,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#in"
@@ -499,7 +499,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_3",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/scalar/schema/source-map/lexical/element_3",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#defaultValue"
@@ -518,13 +518,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -539,10 +539,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType"
+                                    "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -552,7 +552,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/parameter/query/testType/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -571,13 +571,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/request/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#parameter"
@@ -596,16 +596,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -621,16 +621,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest"
+                        "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -640,7 +640,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/end-points/%2Ftestrequest/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -659,16 +659,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -680,10 +680,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -693,7 +693,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"

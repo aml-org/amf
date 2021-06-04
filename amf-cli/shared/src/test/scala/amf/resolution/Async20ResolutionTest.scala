@@ -13,8 +13,8 @@ import amf.plugins.document.apicontract.Async20Plugin
 import scala.concurrent.Future
 
 class Async20ResolutionTest extends ResolutionTest {
-  override def basePath: String       = "amf-client/shared/src/test/resources/resolution/async20/"
-  private val validationsPath: String = "amf-client/shared/src/test/resources/validations/async20/"
+  override def basePath: String       = "amf-cli/shared/src/test/resources/resolution/async20/"
+  private val validationsPath: String = "amf-cli/shared/src/test/resources/validations/async20/"
 
   multiGoldenTest("Message examples are propagated to payload and parameter shapes", "message-example-propagation.%s") {
     config =>

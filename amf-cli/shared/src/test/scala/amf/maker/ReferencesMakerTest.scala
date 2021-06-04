@@ -21,12 +21,12 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Data type fragment test raml") {
-    val rootDocument = "file://amf-client/shared/src/test/resources/references/data-type-fragment.reference.raml"
+    val rootDocument = "file://amf-cli/shared/src/test/resources/references/data-type-fragment.reference.raml"
     assertFixture(rootDocument, Raml10YamlHint)
   }
 
   test("Data type fragment test oas") {
-    val rootDocument = "file://amf-client/shared/src/test/resources/references/data-type-fragment.json"
+    val rootDocument = "file://amf-cli/shared/src/test/resources/references/data-type-fragment.json"
     assertFixture(rootDocument, Oas20JsonHint)
   }
 
@@ -73,8 +73,8 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
 
     private val dataTypeFragment: Fragment = {
       DataTypeFragment()
-        .withLocation("file://amf-client/shared/src/test/resources/references/fragments/" + fragmentFile)
-        .withId("file://amf-client/shared/src/test/resources/references/fragments/" + fragmentFile)
+        .withLocation("file://amf-cli/shared/src/test/resources/references/fragments/" + fragmentFile)
+        .withId("file://amf-cli/shared/src/test/resources/references/fragments/" + fragmentFile)
         .withEncodes(person)
         .withRoot(false)
     }
@@ -84,13 +84,13 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
       val personLink = person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")
       if (recursive) personLink.withSupportsRecursion(true)
       val api = WebApi()
-        .withId("amf-client/shared/src/test/resources/references/" + file + "#/web-api")
+        .withId("amf-cli/shared/src/test/resources/references/" + file + "#/web-api")
         .withName("API")
         .withVersion("1.0")
       if (spec == Oas20 || spec == Oas30) api.withEndPoints(Nil)
       Document()
-        .withId("amf-client/shared/src/test/resources/references/" + file)
-        .withLocation("amf-client/shared/src/test/resources/references/" + file)
+        .withId("amf-cli/shared/src/test/resources/references/" + file)
+        .withLocation("amf-cli/shared/src/test/resources/references/" + file)
         .withEncodes(api)
         .withReferences(Seq(dataTypeFragment))
         .withDeclares(Seq(personLink))

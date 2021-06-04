@@ -1,6 +1,6 @@
 package amf.convert
 
-import amf.cli.convert.NativeOps
+import amf.client.convert.NativeOps
 
 import java.util
 import java.util.concurrent.CompletableFuture

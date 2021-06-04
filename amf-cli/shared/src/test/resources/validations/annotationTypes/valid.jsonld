@@ -30,7 +30,7 @@
     ]
   },
   "raml-doc:declares": [{
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus",
     "@type": [
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
       "http://a.ml/vocabularies/document#DomainProperty",
@@ -43,7 +43,7 @@
     ],
     "http://a.ml/vocabularies/shapes#schema": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus/type",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus/type",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -57,7 +57,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus/type/property/wadus",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus/type/property/wadus",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -70,7 +70,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus/type/property/wadus/scalar/wadus",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus/type/property/wadus/scalar/wadus",
                 "@type": [
                   "http://www.w3.org/ns/shacl#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",

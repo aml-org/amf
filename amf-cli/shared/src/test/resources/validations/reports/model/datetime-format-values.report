@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/datetime-format-values.raml
+Model: file://amf-cli/shared/src/test/resources/validations/datetime-format-values.raml
 Profile: 
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-datetime-format
   Message: Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/datetime-format-values.raml#/declarations/types/scalar/invalid-value
+  Target: file://amf-cli/shared/src/test/resources/validations/datetime-format-values.raml#/declarations/types/scalar/invalid-value
   Property: 
   Position: Some(LexicalInformation([(5,2)-(9,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/datetime-format-values.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/datetime-format-values.raml

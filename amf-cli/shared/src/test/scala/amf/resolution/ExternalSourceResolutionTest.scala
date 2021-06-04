@@ -7,7 +7,7 @@ import amf.core.remote.{Amf, Raml10, Raml10YamlHint}
   *
   */
 class ExternalSourceResolutionTest extends ResolutionTest {
-  override val basePath = "amf-client/shared/src/test/resources/resolution/externalfragment/"
+  override val basePath = "amf-cli/shared/src/test/resources/resolution/externalfragment/"
 
   multiGoldenTest("Xml schema raml to amf", "xmlschema.raml.%s") { config =>
     cycle("xmlschema.raml",

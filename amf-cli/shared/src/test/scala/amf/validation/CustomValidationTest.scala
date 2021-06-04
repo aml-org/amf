@@ -4,8 +4,8 @@ import amf.{ProfileName, RAMLStyle}
 
 class CustomValidationTest extends UniquePlatformReportGenTest {
 
-  override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
-  override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/"
+  override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
+  override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/"
   override val hint: Hint  = Raml10YamlHint
 
   test("Load dialect") {

@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#server": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -34,7 +34,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#variable": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -66,7 +66,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/scalar/schema",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/scalar/schema",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -90,7 +90,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/scalar/schema/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/scalar/schema/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -98,7 +98,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/scalar/schema"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/scalar/schema"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -124,7 +124,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/scalar/schema"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/scalar/schema"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -140,7 +140,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -172,7 +172,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/parameter/one"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -200,7 +200,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -234,7 +234,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/some.%7Bone%7D.com"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -250,7 +250,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -262,7 +262,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#parameter": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -289,7 +289,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/scalar/schema",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/scalar/schema",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -308,7 +308,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/scalar/schema/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/scalar/schema/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -316,7 +316,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/scalar/schema"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/scalar/schema"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -330,7 +330,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/scalar/schema"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/scalar/schema"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -346,7 +346,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -366,7 +366,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/parameter/two"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -394,7 +394,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -414,7 +414,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -428,7 +428,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -450,7 +450,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -467,14 +467,14 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -506,7 +506,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -520,7 +520,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#property": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -533,7 +533,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name/scalar/name",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name/scalar/name",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -552,7 +552,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name/scalar/name/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name/scalar/name/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -560,7 +560,7 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name/scalar/name"
+                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name/scalar/name"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -586,7 +586,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -594,7 +594,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name"
+                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/property/name"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -620,7 +620,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -628,7 +628,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -654,7 +654,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -682,7 +682,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -702,7 +702,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param1"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -728,7 +728,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -755,7 +755,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2%3F/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2%3F/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -774,7 +774,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2%3F/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2%3F/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -782,7 +782,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2%3F/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2%3F/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -808,7 +808,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2%3F/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2%3F/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -824,7 +824,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -844,7 +844,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/parameter/param2"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -860,7 +860,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -884,7 +884,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -904,7 +904,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -918,7 +918,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -940,14 +940,14 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#header": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -974,7 +974,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -993,7 +993,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -1001,7 +1001,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1015,7 +1015,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1031,7 +1031,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1051,7 +1051,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-One"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1077,7 +1077,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -1104,7 +1104,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1123,7 +1123,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -1131,7 +1131,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1145,7 +1145,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1161,7 +1161,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1181,7 +1181,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/parameter/Header-Two"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1209,7 +1209,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -1233,7 +1233,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -1253,7 +1253,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/post"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1281,7 +1281,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#parameter": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -1308,7 +1308,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/scalar/schema",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/scalar/schema",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -1327,7 +1327,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/scalar/schema/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/scalar/schema/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -1335,7 +1335,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/scalar/schema"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/scalar/schema"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1349,7 +1349,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/scalar/schema"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/scalar/schema"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1365,7 +1365,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -1373,7 +1373,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1399,7 +1399,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/parameter/two"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1427,7 +1427,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1435,12 +1435,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D"
                       }
                     ]
                   }
@@ -1461,7 +1461,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/end-points/%2Flevelzero%2Fsome%7Btwo%7D%2Flevel-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1489,7 +1489,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1497,7 +1497,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1523,7 +1523,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/operation-request.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/operation-request.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

@@ -1,6 +1,6 @@
 package amf
 
-import amf.cli.commands.{CmdLineParser, ParseCommand, PatchCommand, TranslateCommand, ValidateCommand}
+import amf.client.commands.{CmdLineParser, ParseCommand, PatchCommand, TranslateCommand, ValidateCommand}
 import amf.client.environment.{AMFConfiguration, AMLConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.remod.AMFGraphConfiguration
 import amf.core.benchmark.ExecutionLog

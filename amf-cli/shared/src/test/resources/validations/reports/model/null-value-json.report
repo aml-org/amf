@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/null-value-json.raml
+Model: file://amf-cli/shared/src/test/resources/validations/null-value-json.raml
 Profile: 
 Conforms? false
 Number of results: 2
@@ -11,7 +11,7 @@ Level: Violation
   Target: 
   Property: 
   Position: Some(LexicalInformation([(16,25)-(16,26)]))
-  Location: file://amf-client/shared/src/test/resources/validations/null-value-json.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/null-value-json.raml
 
 - Source: http://a.ml/vocabularies/amf/core#syaml-error
   Message: Syntax error : Unexpected '}'
@@ -19,4 +19,4 @@ Level: Violation
   Target: 
   Property: 
   Position: Some(LexicalInformation([(16,25)-(16,26)]))
-  Location: file://amf-client/shared/src/test/resources/validations/null-value-json.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/null-value-json.raml

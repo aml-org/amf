@@ -31,7 +31,7 @@ class ProductionServiceTest extends RamlResolutionTest {
     (u: BaseUnit, _: CycleConfig, _: AMFConfiguration) => u
 
   override val basePath =
-    "amf-client/shared/src/test/resources/production/resolution-dumpjsonld/"
+    "amf-cli/shared/src/test/resources/production/resolution-dumpjsonld/"
 
   /* Generate the jsonld from a resolved raml */
   multiGoldenTest("Test step1: resolve and emit jsonld", "api.resolved.raml.%s") { config =>

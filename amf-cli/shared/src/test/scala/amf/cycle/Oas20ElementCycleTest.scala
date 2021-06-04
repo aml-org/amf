@@ -4,9 +4,9 @@ import amf.core.remote.{Oas20JsonHint, Vendor}
 
 class Oas20ElementCycleTest extends DomainElementCycleTest {
 
-  override def basePath: String = "amf-client/shared/src/test/resources/cycle/oas20/"
-  val validationsPath           = "amf-client/shared/src/test/resources/validations/"
-  val compatibilityPath         = "amf-client/shared/src/test/resources/compatibility/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/cycle/oas20/"
+  val validationsPath           = "amf-cli/shared/src/test/resources/validations/"
+  val compatibilityPath         = "amf-cli/shared/src/test/resources/compatibility/"
   val vendor: Vendor            = Vendor.OAS20
 
   test("type - composition with refs and inlined") {

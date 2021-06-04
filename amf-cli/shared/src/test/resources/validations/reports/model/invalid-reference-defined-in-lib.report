@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/invalid-reference/error-in-lib.raml
+Model: file://amf-cli/shared/src/test/resources/validations/invalid-reference/error-in-lib.raml
 Profile: 
 Conforms? false
 Number of results: 4
@@ -11,28 +11,28 @@ Level: Violation
   Target: 
   Property: 
   Position: Some(LexicalInformation([(4,10)-(4,35)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
 
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'other-lib.raml#A'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml#/declarations/types/any/A/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml#/declarations/types/any/A/unresolved
   Property: 
   Position: Some(LexicalInformation([(4,10)-(4,35)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
 
 - Source: http://a.ml/vocabularies/amf/core#expected-module
   Message: Libraries must be applied by using 'uses'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-reference/other-lib.raml
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-reference/other-lib.raml
   Property: 
   Position: Some(LexicalInformation([(4,10)-(4,35)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
 
 - Source: http://a.ml/vocabularies/amf/core#expected-module
   Message: The !include tag must be avoided when referencing a library
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-reference/invalid-lib.raml
   Property: 
   Position: Some(LexicalInformation([(5,7)-(5,32)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-reference/error-in-lib.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-reference/error-in-lib.raml

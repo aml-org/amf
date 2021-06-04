@@ -11,7 +11,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
   override val defaultPipelineToUse: String                = TransformationPipeline.COMPATIBILITY_PIPELINE
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  override def basePath: String = "amf-client/shared/src/test/resources/compatibility/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/compatibility/"
 
   test("Identical RAML inherited examples are removed in OAS 2.0") {
     cycle("raml10/inherited-examples.raml",

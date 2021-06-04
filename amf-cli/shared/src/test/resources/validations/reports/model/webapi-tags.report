@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/webapi/tags.json
+Model: file://amf-cli/shared/src/test/resources/validations/webapi/tags.json
 Profile: OAS 2.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Tag-name-minCount
   Message: Tag object must have a name property
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/webapi/tags.json#/web-api/tag/default-type
+  Target: file://amf-cli/shared/src/test/resources/validations/webapi/tags.json#/web-api/tag/default-type
   Property: http://a.ml/vocabularies/core#name
   Position: Some(LexicalInformation([(12,4)-(17,5)]))
-  Location: file://amf-client/shared/src/test/resources/validations/webapi/tags.json
+  Location: file://amf-cli/shared/src/test/resources/validations/webapi/tags.json

@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/resolution/oas30-discriminator-invalid-mapping/api.yaml
+Model: file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator-invalid-mapping/api.yaml
 Profile: OAS 3.0
 Conforms? true
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference-warning
   Message: Unresolved reference 'null'
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/resolution/oas30-discriminator-invalid-mapping/api.yaml#/declarations/types/Animal/discriminator/invalid/unresolved
+  Target: file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator-invalid-mapping/api.yaml#/declarations/types/Animal/discriminator/invalid/unresolved
   Property: 
   Position: Some(LexicalInformation([(16,19)-(16,25)]))
-  Location: file://amf-client/shared/src/test/resources/resolution/oas30-discriminator-invalid-mapping/api.yaml
+  Location: file://amf-cli/shared/src/test/resources/resolution/oas30-discriminator-invalid-mapping/api.yaml

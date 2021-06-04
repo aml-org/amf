@@ -5,7 +5,7 @@ import amf.core.remote.{Amf, Oas20, Oas20JsonHint, Raml10, Raml10YamlHint}
 
 class SecurityResolutionTest extends ResolutionTest {
 
-  override val basePath = "amf-client/shared/src/test/resources/resolution/security/"
+  override val basePath = "amf-cli/shared/src/test/resources/resolution/security/"
 
   multiGoldenTest("Security resolution raml to AMF", "security.raml.%s") { config =>
     cycle("security.raml", config.golden, Raml10YamlHint, target = Amf, renderOptions = Some(config.renderOptions))

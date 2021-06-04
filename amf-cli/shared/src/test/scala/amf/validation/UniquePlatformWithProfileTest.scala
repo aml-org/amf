@@ -7,8 +7,8 @@ import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
 class UniquePlatformWithProfileTest extends UniquePlatformReportGenTest {
 
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/with-profiles/"
+  override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/with-profiles/"
 
   private def validate(api: String, profile: String, profileFile: Option[String]) =
     super.validate(api, None, ProfileName(profile), profileFile)

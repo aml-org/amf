@@ -1,6 +1,6 @@
 package amf.client.validation
 
-import amf.cli.convert.NativeOps
+import amf.client.convert.NativeOps
 import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.client.convert.ApiRegister
 import amf.client.environment.Environment

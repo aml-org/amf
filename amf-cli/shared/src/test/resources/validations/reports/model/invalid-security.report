@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/invalid-security.raml
+Model: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 4
@@ -8,33 +8,33 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-type-pattern
   Message: Security scheme type should be one of the supported ones
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-unknown
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-unknown
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(19,12)-(19,20)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-security.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml
 
 Level: Warning
 
 - Source: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: OAS security scheme type detected in RAML spec
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-type-open-id
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-type-open-id
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(7,10)-(7,23)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-security.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: OAS security scheme type detected in RAML spec
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-type-http
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-type-http
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(11,10)-(11,14)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-security.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: OAS security scheme type detected in RAML spec
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-api-key
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-api-key
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(15,10)-(15,16)]))
-  Location: file://amf-client/shared/src/test/resources/validations/invalid-security.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml

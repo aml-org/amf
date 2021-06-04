@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml
+Model: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 7
@@ -8,55 +8,55 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/array/arr
+  Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/array/arr
   Property: 
   Position: Some(LexicalInformation([(4,2)-(8,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/array/arrObj
+  Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/array/arrObj
   Property: 
   Position: Some(LexicalInformation([(8,2)-(17,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/array/arrObjProp
+  Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/array/arrObjProp
   Property: 
   Position: Some(LexicalInformation([(17,2)-(23,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/array/arr2
+  Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/array/arr2
   Property: 
   Position: Some(LexicalInformation([(23,2)-(28,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/obj
+  Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/obj
   Property: 
   Position: Some(LexicalInformation([(28,2)-(31,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/objComplex
+  Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/objComplex
   Property: 
   Position: Some(LexicalInformation([(31,2)-(37,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml
 
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/objArr
+  Target: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml#/declarations/types/objArr
   Property: 
   Position: Some(LexicalInformation([(42,2)-(50,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/shapes/invalid-recursives.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/shapes/invalid-recursives.raml

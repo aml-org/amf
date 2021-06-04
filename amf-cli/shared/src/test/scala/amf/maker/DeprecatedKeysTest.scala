@@ -11,7 +11,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  private val basePath = "file://amf-client/shared/src/test/resources/maker/deprecatedwarnings/"
+  private val basePath = "file://amf-cli/shared/src/test/resources/maker/deprecatedwarnings/"
 
   case class FixtureResult(level: String, message: String)
   case class Fixture(name: String, file: String, profileName: ProfileName, results: Seq[FixtureResult])

@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/types/schema_inheritance2.raml
+Model: file://amf-cli/shared/src/test/resources/validations/types/schema_inheritance2.raml
 Profile: RAML
 Conforms? false
 Number of results: 1
@@ -8,6 +8,6 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance
   Message: Resolution error: Incompatible types [class amf.plugins.domain.shapes.models.NodeShape, class amf.plugins.domain.shapes.models.SchemaShape]
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/types/schema_inheritance2.raml#/declarations/types/Person
+  Target: file://amf-cli/shared/src/test/resources/validations/types/schema_inheritance2.raml#/declarations/types/Person
   Property: http://a.ml/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(5,2)-(24,21)]))

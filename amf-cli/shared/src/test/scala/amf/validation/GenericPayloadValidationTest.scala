@@ -22,7 +22,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val payloadsPath = "file://amf-client/shared/src/test/resources/payloads/"
+  val payloadsPath = "file://amf-cli/shared/src/test/resources/payloads/"
 
   val payloadValidations = Map(
     ("payloads.raml", "A", "a_valid.json")   -> ExpectedReport(conforms = true, 0, PayloadProfile),

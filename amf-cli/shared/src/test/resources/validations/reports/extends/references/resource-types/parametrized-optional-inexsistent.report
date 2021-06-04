@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/extends/references/resource-types/parametrized-optional-inexistent.raml
+Model: file://amf-cli/shared/src/test/resources/validations/extends/references/resource-types/parametrized-optional-inexistent.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'asd'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/extends/references/resource-types/parametrized-optional-inexistent.raml#/web-api/end-points/%2Fendpoint3/post/request/application%2Fjson/any/schema/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/extends/references/resource-types/parametrized-optional-inexistent.raml#/web-api/end-points/%2Fendpoint3/post/request/application%2Fjson/any/schema/unresolved
   Property: 
   Position: Some(LexicalInformation([(9,16)-(9,29)]))
-  Location: file://amf-client/shared/src/test/resources/validations/extends/references/resource-types/parametrized-optional-inexistent.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/extends/references/resource-types/parametrized-optional-inexistent.raml

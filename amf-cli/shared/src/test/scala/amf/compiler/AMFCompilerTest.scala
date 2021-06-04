@@ -24,25 +24,25 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   override def defaultConfig: AMFConfiguration =
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
   test("Api (raml)") {
-    build("file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", Raml10YamlHint) map assertDocument
+    build("file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", Raml10YamlHint) map assertDocument
   }
 
   test("Vocabulary") {
-    build("file://amf-client/shared/src/test/resources/vocabularies2/production/raml_doc.yaml", VocabularyYamlHint) map {
+    build("file://amf-cli/shared/src/test/resources/vocabularies2/production/raml_doc.yaml", VocabularyYamlHint) map {
       _ should not be null
     }
   }
 
   test("Api (oas)") {
-    build("file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", Oas20JsonHint) map assertDocument
+    build("file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", Oas20JsonHint) map assertDocument
   }
 
   test("Api (amf)") {
-    build("file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", AmfJsonHint) map assertDocument
+    build("file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.jsonld", AmfJsonHint) map assertDocument
   }
 
   test("Simple import") {
-    build("file://amf-client/shared/src/test/resources/input.json", Oas20JsonHint) map {
+    build("file://amf-cli/shared/src/test/resources/input.json", Oas20JsonHint) map {
       _ should not be null
     }
   }
@@ -55,7 +55,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     recoverToExceptionIf[Exception] {
 
       build(
-        s"file://amf-client/shared/src/test/resources/reference-itself.raml",
+        s"file://amf-cli/shared/src/test/resources/reference-itself.raml",
         Raml10YamlHint,
         defaultConfig
           .withErrorHandlerProvider(() => UnhandledErrorHandler), // TODO ARM then default should not throw exception?
@@ -63,28 +63,27 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       )
     } map { ex =>
       assert(ex.getMessage.contains(
-        s"Cyclic found following references file://amf-client/shared/src/test/resources/reference-itself.raml -> file://amf-client/shared/src/test/resources/reference-itself.raml"))
+        s"Cyclic found following references file://amf-cli/shared/src/test/resources/reference-itself.raml -> file://amf-cli/shared/src/test/resources/reference-itself.raml"))
     }
   }
 
   test("Cache duplicate imports") {
     val cache = new TestCache()
-    build("file://amf-client/shared/src/test/resources/input-duplicate-includes.json",
-          Oas20JsonHint,
-          cache = Some(cache)) map { _ =>
-      cache.assertCacheSize(2)
+    build("file://amf-cli/shared/src/test/resources/input-duplicate-includes.json", Oas20JsonHint, cache = Some(cache)) map {
+      _ =>
+        cache.assertCacheSize(2)
     }
   }
 
   test("Cache different imports") {
     val cache = new TestCache()
-    build("file://amf-client/shared/src/test/resources/input.json", Oas20JsonHint, cache = Some(cache)) map { _ =>
+    build("file://amf-cli/shared/src/test/resources/input.json", Oas20JsonHint, cache = Some(cache)) map { _ =>
       cache.assertCacheSize(3)
     }
   }
 
   test("Libraries (raml)") {
-    compiler("file://amf-client/shared/src/test/resources/modules.raml", Raml10YamlHint).root() map {
+    compiler("file://amf-cli/shared/src/test/resources/modules.raml", Raml10YamlHint).root() map {
       case Root(root, _, _, references, UnspecifiedReference, _) =>
         val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
         body.entries.size should be(2)
@@ -94,7 +93,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Libraries (oas)") {
-    compiler("file://amf-client/shared/src/test/resources/modules.json", Oas20JsonHint).root() map {
+    compiler("file://amf-cli/shared/src/test/resources/modules.json", Oas20JsonHint).root() map {
       case Root(root, _, _, references, UnspecifiedReference, _) =>
         val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
         body.entries.size should be(3)
@@ -107,7 +106,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     val eh = DefaultErrorHandler()
     val amfConfig =
       WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withErrorHandlerProvider(() => eh)
-    build("file://amf-client/shared/src/test/resources/non-exists-include.raml", Raml10YamlHint, amfConfig, None)
+    build("file://amf-cli/shared/src/test/resources/non-exists-include.raml", Raml10YamlHint, amfConfig, None)
       .flatMap(bu => {
         AMFValidator.validate(bu, Raml10Profile, amfConfig)
       })
@@ -116,7 +115,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
         assert(r.results.lengthCompare(2) == 0)
         assert(
           r.results.head.message
-            .contains("amf-client/shared/src/test/resources/nonExists.raml"))
+            .contains("amf-cli/shared/src/test/resources/nonExists.raml"))
         assert(
           r.results.head.message
             .contains("such file or directory")) // temp, assert better the message for js and jvm
@@ -145,14 +144,14 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   private def assertCycles(syntax: Syntax, hint: Hint) = {
     recoverToExceptionIf[Exception] {
       build(
-        s"file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}",
+        s"file://amf-cli/shared/src/test/resources/input-cycle.${syntax.extension}",
         hint,
         defaultConfig.withErrorHandlerProvider(() => UnhandledErrorHandler),
         None
       )
     } map { ex =>
       assert(ex.getMessage.contains(
-        s"Cyclic found following references file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension} -> file://amf-client/shared/src/test/resources/includes/include-cycle.${syntax.extension} -> file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}"))
+        s"Cyclic found following references file://amf-cli/shared/src/test/resources/input-cycle.${syntax.extension} -> file://amf-cli/shared/src/test/resources/includes/include-cycle.${syntax.extension} -> file://amf-cli/shared/src/test/resources/input-cycle.${syntax.extension}"))
     }
   }
 

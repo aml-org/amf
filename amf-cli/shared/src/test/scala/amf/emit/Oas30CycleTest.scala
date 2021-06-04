@@ -5,7 +5,7 @@ import amf.core.remote._
 import amf.io.FunSuiteCycleTests
 
 class Oas30CycleTest extends FunSuiteCycleTests {
-  override val basePath: String = "amf-client/shared/src/test/resources/upanddown/oas3/"
+  override val basePath: String = "amf-cli/shared/src/test/resources/upanddown/oas3/"
 
   case class FixtureData(name: String, apiFrom: String, apiTo: String)
 

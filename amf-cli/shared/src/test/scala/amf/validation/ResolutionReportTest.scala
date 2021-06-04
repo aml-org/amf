@@ -4,9 +4,9 @@ import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
-  override val basePath = "file://amf-client/shared/src/test/resources/validations"
+  override val basePath = "file://amf-cli/shared/src/test/resources/validations"
 
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/resolution/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/resolution/"
 
   test("Complex union resolution") {
     checkReport("/../resolution/empty_union/api.raml", Some("empty_union.report"))

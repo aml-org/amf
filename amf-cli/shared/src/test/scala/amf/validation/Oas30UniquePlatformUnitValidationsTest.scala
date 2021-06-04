@@ -4,9 +4,9 @@ import amf.{Oas20Profile, Oas30Profile}
 import org.scalatest.Matchers
 
 class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/oas3/"
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/oas3/"
-  val resolutionPath               = "file://amf-client/shared/src/test/resources/resolution/"
+  override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/oas3/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/oas3/"
+  val resolutionPath               = "file://amf-cli/shared/src/test/resources/resolution/"
   override val hint: Hint          = Oas30YamlHint
 
   test("'Paths' property is required") {

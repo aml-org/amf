@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -30,7 +30,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -56,7 +56,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -72,7 +72,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus",
         "@type": [
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
           "http://a.ml/vocabularies/document#DomainProperty",
@@ -85,7 +85,7 @@
         ],
         "http://a.ml/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -109,7 +109,7 @@
             ],
             "http://a.ml/vocabularies/shapes#inherits": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -123,7 +123,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -136,7 +136,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -155,7 +155,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -163,7 +163,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -189,7 +189,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -215,7 +215,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -223,7 +223,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/property/wadus"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -244,7 +244,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -252,7 +252,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -278,7 +278,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/type"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -294,7 +294,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -302,7 +302,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -328,7 +328,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -361,7 +361,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -369,7 +369,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -407,7 +407,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/annotations/Wadus"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -433,7 +433,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -447,7 +447,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -460,7 +460,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/scalar/age",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/scalar/age",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -479,7 +479,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/scalar/age/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/scalar/age/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -487,7 +487,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/scalar/age"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/scalar/age"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -513,7 +513,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/scalar/age"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/scalar/age"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -539,7 +539,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -547,7 +547,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/age"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -561,7 +561,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -574,7 +574,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/scalar/name",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -593,7 +593,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/scalar/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/scalar/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -601,7 +601,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -627,7 +627,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -653,7 +653,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -661,7 +661,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -682,7 +682,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -690,7 +690,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -716,7 +716,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

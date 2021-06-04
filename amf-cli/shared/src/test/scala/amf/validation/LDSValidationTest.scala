@@ -5,8 +5,8 @@ import amf.core.remote.{Hint, Raml10YamlHint}
 
 class LDSValidationTest extends UniquePlatformReportGenTest {
 
-  override val basePath    = "file://amf-client/shared/src/test/resources/validations/lds/"
-  override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/lds/"
+  override val basePath    = "file://amf-cli/shared/src/test/resources/validations/lds/"
+  override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/lds/"
   override val hint: Hint  = Raml10YamlHint
 
   test("Missing key") {

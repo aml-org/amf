@@ -6,15 +6,15 @@ import amf.io.FunSuiteCycleTests
 
 class CompleteCycleTest extends FunSuiteCycleTests {
 
-  override val basePath = "amf-client/shared/src/test/resources/upanddown/"
-  val base08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
-  val baseRaml10Path    = "amf-client/shared/src/test/resources/upanddown/raml10/"
-  val referencesPath    = "amf-client/shared/src/test/resources/references/"
-  val productionPath    = "amf-client/shared/src/test/resources/production/"
-  val validationsPath   = "amf-client/shared/src/test/resources/validations/"
-  val apiPath           = "amf-client/shared/src/test/resources/api/"
-  val parserResultPath  = "amf-client/shared/src/test/resources/parser-results/"
-  val oasPath           = "amf-client/shared/src/test/resources/validations/oas2/"
+  override val basePath = "amf-cli/shared/src/test/resources/upanddown/"
+  val base08Path        = "amf-cli/shared/src/test/resources/upanddown/raml08/"
+  val baseRaml10Path    = "amf-cli/shared/src/test/resources/upanddown/raml10/"
+  val referencesPath    = "amf-cli/shared/src/test/resources/references/"
+  val productionPath    = "amf-cli/shared/src/test/resources/production/"
+  val validationsPath   = "amf-cli/shared/src/test/resources/validations/"
+  val apiPath           = "amf-cli/shared/src/test/resources/api/"
+  val parserResultPath  = "amf-cli/shared/src/test/resources/parser-results/"
+  val oasPath           = "amf-cli/shared/src/test/resources/validations/oas2/"
 
   multiGoldenTest("Full oas to amf test", "full-example.json.%s") { config =>
     cycle("full-example.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))

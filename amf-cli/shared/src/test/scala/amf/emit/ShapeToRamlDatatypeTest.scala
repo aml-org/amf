@@ -58,8 +58,8 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
     cycle("reference.json", "reference.raml")
   }
 
-  private val basePath: String   = "file://amf-client/shared/src/test/resources/toraml/toramldatatype/source/"
-  private val goldenPath: String = "amf-client/shared/src/test/resources/toraml/toramldatatype/datatypes/"
+  private val basePath: String   = "file://amf-cli/shared/src/test/resources/toraml/toramldatatype/source/"
+  private val goldenPath: String = "amf-cli/shared/src/test/resources/toraml/toramldatatype/datatypes/"
   private val amfConfig          = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
 
   private def cycle(

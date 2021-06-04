@@ -25,12 +25,12 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
 
   test("Resource loader shouldn't have absolute path if ref and base aren't absolute") {
     val mappings = Map(
-      "resource::really-cool-urn:1.0.0:raml:zip:main.raml" -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/main.raml",
-      "something.raml"                                     -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/something.raml",
-      "examples/something/get-something-response.raml"     -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/get-something-response.raml",
-      "examples/something/put-something-request.raml"      -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/put-something-request.raml",
-      "examples/common/async-response.raml"                -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/common/async-response.raml",
-      "libraries/resourceTypes.raml"                       -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/libraries/resourceTypes.raml",
+      "resource::really-cool-urn:1.0.0:raml:zip:main.raml" -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/main.raml",
+      "something.raml"                                     -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/something.raml",
+      "examples/something/get-something-response.raml"     -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/get-something-response.raml",
+      "examples/something/put-something-request.raml"      -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/put-something-request.raml",
+      "examples/common/async-response.raml"                -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/common/async-response.raml",
+      "libraries/resourceTypes.raml"                       -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/libraries/resourceTypes.raml",
     )
     val url = "resource::really-cool-urn:1.0.0:raml:zip:main.raml"
     val eh  = DefaultErrorHandler()

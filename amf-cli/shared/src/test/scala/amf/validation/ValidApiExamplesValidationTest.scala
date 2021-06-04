@@ -5,7 +5,7 @@ import amf.{AmfProfile, Raml08Profile}
 
 class ValidApiExamplesValidationTest extends ValidModelTest {
 
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/examples/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/examples/"
 
   test("Example of object validations test") {
     checkValid("examples/object-name-example.raml")

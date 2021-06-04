@@ -2,7 +2,7 @@ package amf.convert
 
 import _root_.org.scalatest.{Assertion, Matchers}
 import amf._
-import amf.cli.convert.NativeOps
+import amf.client.convert.NativeOps
 import amf.client.convert.CoreClientConverters.ClientLoader
 import amf.client.convert.CoreClientConverters
 import amf.client.convert.CoreClientConverters._
@@ -32,31 +32,31 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  private val banking       = "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml"
-  private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
-  private val oas3          = "file://amf-client/shared/src/test/resources/api/oas3.json"
-  private val async2        = "file://amf-client/shared/src/test/resources/api/async2.yaml"
-  private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
-  private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
-  private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
-  private val demos2Dialect = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos-2.raml"
-  private val demosInstance = "file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml"
-  private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
+  private val banking       = "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/api.raml"
+  private val zencoder      = "file://amf-cli/shared/src/test/resources/api/zencoder.raml"
+  private val oas3          = "file://amf-cli/shared/src/test/resources/api/oas3.json"
+  private val async2        = "file://amf-cli/shared/src/test/resources/api/async2.yaml"
+  private val zencoder08    = "file://amf-cli/shared/src/test/resources/api/zencoder08.raml"
+  private val music         = "file://amf-cli/shared/src/test/resources/production/world-music-api/api.raml"
+  private val demosDialect  = "file://amf-cli/shared/src/test/resources/api/dialects/eng-demos.raml"
+  private val demos2Dialect = "file://amf-cli/shared/src/test/resources/api/dialects/eng-demos-2.raml"
+  private val demosInstance = "file://amf-cli/shared/src/test/resources/api/examples/libraries/demo.raml"
+  private val security      = "file://amf-cli/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
   private val amflight =
-    "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml.ignore/api.raml"
-  private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
-  private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
-  //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
+    "file://amf-cli/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml.ignore/api.raml"
+  private val defaultValue = "file://amf-cli/shared/src/test/resources/api/shape-default.raml"
+  private val profile      = "file://amf-cli/shared/src/test/resources/api/validation/custom-profile.raml"
+  //  private val banking       = "file://amf-cli/shared/src/test/resources/api/banking.raml"
   private val apiWithSpaces =
-    "file://amf-client/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
+    "file://amf-cli/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
   private val apiWithIncludesWithSpaces =
-    "file://amf-client/shared/src/test/resources/api/api-with-includes-with-spaces/api.raml"
+    "file://amf-cli/shared/src/test/resources/api/api-with-includes-with-spaces/api.raml"
   private val scalarAnnotations =
-    "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
+    "file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
   private val recursiveAdditionalProperties =
-    "file://amf-client/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
+    "file://amf-cli/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
   private val knowledgeGraphServiceApi =
-    "file://amf-client/shared/src/test/resources/production/knowledge-graph-service-api-1.0.13-raml/kg.raml"
+    "file://amf-cli/shared/src/test/resources/production/knowledge-graph-service-api-1.0.13-raml/kg.raml"
 
   def config(): AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
   def testVocabulary(file: String, numClasses: Int, numProperties: Int): Future[Assertion] = {
@@ -430,17 +430,17 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Parsing text document with base url (with include, without trailing slash)") {
-    val baseUrl = "file://amf-client/shared/src/test/resources/includes"
+    val baseUrl = "file://amf-cli/shared/src/test/resources/includes"
     testParseStringWithBaseUrlAndInclude(baseUrl)
   }
 
   test("Parsing text document with base url (with include and trailing slash)") {
-    val baseUrl = "file://amf-client/shared/src/test/resources/includes/"
+    val baseUrl = "file://amf-cli/shared/src/test/resources/includes/"
     testParseStringWithBaseUrlAndInclude(baseUrl)
   }
 
   test("Parsing text document with base url (with include and file name)") {
-    val baseUrl = "file://amf-client/shared/src/test/resources/includes/api.raml"
+    val baseUrl = "file://amf-cli/shared/src/test/resources/includes/api.raml"
     testParseStringWithBaseUrlAndInclude(baseUrl)
   }
 
@@ -480,7 +480,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Network error report has position and location") {
-    val uri = "file://amf-client/shared/src/test/resources/compiler/network-error/api.raml"
+    val uri = "file://amf-cli/shared/src/test/resources/compiler/network-error/api.raml"
 
     case class DummyHttpResourceLoader() extends ResourceLoader {
       override def fetch(resource: String): Future[Content] = {
@@ -1207,8 +1207,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  multiGoldenTest("Generate unit with compact uris and external file",
-//                  "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.%s") { config =>
-//    val apiPath = "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml"
+//                  "file://amf-cli/shared/src/test/resources/resolution/external-data-type/api.%s") { config =>
+//    val apiPath = "file://amf-cli/shared/src/test/resources/resolution/external-data-type/api.raml"
 //    val golden  = config.golden
 //
 //    // TODO migrate to render options converter
@@ -1250,13 +1250,13 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new RamlParser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/production/raml10/xsdschema/api.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/production/raml10/xsdschema/api.raml")
 //        .asFuture
 //    } yield {
 //      val location: Option[String] =
 //        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[SchemaShape].location.asOption
 //      location.isDefined should be(true)
-//      location.get should be("file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema.xsd")
+//      location.get should be("file://amf-cli/shared/src/test/resources/production/raml10/xsdschema/schema.xsd")
 //
 //    }
 //  }
@@ -1265,7 +1265,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new RamlParser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/production/raml10/xsdexample/api.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml")
 //        .asFuture
 //    } yield {
 //      val location: Option[String] = unit
@@ -1280,7 +1280,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //        .location
 //        .asOption
 //      location.isDefined should be(true)
-//      location.get should be("file://amf-client/shared/src/test/resources/production/raml10/xsdexample/example.xsd")
+//      location.get should be("file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/example.xsd")
 //    }
 //  }
 //
@@ -1289,7 +1289,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      _ <- AMF.init().asFuture
 //      unit <- new RamlParser()
 //        .parseFileAsync(
-//          "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml")
+//          "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml")
 //        .asFuture
 //    } yield {
 //      val shape = unit
@@ -1308,7 +1308,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      _ <- AMF.init().asFuture
 //      unit <- new RamlParser()
 //        .parseFileAsync(
-//          "file://amf-client/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml")
+//          "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml")
 //        .asFuture
 //    } yield {
 //      val shape = unit
@@ -1338,7 +1338,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new Raml08Parser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/clients/params-order.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/clients/params-order.raml")
 //        .asFuture
 //      v <- Future.successful(new Raml08Resolver().resolve(unit))
 //    } yield {
@@ -1412,7 +1412,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      a <- AMF
 //        .raml08Parser()
 //        .parseFileAsync(
-//          "file://amf-client/shared/src/test/resources/parser-results/raml/error/not-existing-http-include.raml")
+//          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/not-existing-http-include.raml")
 //        .asFuture
 //      r <- AMF.validate(a, Raml08Profile, RAMLStyle).asFuture
 //    } yield {
@@ -1444,7 +1444,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      _ <- AMF.init().asFuture
 //      a <- AMF
 //        .raml10Parser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml")
 //        .asFuture
 //    } yield {
 //      val r          = new Raml10Resolver().resolve(a)
@@ -1453,7 +1453,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      val option = getOp.request.payloads.asSeq.head.schema
 //        .asInstanceOf[AnyShape]
 //        .trackedExample(
-//          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
+//          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
 //        .asOption
 //      option.isDefined should be(true)
 //      option.get.annotations().isTracked should be(true)
@@ -1462,14 +1462,14 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      val shape   = getPost.request.payloads.asSeq.head.schema.asInstanceOf[AnyShape]
 //      val option2 = shape
 //        .trackedExample(
-//          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
+//          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
 //        .asOption
 //      option2.isDefined should be(true)
 //      option2.get.annotations().isTracked should be(true)
 //
 //      shape.examples.asSeq
 //        .find(_.id.equals(
-//          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/example/declared"))
+//          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/example/declared"))
 //        .head
 //        .annotations()
 //        .isTracked should be(false)
@@ -1480,7 +1480,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new Raml10Parser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/clients/double-field.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/clients/double-field.raml")
 //        .asFuture
 //    } yield {
 //      val shape = unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[ScalarShape]
@@ -1539,7 +1539,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new Oas20YamlParser(environment)
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/clients/oas20-yaml.yaml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/clients/oas20-yaml.yaml")
 //        .asFuture
 //    } yield {
 //      val location: String = unit.location
@@ -1553,7 +1553,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    recoverToSucceededIf[UnsupportedVendorException] {
 //      AMF.init().asFuture.flatMap { _ =>
 //        new Oas20Parser(environment)
-//          .parseFileAsync("file://amf-client/shared/src/test/resources/clients/oas20-yaml.yaml")
+//          .parseFileAsync("file://amf-cli/shared/src/test/resources/clients/oas20-yaml.yaml")
 //          .asFuture
 //          .map { _ =>
 //            succeed
@@ -1564,7 +1564,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test path resolution OAS for 'file:///' prefix") {
-//    val file    = platform.fs.syncFile("amf-client/shared/src/test/resources/clients/toupdir-include/spec/swagger.json")
+//    val file    = platform.fs.syncFile("amf-cli/shared/src/test/resources/clients/toupdir-include/spec/swagger.json")
 //    val absPath = getAbsolutePath(file.path)
 //    for {
 //      _      <- AMF.init().asFuture
@@ -1615,7 +1615,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //
 //  test("Test Json relative ref with absolute path as input") {
 //    val file =
-//      platform.fs.syncFile("amf-client/shared/src/test/resources/production/json-schema-relative-ref/api.raml")
+//      platform.fs.syncFile("amf-cli/shared/src/test/resources/production/json-schema-relative-ref/api.raml")
 //    val absPath = getAbsolutePath(file.path)
 //
 //    for {
@@ -1628,7 +1628,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test quoted default value") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/default-with-quotes.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/default-with-quotes.raml"
 //    for {
 //      _    <- AMF.init().asFuture
 //      unit <- new RamlParser().parseFileAsync(file).asFuture
@@ -1692,7 +1692,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test emission of json schema of a shape with a recursive type") {
-//    val api = "file://amf-client/shared/src/test/resources/validations/recursive-types.raml"
+//    val api = "file://amf-cli/shared/src/test/resources/validations/recursive-types.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(api).asFuture
@@ -1743,7 +1743,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //
 //  // This test is here because of I need to resolve with default and then validate
 //  test("Test json schema emittion of recursive union shape") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/recursion-union.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/recursion-union.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(file).asFuture
@@ -1755,7 +1755,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test external fragment that includes a reference") {
-//    val file = "file://amf-client/shared/src/test/resources/resolution/ex-frag-with-refs/api.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/resolution/ex-frag-with-refs/api.raml"
 //    for {
 //      _    <- AMF.init().asFuture
 //      unit <- new RamlParser().parseFileAsync(file).asFuture
@@ -1854,7 +1854,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test non existent resource types") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/resource_types/non-existent-include.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/resource_types/non-existent-include.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(file).asFuture
@@ -1866,7 +1866,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Resource type merging of identical types referenced differently") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/rt-type-merging/api.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/rt-type-merging/api.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(file).asFuture
@@ -1878,7 +1878,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test non existent traits") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/traits/non-existent-include.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/traits/non-existent-include.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(file).asFuture
@@ -2406,8 +2406,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  multiGoldenTest("Generate unit with compact uris and external file",
-//                  "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.%s") { config =>
-//    val apiPath = "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml"
+//                  "file://amf-cli/shared/src/test/resources/resolution/external-data-type/api.%s") { config =>
+//    val apiPath = "file://amf-cli/shared/src/test/resources/resolution/external-data-type/api.raml"
 //    val golden  = config.golden
 //
 //    // TODO migrate to render options converter
@@ -2449,13 +2449,13 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new RamlParser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/production/raml10/xsdschema/api.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/production/raml10/xsdschema/api.raml")
 //        .asFuture
 //    } yield {
 //      val location: Option[String] =
 //        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[SchemaShape].location.asOption
 //      location.isDefined should be(true)
-//      location.get should be("file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema.xsd")
+//      location.get should be("file://amf-cli/shared/src/test/resources/production/raml10/xsdschema/schema.xsd")
 //
 //    }
 //  }
@@ -2464,7 +2464,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new RamlParser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/production/raml10/xsdexample/api.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/api.raml")
 //        .asFuture
 //    } yield {
 //      val location: Option[String] = unit
@@ -2479,7 +2479,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //        .location
 //        .asOption
 //      location.isDefined should be(true)
-//      location.get should be("file://amf-client/shared/src/test/resources/production/raml10/xsdexample/example.xsd")
+//      location.get should be("file://amf-cli/shared/src/test/resources/production/raml10/xsdexample/example.xsd")
 //    }
 //  }
 //
@@ -2488,7 +2488,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      _ <- AMF.init().asFuture
 //      unit <- new RamlParser()
 //        .parseFileAsync(
-//          "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml")
+//          "file://amf-cli/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml")
 //        .asFuture
 //    } yield {
 //      val shape = unit
@@ -2507,7 +2507,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      _ <- AMF.init().asFuture
 //      unit <- new RamlParser()
 //        .parseFileAsync(
-//          "file://amf-client/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml")
+//          "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml")
 //        .asFuture
 //    } yield {
 //      val shape = unit
@@ -2537,7 +2537,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new Raml08Parser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/clients/params-order.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/clients/params-order.raml")
 //        .asFuture
 //      v <- Future.successful(new Raml08Resolver().resolve(unit))
 //    } yield {
@@ -2611,7 +2611,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      a <- AMF
 //        .raml08Parser()
 //        .parseFileAsync(
-//          "file://amf-client/shared/src/test/resources/parser-results/raml/error/not-existing-http-include.raml")
+//          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/not-existing-http-include.raml")
 //        .asFuture
 //      r <- AMF.validate(a, Raml08Profile, RAMLStyle).asFuture
 //    } yield {
@@ -2643,7 +2643,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      _ <- AMF.init().asFuture
 //      a <- AMF
 //        .raml10Parser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml")
 //        .asFuture
 //    } yield {
 //      val r          = new Raml10Resolver().resolve(a)
@@ -2652,7 +2652,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      val option = getOp.request.payloads.asSeq.head.schema
 //        .asInstanceOf[AnyShape]
 //        .trackedExample(
-//          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
+//          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
 //        .asOption
 //      option.isDefined should be(true)
 //      option.get.annotations().isTracked should be(true)
@@ -2661,14 +2661,14 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      val shape   = getPost.request.payloads.asSeq.head.schema.asInstanceOf[AnyShape]
 //      val option2 = shape
 //        .trackedExample(
-//          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
+//          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
 //        .asOption
 //      option2.isDefined should be(true)
 //      option2.get.annotations().isTracked should be(true)
 //
 //      shape.examples.asSeq
 //        .find(_.id.equals(
-//          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/example/declared"))
+//          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/example/declared"))
 //        .head
 //        .annotations()
 //        .isTracked should be(false)
@@ -2679,7 +2679,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new Raml10Parser()
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/clients/double-field.raml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/clients/double-field.raml")
 //        .asFuture
 //    } yield {
 //      val shape = unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[ScalarShape]
@@ -2738,7 +2738,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    for {
 //      _ <- AMF.init().asFuture
 //      unit <- new Oas20YamlParser(environment)
-//        .parseFileAsync("file://amf-client/shared/src/test/resources/clients/oas20-yaml.yaml")
+//        .parseFileAsync("file://amf-cli/shared/src/test/resources/clients/oas20-yaml.yaml")
 //        .asFuture
 //    } yield {
 //      val location: String = unit.location
@@ -2752,7 +2752,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    recoverToSucceededIf[UnsupportedVendorException] {
 //      AMF.init().asFuture.flatMap { _ =>
 //        new Oas20Parser(environment)
-//          .parseFileAsync("file://amf-client/shared/src/test/resources/clients/oas20-yaml.yaml")
+//          .parseFileAsync("file://amf-cli/shared/src/test/resources/clients/oas20-yaml.yaml")
 //          .asFuture
 //          .map { _ =>
 //            succeed
@@ -2763,7 +2763,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test path resolution OAS for 'file:///' prefix") {
-//    val file    = platform.fs.syncFile("amf-client/shared/src/test/resources/clients/toupdir-include/spec/swagger.json")
+//    val file    = platform.fs.syncFile("amf-cli/shared/src/test/resources/clients/toupdir-include/spec/swagger.json")
 //    val absPath = getAbsolutePath(file.path)
 //    for {
 //      _      <- AMF.init().asFuture
@@ -2814,7 +2814,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //
 //  test("Test Json relative ref with absolute path as input") {
 //    val file =
-//      platform.fs.syncFile("amf-client/shared/src/test/resources/production/json-schema-relative-ref/api.raml")
+//      platform.fs.syncFile("amf-cli/shared/src/test/resources/production/json-schema-relative-ref/api.raml")
 //    val absPath = getAbsolutePath(file.path)
 //
 //    for {
@@ -2827,7 +2827,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test quoted default value") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/default-with-quotes.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/default-with-quotes.raml"
 //    for {
 //      _    <- AMF.init().asFuture
 //      unit <- new RamlParser().parseFileAsync(file).asFuture
@@ -2891,7 +2891,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test emission of json schema of a shape with a recursive type") {
-//    val api = "file://amf-client/shared/src/test/resources/validations/recursive-types.raml"
+//    val api = "file://amf-cli/shared/src/test/resources/validations/recursive-types.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(api).asFuture
@@ -2942,7 +2942,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //
 //  // This test is here because of I need to resolve with default and then validate
 //  test("Test json schema emittion of recursive union shape") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/recursion-union.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/recursion-union.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(file).asFuture
@@ -2954,7 +2954,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test external fragment that includes a reference") {
-//    val file = "file://amf-client/shared/src/test/resources/resolution/ex-frag-with-refs/api.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/resolution/ex-frag-with-refs/api.raml"
 //    for {
 //      _    <- AMF.init().asFuture
 //      unit <- new RamlParser().parseFileAsync(file).asFuture
@@ -3053,7 +3053,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test non existent resource types") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/resource_types/non-existent-include.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/resource_types/non-existent-include.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(file).asFuture
@@ -3065,7 +3065,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Resource type merging of identical types referenced differently") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/rt-type-merging/api.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/rt-type-merging/api.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(file).asFuture
@@ -3077,7 +3077,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Test non existent traits") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/traits/non-existent-include.raml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/traits/non-existent-include.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new RamlParser().parseFileAsync(file).asFuture
@@ -3208,7 +3208,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 ////  }
 //
 //  test("Test emission of json schema with specified version") {
-//    val api = "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml"
+//    val api = "file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new Async20Parser().parseFileAsync(api).asFuture
@@ -3285,7 +3285,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //          .asInstanceOf[Document]
 //          .declares
 //          .asSeq
-//          .find(_._internal.id == "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/conditional-subschemas")
+//          .find(_._internal.id == "file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/conditional-subschemas")
 //          .get
 //          .asInstanceOf[NodeShape]
 //      val generated = buildJsonSchema(shape, options)
@@ -3328,8 +3328,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //
 //  test("Test custom validation to root document") {
 //
-//    val instance          = "file://amf-client/shared/src/test/resources/custom/example.raml"
-//    val validationProfile = "file://amf-client/shared/src/test/resources/custom/profile.raml"
+//    val instance          = "file://amf-cli/shared/src/test/resources/custom/example.raml"
+//    val validationProfile = "file://amf-cli/shared/src/test/resources/custom/profile.raml"
 //
 //    for {
 //      _          <- AMF.init().asFuture
@@ -3395,7 +3395,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //
 //  test("OAS 3.0 Response examples for a same type have different ids") {
 //    val file =
-//      "file://amf-client/shared/src/test/resources/validations/oas3/several-single-examples-for-same-type/api.json"
+//      "file://amf-cli/shared/src/test/resources/validations/oas3/several-single-examples-for-same-type/api.json"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new Oas30Parser().parseFileAsync(file).asFuture
@@ -3408,7 +3408,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Oas and JsonSchema refs don't have double-linking for refs") {
-//    val file = "file://amf-client/shared/src/test/resources/validations/oas2/double-linking.yaml"
+//    val file = "file://amf-cli/shared/src/test/resources/validations/oas2/double-linking.yaml"
 //    for {
 //      _    <- AMF.init().asFuture
 //      unit <- new Oas20YamlParser().parseFileAsync(file).asFuture
@@ -3420,7 +3420,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  }
 //
 //  test("Avoid duplicate errors from invalid json in parsing and extends resolution") {
-//    val api = "file://amf-client/shared/src/test/resources/validations/raml/invalid-json-example-included/api.raml"
+//    val api = "file://amf-cli/shared/src/test/resources/validations/raml/invalid-json-example-included/api.raml"
 //    for {
 //      _        <- AMF.init().asFuture
 //      unit     <- new Raml10Parser().parseFileAsync(api).asFuture

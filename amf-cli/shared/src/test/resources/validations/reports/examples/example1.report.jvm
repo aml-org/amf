@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/examples/example1.raml
+Model: file://amf-cli/shared/src/test/resources/validations/examples/example1.raml
 Profile: RAML 1.0
 Conforms? true
 Number of results: 1
@@ -11,4 +11,4 @@ Level: Warning
   Target: 
   Property: 
   Position: Some(LexicalInformation([(34,12)-(34,18)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/example1.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/example1.raml

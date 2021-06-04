@@ -47,5 +47,5 @@ class OasParserErrorTest extends ParserErrorTest {
     )
   }
 
-  override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/oas"
+  override protected val basePath: String = "file://amf-cli/shared/src/test/resources/parser-results/oas"
 }

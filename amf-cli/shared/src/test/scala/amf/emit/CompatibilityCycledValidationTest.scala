@@ -20,7 +20,7 @@ import scala.concurrent.Future.successful
 
 class CompatibilityCycledValidationTest extends CompatibilityCycle {
 
-  override val basePath = "amf-client/shared/src/test/resources/compatibility/"
+  override val basePath = "amf-cli/shared/src/test/resources/compatibility/"
 
   testCycleCompatibility("oas30", Oas30JsonHint, Raml10, basePath)
   testCycleCompatibility("oas20", Oas20JsonHint, Raml10, basePath)

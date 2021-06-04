@@ -128,8 +128,8 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
     }
   }
 
-  private val basePath: String   = "file://amf-client/shared/src/test/resources/tojson/tojsonschema/source/"
-  private val goldenPath: String = "amf-client/shared/src/test/resources/tojson/tojsonschema/schemas/"
+  private val basePath: String   = "file://amf-cli/shared/src/test/resources/tojson/tojsonschema/source/"
+  private val goldenPath: String = "amf-cli/shared/src/test/resources/tojson/tojsonschema/schemas/"
 
   private def parse(file: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
     val client = config.createClient()

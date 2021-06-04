@@ -17,7 +17,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://amf-client/shared/src/test/resources/vocabularies2/production/validation/"
+  val basePath = "file://amf-cli/shared/src/test/resources/vocabularies2/production/validation/"
 
   private def cycle(exampleFile: String, hint: Hint, syntax: Syntax, target: Vendor): Future[String] = {
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)

@@ -24,7 +24,7 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://amf-client/shared/src/test/resources/validations/"
+  val basePath = "file://amf-cli/shared/src/test/resources/validations/"
 
   def findShape(library: BaseUnit, name: String): AnyShape = {
     val found = library.asInstanceOf[Module].declares.find { e =>

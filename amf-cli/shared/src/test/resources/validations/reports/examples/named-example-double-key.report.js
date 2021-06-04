@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/examples/named-example-double-key/api.raml
+Model: file://amf-cli/shared/src/test/resources/validations/examples/named-example-double-key/api.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -10,7 +10,7 @@ Level: Violation
 should have required property 'name'
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/named-example-double-key/api.raml#/declarations/types/Person/example/a
-  Property: file://amf-client/shared/src/test/resources/validations/examples/named-example-double-key/api.raml#/declarations/types/Person/example/a
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/named-example-double-key/api.raml#/declarations/types/Person/example/a
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/named-example-double-key/api.raml#/declarations/types/Person/example/a
   Position: Some(LexicalInformation([(2,0)-(4,9)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/named-example-double-key/example.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/examples/named-example-double-key/example.raml

@@ -57,7 +57,7 @@ validations:
             doc.customDomainProperties / core.name:
               in: [ "collection" ]
       - propertyConstraints:
-          file://amf-client/shared/src/test/resources/validations/aip/standards.raml#/declarations/annotations/collection:
+          file://amf-cli/shared/src/test/resources/validations/aip/standards.raml#/declarations/annotations/collection:
             minCount: 1
             nested:
               propertyConstraints:

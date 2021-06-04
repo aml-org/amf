@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/file-schema-override/api.raml
+Model: file://amf-cli/shared/src/test/resources/validations/file-schema-override/api.raml
 Profile: 
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-type-definition
   Message: 'file' cannot be used to name a custom type
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/file-schema-override/api.raml#/declarations/schemas
+  Target: file://amf-cli/shared/src/test/resources/validations/file-schema-override/api.raml#/declarations/schemas
   Property: 
   Position: Some(LexicalInformation([(6,4)-(6,8)]))
-  Location: file://amf-client/shared/src/test/resources/validations/file-schema-override/api.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/file-schema-override/api.raml

@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+Model: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 10
@@ -8,79 +8,79 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 10000000000000000 is not less or equal to 9999999999999999
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong0
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong0
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong0
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong0
   Position: Some(LexicalInformation([(9,14)-(9,31)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 10000000000000001 is not less or equal to 9999999999999999
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong1
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong1
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong1
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong1
   Position: Some(LexicalInformation([(10,14)-(10,31)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 10000000000000002 is not less or equal to 9999999999999999
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong2
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong2
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong2
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong2
   Position: Some(LexicalInformation([(11,14)-(11,31)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 10000000000000003 is not less or equal to 9999999999999999
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong3
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong3
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong3
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMax/example/wrong3
   Position: Some(LexicalInformation([(12,14)-(12,31)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 9999999999999999 is not greater or equal to 10000000000000000
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMin/example/wrong1
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMin/example/wrong1
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMin/example/wrong1
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigNumberMin/example/wrong1
   Position: Some(LexicalInformation([(19,14)-(19,30)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 10000000000000000 is not less or equal to 9999999999999999
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong0
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong0
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong0
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong0
   Position: Some(LexicalInformation([(26,14)-(26,31)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 10000000000000001 is not less or equal to 9999999999999999
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong1
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong1
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong1
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong1
   Position: Some(LexicalInformation([(27,14)-(27,31)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 10000000000000002 is not less or equal to 9999999999999999
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong2
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong2
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong2
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong2
   Position: Some(LexicalInformation([(28,14)-(28,31)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 10000000000000003 is not less or equal to 9999999999999999
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong3
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong3
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong3
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMax/example/wrong3
   Position: Some(LexicalInformation([(29,14)-(29,31)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 9999999999999999 is not greater or equal to 10000000000000000
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMin/example/wrong1
-  Property: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMin/example/wrong1
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMin/example/wrong1
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml#/declarations/types/scalar/BigIntMin/example/wrong1
   Position: Some(LexicalInformation([(36,14)-(36,30)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/big-number-examples.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/big-number-examples.raml

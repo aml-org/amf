@@ -5,7 +5,7 @@ import amf.io.FunSuiteCycleTests
 
 class EscapeCycleTest extends FunSuiteCycleTests {
 
-  override val basePath = "amf-client/shared/src/test/resources/escape/"
+  override val basePath = "amf-cli/shared/src/test/resources/escape/"
 
   test("Escape test with problematic characters") {
     cycle("simple-api.raml", Raml10YamlHint)

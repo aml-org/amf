@@ -4,7 +4,7 @@ import amf.core.remote.{Oas20, Raml08, Raml08YamlHint, Raml10}
 import amf.io.FunSuiteCycleTests
 
 class Cycle08ToVersion extends FunSuiteCycleTests {
-  override val basePath: String = "amf-client/shared/src/test/resources/upanddown/raml08/"
+  override val basePath: String = "amf-cli/shared/src/test/resources/upanddown/raml08/"
 
   case class FixtureData(name: String, apiFrom: String, apiTo: String)
 

@@ -24,7 +24,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
   test("test source and lexical info in response name oas") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",
                     Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
@@ -43,7 +43,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test source and lexical info in parameter name oas") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
                     Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
@@ -57,7 +57,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test empty oas parameter") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/empty-parameter.json",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/empty-parameter.json",
                     Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
@@ -71,7 +71,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test annotation at property path") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/property-path.yaml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/property-path.yaml",
                     Oas20YamlHint)
     } yield {
       val document                       = unit.asInstanceOf[Document]
@@ -120,7 +120,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test annotation at raml property path") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/property-path.raml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/property-path.raml",
                     Raml10YamlHint)
     } yield {
       val document                       = unit.asInstanceOf[Document]
@@ -171,7 +171,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test raml resource type position") {
     for {
-      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/resource-type.raml",
+      unit <- build("file://amf-cli/shared/src/test/resources/nodes-annotations-examples/resource-type.raml",
                     Raml10YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
@@ -185,7 +185,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("test raml ReferenceTarget annotations - ExternalFragment") {
-    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
+    val uri = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
     for {
       unit <- build(s"${uri}root.raml", Raml10YamlHint)
     } yield {
@@ -198,7 +198,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("test raml ReferenceTarget annotations - DataType") {
-    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
+    val uri = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
     for {
       unit <- build(s"${uri}root-2.raml", Raml10YamlHint)
     } yield {
@@ -211,7 +211,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("test raml ReferenceTarget annotations - double External") {
-    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
+    val uri = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
     for {
       unit <- build(s"${uri}root-3.raml", Raml10YamlHint)
     } yield {
@@ -232,7 +232,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("test raml ReferenceTarget annotations - double inclusion of same file") {
-    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
+    val uri = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
     for {
       unit <- build(s"${uri}root-4.raml", Raml10YamlHint)
     } yield {
@@ -249,7 +249,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("test raml ReferenceTarget annotations coincides with references (invalid inclusion)") {
     val uri =
-      "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/invalid-include/"
+      "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/reference-targets/invalid-include/"
     for {
       unit <- build(s"${uri}api.raml", Raml10YamlHint)
     } yield {
@@ -264,7 +264,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Test ExternalJsonSchemaShape in JSON ref to shape in external fragment") {
-    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/ref-to-shape/api.yaml"
+    val uri = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/ref-to-shape/api.yaml"
     for {
       unit <- build(uri, Oas20YamlHint)
     } yield {

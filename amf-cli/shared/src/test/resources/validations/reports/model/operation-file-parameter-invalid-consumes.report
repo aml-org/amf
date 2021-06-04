@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-operation.json
+Model: file://amf-cli/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-operation.json
 Profile: OAS 2.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-consumes-with-file-parameter
   Message: Consumes must be either 'multipart/form-data', 'application/x-www-form-urlencoded', or both when a file parameter is present
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-operation.json#/web-api/end-points/%2FaPath/post/request/formData/formData/property/file-parameter
+  Target: file://amf-cli/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-operation.json#/web-api/end-points/%2FaPath/post/request/formData/formData/property/file-parameter
   Property: 
   Position: Some(LexicalInformation([(12,10)-(17,11)]))
-  Location: file://amf-client/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-operation.json
+  Location: file://amf-cli/shared/src/test/resources/validations/file-parameter-consumes/parameter-in-operation.json

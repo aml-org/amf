@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/raml/overlay-inferred-values/base.raml
+Model: file://amf-cli/shared/src/test/resources/validations/raml/overlay-inferred-values/base.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -11,4 +11,4 @@ Level: Violation
   Target: http://a.ml/vocabularies/apiContract#required
   Property: 
   Position: Some(LexicalInformation([(9,8)-(10,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/overlay-inferred-values/invalid-overlay.raml
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/overlay-inferred-values/invalid-overlay.raml

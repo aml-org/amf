@@ -5,9 +5,9 @@ import amf.core.remote.{Async20JsonHint, Async20YamlHint, Hint}
 import org.scalatest.Matchers
 
 class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
-  val asyncPath: String            = "file://amf-client/shared/src/test/resources/validations/async20/"
+  val asyncPath: String            = "file://amf-cli/shared/src/test/resources/validations/async20/"
   override val basePath: String    = asyncPath + "validations/"
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/async20/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/async20/"
   override val hint: Hint          = Async20YamlHint
 
   test("Required channel object") {

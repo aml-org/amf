@@ -10,7 +10,7 @@ import scala.concurrent.Future
 
 class AsyncParserErrorTest extends ParserErrorTest {
 
-  override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/async"
+  override protected val basePath: String = "file://amf-cli/shared/src/test/resources/parser-results/async"
 
   test("Parameter is not YMap") {
     validate(

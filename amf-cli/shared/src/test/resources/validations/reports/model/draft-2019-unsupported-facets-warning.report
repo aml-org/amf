@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml
+Model: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml
 Profile: RAML 1.0
 Conforms? true
 Number of results: 7
@@ -11,15 +11,15 @@ Level: Warning
   Target: null
   Property: 
   Position: Some(LexicalInformation([(5,4)-(23,5)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/schema.json
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/schema.json
 
 - Source: http://a.ml/vocabularies/amf/parser#NodeShape-unevaluatedPropertiesSchema-maxCount
   Message: Unevaluated properties facet won't be taken into account in validation
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/schema
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/schema
   Property: http://a.ml/vocabularies/shapes#unevaluatedPropertiesSchema
   Position: Some(LexicalInformation([(7,6)-(10,7)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/schema.json
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/schema.json
 
 - Source: http://a.ml/vocabularies/amf/validation#untranslatable-draft-2019-fields
   Message:  minContains, maxContains won't be used for validation
@@ -27,7 +27,7 @@ Level: Warning
   Target: null
   Property: 
   Position: Some(LexicalInformation([(12,8)-(21,9)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/schema.json
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/schema.json
 
 - Source: http://a.ml/vocabularies/amf/validation#untranslatable-draft-2019-fields
   Message: unevaluatedItems won't be used for validation
@@ -35,28 +35,28 @@ Level: Warning
   Target: null
   Property: 
   Position: Some(LexicalInformation([(12,8)-(21,9)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/schema.json
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/schema.json
 
 - Source: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMinCount-maxCount
   Message: minContains facet won't be taken into account in validation
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/schema/property/arrayProp/array/arrayProp
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/schema/property/arrayProp/array/arrayProp
   Property: http://www.w3.org/ns/shacl#qualifiedMinCount
   Position: Some(LexicalInformation([(15,25)-(15,26)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/schema.json
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/schema.json
 
 - Source: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMaxCount-maxCount
   Message: maxContains facet won't be taken into account in validation
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/schema/property/arrayProp/array/arrayProp
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/schema/property/arrayProp/array/arrayProp
   Property: http://www.w3.org/ns/shacl#qualifiedMaxCount
   Position: Some(LexicalInformation([(16,25)-(16,26)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/schema.json
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/schema.json
 
 - Source: http://a.ml/vocabularies/amf/parser#ArrayShape-unevaluatedItemsSchema-maxCount
   Message: Unevaluated items facet won't be taken into account in validation
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/schema/property/arrayProp/array/arrayProp
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/draft-2019-unsupported-facets-warning.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/schema/property/arrayProp/array/arrayProp
   Property: http://a.ml/vocabularies/shapes#unevaluatedItemsSchema
   Position: Some(LexicalInformation([(17,10)-(20,11)]))
-  Location: file://amf-client/shared/src/test/resources/validations/raml/draft-2019/schema.json
+  Location: file://amf-cli/shared/src/test/resources/validations/raml/draft-2019/schema.json

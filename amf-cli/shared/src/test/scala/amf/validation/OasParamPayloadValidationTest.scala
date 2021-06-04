@@ -9,7 +9,7 @@ import amf.plugins.domain.apicontract.models.api.WebApi
 
 class OasParamPayloadValidationTest extends ApiShapePayloadValidationTest {
 
-  override val basePath = "file://amf-client/shared/src/test/resources/validations/param-payload/"
+  override val basePath = "file://amf-cli/shared/src/test/resources/validations/param-payload/"
   protected def fixtureList: Seq[Fixture] = Seq(
     Fixture("param validation", "oas_data.json", "2015-07-20T21:00:00", conforms = true, hint = Oas20JsonHint),
     Fixture("param validation quoted number in string",

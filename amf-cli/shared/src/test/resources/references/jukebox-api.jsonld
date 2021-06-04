@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#server": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/http%3A%2F%2Fjukebox.api.com",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/http%3A%2F%2Fjukebox.api.com",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -34,7 +34,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/http%3A%2F%2Fjukebox.api.com/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/http%3A%2F%2Fjukebox.api.com/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -56,7 +56,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/http%3A%2F%2Fjukebox.api.com"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/http%3A%2F%2Fjukebox.api.com"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -77,7 +77,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -89,7 +89,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/get",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -101,7 +101,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -109,7 +109,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -125,7 +125,7 @@
             ],
             "http://a.ml/vocabularies/document#extends": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection",
                 "@type": [
                   "http://a.ml/vocabularies/document#ParametrizedResourceType",
                   "http://a.ml/vocabularies/document#ParametrizedDeclaration",
@@ -138,7 +138,7 @@
                 ],
                 "http://a.ml/vocabularies/document#target": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection",
                     "@type": [
                       "http://a.ml/vocabularies/document#ResourceType",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
@@ -151,43 +151,43 @@
                     ],
                     "http://a.ml/vocabularies/document#dataNode": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1",
                         "@type": [
                           "http://a.ml/vocabularies/data#Object"
                         ],
                         "http://a.ml/vocabularies/data#get": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2",
+                            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2",
                             "@type": [
                               "http://a.ml/vocabularies/data#Object"
                             ],
                             "http://a.ml/vocabularies/data#responses": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3",
+                                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Object"
                                 ],
                                 "http://a.ml/vocabularies/data#200": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4",
+                                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Object"
                                     ],
                                     "http://a.ml/vocabularies/data#body": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5",
+                                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5",
                                         "@type": [
                                           "http://a.ml/vocabularies/data#Object"
                                         ],
                                         "http://a.ml/vocabularies/data#application%2Fjson": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6",
+                                            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6",
                                             "@type": [
                                               "http://a.ml/vocabularies/data#Object"
                                             ],
                                             "http://a.ml/vocabularies/data#example": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8",
+                                                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8",
                                                 "@type": [
                                                   "http://a.ml/vocabularies/data#Scalar"
                                                 ],
@@ -199,7 +199,7 @@
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                                   {
-                                                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8/source-map",
+                                                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8/source-map",
                                                     "@type": [
                                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                                     ],
@@ -207,7 +207,7 @@
                                                       {
                                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                                           {
-                                                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8"
+                                                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8"
                                                           }
                                                         ],
                                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -223,7 +223,7 @@
                                             ],
                                             "http://a.ml/vocabularies/data#type": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7",
+                                                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7",
                                                 "@type": [
                                                   "http://a.ml/vocabularies/data#Scalar"
                                                 ],
@@ -235,7 +235,7 @@
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                                   {
-                                                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7/source-map",
+                                                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7/source-map",
                                                     "@type": [
                                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                                     ],
@@ -243,7 +243,7 @@
                                                       {
                                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                                           {
-                                                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7"
+                                                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7"
                                                           }
                                                         ],
                                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -259,7 +259,7 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#sources": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/source-map",
+                                                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/source-map",
                                                 "@type": [
                                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                                 ],
@@ -267,7 +267,7 @@
                                                   {
                                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                                       {
-                                                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6"
+                                                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6"
                                                       }
                                                     ],
                                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -281,7 +281,7 @@
                                                   {
                                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                                       {
-                                                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6"
+                                                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6"
                                                       }
                                                     ],
                                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -297,7 +297,7 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#sources": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/source-map",
+                                            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/source-map",
                                             "@type": [
                                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                             ],
@@ -305,7 +305,7 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
-                                                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5"
+                                                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5"
                                                   }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -319,7 +319,7 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
-                                                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5"
+                                                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5"
                                                   }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -335,7 +335,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -343,7 +343,7 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4"
+                                                "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -357,7 +357,7 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4"
+                                                "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -373,7 +373,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -381,7 +381,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3"
+                                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -395,7 +395,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3"
+                                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -411,7 +411,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -419,7 +419,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2"
+                                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -433,7 +433,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2"
+                                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -449,7 +449,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -457,7 +457,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1"
+                                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -471,7 +471,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1"
+                                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -492,7 +492,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -500,7 +500,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection"
+                                "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -516,7 +516,7 @@
                 ],
                 "http://a.ml/vocabularies/document#variable": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/exampleItem",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/exampleItem",
                     "@type": [
                       "http://a.ml/vocabularies/document#VariableValue",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -528,7 +528,7 @@
                     ],
                     "http://a.ml/vocabularies/document#value": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/scalar_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/scalar_1",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -540,7 +540,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/scalar_1/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/scalar_1/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -548,7 +548,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/scalar_1"
+                                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/scalar_1"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -564,7 +564,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/exampleItem/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/exampleItem/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -572,7 +572,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/exampleItem"
+                                "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/exampleItem"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -588,7 +588,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -596,7 +596,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/collection"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -612,7 +612,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -620,7 +620,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/end-points/%2Fsongs"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -636,7 +636,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -644,7 +644,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -682,7 +682,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -710,7 +710,7 @@
     ],
     "http://a.ml/vocabularies/document#references": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-include-song.schema",
+        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-include-song.schema",
         "@type": [
           "http://a.ml/vocabularies/document#ExternalFragment",
           "http://a.ml/vocabularies/document#Fragment",
@@ -718,7 +718,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-include-song.schema#/external",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-include-song.schema#/external",
             "@type": [
               "http://a.ml/vocabularies/document#ExternalDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -737,7 +737,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-include-song.sample",
+        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-include-song.sample",
         "@type": [
           "http://a.ml/vocabularies/document#ExternalFragment",
           "http://a.ml/vocabularies/document#Fragment",
@@ -745,7 +745,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-include-song.sample#/external",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-include-song.sample#/external",
             "@type": [
               "http://a.ml/vocabularies/document#ExternalDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -766,7 +766,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song",
+        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -780,7 +780,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -793,7 +793,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/scalar/songId",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/scalar/songId",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -822,7 +822,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/scalar/songId/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/scalar/songId/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -830,7 +830,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/scalar/songId"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/scalar/songId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -868,7 +868,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/scalar/songId"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/scalar/songId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -906,7 +906,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -926,7 +926,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songId"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -940,7 +940,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -953,7 +953,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/scalar/songTitle",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/scalar/songTitle",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -972,7 +972,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/scalar/songTitle/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/scalar/songTitle/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -980,7 +980,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/scalar/songTitle"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/scalar/songTitle"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1006,7 +1006,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/scalar/songTitle"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/scalar/songTitle"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1032,7 +1032,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1052,7 +1052,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/songTitle"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1066,7 +1066,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -1079,7 +1079,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/scalar/albumId",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/scalar/albumId",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -1108,7 +1108,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/scalar/albumId/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/scalar/albumId/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -1116,7 +1116,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/scalar/albumId"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/scalar/albumId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1154,7 +1154,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/scalar/albumId"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/scalar/albumId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1192,7 +1192,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1212,7 +1212,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/property/albumId"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1233,12 +1233,12 @@
         ],
         "http://a.ml/vocabularies/document#reference-id": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-include-song.schema#/external"
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-include-song.schema#/external"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1246,7 +1246,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1260,7 +1260,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1286,7 +1286,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1312,7 +1312,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1326,7 +1326,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection",
+        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection",
         "@type": [
           "http://a.ml/vocabularies/document#ResourceType",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
@@ -1339,43 +1339,43 @@
         ],
         "http://a.ml/vocabularies/document#dataNode": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1",
             "@type": [
               "http://a.ml/vocabularies/data#Object"
             ],
             "http://a.ml/vocabularies/data#get": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2",
                 "@type": [
                   "http://a.ml/vocabularies/data#Object"
                 ],
                 "http://a.ml/vocabularies/data#responses": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3",
                     "@type": [
                       "http://a.ml/vocabularies/data#Object"
                     ],
                     "http://a.ml/vocabularies/data#200": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4",
                         "@type": [
                           "http://a.ml/vocabularies/data#Object"
                         ],
                         "http://a.ml/vocabularies/data#body": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5",
+                            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5",
                             "@type": [
                               "http://a.ml/vocabularies/data#Object"
                             ],
                             "http://a.ml/vocabularies/data#application%2Fjson": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6",
+                                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6",
                                 "@type": [
                                   "http://a.ml/vocabularies/data#Object"
                                 ],
                                 "http://a.ml/vocabularies/data#example": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8",
+                                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar"
                                     ],
@@ -1387,7 +1387,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -1395,7 +1395,7 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8"
+                                                "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_8"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1411,7 +1411,7 @@
                                 ],
                                 "http://a.ml/vocabularies/data#type": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7",
+                                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar"
                                     ],
@@ -1423,7 +1423,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -1431,7 +1431,7 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7"
+                                                "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/scalar_7"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1447,7 +1447,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -1455,7 +1455,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6"
+                                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1469,7 +1469,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6"
+                                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/object_6"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1485,7 +1485,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -1493,7 +1493,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5"
+                                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1507,7 +1507,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5"
+                                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/object_5"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1523,7 +1523,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1531,7 +1531,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4"
+                                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1545,7 +1545,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4"
+                                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/object_4"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1561,7 +1561,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -1569,7 +1569,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3"
+                                "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1583,7 +1583,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3"
+                                "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/object_3"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1599,7 +1599,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -1607,7 +1607,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1621,7 +1621,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2"
+                            "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/object_2"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1637,7 +1637,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1645,7 +1645,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1659,7 +1659,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1"
+                        "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/object_1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1680,7 +1680,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1688,7 +1688,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection"
+                    "@value": "file://amf-cli/shared/src/test/resources/references/jukebox-api.raml#/declarations/resourceTypes/collection"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

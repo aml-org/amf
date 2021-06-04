@@ -64,7 +64,7 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
       .head
       .schema
 
-  override protected val basePath: String = "file://amf-client/shared/src/test/resources/validations/body-payload/"
+  override protected val basePath: String = "file://amf-cli/shared/src/test/resources/validations/body-payload/"
 
   override def transform(unit: BaseUnit, client: AMFGraphClient): BaseUnit = {
 

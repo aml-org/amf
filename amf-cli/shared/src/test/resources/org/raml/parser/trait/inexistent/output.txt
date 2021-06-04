@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/parser/trait/inexistent/input.raml
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/trait/inexistent/input.raml
 Profile: 
 Conforms? false
 Number of results: 2
@@ -11,7 +11,7 @@ Level: Violation
   Target: 
   Property: 
   Position: Some(LexicalInformation([(5,10)-(5,21)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/trait/inexistent/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/trait/inexistent/input.raml
 
 - Source: http://a.ml/vocabularies/amf/core#declaration-not-found
   Message: Trait nonexistent-either not found
@@ -19,4 +19,4 @@ Level: Violation
   Target: 
   Property: 
   Position: Some(LexicalInformation([(7,8)-(7,26)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/trait/inexistent/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/trait/inexistent/input.raml

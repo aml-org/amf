@@ -5,8 +5,8 @@ import amf.{Raml08Profile, Raml10Profile}
 
 class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
-  override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
-  override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/model/"
+  override val basePath    = "file://amf-cli/shared/src/test/resources/validations/"
+  override val reportsPath = "amf-cli/shared/src/test/resources/validations/reports/model/"
   override val hint: Hint  = Raml10YamlHint
 
   test("Load dialect") {

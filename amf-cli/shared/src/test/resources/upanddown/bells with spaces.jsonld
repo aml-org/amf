@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#server": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/http%3A%2F%2Flocalhost%2Fapi",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/http%3A%2F%2Flocalhost%2Fapi",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -34,7 +34,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/http%3A%2F%2Flocalhost%2Fapi/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/http%3A%2F%2Flocalhost%2Fapi/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -56,7 +56,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/http%3A%2F%2Flocalhost%2Fapi"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/http%3A%2F%2Flocalhost%2Fapi"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -77,7 +77,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -89,7 +89,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -101,7 +101,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -118,7 +118,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -130,7 +130,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -149,7 +149,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#inherits": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_1",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -158,7 +158,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -173,7 +173,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_1/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_1/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -181,7 +181,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_1"
+                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_1"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -197,7 +197,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -205,7 +205,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -231,7 +231,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -247,7 +247,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -255,7 +255,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/application%2Fjson"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -271,7 +271,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -291,7 +291,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/200"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -307,7 +307,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -327,7 +327,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -341,7 +341,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -353,14 +353,14 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -372,7 +372,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -391,7 +391,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#inherits": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_2",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_2",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -400,7 +400,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -415,7 +415,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_2/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_2/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -423,7 +423,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_2"
+                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/linked_2"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -439,7 +439,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -447,7 +447,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -473,7 +473,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -489,7 +489,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -497,7 +497,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -513,7 +513,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -537,7 +537,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -545,7 +545,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/post"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -561,7 +561,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -569,7 +569,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/end-points/%2Fbells"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -585,7 +585,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -593,7 +593,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -631,7 +631,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -659,7 +659,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -673,7 +673,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -686,7 +686,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id/scalar/id",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id/scalar/id",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -705,7 +705,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id/scalar/id/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id/scalar/id/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -713,7 +713,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id/scalar/id"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id/scalar/id"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -739,7 +739,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -747,7 +747,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/id"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -761,7 +761,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -774,7 +774,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name/scalar/name",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -793,7 +793,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name/scalar/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name/scalar/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -801,7 +801,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -827,7 +827,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -835,7 +835,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -856,7 +856,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -864,7 +864,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -890,7 +890,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -916,7 +916,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/types/Bell"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

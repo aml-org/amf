@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/rootAsset",
+        "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/rootAsset",
         "@type": [
           "http://a.ml/vocabularies/document#Document",
           "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Document",
@@ -29,7 +29,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/web-api",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/web-api",
             "@type": [
               "http://a.ml/vocabularies/apiContract#WebAPI",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/WebAPI",
@@ -45,7 +45,7 @@
         ],
         "http://a.ml/vocabularies/document#declares": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee",
+            "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
@@ -54,7 +54,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -63,7 +63,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
@@ -82,11 +82,11 @@
                     ],
                     "http://www.w3.org/ns/shacl#in": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType/list",
+                        "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType/list",
                         "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                         "http://www.w3.org/2000/01/rdf-schema#_1": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType/enum/scalar_3",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType/enum/scalar_3",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -107,7 +107,7 @@
                         ],
                         "http://www.w3.org/2000/01/rdf-schema#_2": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType/enum/scalar_2",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType/enum/scalar_2",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -128,7 +128,7 @@
                         ],
                         "http://www.w3.org/2000/01/rdf-schema#_3": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType/enum/scalar_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeType/scalar/employeeType/enum/scalar_1",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarNode",
@@ -168,7 +168,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeId",
+                "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeId",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
@@ -177,7 +177,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeId/scalar/employeeId",
+                    "@id": "file://amf-cli/shared/src/test/resources/transformations/declares/api.raml#/declarations/types/Employee/property/employeeId/scalar/employeeId",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",

@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -23,16 +23,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -44,10 +44,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -57,7 +57,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"
@@ -86,7 +86,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray",
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray",
         "@type": [
           "http://a.ml/vocabularies/shapes#MatrixShape",
           "http://a.ml/vocabularies/shapes#ArrayShape",
@@ -97,7 +97,7 @@
         ],
         "http://a.ml/vocabularies/shapes#items": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items",
             "@type": [
               "http://a.ml/vocabularies/shapes#ArrayShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -107,7 +107,7 @@
             ],
             "http://a.ml/vocabularies/shapes#items": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -117,7 +117,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person"
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -127,13 +127,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402/source-map/synthesized-field/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402/source-map/synthesized-field/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/document#link-target"
@@ -146,7 +146,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402/source-map/synthesized-field/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/document#link-label"
@@ -161,10 +161,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402"
+                            "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1651202402"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -185,16 +185,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#type-expression": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items/source-map/type-expression/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items/source-map/type-expression/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items"
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -206,10 +206,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items"
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/items/array/items"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -235,16 +235,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -256,7 +256,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -269,7 +269,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/shapes#items"
@@ -282,7 +282,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -295,10 +295,10 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -310,10 +310,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myArray"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -327,7 +327,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression",
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression",
         "@type": [
           "http://a.ml/vocabularies/shapes#MatrixShape",
           "http://a.ml/vocabularies/shapes#ArrayShape",
@@ -338,7 +338,7 @@
         ],
         "http://a.ml/vocabularies/shapes#items": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array",
             "@type": [
               "http://a.ml/vocabularies/shapes#ArrayShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -348,7 +348,7 @@
             ],
             "http://a.ml/vocabularies/shapes#items": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -358,7 +358,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person"
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
@@ -368,13 +368,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378/source-map/synthesized-field/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378/source-map/synthesized-field/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/document#link-target"
@@ -387,7 +387,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378/source-map/synthesized-field/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/document#link-label"
@@ -402,10 +402,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378"
+                            "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/link-1053393378"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -421,16 +421,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#type-expression": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array/source-map/type-expression/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array/source-map/type-expression/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array"
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -442,10 +442,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array"
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/items/array/default-array"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -471,16 +471,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -492,7 +492,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -505,7 +505,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -518,10 +518,10 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -533,10 +533,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/array/myTypeExpression"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -550,7 +550,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person",
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -565,7 +565,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -579,7 +579,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -599,16 +599,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -618,7 +618,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/scalar/name/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -647,13 +647,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map/synthesized-field/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map/synthesized-field/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#path"
@@ -666,7 +666,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -681,10 +681,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name"
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -694,7 +694,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/property/name/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/shapes#range"
@@ -718,13 +718,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/synthesized-field/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#closed"
@@ -739,7 +739,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#property"
@@ -752,7 +752,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -765,10 +765,10 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -780,10 +780,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/matrix-type-array.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

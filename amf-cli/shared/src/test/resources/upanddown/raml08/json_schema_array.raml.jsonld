@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#server": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/https%3A%2F%2Fqaws.instantpurchaseoffer.com%2Fapi",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/https%3A%2F%2Fqaws.instantpurchaseoffer.com%2Fapi",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -34,7 +34,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/https%3A%2F%2Fqaws.instantpurchaseoffer.com%2Fapi/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/https%3A%2F%2Fqaws.instantpurchaseoffer.com%2Fapi/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -56,7 +56,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/https%3A%2F%2Fqaws.instantpurchaseoffer.com%2Fapi"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/https%3A%2F%2Fqaws.instantpurchaseoffer.com%2Fapi"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -77,7 +77,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -85,7 +85,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -123,7 +123,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -151,7 +151,7 @@
     ],
     "http://a.ml/vocabularies/document#references": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/resources/200.json",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/resources/200.json",
         "@type": [
           "http://a.ml/vocabularies/document#ExternalFragment",
           "http://a.ml/vocabularies/document#Fragment",
@@ -159,7 +159,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/resources/200.json#/external",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/resources/200.json#/external",
             "@type": [
               "http://a.ml/vocabularies/document#ExternalDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -180,7 +180,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -194,7 +194,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -207,7 +207,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#TupleShape",
                   "http://a.ml/vocabularies/shapes#ArrayShape",
@@ -217,11 +217,11 @@
                 ],
                 "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/list",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/list",
                     "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                     "http://www.w3.org/2000/01/rdf-schema#_1": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -245,7 +245,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -253,7 +253,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -279,7 +279,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -293,7 +293,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/member0"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -316,7 +316,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -324,7 +324,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -338,7 +338,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -352,7 +352,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/array/questionnaires"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -378,7 +378,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -386,7 +386,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/property/questionnaires"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -407,12 +407,12 @@
         ],
         "http://a.ml/vocabularies/document#reference-id": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/resources/200.json#/external"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/resources/200.json#/external"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -420,7 +420,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -434,7 +434,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -460,7 +460,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -474,7 +474,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -488,7 +488,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

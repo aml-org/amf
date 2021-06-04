@@ -1,5 +1,5 @@
 [{
-    "@id": "file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml",
     "@type": [
         "http://a.ml/vocabularies/document#Document",
         "http://a.ml/vocabularies/document#Fragment",
@@ -8,14 +8,14 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
         {
-            "@id": "file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml#/api-documentation",
+            "@id": "file://amf-cli/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml#/api-documentation",
             "@type": [
                 "http://a.ml/vocabularies/apiContract#WebAPI",
                 "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/apiContract#server": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.raml#/web-api/api.example.com",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/basic.raml#/web-api/api.example.com",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Server",
                   "http://a.ml/vocabularies/document#DomainElement"

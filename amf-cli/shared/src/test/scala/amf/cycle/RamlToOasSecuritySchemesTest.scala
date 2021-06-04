@@ -5,7 +5,7 @@ import amf.io.FunSuiteCycleTests
 
 class RamlToOasSecuritySchemesTest extends FunSuiteCycleTests {
 
-  override def basePath: String = "amf-client/shared/src/test/resources/extensions/security-schemes/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/extensions/security-schemes/"
 
   test("Raml oauth 1.0 scheme in OAS 2.0") {
     cycle("oauth1.raml", "cycles/oauth1.oas2.json", Raml10YamlHint, Vendor.OAS20)

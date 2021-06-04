@@ -1,4 +1,4 @@
-package amf.cli.commands
+package amf.client.commands
 
 import amf.client.convert.ApiRegister
 import amf.client.environment.{AMFConfiguration, AMLConfiguration}

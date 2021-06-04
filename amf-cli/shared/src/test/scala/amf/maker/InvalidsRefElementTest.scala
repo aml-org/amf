@@ -26,7 +26,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
 
   test("Invalid link to Response with ast") {
-    build("file://amf-client/shared/src/test/resources/invalids/error-response.yaml", Oas20YamlHint)
+    build("file://amf-cli/shared/src/test/resources/invalids/error-response.yaml", Oas20YamlHint)
       .map(unit => {
         val api      = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         val response = api.endPoints.head.operations.head.responses.head
@@ -39,7 +39,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Invalid link to Trait with ast") {
 
-    build("file://amf-client/shared/src/test/resources/invalids/error-trait.raml", Raml10YamlHint)
+    build("file://amf-cli/shared/src/test/resources/invalids/error-trait.raml", Raml10YamlHint)
       .map(unit => {
         val api      = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         val badTrait = api.endPoints.head.operations.head.extend.head
@@ -57,7 +57,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Invalid link to resource type with ast") {
-    build("file://amf-client/shared/src/test/resources/invalids/error-resource-type.raml", Raml10YamlHint)
+    build("file://amf-cli/shared/src/test/resources/invalids/error-resource-type.raml", Raml10YamlHint)
       .map(unit => {
         val api         = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         val badResource = api.endPoints.head.extend.head
@@ -82,7 +82,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Invalid link to security scheme type with ast") {
-    build("file://amf-client/shared/src/test/resources/invalids/error-security-scheme.raml", Raml10YamlHint)
+    build("file://amf-cli/shared/src/test/resources/invalids/error-security-scheme.raml", Raml10YamlHint)
       .map(unit => {
         val declaration = unit.asInstanceOf[Document].declares.head
         assert(declaration.isInstanceOf[SecurityScheme])
@@ -94,7 +94,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
   }
   test("Invalid link to named example with ast") {
 
-    build("file://amf-client/shared/src/test/resources/invalids/error-named-example.raml", Raml10YamlHint)
+    build("file://amf-cli/shared/src/test/resources/invalids/error-named-example.raml", Raml10YamlHint)
       .map(unit => {
         val declaration = unit.asInstanceOf[Document].declares.head
         assert(declaration.isInstanceOf[AnyShape])

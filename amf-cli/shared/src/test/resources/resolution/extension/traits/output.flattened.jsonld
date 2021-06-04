@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -12,17 +12,17 @@
       "http://a.ml/vocabularies/core#description": "some overlaid description",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -30,33 +30,33 @@
       "http://a.ml/vocabularies/apiContract#path": "/master",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map/source-vendor/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -65,54 +65,54 @@
       "http://a.ml/vocabularies/core#description": "Master description",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(10,6)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,0)-(10,6)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api/end-points/%2Fmaster/get",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,2)-(10,6)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml",
       "@type": [
         "http://a.ml/vocabularies/document#Document",
         "http://a.ml/vocabularies/document#Fragment",
@@ -120,7 +120,7 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extension/traits/master.raml#/web-api"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true

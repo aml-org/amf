@@ -12,8 +12,8 @@ import amf.cycle.JsonSchemaSuite
 import scala.concurrent.Future
 
 class JsonSchemaUniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with JsonSchemaSuite {
-  override val basePath: String    = "amf-client/shared/src/test/resources/validations/jsonschema/"
-  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/jsonschema/"
+  override val basePath: String    = "amf-cli/shared/src/test/resources/validations/jsonschema/"
+  override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/jsonschema/"
   override val hint: Hint          = Oas20YamlHint // just here to respect interface
 
   test("minContains and maxContains should be bigger than 0") {

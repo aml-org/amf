@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml
+Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
   Message: Maximum must be greater than or equal to minimum
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml#/declarations/types/scalar/RangeError
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml#/declarations/types/scalar/RangeError
   Property: 
   Position: Some(LexicalInformation([(21,4)-(25,0)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml
+  Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml

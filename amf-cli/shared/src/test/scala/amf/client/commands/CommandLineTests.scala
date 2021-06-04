@@ -1,6 +1,5 @@
 package amf.client.commands
 
-import amf.cli.commands.{CmdLineParser, ParseCommand, TranslateCommand, ValidateCommand}
 import amf.client.environment.{AMLConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.core.client.{ParserConfig, Proc, ProcWriter}
 import amf.core.remote._
@@ -37,7 +36,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
                      Raml10.name,
                      "-mime-in",
                      "application/yaml",
-                     "file://amf-client/shared/src/test/resources/upanddown/complete-with-operations.raml")
+                     "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml")
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
     val stdout = new TestWriter()
@@ -67,7 +66,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       Oas20.name,
       "-mime-out",
       "application/json",
-      "file://amf-client/shared/src/test/resources/upanddown/complete-with-operations.raml"
+      "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml"
     )
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
@@ -96,7 +95,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "application/yaml",
       "-p",
       Raml10.name,
-      "file://amf-client/shared/src/test/resources/validations/data/error1.raml"
+      "file://amf-cli/shared/src/test/resources/validations/data/error1.raml"
     )
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
@@ -126,7 +125,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "application/yaml",
       "-p",
       Raml10.name,
-      "file://amf-client/shared/src/test/resources/validations/data/references/invalid-included-rtype-broken-key.raml"
+      "file://amf-cli/shared/src/test/resources/validations/data/references/invalid-included-rtype-broken-key.raml"
     )
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
@@ -155,8 +154,8 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "-mime-in",
       "application/yaml",
       "-cp",
-      "file://amf-client/shared/src/test/resources/validations/profiles/mercury.yaml",
-      "file://amf-client/shared/src/test/resources/validations/mercury.raml"
+      "file://amf-cli/shared/src/test/resources/validations/profiles/mercury.yaml",
+      "file://amf-cli/shared/src/test/resources/validations/mercury.raml"
     )
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
@@ -188,8 +187,8 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "-mime-in",
       "application/yaml",
       "-ds",
-      "file://amf-client/shared/src/test/resources/vocabularies2/production/k8/dialects/pod.yaml",
-      "file://amf-client/shared/src/test/resources/vocabularies2/production/k8/examples/pod.yaml"
+      "file://amf-cli/shared/src/test/resources/vocabularies2/production/k8/dialects/pod.yaml",
+      "file://amf-cli/shared/src/test/resources/vocabularies2/production/k8/examples/pod.yaml"
     )
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)

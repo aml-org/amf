@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json",
+    "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -27,7 +27,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath",
+            "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -39,7 +39,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -56,14 +56,14 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -90,7 +90,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#FileShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -105,7 +105,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -113,7 +113,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -127,7 +127,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -143,7 +143,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -175,7 +175,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter"
+                                    "@value": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/parameter/file-parameter"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -215,7 +215,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -239,7 +239,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/default",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -261,7 +261,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/default/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/default/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -281,7 +281,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/default"
+                                "@value": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/default"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -297,7 +297,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -331,7 +331,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post"
+                            "@value": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/post"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -359,7 +359,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -367,7 +367,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath"
+                        "@value": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/end-points/%2Fsomepath"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -383,7 +383,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -391,7 +391,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -429,7 +429,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/validations/file-parameter/file-parameter-incorrect-binding.json#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

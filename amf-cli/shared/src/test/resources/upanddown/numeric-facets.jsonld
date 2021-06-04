@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
@@ -50,7 +50,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -62,7 +62,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -74,14 +74,14 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -113,7 +113,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -137,7 +137,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#inherits": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/linked_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/linked_1",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -146,7 +146,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person"
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -161,7 +161,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/linked_1/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/linked_1/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -169,7 +169,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/linked_1"
+                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/linked_1"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -185,7 +185,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -193,7 +193,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -219,7 +219,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -247,7 +247,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -267,7 +267,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -295,7 +295,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -319,7 +319,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -327,7 +327,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -343,7 +343,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -351,7 +351,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/end-points/%2Flevel-zero"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -367,7 +367,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -375,7 +375,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -425,7 +425,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -477,7 +477,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -511,7 +511,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -519,7 +519,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -569,7 +569,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -607,7 +607,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/scalar/Age"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -621,7 +621,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -635,7 +635,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -648,7 +648,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name/scalar/name",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -667,7 +667,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name/scalar/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name/scalar/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -675,7 +675,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -701,7 +701,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -709,7 +709,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -723,7 +723,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -736,7 +736,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age/scalar/age",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age/scalar/age",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -755,7 +755,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age/scalar/age/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age/scalar/age/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -763,7 +763,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age/scalar/age"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age/scalar/age"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -789,7 +789,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -797,7 +797,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/property/age"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -818,7 +818,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -826,7 +826,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -852,7 +852,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

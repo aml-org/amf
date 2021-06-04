@@ -11,7 +11,7 @@ import amf.plugins.domain.apicontract.models.templates.Trait
 import org.scalatest.Matchers._
 
 class ParsedCloneTest extends FunSuiteCycleTests {
-  override def basePath: String = "amf-client/shared/src/test/resources/clone/"
+  override def basePath: String = "amf-cli/shared/src/test/resources/clone/"
 
   test("Test error trait clone") {
     val config = CycleConfig("error-trait.raml", "", Raml10YamlHint, Amf, basePath, None, None)
