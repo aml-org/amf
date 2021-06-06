@@ -1,11 +1,11 @@
 package amf.validation
 
-import amf.client.environment.WebAPIConfiguration
+import amf.client.environment.{AMFClient, WebAPIConfiguration}
 import amf.core.client.common.validation.{SeverityLevels, StrictValidationMode, ValidationMode}
 import amf.core.client.scala.AMFGraphClient
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Shape
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote._
@@ -64,13 +64,13 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override protected val basePath: String = "file://amf-cli/shared/src/test/resources/validations/body-payload/"
 
-  override def transform(unit: BaseUnit, client: AMFGraphClient): BaseUnit = {
+  override def transform(unit: BaseUnit, client: AMFClient): BaseUnit = {
 
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
       case Some(Raml08) =>
-        client.transform(unit, PipelineName.from(Raml08.mediaType, TransformationPipeline.DEFAULT_PIPELINE)).bu
+        client.transformDefault(unit, Raml08.mediaType).bu
       case _ =>
-        client.transform(unit, PipelineName.from(Raml10.mediaType, TransformationPipeline.DEFAULT_PIPELINE)).bu
+        client.transformDefault(unit, Raml10.mediaType).bu
     }
   }
 }
@@ -91,7 +91,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
 
   protected def findShape(d: Document): Shape
 
-  def transform(unit: BaseUnit, config: AMFGraphClient): BaseUnit
+  def transform(unit: BaseUnit, config: AMFClient): BaseUnit
 
   protected def fixtureList: Seq[Fixture]
 

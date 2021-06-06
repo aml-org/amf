@@ -2,7 +2,7 @@ package amf.plugins.document.apicontract.resolution.pipelines
 
 import amf.core.client.common.validation.{AmfProfile, ProfileName}
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
-import amf.core.client.scala.transform.pipelines.TransformationPipeline.EDITING_PIPELINE
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.stages.{TransformationStep, UrlShortenerStage}
 import amf.plugins.document.apicontract.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.apicontract.resolution.stages._
@@ -34,11 +34,11 @@ class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override v
     ) ++ url
   }
 
-  val ID: String               = EDITING_PIPELINE
+  val ID: String               = PipelineId.Editing
   def profileName: ProfileName = AmfProfile
 }
 
 object AmfEditingPipeline {
-  val name: String = TransformationPipeline.EDITING_PIPELINE
+  val name: String = PipelineId.Editing
   def apply()      = new AmfEditingPipeline(name = name)
 }

@@ -3,7 +3,7 @@ package amf.resolution
 import amf.client.environment.AMFConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
 import amf.core.internal.remote._
 import amf.plugins.document.apicontract.resolution.pipelines.{AmfEditingPipeline, AmfTransformationPipeline}

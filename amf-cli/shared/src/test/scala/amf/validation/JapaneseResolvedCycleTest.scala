@@ -4,7 +4,6 @@ import amf.client.environment.AMFConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.PipelineName
 import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.internal.remote.{
   Amf,
@@ -63,7 +62,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
         amfConfig
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
           .createClient()
-          .transform(unit, PipelineName.from(config.target.mediaType, TransformationPipeline.EDITING_PIPELINE))
+          .transformEditing(unit, config.target.mediaType)
           .bu
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")

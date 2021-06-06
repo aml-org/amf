@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.common.transform._
 import amf.core.internal.remote.Syntax.Json
 import amf.core.internal.remote.{
   Oas20,
@@ -17,7 +17,7 @@ import scala.concurrent.ExecutionContext
 
 class CompatibilityCycleGoldenTest extends ResolutionTest {
 
-  override val defaultPipelineToUse: String                = TransformationPipeline.COMPATIBILITY_PIPELINE
+  override val defaultPipelineToUse: String                = PipelineId.Compatibility
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def basePath: String = "amf-cli/shared/src/test/resources/compatibility/"

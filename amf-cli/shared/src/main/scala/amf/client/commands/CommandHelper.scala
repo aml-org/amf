@@ -5,7 +5,7 @@ import amf.client.environment.{AMFConfiguration, AMLConfiguration}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
 import amf.core.internal.remote.{Cache, Context, Platform, Vendor}
@@ -46,8 +46,7 @@ trait CommandHelper {
     if (config.resolve)
       parsed map (result => {
         val transformed =
-          configClient.transform(result.bu,
-                                 PipelineName.from(Vendor(vendor).mediaType, TransformationPipeline.DEFAULT_PIPELINE))
+          configClient.transform(result.bu, PipelineName.from(Vendor(vendor).mediaType, PipelineId.Default))
         transformed.bu
       })
     else parsed.map(_.bu)
@@ -68,11 +67,11 @@ trait CommandHelper {
         ParseConfiguration(configuration)
       ).build()
       parsed map { parsed =>
-        configClient.transform(parsed, PipelineName.from(vendorMediaType, TransformationPipeline.DEFAULT_PIPELINE)).bu
+        configClient.transform(parsed, PipelineName.from(vendorMediaType, PipelineId.Default)).bu
       }
     } else if (config.resolve) {
       Future {
-        configClient.transform(unit, PipelineName.from(vendorMediaType, TransformationPipeline.DEFAULT_PIPELINE)).bu
+        configClient.transform(unit, PipelineName.from(vendorMediaType, PipelineId.Default)).bu
       }
     } else {
       Future { unit }

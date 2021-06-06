@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
 import amf.core.client.common.validation.{Async20Profile, ProfileName}
-import amf.core.client.scala.transform.PipelineName
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.remote.AsyncApi20
 import amf.plugins.domain.apicontract.resolution.stages._
@@ -38,10 +38,10 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
 object Async20EditingPipeline {
   def apply()                    = new Async20EditingPipeline(true, name)
   private[amf] def cachePipeline = new Async20EditingPipeline(false, Async20CachePipeline.name)
-  val name: String               = PipelineName.from(AsyncApi20.mediaType, TransformationPipeline.EDITING_PIPELINE)
+  val name: String               = PipelineName.from(AsyncApi20.mediaType, PipelineId.Editing)
 }
 
 object Async20CachePipeline {
-  val name: String                                 = PipelineName.from(AsyncApi20.mediaType, TransformationPipeline.CACHE_PIPELINE)
+  val name: String                                 = PipelineName.from(AsyncApi20.mediaType, PipelineId.Cache)
   private[amf] def apply(): Async20EditingPipeline = Async20EditingPipeline.cachePipeline
 }

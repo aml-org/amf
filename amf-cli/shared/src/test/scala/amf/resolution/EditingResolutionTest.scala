@@ -2,7 +2,7 @@ package amf.resolution
 
 import amf.client.environment.AMFConfiguration
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.Yaml
@@ -12,7 +12,7 @@ import scala.concurrent.ExecutionContext
 
 class EditingResolutionTest extends ResolutionTest {
 
-  override val defaultPipelineToUse: String = TransformationPipeline.EDITING_PIPELINE
+  override val defaultPipelineToUse: String = PipelineId.Editing
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

@@ -5,8 +5,6 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
-import amf.core.client.scala.transform.PipelineName
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.facades.Validation
@@ -156,7 +154,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
       findShapeFunc(
         config
           .createClient()
-          .transform(unit, PipelineName.from(Vendor.OAS20.mediaType, TransformationPipeline.DEFAULT_PIPELINE))
+          .transformDefault(unit, Vendor.OAS20.mediaType)
           .bu
       ).map { element =>
           toJsonSchema(element, config)

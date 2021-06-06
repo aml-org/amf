@@ -12,8 +12,7 @@ import amf.core.client.common.validation.{
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, EncodesModel, Module}
-import amf.core.client.scala.transform.PipelineName
-import amf.core.client.scala.transform.pipelines.TransformationPipeline.EDITING_PIPELINE
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.annotations.SourceVendor
@@ -112,7 +111,7 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.createClient().transform(unit, PipelineName.from(config.target.mediaType, EDITING_PIPELINE)).bu
+        amfConfig.createClient().transformEditing(unit, config.target.mediaType).bu
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit

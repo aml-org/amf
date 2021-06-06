@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
 import amf.core.client.common.validation.{Oas20Profile, ProfileName}
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.remote.Oas20
 import amf.plugins.domain.apicontract.resolution.stages.{
@@ -19,5 +19,5 @@ class Oas20TransformationPipeline private (override val name: String) extends Am
 
 object Oas20TransformationPipeline {
   def apply()      = new Oas20TransformationPipeline(name)
-  val name: String = PipelineName.from(Oas20.mediaType, TransformationPipeline.DEFAULT_PIPELINE)
+  val name: String = PipelineName.from(Oas20.mediaType, PipelineId.Default)
 }

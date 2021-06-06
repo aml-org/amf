@@ -68,7 +68,7 @@
 //      _           <- AMF.init().asFuture
 //      unit        <- new RamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
 //      parseReport <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
-//      _           <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE, clientHandler))
+//      _           <- Future(new Raml10Resolver().resolve(unit, PipelineId.Editing, clientHandler))
 //    } yield {
 //      assertThresholdViolation(eh.getErrors)
 //      assertThresholdViolation(parseReport.results.asSeq.map(_._internal))
@@ -105,7 +105,7 @@
 //      _           <- AMF.init().asFuture
 //      unit        <- new Oas20YamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
 //      parseReport <- AMF.validate(unit, Oas20Profile, AMFStyle).asFuture
-//      _           <- Future(new Oas20Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE, clientHandler))
+//      _           <- Future(new Oas20Resolver().resolve(unit, PipelineId.Editing, clientHandler))
 //    } yield {
 //      assertThresholdViolation(eh.getErrors)
 //      assertThresholdViolation(parseReport.results.asSeq.map(_._internal))
@@ -190,7 +190,7 @@
 //      _    <- AMF.init().asFuture
 //      unit <- new RamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
 //      r    <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
-//      _    <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
+//      _    <- Future(new Raml10Resolver().resolve(unit, PipelineId.Editing))
 //    } yield {
 //      assertThresholdViolation(r.results.asSeq.map(_._internal))
 //    }
@@ -202,7 +202,7 @@
 //      _    <- AMF.init().asFuture
 //      unit <- new RamlParser().parseFileAsync(file, ParsingOptions().setMaxYamlReferences(50)).asFuture
 //      r    <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
-//      _    <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
+//      _    <- Future(new Raml10Resolver().resolve(unit, PipelineId.Editing))
 //    } yield {
 //      assertThresholdViolation(r.results.asSeq.map(_._internal))
 //    }

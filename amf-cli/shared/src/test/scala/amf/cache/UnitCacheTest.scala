@@ -140,7 +140,7 @@
 //    for {
 //      _               <- AMF.init().asFuture
 //      library         <- new RamlParser().parseFileAsync(libPath).asFuture
-//      libraryResolved <- Future(new Raml10Resolver().resolve(library, TransformationPipeline.CACHE_PIPELINE))
+//      libraryResolved <- Future(new Raml10Resolver().resolve(library, PipelineId.Cache))
 //      environment <- {
 //        val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false))
 //        Future.successful(
@@ -183,7 +183,7 @@
 //    for {
 //      _               <- AMF.init().asFuture
 //      library         <- new RamlParser().parseFileAsync(libPath).asFuture
-//      libraryResolved <- Future(new Raml10Resolver().resolve(library, TransformationPipeline.CACHE_PIPELINE))
+//      libraryResolved <- Future(new Raml10Resolver().resolve(library, PipelineId.Cache))
 //      environment <- {
 //        val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false))
 //        Future.successful(
@@ -227,9 +227,9 @@
 //    for {
 //      _               <- AMF.init().asFuture
 //      library         <- new RamlParser().parseFileAsync(libPath).asFuture
-//      libraryResolved <- Future(new Raml10Resolver().resolve(library, TransformationPipeline.CACHE_PIPELINE))
+//      libraryResolved <- Future(new Raml10Resolver().resolve(library, PipelineId.Cache))
 //      dataType        <- new RamlParser().parseFileAsync(typePath).asFuture
-//      typeResolved    <- Future(new Raml10Resolver().resolve(dataType, TransformationPipeline.CACHE_PIPELINE))
+//      typeResolved    <- Future(new Raml10Resolver().resolve(dataType, PipelineId.Cache))
 //      environment <- {
 //        val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false),
 //                             new CachedReference(typePath, typeResolved, resolved = false))
@@ -254,9 +254,9 @@
 //    for {
 //      _               <- AMF.init().asFuture
 //      library         <- new RamlParser().parseFileAsync(libPath).asFuture
-//      libraryResolved <- Future(new Raml10Resolver().resolve(library, TransformationPipeline.CACHE_PIPELINE))
+//      libraryResolved <- Future(new Raml10Resolver().resolve(library, PipelineId.Cache))
 //      traitType       <- new RamlParser().parseFileAsync(traitPath).asFuture
-//      traitResolved   <- Future(new Raml10Resolver().resolve(traitType, TransformationPipeline.CACHE_PIPELINE))
+//      traitResolved   <- Future(new Raml10Resolver().resolve(traitType, PipelineId.Cache))
 //      environment <- {
 //        val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false),
 //                             new CachedReference(traitPath, traitResolved, resolved = false))
@@ -280,7 +280,7 @@
 //    for {
 //      _               <- AMF.init().asFuture
 //      library         <- new RamlParser().parseFileAsync(refPath).asFuture
-//      libraryResolved <- Future(new Raml10Resolver().resolve(library, TransformationPipeline.CACHE_PIPELINE))
+//      libraryResolved <- Future(new Raml10Resolver().resolve(library, PipelineId.Cache))
 //      environment <- {
 //        val references = Seq(new CachedReference(refPath, libraryResolved, resolved = false))
 //        Future.successful(
@@ -304,9 +304,9 @@
 //    for {
 //      _             <- AMF.init().asFuture
 //      type1         <- new RamlParser().parseFileAsync(type1Path).asFuture
-//      type1Resolved <- Future(new Raml10Resolver().resolve(type1, TransformationPipeline.CACHE_PIPELINE))
+//      type1Resolved <- Future(new Raml10Resolver().resolve(type1, PipelineId.Cache))
 //      type2         <- new RamlParser().parseFileAsync(type2Path).asFuture
-//      type2Resolved <- Future(new Raml10Resolver().resolve(type2, TransformationPipeline.CACHE_PIPELINE))
+//      type2Resolved <- Future(new Raml10Resolver().resolve(type2, PipelineId.Cache))
 //      environment <- {
 //        val references = Seq(new CachedReference(type1Path, type1Resolved, resolved = false),
 //                             new CachedReference(type2Path, type2Resolved, resolved = false))
@@ -330,7 +330,7 @@
 //    for {
 //      _             <- AMF.init().asFuture
 //      type1         <- new RamlParser().parseFileAsync(type1Path).asFuture
-//      type1Resolved <- Future(new Raml10Resolver().resolve(type1, TransformationPipeline.CACHE_PIPELINE))
+//      type1Resolved <- Future(new Raml10Resolver().resolve(type1, PipelineId.Cache))
 //      environment <- {
 //        val references = Seq(new CachedReference(type1Path, type1Resolved, resolved = false))
 //        Future.successful(

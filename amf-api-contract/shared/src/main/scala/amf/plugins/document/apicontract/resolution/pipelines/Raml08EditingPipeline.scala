@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.remote.Raml08
 import amf.plugins.domain.apicontract.resolution.stages.{
@@ -23,10 +23,10 @@ object Raml08EditingPipeline {
 
   def apply()                    = new Raml08EditingPipeline(true, name)
   private[amf] def cachePipeline = new Raml08EditingPipeline(false, Raml08CachePipeline.name)
-  val name: String               = PipelineName.from(Raml08.mediaType, TransformationPipeline.EDITING_PIPELINE)
+  val name: String               = PipelineName.from(Raml08.mediaType, PipelineId.Editing)
 }
 
 object Raml08CachePipeline {
   def apply(): Raml08EditingPipeline = Raml08EditingPipeline.cachePipeline
-  val name: String                   = PipelineName.from(Raml08.mediaType, TransformationPipeline.COMPATIBILITY_PIPELINE)
+  val name: String                   = PipelineName.from(Raml08.mediaType, PipelineId.Compatibility)
 }
