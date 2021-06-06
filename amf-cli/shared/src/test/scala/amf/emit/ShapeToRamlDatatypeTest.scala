@@ -75,7 +75,9 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
       sourceUnit <- client.parse(basePath + sourceFile).map(_.bu)
     } yield {
       findShapeFunc(
-        client.transform(sourceUnit, PipelineName.from(Vendor.OAS20.name, TransformationPipeline.DEFAULT_PIPELINE)).bu)
+        client
+          .transform(sourceUnit, PipelineName.from(Vendor.OAS20.mediaType, TransformationPipeline.DEFAULT_PIPELINE))
+          .bu)
         .map(toRamlDatatype(_, amfConfig))
         .getOrElse("")
     }

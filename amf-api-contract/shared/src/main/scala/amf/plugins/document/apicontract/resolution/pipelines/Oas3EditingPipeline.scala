@@ -21,13 +21,13 @@ class Oas3EditingPipeline private(urlShortening: Boolean, override val name:Stri
 }
 
 object Oas3EditingPipeline{
-  val name:String = PipelineName.from(Oas30.name, TransformationPipeline.EDITING_PIPELINE)
+  val name:String = PipelineName.from(Oas30.mediaType, TransformationPipeline.EDITING_PIPELINE)
   def apply() = new Oas3EditingPipeline(true, name = name)
 
   private[amf] def cachePipeline() = new Oas3EditingPipeline(false, Oas3CachePipeline.name)
 }
 
 object Oas3CachePipeline{
-  val name:String = PipelineName.from(Oas30.name, TransformationPipeline.CACHE_PIPELINE)
+  val name:String = PipelineName.from(Oas30.mediaType, TransformationPipeline.CACHE_PIPELINE)
   def apply(): Oas3EditingPipeline = Oas3EditingPipeline.cachePipeline()
 }

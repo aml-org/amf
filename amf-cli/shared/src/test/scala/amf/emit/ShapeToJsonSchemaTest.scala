@@ -156,7 +156,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
       findShapeFunc(
         config
           .createClient()
-          .transform(unit, PipelineName.from(Vendor.OAS20.name, TransformationPipeline.DEFAULT_PIPELINE))
+          .transform(unit, PipelineName.from(Vendor.OAS20.mediaType, TransformationPipeline.DEFAULT_PIPELINE))
           .bu
       ).map { element =>
           toJsonSchema(element, config)

@@ -19,5 +19,5 @@ class Raml08TransformationPipeline private (override val name: String) extends A
 
 object Raml08TransformationPipeline {
   def apply()      = new Raml08TransformationPipeline(name)
-  val name: String = PipelineName.from(Raml08.name, TransformationPipeline.DEFAULT_PIPELINE)
+  val name: String = PipelineName.from(Raml08.mediaType, TransformationPipeline.DEFAULT_PIPELINE)
 }

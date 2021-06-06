@@ -26,5 +26,5 @@ class Oas3CompatibilityPipeline private (override val name: String) extends Tran
 
 object Oas3CompatibilityPipeline {
   def apply(): Oas3CompatibilityPipeline = new Oas3CompatibilityPipeline(name)
-  val name: String                       = PipelineName.from(Oas30.name, TransformationPipeline.COMPATIBILITY_PIPELINE)
+  val name: String                       = PipelineName.from(Oas30.mediaType, TransformationPipeline.COMPATIBILITY_PIPELINE)
 }

@@ -46,7 +46,8 @@ trait CommandHelper {
     if (config.resolve)
       parsed map (result => {
         val transformed =
-          configClient.transform(result.bu, PipelineName.from(vendor, TransformationPipeline.DEFAULT_PIPELINE))
+          configClient.transform(result.bu,
+                                 PipelineName.from(Vendor(vendor).mediaType, TransformationPipeline.DEFAULT_PIPELINE))
         transformed.bu
       })
     else parsed.map(_.bu)
@@ -56,6 +57,7 @@ trait CommandHelper {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val configClient                       = configuration.createClient()
     val vendor                             = effectiveVendor(config.inputFormat)
+    val vendorMediaType                    = Vendor(vendor).mediaType
     if (config.resolve && config.validate) {
       val inputFile = ensureUrl(config.input.get)
       val parsed = AMFCompiler(
@@ -66,10 +68,12 @@ trait CommandHelper {
         ParseConfiguration(configuration)
       ).build()
       parsed map { parsed =>
-        configClient.transform(parsed, PipelineName.from(vendor, TransformationPipeline.DEFAULT_PIPELINE)).bu
+        configClient.transform(parsed, PipelineName.from(vendorMediaType, TransformationPipeline.DEFAULT_PIPELINE)).bu
       }
     } else if (config.resolve) {
-      Future { configClient.transform(unit, PipelineName.from(vendor, TransformationPipeline.DEFAULT_PIPELINE)).bu }
+      Future {
+        configClient.transform(unit, PipelineName.from(vendorMediaType, TransformationPipeline.DEFAULT_PIPELINE)).bu
+      }
     } else {
       Future { unit }
     }

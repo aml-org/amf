@@ -19,5 +19,5 @@ class Oas20TransformationPipeline private (override val name: String) extends Am
 
 object Oas20TransformationPipeline {
   def apply()      = new Oas20TransformationPipeline(name)
-  val name: String = PipelineName.from(Oas20.name, TransformationPipeline.DEFAULT_PIPELINE)
+  val name: String = PipelineName.from(Oas20.mediaType, TransformationPipeline.DEFAULT_PIPELINE)
 }

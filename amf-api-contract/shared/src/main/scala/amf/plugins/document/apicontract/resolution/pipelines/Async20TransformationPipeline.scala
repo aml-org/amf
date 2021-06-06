@@ -39,5 +39,5 @@ class Async20TransformationPipeline private (override val name: String) extends 
 
 object Async20TransformationPipeline {
   def apply()      = new Async20TransformationPipeline(name)
-  val name: String = PipelineName.from(AsyncApi20.name, TransformationPipeline.DEFAULT_PIPELINE)
+  val name: String = PipelineName.from(AsyncApi20.mediaType, TransformationPipeline.DEFAULT_PIPELINE)
 }

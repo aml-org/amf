@@ -92,7 +92,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.createClient().transform(unit, PipelineName.from(config.target.name, DEFAULT_PIPELINE)).bu
+        amfConfig.createClient().transform(unit, PipelineName.from(config.target.mediaType, DEFAULT_PIPELINE)).bu
       case Amf =>
         TransformationPipelineRunner(amfConfig.errorHandlerProvider.errorHandler())
           .run(unit, AmfTransformationPipeline())

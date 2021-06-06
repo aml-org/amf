@@ -112,7 +112,7 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.createClient().transform(unit, PipelineName.from(Raml10.name, EDITING_PIPELINE)).bu
+        amfConfig.createClient().transform(unit, PipelineName.from(config.target.mediaType, EDITING_PIPELINE)).bu
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit

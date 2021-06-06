@@ -68,9 +68,9 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
       case Some(Raml08) =>
-        client.transform(unit, PipelineName.from(Raml08.name, TransformationPipeline.DEFAULT_PIPELINE)).bu
+        client.transform(unit, PipelineName.from(Raml08.mediaType, TransformationPipeline.DEFAULT_PIPELINE)).bu
       case _ =>
-        client.transform(unit, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE)).bu
+        client.transform(unit, PipelineName.from(Raml10.mediaType, TransformationPipeline.DEFAULT_PIPELINE)).bu
     }
   }
 }

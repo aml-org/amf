@@ -29,5 +29,5 @@ class Oas20CompatibilityPipeline private (override val name: String) extends Tra
 
 object Oas20CompatibilityPipeline {
   def apply(): Oas20CompatibilityPipeline = new Oas20CompatibilityPipeline(name)
-  val name: String                        = PipelineName.from(Oas20.name, TransformationPipeline.COMPATIBILITY_PIPELINE)
+  val name: String                        = PipelineName.from(Oas20.mediaType, TransformationPipeline.COMPATIBILITY_PIPELINE)
 }

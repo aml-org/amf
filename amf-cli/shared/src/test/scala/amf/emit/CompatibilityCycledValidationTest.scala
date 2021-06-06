@@ -87,7 +87,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     amfConfig
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .createClient()
-      .transform(unit, PipelineName.from(config.target.name, TransformationPipeline.COMPATIBILITY_PIPELINE))
+      .transform(unit, PipelineName.from(config.target.mediaType, TransformationPipeline.COMPATIBILITY_PIPELINE))
       .bu
   }
 

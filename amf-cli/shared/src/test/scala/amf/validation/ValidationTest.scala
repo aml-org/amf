@@ -102,7 +102,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(RAMLConfiguration.RAML10().createClient())
       parseResult <- client.parse(validationsPath + "/security-schemes/security1.raml")
       transformResult <- Future {
-        client.transform(parseResult.bu, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE))
+        client.transform(parseResult.bu, PipelineName.from(Raml10.mediaType, TransformationPipeline.DEFAULT_PIPELINE))
       }
     } yield {
       assert(!transformResult.conforms)
@@ -119,7 +119,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(RAMLConfiguration.RAML10().createClient())
       parseResult <- client.parse(validationsPath + "/missing-annotation-types/api.raml")
       transformResult <- Future {
-        client.transform(parseResult.bu, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE))
+        client.transform(parseResult.bu, PipelineName.from(Raml10.mediaType, TransformationPipeline.DEFAULT_PIPELINE))
       }
       report <- client.validate(transformResult.bu, Raml10Profile)
     } yield {
@@ -134,7 +134,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(RAMLConfiguration.RAML10().createClient())
       parseResult <- client.parse(validationsPath + "/enumeration-arrays/api.raml")
       transformResult <- Future {
-        client.transform(parseResult.bu, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE))
+        client.transform(parseResult.bu, PipelineName.from(Raml10.mediaType, TransformationPipeline.DEFAULT_PIPELINE))
       }
       report <- client.validate(transformResult.bu, Raml10Profile)
     } yield {
@@ -148,7 +148,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(WebAPIConfiguration.WebAPI().createClient())
       parseResult <- client.parse(validationsPath + "/enumeration-arrays/api.raml")
       transformResult <- Future {
-        client.transform(parseResult.bu, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE))
+        client.transform(parseResult.bu, PipelineName.from(Raml10.mediaType, TransformationPipeline.DEFAULT_PIPELINE))
       }
       report <- client.validate(transformResult.bu, Oas20Profile)
     } yield {
