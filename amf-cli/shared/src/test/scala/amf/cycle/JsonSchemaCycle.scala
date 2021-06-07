@@ -194,7 +194,7 @@ object JsonSchemaTestEmitters {
 case class JsonSchemaTestEmitter(to: JSONSchemaVersion) extends SchemaEmitter {
 
   private val options =
-    ImmutableShapeRenderOptions().withSchemaVersion(SchemaVersion.toClientOptions(to)).withCompactedEmission
+    ImmutableShapeRenderOptions().withSchemaVersion(SchemaVersion.toClientOptions(to))
 
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
     val shape     = fragment.encodes

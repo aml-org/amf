@@ -150,7 +150,7 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
   }
 
   private def generateSchemaString(shape: Shape, validationProcessor: ValidationProcessor): Option[CharSequence] = {
-    val renderOptions = ShapeRenderOptions().withoutDocumentation.withCompactedEmission
+    val renderOptions = ShapeRenderOptions().withoutDocumentation
       .withSchemaVersion(JsonSchemaDraft7)
       .withEmitWarningForUnsupportedValidationFacets(true)
     val declarations = List(shape)

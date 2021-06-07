@@ -2,6 +2,7 @@ package amf.emit
 
 import amf.client.environment.WebAPIConfiguration
 import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions}
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, Module}
@@ -146,7 +147,9 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
                     findShapeFunc: BaseUnit => Option[AnyShape],
                     renderFn: AnyShape => String = toJsonSchema,
                     hint: Hint = Raml10YamlHint): Future[Assertion] = {
-    val config = WebAPIConfiguration.WebAPI()
+    val config = WebAPIConfiguration
+      .WebAPI()
+      .withRenderOptions(RenderOptions().withShapeRenderOptions(ShapeRenderOptions().withoutCompactedEmission))
     val jsonSchema: Future[String] = for {
       unit <- parse(file, config)
     } yield {
