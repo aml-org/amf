@@ -35,5 +35,5 @@ object Oas30RenderPlugin extends OasRenderPlugin {
     }
 
   private def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): Oas3SpecEmitterContext =
-    new Oas3SpecEmitterContext(errorHandler, compactEmission = options.shapeRenderOptions.isWithCompactedEmission)
+    new Oas3SpecEmitterContext(errorHandler, options = options.shapeRenderOptions)
 }

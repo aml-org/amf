@@ -20,7 +20,9 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotat
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.RamlTypePartEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.schema.json.CompactOasRecursiveShapeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.{
+  CompactOasTypesEmitters,
   CustomFacetsEmitter,
   JSONSchemaDraft201909SchemaVersion,
   JSONSchemaVersion,
@@ -60,17 +62,24 @@ object JsonSchemaDeclarationsPath {
   }
 }
 
+/**
+  * InlinedJsonSchemaShape context is used when emitting a single shape in a non compacted form.
+  * This implies having to use compact declaredTypesEmitter and recursiveShapeEmitter emitters to handle shapes that have RecursiveShapes,
+  * emitting their fixpoint target to the schemas definitions facet dynamically.
+  */
 class InlineJsonSchemaShapeEmitterContext(eh: AMFErrorHandler,
                                           schemaVersion: SchemaVersion,
                                           options: ShapeRenderOptions)
     extends JsonSchemaShapeEmitterContext(eh, schemaVersion, options) {
-  override def typeEmitters(shape: Shape,
-                            ordering: SpecOrdering,
-                            ignored: Seq[Field],
-                            references: Seq[BaseUnit],
-                            pointer: Seq[String],
-                            schemaPath: Seq[(String, String)]): Seq[Emitter] =
-    OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
+  override def recursiveShapeEmitter(shape: RecursiveShape,
+                                     ordering: SpecOrdering,
+                                     schemaPath: Seq[(String, String)]): EntryEmitter = {
+    new CompactOasRecursiveShapeEmitter(shape, ordering, schemaPath)
+  }
+
+  override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter = {
+    CompactOasTypesEmitters.apply
+  }
 }
 
 object JsonSchemaShapeEmitterContext {
@@ -84,8 +93,6 @@ class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
     extends OasLikeShapeEmitterContext {
 
   override def nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
-
-  override def compactEmission: Boolean = true
 
   override def schemasDeclarationsPath: String = JsonSchemaDeclarationsPath(schemaVersion)
 
@@ -129,8 +136,6 @@ trait OasLikeShapeEmitterContext
     extends ShapeEmitterContext
     with CompactableEmissionContext
     with OasCompactEmitterFactory {
-
-  def compactEmission: Boolean
 
   def recursiveShapeEmitter(recursive: RecursiveShape,
                             ordering: SpecOrdering,

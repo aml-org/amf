@@ -143,8 +143,7 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) exte
 
 abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
                                      refEmitter: RefEmitter = OasRefEmitter,
-                                     options: ShapeRenderOptions = ShapeRenderOptions(),
-                                     val compactEmission: Boolean = true)
+                                     options: ShapeRenderOptions = ShapeRenderOptions())
     extends OasLikeSpecEmitterContext(eh, refEmitter, options)
     with CompactableEmissionContext {
 
@@ -161,9 +160,8 @@ abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
 
 class Oas3SpecEmitterContext(eh: AMFErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
-                             options: ShapeRenderOptions = ShapeRenderOptions(),
-                             compactEmission: Boolean = true)
-    extends OasSpecEmitterContext(eh, refEmitter, options, compactEmission) {
+                             options: ShapeRenderOptions = ShapeRenderOptions())
+    extends OasSpecEmitterContext(eh, refEmitter, options) {
   override val anyOfKey: String                = "anyOf"
   val schemaVersion: SchemaVersion             = OAS30SchemaVersion(Schema)
   override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory(this)
@@ -173,9 +171,8 @@ class Oas3SpecEmitterContext(eh: AMFErrorHandler,
 
 class Oas2SpecEmitterContext(eh: AMFErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
-                             options: ShapeRenderOptions = ShapeRenderOptions(),
-                             compactEmission: Boolean = true)
-    extends OasSpecEmitterContext(eh, refEmitter, options, compactEmission) {
+                             options: ShapeRenderOptions = ShapeRenderOptions())
+    extends OasSpecEmitterContext(eh, refEmitter, options) {
   val schemaVersion: SchemaVersion             = OAS20SchemaVersion(Schema)
   override val factory: OasSpecEmitterFactory  = new Oas2SpecEmitterFactory(this)
   override val vendor: Vendor                  = Oas20

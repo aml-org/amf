@@ -1,5 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.common.emitters.factory
 
+import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.annotations.{DeclaredElement, DeclaredHeader, SynthesizedField}
 import amf.core.emitter.{PartEmitter, SpecOrdering}
 import amf.core.errorhandling.AMFErrorHandler
@@ -90,7 +91,7 @@ case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) exten
 
 object Oas20EmitterFactory {
   def apply(eh: AMFErrorHandler): Oas20EmitterFactory =
-    Oas20EmitterFactory()(new Oas2SpecEmitterContext(eh, compactEmission = false))
+    Oas20EmitterFactory()(new Oas2SpecEmitterContext(eh, options = ShapeRenderOptions().withoutCompactedEmission))
 }
 
 case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) extends OasEmitterFactory {
@@ -119,7 +120,7 @@ case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) exten
 
 object Oas30EmitterFactory {
   def apply(eh: AMFErrorHandler): Oas30EmitterFactory =
-    Oas30EmitterFactory()(new Oas3SpecEmitterContext(eh, compactEmission = false))
+    Oas30EmitterFactory()(new Oas3SpecEmitterContext(eh, options = ShapeRenderOptions().withoutCompactedEmission))
 }
 
 trait OasEmitterFactory extends OasLikeEmitterFactory {
