@@ -4,9 +4,6 @@ import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.exported.AMFGraphConfiguration
 import amf.client.model.domain.AnyShape
-import amf.client.render.ShapeRenderOptions
-import amf.core.emitter.ShapeRenderOptions.toImmutable
-import amf.core.emitter.{ShapeRenderOptions => CoreShapeRenderOptions}
 import amf.plugins.document.apicontract.parser.spec.common.JsonSchemaSerializer
 
 object ClientJsonSchemaShapeSerializer extends JsonSchemaSerializer {

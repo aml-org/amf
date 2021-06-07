@@ -1,10 +1,9 @@
 package amf.plugins.document.apicontract.validation.remote
 
+import amf.client.exported.config.JsonSchemaDraft7
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
-import amf.client.remod.amfcore.config.ShapeRenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, ShapeRenderOptions}
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.client.render.JsonSchemaDraft7
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment

@@ -1,29 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.client.execution.BaseExecutionEnvironment
 import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.config.{ShapeRenderOptions => ImmutableShapeRenderOptions}
 import amf.core.AMFSerializer
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, ShapeRenderOptions, SpecOrdering}
-import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.Document
-import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.parser.Position
 import amf.core.remote.JsonSchema
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.apicontract.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
-import amf.plugins.document.apicontract.parser.spec.declaration.{
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaUnspecifiedVersion,
-  JSONSchemaVersion,
-  SchemaVersion
-}
 import amf.plugins.domain.shapes.models.AnyShape
-import org.yaml.model.YDocument
-import org.yaml.model.YDocument.EntryBuilder
-
-import scala.concurrent.ExecutionContext
 
 trait JsonSchemaSerializer extends PlatformSecrets {
   // todo, check if its resolved?

@@ -7,8 +7,7 @@ import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.AMFErrorHandler
-import amf.client.remod.amfcore.config.{ParsingOptionsConverter, RenderOptions}
-import amf.core.client.ParsingOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
