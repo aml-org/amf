@@ -265,7 +265,6 @@ private[amf] object ApiRegister extends PlatformSecrets {
 //    platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
 //    platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
 
-    amf.Core.registerPlugin(APIDomainPlugin)
   }
 
 }

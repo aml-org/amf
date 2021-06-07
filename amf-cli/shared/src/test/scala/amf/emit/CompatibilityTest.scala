@@ -2,7 +2,7 @@ package amf.emit
 
 import amf.ProfileName
 import amf.client.environment.WebAPIConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.AMFCompiler

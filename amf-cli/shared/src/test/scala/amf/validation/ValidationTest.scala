@@ -3,7 +3,7 @@ package amf.validation
 import _root_.org.scalatest.AsyncFunSuite
 import amf._
 import amf.client.environment.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.environment.{OASConfiguration, RAMLConfiguration}
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration

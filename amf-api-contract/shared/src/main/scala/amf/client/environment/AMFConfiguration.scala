@@ -162,6 +162,11 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
         ))
 }
 
+/** Merged [[WebAPIConfiguration]] and [[AsyncAPIConfiguration.Async20()]] configurations */
+object APIConfiguration {
+  def API(): AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+}
+
 /**
   * The AMFConfiguration lets you customize all AMF-specific configurations.
   * Its immutable and created through builders. An instance is needed to use AMF.

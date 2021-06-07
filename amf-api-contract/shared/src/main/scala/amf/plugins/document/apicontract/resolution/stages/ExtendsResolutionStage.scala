@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.resolution.stages
 
-import amf.client.parse.IgnoringErrorHandler
+import amf.client.errorhandling.IgnoringErrorHandler
 import amf.client.remod.ParseConfiguration
 import amf.core.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.emitter.SpecOrdering

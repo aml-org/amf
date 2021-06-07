@@ -1,6 +1,6 @@
 package amf.cycle
 import amf.client.convert.CoreClientConverters._
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.render.WebApiDomainElementEmitter
 import amf.client.resolve.ClientErrorHandlerConverter.ErrorHandlerConverter
 import amf.core.model.domain.DomainElement

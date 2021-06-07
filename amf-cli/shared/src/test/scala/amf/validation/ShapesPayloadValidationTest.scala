@@ -3,7 +3,7 @@ package amf.validation
 import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.AMFSerializer
+import amf.core.{AMF, AMFSerializer}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.services.RuntimeValidator
 import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
@@ -25,7 +25,7 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
 
   override val executionContext: ExecutionContext = global
 
-  amf.Core.registerPlugin(PayloadValidatorPlugin)
+  AMF.registerPlugin(PayloadValidatorPlugin)
   RuntimeValidator.register(AMFValidatorPlugin)
   AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
 

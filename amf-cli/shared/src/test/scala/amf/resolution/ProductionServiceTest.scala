@@ -3,7 +3,7 @@ package amf.resolution
 import amf.client.environment.AMFConfiguration
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.environment.RAMLConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.metamodel.document.DocumentModel

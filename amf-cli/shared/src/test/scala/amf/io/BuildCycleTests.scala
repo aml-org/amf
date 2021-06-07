@@ -1,9 +1,9 @@
 package amf.io
 
 import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.parse.IgnoringErrorHandler
+import amf.client.errorhandling.IgnoringErrorHandler
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.AMFErrorHandler

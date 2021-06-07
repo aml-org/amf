@@ -2,7 +2,7 @@ package amf.compiler
 
 import amf.Raml10Profile
 import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.parse.{DefaultErrorHandler, IgnoringErrorHandler}
+import amf.client.errorhandling.{DefaultErrorHandler, IgnoringErrorHandler}
 import amf.client.remod.AMFValidator
 import amf.core.Root
 import amf.core.errorhandling.UnhandledErrorHandler

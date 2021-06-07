@@ -1,7 +1,7 @@
 package amf.emit
 
 import amf.client.environment.{AsyncAPIConfiguration, OASConfiguration, WebAPIConfiguration}
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}

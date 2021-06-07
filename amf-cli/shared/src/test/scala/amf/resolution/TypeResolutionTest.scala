@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.client.environment.AMFConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.compiler.CompilerTestBuilder

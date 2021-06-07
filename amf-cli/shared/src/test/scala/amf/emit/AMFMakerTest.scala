@@ -1,7 +1,6 @@
 package amf.emit
 
-import amf.Core
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.APIConfiguration
 import amf.core.AMFSerializer
 import amf.core.model.document.Document
 import amf.core.parser._
@@ -126,7 +125,6 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
 
   private def ast(document: Document, vendor: Vendor): YMap = {
 
-    Core.init()
     // Remod registering
     VocabulariesRegister.register(platform)
     amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
@@ -142,7 +140,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
       case _       => ""
     }
 
-    val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    val config = APIConfiguration.API()
 
     val serializer = new AMFSerializer(document, vendor.mediaType, config.renderConfiguration)
 

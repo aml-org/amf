@@ -1,9 +1,9 @@
 package amf.resolution
 import amf.ProfileName
 import amf.client.environment.AMFConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.amfcore.resolution.PipelineName
-import amf.client.parse.{DefaultErrorHandler, IgnoringErrorHandler}
+import amf.client.errorhandling.{DefaultErrorHandler, IgnoringErrorHandler}
 import amf.core.annotations.LexicalInformation
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit

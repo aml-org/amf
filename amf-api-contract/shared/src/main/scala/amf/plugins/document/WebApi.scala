@@ -2,6 +2,7 @@ package amf.plugins.document
 
 import amf.client.convert.ApiRegister
 import amf.client.execution.BaseExecutionEnvironment
+import amf.core.AMF
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.apicontract._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
@@ -18,8 +19,8 @@ object WebApi extends PlatformSecrets {
     ApiRegister.register(platform)
 
     // plugin initialization
-    amf.Core.registerPlugin(DataShapesDomainPlugin)
-    amf.Core.registerPlugin(APIDomainPlugin)
+    AMF.registerPlugin(DataShapesDomainPlugin)
+    AMF.registerPlugin(APIDomainPlugin)
   }
 
 }

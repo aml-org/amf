@@ -2,7 +2,7 @@ package amf.cycle
 
 import amf.client.convert.ApiRegister
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{DomainElement, NamedDomainElement}
