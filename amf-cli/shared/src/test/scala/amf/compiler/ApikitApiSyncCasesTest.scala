@@ -1,7 +1,7 @@
 package amf.compiler
 
 import amf.client.environment.WebAPIConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.{ErrorHandlerProvider, ParseConfiguration}
 import amf.client.remote.Content
 import amf.core.AMFCompiler

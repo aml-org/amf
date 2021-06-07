@@ -1,7 +1,7 @@
 package amf.recursive.shapes
 
 import amf.client.environment.AMFConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Hint, Oas20, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests

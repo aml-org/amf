@@ -1,7 +1,7 @@
 package amf.maker
 
 import amf.client.environment.AMFConfiguration
-import amf.client.parse.IgnoringErrorHandler
+import amf.client.errorhandling.IgnoringErrorHandler
 import amf.compiler.CompilerTestBuilder
 import amf.core.annotations.SourceAST
 import amf.core.model.document.Document

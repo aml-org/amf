@@ -1,7 +1,7 @@
 package amf.compiler
 
 import amf.client.environment.AMFConfiguration
-import amf.client.parse.IgnoringErrorHandler
+import amf.client.errorhandling.IgnoringErrorHandler
 import amf.core.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfObject, Shape}

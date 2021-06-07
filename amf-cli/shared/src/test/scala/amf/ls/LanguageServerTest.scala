@@ -1,7 +1,7 @@
 package amf.ls
 
 import amf.client.environment.AMFConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.Document
 import amf.core.model.domain.templates.ParametrizedDeclaration

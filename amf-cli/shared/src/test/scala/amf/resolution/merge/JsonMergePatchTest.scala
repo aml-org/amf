@@ -1,7 +1,7 @@
 package amf.resolution.merge
 
 import amf.client.convert.BaseUnitConverter
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.emitter.BaseEmitters.traverse

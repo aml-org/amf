@@ -1,13 +1,11 @@
 package amf.client.convert
 
 import amf.client.convert.ApiClientConverters._
-import amf.client.environment.{DefaultEnvironment, Environment => ClientEnvironment}
 import amf.client.plugins._
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.document.{PayloadFragment => InternalPayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.validation.{AMFPayloadValidationPlugin, AMFValidationReport, PayloadValidator}
-import amf.internal.environment.Environment
 
 import scala.concurrent.{ExecutionContext, Future}
 object ClientPayloadPluginConverter {
@@ -32,7 +30,7 @@ object ClientPayloadPluginConverter {
 
       override def canValidate(shape: Shape, config: ValidationConfiguration): Boolean = {
         // TODO ARM change env for conf when is done
-        clientPlugin.canValidate(ShapeMatcher.asClient(shape), DefaultEnvironment())
+        clientPlugin.canValidate(ShapeMatcher.asClient(shape), config)
       }
 
       override val ID: String = clientPlugin.ID
@@ -47,7 +45,7 @@ object ClientPayloadPluginConverter {
                              config: ValidationConfiguration,
                              validationMode: ValidationMode): PayloadValidator = {
         // TODO ARM change for config interface
-        val validator = clientPlugin.validator(s, DefaultEnvironment(), validationMode)
+        val validator = clientPlugin.validator(s, config, validationMode)
         new PayloadValidator {
           override val shape: Shape                   = validator.shape
           override val defaultSeverity: String        = validator.defaultSeverity

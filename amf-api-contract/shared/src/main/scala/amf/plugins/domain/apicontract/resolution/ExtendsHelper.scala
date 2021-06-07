@@ -1,6 +1,6 @@
 package amf.plugins.domain.apicontract.resolution
 
-import amf.client.parse.IgnoringErrorHandler
+import amf.client.errorhandling.IgnoringErrorHandler
 import amf.client.remod.ParseConfiguration
 import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
 import amf.core.emitter.SpecOrdering

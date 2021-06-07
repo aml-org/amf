@@ -1,7 +1,7 @@
 package amf.parser
 
 import amf.client.environment.RAMLConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.core.parser.Range
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationResult

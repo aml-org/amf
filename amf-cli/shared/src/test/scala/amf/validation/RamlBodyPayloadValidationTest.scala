@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.plugins.{StrictValidationMode, ValidationMode}
 import amf.client.remod.{AMFGraphClient, AMFGraphConfiguration}
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration

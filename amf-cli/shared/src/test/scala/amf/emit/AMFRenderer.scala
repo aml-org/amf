@@ -1,6 +1,5 @@
 package amf.emit
 
-import amf.Core
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.AMFSerializer
@@ -19,7 +18,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax: Option[Syntax])
     extends PlatformSecrets {
 
-  Core.init()
   // Remod registering
   VocabulariesRegister.register(platform)
   amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)

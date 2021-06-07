@@ -3,11 +3,9 @@ package amf.validation
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
 import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.parse.DefaultErrorHandler
-import amf.client.remod.{AMFGraphConfiguration, AMFResult}
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.client.remod.{AMFGraphConfiguration, AMFResult}
-import amf.core.errorhandling.{AMFErrorHandler, AmfReportBuilder}
+import amf.client.errorhandling.DefaultErrorHandler
+import amf.client.remod.AMFResult
+import amf.core.errorhandling.AmfReportBuilder
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipelineRunner
@@ -102,8 +100,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
     val errorHandler = DefaultErrorHandler()
     val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => errorHandler)
     for {
-      validation <- Validation(platform)
-      model      <- config.createClient().parse(basePath + api).map(_.bu)
+      model <- config.createClient().parse(basePath + api).map(_.bu)
       report <- {
         TransformationPipelineRunner(errorHandler).run(model, new ValidationTransformationPipeline(profile))
         val results = errorHandler.getResults

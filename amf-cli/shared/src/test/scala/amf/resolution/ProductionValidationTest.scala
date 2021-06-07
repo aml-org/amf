@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.client.environment.RAMLConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}

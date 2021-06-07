@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.client.parse.IgnoringErrorHandler
+import amf.client.errorhandling.IgnoringErrorHandler
 import amf.client.remod.{AMFGraphConfiguration, AMFResult}
 import amf.client.environment.AMFConfiguration
 import amf.client.remod.AMFResult

@@ -4,7 +4,7 @@ import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPICo
 import amf.core.AMFCompiler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.client.environment.WebAPIConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Cache, Context, Hint}
