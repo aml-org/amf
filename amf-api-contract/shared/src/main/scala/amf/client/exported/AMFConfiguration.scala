@@ -43,9 +43,8 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: Intern
   override def withRenderOptions(renderOptions: RenderOptions): AMFConfiguration =
     _internal.withRenderOptions(renderOptions)
 
-  //TODO FIX EH
-//  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration =
-//    _internal.withErrorHandlerProvider(() => provider.errorHandler())
+  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration =
+    _internal.withErrorHandlerProvider(() => provider.errorHandler())
 
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = _internal.withEventListener(listener)
 
