@@ -48,7 +48,14 @@ class OasAnyShapeEmitter(shape: AnyShape,
         shape.fields.entry(AnyShapeModel.Comment).map(c => result += ValueEmitter("$comment", c))
     }
 
+    result ++= semanticContextEmitter(shape)
+
     super.emitters() ++ result
+  }
+
+  private def semanticContextEmitter(shape: AnyShape): List[EntryEmitter] = shape.semanticContext match {
+    case Some(ctx) => List(SemanticContextEmitter(ctx, ordering))
+    case _         => Nil
   }
 
   private def examplesEmitters(main: Option[Example], extensions: Seq[Example], isHeader: Boolean) =
