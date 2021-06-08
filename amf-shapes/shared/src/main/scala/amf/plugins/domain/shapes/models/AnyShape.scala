@@ -6,7 +6,7 @@ import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.apicontract.annotations.InlineDefinition
-import amf.plugins.domain.shapes.metamodel.AnyShapeModel
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, WithSemanticContext}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YPart
@@ -89,6 +89,9 @@ class AnyShape(val fields: Fields, val annotations: Annotations = Annotations())
   def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
   def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)
   def withComment(comment: String): this.type                          = set(Comment, comment)
+
+  def withSemanticContext(context: SemanticContext) = set(AnyShapeModel.Semantics, context)
+  def semanticContext: Option[SemanticContext] = Option(fields.field(AnyShapeModel.Semantics))
 
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 

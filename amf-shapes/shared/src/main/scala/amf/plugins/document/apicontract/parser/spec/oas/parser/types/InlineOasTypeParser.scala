@@ -14,26 +14,13 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.apicontract.annotations.{CollectionFormatFromItems, JSONSchemaId}
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.OasShapeDefinitions
-import amf.plugins.document.apicontract.parser.spec.common.{
-  AnnotationParser,
-  DataNodeParser,
-  QuickFieldParserOps,
-  ScalarNodeParser
-}
+import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, DataNodeParser, QuickFieldParserOps, ScalarNodeParser}
 import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.types.TypeDetector
-import amf.plugins.document.apicontract.parser.spec.domain.{
-  ExampleOptions,
-  ExamplesDataParser,
-  NodeDataNodeParser,
-  RamlExamplesParser
-}
+import amf.plugins.document.apicontract.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.apicontract.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
-import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{
-  DiscriminatorValue,
-  DiscriminatorValueTarget
-}
+import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
@@ -43,6 +30,7 @@ import amf.plugins.domain.apicontract.metamodel.IriTemplateMappingModel.{LinkExp
 import amf.plugins.domain.apicontract.models
 import amf.plugins.domain.apicontract.models.IriTemplateMapping
 import amf.validations.ShapeParserSideValidations._
+import org.yaml.model.YType.Null
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -62,7 +50,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
   def parse(): Option[AnyShape] = {
 
-    if (detectDisjointUnion()) {
+    val parsedShape = if (detectDisjointUnion()) {
       validateUnionType()
       Some(parseDisjointUnionType())
     } else {
@@ -83,6 +71,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         case None => None
       }
     }
+
+    parsedShape.map(parseSemanticContext)
   }
 
   def validateUnionType(): Unit =
@@ -264,6 +254,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
   }
 
   private def parseUnionType(): UnionShape = UnionShapeParser(entryOrNode, name).parse()
+
+  def parseSemanticContext(shape: AnyShape): AnyShape = SemanticContextParser(entryOrNode.asMap, shape).parse()
 
   trait CommonScalarParsingLogic {
     def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): TypeDef = {
@@ -1054,4 +1046,89 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       shape
     }
   }
+
+  case class SemanticContextParser(override val map: YMap, override val shape: AnyShape) extends AnyShapeParser() {
+
+    override def parse(): AnyShape = {
+      val contextEntry = map.key("@context")
+      contextEntry.map(entry => {
+        Option(entry.value.as[YMap]) match {
+          case Some(m) =>
+            val semanticContext = SemanticContext(m)
+            m.entries.foreach { entry =>
+              entry.key.as[YScalar].text match {
+                case "@base" => parseBase(entry.value, semanticContext)
+                case "@vocab" => parseVocab(entry.value, semanticContext)
+                case "@type" => parseTypeMapping(entry.value, semanticContext)
+                case _        => parseMapping(entry, semanticContext)
+              }
+            }
+            shape.withSemanticContext(semanticContext)
+          case _ => shape // empty context property
+        }
+      }) getOrElse(shape)
+    }
+
+    def parseBase(n: YNode, semanticContext: SemanticContext): Any = {
+      Option(n.as[YScalar]) match {
+        case Some(Null) => semanticContext.withBase(BaseIri(n).withNulled(true))
+        case Some(s)    => semanticContext.withBase(BaseIri(s).withIri(s.text))
+        case _ =>  // ignore
+      }
+    }
+
+    def parseVocab(n: YNode, semanticContext: SemanticContext): Any = {
+      Option(n.as[YScalar]) match {
+        case Some(Null) => // ignore
+        case Some(s)    => semanticContext.withVocab(DefaultVocabulary(s).withIri(s.text))
+        case _ =>  // ignore
+      }
+    }
+
+    def parseTypeMapping(n: YNode, context: SemanticContext) = {
+      n.tagType match {
+        case YType.Seq =>
+          context.withTypeMappings(n.as[YSequence].nodes.map((e) => e.as[YScalar].text))
+        case YType.Str =>
+          context.withTypeMappings(Seq(n.as[YScalar].text))
+        case _         => // ignore
+      }
+    }
+    def parseMapping(m: YMapEntry, semanticContext: SemanticContext): semanticContext.type = {
+      val key = m.key.as[YScalar].text
+      m.value.tagType match {
+        case YType.Null =>
+          val mapping = ContextMapping(m).withAlias(key).withNulled(true)
+          val oldMappings = semanticContext.mapping
+          semanticContext.withMapping(oldMappings ++ Seq(mapping))
+        case YType.Str =>
+          val iri = m.value.as[YScalar].text
+          if (iri.endsWith("#") || iri.endsWith("/")) {
+            val prefix = CuriePrefix(m).withAlias(key).withIri(iri)
+            val oldCuries = semanticContext.curies
+            semanticContext.withCuries(oldCuries ++ Seq(prefix))
+          } else {
+            val mapping = ContextMapping(m).withAlias(key).withIri(iri)
+            val oldMappings = semanticContext.mapping
+            semanticContext.withMapping(oldMappings ++ Seq(mapping))
+          }
+        case YType.Map =>
+          val mapping = ContextMapping(m).withAlias(key)
+          val nestedMapping = m.value.as[YMap]
+          nestedMapping.key("@id").foreach(e => {
+            val iri = e.value.as[YScalar].text
+            mapping.withIri(iri)
+          })
+          nestedMapping.key("@type").foreach(e => {
+            val iri = e.value.as[YScalar].text
+            mapping.withCoercion(iri)
+          })
+          val oldMappings = semanticContext.mapping
+          semanticContext.withMapping(oldMappings ++ Seq(mapping))
+      }
+    }
+
+
+  }
+
 }

@@ -4,14 +4,8 @@ import amf.core.emitter.BaseEmitters.ValueEmitter
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.apicontract.parser.spec.async.emitters.Draft6ExamplesEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.{
-  JSONSchemaDraft6SchemaVersion,
-  JSONSchemaDraft7SchemaVersion
-}
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  OasLikeShapeEmitterContext,
-  ShapeEmitterContext
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContext
+import amf.plugins.document.apicontract.parser.spec.declaration.{JSONSchemaDraft6SchemaVersion, JSONSchemaDraft7SchemaVersion}
 import amf.plugins.document.apicontract.parser.spec.oas.emitters.OasExampleEmitters
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, Example}
@@ -53,7 +47,14 @@ class OasAnyShapeEmitter(shape: AnyShape,
         shape.fields.entry(AnyShapeModel.Comment).map(c => result += ValueEmitter("$comment", c))
     }
 
+    result ++= semanticContextEmitter(shape)
+
     super.emitters() ++ result
+  }
+
+  private def semanticContextEmitter(shape: AnyShape): List[EntryEmitter] = shape.semanticContext match {
+    case Some(ctx) => List(SemanticContextEmitter(ctx, ordering))
+    case _         => Nil
   }
 
   private def examplesEmitters(main: Option[Example], extensions: Seq[Example], isHeader: Boolean) =

@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$ref": "#/$defs/main",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "name": {
+      "@id": "foaf:name",
+      "@type": "xsd:string"
+    }
+  },
+  "type": "object",
+  "required": ["name", "pepito"],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "pepito": {
+      "type": "number"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/$defs/allOffEd"
+    }
+  ],
+  "$defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "anotherName"
+      ],
+      "properties": {
+        "anotherName": {
+          "type": "string"
+        }
+      }
+    },
+    "allOffEd": {
+      "@context": {
+        "@type": [
+          "foaf:Test"
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

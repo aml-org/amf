@@ -8,7 +8,7 @@ import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
 import amf.plugins.domain.shapes.models.AnyShape
 
-trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with ExamplesField with DocumentationField {
+trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with ExamplesField with DocumentationField with WithSemanticContext {
 
   val XMLSerialization = Field(
     XMLSerializerModel,

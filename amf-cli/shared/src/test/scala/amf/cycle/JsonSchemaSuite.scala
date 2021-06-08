@@ -7,7 +7,6 @@ import amf.core.Root
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser.{ParserContext, SchemaReference, SyamlParsedDocument}
 import amf.core.remote.Platform
-import amf.core.validation.AMFValidationReport
 import amf.plugins.document.apicontract.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.apicontract.model.DataTypeFragment
 import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
