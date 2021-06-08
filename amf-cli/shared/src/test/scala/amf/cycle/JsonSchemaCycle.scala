@@ -31,6 +31,10 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     cycle("draft-2019-09/defs.json", "draft-2019-09/cycled/defs.json", DRAFT_2019_09_EMITTER, `application/json`)
   }
 
+  test("HERE_HERE Draft 2019-09 semantics") {
+    cycle("draft-2019-09/semantics.json", "draft-2019-09/cycled/semantics.json", DRAFT_2019_09_EMITTER, JSON)
+  }
+
   test("Draft 2019-09 duration and uuid formats") {
     cycle("draft-2019-09/duration-uuid-format.json",
           "draft-2019-09/cycled/duration-uuid-format.json",

@@ -16,17 +16,21 @@ AMF Model Documentation
 * [ArrayShape](#arrayshape)
 * [AsyncApi](#asyncapi)
 * [BaseApi](#baseapi)
+* [BaseIRI](#baseiri)
 * [BaseUnit](#baseunit)
 * [Callback](#callback)
 * [ChannelBinding](#channelbinding)
 * [ChannelBindings](#channelbindings)
 * [ClassTerm](#classterm)
+* [ContextMapping](#contextmapping)
 * [CorrelationId](#correlationid)
 * [CreativeWork](#creativework)
+* [CuriePrefix](#curieprefix)
 * [CustomDomainProperty](#customdomainproperty)
 * [DataNode](#datanode)
 * [DataTypeFragment](#datatypefragment)
 * [DatatypePropertyTerm](#datatypepropertyterm)
+* [DefaultVocabulary](#defaultvocabulary)
 * [Dialect](#dialect)
 * [DialectFragment](#dialectfragment)
 * [DialectInstance](#dialectinstance)
@@ -113,6 +117,7 @@ AMF Model Documentation
 * [SecurityRequirement](#securityrequirement)
 * [SecurityScheme](#securityscheme)
 * [SecuritySchemeFragment](#securityschemefragment)
+* [SemanticContext](#semanticcontext)
 * [SemanticExtension](#semanticextension)
 * [Server](#server)
 * [ServerBinding](#serverbinding)
@@ -396,6 +401,14 @@ Top level element describing any kind of API
  | tag | [[Tag](#tag)] | Additionally custom tagged information | http://a.ml/vocabularies/apiContract#tag |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
+## BaseIRI
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | iri | url | Base IRI for all the elements in the model | http://a.ml/vocabularies/meta#iri |
+ | null | boolean | Marks the baseIRI as null, preventing generation of absolute IRIs in the model | http://a.ml/vocabularies/meta#null |
+
 ## BaseUnit
 Base class for every single document model unit. After parsing a document the parser generate parsing Units. Units encode the domain elements and can reference other units to re-use descriptions.
 
@@ -450,6 +463,16 @@ Model defining the information for a HTTP callback/ webhook
  | subClassOf | [url] | Subsumption relationship across terms | http://www.w3.org/2000/01/rdf-schema#subClassOf |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
+## ContextMapping
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | contextAlias | string | lexical value of the alias in the context | http://a.ml/vocabularies/meta#contextAlias |
+ | iri | url | Base IRI for all the elements in the model | http://a.ml/vocabularies/meta#iri |
+ | coercion | string | Type to coerce the mapped model | http://a.ml/vocabularies/meta#coercion |
+ | null | boolean | Marks the baseIRI as null, preventing generation of absolute IRIs in the model | http://a.ml/vocabularies/meta#null |
+
 ## CorrelationId
 Model defining an identifier that can used for message tracing and correlation
 
@@ -475,6 +498,14 @@ The most generic kind of creative work, including books, movies, photographs, so
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
+
+## CuriePrefix
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | contextAlias | string | lexical value of the alias in the context | http://a.ml/vocabularies/meta#contextAlias |
+ | iri | url | Base IRI for all the elements in the model | http://a.ml/vocabularies/meta#iri |
 
 ## CustomDomainProperty
 Definition of an extension to the domain model defined directly by a user in the RAML/OpenAPI document.
@@ -527,6 +558,13 @@ Fragment encoding a RAML data type
  | range | url | Range of the proeprty term, scalar or object | http://www.w3.org/2000/01/rdf-schema#range |
  | subPropertyOf | [url] | Subsumption relationship for terms | http://www.w3.org/2000/01/rdf-schema#subPropertyOf |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## DefaultVocabulary
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | iri | url | Base IRI for all the elements in the model | http://a.ml/vocabularies/meta#iri |
 
 ## Dialect
 Definition of an AML dialect, mapping AST nodes from dialect documents into an output semantic graph
@@ -1867,6 +1905,16 @@ Fragment encoding a RAML security scheme
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
+
+## SemanticContext
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | base | [BaseIRI](#baseiri) | Base IRI used to generate all the @ids in the model | http://a.ml/vocabularies/meta#base |
+ | vocab | [DefaultVocabulary](#defaultvocabulary) | Default IRI prefix used to map by default all properties and terms in the model | http://a.ml/vocabularies/meta#vocab |
+ | curies | [[CuriePrefix](#curieprefix)] | Set of CURIE prefixes defined in a context | http://a.ml/vocabularies/meta#curies |
+ | mappings | [[ContextMapping](#contextmapping)] | Set of property mappings and coercions defined in a context | http://a.ml/vocabularies/meta#mappings |
 
 ## SemanticExtension
 Mapping a particular extension name to an extension definition
