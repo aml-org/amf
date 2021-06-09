@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: my api
+/myEndpoint:
+  get:
+    body:
+      application/json:
+        properties:
+          a:
+            type: string
+          b?:
+            type: number
+        example:
+          a: my value
+          b: 299

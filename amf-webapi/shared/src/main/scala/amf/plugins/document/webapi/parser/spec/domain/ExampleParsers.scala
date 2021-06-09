@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.LexicalInformation
-import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DataNode, ExternalDomainElement}
-import amf.core.parser.errorhandler.{JsonErrorHandler, ParserErrorHandler, WarningOnlyHandler}
+import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DataNode}
+import amf.core.parser.errorhandler.{ParserErrorHandler, WarningOnlyHandler}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ParsedJSONExample}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -10,13 +10,7 @@ import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorNamedExample
-import amf.plugins.document.webapi.parser.spec.common.{
-  AnnotationParser,
-  DataNodeParser,
-  ExternalFragmentHelper,
-  SpecParserOps,
-  YMapEntryLike
-}
+import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField
@@ -27,8 +21,7 @@ import amf.validations.ParserSideValidations.{
   ExclusivePropertiesSpecification,
   InvalidFragmentType
 }
-import org.mulesoft.lexer.{Position, SourceLocation}
-import org.yaml.model.YNode.MutRef
+import org.mulesoft.lexer.Position
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
@@ -95,7 +88,7 @@ case class RamlExamplesParser(map: YMap,
       .key(multipleExamplesKey)
       .orElse(map.key(singleExampleKey)) match {
       case Some(e) =>
-        exemplified.set(ExamplesField.Examples, AmfArray(examples, Annotations(e.value)), Annotations(e))
+        exemplified.set(ExamplesField.Examples, AmfArray(examples, Annotations(e)), Annotations(e))
       case _ if examples.nonEmpty =>
         exemplified.set(ExamplesField.Examples, AmfArray(examples), Annotations.inferred())
       case _ => // ignore
