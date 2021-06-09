@@ -276,6 +276,7 @@ class ExpandedRamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)
           results += StringToAstEmitter(s)
         }
       })(f => {
+        // TODO: fix because emission changes with raw value change (see ignored test upanddown/cycle/raml10/referenced-example)
         results += EntryPartEmitter("value",
                                     DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
                                     position = pos(f.value.annotations))
