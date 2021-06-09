@@ -47,7 +47,7 @@ abstract class ExtensionsContext(val loc: String,
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] =
     declarations.findAnnotation(key, scope)
 
-  override def getMaxYamlReferences: Option[Long] = options.getMaxYamlReferences
+  override def getMaxYamlReferences: Option[Int] = options.getMaxYamlReferences
 
   override def fragments: Map[String, FragmentRef] = declarations.fragments
 }

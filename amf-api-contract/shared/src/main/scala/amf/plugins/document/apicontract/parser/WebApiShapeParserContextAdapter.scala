@@ -54,7 +54,7 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
 
   override def refs: Seq[ParsedReference] = ctx.refs
 
-  override def getMaxYamlReferences: Option[Long] = ctx.options.getMaxYamlReferences
+  override def getMaxYamlReferences: Option[Int] = ctx.options.getMaxYamlReferences
 
   override def fragments: Map[String, FragmentRef] = ctx.declarations.fragments
 

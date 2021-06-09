@@ -1,4 +1,8 @@
 package amf.client.exported
+import amf.client.convert.ApiClientConverters._
+import amf.client.convert.VocabulariesClientConverter.DialectConverter
+import amf.client.convert.TransformationPipelineConverter._
+import amf.client.convert.VocabulariesClientConverter
 import amf.client.environment.{
   AMFConfiguration => InternalAMFConfiguration,
   AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
@@ -6,22 +10,20 @@ import amf.client.environment.{
   RAMLConfiguration => InternalRAMLConfiguration,
   WebAPIConfiguration => InternalWebAPIConfiguration
 }
-import amf.client.convert.ApiClientConverters._
-import amf.client.convert.TransformationPipelineConverter._
-import amf.client.resolve.ClientErrorHandlerConverter._
 import amf.client.exported.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
 import amf.client.exported.transform.TransformationPipeline
+import amf.client.model.document.Dialect
 import amf.client.reference.UnitCache
-import amf.client.resolve.ClientErrorHandlerConverter
+import amf.client.resolve.ClientErrorHandlerConverter._
 import amf.client.resource.ResourceLoader
+import amf.client.validate.ValidationProfile
 
 import scala.concurrent.ExecutionContext
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 class AMFConfiguration private[amf] (private[amf] override val _internal: InternalAMFConfiguration)
-    extends AMLConfiguration(_internal) {
-  private implicit val ec: ExecutionContext = _internal.getExecutionContext
+    extends BaseAMLConfiguration(_internal) {
 
   override def createClient(): AMFClient = new AMFClient(this)
 
@@ -51,6 +53,18 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: Intern
   override def withLogger(logger: AMFLogger): AMFConfiguration = _internal.withLogger(logger)
 
   def merge(other: AMFConfiguration): AMFConfiguration = _internal.merge(other)
+
+  override def withDialect(dialect: Dialect): AMFConfiguration = _internal.withDialect(asInternal(dialect))
+
+  def withCustomValidationsEnabled(): ClientFuture[AMFConfiguration] =
+    _internal.withCustomValidationsEnabled().asClient
+
+  def withDialect(path: String): ClientFuture[AMFConfiguration] = _internal.withDialect(path).asClient
+
+  def withCustomProfile(instancePath: String): ClientFuture[AMFConfiguration] =
+    _internal.withCustomProfile(instancePath).asClient
+
+  def withCustomProfile(profile: ValidationProfile): AMFConfiguration = _internal.withCustomProfile(profile)
 }
 
 /**
