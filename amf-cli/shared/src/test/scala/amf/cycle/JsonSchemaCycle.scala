@@ -8,16 +8,12 @@ import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
 import amf.plugins.document.apicontract.model.DataTypeFragment
 import amf.plugins.document.apicontract.parser.spec.common.JsonSchemaEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.{
-  JSONSchemaDraft201909SchemaVersion,
-  JSONSchemaDraft7SchemaVersion,
-  JSONSchemaVersion,
-  SchemaVersion
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaVersion, SchemaVersion}
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.render.JsonRender
 import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions => ImmutableShapeRenderOptions}
 import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.model.document.BaseUnit
 
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -10,19 +10,16 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.vocabularies.parser.common.DeclarationKey
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.model.{Extension, Overlay}
-import amf.plugins.document.apicontract.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.{AbstractDeclarationsParser, OasTypeParser, _}
 import amf.plugins.document.apicontract.parser.spec.domain
 import amf.plugins.document.apicontract.parser.spec.domain._
+import amf.plugins.document.apicontract.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
-import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.apicontract.metamodel.templates.{ResourceTypeModel, TraitModel}
@@ -30,6 +27,8 @@ import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.security.{SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
+import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMapEntry, YNode, _}
