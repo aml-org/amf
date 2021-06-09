@@ -1,0 +1,13 @@
+#%Dialect 1.0
+nodeMappings:
+  SchemaNode:
+    mapping:
+      name:
+        range: string
+      pepito:
+        range: number
+dialect: generated_dialect
+version: "1.0"
+documents:
+  root:
+    encodes: SchemaNode
