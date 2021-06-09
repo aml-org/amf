@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ./amf-client/js
+# cd ./amf-cli/js
 
 echo 'SHACLValidator = require("amf-shacl-node")' > amf.js
 echo 'Ajv = require("ajv")' >> amf.js

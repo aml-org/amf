@@ -1,11 +1,11 @@
 declare module 'amf-client-js' {
   namespace reference {
-    export interface ReferenceResolver    {
+    export interface UnitCache    {
       fetch(url: string): Promise<client.remote.CachedReference>
 
 
     }
-    export interface ClientReferenceResolver    {
+    export interface ClientUnitCache    {
       fetch(url: string): Promise<client.remote.CachedReference>
 
 
@@ -30,9 +30,9 @@ declare module 'amf-client-js' {
     export interface ClientAMFPayloadValidationPlugin extends ClientAMFPlugin    {
       readonly payloadMediaType: Array<string>
 
-      canValidate(shape: model.domain.Shape, env: client.environment.Environment): boolean
+      canValidate(shape: model.domain.Shape): boolean
 
-      validator(s: model.domain.Shape, env: client.environment.Environment, validationMode: ValidationMode): ClientPayloadValidator
+      validator(s: model.domain.Shape, validationMode: ValidationMode): ClientPayloadValidator
 
 
     }
@@ -40,13 +40,12 @@ declare module 'amf-client-js' {
       readonly shape: model.domain.Shape
       readonly defaultSeverity: string
       readonly validationMode: ValidationMode
-      readonly env: client.environment.Environment
 
-      validate(payload: string, mediaType: string): Promise<client.validate.ValidationReport>
+      validate(payload: string, mediaType: string): Promise<client.validate.AMFValidationReport>
 
-      validate(payloadFragment: model.domain.PayloadFragment): Promise<client.validate.ValidationReport>
+      validate(payloadFragment: model.domain.PayloadFragment): Promise<client.validate.AMFValidationReport>
 
-      syncValidate(payload: string, mediaType: string): client.validate.ValidationReport
+      syncValidate(payload: string, mediaType: string): client.validate.AMFValidationReport
 
       isValid(payload: string, mediaType: string): Promise<boolean>
 
@@ -155,29 +154,226 @@ declare module 'amf-client-js' {
 
       withoutBaseUnitUrl(): ParsingOptions
 
+      setMaxYamlReferences(value: number): ParsingOptions
+
 
     }
   }
   namespace validate {
-    export class Validator    {
-      validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: amf.MessageStyle, env: client.environment.Environment, resolved: boolean): Promise<client.validate.ValidationReport>
-
-      loadValidationProfile(url: string, env: client.environment.Environment): Promise<ProfileName>
-
-      emitShapesGraph(profileName: ProfileName): string
-
-
-    }
     export class PayloadValidator    {
       isValid(mediaType: string, payload: string): Promise<boolean>
 
-      validate(mediaType: string, payload: string): Promise<client.validate.ValidationReport>
+      validate(mediaType: string, payload: string): Promise<client.validate.AMFValidationReport>
 
-      validate(payloadFragment: model.domain.PayloadFragment): Promise<client.validate.ValidationReport>
+      validate(payloadFragment: model.domain.PayloadFragment): Promise<client.validate.AMFValidationReport>
 
-      syncValidate(mediaType: string, payload: string): client.validate.ValidationReport
+      syncValidate(mediaType: string, payload: string): client.validate.AMFValidationReport
 
 
+    }
+  }
+  namespace exported {
+
+    export class AMFLibraryResult extends AMFResult    {
+      library: model.document.Module
+
+    }
+    export class AMFDocumentResult extends AMFResult    {
+      document: model.document.Document
+
+    }
+    export class AMFConfiguration extends AMLConfiguration    {
+      createClient(): AMFClient
+
+      withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration
+
+      withResourceLoader(rl: resource.ResourceLoader): AMFConfiguration
+
+      withResourceLoaders(rl: Array<resource.ResourceLoader>): AMFConfiguration
+
+      withUnitCache(cache: reference.UnitCache): AMFConfiguration
+
+      withTransformationPipeline(pipeline: transform.TransformationPipeline): AMFConfiguration
+
+      withRenderOptions(renderOptions: RenderOptions): AMFConfiguration
+
+      withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration
+
+      withEventListener(listener: config.AMFEventListener): AMFConfiguration
+
+      withLogger(logger: config.AMFLogger): AMFConfiguration
+
+      merge(other: AMFConfiguration): AMFConfiguration
+
+      withDialect(dialect: model.document.Dialect): AMFConfiguration
+
+      withDialect(path: string): Promise<AMFConfiguration>
+
+      withCustomProfile(instancePath: string): Promise<AMFConfiguration>
+
+      withCustomProfile(profile: client.validate.ValidationProfile): AMFConfiguration
+
+      withCustomValidationsEnabled(): Promise<AMFConfiguration>
+    }
+    export class AMFResult    {
+      conforms: boolean
+      results: Array<client.validate.ValidationResult>
+      baseUnit: model.document.BaseUnit
+
+    }
+    export class AMFGraphConfiguration    {
+      createClient(): AMFGraphClient
+
+      withParsingOptions(parsingOptions: ParsingOptions): AMFGraphConfiguration
+
+      withRenderOptions(renderOptions: RenderOptions): AMFGraphConfiguration
+
+      withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFGraphConfiguration
+
+      withResourceLoader(rl: resource.ResourceLoader): AMFGraphConfiguration
+
+      withResourceLoaders(rl: Array<resource.ResourceLoader>): AMFGraphConfiguration
+
+      withUnitCache(cache: reference.UnitCache): AMFGraphConfiguration
+
+      withTransformationPipeline(pipeline: transform.TransformationPipeline): AMFGraphConfiguration
+
+      withEventListener(listener: config.AMFEventListener): AMFGraphConfiguration
+
+      withLogger(logger: config.AMFLogger): AMFGraphConfiguration
+
+      merge(other: AMFGraphConfiguration): AMFGraphConfiguration
+
+
+    }
+    export class AMLVocabularyResult extends AMFResult    {
+      vocabulary: model.document.Vocabulary
+
+    }
+    export class AMLDialectResult extends AMFResult    {
+      dialect: model.document.Dialect
+
+    }
+    export class AMLDialectInstanceResult extends AMFResult    {
+      dialectInstance: model.document.DialectInstance
+
+    }
+
+    export abstract class ErrorHandlerProvider {
+      static errorHandler(): resolve.ClientErrorHandler
+      static unhandled(): ErrorHandlerProvider
+      static default(): ErrorHandlerProvider
+      static ignoring(): ErrorHandlerProvider
+    }
+
+    namespace config {
+      export interface AMFLogger      {
+        log(message: string, severity: LogSeverity, source: string): void
+
+
+      }
+      export class LogSeverity      {
+        severity: string
+
+      }
+      export interface AMFEventListener      {
+        notifyEvent(event: AMFEvent): void
+
+
+      }
+      export interface AMFEvent      {
+        readonly name: string
+
+      }
+      export class StartingParsingEvent      {
+        url: string
+        mediaType: undefined | string
+
+      }
+      export class StartingContentParsingEvent      {
+        url: string
+        content: client.remote.Content
+
+      }
+      export class ParsedSyntaxEvent      {
+        url: string
+        content: client.remote.Content
+
+      }
+      export class ParsedModelEvent      {
+        url: string
+        unit: model.document.BaseUnit
+
+      }
+      export class FinishedParsingEvent      {
+        url: string
+        unit: model.document.BaseUnit
+
+      }
+      export class StartingTransformationEvent      {
+        pipeline: transform.TransformationPipeline
+
+      }
+      export class FinishedTransformationStepEvent      {
+        step: transform.TransformationStep
+        index: number
+
+      }
+      export class FinishedTransformationEvent      {
+        unit: model.document.BaseUnit
+
+      }
+      export class StartingValidationEvent      {
+        totalPlugins: number
+
+      }
+      export class FinishedValidationPluginEvent      {
+        result: client.validate.AMFValidationReport
+
+      }
+      export class FinishedValidationEvent      {
+        result: client.validate.AMFValidationReport
+
+      }
+      export class StartingRenderingEvent      {
+        unit: model.document.BaseUnit
+        mediaType: string
+
+      }
+      export class FinishedRenderingASTEvent      {
+        unit: model.document.BaseUnit
+
+      }
+      export class FinishedRenderingSyntaxEvent      {
+        unit: model.document.BaseUnit
+
+      }
+    }
+    namespace transform {
+      export interface TransformationStep      {
+        transform(model: model.document.BaseUnit, errorHandler: resolve.ClientErrorHandler): model.document.BaseUnit
+
+
+      }
+      export class TransformationPipelineBuilder      {
+        build(): TransformationPipeline
+
+        withName(newName: string): TransformationPipelineBuilder
+
+        append(newStage: TransformationStep): TransformationPipelineBuilder
+
+        prepend(newStage: TransformationStep): TransformationPipelineBuilder
+
+
+      }
+      export interface TransformationPipeline      {
+        readonly name: string
+        steps: Array<TransformationStep>
+
+      }
+      export class JsTransformationStep {
+        static transform(model: model.document.BaseUnit, errorHandler: handler.JsErrorHandler): model.document.BaseUnit
+      }
     }
   }
   namespace model {
@@ -821,6 +1017,8 @@ declare module 'amf-client-js' {
 
         withLocation(location: string): this
 
+        extensions(): Array<domain.SemanticExtension>
+
         withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
 
         withDocuments(documentsMapping: domain.DocumentsModel): Dialect
@@ -876,6 +1074,539 @@ declare module 'amf-client-js' {
         withNamespace(namespace: string): this
 
         withId(id: string): this
+
+
+      }
+      export class UnionShape extends AnyShape      {
+        anyOf: Array<Shape>
+
+        constructor()
+
+        withAnyOf(anyOf: Array<Shape>): UnionShape
+
+
+      }
+      export class TupleShape extends DataArrangeShape      {
+        items: Array<Shape>
+        closedItems: BoolField
+        additionalItemsSchema: Shape
+
+        constructor()
+
+        withItems(items: Array<Shape>): this
+
+        withClosedItems(closedItems: boolean): this
+
+        linkCopy(): TupleShape
+
+
+      }
+      export class SchemaShape extends AnyShape      {
+        mediaType: StrField
+        raw: StrField
+        location: undefined | string
+
+        constructor()
+
+        withMediatype(mediaType: string): this
+
+        withRaw(text: string): this
+
+        linkCopy(): SchemaShape
+
+
+      }
+      export class SchemaDependencies implements DomainElement      {
+        source: StrField
+        customDomainProperties: Array<DomainExtension>
+        isExternalLink: BoolField
+        id: string
+        position: core.parser.Range
+        target: Shape
+        extendsNode: Array<DomainElement>
+
+        constructor()
+
+        withSchemaTarget(schema: Shape): this
+
+        withPropertySource(propertySource: string): this
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withId(id: string): this
+
+
+      }
+      export class ScalarShape extends AnyShape      {
+        dataType: StrField
+        pattern: StrField
+        minLength: IntField
+        maxLength: IntField
+        minimum: DoubleField
+        maximum: DoubleField
+        exclusiveMinimum: BoolField
+        exclusiveMaximum: BoolField
+        format: StrField
+        multipleOf: DoubleField
+        encoding: StrField
+        mediaType: StrField
+        schema: Shape
+
+        constructor()
+
+        withDataType(dataType: string): this
+
+        withPattern(pattern: string): this
+
+        withMinLength(min: number): this
+
+        withMaxLength(max: number): this
+
+        withMinimum(min: number): this
+
+        withMaximum(max: number): this
+
+        withExclusiveMinimum(min: boolean): this
+
+        withExclusiveMaximum(max: boolean): this
+
+        withFormat(format: string): this
+
+        withMultipleOf(multiple: number): this
+
+        withEncoding(encoding: string): this
+
+        withMediaType(mediaType: string): this
+
+        withSchema(schema: Shape): this
+
+        linkCopy(): ScalarShape
+
+
+      }
+      export class PropertyDependencies implements DomainElement      {
+        source: StrField
+        customDomainProperties: Array<DomainExtension>
+        isExternalLink: BoolField
+        id: string
+        position: core.parser.Range
+        target: Array<StrField>
+        extendsNode: Array<DomainElement>
+
+        constructor()
+
+        withPropertySource(propertySource: string): this
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withPropertyTarget(propertyTarget: Array<string>): this
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withId(id: string): this
+
+
+      }
+      export class NodeShape extends AnyShape      {
+        minProperties: IntField
+        maxProperties: IntField
+        closed: BoolField
+        discriminator: StrField
+        discriminatorValue: StrField
+        discriminatorMapping: Array<IriTemplateMapping>
+        discriminatorValueMapping: Array<DiscriminatorValueMapping>
+        properties: Array<PropertyShape>
+        additionalPropertiesSchema: Shape
+        dependencies: Array<PropertyDependencies>
+        schemaDependencies: Array<SchemaDependencies>
+        propertyNames: Shape
+        unevaluatedProperties: boolean
+        unevaluatedPropertiesSchema: Shape
+
+        constructor()
+
+        withMinProperties(min: number): this
+
+        withMaxProperties(max: number): this
+
+        withClosed(closed: boolean): this
+
+        withDiscriminator(discriminator: string): this
+
+        withDiscriminatorValue(value: string): this
+
+        withDiscriminatorMapping(mappings: Array<IriTemplateMapping>): this
+
+        withProperties(properties: Array<PropertyShape>): this
+
+        withAdditionalPropertiesSchema(additionalPropertiesSchema: Shape): this
+
+        withDependencies(dependencies: Array<PropertyDependencies>): this
+
+        withSchemaDependencies(dependencies: Array<SchemaDependencies>): this
+
+        withPropertyNames(propertyNames: Shape): this
+
+        withUnevaluatedProperties(value: boolean): this
+
+        withUnevaluatedPropertiesSchema(schema: Shape): this
+
+        withProperty(name: string): PropertyShape
+
+        withDependency(): PropertyDependencies
+
+        withInheritsObject(name: string): NodeShape
+
+        withInheritsScalar(name: string): ScalarShape
+
+        linkCopy(): NodeShape
+
+
+      }
+      export class NilShape extends AnyShape      {
+        constructor()
+
+        linkCopy(): NilShape
+
+
+      }
+      export class MatrixShape extends ArrayShape      {
+        constructor()
+
+        withItems(items: Shape): this
+
+
+      }
+      export class IriTemplateMapping implements DomainElement      {
+        customDomainProperties: Array<DomainExtension>
+        templateVariable: StrField
+        isExternalLink: BoolField
+        id: string
+        linkExpression: StrField
+        position: core.parser.Range
+        extendsNode: Array<DomainElement>
+
+        constructor()
+
+        graph(): Graph
+
+        withTemplateVariable(variable: string): this
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withLinkExpression(expression: string): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withId(id: string): this
+
+
+      }
+      export class FileShape extends AnyShape      {
+        fileTypes: Array<StrField>
+        pattern: StrField
+        minLength: IntField
+        maxLength: IntField
+        minimum: DoubleField
+        maximum: DoubleField
+        exclusiveMinimum: BoolField
+        exclusiveMaximum: BoolField
+        format: StrField
+        multipleOf: DoubleField
+
+        constructor()
+
+        withFileTypes(fileTypes: Array<string>): this
+
+        withPattern(pattern: string): this
+
+        withMinLength(min: number): this
+
+        withMaxLength(max: number): this
+
+        withMinimum(min: number): this
+
+        withMaximum(max: number): this
+
+        withExclusiveMinimum(min: boolean): this
+
+        withExclusiveMaximum(max: boolean): this
+
+        withFormat(format: string): this
+
+        withMultipleOf(multiple: number): this
+
+        linkCopy(): FileShape
+
+
+      }
+      export class Example implements DomainElement, Linkable      {
+        displayName: StrField
+        mediaType: StrField
+        name: StrField
+        strict: BoolField
+        toYaml: string
+        customDomainProperties: Array<DomainExtension>
+        location: undefined | string
+        description: StrField
+        structuredValue: DataNode
+        linkTarget: undefined | DomainElement
+        isLink: boolean
+        isExternalLink: BoolField
+        id: string
+        toJson: string
+        position: core.parser.Range
+        linkLabel: StrField
+        extendsNode: Array<DomainElement>
+        value: StrField
+
+        constructor()
+
+        linkCopy(): Example
+
+        withName(name: string): this
+
+        withStructuredValue(value: DataNode): this
+
+        withDescription(description: string): this
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withMediaType(mediaType: string): this
+
+        withLinkLabel(label: string): this
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withValue(value: string): this
+
+        withLinkTarget(target: undefined): this
+
+        withStrict(strict: boolean): this
+
+        withDisplayName(displayName: string): this
+
+        withId(id: string): this
+
+
+      }
+      export class DiscriminatorValueMapping implements DomainElement      {
+        customDomainProperties: Array<DomainExtension>
+        targetShape: Shape
+        isExternalLink: BoolField
+        id: string
+        position: core.parser.Range
+        extendsNode: Array<DomainElement>
+        value: StrField
+
+        constructor()
+
+        withTargetShape(shape: Shape): this
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withValue(value: string): this
+
+        withId(id: string): this
+
+
+      }
+      export class DataArrangeShape extends AnyShape      {
+        minItems: IntField
+        maxItems: IntField
+        uniqueItems: BoolField
+
+        withMinItems(minItems: number): this
+
+        withMaxItems(maxItems: number): this
+
+        withUniqueItems(uniqueItems: boolean): this
+
+
+      }
+      export class CreativeWork implements DomainElement      {
+        customDomainProperties: Array<DomainExtension>
+        url: StrField
+        description: StrField
+        isExternalLink: BoolField
+        id: string
+        position: core.parser.Range
+        title: StrField
+        extendsNode: Array<DomainElement>
+
+        constructor()
+
+        withDescription(description: string): this
+
+        withTitle(title: string): this
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withUrl(url: string): this
+
+        withId(id: string): this
+
+
+      }
+      export class ArrayShape extends DataArrangeShape      {
+        items: Shape
+        contains: Shape
+        minContains: number
+        maxContains: number
+        unevaluatedItems: boolean
+        unevaluatedItemsSchema: Shape
+
+        constructor()
+
+        withItems(items: Shape): this
+
+        withContains(contains: Shape): this
+
+        withMinContains(amount: number): this
+
+        withMaxContains(amount: number): this
+
+        withUnevaluatedItemsSchema(schema: Shape): this
+
+        withUnevaluatedItems(value: boolean): this
+
+        linkCopy(): ArrayShape
+
+
+      }
+      export class AnyShape implements Shape      {
+        defaultValueStr: StrField
+        displayName: StrField
+        name: StrField
+        customDomainProperties: Array<DomainExtension>
+        examples: Array<Example>
+        xone: Array<Shape>
+        readOnly: BoolField
+        description: StrField
+        documentation: CreativeWork
+        deprecated: BoolField
+        xmlSerialization: XMLSerializer
+        customShapePropertyDefinitions: Array<PropertyShape>
+        or: Array<Shape>
+        elseShape: Shape
+        linkTarget: undefined | DomainElement
+        isLink: boolean
+        isExternalLink: BoolField
+        customShapeProperties: Array<ShapeExtension>
+        thenShape: Shape
+        id: string
+        ifShape: Shape
+        writeOnly: BoolField
+        comment: StrField
+        not: Shape
+        values: Array<DataNode>
+        position: core.parser.Range
+        isDefaultEmpty: boolean
+        inherits: Array<Shape>
+        linkLabel: StrField
+        defaultValue: DataNode
+        extendsNode: Array<DomainElement>
+        and: Array<Shape>
+
+        constructor()
+
+        withValues(values: Array<DataNode>): this
+
+        linkCopy(): AnyShape
+
+        withOr(subShapes: Array<Shape>): this
+
+        withName(name: string): this
+
+        withDescription(description: string): this
+
+        trackedExample(trackId: string): undefined | Example
+
+        withIf(ifShape: Shape): this
+
+        withCustomShapePropertyDefinition(name: string): PropertyShape
+
+        withExamples(examples: Array<Example>): this
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withLinkLabel(label: string): this
+
+        withCustomShapePropertyDefinitions(propertyDefinitions: Array<PropertyShape>): this
+
+        withReadOnly(readOnly: boolean): this
+
+        withInherits(inherits: Array<Shape>): this
+
+        withAnd(subShapes: Array<Shape>): this
+
+        withComment(comment: string): this
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withWriteOnly(writeOnly: boolean): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        inlined(): boolean
+
+        withLinkTarget(target: undefined): this
+
+        withDisplayName(name: string): this
+
+        withDefaultValue(defaultVal: DataNode): this
+
+        withXMLSerialization(xmlSerialization: XMLSerializer): this
+
+        withThen(thenShape: Shape): this
+
+        withDefaultStr(value: string): this
+
+        withCustomShapeProperties(customShapeProperties: Array<ShapeExtension>): this
+
+        withId(id: string): this
+
+        withElse(elseShape: Shape): this
+
+        withExample(mediaType: string): Example
+
+        withXone(subShapes: Array<Shape>): this
+
+        withDocumentation(documentation: CreativeWork): this
+
+        withDeprecated(deprecated: boolean): this
+
+        withNode(shape: Shape): this
 
 
       }
@@ -994,30 +1725,6 @@ declare module 'amf-client-js' {
         withAccepts(accepts: Array<string>): this
 
         withId(id: string): this
-
-
-      }
-      export class UnionShape extends AnyShape      {
-        anyOf: Array<Shape>
-
-        constructor()
-
-        withAnyOf(anyOf: Array<Shape>): UnionShape
-
-
-      }
-      export class TupleShape extends DataArrangeShape      {
-        items: Array<Shape>
-        closedItems: BoolField
-        additionalItemsSchema: Shape
-
-        constructor()
-
-        withItems(items: Array<Shape>): this
-
-        withClosedItems(closedItems: boolean): this
-
-        linkCopy(): TupleShape
 
 
       }
@@ -1423,95 +2130,6 @@ declare module 'amf-client-js' {
 
 
       }
-      export class SchemaShape extends AnyShape      {
-        mediaType: StrField
-        raw: StrField
-        location: undefined | string
-
-        constructor()
-
-        withMediatype(mediaType: string): this
-
-        withRaw(text: string): this
-
-        linkCopy(): SchemaShape
-
-
-      }
-      export class SchemaDependencies implements DomainElement      {
-        source: StrField
-        customDomainProperties: Array<DomainExtension>
-        isExternalLink: BoolField
-        id: string
-        position: core.parser.Range
-        target: Shape
-        extendsNode: Array<DomainElement>
-
-        constructor()
-
-        withSchemaTarget(schema: Shape): this
-
-        withPropertySource(propertySource: string): this
-
-        graph(): Graph
-
-        withIsExternalLink(isExternalLink: boolean): DomainElement
-
-        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-        withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-        withId(id: string): this
-
-
-      }
-      export class ScalarShape extends AnyShape      {
-        dataType: StrField
-        pattern: StrField
-        minLength: IntField
-        maxLength: IntField
-        minimum: DoubleField
-        maximum: DoubleField
-        exclusiveMinimum: BoolField
-        exclusiveMaximum: BoolField
-        format: StrField
-        multipleOf: DoubleField
-        encoding: StrField
-        mediaType: StrField
-        schema: Shape
-
-        constructor()
-
-        withDataType(dataType: string): this
-
-        withPattern(pattern: string): this
-
-        withMinLength(min: number): this
-
-        withMaxLength(max: number): this
-
-        withMinimum(min: number): this
-
-        withMaximum(max: number): this
-
-        withExclusiveMinimum(min: boolean): this
-
-        withExclusiveMaximum(max: boolean): this
-
-        withFormat(format: string): this
-
-        withMultipleOf(multiple: number): this
-
-        withEncoding(encoding: string): this
-
-        withMediaType(mediaType: string): this
-
-        withSchema(schema: Shape): this
-
-        linkCopy(): ScalarShape
-
-
-      }
       export class Response extends Message      {
         statusCode: StrField
         headers: Array<Parameter>
@@ -1573,33 +2191,6 @@ declare module 'amf-client-js' {
         withCookieParameter(name: string): Parameter
 
         linkCopy(): Request
-
-
-      }
-      export class PropertyDependencies implements DomainElement      {
-        source: StrField
-        customDomainProperties: Array<DomainExtension>
-        isExternalLink: BoolField
-        id: string
-        position: core.parser.Range
-        target: Array<StrField>
-        extendsNode: Array<DomainElement>
-
-        constructor()
-
-        withPropertySource(propertySource: string): this
-
-        graph(): Graph
-
-        withIsExternalLink(isExternalLink: boolean): DomainElement
-
-        withPropertyTarget(propertyTarget: Array<string>): this
-
-        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-        withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-        withId(id: string): this
 
 
       }
@@ -2021,68 +2612,6 @@ declare module 'amf-client-js' {
 
 
       }
-      export class NodeShape extends AnyShape      {
-        minProperties: IntField
-        maxProperties: IntField
-        closed: BoolField
-        discriminator: StrField
-        discriminatorValue: StrField
-        discriminatorMapping: Array<IriTemplateMapping>
-        properties: Array<PropertyShape>
-        additionalPropertiesSchema: Shape
-        dependencies: Array<PropertyDependencies>
-        schemaDependencies: Array<SchemaDependencies>
-        propertyNames: Shape
-        unevaluatedProperties: boolean
-        unevaluatedPropertiesSchema: Shape
-
-        constructor()
-
-        withMinProperties(min: number): this
-
-        withMaxProperties(max: number): this
-
-        withClosed(closed: boolean): this
-
-        withDiscriminator(discriminator: string): this
-
-        withDiscriminatorValue(value: string): this
-
-        withDiscriminatorMapping(mappings: Array<IriTemplateMapping>): this
-
-        withProperties(properties: Array<PropertyShape>): this
-
-        withAdditionalPropertiesSchema(additionalPropertiesSchema: Shape): this
-
-        withDependencies(dependencies: Array<PropertyDependencies>): this
-
-        withSchemaDependencies(dependencies: Array<SchemaDependencies>): this
-
-        withPropertyNames(propertyNames: Shape): this
-
-        withUnevaluatedProperties(value: boolean): this
-
-        withUnevaluatedPropertiesSchema(schema: Shape): this
-
-        withProperty(name: string): PropertyShape
-
-        withDependency(): PropertyDependencies
-
-        withInheritsObject(name: string): NodeShape
-
-        withInheritsScalar(name: string): ScalarShape
-
-        linkCopy(): NodeShape
-
-
-      }
-      export class NilShape extends AnyShape      {
-        constructor()
-
-        linkCopy(): NilShape
-
-
-      }
       export class MqttServerBinding implements ServerBinding      {
         customDomainProperties: Array<DomainExtension>
         clientId: StrField
@@ -2344,13 +2873,6 @@ declare module 'amf-client-js' {
 
 
       }
-      export class MatrixShape extends ArrayShape      {
-        constructor()
-
-        withItems(items: Shape): this
-
-
-      }
       export class License implements DomainElement      {
         name: StrField
         customDomainProperties: Array<DomainExtension>
@@ -2451,33 +2973,6 @@ declare module 'amf-client-js' {
 
 
       }
-      export class IriTemplateMapping implements DomainElement      {
-        customDomainProperties: Array<DomainExtension>
-        templateVariable: StrField
-        isExternalLink: BoolField
-        id: string
-        linkExpression: StrField
-        position: core.parser.Range
-        extendsNode: Array<DomainElement>
-
-        constructor()
-
-        graph(): Graph
-
-        withTemplateVariable(variable: string): this
-
-        withIsExternalLink(isExternalLink: boolean): DomainElement
-
-        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-        withLinkExpression(expression: string): this
-
-        withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-        withId(id: string): this
-
-
-      }
       export class HttpOperationBinding implements OperationBinding      {
         method: StrField
         customDomainProperties: Array<DomainExtension>
@@ -2549,98 +3044,6 @@ declare module 'amf-client-js' {
         withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
         withLinkTarget(target: undefined): this
-
-        withId(id: string): this
-
-
-      }
-      export class FileShape extends AnyShape      {
-        fileTypes: Array<StrField>
-        pattern: StrField
-        minLength: IntField
-        maxLength: IntField
-        minimum: DoubleField
-        maximum: DoubleField
-        exclusiveMinimum: BoolField
-        exclusiveMaximum: BoolField
-        format: StrField
-        multipleOf: DoubleField
-
-        constructor()
-
-        withFileTypes(fileTypes: Array<string>): this
-
-        withPattern(pattern: string): this
-
-        withMinLength(min: number): this
-
-        withMaxLength(max: number): this
-
-        withMinimum(min: number): this
-
-        withMaximum(max: number): this
-
-        withExclusiveMinimum(min: boolean): this
-
-        withExclusiveMaximum(max: boolean): this
-
-        withFormat(format: string): this
-
-        withMultipleOf(multiple: number): this
-
-        linkCopy(): FileShape
-
-
-      }
-      export class Example implements DomainElement, Linkable      {
-        displayName: StrField
-        mediaType: StrField
-        name: StrField
-        strict: BoolField
-        toYaml: string
-        customDomainProperties: Array<DomainExtension>
-        location: undefined | string
-        description: StrField
-        structuredValue: DataNode
-        linkTarget: undefined | DomainElement
-        isLink: boolean
-        isExternalLink: BoolField
-        id: string
-        toJson: string
-        position: core.parser.Range
-        linkLabel: StrField
-        extendsNode: Array<DomainElement>
-        value: StrField
-
-        constructor()
-
-        linkCopy(): Example
-
-        withName(name: string): this
-
-        withStructuredValue(value: DataNode): this
-
-        withDescription(description: string): this
-
-        graph(): Graph
-
-        withIsExternalLink(isExternalLink: boolean): DomainElement
-
-        withMediaType(mediaType: string): this
-
-        withLinkLabel(label: string): this
-
-        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-        withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-        withValue(value: string): this
-
-        withLinkTarget(target: undefined): this
-
-        withStrict(strict: boolean): this
-
-        withDisplayName(displayName: string): this
 
         withId(id: string): this
 
@@ -2776,49 +3179,6 @@ declare module 'amf-client-js' {
         withLinkTarget(target: undefined): this
 
         withType(type: string): this
-
-        withId(id: string): this
-
-
-      }
-      export class DataArrangeShape extends AnyShape      {
-        minItems: IntField
-        maxItems: IntField
-        uniqueItems: BoolField
-
-        withMinItems(minItems: number): this
-
-        withMaxItems(maxItems: number): this
-
-        withUniqueItems(uniqueItems: boolean): this
-
-
-      }
-      export class CreativeWork implements DomainElement      {
-        customDomainProperties: Array<DomainExtension>
-        url: StrField
-        description: StrField
-        isExternalLink: BoolField
-        id: string
-        position: core.parser.Range
-        title: StrField
-        extendsNode: Array<DomainElement>
-
-        constructor()
-
-        withDescription(description: string): this
-
-        withTitle(title: string): this
-
-        graph(): Graph
-
-        withIsExternalLink(isExternalLink: boolean): DomainElement
-
-        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-        withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-        withUrl(url: string): this
 
         withId(id: string): this
 
@@ -3013,32 +3373,6 @@ declare module 'amf-client-js' {
 
 
       }
-      export class ArrayShape extends DataArrangeShape      {
-        items: Shape
-        contains: Shape
-        minContains: number
-        maxContains: number
-        unevaluatedItems: boolean
-        unevaluatedItemsSchema: Shape
-
-        constructor()
-
-        withItems(items: Shape): this
-
-        withContains(contains: Shape): this
-
-        withMinContains(amount: number): this
-
-        withMaxContains(amount: number): this
-
-        withUnevaluatedItemsSchema(schema: Shape): this
-
-        withUnevaluatedItems(value: boolean): this
-
-        linkCopy(): ArrayShape
-
-
-      }
       export class Api<A> implements DomainElement      {
         name: StrField
         customDomainProperties: Array<DomainExtension>
@@ -3080,144 +3414,6 @@ declare module 'amf-client-js' {
         withServer(url: string): Server
 
         withId(id: string): this
-
-
-      }
-      export class AnyShape implements Shape      {
-        defaultValueStr: StrField
-        displayName: StrField
-        name: StrField
-        customDomainProperties: Array<DomainExtension>
-        examples: Array<Example>
-        xone: Array<Shape>
-        readOnly: BoolField
-        description: StrField
-        documentation: CreativeWork
-        deprecated: BoolField
-        xmlSerialization: XMLSerializer
-        customShapePropertyDefinitions: Array<PropertyShape>
-        or: Array<Shape>
-        elseShape: Shape
-        linkTarget: undefined | DomainElement
-        isLink: boolean
-        isExternalLink: BoolField
-        customShapeProperties: Array<ShapeExtension>
-        thenShape: Shape
-        id: string
-        ifShape: Shape
-        writeOnly: BoolField
-        comment: StrField
-        not: Shape
-        values: Array<DataNode>
-        position: core.parser.Range
-        isDefaultEmpty: boolean
-        inherits: Array<Shape>
-        linkLabel: StrField
-        defaultValue: DataNode
-        extendsNode: Array<DomainElement>
-        and: Array<Shape>
-
-        constructor()
-
-        withValues(values: Array<DataNode>): this
-
-        linkCopy(): AnyShape
-
-        withOr(subShapes: Array<Shape>): this
-
-        withName(name: string): this
-
-        buildRamlDatatype(): string
-
-        withDescription(description: string): this
-
-        trackedExample(trackId: string): undefined | Example
-
-        withIf(ifShape: Shape): this
-
-        toRamlDatatype(): string
-
-        validate(fragment: PayloadFragment): Promise<client.validate.ValidationReport>
-
-        buildJsonSchema(): string
-
-        withCustomShapePropertyDefinition(name: string): PropertyShape
-
-        withExamples(examples: Array<Example>): this
-
-        graph(): Graph
-
-        withIsExternalLink(isExternalLink: boolean): DomainElement
-
-        withLinkLabel(label: string): this
-
-        withCustomShapePropertyDefinitions(propertyDefinitions: Array<PropertyShape>): this
-
-        withReadOnly(readOnly: boolean): this
-
-        withInherits(inherits: Array<Shape>): this
-
-        withAnd(subShapes: Array<Shape>): this
-
-        parameterValidator(mediaType: string, env: client.environment.Environment): undefined | validate.PayloadValidator
-
-        validateParameter(payload: string, env: client.environment.Environment): Promise<client.validate.ValidationReport>
-
-        validate(fragment: PayloadFragment, env: client.environment.Environment): Promise<client.validate.ValidationReport>
-
-        withComment(comment: string): this
-
-        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-        withWriteOnly(writeOnly: boolean): this
-
-        withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-        inlined(): boolean
-
-        parameterValidator(mediaType: string): undefined | validate.PayloadValidator
-
-        toJsonSchema(): string
-
-        withLinkTarget(target: undefined): this
-
-        withDisplayName(name: string): this
-
-        withDefaultValue(defaultVal: DataNode): this
-
-        withXMLSerialization(xmlSerialization: XMLSerializer): this
-
-        validate(payload: string): Promise<client.validate.ValidationReport>
-
-        validate(payload: string, env: client.environment.Environment): Promise<client.validate.ValidationReport>
-
-        withThen(thenShape: Shape): this
-
-        withDefaultStr(value: string): this
-
-        validateParameter(payload: string): Promise<client.validate.ValidationReport>
-
-        withCustomShapeProperties(customShapeProperties: Array<ShapeExtension>): this
-
-        withId(id: string): this
-
-        withElse(elseShape: Shape): this
-
-        withExample(mediaType: string): Example
-
-        buildJsonSchema(options: render.ShapeRenderOptions): string
-
-        withXone(subShapes: Array<Shape>): this
-
-        withDocumentation(documentation: CreativeWork): this
-
-        withDeprecated(deprecated: boolean): this
-
-        payloadValidator(mediaType: string, env: client.environment.Environment): undefined | validate.PayloadValidator
-
-        withNode(shape: Shape): this
-
-        payloadValidator(mediaType: string): undefined | validate.PayloadValidator
 
 
       }
@@ -3684,15 +3880,11 @@ declare module 'amf-client-js' {
 
         withAnd(subShapes: Array<Shape>): this
 
-        parameterValidator(mediaType: string, env: client.environment.Environment): undefined | validate.PayloadValidator
-
         withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
         withWriteOnly(writeOnly: boolean): this
 
         withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-        parameterValidator(mediaType: string): undefined | validate.PayloadValidator
 
         withLinkTarget(target: undefined): this
 
@@ -3714,11 +3906,7 @@ declare module 'amf-client-js' {
 
         withDeprecated(deprecated: boolean): this
 
-        payloadValidator(mediaType: string, env: client.environment.Environment): undefined | validate.PayloadValidator
-
         withNode(shape: Shape): this
-
-        payloadValidator(mediaType: string): undefined | validate.PayloadValidator
 
 
       }
@@ -4173,7 +4361,36 @@ declare module 'amf-client-js' {
 
         withId(id: string): this
 
-        withTypeDiscriminator(typesMapping: Map<string, string>): any
+        withTypeDiscriminator(typesMapping: Map<string, string>): UnionNodeMapping
+
+
+      }
+      export class SemanticExtension implements DomainElement      {
+        customDomainProperties: Array<DomainExtension>
+        isExternalLink: BoolField
+        id: string
+        position: core.parser.Range
+        extendsNode: Array<DomainElement>
+
+        constructor()
+
+        extensionName(): StrField
+
+        extensionMappingDefinition(): StrField
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withExtensionMappingDefinition(annotationMapping: string): SemanticExtension
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withExtensionName(name: string): SemanticExtension
+
+        withId(id: string): this
 
 
       }
@@ -4186,7 +4403,7 @@ declare module 'amf-client-js' {
 
         constructor()
 
-        withName(name: string): any
+        withName(name: string): PublicNodeMapping
 
         mappedNode(): StrField
 
@@ -4194,91 +4411,13 @@ declare module 'amf-client-js' {
 
         withIsExternalLink(isExternalLink: boolean): DomainElement
 
-        withMappedNode(mappedNode: string): any
+        withMappedNode(mappedNode: string): PublicNodeMapping
 
         withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
         withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
         name(): StrField
-
-        withId(id: string): this
-
-
-      }
-      export class DocumentMapping implements DomainElement      {
-        customDomainProperties: Array<DomainExtension>
-        isExternalLink: BoolField
-        id: string
-        position: core.parser.Range
-        extendsNode: Array<DomainElement>
-
-        constructor()
-
-        withDeclaredNodes(declarations: Array<PublicNodeMapping>): any
-
-        withDocumentName(name: string): any
-
-        graph(): Graph
-
-        withIsExternalLink(isExternalLink: boolean): DomainElement
-
-        documentName(): StrField
-
-        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-        withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-        withEncoded(encodedNode: string): any
-
-        declaredNodes(): Array<PublicNodeMapping>
-
-        withId(id: string): this
-
-        encoded(): StrField
-
-
-      }
-      export class DocumentsModel implements DomainElement      {
-        customDomainProperties: Array<DomainExtension>
-        isExternalLink: BoolField
-        id: string
-        position: core.parser.Range
-        extendsNode: Array<DomainElement>
-
-        constructor()
-
-        declarationsPath(): StrField
-
-        withRoot(documentMapping: DocumentMapping): any
-
-        withKeyProperty(keyProperty: boolean): DocumentsModel
-
-        keyProperty(): BoolField
-
-        fragments(): Array<DocumentMapping>
-
-        graph(): Graph
-
-        withIsExternalLink(isExternalLink: boolean): DomainElement
-
-        root(): DocumentMapping
-
-        selfEncoded(): BoolField
-
-        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-        withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-        withFragments(fragments: Array<DocumentMapping>): any
-
-        library(): DocumentMapping
-
-        withLibrary(library: DocumentMapping): any
-
-        withSelfEncoded(selfEncoded: boolean): DocumentsModel
-
-        withDeclarationsPath(declarationsPath: string): DocumentsModel
 
         withId(id: string): this
 
@@ -4296,13 +4435,13 @@ declare module 'amf-client-js' {
         position: core.parser.Range
         extendsNode: Array<DomainElement>
 
-        withName(name: string): any
+        withName(name: string): PropertyTerm
 
-        withDescription(description: string): any
+        withDescription(description: string): PropertyTerm
 
         graph(): Graph
 
-        withSubClasOf(superProperties: Array<string>): any
+        withSubClasOf(superProperties: Array<string>): PropertyTerm
 
         withIsExternalLink(isExternalLink: boolean): DomainElement
 
@@ -4310,11 +4449,11 @@ declare module 'amf-client-js' {
 
         withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
-        withDisplayName(displayName: string): any
+        withDisplayName(displayName: string): PropertyTerm
 
         withId(id: string): this
 
-        withRange(range: string): any
+        withRange(range: string): PropertyTerm
 
 
       }
@@ -4341,21 +4480,21 @@ declare module 'amf-client-js' {
 
         classification(): string
 
-        withEnum(values: Array<any>): any
+        withEnum(values: Array<any>): PropertyMapping
 
         enum(): Array<AnyField>
 
         minCount(): IntField
 
-        withMapKeyProperty(key: string): any
+        withMapKeyProperty(key: string): PropertyMapping
 
-        withName(name: string): any
+        withName(name: string): PropertyMapping
 
         literalRange(): StrField
 
         externallyLinkable(): BoolField
 
-        withTypeDiscriminatorName(name: string): any
+        withTypeDiscriminatorName(name: string): PropertyMapping
 
         sorted(): BoolField
 
@@ -4365,31 +4504,31 @@ declare module 'amf-client-js' {
 
         graph(): Graph
 
-        withLiteralRange(range: string): any
+        withLiteralRange(range: string): PropertyMapping
 
         withIsExternalLink(isExternalLink: boolean): DomainElement
 
-        withObjectRange(range: Array<string>): any
+        withObjectRange(range: Array<string>): PropertyMapping
 
         objectRange(): Array<StrField>
 
-        withPattern(pattern: string): any
+        withPattern(pattern: string): PropertyMapping
 
         withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
-        withMapValueProperty(value: string): any
+        withMapValueProperty(value: string): PropertyMapping
 
         withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
-        withSorted(sorted: boolean): any
+        withSorted(sorted: boolean): PropertyMapping
 
-        withNodePropertyMapping(propertyId: string): any
+        withNodePropertyMapping(propertyId: string): PropertyMapping
 
         allowMultiple(): BoolField
 
-        withMinimum(min: number): any
+        withMinimum(min: number): PropertyMapping
 
-        withMaximum(max: number): any
+        withMaximum(max: number): PropertyMapping
 
         nodePropertyMapping(): StrField
 
@@ -4397,19 +4536,19 @@ declare module 'amf-client-js' {
 
         name(): StrField
 
-        withAllowMultiple(allow: boolean): any
+        withAllowMultiple(allow: boolean): PropertyMapping
 
         mapValueProperty(): StrField
 
         mapKeyProperty(): StrField
 
-        withExternallyLinkable(linkable: boolean): any
+        withExternallyLinkable(linkable: boolean): PropertyMapping
 
         withId(id: string): this
 
-        withTypeDiscriminator(typesMapping: Map<string, string>): any
+        withTypeDiscriminator(typesMapping: Map<string, string>): PropertyMapping
 
-        withMinCount(minCount: number): any
+        withMinCount(minCount: number): PropertyMapping
 
 
       }
@@ -4429,7 +4568,7 @@ declare module 'amf-client-js' {
 
         constructor()
 
-        withIdTemplate(idTemplate: string): any
+        withIdTemplate(idTemplate: string): NodeMapping
 
         linkCopy(): NodeMapping
 
@@ -4483,6 +4622,84 @@ declare module 'amf-client-js' {
         withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
         withId(id: string): this
+
+
+      }
+      export class DocumentsModel implements DomainElement      {
+        customDomainProperties: Array<DomainExtension>
+        isExternalLink: BoolField
+        id: string
+        position: core.parser.Range
+        extendsNode: Array<DomainElement>
+
+        constructor()
+
+        declarationsPath(): StrField
+
+        withRoot(documentMapping: DocumentMapping): DocumentsModel
+
+        withKeyProperty(keyProperty: boolean): DocumentsModel
+
+        keyProperty(): BoolField
+
+        fragments(): Array<DocumentMapping>
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        root(): DocumentMapping
+
+        selfEncoded(): BoolField
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withFragments(fragments: Array<DocumentMapping>): DocumentsModel
+
+        library(): DocumentMapping
+
+        withLibrary(library: DocumentMapping): DocumentsModel
+
+        withSelfEncoded(selfEncoded: boolean): DocumentsModel
+
+        withDeclarationsPath(declarationsPath: string): DocumentsModel
+
+        withId(id: string): this
+
+
+      }
+      export class DocumentMapping implements DomainElement      {
+        customDomainProperties: Array<DomainExtension>
+        isExternalLink: BoolField
+        id: string
+        position: core.parser.Range
+        extendsNode: Array<DomainElement>
+
+        constructor()
+
+        withDeclaredNodes(declarations: Array<PublicNodeMapping>): DocumentMapping
+
+        withDocumentName(name: string): DocumentMapping
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        documentName(): StrField
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withEncoded(encodedNode: string): DocumentMapping
+
+        declaredNodes(): Array<PublicNodeMapping>
+
+        withId(id: string): this
+
+        encoded(): StrField
 
 
       }
@@ -4557,9 +4774,9 @@ declare module 'amf-client-js' {
 
         constructor()
 
-        withName(name: string): any
+        withName(name: string): ClassTerm
 
-        withDescription(description: string): any
+        withDescription(description: string): ClassTerm
 
         graph(): Graph
 
@@ -4569,13 +4786,94 @@ declare module 'amf-client-js' {
 
         withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
-        withProperties(properties: Array<string>): any
+        withProperties(properties: Array<string>): ClassTerm
 
-        withDisplayName(displayName: string): any
+        withDisplayName(displayName: string): ClassTerm
 
         withId(id: string): this
 
-        withSubClassOf(superClasses: Array<string>): any
+        withSubClassOf(superClasses: Array<string>): ClassTerm
+
+
+      }
+      export class AnnotationMapping implements DomainElement      {
+        customDomainProperties: Array<DomainExtension>
+        isExternalLink: BoolField
+        id: string
+        position: core.parser.Range
+        extendsNode: Array<DomainElement>
+
+        constructor()
+
+        maximum(): DoubleField
+
+        typeDiscriminator(): Map<string, string>
+
+        withEnum(values: Array<any>): AnnotationMapping
+
+        enum(): Array<AnyField>
+
+        minCount(): IntField
+
+        withName(name: string): AnnotationMapping
+
+        literalRange(): StrField
+
+        externallyLinkable(): BoolField
+
+        withTypeDiscriminatorName(name: string): AnnotationMapping
+
+        sorted(): BoolField
+
+        withDomain(domainIri: string): AnnotationMapping
+
+        minimum(): DoubleField
+
+        pattern(): StrField
+
+        graph(): Graph
+
+        withLiteralRange(range: string): AnnotationMapping
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withObjectRange(range: Array<string>): AnnotationMapping
+
+        objectRange(): Array<StrField>
+
+        domain(): StrField
+
+        withPattern(pattern: string): AnnotationMapping
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withSorted(sorted: boolean): AnnotationMapping
+
+        withNodePropertyMapping(propertyId: string): AnnotationMapping
+
+        allowMultiple(): BoolField
+
+        withMinimum(min: number): AnnotationMapping
+
+        withMaximum(max: number): AnnotationMapping
+
+        nodePropertyMapping(): StrField
+
+        typeDiscriminatorName(): StrField
+
+        name(): StrField
+
+        withAllowMultiple(allow: boolean): AnnotationMapping
+
+        withExternallyLinkable(linkable: boolean): this
+
+        withId(id: string): this
+
+        withTypeDiscriminator(typesMapping: Map<string, string>): AnnotationMapping
+
+        withMinCount(minCount: number): AnnotationMapping
 
 
       }
@@ -4586,9 +4884,8 @@ declare module 'amf-client-js' {
       fetch(resource: string): Promise<client.remote.Content>
 
       accepts(resource: string): boolean
-
-
     }
+
     export class BaseHttpResourceLoader implements ResourceLoader    {
       fetch(resource: string): Promise<client.remote.Content>
 
@@ -4605,40 +4902,12 @@ declare module 'amf-client-js' {
 
 
     }
-    export interface ClientResourceLoader    {
-      fetch(resource: string): Promise<client.remote.Content>
-
-      accepts(resource: string): boolean
-
-
-    }
-  }
-  namespace parse {
-    export class Parser    {
-      parseFileAsync(url: string): Promise<model.document.BaseUnit>
-
-      parseFileAsync(url: string, options: parser.ParsingOptions): Promise<model.document.BaseUnit>
-
-      parseStringAsync(stream: string): Promise<model.document.BaseUnit>
-
-      parseStringAsync(stream: string, options: parser.ParsingOptions): Promise<model.document.BaseUnit>
-
-      parseStringAsync(url: string, stream: string): Promise<model.document.BaseUnit>
-
-      parseStringAsync(url: string, stream: string, options: parser.ParsingOptions): Promise<model.document.BaseUnit>
-
-      reportValidation(profile: ProfileName, messageStyle: amf.MessageStyle): Promise<client.validate.ValidationReport>
-
-      reportValidation(profile: ProfileName): Promise<client.validate.ValidationReport>
-
-      reportCustomValidation(profile: ProfileName, customProfilePath: string): Promise<client.validate.ValidationReport>
-
-
-    }
   }
   namespace resolve {
     export interface ClientErrorHandler    {
-      reportConstraint(id: string, node: string, property: undefined | string, message: string, range: undefined, level: string, location: undefined | string): void
+      getResults: Array<client.validate.ValidationResult>
+
+      report(result: client.validate.ValidationResult): void
 
 
     }
@@ -4647,6 +4916,40 @@ declare module 'amf-client-js' {
     export interface MessageStyle    {
       profileName: ProfileName
 
+    }
+    namespace plugins {
+      namespace document {
+        export class Vocabularies        {
+          register(): void
+
+
+        }
+        namespace apicontract {
+          namespace validation {
+            namespace remote {
+              export interface ValidationResult              {
+                readonly keyword: string
+                readonly dataPath: string
+                readonly schemaPath: string
+                readonly params: undefined
+                readonly message: string
+
+              }
+              export class Ajv              {
+                readonly errors: undefined
+
+                validate(schema: undefined, data: undefined): boolean
+
+                addMetaSchema(metaSchema: undefined): Ajv
+
+                addFormat(name: string, formatValidator: any): Ajv
+
+
+              }
+            }
+          }
+        }
+      }
     }
     namespace core {
       namespace remote {
@@ -4690,60 +4993,6 @@ declare module 'amf-client-js' {
         }
       }
     }
-    namespace plugins {
-      namespace document {
-        export class Vocabularies        {
-          register(): void
-
-          registerDialect(url: string): Promise<model.document.Dialect>
-
-          registerDialect(url: string, env: client.environment.Environment): Promise<model.document.Dialect>
-
-          registerDialect(url: string, dialectText: string): Promise<model.document.Dialect>
-
-          registerDialect(url: string, dialectText: string, env: client.environment.Environment): Promise<model.document.Dialect>
-
-
-        }
-        namespace apicontract {
-          namespace validation {
-            namespace remote {
-              export interface ValidationResult              {
-                readonly keyword: string
-                readonly dataPath: string
-                readonly schemaPath: string
-                readonly params: undefined
-                readonly message: string
-
-              }
-              export class Ajv              {
-                readonly errors: undefined
-
-                validate(schema: undefined, data: undefined): boolean
-
-                addMetaSchema(metaSchema: undefined): Ajv
-
-                addFormat(name: string, formatValidator: any): Ajv
-
-
-              }
-            }
-          }
-        }
-      }
-      namespace features {
-        export class AMFValidation        {
-          register(): void
-
-
-        }
-        export class AMFCustomValidation        {
-          register(): void
-
-
-        }
-      }
-    }
   }
   namespace render {
     export class ShapeRenderOptions    {
@@ -4756,21 +5005,6 @@ declare module 'amf-client-js' {
       constructor()
 
       withErrorHandler(errorHandler: resolve.ClientErrorHandler): ShapeRenderOptions
-
-
-    }
-    export class Renderer    {
-      generateFile(unit: model.document.BaseUnit, url: string): Promise<void>
-
-      generateFile(unit: model.document.BaseUnit, url: string, options: RenderOptions): Promise<void>
-
-      generateString(unit: model.document.BaseUnit): Promise<string>
-
-      generateString(unit: model.document.BaseUnit, options: RenderOptions): Promise<string>
-
-      generateToWriter(unit: model.document.BaseUnit, options: RenderOptions, writer: org.mulesoft.common.io.LimitedStringBuffer): Promise<void>
-
-      generateToWriter(unit: model.document.BaseUnit, writer: org.mulesoft.common.io.LimitedStringBuffer): Promise<void>
 
 
     }
@@ -4806,10 +5040,8 @@ declare module 'amf-client-js' {
   }
   namespace core {
     export class Vendor    {
-      static readonly RAML: Vendor
       static readonly RAML08: Vendor
       static readonly RAML10: Vendor
-      static readonly OAS: Vendor
       static readonly OAS20: Vendor
       static readonly OAS30: Vendor
       static readonly ASYNC: Vendor
@@ -4821,7 +5053,8 @@ declare module 'amf-client-js' {
 
       apply(name: string): Vendor
 
-
+      mediaType: string
+      name: string
     }
     namespace parser {
       export class Position      {
@@ -4870,41 +5103,18 @@ declare module 'amf-client-js' {
   }
   namespace handler {
     export interface JsErrorHandler    {
-      reportConstraint(id: string, node: string, property: undefined | string, message: string, range: undefined, level: string, location: undefined | string): void
+      report(result: client.validate.ValidationResult): void
+
+      getResults(): Array<client.validate.ValidationResult>
 
 
     }
   }
   namespace client {
-    export class DefaultEnvironment    {
-      apply(): environment.Environment
-
-
-    }
     export class DefaultExecutionEnvironment    {
       apply(): execution.ExecutionEnvironment
 
 
-    }
-    namespace environment {
-      export class Environment      {
-        loaders: Array<resource.ResourceLoader>
-        reference: undefined | reference.ReferenceResolver
-
-        constructor()
-
-        addClientLoader(loader: resource.ClientResourceLoader): Environment
-
-        withClientResolver(resolver: reference.ClientReferenceResolver): Environment
-
-        add(loader: resource.ClientResourceLoader): Environment
-
-        withLoaders(loaders: Array<resource.ClientResourceLoader>): Environment
-
-        withResolver(resolver: reference.ClientReferenceResolver): Environment
-
-
-      }
     }
     namespace execution {
       export class ExecutionEnvironment      {
@@ -4930,6 +5140,10 @@ declare module 'amf-client-js' {
     }
     namespace remote {
       export class Content      {
+        toString: string
+        stream: string
+        url: string
+
         constructor(stream: string, url: string)
         constructor(stream: string, url: string, mime: string)
 
@@ -4964,226 +5178,75 @@ declare module 'amf-client-js' {
         constructor(fragment: model.domain.PayloadFragment, results: Array<ValidationResult>)
 
       }
-      export class ValidationReport      {
+      export class AMFValidationReport      {
         conforms: boolean
         model: string
         profile: ProfileName
         results: Array<ValidationResult>
         toString: string
 
-        constructor(conforms: boolean, model: string, profile: ProfileName, results: Array<ValidationResult>)
+        constructor(model: string, profile: ProfileName, results: Array<ValidationResult>)
+
+        toStringMaxed(max: number): string
+
+
+      }
+      export class ValidationProfile {
+        profileName(): ProfileName
+        baseProfile(): undefined | ProfileName
+      }
+    }
+    namespace resource {
+      export interface ClientResourceLoader    {
+        fetch(resource: string): Promise<client.remote.Content>
+
+        accepts(resource: string): boolean
+
 
       }
     }
-  }
-  export class Raml10Resolver extends Resolver  {
-    constructor()
-
-  }
-  export class Raml08Resolver extends Resolver  {
-    constructor()
-
-  }
-  export class Oas30Resolver extends Resolver  {
-    constructor()
-
-  }
-  export class Oas20Resolver extends Resolver  {
-    constructor()
-
-  }
-  export class Async20Resolver extends Resolver  {
-    constructor()
-
-  }
-  export class YamlPayloadRenderer extends render.Renderer  {
-    constructor()
-    constructor(env: client.environment.Environment)
-
   }
   export class WebApiDomainElementEmitter  {
     emitToBuilder<T>(element: model.domain.DomainElement, emissionStructure: core.Vendor, eh: resolve.ClientErrorHandler, builder: org.yaml.builder.JsOutputBuilder): void
 
 
   }
-  export class Raml10Renderer extends render.Renderer  {
-    constructor()
-    constructor(env: client.environment.Environment)
+  export class RAMLConfiguration  {
+    static RAML10(): exported.AMFConfiguration
 
-  }
-  export class Raml08Renderer extends render.Renderer  {
-    constructor()
-    constructor(env: client.environment.Environment)
+    static RAML08(): exported.AMFConfiguration
 
-  }
-  export class Oas30Renderer extends render.Renderer  {
-    constructor()
-    constructor(env: client.environment.Environment)
-
-  }
-  export class Oas20Renderer extends render.Renderer  {
-    constructor()
-    constructor(env: client.environment.Environment)
-
-  }
-  export class JsonldRenderer extends render.Renderer  {
-    constructor()
-    constructor(env: client.environment.Environment)
-
-  }
-  export class JsonPayloadRenderer extends render.Renderer  {
-    constructor()
-    constructor(env: client.environment.Environment)
-
-  }
-  export class Async20Renderer extends render.Renderer  {
-    constructor()
-
-  }
-  export class YamlPayloadParser extends parse.Parser  {
-    constructor()
-    constructor(environment: client.environment.Environment)
-
-  }
-  export class RamlParser extends parse.Parser  {
-    constructor()
-    constructor(environment: client.environment.Environment)
-
-  }
-  export class Raml10Parser extends parse.Parser  {
-    constructor()
-    constructor(environment: client.environment.Environment)
-
-  }
-  export class Raml08Parser extends parse.Parser  {
-    constructor()
-    constructor(environment: client.environment.Environment)
-
-  }
-  export class Oas30YamlParser extends parse.Parser  {
-    constructor()
-    constructor(environment: client.environment.Environment)
-
-  }
-  export class Oas30Parser extends parse.Parser  {
-    constructor()
-    constructor(environment: client.environment.Environment)
-
-  }
-  export class Oas20YamlParser extends parse.Parser  {
-    constructor()
-    constructor(environment: client.environment.Environment)
-
-  }
-  export class Oas20Parser extends parse.Parser  {
-    constructor()
-    constructor(environment: client.environment.Environment)
-
-  }
-  export class JsonPayloadParser extends parse.Parser  {
-    constructor()
-    constructor(environment: client.environment.Environment)
-
-  }
-  export class Async20Parser extends parse.Parser  {
-    constructor()
-    constructor(env: client.environment.Environment)
-
-  }
-  export class Async20JsonParser extends parse.Parser  {
-    constructor()
-    constructor(env: client.environment.Environment)
-
-  }
-  export class AMF  {
-    init(): Promise<void>
-
-    raml10Parser(): Raml10Parser
-
-    ramlParser(): RamlParser
-
-    raml10Generator(): Raml10Renderer
-
-    raml08Parser(): Raml08Parser
-
-    raml08Generator(): Raml08Renderer
-
-    oas20Parser(): Oas20Parser
-
-    oas20Generator(): Oas20Renderer
-
-    amfGraphParser(): AmfGraphParser
-
-    amfGraphGenerator(): AmfGraphRenderer
-
-    validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: amf.MessageStyle): Promise<client.validate.ValidationReport>
-
-    validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: amf.MessageStyle, env: client.environment.Environment): Promise<client.validate.ValidationReport>
-
-    validateResolved(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: amf.MessageStyle): Promise<client.validate.ValidationReport>
-
-    validateResolved(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: amf.MessageStyle, env: client.environment.Environment): Promise<client.validate.ValidationReport>
-
-    loadValidationProfile(url: string): Promise<ProfileName>
-
-    loadValidationProfile(url: string, env: client.environment.Environment): Promise<ProfileName>
-
-    emitShapesGraph(profileName: ProfileName): string
-
-    registerNamespace(alias: string, prefix: string): boolean
-
-    registerDialect(url: string): Promise<model.document.Dialect>
-
-    registerDialect(url: string, env: client.environment.Environment): Promise<model.document.Dialect>
-
-    resolveRaml10(unit: model.document.BaseUnit): model.document.BaseUnit
-
-    resolveRaml08(unit: model.document.BaseUnit): model.document.BaseUnit
-
-    resolveOas20(unit: model.document.BaseUnit): model.document.BaseUnit
-
-    resolveAmfGraph(unit: model.document.BaseUnit): model.document.BaseUnit
-
-    jsonPayloadParser(): JsonPayloadParser
-
-    yamlPayloadParser(): YamlPayloadParser
+    static RAML(): exported.AMFConfiguration
 
 
   }
-  export class Core  {
-    init(): Promise<void>
+  export class OASConfiguration  {
+    static OAS20(): exported.AMFConfiguration
 
-    parser(vendor: string, mediaType: string): parse.Parser
+    static OAS30(): exported.AMFConfiguration
 
-    parser(vendor: string, mediaType: string, env: client.environment.Environment): parse.Parser
-
-    generator(vendor: string, mediaType: string): render.Renderer
-
-    resolver(vendor: string): Resolver
-
-    validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: amf.MessageStyle): Promise<client.validate.ValidationReport>
-
-    validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: amf.MessageStyle, env: client.environment.Environment): Promise<client.validate.ValidationReport>
-
-    loadValidationProfile(url: string): Promise<ProfileName>
-
-    loadValidationProfile(url: string, env: client.environment.Environment): Promise<ProfileName>
-
-    emitShapesGraph(profileName: ProfileName): string
-
-    registerNamespace(alias: string, prefix: string): boolean
-
-    registerPlugin(plugin: plugins.ClientAMFPlugin): void
-
-    registerPayloadPlugin(plugin: plugins.ClientAMFPayloadValidationPlugin): void
+    static OAS(): exported.AMFConfiguration
 
 
   }
-  export class ResolutionPipeline  {
-    static readonly DEFAULT_PIPELINE: 'default'
-    static readonly EDITING_PIPELINE: 'editing'
-    static readonly COMPATIBILITY_PIPELINE: 'compatibility'
-    static readonly CACHE_PIPELINE: 'cache'
+  export class WebAPIConfiguration  {
+    static WebAPI(): exported.AMFConfiguration
+
+
+  }
+  export class AsyncAPIConfiguration  {
+    static Async20(): exported.AMFConfiguration
+
+
+  }
+  export class AMFClient extends AMLClient  {
+
+    constructor(configuration: exported.AMFConfiguration)
+
+    parseDocument(url: string): Promise<exported.AMFDocumentResult>
+
+    parseLibrary(url: string): Promise<exported.AMFLibraryResult>
+
 
   }
   export class ResourceNotFound  {
@@ -5207,32 +5270,158 @@ declare module 'amf-client-js' {
     constructor()
 
   }
-  export class AmfGraphRenderer extends render.Renderer  {
-    constructor()
-    constructor(env: client.environment.Environment)
-
-    generateToBuilder<T>(unit: model.document.BaseUnit, builder: org.yaml.builder.JsOutputBuilder): Promise<void>
-
-    generateToBuilder<T>(unit: model.document.BaseUnit, options: render.RenderOptions, builder: org.yaml.builder.JsOutputBuilder): Promise<void>
-
-
-  }
   export class ValidationMode  {
     static readonly StrictValidationMode: ValidationMode
     static readonly ScalarRelaxedValidationMode: ValidationMode
 
   }
-  export class AmfGraphParser extends parse.Parser  {
+  export class TransformationPipelineBuilder  {
+    empty(pipelineName: string): TransformationPipelineBuilder
+
+    fromPipeline(pipeline: exported.transform.TransformationPipeline): TransformationPipelineBuilder
+
+    fromPipeline(pipelineName: string, conf: AMFGraphConfiguration): undefined | TransformationPipelineBuilder
+
+
+  }
+  export class ShapeRenderOptions  {
+    isWithDocumentation: boolean
+    isWithCompactedEmission: boolean
+    withoutDocumentation: ShapeRenderOptions
+    withCompactedEmission: ShapeRenderOptions
+
     constructor()
-    constructor(environment: client.environment.Environment)
+
+  }
+  export class RenderOptions  {
+    withPrettyPrint: RenderOptions
+    withoutPrettyPrint: RenderOptions
+    withSourceMaps: RenderOptions
+    withoutSourceMaps: RenderOptions
+    withCompactUris: RenderOptions
+    withoutCompactUris: RenderOptions
+    withFlattenedJsonLd: RenderOptions
+    withoutFlattenedJsonLd: RenderOptions
+    withoutAmfJsonLdSerialization: RenderOptions
+    withAmfJsonLdSerialization: RenderOptions
+    withNodeIds: RenderOptions
+    isWithCompactUris: boolean
+    isWithSourceMaps: boolean
+    isAmfJsonLdSerilization: boolean
+    isPrettyPrint: boolean
+    isEmitNodeIds: boolean
+    isFlattenedJsonLd: boolean
+    shapeRenderOptions: ShapeRenderOptions
+
+    constructor()
+
+    withShapeRenderOptions(s: ShapeRenderOptions): RenderOptions
+
+
+  }
+  export class ParsingOptions  {
+    isAmfJsonLdSerialization: boolean
+    definedBaseUrl: undefined | string
+    getMaxYamlReferences: undefined | number
+    withoutAmfJsonLdSerialization: ParsingOptions
+    withAmfJsonLdSerialization: ParsingOptions
+
+    constructor()
+
+    withBaseUnitUrl(baseUnit: string): ParsingOptions
+
+    withoutBaseUnitUrl(): ParsingOptions
+
+    setMaxYamlReferences(value: number): ParsingOptions
+
+
+  }
+  export class EventNames  {
+    static readonly StartingParsing: 'StartingParsing'
+    static readonly StartingContentParsing: 'StartingContentParsing'
+    static readonly ParsedSyntax: 'ParsedSyntax'
+    static readonly ParsedModel: 'ParsedModel'
+    static readonly FinishedParsing: 'FinishedParsing'
+    static readonly StartingTransformation: 'StartingTransformation'
+    static readonly FinishedTransformationStep: 'FinishedTransformationStep'
+    static readonly FinishedTransformation: 'FinishedTransformation'
+    static readonly StartingValidation: 'StartingValidation'
+    static readonly FinishedValidationPlugin: 'FinishedValidationPlugin'
+    static readonly FinishedValidation: 'FinishedValidation'
+    static readonly StartingRendering: 'StartingRendering'
+    static readonly FinishedRenderingAST: 'FinishedRenderingAST'
+    static readonly FinishedRenderingSyntax: 'FinishedRenderingSyntax'
+
+  }
+  export class AMFValidator  {
+    validate(bu: model.document.BaseUnit, conf: AMFGraphConfiguration): Promise<client.validate.AMFValidationReport>
+
+    validate(bu: model.document.BaseUnit, profileName: ProfileName, conf: AMFGraphConfiguration): Promise<client.validate.AMFValidationReport>
+
+
+  }
+  export class AMFTransformer  {
+    transform(unit: model.document.BaseUnit, configuration: AMFGraphConfiguration): exported.AMFResult
+
+    transform(unit: model.document.BaseUnit, pipelineName: string, configuration: AMFGraphConfiguration): exported.AMFResult
+
+
+  }
+  export class AMFRenderer  {
+    render(bu: model.document.BaseUnit, env: AMFGraphConfiguration): string
+
+    render(bu: model.document.BaseUnit, mediaType: string, env: AMFGraphConfiguration): string
+
+
+  }
+  export class AMFParser  {
+    parse(url: string, configuration: AMFGraphConfiguration): Promise<exported.AMFResult>
+
+    parse(url: string, mediaType: string, configuration: AMFGraphConfiguration): Promise<exported.AMFResult>
+
+    parseContent(content: string, configuration: AMFGraphConfiguration): Promise<exported.AMFResult>
+
+    parseContent(content: string, mediaType: string, configuration: AMFGraphConfiguration): Promise<exported.AMFResult>
+
+
+  }
+  export class AMFGraphConfiguration  {
+    empty(): AMFGraphConfiguration
+
+    predefined(): AMFGraphConfiguration
+
+
+  }
+  export class AMFGraphClient  {
+
+    constructor(configuration: AMFGraphConfiguration)
+
+    parse(url: string): Promise<exported.AMFResult>
+
+    parse(url: string, mediaType: string): Promise<exported.AMFResult>
+
+    parseContent(content: string): Promise<exported.AMFResult>
+
+    parseContent(content: string, mediaType: string): Promise<exported.AMFResult>
+
+    transform(bu: model.document.BaseUnit): exported.AMFResult
+
+    transform(bu: model.document.BaseUnit, pipelineName: string): exported.AMFResult
+
+    render(bu: model.document.BaseUnit): string
+
+    render(bu: model.document.BaseUnit, mediaType: string): string
+
+    validate(bu: model.document.BaseUnit): Promise<client.validate.AMFValidationReport>
+
+    validate(bu: model.document.BaseUnit, profileName: ProfileName): Promise<client.validate.AMFValidationReport>
+
 
   }
   export class ProfileNames  {
     static readonly AMF: ProfileName
-    static readonly OAS: ProfileName
     static readonly OAS20: ProfileName
     static readonly OAS30: ProfileName
-    static readonly RAML: ProfileName
     static readonly RAML10: ProfileName
     static readonly RAML08: ProfileName
     static readonly ASYNC: ProfileName
@@ -5247,6 +5436,11 @@ declare module 'amf-client-js' {
     toString: string
 
     constructor(profile: string)
+
+    isOas(): boolean
+
+    isRaml(): boolean
+
 
   }
   export class MessageStyles  {
@@ -5297,18 +5491,78 @@ declare module 'amf-client-js' {
 
 
   }
-  export class Aml10Renderer extends render.Renderer  {
-    readonly mediaType: string
+  export class AMLClient extends AMFGraphClient  {
 
-    constructor()
-    constructor(mediaType: string)
+    constructor(configuration: AMLConfiguration)
 
+    parseDialect(url: string): Promise<exported.AMLDialectResult>
+
+    parseDialectInstance(url: string): Promise<exported.AMLDialectInstanceResult>
+
+    parseVocabulary(url: string): Promise<exported.AMLVocabularyResult>
+
+    parseValidationProfile(url: String): Promise<client.validate.ValidationProfile>
+
+    parseValidationProfile(instance: model.document.DialectInstance): client.validate.ValidationProfile
   }
-  export class Aml10Parser extends parse.Parser  {
-    constructor()
-    constructor(mediaType: string)
-    constructor(env: client.environment.Environment)
-    constructor(mediaType: string, env: client.environment.Environment)
 
+  export class ErrorHandler {
+    static provider(errorHandler: handler.JsErrorHandler): exported.ErrorHandlerProvider
+  }
+
+  export class ResourceLoaderFactory {
+    static create(loader: client.resource.ClientResourceLoader): resource.ResourceLoader
+  }
+
+  export class PipelineName {
+    static from(targetMediaType: string, pipelineId: string): string
+    static from(targetMediaType: string): string
+  }
+
+  export class AMLConfiguration {
+    static predefined(): AMLConfiguration
+
+    createClient(): AMLClient
+
+    withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration
+
+    withRenderOptions(renderOptions: RenderOptions): AMLConfiguration
+
+    withErrorHandlerProvider(provider: exported.ErrorHandlerProvider): AMLConfiguration
+
+    withResourceLoader(rl: resource.ResourceLoader): AMLConfiguration
+
+    withResourceLoaders(rl: Array<resource.ResourceLoader>): AMLConfiguration
+
+    withUnitCache(cache: reference.UnitCache): AMLConfiguration
+
+    withTransformationPipeline(pipeline: exported.transform.TransformationPipeline): AMLConfiguration
+
+    withEventListener(listener: exported.config.AMFEventListener): AMLConfiguration
+
+    withLogger(logger: exported.config.AMFLogger): AMLConfiguration
+
+    merge(other: AMLConfiguration): AMLConfiguration
+
+    withCustomValidationsEnabled(): Promise<AMLConfiguration>
+
+    withDialect(path: string): Promise<AMLConfiguration>
+
+    withDialect(dialect: model.document.Dialect): AMLConfiguration
+
+    withCustomProfile(instancePath: string): Promise<AMLConfiguration>
+
+    forInstance(url: string): Promise<AMLConfiguration>
+  }
+
+  export class TransformationStepFactory {
+    static from(step: exported.transform.JsTransformationStep): exported.transform.TransformationStep
+  }
+
+  export class TransformationPipeline      {
+    static readonly DEFAULT_PIPELINE: string
+    static readonly EDITING_PIPELINE: string
+    static readonly COMPATIBILITY_PIPELINE: string
+    static readonly CACHE_PIPELINE: string
   }
 }

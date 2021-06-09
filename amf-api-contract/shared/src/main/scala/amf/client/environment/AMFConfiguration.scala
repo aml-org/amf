@@ -229,11 +229,21 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withCustomProfile(instancePath: String): Future[AMFConfiguration] =
     super.withCustomProfile(instancePath).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
-  override def withCustomValidationsEnabled: Future[AMFConfiguration] =
-    super.withCustomValidationsEnabled.map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+  override def withCustomProfile(profile: ValidationProfile): AMFConfiguration =
+    super.withCustomProfile(profile).asInstanceOf[AMFConfiguration]
+
+  override def withCustomValidationsEnabled(): Future[AMFConfiguration] =
+    super.withCustomValidationsEnabled().map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+
+  override def withDialect(path: String): Future[AMFConfiguration] =
+    super.withDialect(path).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
   override def withDialect(dialect: Dialect): AMFConfiguration =
     super.withDialect(dialect).asInstanceOf[AMFConfiguration]
+
+  override def forInstance(url: String, mediaType: Option[String] = None): Future[AMFConfiguration] =
+    super.forInstance(url, mediaType).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+
   def merge(other: AMFConfiguration): AMFConfiguration = super._merge(other)
 
   override protected def copy(resolvers: AMFResolvers,

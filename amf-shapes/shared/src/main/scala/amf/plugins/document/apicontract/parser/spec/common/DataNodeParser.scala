@@ -27,7 +27,7 @@ import scala.collection.mutable.ListBuffer
 trait DataNodeParserContext {
   def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty]
   def refs: Seq[ParsedReference]
-  def getMaxYamlReferences: Option[Long]
+  def getMaxYamlReferences: Option[Int]
   def fragments: Map[String, FragmentRef]
 }
 

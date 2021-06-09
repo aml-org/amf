@@ -230,13 +230,13 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
   }
 
   private def dataNodeParsingCtx(errorHandler: AMFErrorHandler,
-                                 maxYamlRefs: Option[Long]): ErrorHandlingContext with DataNodeParserContext = {
+                                 maxYamlRefs: Option[Int]): ErrorHandlingContext with DataNodeParserContext = {
     new ErrorHandlingContext()(errorHandler) with DataNodeParserContext {
       override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
         eh.violation(violationId, node, message, "")
       override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
       override def refs: Seq[ParsedReference]                                                          = Seq.empty
-      override def getMaxYamlReferences: Option[Long]                                                  = maxYamlRefs
+      override def getMaxYamlReferences: Option[Int]                                                   = maxYamlRefs
       override def fragments: Map[String, FragmentRef]                                                 = Map.empty
     }
   }

@@ -11,16 +11,14 @@ import scala.concurrent.ExecutionContext
   * For more complex uses see [[AMFParser]] or [[amf.client.remod.AMFRenderer]]
   */
 @JSExportAll
-class AMFClient private (private val _internal: InternalAMFClient) extends AMLClient(_internal) {
-
-  private implicit val ec: ExecutionContext = _internal.getConfiguration.getExecutionContext
+class AMFClient private (private val _internal: InternalAMFClient) extends BaseAMLClient(_internal) {
 
   @JSExportTopLevel("AMFClient")
   def this(configuration: AMFConfiguration) = {
     this(new InternalAMFClient(configuration))
   }
 
-  override def getConfiguration: AMFConfiguration = _internal.getConfiguration
+  override def getConfiguration(): AMFConfiguration = _internal.getConfiguration
 
   /**
     * parse a [[amf.client.model.document.Document]]
