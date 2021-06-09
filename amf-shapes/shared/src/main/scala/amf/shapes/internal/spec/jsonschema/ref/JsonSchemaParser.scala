@@ -26,7 +26,7 @@ class JsonSchemaParser {
   def parse(inputFragment: Fragment, pointer: Option[String])(implicit ctx: ShapeParserContext): Option[AnyShape] = {
 
     val doc: Root     = createRootFrom(inputFragment, pointer, ctx.eh)
-    val parsingResult = parse(doc, ctx, new ParsingOptions())
+    val parsingResult = parse(doc, ctx, ParsingOptions())
     Some(parsingResult)
   }
 

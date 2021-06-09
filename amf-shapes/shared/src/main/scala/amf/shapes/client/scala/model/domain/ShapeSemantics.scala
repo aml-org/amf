@@ -8,6 +8,8 @@ import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.domain.metamodel.{BaseIRIModel, ContextElementWithIri, ContextMappingModel, CuriePrefixModel, DefaultVocabularyModel, SemanticContextModel}
 import org.yaml.model.YPart
 
+import scala.collection.mutable
+
 trait WithContextIri {
   this: DomainElement =>
   def withIri(iri: String): this.type = set(ContextElementWithIri.IRI, AmfScalar(iri, Annotations()))
@@ -130,6 +132,100 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
   def typeMappings: Seq[StrField] = fields.field(SemanticContextModel.TypeMapping)
 
   override def componentId: String = "/" + "@context".urlComponentEncoded
+
+  private def prefixMap(): Map[String,String] = {
+    var acc = Map[String,String]()
+    curies.foreach { curie =>
+      acc += (curie.alias.value() -> curie.iri.value())
+    }
+    acc
+  }
+
+  def normalize(): SemanticContext = {
+    val newContext = new SemanticContext(this.fields, this.annotations)
+
+    // set-up the default vocabulary
+    vocab match {
+      case Some(v) =>
+        newContext.withVocab(DefaultVocabulary().withId(v.id).withIri(expand(v.iri.value())))
+      case _       =>
+        // ignore
+    }
+
+    newContext.withCuries(curies.map { curie =>
+      CuriePrefix().withId(curie.id).withAlias(curie.alias.value()).withId(curie.iri.value())
+    })
+
+    base.flatMap(_.iri.option()).foreach { iri =>
+      newContext.withBase(BaseIri().withIri(expand(iri)))
+    }
+
+    newContext.withTypeMappings(typeMappings.map { t =>
+      expand(t.value())
+    })
+
+    newContext.withMapping(mapping.map { m =>
+      val newMapping = ContextMapping().withId(m.id)
+      m.iri.option().foreach { iri =>
+        newMapping.withIri(expand(iri))
+      }
+      m.coercion.option().foreach { dt =>
+        newMapping.withCoercion(expand(dt))
+      }
+      newMapping
+    })
+
+    newContext
+  }
+
+  def merge(other: SemanticContext): SemanticContext = {
+    val merged = normalize()
+    val toMerge = other.normalize()
+
+    toMerge.base.foreach { base =>
+      merged.withBase(base)
+    }
+
+    toMerge.vocab.foreach { vocab =>
+      merged.withVocab(vocab)
+    }
+
+    val acc: mutable.Map[String, CuriePrefix] = mutable.Map()
+    merged.curies.foreach { curie =>
+      acc(curie.alias.value()) = curie
+    }
+    toMerge.curies.foreach { curie =>
+      acc(curie.alias.value()) = curie
+    }
+    merged.withCuries(acc.values.toList)
+
+    val accTypings: mutable.Map[String,ContextMapping] = mutable.Map()
+    merged.mapping.foreach { mapping =>
+      accTypings(mapping.alias.value()) = mapping
+    }
+    toMerge.curies.foreach { mapping =>
+      acc(mapping.alias.value()) = mapping
+    }
+    merged.withMapping(accTypings.values.toList)
+
+    merged
+  }
+
+  def expand(iri: String): String = {
+    val prefixes = prefixMap()
+    if (iri.contains(":") && !iri.contains("://")) {
+      val parts = iri.split(":")
+      if (parts(0) == "" && vocab.nonEmpty) {
+        s"${vocab.get}${parts(1)}"
+      } else if (prefixes.contains(parts(0))) {
+        s"${prefixes(parts(0))}${parts(1)}"
+      } else {
+        iri
+      }
+    } else {
+      iri
+    }
+  }
 }
 
 object SemanticContext {
