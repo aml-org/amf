@@ -7,9 +7,8 @@ import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
-import amf.emit.AMFRenderer
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class EditingResolutionTest extends ResolutionTest {
 
@@ -1128,6 +1127,18 @@ class EditingResolutionTest extends ResolutionTest {
         transformWith = Some(Oas30),
         renderOptions = Some(config.renderOptions),
         eh = Some(UnhandledErrorHandler)
+      )
+    }
+
+    multiGoldenTest("OAS 3.0 discriminators from JSON-LD", "api.target.%s") { config =>
+      cycle(
+        "api.source.flattened.jsonld",
+        config.golden,
+        AmfJsonHint,
+        target = Amf,
+        directory = resolutionPath + "oas30-discriminator-json-ld/",
+        transformWith = Some(Oas30),
+        renderOptions = Some(config.renderOptions)
       )
     }
 

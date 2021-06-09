@@ -3,7 +3,7 @@ package amf.plugins.domain.apicontract.entities
 import amf.core.entities.Entities
 import amf.core.metamodel.{ModelDefaultBuilder, Obj}
 import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
-import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+import amf.plugins.domain.shapes.metamodel.{CreativeWorkModel, DiscriminatorValueMappingModel}
 import amf.plugins.domain.apicontract.metamodel.api.{AsyncApiModel, WebApiModel}
 import amf.plugins.domain.apicontract.metamodel.bindings._
 import amf.plugins.domain.apicontract.metamodel.security._
@@ -68,7 +68,8 @@ private[amf] object APIEntities extends Entities {
     MqttOperationBindingModel,
     MqttMessageBindingModel,
     ServerBindingModel,
-    WebSocketsChannelBindingModel
+    WebSocketsChannelBindingModel,
+    DiscriminatorValueMappingModel
   )
 
 }

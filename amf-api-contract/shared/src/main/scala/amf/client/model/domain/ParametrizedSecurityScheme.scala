@@ -1,6 +1,6 @@
 package amf.client.model.domain
-import amf.client.convert.ApiClientConverters._
 
+import amf.client.convert.ApiClientConverters._
 import amf.client.model.StrField
 import amf.plugins.domain.apicontract.models.security.{
   ParametrizedSecurityScheme => InternalParametrizedSecurityScheme
@@ -55,4 +55,7 @@ case class ParametrizedSecurityScheme(override private[amf] val _internal: Inter
   def withHttpSettings(): HttpSettings = _internal.withHttpSettings()
 
   def withOpenIdConnectSettings(): OpenIdConnectSettings = _internal.withOpenIdConnectSettings()
+
+  // If the security scheme is null and not "null" it returns true
+  def hasNullSecurityScheme: Boolean = _internal.hasNullSecurityScheme
 }

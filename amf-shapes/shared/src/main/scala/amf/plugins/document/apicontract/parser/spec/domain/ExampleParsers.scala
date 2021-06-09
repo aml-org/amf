@@ -271,7 +271,7 @@ case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleO
     map.key("description", (ExampleModel.Description in example).allowingAnnotations)
     map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
 
-    example.set(ExampleModel.StructuredValue, AmfScalar(options.strictDefault), Annotations.synthesized())
+    example.set(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations.synthesized())
 
     map
       .key("value")

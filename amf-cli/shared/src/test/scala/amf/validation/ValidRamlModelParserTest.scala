@@ -279,5 +279,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/api-with-includes-with-spaces/api.raml")
   }
 
+  test("Trait definition with numeric name") {
+    checkValid("/raml/trait-definition-numeric-name.raml")
+  }
+
   override val hint: Hint = Raml10YamlHint
 }
