@@ -15,9 +15,10 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.schema.
 trait OasCompactEmitterFactory {
 
   protected implicit val shapeCtx: OasLikeShapeEmitterContext
+  lazy val compactEmissionEnabled: Boolean = shapeCtx.options.compactedEmission
 
   def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
-    if (shapeCtx.compactEmission)
+    if (compactEmissionEnabled)
       CompactOasTypesEmitters.apply
     else
       OasDeclaredTypesEmitters.apply
@@ -28,7 +29,7 @@ trait OasCompactEmitterFactory {
                    references: Seq[BaseUnit],
                    pointer: Seq[String],
                    schemaPath: Seq[(String, String)]): Seq[Emitter] = {
-    if (shapeCtx.compactEmission)
+    if (compactEmissionEnabled)
       CompactOasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
     else
       OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
@@ -37,7 +38,7 @@ trait OasCompactEmitterFactory {
   def recursiveShapeEmitter(shape: RecursiveShape,
                             ordering: SpecOrdering,
                             schemaPath: Seq[(String, String)]): EntryEmitter =
-    if (shapeCtx.compactEmission)
+    if (compactEmissionEnabled)
       new CompactOasRecursiveShapeEmitter(shape, ordering, schemaPath)
     else
       OasRecursiveShapeEmitter(shape, ordering, schemaPath)

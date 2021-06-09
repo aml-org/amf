@@ -1,6 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.client.render.{JSONSchemaVersion => ClientJSONSchemaVersion, JSONSchemaVersions => ClientJSONSchemaVersions}
+import amf.client.exported.config.{
+  JSONSchemaVersion => ClientJSONSchemaVersion,
+  JSONSchemaVersions => ClientJSONSchemaVersions
+}
 import amf.plugins.document.apicontract.parser.spec.declaration.SchemaPosition.Position
 
 abstract class SchemaVersion(val name: String) {

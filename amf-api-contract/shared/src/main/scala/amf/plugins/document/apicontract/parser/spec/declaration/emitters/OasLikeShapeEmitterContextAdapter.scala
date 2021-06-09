@@ -66,9 +66,4 @@ case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext)
                             pointer: Seq[String],
                             schemaPath: Seq[(String, String)]): Seq[Emitter] =
     spec.factory.typeEmitters(shape, ordering, ignored, references, pointer, schemaPath)
-
-  override def compactEmission: Boolean = spec match {
-    case oasCtx: OasSpecEmitterContext => oasCtx.compactEmission
-    case _                             => options.compactedEmission
-  }
 }

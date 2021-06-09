@@ -1,10 +1,9 @@
 package amf.plugins.document.apicontract.validation.remote
 
+import amf.client.exported.config.JsonSchemaDraft7
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
-import amf.client.remod.amfcore.config.ShapeRenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, ShapeRenderOptions}
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.client.render.JsonSchemaDraft7
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
@@ -151,7 +150,7 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
   }
 
   private def generateSchemaString(shape: Shape, validationProcessor: ValidationProcessor): Option[CharSequence] = {
-    val renderOptions = ShapeRenderOptions().withoutDocumentation.withCompactedEmission
+    val renderOptions = ShapeRenderOptions().withoutDocumentation
       .withSchemaVersion(JsonSchemaDraft7)
       .withEmitWarningForUnsupportedValidationFacets(true)
     val declarations = List(shape)

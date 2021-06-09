@@ -1,12 +1,8 @@
 package amf.facades
 
-import amf.client.remod.amfcore.config.ParsingOptionsConverter
 import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
-import amf.core.client.ParsingOptions
-import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.{Json, PlainText, Yaml}
 import amf.core.remote._
 import amf.core.{CompilerContext, CompilerContextBuilder, Root, AMFCompiler => ModularCompiler}

@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.client.environment.AMFConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Yaml
@@ -936,7 +936,7 @@ class EditingResolutionTest extends ResolutionTest {
       Oas30JsonHint,
       Oas30,
       directory = cyclePath + "oas3/",
-      renderOptions = Some(RenderOptions().withoutCompactedEmission),
+      renderOptions = Some(RenderOptions().withShapeRenderOptions(ShapeRenderOptions().withoutCompactedEmission)),
       transformWith = Some(Oas30)
     )
   }
@@ -948,7 +948,7 @@ class EditingResolutionTest extends ResolutionTest {
       Oas20JsonHint,
       Oas20,
       directory = cyclePath + "cycle/oas20/json/",
-      renderOptions = Some(RenderOptions().withoutCompactedEmission),
+      renderOptions = Some(RenderOptions().withShapeRenderOptions(ShapeRenderOptions().withoutCompactedEmission)),
       transformWith = Some(Oas20)
     )
   }
