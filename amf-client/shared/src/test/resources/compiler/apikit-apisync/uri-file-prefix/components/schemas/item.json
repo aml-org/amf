@@ -1,0 +1,18 @@
+{
+  "components": {
+    "schemas": {
+      "item": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "nested"
+        ],
+        "properties": {
+          "nestedItem": {
+            "$ref": "nested.json#/components/schemas/nested"
+          }
+        }
+      }
+    }
+  }
+}

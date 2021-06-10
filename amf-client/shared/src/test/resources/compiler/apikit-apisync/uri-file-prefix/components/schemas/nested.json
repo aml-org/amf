@@ -1,0 +1,19 @@
+{
+  "components": {
+    "schemas": {
+      "nested": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "example": "Example",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
