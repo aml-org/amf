@@ -1,7 +1,9 @@
 package amf.compiler
 
+import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.common.remote.Content
+import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.resource.ResourceLoader
@@ -42,6 +44,25 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
       .map { _ =>
         eh.getResults should have size 0
       }
+  }
+
+  test("Parsing context generated in extends resolution stage for raml traits") {
+    val mappings = Map(
+      "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml" -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/townfile.raml",
+      "some-modules/for-health-check.raml" -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/for-health-check.raml",
+      "some-modules/trait.raml" -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/trait.raml",
+    )
+    val url = "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml"
+    val eh  = DefaultErrorHandler()
+    val client = WebAPIConfiguration.WebAPI()
+      .withResourceLoaders(List(new URNResourceLoader(mappings)))
+      .withErrorHandlerProvider(() => eh).createClient()
+    for {
+      parseResult <- client.parse(url)
+      _ <- Future.successful(client.transformEditing(parseResult.bu, ProvidedMediaType.Raml10))
+    }yield {
+      eh.getResults should have size 0
+    }
   }
 
   class URNResourceLoader(mappings: Map[String, String]) extends ResourceLoader {
