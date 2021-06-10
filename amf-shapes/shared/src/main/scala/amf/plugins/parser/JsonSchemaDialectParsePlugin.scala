@@ -11,8 +11,10 @@ import amf.plugins.document.apicontract.contexts.parser.JsonSchemaContext
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.jsonschema.JsonSchemaParser
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.vocabularies.model.domain.{DocumentMapping, DocumentsModel}
+import amf.plugins.document.vocabularies.model.domain.{DocumentMapping, DocumentsModel, External}
 import amf.plugins.parser.dialect.{SchemaTransformer, TransformationResult}
+
+import scala.language.postfixOps
 
 object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
 
@@ -34,7 +36,14 @@ object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
       case Left(nm)   => DocumentsModel().withId(location + "/documents").withRoot(DocumentMapping().withId(location + "/docMapping").withEncoded(nm.name.value()))
       case Right(unm) => DocumentsModel().withId(location + "/documents").withRoot(DocumentMapping().withId(location + "/docMapping").withEncoded(unm.name.value()))
     }
-    Dialect().withId(location).withName("generated_dialect").withVersion("1.0").withDocuments(documentMapping).withDeclares(transformed.declared)
+    val dialect = Dialect().withId(location).withName("generated_dialect").withVersion("1.0").withDocuments(documentMapping).withDeclares(transformed.declared)
+    if (transformed.externals.nonEmpty) {
+      val externals = transformed.externals.map {  case (ns, prefix) =>
+        External().withId(location + "/external/" + prefix).withBase(prefix).withAlias(ns)
+      }
+      dialect.withExternals(externals.toSeq)
+    }
+    dialect
   }
 
   private def context(wrapped: ParserContext): ShapeParserContext = JsonSchemaContext(wrapped)

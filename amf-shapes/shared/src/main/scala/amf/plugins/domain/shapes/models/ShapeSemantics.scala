@@ -68,7 +68,7 @@ class CuriePrefix(override val fields: Fields, val annotations: Annotations)
   def withAlias(alias: String): this.type = set(CuriePrefixModel.Alias, AmfScalar(alias, Annotations()))
   def alias: StrField = fields.field(CuriePrefixModel.Alias)
 
-  override def meta: Obj = DefaultVocabularyModel
+  override def meta: Obj = CuriePrefixModel
 
   override def componentId: String = "/" + iri.value().urlComponentEncoded
 }
@@ -154,7 +154,7 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
     }
 
     newContext.withCuries(curies.map { curie =>
-      CuriePrefix().withId(curie.id).withAlias(curie.alias.value()).withId(curie.iri.value())
+      CuriePrefix().withId(curie.id).withAlias(curie.alias.value()).withIri(curie.iri.value())
     })
 
     base.flatMap(_.iri.option()).foreach { iri =>
@@ -166,7 +166,7 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
     })
 
     newContext.withMapping(mapping.map { m =>
-      val newMapping = ContextMapping().withId(m.id)
+      val newMapping = ContextMapping().withId(m.id).withAlias(m.alias.value())
       m.iri.option().foreach { iri =>
         newMapping.withIri(expand(iri))
       }
@@ -204,8 +204,8 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
     merged.mapping.foreach { mapping =>
       accTypings(mapping.alias.value()) = mapping
     }
-    toMerge.curies.foreach { mapping =>
-      acc(mapping.alias.value()) = mapping
+    toMerge.mapping.foreach { mapping =>
+      accTypings(mapping.alias.value()) = mapping
     }
     merged.withMapping(accTypings.values.toList)
 
