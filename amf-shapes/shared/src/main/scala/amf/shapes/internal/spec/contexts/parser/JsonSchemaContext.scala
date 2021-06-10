@@ -148,7 +148,7 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
 
   override def refs: Seq[ParsedReference] = ctx.refs
 
-  override def getMaxYamlReferences: Option[Long] = None
+  override def getMaxYamlReferences: Option[Int] = None
 
   override def fragments: Map[String, FragmentRef] = Map()
 
