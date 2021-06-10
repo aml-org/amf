@@ -3,15 +3,15 @@ package amf.plugins.parser.dialect
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, Fields, ScalarNode}
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
-import amf.plugins.domain.shapes.models.{ArrayShape, ScalarShape}
+import amf.plugins.domain.shapes.models.{ArrayShape, NodeShape, ScalarShape}
 
 case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext) {
 
-  val propertyMapping = PropertyMapping(Fields(),Annotations(property.annotations))
+  val propertyMapping: PropertyMapping = PropertyMapping(Fields(),Annotations(property.annotations))
     .withId(property.id)
     .withName(property.name.value())
 
-  def checkMandatoriness() = {
+  def checkMandatoriness(): Unit = {
     property.minCount.option().foreach { minCount =>
       propertyMapping.withMinCount(minCount)
     }
@@ -21,19 +21,26 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     property.range match {
       case scalar: ScalarShape =>
         transformScalarProperty(scalar)
-      case array: ArrayShape => {
+      case obj: NodeShape      =>
+        transformObjectProperty(obj)
+      case array: ArrayShape   =>
         propertyMapping.withAllowMultiple(true)
         array.items match {
           case scalar: ScalarShape => transformScalarProperty(scalar)
+          case obj: NodeShape      => transformObjectProperty(obj)
         }
-      }
     }
     checkMandatoriness()
     checkSemantics()
     propertyMapping
   }
 
-  private def transformScalarProperty(scalar: ScalarShape) = {
+  def transformObjectProperty(obj: NodeShape): Unit = {
+    val range = ShapeTransformer(obj, ctx).transform()
+    propertyMapping.withObjectRange(Seq(range.id))
+  }
+
+  private def transformScalarProperty(scalar: ScalarShape): Unit = {
     // datatype
     val scalarRangeDatatype = sanitizeScalarRange(scalar.dataType.value())
     propertyMapping.withLiteralRange(scalarRangeDatatype)

@@ -2,6 +2,7 @@ package amf.plugins.parser.dialect
 
 import amf.core.parser.Fields
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
+import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.NodeShape
 
 case class NodeShapeTransformer(node: NodeShape, ctx: ShapeTransformationContext) {
@@ -10,6 +11,7 @@ case class NodeShapeTransformer(node: NodeShape, ctx: ShapeTransformationContext
 
   def transform(): NodeMapping = {
     updateContext()
+    nameShape()
     val propertyMappings = node.properties.map { property =>
       PropertyShapeTransformer(property, ctx).transform()
     }
@@ -27,9 +29,14 @@ case class NodeShapeTransformer(node: NodeShape, ctx: ShapeTransformationContext
     }
   }
 
-  private def updateContext() = {
+  private def nameShape() {
+    node.displayName.option() match {
+      case Some(name) => nodeMapping.withName(name.replaceAll(" ", ""))
+      case _          => ctx.genName(nodeMapping)
+    }
+  }
+  private def updateContext(): Unit = {
     ctx.registerNodeMapping(nodeMapping)
-    ctx.genName(nodeMapping)
   }
 
 }
