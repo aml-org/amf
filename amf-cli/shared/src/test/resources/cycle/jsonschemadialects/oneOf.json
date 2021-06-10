@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "foaf": "http://xmlns.com/foaf/0.1/"
+  },
+  "title": "Child",
+  "oneOf": [
+    {"$ref":  "#/$defs/Parent1"},
+    {
+      "@context": {
+        "@type": "foaf:Location",
+        "address": "foaf:address"
+      },
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "Parent1": {
+      "@context": {
+        "@type": "foaf:Something",
+        "displayName": "foaf:displayName"
+      },
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

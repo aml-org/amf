@@ -1,26 +1,32 @@
 package amf.plugins.parser.dialect
 
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.parser.Fields
-import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, UnionNodeMapping}
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.plugins.document.vocabularies.model.domain.{NodeMapping, UnionNodeMapping}
+import amf.plugins.domain.shapes.models.AnyShape
 
+case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext) {
 
-case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContext) {
+  val nodeMapping: UnionNodeMapping = UnionNodeMapping(Fields(),shape.annotations).withId(shape.id)
 
-  val nodeMapping: NodeMapping = NodeMapping(Fields(),shape.annotations).withId(shape.id)
-
-  def transform(): NodeMapping = {
+  def transform(): UnionNodeMapping = {
     updateContext()
     nameShape()
 
-    val propertyMappings = shape.properties.map { property =>
-      PropertyShapeTransformer(property, ctx).transform()
+    val members = shape.xone.flatMap { case member: AnyShape =>
+      ShapeTransformer(member, ctx).transform() match {
+        case nm: NodeMapping => Seq(nm.id)
+        case unm: UnionNodeMapping => unm.objectRange().map(_.value())
+      }
+    }
+    if (shape.or.nonEmpty) {
+      throw new Error("Or constraint not supported")
+    }
+    if (Option(shape.not).nonEmpty) {
+      throw new Error("Not constraint not supported")
     }
 
-    checkInheritance()
-    checkSemantics()
-    nodeMapping.withPropertiesMapping(propertyMappings)
-
+    nodeMapping.withObjectRange(members)
   }
 
   private def checkInheritance(): Unit = {
@@ -37,15 +43,6 @@ case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContex
     }
   }
 
-  private def checkSemantics(): Unit = {
-    ctx.semantics.typeMappings match {
-      case types if types.nonEmpty =>
-        nodeMapping.withNodeTypeMapping(types.head.value()) // @TODO: support multiple type mappings
-      case _                       =>
-        // ignore
-    }
-  }
-
   private def nameShape() {
     shape.displayName.option() match {
       case Some(name) => nodeMapping.withName(name.replaceAll(" ", ""))
@@ -56,4 +53,5 @@ case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContex
   private def updateContext(): Unit = {
     ctx.registerNodeMapping(nodeMapping)
   }
+
 }

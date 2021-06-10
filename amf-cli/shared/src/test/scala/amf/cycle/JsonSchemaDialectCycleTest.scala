@@ -24,8 +24,12 @@ class JsonSchemaDialectCycleTest extends AsyncFunSuite with PlatformSecrets with
     cycle("simple.json", "simple.yaml")
   }
 
-  test("HERE_HERE can generate a dialect from a semantic JSON schema with allOfs") {
+  test("can generate a dialect from a semantic JSON schema with allOfs") {
     cycle("allOf.json", "allOf.yaml")
+  }
+
+  test("can generate a dialect from a semantic JSON schema with oneOfs") {
+    cycle("oneOf.json", "oneOf.yaml")
   }
 
 
