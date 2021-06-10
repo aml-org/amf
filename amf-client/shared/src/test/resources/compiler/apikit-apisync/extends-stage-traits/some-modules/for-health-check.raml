@@ -1,0 +1,19 @@
+#%RAML 1.0 ResourceType
+description: description
+usage: |
+  Some usage
+
+uses:
+  trait-lib: trait.raml
+
+get:
+  displayName: asdf
+  description: asf
+  is:
+    - trait-lib.traceable
+  responses:
+      200:
+        body:
+          text/plain:
+            example: |
+              "OK"

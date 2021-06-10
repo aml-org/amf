@@ -1,9 +1,11 @@
 package amf.compiler
 
+import amf.{ProfileName, RAMLStyle, Raml10Profile}
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.remote.Content
-import amf.core.remote.{Cache, Context, FileNotFound}
-import amf.core.services.RuntimeCompiler
+import amf.core.remote.{Cache, Context, FileNotFound, Raml10}
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.{RuntimeCompiler, RuntimeResolver, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.internal.environment.Environment
@@ -36,6 +38,24 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     val env = Environment().withLoaders(loaders)
     RuntimeCompiler.apply(url, None, None, base = Context(platform), cache = Cache(), errorHandler = errorHandler, env = env).map { unit =>
       errorHandler.getErrors should have size 0
+    }
+  }
+
+  test("Parsing context generated in extends resolution stage for raml traits") {
+    val mappings = Map(
+      "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml" -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/townfile.raml",
+      "some-modules/for-health-check.raml" -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/for-health-check.raml",
+      "some-modules/trait.raml" -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/trait.raml",
+    )
+    val url = "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml"
+    val loaders = Seq(new URNResourceLoader(mappings))
+    val env = Environment().withLoaders(loaders)
+    for {
+     unit <- RuntimeCompiler.apply(url, None, None, base = Context(platform), cache = Cache(), env = env)
+    _ <- Future.successful(RuntimeResolver.resolve(Raml10.name, unit, ResolutionPipeline.EDITING_PIPELINE))
+    report <- RuntimeValidator(unit, Raml10Profile, RAMLStyle, resolved = true)
+    }yield {
+      report.results should have size 0
     }
   }
 
