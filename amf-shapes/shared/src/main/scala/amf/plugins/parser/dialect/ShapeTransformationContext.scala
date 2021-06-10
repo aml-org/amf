@@ -1,7 +1,8 @@
 package amf.plugins.parser.dialect
 
 import amf.core.model.domain.DomainElement
-import amf.plugins.document.vocabularies.model.domain.NodeMapping
+import amf.plugins.document.vocabularies.metamodel.domain.NodeMappableModel
+import amf.plugins.document.vocabularies.model.domain.NodeMappable
 import amf.plugins.domain.shapes.models.SemanticContext
 
 import java.util.concurrent.atomic.AtomicReference
@@ -20,14 +21,14 @@ class ShapeTransformationContext(val shapeMap: mutable.Map[String, DomainElement
     shapeMap.values.toSeq
   }
 
-  def registerNodeMapping(nodeMapping: NodeMapping): Unit = {
+  def registerNodeMapping[T <: NodeMappableModel](nodeMapping: NodeMappable[T]): Unit = {
     shapeMap(nodeMapping.id) = nodeMapping
   }
 
-  def genName(nodeMapping: NodeMapping): NodeMapping = {
+  def genName[T <: NodeMappableModel](nodeMapping: NodeMappable[T]): NodeMappable[T] = {
     val nodeMappingName = nodeMapping.name.option().getOrElse("SchemaNode")
     val name =  if (shapeDeclarationNames.contains(nodeMappingName)) {
-      s"${nodeMappingName}_${idCounter.updateAndGet((v) => v + 1)}"
+      s"${nodeMappingName}${idCounter.updateAndGet((v) => v + 1)}"
     } else {
       nodeMappingName
     }
