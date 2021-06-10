@@ -1,8 +1,6 @@
 package amf.plugins.parser.dialect
 
-import amf.client.model.domain.UnionNodeMapping
 import amf.core.model.domain.DomainElement
-import amf.plugins.document.vocabularies.model.domain.NodeMapping
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 case class ShapeTransformer(s: AnyShape, ctx: ShapeTransformationContext) {
