@@ -1,0 +1,27 @@
+#%Dialect 1.0
+nodeMappings:
+  Child:
+    classTerm: foaf.Person
+    mapping:
+      name:
+        range: string
+        mandatory: true
+      pepito:
+        range: number
+        mandatory: true
+    extends: SchemaNode
+  SchemaNode:
+    mapping:
+      displayName:
+        range: string
+        propertyTerm: foaf.displayName
+        mandatory: false
+external:
+  ns0: http://test.com/vocab#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  foaf: http://xmlns.com/foaf/0.1/
+dialect: generated_dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Child

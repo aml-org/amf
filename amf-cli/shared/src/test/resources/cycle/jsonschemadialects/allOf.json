@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "@type": "foaf:Person"
+  },
+  "title": "Child",
+  "type": "object",
+  "required": [
+    "name",
+    "pepito"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "pepito": {
+      "type": "number"
+    }
+  },
+  "allOf": [
+    {"$ref":  "#/$defs/Parent1"}
+  ],
+  "$defs": {
+    "Parent1": {
+      "@context": {
+        "displayName": "foaf:displayName"
+      },
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        }
+      }
+    },
+    "Parent2": {
+      "@context": {
+        "address": "foaf:address"
+      },
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

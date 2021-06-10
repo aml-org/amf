@@ -1,8 +1,8 @@
 package amf.plugins.parser.dialect
 
 import amf.core.parser.Fields
-import amf.plugins.document.vocabularies.model.domain.NodeMapping
-import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.document.vocabularies.model.domain.{NodeMapping, UnionNodeMapping}
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 case class NodeShapeTransformer(node: NodeShape, ctx: ShapeTransformationContext) {
 
@@ -14,9 +14,24 @@ case class NodeShapeTransformer(node: NodeShape, ctx: ShapeTransformationContext
     val propertyMappings = node.properties.map { property =>
       PropertyShapeTransformer(property, ctx).transform()
     }
+    checkInheritance()
     checkSemantics()
     nodeMapping.withPropertiesMapping(propertyMappings)
 
+  }
+
+  private def checkInheritance(): Unit = {
+    val superSchemas = node.and
+    if (superSchemas.length > 0) { // @TODO: support more than 1 super schema
+      val hierarchy = superSchemas.map { case s: AnyShape =>
+        val transformed = ShapeTransformer(s, ctx).transform()
+        transformed match {
+          case nm: NodeMapping       => nm.link[NodeMapping](nm.name.value())
+          case unm: UnionNodeMapping => unm.link[UnionNodeMapping](unm.name.value())
+        }
+      }
+      nodeMapping.withExtends(hierarchy)
+    }
   }
 
   private def checkSemantics(): Unit = {
