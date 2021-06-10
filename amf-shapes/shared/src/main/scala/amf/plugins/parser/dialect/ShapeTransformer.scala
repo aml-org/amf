@@ -4,13 +4,14 @@ import amf.core.model.domain.DomainElement
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 case class ShapeTransformer(s: AnyShape, ctx: ShapeTransformationContext) {
-  val shape = s.linkTarget.getOrElse(s).asInstanceOf[AnyShape]
+  val shape: AnyShape = s.linkTarget.getOrElse(s).asInstanceOf[AnyShape]
 
   def transform(): DomainElement = {
     ensureNotTransformed {
       updateContext { ctx =>
         shape match {
           case node: NodeShape if node.properties.nonEmpty => NodeShapeTransformer(node, ctx).transform()
+          case any: AnyShape                               => AnyShapeTransformer(any,ctx).transform()
         }
       }
     }
