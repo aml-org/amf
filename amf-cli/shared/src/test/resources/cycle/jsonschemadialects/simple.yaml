@@ -1,6 +1,6 @@
 #%Dialect 1.0
 nodeMappings:
-  SchemaNode:
+  Parent:
     mapping:
       name:
         range: string
@@ -9,6 +9,16 @@ nodeMappings:
       pepito:
         range: number
         mandatory: true
+      hey:
+        range: SchemaNode
+        mandatory: false
+        allowMultiple: true
+  SchemaNode:
+    mapping:
+      ho:
+        range: string
+        propertyTerm: foaf.ho
+        mandatory: false
 external:
   ns0: http://test.com/vocab#
   xsd: http://www.w3.org/2001/XMLSchema#
@@ -17,4 +27,4 @@ dialect: generated_dialect
 version: "1.0"
 documents:
   root:
-    encodes: SchemaNode
+    encodes: Parent
