@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft/2019-09/schema#",
-  "$ref": "#/$defs/schema",
   "@context": {
     "@base": "http://test.com/adocument.jsonld",
     "@vocab": "http://test.com/vocab#",
@@ -11,6 +10,7 @@
       "@type": "xsd:string"
     }
   },
+  "title": "Parent",
   "type": "object",
   "required": [
     "name",
@@ -22,6 +22,24 @@
     },
     "pepito": {
       "type": "number"
+    },
+    "hey": {
+      "type": "array",
+      "items":
+        {
+          "@context": {
+            "ho": {
+              "@id": "foaf:ho"
+            }
+          },
+          "type": "object",
+          "@type": "foaf:Verse",
+          "properties": {
+            "ho": {
+              "type": "string"
+            }
+          }
+        }
     }
   }
 }
