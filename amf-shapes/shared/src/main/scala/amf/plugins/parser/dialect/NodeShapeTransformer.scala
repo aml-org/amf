@@ -2,7 +2,6 @@ package amf.plugins.parser.dialect
 
 import amf.core.parser.Fields
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
-import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.NodeShape
 
 case class NodeShapeTransformer(node: NodeShape, ctx: ShapeTransformationContext) {

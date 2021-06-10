@@ -217,15 +217,20 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
 
   def merge(toMerge: SemanticContext): SemanticContext = {
     val merged = copy()
-
+    // base
     toMerge.base.foreach { base =>
       merged.withBase(base)
     }
 
+    //vocab
     toMerge.vocab.foreach { vocab =>
       merged.withVocab(vocab)
     }
 
+    // type mappings, just replace
+    merged.withTypeMappings(toMerge.typeMappings.map(m => m.value()))
+
+    // curies
     val acc: mutable.Map[String, CuriePrefix] = mutable.Map()
     merged.curies.foreach { curie =>
       acc(curie.alias.value()) = curie
@@ -235,6 +240,7 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
     }
     merged.withCuries(acc.values.toList)
 
+    // typings
     val accTypings: mutable.Map[String,ContextMapping] = mutable.Map()
     merged.mapping.foreach { mapping =>
       accTypings(mapping.alias.value()) = mapping
