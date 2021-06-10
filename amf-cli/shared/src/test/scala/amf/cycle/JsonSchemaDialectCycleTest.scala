@@ -20,7 +20,7 @@ class JsonSchemaDialectCycleTest extends AsyncFunSuite with PlatformSecrets with
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   private val basePath                                     = "amf-cli/shared/src/test/resources/cycle/jsonschemadialects/"
 
-  test("can generate a dialect from a semantic JSON schema") {
+  test("HERE_HERE can generate a dialect from a semantic JSON schema") {
     cycle("simple.json", "simple.yaml")
   }
 
