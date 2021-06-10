@@ -1,0 +1,27 @@
+#%Dialect 1.0
+nodeMappings:
+  Child:
+    union:
+      - SchemaNode
+      - SchemaNode1
+  SchemaNode1:
+    classTerm: foaf.Location
+    mapping:
+      address:
+        range: string
+        propertyTerm: foaf.address
+        mandatory: false
+  SchemaNode:
+    classTerm: foaf.Something
+    mapping:
+      displayName:
+        range: string
+        propertyTerm: foaf.displayName
+        mandatory: false
+external:
+  foaf: http://xmlns.com/foaf/0.1/
+dialect: generated_dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Child
