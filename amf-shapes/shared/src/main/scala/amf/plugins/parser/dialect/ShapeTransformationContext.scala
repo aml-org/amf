@@ -37,7 +37,7 @@ class ShapeTransformationContext(val shapeMap: mutable.Map[String, DomainElement
   }
 
   def updateSemanticContext(newSemantics: SemanticContext): ShapeTransformationContext = {
-    new ShapeTransformationContext(shapeMap, externals, idCounter, shapeDeclarationNames, semantics.merge(newSemantics))
+    new ShapeTransformationContext(shapeMap, externals, idCounter, shapeDeclarationNames, semantics.merge(newSemantics).normalize())
   }
 
   private def updateExternals(): Unit = {
