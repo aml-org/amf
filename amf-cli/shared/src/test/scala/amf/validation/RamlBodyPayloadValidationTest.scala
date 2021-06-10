@@ -8,12 +8,12 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.transform.PipelineName
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.remote.{Hint, Raml08, Raml08YamlHint, Raml10, Raml10YamlHint}
+import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.ValidationConfiguration
 import amf.facades.Validation
 import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -111,21 +111,16 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
         val shape = findShape(model.asInstanceOf[Document])
         mediaType
           .map(mediaTypeVal => {
-            PayloadValidationPluginsHandler
-              .validate(shape,
-                        mediaTypeVal,
-                        payload,
-                        SeverityLevels.VIOLATION,
-                        validationMode = validationMode,
-                        config = new ValidationConfiguration(config))
+            config
+              .payloadValidatorFactory()
+              .createFor(shape, mediaTypeVal, validationMode)
+              .validate(payload)
           })
           .getOrElse(
-            PayloadValidationPluginsHandler
-              .validateWithGuessing(shape,
-                                    payload,
-                                    SeverityLevels.VIOLATION,
-                                    validationMode = validationMode,
-                                    config = new ValidationConfiguration(config)))
+            config
+              .payloadValidatorFactory()
+              .createFor(shape, payload.guessMediaType(false), validationMode)
+              .validate(payload))
       }
     } yield {
       result

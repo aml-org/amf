@@ -223,12 +223,6 @@ object ParserSideValidations extends Validations {
     "Parameters with type file must be in formData"
   )
 
-  // Used also in validation
-  val UnsupportedExampleMediaTypeErrorSpecification = validation(
-    "unsupported-example-media-type",
-    "Cannot validate example with unsupported media type"
-  )
-
   val UnknownSecuritySchemeErrorSpecification = validation(
     "unknown-security-scheme",
     "Cannot find the security scheme"
@@ -453,7 +447,6 @@ object ParserSideValidations extends Validations {
     MissingSecuritySchemeErrorSpecification,
     UnknownScopeErrorSpecification,
     DuplicatedPropertySpecification,
-    UnsupportedExampleMediaTypeErrorSpecification,
     OasInvalidBodyParameter,
     DuplicatedParameters,
     DuplicatedTags,

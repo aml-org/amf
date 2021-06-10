@@ -8,9 +8,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.PipelineName
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
-import amf.core.internal.registries.domain.AMFPluginsRegistry
 import amf.core.internal.remote.{Cache, Context, Platform, Vendor}
-import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
 import amf.plugins.domain.VocabulariesRegister
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -22,8 +20,6 @@ trait CommandHelper {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     ApiRegister.register(platform)
     VocabulariesRegister.register(platform) // validation dialect was not being parsed by static config.
-//    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
-//    amf.core.AMF.init()
     Future.successful {}
   }
 
