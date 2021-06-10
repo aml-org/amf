@@ -178,9 +178,45 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
     newContext
   }
 
-  def merge(other: SemanticContext): SemanticContext = {
-    val merged = normalize()
-    val toMerge = other.normalize()
+  def copy(): SemanticContext = {
+    val newContext = SemanticContext()
+
+    // set-up the default vocabulary
+    vocab match {
+      case Some(v) =>
+        newContext.withVocab(DefaultVocabulary().withId(v.id).withIri(v.iri.value()))
+      case _       =>
+      // ignore
+    }
+
+    newContext.withCuries(curies.map { curie =>
+      CuriePrefix().withId(curie.id).withAlias(curie.alias.value()).withIri(curie.iri.value())
+    })
+
+    base.flatMap(_.iri.option()).foreach { iri =>
+      newContext.withBase(BaseIri().withIri(iri))
+    }
+
+    newContext.withTypeMappings(typeMappings.map { t =>
+      t.value()
+    })
+
+    newContext.withMapping(mapping.map { m =>
+      val newMapping = ContextMapping().withId(m.id).withAlias(m.alias.value())
+      m.iri.option().foreach { iri =>
+        newMapping.withIri(iri)
+      }
+      m.coercion.option().foreach { dt =>
+        newMapping.withCoercion(dt)
+      }
+      newMapping
+    })
+
+    newContext
+  }
+
+  def merge(toMerge: SemanticContext): SemanticContext = {
+    val merged = copy()
 
     toMerge.base.foreach { base =>
       merged.withBase(base)
