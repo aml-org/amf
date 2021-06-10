@@ -46,6 +46,24 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
       }
   }
 
+  // APIMF-3118
+  test("Resource loader should find nested references") {
+    val mappings = Map(
+      "resource::37fab092-be99-4538-b5ce-b004c5439f6d:refexample:1.0.1:oas:zip:example.json" -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/example.json",
+      "exchange.json"                                                                        -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/exchange.json",
+      "components/schemas/okResponse.json"                                                 -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/okResponse.json",
+      "components/schemas/item.json"                                                         -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/item.json",
+      "components/schemas/nested.json"                                                       -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/nested.json",
+    )
+    val url          = "resource::37fab092-be99-4538-b5ce-b004c5439f6d:refexample:1.0.1:oas:zip:example.json"
+    val client = WebAPIConfiguration.WebAPI()
+      .withResourceLoaders(List(new URNResourceLoader(mappings)))
+      .createClient()
+    client.parse(url).map { parseResult =>
+      parseResult.results should have size 0
+    }
+  }
+
   test("Parsing context generated in extends resolution stage for raml traits") {
     val mappings = Map(
       "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml" -> "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/townfile.raml",
