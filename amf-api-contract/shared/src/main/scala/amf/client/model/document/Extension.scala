@@ -1,5 +1,6 @@
 package amf.client.model.document
 
+import amf.core.client.platform.model.document.Document
 import amf.plugins.document.apicontract.model.{Extension => InternalExtension}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

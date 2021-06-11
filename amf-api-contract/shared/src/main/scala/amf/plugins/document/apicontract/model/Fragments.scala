@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.model
 
-import amf.core.model.document.Fragment
-import amf.core.model.domain.Shape
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.document.Fragment
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.apicontract.metamodel.FragmentsTypesModels._
+import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 
 case class DocumentationItemFragment(fields: Fields, annotations: Annotations) extends Fragment {
@@ -48,8 +49,8 @@ case class AnnotationTypeDeclarationFragment(fields: Fields, annotations: Annota
 }
 
 case class SecuritySchemeFragment(fields: Fields, annotations: Annotations) extends Fragment {
-  override def encodes: amf.plugins.domain.apicontract.models.security.SecurityScheme =
-    super.encodes.asInstanceOf[amf.plugins.domain.apicontract.models.security.SecurityScheme]
+  override def encodes: SecurityScheme =
+    super.encodes.asInstanceOf[SecurityScheme]
 
   /** Meta data for the document */
   override def meta: SecuritySchemeFragmentModel.type = SecuritySchemeFragmentModel

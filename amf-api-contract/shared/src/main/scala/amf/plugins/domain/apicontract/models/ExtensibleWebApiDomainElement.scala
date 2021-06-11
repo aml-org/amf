@@ -1,7 +1,7 @@
 package amf.plugins.domain.apicontract.models
 
 import amf.core.metamodel.domain.DomainElementModel._
-import amf.core.model.domain.DomainElement
+import amf.core.client.scala.model.domain.DomainElement
 import amf.core.utils._
 import amf.plugins.domain.apicontract.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 

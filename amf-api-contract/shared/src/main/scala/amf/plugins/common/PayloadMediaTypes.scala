@@ -1,6 +1,6 @@
 package amf.plugins.common
 
-import amf.core.remote.Payload
+import amf.core.internal.remote.Payload
 
 object PayloadMediaTypes {
 

@@ -1,14 +1,14 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.annotations.DeclaredElement
-import amf.core.model.StrField
-import amf.core.model.domain._
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
+import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.annotations.InlineDefinition
+import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
-import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YPart
 
 import scala.collection.mutable

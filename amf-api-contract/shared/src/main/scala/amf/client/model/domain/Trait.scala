@@ -1,9 +1,9 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-
-import amf.client.model.document.BaseUnit
+import amf.core.client.common.validation.{ProfileName, Raml10Profile}
+import amf.core.client.platform.model.document.BaseUnit
 import amf.plugins.domain.apicontract.models.templates.{Trait => InternalTrait}
-import amf.{ProfileName, Raml10Profile}
+import amf.core.client.platform.model.domain.{AbstractDeclaration, DomainElement, Linkable, NamedDomainElement}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

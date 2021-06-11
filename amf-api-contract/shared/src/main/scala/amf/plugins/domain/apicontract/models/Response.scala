@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.models
 
 import amf.core.metamodel.{Field, Obj}
-import amf.core.model.StrField
-import amf.core.model.domain._
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain._
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.apicontract.metamodel.ResponseModel

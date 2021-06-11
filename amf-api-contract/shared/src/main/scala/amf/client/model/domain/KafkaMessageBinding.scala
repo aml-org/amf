@@ -1,7 +1,7 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-
-import amf.client.model
+import amf.core.client.platform.model
+import amf.core.client.platform.model.domain.Shape
 import amf.core.model.StrField
 import amf.plugins.domain.apicontract.models.bindings.kafka.{KafkaMessageBinding => InternalKafkaMessageBinding}
 

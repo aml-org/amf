@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.schema.json
 
-import amf.core.emitter.SpecOrdering
-import amf.core.model.domain.RecursiveShape
+import amf.core.client.scala.model.domain.RecursiveShape
+import amf.core.internal.render.SpecOrdering
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasRecursiveShapeEmitter
 import org.yaml.model.YDocument.EntryBuilder

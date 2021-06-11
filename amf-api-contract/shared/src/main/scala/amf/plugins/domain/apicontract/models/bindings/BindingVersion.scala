@@ -1,7 +1,7 @@
 package amf.plugins.domain.apicontract.models.bindings
 import amf.core.metamodel.Field
-import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.DomainElement
 
 trait BindingVersion extends DomainElement {
 

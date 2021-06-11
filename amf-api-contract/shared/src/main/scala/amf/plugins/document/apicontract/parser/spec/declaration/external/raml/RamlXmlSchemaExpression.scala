@@ -2,7 +2,7 @@ package amf.plugins.document.apicontract.parser.spec.declaration.external.raml
 
 import amf.core.annotations.ExternalFragmentRef
 import amf.core.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
-import amf.core.model.domain.{AmfScalar, Shape}
+import amf.core.internal.parser.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, ReferenceFragmentPartition, YMapOps}
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext

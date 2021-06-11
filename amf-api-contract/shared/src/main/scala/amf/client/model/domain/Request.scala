@@ -1,7 +1,7 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-
-import amf.client.model.BoolField
+import amf.core.client.platform.model.BoolField
+import amf.core.client.platform.model.domain.Shape
 import amf.plugins.domain.apicontract.models.{Request => InternalRequest}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations
 
-import amf.core.emitter.BaseEmitters.ValueEmitter
+import amf.core.internal.render.BaseEmitters.ValueEmitter
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain.extensions.CustomDomainProperty

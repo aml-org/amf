@@ -1,32 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.emitter.BaseEmitters.{pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{RecursiveShape, Shape}
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
-import amf.core.remote.Vendor
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.async.Async20SpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.jsonschema.JsonSchemaEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter,
-  ShapeEmitterContext,
-  oas
-}
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasNamedTypeEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
-  RamlNamedTypeEmitter,
-  RamlRecursiveShapeTypeEmitter
-}
-import amf.plugins.domain.shapes.models.AnyShape
-import amf.validations.RenderSideValidations.RenderValidation
-import org.yaml.model.YDocument.EntryBuilder
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContextAdapter
 
 object AsyncDeclaredTypesEmitters {
 

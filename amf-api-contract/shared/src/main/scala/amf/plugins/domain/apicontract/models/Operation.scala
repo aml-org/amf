@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.models
 
 import amf.core.metamodel.Field
-import amf.core.model.domain.{AmfArray, DomainElement, Linkable, NamedDomainElement}
-import amf.core.model.{BoolField, StrField}
+import amf.core.client.scala.model.domain.{AmfArray, DomainElement, Linkable, NamedDomainElement}
+import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}

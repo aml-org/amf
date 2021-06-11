@@ -1,6 +1,6 @@
 package amf.plugins.domain.apicontract.models.templates
 
-import amf.core.model.domain.templates.ParametrizedDeclaration
+import amf.core.client.scala.model.domain.templates.ParametrizedDeclaration
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.templates.ParametrizedResourceTypeModel
 import org.yaml.model.YPart

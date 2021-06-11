@@ -1,8 +1,9 @@
 package amf.client.model.domain
 
 import amf.client.convert.ApiClientConverters._
-import amf.client.model.StrField
-import amf.core.remote.Vendor
+import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
+import amf.core.internal.remote.Vendor
 import amf.plugins.domain.apicontract.models.api.{Api => InternalApi}
 
 import scala.scalajs.js.annotation.JSExportAll

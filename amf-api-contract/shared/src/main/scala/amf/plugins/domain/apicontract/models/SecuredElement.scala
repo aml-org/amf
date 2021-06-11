@@ -1,7 +1,7 @@
 package amf.plugins.domain.apicontract.models
 
 import amf.core.annotations.SynthesizedField
-import amf.core.model.domain.DomainElement
+import amf.core.client.scala.model.domain.DomainElement
 import amf.core.parser.Annotations
 import amf.plugins.domain.apicontract.metamodel.ServerModel.Security
 import amf.plugins.domain.apicontract.models.security.SecurityRequirement

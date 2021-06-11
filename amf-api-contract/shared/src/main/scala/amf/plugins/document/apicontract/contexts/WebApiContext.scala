@@ -2,7 +2,7 @@ package amf.plugins.document.apicontract.contexts
 
 import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
-import amf.core.model.domain.Shape
+import amf.core.internal.parser.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.{Annotations, FragmentRef, ParsedReference, ParserContext, SearchScope}
 import amf.core.remote._

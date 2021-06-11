@@ -1,14 +1,14 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-
-import amf.client.model.StrField
+import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.domain.{DataNode, DomainElement}
 import amf.plugins.domain.apicontract.models.security.{
-  OpenIdConnectSettings => InternalOpenIdConnectSettings,
-  HttpSettings => InternalHttpSettings,
   ApiKeySettings => InternalApiKeySettings,
   HttpApiKeySettings => InternalHttpApiKeySettings,
+  HttpSettings => InternalHttpSettings,
   OAuth1Settings => InternalOAuth1Settings,
   OAuth2Settings => InternalOAuth2Settings,
+  OpenIdConnectSettings => InternalOpenIdConnectSettings,
   Settings => InternalSettings
 }
 

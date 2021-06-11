@@ -2,12 +2,16 @@ package amf.client.convert
 
 import amf.client.model.document._
 import amf.client.model.domain._
+import amf.core.client.platform.model.document.PayloadFragment
+import amf.core.internal.metamodel.document.PayloadFragmentModel
+import amf.core.internal.remote.Platform
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.metamodel.document.PayloadFragmentModel
 import amf.core.remote.Platform
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.apicontract.metamodel.FragmentsTypesModels._
 import amf.plugins.document.apicontract.model
-import amf.plugins.domain.{shapes, apicontract}
+import amf.plugins.domain.{apicontract, shapes}
 import amf.plugins.domain.apicontract.APIDomainPlugin
 import amf.plugins.domain.apicontract.metamodel.bindings._
 import amf.plugins.domain.apicontract.metamodel.{
@@ -256,15 +260,6 @@ private[amf] object ApiRegister extends PlatformSecrets {
     platform.registerWrapper(EmptyBindingModel) {
       case s: apicontract.models.bindings.EmptyBinding => EmptyBinding(s)
     }
-
-//    platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
-//    platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
-////    platform.registerValidations(ShapeParserSideValidations.validations, ShapeParserSideValidations.levels)
-//    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
-////    platform.registerValidations(ShapePayloadValidations.validations, ShapePayloadValidations.levels)
-//    platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
-//    platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
-
   }
 
 }

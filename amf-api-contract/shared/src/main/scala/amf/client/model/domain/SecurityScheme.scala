@@ -1,7 +1,7 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-
-import amf.client.model.StrField
+import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, Shape}
 import amf.plugins.domain.apicontract.models.security.{SecurityScheme => InternalSecurityScheme}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

@@ -2,9 +2,9 @@ package amf.plugins.domain.apicontract.models.templates
 
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.Obj
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.model.domain.{DataNode, DomainElement, Linkable}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.client.scala.model.domain.{DataNode, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.templates.ResourceTypeModel
 import amf.plugins.domain.apicontract.models.EndPoint

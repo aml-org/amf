@@ -1,14 +1,16 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations
 
-import amf.core.annotations.SourceAST
-import amf.core.emitter.BaseEmitters.{LinkScalaEmitter, NullEmitter, TextScalarEmitter, pos}
-import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.model.domain._
-import amf.core.parser.{Annotations, Position}
-import amf.core.utils.AmfStrings
-import amf.core.vocabulary.Namespace
+import amf.core.client.common.position.Position
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain._
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations.SourceAST
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.render.BaseEmitters.{LinkScalaEmitter, NullEmitter, TextScalarEmitter, pos}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YMapEntry, YNode, YScalar, YType}

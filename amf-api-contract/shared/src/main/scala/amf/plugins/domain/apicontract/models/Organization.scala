@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.models
 
 import amf.core.metamodel.Field
-import amf.core.model.StrField
-import amf.core.model.domain.NamedDomainElement
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.OrganizationModel
 import amf.plugins.domain.apicontract.metamodel.OrganizationModel._

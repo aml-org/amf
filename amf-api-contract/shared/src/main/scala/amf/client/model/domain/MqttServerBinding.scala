@@ -1,9 +1,9 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
+import amf.core.client.platform.model.domain.DomainElement
+import amf.core.client.platform.model.{BoolField, IntField, StrField}
 
-import amf.client.model.{BoolField, StrField, IntField}
-
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.plugins.domain.apicontract.models.bindings.mqtt.{
   MqttServerBinding => InternalMqttServerBinding,
   MqttServerLastWill => InternalMqttServerLastWill

@@ -1,5 +1,6 @@
 package amf.client.convert
-import amf.client.convert.shapeconverters.{ShapesBaseConverter, ShapesBaseClientConverter}
+import amf.client.convert.shapeconverters.{ShapesBaseClientConverter, ShapesBaseConverter}
+import amf.core.internal.convert.CoreClientConverters
 
 object ApiClientConverters
     extends ApiBaseConverter

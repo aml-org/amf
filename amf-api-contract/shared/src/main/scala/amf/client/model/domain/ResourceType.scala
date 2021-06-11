@@ -1,7 +1,8 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-
-import amf.client.model.document.BaseUnit
+import amf.core.client.common.validation.{ProfileName, Raml10Profile}
+import amf.core.client.platform.model.document.BaseUnit
+import amf.core.client.platform.model.domain.{AbstractDeclaration, DomainElement}
 import amf.plugins.domain.apicontract.models.templates.{ResourceType => InternalResourceType}
 import amf.{ProfileName, Raml10Profile}
 
@@ -18,6 +19,7 @@ case class ResourceType(override private[amf] val _internal: InternalResourceTyp
 
   override def linkCopy(): ResourceType = _internal.linkCopy()
 
+  // TODO: ARM Remove (TOMI)
   def asEndpoint[T <: BaseUnit](unit: T, profile: ProfileName = Raml10Profile): EndPoint =
     _internal.asEndpoint(unit._internal, profile)
 }

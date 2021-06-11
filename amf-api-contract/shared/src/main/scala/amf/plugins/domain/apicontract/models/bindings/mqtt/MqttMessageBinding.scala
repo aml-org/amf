@@ -1,7 +1,7 @@
 package amf.plugins.domain.apicontract.models.bindings.mqtt
 import amf.core.metamodel.Field
-import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.bindings.MqttMessageBindingModel
 import amf.plugins.domain.apicontract.metamodel.bindings.MqttMessageBindingModel._

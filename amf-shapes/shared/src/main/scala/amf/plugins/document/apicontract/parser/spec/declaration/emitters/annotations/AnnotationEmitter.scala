@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter._
-import amf.core.model.domain._
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.CustomizableElement
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.internal.render.BaseEmitters.pos
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.ShapeEmitterContext
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import org.yaml.model.YDocument.EntryBuilder

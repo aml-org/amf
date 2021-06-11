@@ -61,7 +61,8 @@ import amf.client.exported.{
   AMFDocumentResult => ClientAMFDocumentResult,
   AMFLibraryResult => ClientAMFLibraryResult
 }
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.bindings._
 import amf.plugins.domain.apicontract.models.bindings.amqp._

@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.models.bindings.amqp
 
 import amf.core.metamodel.Field
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
-import amf.core.model.{BoolField, StrField}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.bindings.Amqp091ChannelBindingModel._
 import amf.plugins.domain.apicontract.metamodel.bindings.{

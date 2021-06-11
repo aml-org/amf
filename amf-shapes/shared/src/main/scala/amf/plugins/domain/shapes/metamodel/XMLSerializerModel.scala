@@ -1,11 +1,11 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Bool, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.client.scala.vocabulary.Namespace.Shapes
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Bool, Str}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.plugins.domain.shapes.models.XMLSerializer
-import amf.core.vocabulary.Namespace.Shapes
-import amf.core.vocabulary.ValueType
 
 /**
   * Scalar shape metamodel

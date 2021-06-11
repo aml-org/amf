@@ -1,6 +1,14 @@
 package amf.plugins.document.apicontract.annotations
 
-import amf.core.model.domain._
+import amf.core.client.scala.model.domain.{
+  AmfElement,
+  Annotation,
+  AnnotationGraphLoader,
+  DomainElement,
+  PerpetualAnnotation,
+  SerializableAnnotation
+}
+import amf.core.internal.parser.domain._
 import amf.core.parser.Range
 import org.yaml.model.YMapEntry
 

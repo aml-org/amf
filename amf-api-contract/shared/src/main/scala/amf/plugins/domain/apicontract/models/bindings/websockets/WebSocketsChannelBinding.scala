@@ -1,7 +1,7 @@
 package amf.plugins.domain.apicontract.models.bindings.websockets
 import amf.core.metamodel.{Field, Obj}
-import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.bindings.WebSocketsChannelBindingModel
 import amf.plugins.domain.apicontract.metamodel.bindings.WebSocketsChannelBindingModel._

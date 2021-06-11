@@ -1,9 +1,20 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
 import amf.client.remod.amfcore.config.ShapeRenderOptions
+import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
+import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.emitter.BaseEmitters.MultipleValuesArrayEmitter
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.errorhandling.AMFErrorHandler
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.BaseEmitters.MultipleValuesArrayEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}

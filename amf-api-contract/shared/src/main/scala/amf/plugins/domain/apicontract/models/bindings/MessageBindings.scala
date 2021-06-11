@@ -1,7 +1,7 @@
 package amf.plugins.domain.apicontract.models.bindings
 
 import amf.core.metamodel.Field
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.apicontract.metamodel.bindings.MessageBindingsModel

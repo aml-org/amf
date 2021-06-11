@@ -1,9 +1,10 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils._
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.internal.metamodel.domain.ShapeModel.Description
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel._
 import org.yaml.model.YNode

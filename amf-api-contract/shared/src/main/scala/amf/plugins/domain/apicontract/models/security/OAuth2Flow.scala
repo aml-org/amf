@@ -1,7 +1,7 @@
 package amf.plugins.domain.apicontract.models.security
 
-import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.apicontract.metamodel.security.OAuth2FlowModel

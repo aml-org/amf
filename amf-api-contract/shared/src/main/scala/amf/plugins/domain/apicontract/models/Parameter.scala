@@ -1,14 +1,14 @@
 package amf.plugins.domain.apicontract.models
 
-import amf.core.annotations.SynthesizedField
-import amf.core.metamodel.Field
-import amf.core.model.domain.{AmfScalar, DomainElement, Linkable, NamedDomainElement, Shape}
-import amf.core.model.{BoolField, StrField}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
-import amf.plugins.domain.shapes.models.{ExemplifiedDomainElement, NodeShape, ScalarShape}
+import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.{BoolField, StrField}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.apicontract.metamodel.ParameterModel
 import amf.plugins.domain.apicontract.metamodel.ParameterModel._
+import amf.plugins.domain.shapes.metamodel.ExampleModel.Description
+import amf.plugins.domain.shapes.models.{ExemplifiedDomainElement, NodeShape, ScalarShape}
 import org.yaml.model.YPart
 
 /**

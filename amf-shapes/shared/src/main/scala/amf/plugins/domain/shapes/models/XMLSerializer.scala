@@ -1,8 +1,8 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.{BoolField, StrField}
-import amf.core.model.domain.DomainElement
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.{BoolField, StrField}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel._
 import org.yaml.model.{YMap, YNode}
