@@ -1,13 +1,13 @@
 package amf.plugins.document.apicontract.references
 
-import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
-import amf.core.CompilerContext
-import amf.core.TaggedReferences._
-import amf.core.annotations.SourceAST
-import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{ParsedReference, ParserContext, Reference, ReferenceResolutionResult, SyamlParsedDocument}
-import amf.plugins.features.validation.CoreValidations.UnresolvedReference
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
+import amf.core.client.scala.model.domain.ExternalDomainElement
+import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.parse.TaggedReferences.BuReferenceTagger
+import amf.core.client.scala.parse.document._
+import amf.core.internal.annotations.SourceAST
+import amf.core.internal.parser.CompilerContext
+import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.validations.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}

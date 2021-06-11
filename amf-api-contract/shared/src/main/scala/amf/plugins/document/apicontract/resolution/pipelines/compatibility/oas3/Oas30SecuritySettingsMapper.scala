@@ -1,6 +1,5 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.oas3
 
-import amf.core.errorhandling.AMFErrorHandler
 import amf.plugins.document.apicontract.resolution.pipelines.compatibility.common.SecuritySettingsMapper
 import amf.plugins.domain.apicontract.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.apicontract.models.security._

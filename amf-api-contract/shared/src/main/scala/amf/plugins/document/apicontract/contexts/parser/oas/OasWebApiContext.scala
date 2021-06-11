@@ -1,10 +1,14 @@
 package amf.plugins.document.apicontract.contexts.parser.oas
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.model.document.ExternalFragment
-import amf.core.parser.{ParsedReference, ParserContext}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.model.document.ExternalFragment
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.remote.{JsonSchema, Vendor}
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.apicontract.parser.spec.OasWebApiDeclarations
+import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaVersion
+import amf.plugins.document.apicontract.parser.spec.oas.Oas3Syntax
+import amf.plugins.document.apicontract.parser.spec.{OasWebApiDeclarations, SpecSyntax}
 
 import scala.collection.mutable
 

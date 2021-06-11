@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.contexts.parser
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.model.document.ExternalFragment
-import amf.core.model.domain.Shape
-import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.model.document.ExternalFragment
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.parser.YMapOps
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.contexts.{SpecVersionFactory, WebApiContext}
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
@@ -16,9 +17,9 @@ import amf.plugins.document.apicontract.parser.spec.domain.{
   ParsingHelpers
 }
 import amf.plugins.document.apicontract.parser.spec.jsonschema.JsonSchemaParser
-import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation}
+import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 import scala.collection.mutable

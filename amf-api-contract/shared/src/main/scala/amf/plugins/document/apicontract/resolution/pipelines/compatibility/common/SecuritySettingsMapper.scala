@@ -1,15 +1,9 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.common
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.resolution.stages.TransformationStep
-import amf.plugins.domain.apicontract.models.security.{
-  ApiKeySettings,
-  OAuth1Settings,
-  OAuth2Settings,
-  OpenIdConnectSettings,
-  SecurityScheme
-}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.plugins.domain.apicontract.models.security._
 
 abstract class SecuritySettingsMapper() extends TransformationStep {
 

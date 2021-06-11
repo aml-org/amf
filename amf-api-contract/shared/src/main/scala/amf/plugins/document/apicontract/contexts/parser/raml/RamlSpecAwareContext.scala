@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.contexts.parser.raml
 
-import amf.core.Root
-import amf.core.model.domain.{DomainElement, Shape}
+import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.internal.parser.Root
 import amf.plugins.document.apicontract.contexts.{SpecAwareContext, SpecVersionFactory}
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration._

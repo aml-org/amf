@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.contexts.parser.raml
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.parser.{ParsedReference, ParserContext}
-import amf.core.remote.{Raml10, Vendor}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.remote.{Raml10, Vendor}
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.apicontract.parser.spec.raml.Raml10Syntax

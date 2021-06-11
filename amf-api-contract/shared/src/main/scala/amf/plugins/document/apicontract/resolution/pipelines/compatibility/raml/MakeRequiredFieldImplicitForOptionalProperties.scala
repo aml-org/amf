@@ -1,14 +1,14 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
 
-import amf.core.annotations.ExplicitField
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.MetaModelTypeMapping
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DomainElement
-import amf.core.resolution.stages.TransformationStep
-import amf.core.resolution.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
-import amf.core.resolution.stages.selectors.NodeShapeSelector
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
+import amf.core.client.scala.transform.stages.selectors.NodeShapeSelector
+import amf.core.internal.annotations.ExplicitField
+import amf.core.internal.metamodel.MetaModelTypeMapping
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.plugins.domain.shapes.models.NodeShape
 
 class MakeRequiredFieldImplicitForOptionalProperties()

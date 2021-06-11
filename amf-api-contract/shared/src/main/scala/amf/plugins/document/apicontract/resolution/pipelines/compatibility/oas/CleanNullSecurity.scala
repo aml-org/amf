@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.oas
 
-import amf.core.annotations.NullSecurity
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.DataType
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.ScalarNode
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.ScalarNode
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.internal.annotations.NullSecurity
 import amf.plugins.domain.apicontract.models.Operation
 
 class CleanNullSecurity() extends TransformationStep {

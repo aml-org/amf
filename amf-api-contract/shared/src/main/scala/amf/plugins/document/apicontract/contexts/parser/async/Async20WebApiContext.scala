@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.contexts.parser.async
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.parser.{ParsedReference, ParserContext}
-import amf.core.remote.{AsyncApi20, Vendor}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.remote.{AsyncApi20, Vendor}
 import amf.plugins.document.apicontract.parser.spec.async.Async20Syntax
 import amf.plugins.document.apicontract.parser.spec.{AsyncWebApiDeclarations, SpecSyntax}
 

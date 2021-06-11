@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.contexts.parser.oas
 
-import amf.core.utils.IdCounter
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.contexts.SpecAwareContext
 import amf.plugins.document.apicontract.contexts.parser.OasLikeSpecVersionFactory
 import amf.plugins.document.apicontract.parser.spec.declaration._

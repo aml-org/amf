@@ -1,17 +1,17 @@
 package amf.plugins.document.apicontract.contexts
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
-import amf.core.internal.parser.domain.Shape
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.{Annotations, FragmentRef, ParsedReference, ParserContext, SearchScope}
-import amf.core.remote._
-import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.{AliasCounter, IdCounter}
-import amf.plugins.document.vocabularies.parser.common.DeclarationContext
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.parser.domain.{Annotations, FragmentRef, SearchScope}
+import amf.core.internal.remote.Vendor
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.utils.{AliasCounter, IdCounter}
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.apicontract.parser.spec._
+import amf.plugins.document.apicontract.parser.spec.{SpecSyntax, _}
 import amf.plugins.document.apicontract.parser.spec.common.DataNodeParserContext
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.{
@@ -26,6 +26,7 @@ import amf.plugins.document.apicontract.parser.spec.jsonschema.{
   AstIndexBuilder,
   JsonSchemaInference
 }
+import amf.plugins.document.vocabularies.parser.common.DeclarationContext
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
 import org.yaml.model._
