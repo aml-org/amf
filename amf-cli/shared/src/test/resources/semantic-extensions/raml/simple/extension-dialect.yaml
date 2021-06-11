@@ -1,0 +1,15 @@
+#%Dialect 1.0
+dialect: Pagination
+version: 1.0
+
+external:
+  apiContract: http://a.ml/vocabularies/apiContract#
+
+annotationMappings:
+  paginationMapping:
+    domain: apiContract.Response
+    propertyTerm: apiContract.paginated
+    range: boolean
+
+extensions:
+  paginated: paginationMapping
