@@ -57,7 +57,7 @@ pipeline {
       when {
         anyOf {
           branch 'master'
-          branch 'develop'
+          branch 'publish-APIMF-3125'
         }
       }
       steps {
