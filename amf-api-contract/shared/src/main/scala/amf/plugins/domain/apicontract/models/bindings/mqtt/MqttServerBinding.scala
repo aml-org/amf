@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.models.bindings.mqtt
-import amf.core.metamodel.Field
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.client.scala.model.{BoolField, IntField, StrField}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.bindings.MqttServerBindingModel._
 import amf.plugins.domain.apicontract.metamodel.bindings.MqttServerLastWillModel._
 import amf.plugins.domain.apicontract.metamodel.bindings.{MqttServerBindingModel, MqttServerLastWillModel}

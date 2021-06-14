@@ -1,5 +1,11 @@
 package amf.plugins.domain.apicontract.metamodel
 
+import amf.core.client.scala.vocabulary.Namespace.Core
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Iri
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Iri, Str}
 import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}

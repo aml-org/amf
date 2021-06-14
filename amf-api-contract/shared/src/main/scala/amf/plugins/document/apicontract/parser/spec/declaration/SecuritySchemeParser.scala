@@ -1,6 +1,5 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.parser._
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.spec.common._
 import amf.plugins.domain.apicontract.models.security.SecurityScheme

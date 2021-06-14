@@ -1,16 +1,16 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
-import amf.core.emitter.{Emitter, EntryEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
-import amf.core.model.domain.{DomainElement, RecursiveShape, Shape}
-import amf.core.parser.FieldEntry
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.oas.{DefinitionsQueue, OasSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.declaration.CustomFacetsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasRecursiveShapeEmitter
 import org.yaml.model.YNode
 
 import scala.util.matching.Regex

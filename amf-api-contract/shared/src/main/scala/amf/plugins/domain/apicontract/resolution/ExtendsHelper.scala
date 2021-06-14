@@ -1,15 +1,17 @@
 package amf.plugins.domain.apicontract.resolution
 
-import amf.client.errorhandling.IgnoringErrorHandler
-import amf.client.remod.ParseConfiguration
-import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
-import amf.core.emitter.SpecOrdering
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
-import amf.core.model.domain._
-import amf.core.parser.{Annotations, FragmentRef, ParserContext}
-import amf.core.resolution.stages.ReferenceResolutionStage
-import amf.core.resolution.stages.helpers.ResolvedNamedEntity
+import amf.core.client.common.validation.{ProfileName, Raml08Profile}
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
+import amf.core.client.scala.model.domain.{AmfElement, DataNode, DomainElement, NamedDomainElement}
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.client.scala.transform.stages.ReferenceResolutionStage
+import amf.core.client.scala.transform.stages.helpers.ResolvedNamedEntity
+import amf.core.internal.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation}
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.parser.domain.{Annotations, FragmentRef}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.contexts.parser.raml.{
   Raml08WebApiContext,
@@ -21,9 +23,7 @@ import amf.plugins.document.apicontract.parser.RamlWebApiContextType
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation}
-import amf.plugins.features.validation.CoreValidations
 import amf.validations.ResolutionSideValidations.ParseResourceTypeFail
-import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -203,7 +203,7 @@ case class ExtendsHelper(profile: ProfileName,
 
   private def sourceNameMatch(f: AmfElement, sourceName: String): Boolean =
     f.annotations
-      .find(classOf[AmfSourceLocation])
+      .find(classOf[SourceLocation])
       .map(_.location)
       .contains(sourceName)
 

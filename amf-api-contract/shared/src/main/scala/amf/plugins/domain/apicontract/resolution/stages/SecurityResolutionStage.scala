@@ -1,10 +1,10 @@
 package amf.plugins.domain.apicontract.resolution.stages
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.DomainElement
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.internal.metamodel.Field
 import amf.plugins.domain.apicontract.metamodel.api.BaseApiModel
 import amf.plugins.domain.apicontract.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.apicontract.models.api.Api

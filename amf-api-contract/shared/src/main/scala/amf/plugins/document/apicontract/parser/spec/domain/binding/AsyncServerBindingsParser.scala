@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.domain.binding
 
-import amf.core.metamodel.Field
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, SearchScope, YMapOps}
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorServerBindings
@@ -15,6 +16,8 @@ import amf.plugins.domain.apicontract.metamodel.bindings.{
 import amf.plugins.domain.apicontract.models.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
 import amf.plugins.domain.apicontract.models.bindings.{ServerBinding, ServerBindings}
 import org.yaml.model.{YMap, YMapEntry}
+
+import scala.Console.in
 
 case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
     extends AsyncBindingsParser(entryLike, parent) {

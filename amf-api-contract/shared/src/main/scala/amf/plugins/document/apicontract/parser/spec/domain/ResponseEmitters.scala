@@ -1,19 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.domain.apicontract.metamodel.{RequestModel, ResponseModel}
-import amf.plugins.domain.apicontract.models.Response
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.plugins.domain.apicontract.metamodel.{RequestModel, ResponseModel}
+import amf.plugins.domain.apicontract.models.Response
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

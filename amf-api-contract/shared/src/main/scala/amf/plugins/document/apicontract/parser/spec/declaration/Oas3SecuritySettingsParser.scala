@@ -1,7 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.model.domain.AmfArray
-import amf.core.parser.{Annotations, ScalarNode, YMapOps}
+import amf.core.client.scala.model.domain.AmfArray
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
@@ -14,6 +15,8 @@ import amf.plugins.domain.apicontract.metamodel.security.{
 }
 import amf.plugins.domain.apicontract.models.security._
 import org.yaml.model.{YMap, YMapEntry}
+
+import scala.Console.in
 
 class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: OasWebApiContext)
     extends OasLikeSecuritySettingsParser(map, scheme) {

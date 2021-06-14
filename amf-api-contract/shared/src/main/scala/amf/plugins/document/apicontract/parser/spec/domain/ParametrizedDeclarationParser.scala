@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.metamodel.domain.templates.{ParametrizedDeclarationModel, VariableValueModel}
-import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, _}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.client.scala.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
+import amf.core.internal.metamodel.domain.templates.{ParametrizedDeclarationModel, VariableValueModel}
+import amf.core.internal.parser.YNodeLikeOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.DataNodeParser

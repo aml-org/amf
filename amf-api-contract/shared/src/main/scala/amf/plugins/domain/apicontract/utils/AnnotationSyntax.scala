@@ -1,6 +1,6 @@
 package amf.plugins.domain.apicontract.utils
-import amf.core.annotations.SourceLocation
-import amf.core.model.domain.AmfElement
+import amf.core.client.scala.model.domain.AmfElement
+import amf.core.internal.annotations.SourceLocation
 import amf.plugins.document.apicontract.annotations.{ParsedJSONSchema, SchemaIsJsonSchema}
 import scala.language.implicitConversions
 

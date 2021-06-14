@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.entities
 
-import amf.core.entities.Entities
-import amf.core.metamodel.{ModelDefaultBuilder, Obj}
-import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
+import amf.core.internal.entities.Entities
+import amf.core.internal.metamodel.ModelDefaultBuilder
+import amf.core.internal.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
 import amf.plugins.domain.shapes.metamodel.{CreativeWorkModel, DiscriminatorValueMappingModel}
 import amf.plugins.domain.apicontract.metamodel.api.{AsyncApiModel, WebApiModel}
 import amf.plugins.domain.apicontract.metamodel.bindings._

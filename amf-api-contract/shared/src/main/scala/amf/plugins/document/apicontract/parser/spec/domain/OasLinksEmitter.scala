@@ -1,17 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.Position.ZERO
-import amf.core.parser.{Annotations, Position}
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, MapEntryEmitter, ValueEmitter, pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.domain.apicontract.metamodel.TemplatedLinkModel
 import amf.plugins.domain.apicontract.models.{IriTemplateMapping, TemplatedLink}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

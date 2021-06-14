@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.metamodel.bindings
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
-import amf.core.vocabulary.Namespace.ApiBinding
+import amf.core.client.scala.vocabulary.Namespace.ApiBinding
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 
 trait BindingQuery {
   val Query = Field(ShapeModel,

@@ -2,7 +2,7 @@ package amf.plugins.domain.apicontract.models.security
 
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.parser.{Annotations, Fields}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.security.ScopeModel
 import amf.plugins.domain.apicontract.metamodel.security.ScopeModel._
 import org.yaml.model.YPart

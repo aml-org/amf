@@ -1,18 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.Root
-import amf.core.annotations.Aliases
-import amf.core.model.document._
-import amf.core.parser.{
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, Fragment, Module}
+import amf.core.client.scala.parse.document.{
   CallbackReferenceCollector,
   CollectionSideEffect,
   ParsedReference,
   Reference,
-  ReferenceCollector,
-  YMapOps
+  ReferenceCollector
 }
+import amf.core.internal.annotations.Aliases
+import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.validation.CoreValidations.ExpectedModule
 import amf.plugins.document.apicontract.contexts.WebApiContext
-import amf.plugins.features.validation.CoreValidations.ExpectedModule
 import amf.validations.ParserSideValidations.InvalidModuleType
 import org.yaml.model.{YMap, YScalar, YType}
 

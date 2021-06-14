@@ -1,20 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.domain.binding
 
-import amf.core.annotations.SynthesizedField
-import amf.core.metamodel.Field
-import amf.core.model.domain.{AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorChannelBindings
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.domain.apicontract.metamodel.bindings.{
-  Amqp091ChannelBindingModel,
-  Amqp091ChannelExchangeModel,
-  Amqp091QueueModel,
-  ChannelBindingsModel,
-  WebSocketsChannelBindingModel
-}
+import amf.plugins.domain.apicontract.metamodel.bindings._
 import amf.plugins.domain.apicontract.models.bindings.amqp.{
   Amqp091ChannelBinding,
   Amqp091ChannelExchange,
@@ -23,6 +17,8 @@ import amf.plugins.domain.apicontract.models.bindings.amqp.{
 import amf.plugins.domain.apicontract.models.bindings.websockets.WebSocketsChannelBinding
 import amf.plugins.domain.apicontract.models.bindings.{ChannelBinding, ChannelBindings}
 import org.yaml.model.{YMap, YMapEntry}
+
+import scala.Console.in
 
 case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
     extends AsyncBindingsParser(entryLike, parent) {

@@ -1,10 +1,10 @@
 package amf.plugins.domain.apicontract.metamodel.templates
 
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.core.metamodel.domain.templates.AbstractDeclarationModel
+import amf.core.client.scala.vocabulary.Namespace.ApiContract
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.templates.AbstractDeclarationModel
 import amf.plugins.domain.apicontract.models.templates.Trait
-import amf.core.vocabulary.Namespace.ApiContract
-import amf.core.vocabulary.ValueType
 
 object TraitModel extends AbstractDeclarationModel {
   override val `type`: List[ValueType] = ApiContract + "Trait" :: AbstractDeclarationModel.`type`

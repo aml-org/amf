@@ -1,30 +1,26 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
-import amf.plugins.document.apicontract.annotations.{DefaultPayload, EndPointBodyParameter}
-import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}
-import amf.plugins.domain.apicontract.models.{Payload, Response, TemplatedLink}
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ScalarEmitter, ValueEmitter, pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
+import amf.plugins.document.apicontract.annotations.{DefaultPayload, EndPointBodyParameter}
 import amf.plugins.document.apicontract.contexts.emitter.oas.{
   Oas2SpecEmitterFactory,
   Oas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasSchemaEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter,
-  ShapeEmitterContext,
-  oas
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{OasLikeShapeEmitterContextAdapter, oas}
+import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}
+import amf.plugins.domain.apicontract.models.{Payload, Response, TemplatedLink}
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 

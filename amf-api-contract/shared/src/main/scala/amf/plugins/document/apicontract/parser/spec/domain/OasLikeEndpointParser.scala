@@ -1,22 +1,24 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.model.domain.AmfArray
-import amf.core.parser.{Annotations, _}
-import amf.core.internal.utils.{IdCounter, TemplateUri, _}
+import amf.core.client.scala.model.domain.AmfArray
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.apicontract.parser.{WebApiShapeParserContextAdapter, spec}
 import amf.plugins.document.apicontract.parser.spec.async.parser.AsyncParametersParser
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.domain.binding.AsyncChannelBindingsParser
+import amf.plugins.document.apicontract.parser.{WebApiShapeParserContextAdapter, spec}
 import amf.plugins.domain.apicontract.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.apicontract.models.security.SecurityRequirement
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation, Parameter}
 import amf.validations.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, InvalidEndpointType}
 import org.yaml.model._
 
+import scala.Console.in
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 

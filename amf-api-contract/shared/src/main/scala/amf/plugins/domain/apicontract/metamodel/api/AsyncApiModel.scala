@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.metamodel.api
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.Namespace.ApiContract
-import amf.core.vocabulary.ValueType
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.vocabulary.Namespace.ApiContract
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.plugins.domain.apicontract.models.api.AsyncApi
 
 object AsyncApiModel extends ApiModel {

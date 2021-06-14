@@ -1,14 +1,12 @@
 package amf.plugins.parse
 
-import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.exception.InvalidDocumentHeaderException
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParsedReference, ParserContext}
-import amf.core.remote.{Oas30, Vendor}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.exception.InvalidDocumentHeaderException
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.parser.Root
+import amf.core.internal.remote.{Oas30, Vendor}
 import amf.plugins.common.Oas30MediaTypes
-import amf.plugins.document.apicontract.contexts.emitter.oas.Oas3SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
 import amf.plugins.document.apicontract.parser.OasHeader
 import amf.plugins.document.apicontract.parser.OasHeader.Oas30Header

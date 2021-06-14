@@ -1,9 +1,8 @@
 package amf.plugins.domain.apicontract.models.security
 
-import amf.core.metamodel.Obj
 import amf.core.client.scala.model.domain.{AmfArray, DataNode, DomainElement}
 import amf.core.client.scala.model.{StrField, domain}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.security.ApiKeySettingsModel._
 import amf.plugins.domain.apicontract.metamodel.security.HttpSettingsModel._
 import amf.plugins.domain.apicontract.metamodel.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}

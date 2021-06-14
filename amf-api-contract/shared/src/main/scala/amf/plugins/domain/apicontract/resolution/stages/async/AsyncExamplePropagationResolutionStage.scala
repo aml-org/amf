@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.resolution.stages.async
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.domain.apicontract.metamodel.MessageModel
 import amf.plugins.domain.apicontract.models.Message
 import amf.plugins.domain.apicontract.models.api.Api

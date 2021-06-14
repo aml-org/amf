@@ -1,15 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter._
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{RawEmitter, ScalarEmitter, pos, raw, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.annotations.ParsedJSONSchema
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
   Raml08TypePartEmitter,
@@ -18,16 +20,13 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
   RamlRequiredShapeEmitter
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
+  CommentEmitter,
   RamlShapeEmitterContextAdapter,
-  ShapeEmitterContext,
   raml
 }
-import amf.plugins.document.apicontract.parser.spec.raml.CommentEmitter
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.apicontract.metamodel.PayloadModel
 import amf.plugins.domain.apicontract.models.Payload
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YMap, YNode, YType}
 

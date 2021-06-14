@@ -1,9 +1,9 @@
 package amf.plugins.domain.shapes.resolution.stages.merge
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.{DataNodeModel, ShapeModel}
-import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
-import amf.core.parser.FieldEntry
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.{DataNodeModel, ShapeModel}
+import amf.core.internal.parser.domain.FieldEntry
 import amf.plugins.domain.apicontract.models.{Key, Payload}
 
 case class JsonMergePatch(isNull: AmfElement => Boolean,

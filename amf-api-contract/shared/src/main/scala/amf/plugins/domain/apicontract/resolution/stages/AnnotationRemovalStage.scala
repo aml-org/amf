@@ -1,10 +1,10 @@
 package amf.plugins.domain.apicontract.resolution.stages
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document, FieldsFilter}
-import amf.core.model.domain.Annotation
-import amf.core.resolution.stages.TransformationStep
-import amf.core.traversal.iterator.{DomainElementIterator, IdCollector, InstanceCollector}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document, FieldsFilter}
+import amf.core.client.scala.model.domain.Annotation
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.traversal.iterator.InstanceCollector
 import amf.plugins.document.apicontract.annotations.{ExternalJsonSchemaShape, ExternalReferenceUrl}
 
 class AnnotationRemovalStage() extends TransformationStep() {
