@@ -1,12 +1,12 @@
 package amf.validations
 
-import amf.core.validation.SeverityLevels._
-import amf.core.validation.core.ValidationSpecification
-import amf.core.validation.core.ValidationSpecification.RESOLUTION_SIDE_VALIDATION
-import amf.core.vocabulary.Namespace
-import amf.core.vocabulary.Namespace.AmfResolution
-import amf.plugins.features.validation.Validations
-import amf._
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.common.validation.SeverityLevels.WARNING
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.Namespace.AmfResolution
+import amf.core.internal.validation.Validations
+import amf.core.internal.validation.core.ValidationSpecification
+import amf.core.internal.validation.core.ValidationSpecification.RESOLUTION_SIDE_VALIDATION
 
 // noinspection TypeAnnotation
 object ResolutionSideValidations extends Validations {

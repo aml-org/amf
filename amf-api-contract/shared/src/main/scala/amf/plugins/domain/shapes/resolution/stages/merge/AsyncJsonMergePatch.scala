@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.resolution.stages.merge
 
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.plugins.domain.apicontract.metamodel.{AbstractModel, MessageModel, OperationModel}
 import amf.plugins.domain.apicontract.resolution.stages.{CustomMessageExamplesMerge, PayloadMediaTypeMerge}
 

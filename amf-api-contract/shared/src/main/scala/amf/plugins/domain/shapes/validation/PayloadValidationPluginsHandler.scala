@@ -1,15 +1,16 @@
 package amf.plugins.domain.shapes.validation
 
-import amf.ProfileName
-import amf.client.plugins._
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.Shape
-import amf.core.registries.AMFPluginsRegistry
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.common.validation.{ProfileName, SeverityLevels, StrictValidationMode, ValidationMode}
+import amf.core.client.scala.model.document.PayloadFragment
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.validation.payload.{AMFPayloadValidationPlugin, PayloadValidator}
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.registries.domain.AMFPluginsRegistry
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils._
-import amf.core.validation._
-import amf.core.vocabulary.Namespace
+import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
 import amf.validations.ParserSideValidations
 import amf.validations.PayloadValidations.UnsupportedExampleMediaTypeWarningSpecification
 
