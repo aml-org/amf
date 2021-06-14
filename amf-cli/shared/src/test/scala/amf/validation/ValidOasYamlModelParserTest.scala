@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.Oas20Profile
-import amf.core.remote.{Hint, Oas20YamlHint}
+import amf.core.client.common.validation.Oas20Profile
+import amf.core.internal.remote.{Hint, Oas20YamlHint}
 
 class ValidOasYamlModelParserTest extends ValidModelTest {
 

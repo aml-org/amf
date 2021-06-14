@@ -1,19 +1,16 @@
 package amf.validation
 
 import _root_.org.scalatest.AsyncFunSuite
-import amf._
 import amf.client.environment.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.environment.{OASConfiguration, RAMLConfiguration}
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.{AMFValidationReport, SeverityLevels}
+import amf.core.client.common.validation._
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.remote.Raml10
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.CoreValidations
 import amf.facades.Validation
-import amf.plugins.features.validation.CoreValidations
 
 import scala.concurrent.{ExecutionContext, Future}
 

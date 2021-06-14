@@ -2,8 +2,14 @@ package amf.validation
 
 import amf.client.environment.{OASConfiguration, RAMLConfiguration}
 import amf.client.remod.AMFGraphConfiguration
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.exception.UnsupportedMediaTypeException
+import amf.core.client.scala.model.document.BaseUnit
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.exception.UnsupportedMediaTypeException
+import amf.core.internal.remote.{Oas20, Raml10}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets

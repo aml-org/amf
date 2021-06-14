@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.Async20Profile
-import amf.core.remote.{Async20YamlHint, Hint}
+import amf.core.client.common.validation.Async20Profile
+import amf.core.internal.remote.{Async20YamlHint, Hint}
 
 class ValidAsyncModelParserTest extends ValidModelTest {
 

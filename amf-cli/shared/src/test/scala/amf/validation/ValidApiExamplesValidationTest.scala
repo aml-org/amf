@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-import amf.{AmfProfile, Raml08Profile}
+import amf.core.client.common.validation._
+import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class ValidApiExamplesValidationTest extends ValidModelTest {
 
