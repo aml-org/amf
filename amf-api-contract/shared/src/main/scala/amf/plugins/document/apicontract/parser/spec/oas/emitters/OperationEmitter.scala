@@ -21,6 +21,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
   RamlTypePartEmitter
 }
 import amf.plugins.document.apicontract.parser.spec.domain._
+import amf.plugins.document.apicontract.parser.spec.oas.Oas3RequestBodyEmitter
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.{OperationModel, RequestModel}
 import amf.plugins.domain.apicontract.models.{Callback, Operation, Request, Tag}

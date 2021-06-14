@@ -27,8 +27,9 @@ import amf.plugins.domain.shapes.models.{AnyShape, Example, FileShape, NodeShape
 import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
-
+import amf.core.client.common.position.Range
 import scala.language.postfixOps
+import amf.core.internal.parser.YMapOps
 
 case class RamlParametersParser(map: YMap,
                                 adopted: Parameter => Unit,

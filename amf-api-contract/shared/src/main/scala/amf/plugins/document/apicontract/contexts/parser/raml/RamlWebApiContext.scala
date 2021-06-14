@@ -4,6 +4,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.Vendor
+import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.apicontract.parser.spec.{RamlWebApiDeclarations, SpecSyntax}

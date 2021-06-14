@@ -4,7 +4,6 @@ import amf.core.client.common.validation.{ProfileName, Raml10Profile}
 import amf.core.client.platform.model.document.BaseUnit
 import amf.core.client.platform.model.domain.{AbstractDeclaration, DomainElement}
 import amf.plugins.domain.apicontract.models.templates.{ResourceType => InternalResourceType}
-import amf.{ProfileName, Raml10Profile}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

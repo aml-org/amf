@@ -9,7 +9,11 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.async.AsyncHelper
-import amf.plugins.document.apicontract.parser.spec.oas.emitters.{OasLikeOperationEmitter, OasLikeOperationPartEmitter}
+import amf.plugins.document.apicontract.parser.spec.oas.emitters.{
+  OasLikeOperationEmitter,
+  OasLikeOperationPartEmitter,
+  TagsEmitter
+}
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.OperationModel
 import amf.plugins.domain.apicontract.models.{Operation, Tag}

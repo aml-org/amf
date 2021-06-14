@@ -104,9 +104,9 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
 
     override val ID: String = "Any match"
 
-    override def dependencies(): Seq[AMFPlugin] = Nil
+//    override def dependencies(): Seq[AMFPlugin] = Nil
 
-    override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
+//    override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
     override def validator(s: Shape,
                            config: ValidationConfiguration,
                            validationMode: ValidationMode): PayloadValidator =

@@ -13,8 +13,10 @@ import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOpti
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
 import amf.core.client.platform.resource.ResourceLoader
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
-
+import amf.core.client.platform.transform.TransformationPipeline
+import amf.core.internal.convert.ClientErrorHandlerConverter._
+import amf.core.internal.convert.TransformationPipelineConverter._
+import amf.client.convert.VocabulariesClientConverter.DialectConverter
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll

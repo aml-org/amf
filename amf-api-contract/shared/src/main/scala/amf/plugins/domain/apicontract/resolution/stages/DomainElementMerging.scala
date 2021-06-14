@@ -1,6 +1,8 @@
 package amf.plugins.domain.apicontract.resolution.stages
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.DataNodeOps.adoptTree
 import amf.core.client.scala.model.domain.{
   AmfArray,
   AmfElement,

@@ -12,6 +12,7 @@ import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterConte
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{AgnosticShapeEmitterContextAdapter, async}
 import amf.plugins.document.apicontract.parser.spec.domain.ExampleDataNodePartEmitter
+import amf.plugins.document.apicontract.parser.spec.oas.emitters.TagsEmitter
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.{MessageModel, PayloadModel}
 import amf.plugins.domain.apicontract.models._

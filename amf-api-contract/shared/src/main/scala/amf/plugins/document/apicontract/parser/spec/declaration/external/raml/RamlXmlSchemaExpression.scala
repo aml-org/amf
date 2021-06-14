@@ -2,6 +2,7 @@ package amf.plugins.document.apicontract.parser.spec.declaration.external.raml
 
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.client.scala.parse.document.ReferenceFragmentPartition
+import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
 import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
@@ -16,6 +17,7 @@ import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.models.SchemaShape
 import amf.validations.ParserSideValidations.InvalidXmlSchemaType
 import org.yaml.model._
+import amf.core.internal.parser.YMapOps
 
 case class DefaultRamlExternalSchemaExpressionFactory()(implicit val ctx: RamlWebApiContext)
     extends RamlExternalSchemaExpressionFactory {

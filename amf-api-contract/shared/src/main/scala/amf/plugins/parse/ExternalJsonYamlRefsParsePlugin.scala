@@ -9,6 +9,7 @@ import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.MediaTypeMatcher
 import amf.plugins.document.apicontract.references.JsonRefsReferenceHandler
 
 object ExternalJsonYamlRefsParsePlugin extends AMFParsePlugin {

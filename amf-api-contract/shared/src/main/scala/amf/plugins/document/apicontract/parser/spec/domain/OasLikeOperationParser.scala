@@ -5,7 +5,7 @@ import amf.core.internal.annotations.{SourceAST, VirtualElement}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
-import amf.core.internal.utils.AmfStrings
+import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter

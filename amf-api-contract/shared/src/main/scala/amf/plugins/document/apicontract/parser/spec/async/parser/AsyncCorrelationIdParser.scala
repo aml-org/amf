@@ -8,7 +8,7 @@ import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorCorrelationId
-import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
+import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.domain.apicontract.metamodel.CorrelationIdModel
 import amf.plugins.domain.apicontract.models.CorrelationId

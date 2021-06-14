@@ -2,7 +2,7 @@ package amf.plugins.document.apicontract.parser.spec.declaration
 
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
-import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter

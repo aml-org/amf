@@ -7,6 +7,7 @@ import amf.core.client.scala.model.domain.{
   PerpetualAnnotation,
   SerializableAnnotation
 }
+import amf.core.client.common.position.Range
 
 case class ParameterBindingInBodyLexicalInfo(range: Range) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String = "parameter-binding-in-body-lexical-info"
