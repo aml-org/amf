@@ -1,12 +1,13 @@
 package amf.facades
 
-import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.ParserContext
-import amf.core.remote.Syntax.{Json, PlainText, Yaml}
-import amf.core.remote._
-import amf.core.{CompilerContext, CompilerContextBuilder, Root, AMFCompiler => ModularCompiler}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.parser.{CompilerContext, CompilerContextBuilder, ParseConfiguration, Root}
+import amf.core.internal.remote.Syntax.{Json, PlainText, Yaml}
+import amf.core.internal.remote.{Cache, Context, Hint, Platform}
 import amf.plugins.document.vocabularies.plugin.headers.RamlHeaderExtractor
+import amf.core.internal.parser.{AMFCompiler => ModularCompiler}
 
 import scala.concurrent.{ExecutionContext, Future}
 

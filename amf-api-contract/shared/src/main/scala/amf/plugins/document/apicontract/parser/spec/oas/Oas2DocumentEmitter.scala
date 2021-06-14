@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.model.document.BaseUnit
+import amf.core.client.scala.model.document.BaseUnit
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import org.yaml.model._
 

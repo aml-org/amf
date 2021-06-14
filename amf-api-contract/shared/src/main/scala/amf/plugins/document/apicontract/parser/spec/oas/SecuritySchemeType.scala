@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.remote.Vendor
+import amf.core.internal.remote.Vendor
 
 class SecuritySchemeType(val text: String)
 case class OasSecuritySchemeType(override val text: String)     extends SecuritySchemeType(text)
@@ -15,8 +15,8 @@ object OasLikeSecuritySchemeTypeMappings {
   private val BasicAuth     = OasSecuritySchemeType("basic")
 
   val mappings = Map(
-    Vendor.OAS20   -> Oas2SchemeMappings,
-    Vendor.OAS30   -> Oas3SchemeMappings
+    Vendor.OAS20 -> Oas2SchemeMappings,
+    Vendor.OAS30 -> Oas3SchemeMappings
   )
 
   def mapsTo(vendor: Vendor, text: String): SecuritySchemeType = mappings(vendor).mapsTo(text)

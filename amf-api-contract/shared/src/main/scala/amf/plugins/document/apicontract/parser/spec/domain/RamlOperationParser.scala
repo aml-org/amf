@@ -2,7 +2,7 @@ package amf.plugins.document.apicontract.parser.spec.domain
 
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.metamodel.domain.DomainElementModel
-import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.apicontract.annotations.OperationTraitEntry
@@ -19,6 +19,7 @@ import amf.plugins.domain.apicontract.metamodel.OperationModel.Method
 import amf.plugins.domain.apicontract.models.{Operation, Response}
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
+import amf.core.client.common.position.Range
 
 import scala.collection.mutable
 

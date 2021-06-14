@@ -1,14 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.Annotations
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorCallback
 import amf.plugins.domain.apicontract.metamodel.{CallbackModel, EndPointModel}
 import amf.plugins.domain.apicontract.models.Callback
-import amf.plugins.features.validation.CoreValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 /**

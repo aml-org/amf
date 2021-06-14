@@ -1,18 +1,20 @@
 package amf.plugins.document.apicontract.parser.spec.oas.emitters
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.parser.{Fields, Position}
+import amf.core.client.common.position.Position
+import amf.core.internal.parser.domain.Fields
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration._
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
-import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.apicontract.metamodel.OperationModel
 import amf.plugins.domain.apicontract.models.Operation
+import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument
 
 import scala.collection.mutable

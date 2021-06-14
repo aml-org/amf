@@ -1,12 +1,11 @@
 package amf.client.commands
 
-import amf.ProfileName
 import amf.client.environment.AMFConfiguration
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
-import amf.core.client.{ExitCodes, ParserConfig}
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Platform
-import amf.core.validation.AMFValidationReport
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.remote.Platform
 import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
@@ -17,20 +16,20 @@ import scala.util.{Failure, Success}
 
 class ValidateCommand(override val platform: Platform) extends CommandHelper {
 
-  def run(config: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
+  def run(parserConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val res = for {
-      newCofig <- processDialects(config, configuration)
-      model    <- parseInput(config, newCofig)
-      report   <- report(model, config, newCofig)
+      newConfig <- processDialects(parserConfig, configuration)
+      model     <- parseInput(parserConfig, newConfig)
+      report    <- report(model, parserConfig, newConfig)
     } yield {
-      processOutput(report, config)
+      processOutput(report, parserConfig)
     }
 
     res.onComplete {
       case Failure(ex) =>
-        config.stderr.print(ex)
-        config.proc.exit(ExitCodes.Exception)
+        parserConfig.stderr.print(ex)
+        parserConfig.proc.exit(ExitCodes.Exception)
       case Success(other) =>
         other
     }
@@ -38,7 +37,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  // TODO ARM: move to registry? or to contxt parsng? discuss with tomi
+  // TODO ARM: move to registry? or to context parsing? discuss with tomi
   def findDialect(configuration: AMFConfiguration, id: String): Option[Dialect] = {
     configuration.registry.plugins.parsePlugins.collectFirst({
       case aml: AMLDialectInstanceParsingPlugin if aml.dialect.id == id => aml.dialect

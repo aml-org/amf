@@ -1,8 +1,7 @@
 package amf.client.commands
 
-import amf._
-import amf.core.client.ParserConfig
-import amf.core.remote._
+import amf.core.client.common.validation._
+import amf.core.internal.remote._
 import scopt.OptionParser
 
 object CmdLineParser {

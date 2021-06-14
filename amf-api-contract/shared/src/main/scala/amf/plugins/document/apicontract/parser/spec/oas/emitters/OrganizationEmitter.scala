@@ -1,14 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.oas.emitters
 
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.client.common.position.Position
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.apicontract.metamodel.OrganizationModel
 import amf.plugins.domain.apicontract.models.Organization
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

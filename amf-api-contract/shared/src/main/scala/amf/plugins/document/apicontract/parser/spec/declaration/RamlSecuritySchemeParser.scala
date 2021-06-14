@@ -1,7 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
-import amf.core.internal.annotations.LexicalInformation
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.internal.parser.YMapOps
-import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
@@ -15,7 +16,7 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.validations.ParserSideValidations._
 import amf.validations.ShapeParserSideValidations.ExclusivePropertiesSpecification
 import org.yaml.model._
-
+import amf.core.client.common.position.Range
 import scala.collection.mutable
 
 case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(

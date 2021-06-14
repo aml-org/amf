@@ -6,6 +6,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.plugins.domain.apicontract.models.bindings.MessageBindings
+import amf.core.internal.metamodel.Type.Array
 
 object MessageBindingsModel extends DomainElementModel with NameFieldSchema {
 

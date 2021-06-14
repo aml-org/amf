@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.validation.SeverityLevels
+import amf.core.client.common.validation.SeverityLevels
 import amf.plugins.document.apicontract.parser.spec.{CustomSyntax, SpecField, SpecNode}
 
 object OasCustomSyntax extends CustomSyntax {

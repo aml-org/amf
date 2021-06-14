@@ -1,30 +1,23 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.document.BaseUnitModel
-import amf.core.model.document.{Module, _}
-import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.Position
-import amf.core.remote.{Oas, Oas20}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{Fragment, Module}
+import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.internal.metamodel.document.BaseUnitModel
+import amf.core.internal.remote.Oas20
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, _}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.OasHeader
 import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasTypeEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContext,
-  OasLikeShapeEmitterContextAdapter,
-  ShapeEmitterContext,
-  oas
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters._
 import amf.plugins.document.apicontract.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.apicontract.parser.spec.oas.emitters.{OasSecuritySchemeEmitter, OasSpecEmitter}
-import amf.plugins.document.apicontract.parser.spec.raml.ReferencesEmitter
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 

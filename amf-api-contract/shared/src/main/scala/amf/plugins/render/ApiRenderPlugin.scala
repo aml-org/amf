@@ -1,10 +1,10 @@
 package amf.plugins.render
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderConfiguration}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Vendor
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration}
+import amf.core.internal.remote.Vendor
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}
 import org.yaml.model.YDocument
 

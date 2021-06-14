@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, ScalarNode}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.internal.annotations.{DeclaredElement, ExternalFragmentRef}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.internal.parser.YMapOps
-import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.{AbstractVariables, DataNodeParser}

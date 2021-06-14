@@ -17,15 +17,24 @@ import amf.plugins.document.apicontract.contexts.emitter.oas.{
 import amf.plugins.document.apicontract.parser.spec.declaration.OasCreativeWorkEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{OasLikeShapeEmitterContextAdapter, oas}
 import amf.plugins.document.apicontract.parser.spec.domain.{
+  ExampleDataNodePartEmitter,
+  Oas3ExampleValuesPartEmitter,
+  OasCallbackEmitter,
+  OasLinkPartEmitter,
   OasPayloadEmitter,
   OasResponsePartEmitter,
   OasServerEmitter,
   ParameterEmitter,
   PayloadAsParameterEmitter
 }
-import amf.plugins.document.apicontract.parser.spec.oas.{EndPointPartEmitter, OasLikeSecuritySchemeTypeMappings}
+import amf.plugins.document.apicontract.parser.spec.oas.{
+  EndPointPartEmitter,
+  Oas3RequestBodyPartEmitter,
+  OasLikeSecuritySchemeTypeMappings
+}
 import amf.plugins.document.apicontract.parser.spec.oas.emitters.{
   LicensePartEmitter,
+  Oas3SecuritySchemeEmitter,
   OasSecuritySchemeEmitter,
   OrganizationPartEmitter,
   TagEmitter

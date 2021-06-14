@@ -1,13 +1,10 @@
 package amf.client.commands
 
-import amf.ProfileName
 import amf.client.environment.{AMFConfiguration, AMLConfiguration}
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
-import amf.core.client.{ExitCodes, ParserConfig}
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Platform
-import amf.core.services.RuntimeValidator
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Platform
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -37,13 +34,10 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def checkValidation(config: ParserConfig, model: BaseUnit, configuration: AMLConfiguration): Future[Unit] = {
+  def checkValidation(parserConfig: ParserConfig, model: BaseUnit, configuration: AMLConfiguration): Future[Unit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val customProfileLoaded: Future[ProfileName] = if (config.customProfile.isDefined) {
-      RuntimeValidator.loadValidationProfile(config.customProfile.get, errorHandler = UnhandledErrorHandler) map {
-        profileName =>
-          profileName
-      }
+    val customProfileLoaded: Future[ProfileName] = if (parserConfig.customProfile.isDefined) {
+      configuration.createClient().parseValidationProfile(parserConfig.customProfile.get) map (_.name)
     } else {
       Future {
         model match {
@@ -54,17 +48,17 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
               }
               .find(dialect => dialectInstance.definedBy().value() == dialect.id)
               .map(dialect => ProfileName(dialect.nameAndVersion()))
-              .getOrElse(config.profile)
+              .getOrElse(parserConfig.profile)
           case _ =>
-            config.profile
+            parserConfig.profile
         }
       }
     }
     customProfileLoaded flatMap { profileName =>
       configuration.createClient().validate(model, profileName) map { report =>
         if (!report.conforms) {
-          config.stderr.print(report.toString)
-          config.proc.exit(ExitCodes.FailingValidation)
+          parserConfig.stderr.print(report.toString)
+          parserConfig.proc.exit(ExitCodes.FailingValidation)
         }
       }
     }

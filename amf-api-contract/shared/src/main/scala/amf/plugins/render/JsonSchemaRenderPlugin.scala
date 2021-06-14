@@ -1,11 +1,11 @@
 package amf.plugins.render
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderInfo}
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.remote.{JsonSchema, Vendor}
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderInfo}
+import amf.core.internal.remote.{JsonSchema, Vendor}
 import amf.plugins.document.apicontract.annotations.JSONSchemaRoot
 import amf.plugins.document.apicontract.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.domain.shapes.models.AnyShape

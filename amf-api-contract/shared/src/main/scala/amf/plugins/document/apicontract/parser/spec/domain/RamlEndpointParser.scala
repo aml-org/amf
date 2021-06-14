@@ -1,17 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.{ParseConfiguration, YMapOps}
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.utils.TemplateUri
+import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.plugins.document.apicontract.annotations.{EndPointResourceTypeEntry, EndPointTraitEntry}
 import amf.plugins.document.apicontract.contexts.parser.raml.{
   Raml08WebApiContext,
   Raml10WebApiContext,
   RamlWebApiContext
 }
-import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
+import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter, spec}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
 import amf.plugins.domain.apicontract.annotations.ParentEndPoint
@@ -27,6 +27,9 @@ import amf.validations.ParserSideValidations.{
 }
 import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
+import amf.core.client.common.position.Range
+import amf.core.client.scala.model.DataType
+import amf.core.internal.annotations.{LexicalInformation, VirtualElement}
 
 import scala.collection.mutable
 
