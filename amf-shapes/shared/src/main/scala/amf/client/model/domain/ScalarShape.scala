@@ -1,7 +1,8 @@
 package amf.client.model.domain
 
 import amf.client.convert.shapeconverters.ShapeClientConverters._
-import amf.client.model._
+import amf.core.client.scala.model._
+import amf.core.client.scala.model.domain.Shape
 import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -22,8 +23,8 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
   def exclusiveMaximum: BoolField = _internal.exclusiveMaximum
   def format: StrField            = _internal.format
   def multipleOf: DoubleField     = _internal.multipleOf
-  def encoding: StrField            = _internal.encoding
-  def mediaType: StrField           = _internal.mediaType
+  def encoding: StrField          = _internal.encoding
+  def mediaType: StrField         = _internal.mediaType
   def schema: Shape               = _internal.schema
 
   def withDataType(dataType: String): this.type = {

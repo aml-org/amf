@@ -1,6 +1,6 @@
 package amf.remod
 
-import amf.client.remod.AMFGraphConfiguration
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.plugins.document.apicontract.parser.spec.common.JsonSchemaSerializer
 import amf.plugins.domain.shapes.models.AnyShape
 

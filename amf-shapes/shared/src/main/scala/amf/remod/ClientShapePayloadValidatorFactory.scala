@@ -1,11 +1,9 @@
 package amf.remod
 
-import amf.client.convert.shapeconverters.ShapeClientConverters._
-import amf.client.model.domain.Shape
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.plugins.validate.{ValidationConfiguration, ValidationInfo}
-import amf.client.validate.PayloadValidator
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.validation.payload.PayloadValidator
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.ValidationConfiguration
 
 object ClientShapePayloadValidatorFactory extends PlatformSecrets {
 

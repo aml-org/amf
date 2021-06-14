@@ -1,6 +1,6 @@
 package amf.client.model.domain
 
-import amf.client.convert.shapeconverters.ShapeClientConverters._
+import amf.core.client.scala.model.domain.Shape
 import amf.plugins.domain.shapes.models.{ArrayShape => InternalArrayShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -11,11 +11,11 @@ case class ArrayShape(private[amf] override val _internal: InternalArrayShape) e
   @JSExportTopLevel("model.domain.ArrayShape")
   def this() = this(InternalArrayShape())
 
-  def items: Shape            = _internal.items
-  def contains: Shape         = _internal.contains
-  def minContains: Int        = _internal.minContains
-  def maxContains: Int        = _internal.maxContains
-  def unevaluatedItems: Boolean = _internal.unevaluatedItems
+  def items: Shape                  = _internal.items
+  def contains: Shape               = _internal.contains
+  def minContains: Int              = _internal.minContains
+  def maxContains: Int              = _internal.maxContains
+  def unevaluatedItems: Boolean     = _internal.unevaluatedItems
   def unevaluatedItemsSchema: Shape = _internal.unevaluatedItemsSchema
 
   def withItems(items: Shape): this.type = {

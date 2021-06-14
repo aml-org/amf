@@ -1,8 +1,8 @@
 package amf.plugins.domain.shapes.entities
 
-import amf.core.entities.Entities
-import amf.core.metamodel.{ModelDefaultBuilder, Obj}
-import amf.core.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
+import amf.core.internal.entities.Entities
+import amf.core.internal.metamodel.ModelDefaultBuilder
+import amf.core.internal.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
 import amf.plugins.domain.shapes.metamodel._
 
 private[amf] object ShapeEntities extends Entities {
@@ -24,5 +24,4 @@ private[amf] object ShapeEntities extends Entities {
     ShapeExtensionModel,
     ExampleModel
   )
-
 }

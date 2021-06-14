@@ -1,12 +1,19 @@
 package amf.validations
 
-import amf._
-import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
-import amf.core.validation.core.ValidationSpecification
-import amf.core.validation.core.ValidationSpecification.PARSER_SIDE_VALIDATION
-import amf.core.vocabulary.Namespace
-import amf.core.vocabulary.Namespace.AmfParser
-import amf.plugins.features.validation.Validations
+import amf.core.client.common.validation.{
+  AmfProfile,
+  Oas20Profile,
+  Oas30Profile,
+  ProfileName,
+  Raml08Profile,
+  Raml10Profile
+}
+import amf.core.client.common.validation.SeverityLevels.{VIOLATION, WARNING}
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.Namespace.AmfParser
+import amf.core.internal.validation.Validations
+import amf.core.internal.validation.core.ValidationSpecification
+import amf.core.internal.validation.core.ValidationSpecification.PARSER_SIDE_VALIDATION
 
 // noinspection TypeAnnotation
 object ShapeParserSideValidations extends Validations {

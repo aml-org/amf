@@ -1,7 +1,7 @@
 package amf.client.model.domain
 
-import amf.client.convert.shapeconverters.ShapeClientConverters._
-import amf.client.model.StrField
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.plugins.domain.shapes.models.{SchemaDependencies => InternalSchemaDependencies}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -10,14 +10,13 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Schema dependencies model class
   */
 @JSExportAll
-case class SchemaDependencies(override private[amf] val _internal: InternalSchemaDependencies)
-    extends DomainElement {
+case class SchemaDependencies(override private[amf] val _internal: InternalSchemaDependencies) extends DomainElement {
 
   @JSExportTopLevel("model.domain.SchemaDependencies")
   def this() = this(InternalSchemaDependencies())
 
-  def source: StrField             = _internal.propertySource
-  def target: Shape = _internal.schemaTarget
+  def source: StrField = _internal.propertySource
+  def target: Shape    = _internal.schemaTarget
 
   def withPropertySource(propertySource: String): this.type = {
     _internal.withPropertySource(propertySource)

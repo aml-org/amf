@@ -1,7 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.convert.shapeconverters.ShapeClientConverters._
-import amf.client.model._
+import amf.core.client.scala.model._
 import amf.plugins.domain.shapes.models.{FileShape => InternalFileShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

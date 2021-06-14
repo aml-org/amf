@@ -1,7 +1,8 @@
 package amf.client.model.domain
 
 import amf.client.convert.shapeconverters.ShapeClientConverters._
-import amf.client.model.StrField
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.DomainElement
 import amf.plugins.domain.shapes.models.{PropertyDependencies => InternalPropertyDependencies}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

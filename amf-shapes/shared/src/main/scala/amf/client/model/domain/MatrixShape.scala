@@ -1,5 +1,6 @@
 package amf.client.model.domain
 
+import amf.core.client.scala.model.domain.Shape
 import amf.plugins.domain.shapes.models.{ArrayShape => InternalArrayShape, MatrixShape => InternalMatrixShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -12,12 +13,8 @@ class MatrixShape(override private[amf] val _internal: InternalArrayShape) exten
 
   override def withItems(items: Shape): this.type = {
     items match {
-      case array: ArrayShape => super.withItems(items)
-      case _                 => throw new Exception("Matrix shapes can only accept arrays as items")
+      case _: ArrayShape => super.withItems(items)
+      case _             => throw new Exception("Matrix shapes can only accept arrays as items")
     }
   }
 }
-
-/*object MatrixShape {
-  def apply(matrix: InternalMatrixShape): MatrixShape = { new MatrixShape(matrix.toArrayShape) }
-}*/
