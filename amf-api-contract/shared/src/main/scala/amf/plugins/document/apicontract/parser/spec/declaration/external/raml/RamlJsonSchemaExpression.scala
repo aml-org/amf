@@ -23,7 +23,6 @@ import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
-import scala.Console.in
 import scala.collection.mutable
 
 case class RamlJsonSchemaExpression(key: YNode,

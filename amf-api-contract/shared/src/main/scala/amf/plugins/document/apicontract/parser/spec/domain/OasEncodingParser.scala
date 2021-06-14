@@ -11,8 +11,6 @@ import amf.plugins.domain.apicontract.metamodel.ResponseModel.Headers
 import amf.plugins.domain.apicontract.models.{Encoding, Parameter}
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.Console.in
-
 case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 

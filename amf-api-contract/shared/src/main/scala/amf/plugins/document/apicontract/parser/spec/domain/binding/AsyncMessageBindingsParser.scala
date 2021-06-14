@@ -16,8 +16,6 @@ import amf.plugins.domain.apicontract.models.bindings.mqtt.MqttMessageBinding
 import amf.plugins.domain.apicontract.models.bindings.{MessageBinding, MessageBindings}
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.Console.in
-
 case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
     extends AsyncBindingsParser(entryLike, parent) {
 

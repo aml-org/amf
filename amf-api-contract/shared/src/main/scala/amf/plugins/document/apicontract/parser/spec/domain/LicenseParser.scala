@@ -9,8 +9,6 @@ import amf.plugins.domain.apicontract.metamodel.LicenseModel
 import amf.plugins.domain.apicontract.models.License
 import org.yaml.model.{YMap, YNode}
 
-import scala.Console.in
-
 /**
   *
   */

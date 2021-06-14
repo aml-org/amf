@@ -1,9 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.annotations.EmptyPayload
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
+import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.{AnyDefaultType, DefaultType}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}

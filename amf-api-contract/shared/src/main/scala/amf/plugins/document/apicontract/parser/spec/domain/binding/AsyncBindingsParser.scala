@@ -16,8 +16,6 @@ import amf.plugins.domain.apicontract.models.bindings._
 import amf.validations.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
-import scala.Console.in
-
 abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
     extends SpecParserOps {
 

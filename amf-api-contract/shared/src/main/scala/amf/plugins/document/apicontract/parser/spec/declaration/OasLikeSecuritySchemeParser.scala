@@ -20,8 +20,6 @@ import amf.validations.ParserSideValidations.{
 }
 import org.yaml.model.{YMap, YNode, YPart, YType}
 
-import scala.Console.in
-
 abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
     implicit ctx: OasLikeWebApiContext)
     extends SecuritySchemeParser(part, adopt) {

@@ -9,8 +9,6 @@ import amf.plugins.domain.apicontract.metamodel.OrganizationModel
 import amf.plugins.domain.apicontract.models.Organization
 import org.yaml.model.{YMap, YNode}
 
-import scala.Console.in
-
 /**
   *
   */

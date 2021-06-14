@@ -19,8 +19,6 @@ import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
-import scala.Console.in
-
 case class OasHeaderParametersParser(map: YMap, adopt: Parameter => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Seq[Parameter] = {
     map.entries

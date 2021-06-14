@@ -1,5 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
+import amf.core.client.scala.model.domain.AmfArray
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.utils.IdCounter
+import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.apicontract.metamodel.security._

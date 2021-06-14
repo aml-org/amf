@@ -27,7 +27,6 @@ import amf.plugins.domain.apicontract.models.{Operation, Request, Response}
 import amf.validations.ParserSideValidations.{DuplicatedOperationId, InvalidStatusCode}
 import org.yaml.model._
 
-import scala.Console.in
 import scala.collection.mutable
 
 abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Operation)(

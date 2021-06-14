@@ -28,7 +28,6 @@ import amf.validations.ParserSideValidations.{
 import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
 
-import scala.Console.in
 import scala.collection.mutable
 
 /**

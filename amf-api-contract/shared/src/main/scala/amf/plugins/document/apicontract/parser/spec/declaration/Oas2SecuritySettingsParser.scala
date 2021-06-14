@@ -12,8 +12,6 @@ import amf.plugins.domain.apicontract.metamodel.security.{OAuth2FlowModel, OAuth
 import amf.plugins.domain.apicontract.models.security._
 import org.yaml.model.YMap
 
-import scala.Console.in
-
 class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext)
     extends OasLikeSecuritySettingsParser(map, scheme) {
 

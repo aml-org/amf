@@ -16,8 +16,6 @@ import amf.plugins.domain.apicontract.models.{IriTemplateMapping, TemplatedLink}
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
-import scala.Console.in
-
 case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 

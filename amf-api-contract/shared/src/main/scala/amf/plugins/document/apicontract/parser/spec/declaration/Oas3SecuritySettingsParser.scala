@@ -16,8 +16,6 @@ import amf.plugins.domain.apicontract.metamodel.security.{
 import amf.plugins.domain.apicontract.models.security._
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.Console.in
-
 class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: OasWebApiContext)
     extends OasLikeSecuritySettingsParser(map, scheme) {
 

@@ -17,8 +17,6 @@ import amf.plugins.domain.shapes.models.SchemaShape
 import amf.validations.ParserSideValidations.InvalidXmlSchemaType
 import org.yaml.model._
 
-import scala.Console.in
-
 case class DefaultRamlExternalSchemaExpressionFactory()(implicit val ctx: RamlWebApiContext)
     extends RamlExternalSchemaExpressionFactory {
   def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false) =

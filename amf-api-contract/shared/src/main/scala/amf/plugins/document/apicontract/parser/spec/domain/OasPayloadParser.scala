@@ -11,8 +11,6 @@ import amf.plugins.domain.apicontract.models.Payload
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import org.yaml.model.{YMap, YNode}
 
-import scala.Console.in
-
 case class OasPayloadParser(node: YNode, producer: Option[String] => Payload)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
   def parse(): Payload = {

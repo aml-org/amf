@@ -13,8 +13,6 @@ import amf.plugins.domain.apicontract.metamodel.{ParameterModel, ServerModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Server}
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.Console.in
-
 /**
   * Single server OAS-like parser
   * @param parent parent node for server

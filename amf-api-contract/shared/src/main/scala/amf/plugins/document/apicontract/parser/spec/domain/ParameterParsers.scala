@@ -28,7 +28,6 @@ import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
-import scala.Console.in
 import scala.language.postfixOps
 
 case class RamlParametersParser(map: YMap,

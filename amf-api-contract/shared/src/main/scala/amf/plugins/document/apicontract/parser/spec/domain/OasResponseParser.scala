@@ -21,7 +21,6 @@ import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import org.yaml.model.YMap
 
-import scala.Console.in
 import scala.collection.mutable
 
 case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx: OasWebApiContext)

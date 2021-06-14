@@ -16,8 +16,6 @@ import amf.plugins.domain.apicontract.models.bindings.mqtt.MqttOperationBinding
 import amf.plugins.domain.apicontract.models.bindings.{OperationBinding, OperationBindings}
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.Console.in
-
 case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
     extends AsyncBindingsParser(entryLike, parent) {
   override type Binding  = OperationBinding

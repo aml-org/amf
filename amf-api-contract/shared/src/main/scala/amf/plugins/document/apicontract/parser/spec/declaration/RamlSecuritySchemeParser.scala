@@ -16,7 +16,6 @@ import amf.validations.ParserSideValidations._
 import amf.validations.ShapeParserSideValidations.ExclusivePropertiesSpecification
 import org.yaml.model._
 
-import scala.Console.in
 import scala.collection.mutable
 
 case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(

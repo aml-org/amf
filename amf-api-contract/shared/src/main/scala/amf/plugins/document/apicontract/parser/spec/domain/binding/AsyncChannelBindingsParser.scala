@@ -18,8 +18,6 @@ import amf.plugins.domain.apicontract.models.bindings.websockets.WebSocketsChann
 import amf.plugins.domain.apicontract.models.bindings.{ChannelBinding, ChannelBindings}
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.Console.in
-
 case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
     extends AsyncBindingsParser(entryLike, parent) {
 

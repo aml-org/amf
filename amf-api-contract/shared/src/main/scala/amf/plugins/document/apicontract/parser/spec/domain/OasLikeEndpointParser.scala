@@ -18,7 +18,6 @@ import amf.plugins.domain.apicontract.models.{EndPoint, Operation, Parameter}
 import amf.validations.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, InvalidEndpointType}
 import org.yaml.model._
 
-import scala.Console.in
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 

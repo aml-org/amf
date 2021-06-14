@@ -1,9 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec._
-import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
+import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.OasLikeCreativeWorkParser
 import amf.plugins.domain.apicontract.metamodel.TagModel
 import amf.plugins.domain.apicontract.models.Tag

@@ -20,7 +20,6 @@ import amf.plugins.domain.apicontract.models.{Operation, Response}
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
-import scala.Console.in
 import scala.collection.mutable
 
 case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional: Boolean = false)(
