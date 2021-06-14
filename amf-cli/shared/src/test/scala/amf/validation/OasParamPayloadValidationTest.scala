@@ -1,10 +1,10 @@
 package amf.validation
 
-import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
-import amf.client.remod.AMFGraphClient
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.Shape
-import amf.core.remote.{Hint, Oas20JsonHint}
+import amf.core.client.common.validation.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.core.client.scala.AMFGraphClient
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.remote.Oas20JsonHint
 import amf.plugins.domain.apicontract.models.api.WebApi
 
 class OasParamPayloadValidationTest extends ApiShapePayloadValidationTest {

@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.core.remote.{Hint, Oas20JsonHint}
+import amf.core.internal.remote.{Hint, Oas20JsonHint}
 
 class OasInterSpecRefsReportTest extends UniquePlatformReportGenTest {
 

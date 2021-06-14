@@ -1,6 +1,7 @@
 package amf.validation
-import amf.{Oas20Profile, Raml08Profile}
-import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
+
+import amf.core.client.common.validation.{Oas20Profile, Raml08Profile}
+import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 

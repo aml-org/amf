@@ -1,9 +1,8 @@
 package amf.client.commands
 
-import amf.client.environment.{AMLConfiguration, RAMLConfiguration, WebAPIConfiguration}
-import amf.core.client.{ParserConfig, Proc, ProcWriter}
-import amf.core.remote._
-import amf.core.unsafe.PlatformSecrets
+import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
+import amf.core.internal.remote.{Aml, Oas20, Raml10}
+import amf.core.internal.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext

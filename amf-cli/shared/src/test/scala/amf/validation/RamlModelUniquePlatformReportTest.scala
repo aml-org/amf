@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-import amf.{Raml08Profile, Raml10Profile}
+import amf.core.client.common.validation.{Raml08Profile, Raml10Profile}
+import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 

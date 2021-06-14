@@ -1,18 +1,17 @@
 package amf.validation
 import amf.client.environment.RAMLConfiguration
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
-import amf.core.model.domain.Shape
-import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, Raml10YamlHint}
-import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
-import amf.core.validation.{SeverityLevels, ValidationCandidate}
+import amf.core.client.common.validation.{AmfProfile, PayloadProfile, SeverityLevels}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Module, PayloadFragment}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.plugins.document.graph.emitter.EmbeddedJsonLdEmitter
+import amf.core.internal.remote.{PayloadJsonHint, PayloadYamlHint}
+import amf.core.internal.unsafe.{PlatformSecrets, TrunkPlatform}
+import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.graph.emitter.EmbeddedJsonLdEmitter
 import amf.plugins.document.apicontract.resolution.pipelines.ValidationTransformationPipeline
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
-import amf.{AmfProfile, PayloadProfile}
 import org.scalatest.AsyncFunSuite
 import org.yaml.builder.JsonOutputBuilder
 
@@ -110,7 +109,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("payload parsing test") {
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
-      content    <- platform.resolve(payloadsPath + "b_valid.yaml")
+      content    <- platform.fetchContent(payloadsPath + "b_valid.yaml", config)
       validation <- Validation(platform)
       filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, config = config)
         .build()

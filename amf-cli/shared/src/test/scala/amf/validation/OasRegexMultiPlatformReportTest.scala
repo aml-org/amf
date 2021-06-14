@@ -1,10 +1,10 @@
 package amf.validation
 
-import amf.core.remote.{Hint, Oas20JsonHint}
+import amf.core.internal.remote.{Hint, Oas20JsonHint}
 
 /**
   * Test to document regex differences between jvm and js. No specific reason for it to be OAS.
-  * Here are the differences that could not be hacked in the implicit class [[amf.core.utils.RegexConverter]].
+  * Here are the differences that could not be hacked in the implicit class [[RegexConverter]].
   */
 class OasRegexMultiPlatformReportTest extends MultiPlatformReportGenTest {
 

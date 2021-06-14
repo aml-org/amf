@@ -1,6 +1,6 @@
 package amf.validation
-import amf.core.remote.{Hint, Oas20JsonHint, Oas30JsonHint, Oas30YamlHint}
-import amf.{Oas20Profile, Oas30Profile}
+import amf.core.client.common.validation.Oas30Profile
+import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas30JsonHint, Oas30YamlHint}
 import org.scalatest.Matchers
 
 class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {

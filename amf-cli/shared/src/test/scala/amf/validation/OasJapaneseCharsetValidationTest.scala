@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.{Oas20Profile, Oas30Profile}
-import amf.core.remote.{Hint, Oas20YamlHint, Oas30JsonHint, Oas30YamlHint}
+import amf.core.client.common.validation.{Oas20Profile, Oas30Profile}
+import amf.core.internal.remote.{Hint, Oas20YamlHint, Oas30JsonHint, Oas30YamlHint}
 
 // TODO: Add test to check for Japanese characters in OAS 3 Component schema name. @author: Tomás Fernández
 class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
