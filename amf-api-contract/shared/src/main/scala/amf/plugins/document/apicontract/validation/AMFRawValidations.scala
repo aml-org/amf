@@ -39,7 +39,7 @@ object AMFRawValidations {
                     value: String = "0",
                     ramlErrorMessage: String = "",
                     openApiErrorMessage: String = "",
-                    severity: String = Severity.VIOLATION): AMFValidation = {
+                    severity: String = SeverityLevels.VIOLATION): AMFValidation = {
 
       def iri(s: String) = Namespace.defaultAliases.uri(s).iri()
       val sameMessage    = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
@@ -217,7 +217,7 @@ object AMFRawValidations {
         constraint = shape("mandatoryHeaderNamePattern"),
         ramlErrorMessage = "Header name must comply RFC-7230",
         openApiErrorMessage = "Header name must comply RFC-7230",
-        severity = Severity.WARNING
+        severity = SeverityLevels.WARNING
       ),
       AMFValidation(
         owlClass = doc("DomainElement"),

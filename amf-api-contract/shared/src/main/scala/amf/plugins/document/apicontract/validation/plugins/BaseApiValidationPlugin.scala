@@ -5,7 +5,6 @@ import amf.core.client.common.validation._
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.plugins.validation.{AMFValidatePlugin, ValidationInfo, ValidationOptions, ValidationResult}
-import amf.core.internal.validation.core.ValidationResult
 
 import scala.concurrent.{ExecutionContext, Future}
 

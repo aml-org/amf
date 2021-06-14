@@ -2,14 +2,14 @@ package amf.plugins.document.apicontract.parser.spec.oas
 
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, ArrayNode}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations.{DeclaredElement, LexicalInformation, SingleValueArray, SourceVendor}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel}
 import amf.core.internal.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.internal.parser.{Root, YMapOps}
-import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope, ArrayNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext

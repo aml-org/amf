@@ -1,9 +1,9 @@
-package amf.plugins.domain.shapes
+//package amf.plugins.domain.shapes
 
-import amf.plugins.domain.shapes.annotations.serializable.ShapeSerializableAnnotations
-import amf.plugins.domain.shapes.entities.ShapeEntities
-
-import scala.concurrent.{ExecutionContext, Future}
+//import amf.plugins.domain.shapes.annotations.serializable.ShapeSerializableAnnotations
+//import amf.plugins.domain.shapes.entities.ShapeEntities
+//
+//import scala.concurrent.{ExecutionContext, Future}
 
 //object DataShapesDomainPlugin extends AMFDomainPlugin {
 //

@@ -22,9 +22,9 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
   override val ID: String = "AMF Payload Validation"
 
-  override def dependencies(): Seq[AMFPlugin] = Nil
+//  override def dependencies(): Seq[AMFPlugin] = Nil
 
-  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
+//  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
 
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 

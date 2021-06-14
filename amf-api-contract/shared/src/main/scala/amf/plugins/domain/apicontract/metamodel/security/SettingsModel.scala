@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.{Core, Security}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.Type.{Str, Array}
 import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.plugins.domain.apicontract.models.security.{
   ApiKeySettings,
