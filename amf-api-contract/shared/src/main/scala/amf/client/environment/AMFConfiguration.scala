@@ -9,6 +9,7 @@ import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.registries.AMFRegistry
+import amf.core.internal.registries.domain.AMFPluginsRegistry
 import amf.core.internal.resource.{AMFResolvers, ResourceLoader}
 import amf.core.internal.validation.core.ValidationProfile
 import amf.plugins.document.apicontract.annotations.serializable.WebAPISerializableAnnotations
@@ -21,6 +22,7 @@ import amf.plugins.document.apicontract.resolution.pipelines.compatibility.{
   Raml10CompatibilityPipeline
 }
 import amf.plugins.document.apicontract.validation.ApiValidationProfiles._
+import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
 import amf.plugins.document.apicontract.validation.plugins.{
   CustomShaclModelValidationPlugin,
   FullShaclModelValidationPlugin,
@@ -41,7 +43,8 @@ sealed trait APIConfigurationBuilder {
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
     val configuration = AMLConfiguration.predefined()
-    ApiRegister.register() // TODO ARM remove when APIMF-3000 is done
+    ApiRegister.register()                                                     // TODO ARM remove when APIMF-3000 is done
+    AMFPluginsRegistry.registerPayloadValidationPlugin(PayloadValidatorPlugin) // TODO remove with tomi's PR (APIMF-2981)
     val result = new AMFConfiguration(
       configuration.resolvers,
       configuration.errorHandlerProvider,

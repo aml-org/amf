@@ -42,6 +42,7 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.validations.ParserSideValidations._
 import amf.validations.ShapeParserSideValidations.{ExclusiveSchemasType, InvalidFragmentType, InvalidTypeDefinition}
 import org.yaml.model._
+import amf.core.internal.parser.YScalarYRead
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

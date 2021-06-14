@@ -13,6 +13,7 @@ import amf.plugins.domain.shapes.models.NodeShape
 import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations.UnableToParseShape
 import org.yaml.model.{YMap, YScalar}
+import amf.core.internal.parser.YScalarYRead
 
 trait OasLikeDeclarationsHelper {
   protected val definitionsKey: String

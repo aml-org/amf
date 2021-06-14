@@ -3,6 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.declaration
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.client.scala.model.domain._
 import amf.core.internal.parser.domain.{Annotations, _}
+import amf.core.internal.parser.YScalarYRead
 import amf.core.internal.remote.Vendor
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.common.QuickFieldParserOps

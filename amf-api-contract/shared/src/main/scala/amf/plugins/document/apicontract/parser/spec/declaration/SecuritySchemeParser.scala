@@ -4,6 +4,7 @@ import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.spec.common._
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import org.yaml.model._
+import amf.core.internal.parser.YScalarYRead
 
 abstract class SecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit ctx: WebApiContext)
     extends SpecParserOps {
