@@ -1,10 +1,10 @@
 package amf.tools
 
-import java.io.{File, FileWriter}
-
 import amf.`export`.{Context, ExportableModelAdapter, MarkdownExporter, ModelTraverser}
-import amf.core.metamodel.Obj
+import amf.core.internal.metamodel.Obj
 import org.reflections.Reflections
+
+import java.io.{File, FileWriter}
 
 object ModelExporter {
 

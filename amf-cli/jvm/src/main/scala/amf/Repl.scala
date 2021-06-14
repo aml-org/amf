@@ -1,13 +1,15 @@
 package amf
 
-import amf.client.exported.{AMFResult, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.model.document.{BaseUnit, Document}
+import amf.client.exported.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.convert.NativeOpsFromJvm
-import amf.core.remote._
+import amf.core.client.platform.AMFResult
+import amf.core.client.platform.model.document.{BaseUnit, Document}
+import amf.core.internal.remote._
 
 import java.io.{InputStream, PrintStream}
 import java.util.Scanner
 import scala.concurrent.ExecutionContext.Implicits.global
+
 class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
 
   init()

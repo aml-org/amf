@@ -3,6 +3,8 @@ package amf.convert
 import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.AMFSerializer
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.render.AMFSerializer
 import amf.core.model.document.BaseUnit
 import org.yaml.builder.JsOutputBuilder
 import org.yaml.model.YDocument

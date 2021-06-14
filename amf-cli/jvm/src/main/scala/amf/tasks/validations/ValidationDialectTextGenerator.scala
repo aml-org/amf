@@ -1,8 +1,8 @@
 package amf.tasks.validations
 
-import amf.ProfileNames
-import amf.core.validation.core.{ValidationProfile, ValidationSpecification}
-import amf.core.vocabulary.Namespace
+import amf.core.client.common.validation.ProfileNames
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.validation.core.{ValidationProfile, ValidationSpecification}
 
 class ValidationDialectTextGenerator(profile: ValidationProfile) {
 
