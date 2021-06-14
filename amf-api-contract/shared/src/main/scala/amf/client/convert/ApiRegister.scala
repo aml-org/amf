@@ -3,16 +3,12 @@ package amf.client.convert
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.core.client.platform.model.document.PayloadFragment
+import amf.core.client.platform.model.domain.RecursiveShape
 import amf.core.internal.metamodel.document.PayloadFragmentModel
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.metamodel.document.PayloadFragmentModel
-import amf.core.remote.Platform
-import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.apicontract.metamodel.FragmentsTypesModels._
 import amf.plugins.document.apicontract.model
-import amf.plugins.domain.{apicontract, shapes}
-import amf.plugins.domain.apicontract.APIDomainPlugin
 import amf.plugins.domain.apicontract.metamodel.bindings._
 import amf.plugins.domain.apicontract.metamodel.{
   CorrelationIdModel,
@@ -20,15 +16,7 @@ import amf.plugins.domain.apicontract.metamodel.{
   TemplatedLinkModel,
   templates
 }
-import amf.plugins.features.validation.CoreValidations
-import amf.validations.{
-  ParserSideValidations,
-  PayloadValidations,
-  RenderSideValidations,
-  ResolutionSideValidations,
-  ShapeParserSideValidations,
-  ShapePayloadValidations
-}
+import amf.plugins.domain.{apicontract, shapes}
 
 /** Shared WebApi registrations. */
 // TODO: could be renamed to ApiRegister??
@@ -47,7 +35,7 @@ private[amf] object ApiRegister extends PlatformSecrets {
       case s: model.DataTypeFragment => DataType(s)
     }
     platform.registerWrapper(PayloadFragmentModel) {
-      case s: amf.core.model.document.PayloadFragment => PayloadFragment(s)
+      case s: amf.core.client.scala.model.document.PayloadFragment => PayloadFragment(s)
     }
     platform.registerWrapper(DocumentationItemFragmentModel) {
       case s: model.DocumentationItemFragment => DocumentationItem(s)
@@ -191,8 +179,8 @@ private[amf] object ApiRegister extends PlatformSecrets {
     platform.registerWrapper(shapes.metamodel.UnionShapeModel) {
       case s: shapes.models.UnionShape => UnionShape(s)
     }
-    platform.registerWrapper(amf.core.metamodel.domain.RecursiveShapeModel) {
-      case s: amf.core.model.domain.RecursiveShape => RecursiveShape(s)
+    platform.registerWrapper(amf.core.internal.metamodel.domain.RecursiveShapeModel) {
+      case s: amf.core.client.scala.model.domain.RecursiveShape => RecursiveShape(s)
     }
     platform.registerWrapper(TemplatedLinkModel) {
       case s: apicontract.models.TemplatedLink => TemplatedLink(s)

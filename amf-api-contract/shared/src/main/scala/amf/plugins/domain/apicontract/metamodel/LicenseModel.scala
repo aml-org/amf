@@ -4,15 +4,9 @@ import amf.core.client.scala.vocabulary.Namespace.Core
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Iri
-import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Iri, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
-import amf.core.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.plugins.domain.apicontract.models.License
-import amf.core.vocabulary.Namespace.{ApiContract, Core}
-import amf.core.vocabulary.ValueType
 
 /**
   * License metamodel

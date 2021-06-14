@@ -1,10 +1,10 @@
 package amf.plugins.render
 
-import amf.client.remod.amfcore.plugins.{LowPriority, PluginPriority}
-import amf.client.remod.amfcore.plugins.render.AMFRenderPlugin.APPLICATION_JSON
-import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
-import amf.core.model.document.{BaseUnit, PayloadFragment}
-import amf.core.remote.{Payload, Vendor}
+import amf.core.client.common.{LowPriority, PluginPriority}
+import amf.core.client.scala.model.document.{BaseUnit, PayloadFragment}
+import amf.core.internal.plugins.render.AMFRenderPlugin.APPLICATION_JSON
+import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
+import amf.core.internal.remote.Vendor
 import amf.plugins.common.PayloadMediaTypes
 import amf.plugins.document.apicontract.parser.spec.common.PayloadEmitter
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}

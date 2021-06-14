@@ -1,5 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.internal.annotations.{BasePathLexicalInformation, HostLexicalInformation, VirtualElement}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain.{FieldEntry, Value}
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, MapEntryEmitter, ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts._
 import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
@@ -9,6 +19,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotat
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
+  EnumValuesEmitter,
   ShapeEmitterContext
 }
 import amf.plugins.document.apicontract.parser.spec.{BaseUriSplitter, toRaml}
