@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.Root
-import amf.core.annotations.SourceVendor
-import amf.core.metamodel.document.BaseUnitModel
-import amf.core.model.document.Module
-import amf.core.parser.{Annotations, _}
+import amf.core.client.scala.model.document.Module
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.metamodel.document.BaseUnitModel
+import amf.core.internal.parser.{Root, YNodeLikeOps}
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter

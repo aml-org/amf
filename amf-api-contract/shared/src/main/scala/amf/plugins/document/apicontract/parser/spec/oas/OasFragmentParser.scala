@@ -1,22 +1,23 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.Root
-import amf.core.model.document._
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{ExternalDomainElement, Shape}
-import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
+import amf.core.client.scala.model.domain.ExternalDomainElement
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.OasHeader._
 import amf.plugins.document.apicontract.parser.spec.declaration.SchemaPosition.Schema
+import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.apicontract.parser.spec.declaration.{OasTypeParser, _}
 import amf.plugins.document.apicontract.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.document.apicontract.parser.{OasHeader, WebApiShapeParserContextAdapter}
-import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
+import amf.plugins.domain.shapes.models.Example
 import amf.plugins.parse.ExternalJsonYamlRefsParsePlugin
 import amf.validations.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}

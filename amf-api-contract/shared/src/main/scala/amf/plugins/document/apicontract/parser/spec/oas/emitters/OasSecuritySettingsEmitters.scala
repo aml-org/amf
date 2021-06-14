@@ -1,26 +1,23 @@
 package amf.plugins.document.apicontract.parser.spec.oas.emitters
 
-import amf.core.annotations.SingleValueArray
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.domain.DataNode
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.{FieldEntry, Position}
-import amf.core.remote.Vendor
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.DataNode
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  ShapeEmitterContext
-}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
   AnnotationsEmitter,
   DataNodeEmitter,
   OrphanAnnotationsEmitter
 }
-import amf.plugins.document.apicontract.parser.spec.raml.emitters.{
-  RamlApiKeySettingsEmitters,
-  RamlOAuth1SettingsEmitters
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
+  AgnosticShapeEmitterContextAdapter,
+  ShapeEmitterContext
 }
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.security._

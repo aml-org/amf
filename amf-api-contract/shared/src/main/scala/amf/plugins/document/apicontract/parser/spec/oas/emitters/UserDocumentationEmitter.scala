@@ -1,17 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.oas.emitters
 
-import amf.core.emitter.BaseEmitters.{pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.{OasEntryCreativeWorkEmitter, RamlCreativeWorkEmitter}
-import amf.plugins.domain.shapes.models.CreativeWork
-import org.yaml.model.YDocument.EntryBuilder
+import amf.core.client.common.position.Position
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
+import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
+import amf.plugins.document.apicontract.parser.spec.declaration.{OasEntryCreativeWorkEmitter, RamlCreativeWorkEmitter}
+import amf.plugins.domain.shapes.models.CreativeWork
+import org.yaml.model.YDocument.EntryBuilder
 
 case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)

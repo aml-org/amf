@@ -1,10 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.emitter.BaseEmitters.traverse
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.common.DeclarationsEmitterWrapper
 import org.yaml.model.{YDocument, YNode, YScalar, YType}

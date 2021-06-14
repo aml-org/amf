@@ -1,15 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.emitter.BaseEmitters.{EntryPartEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DomainElement
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.Position.ZERO
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, Position}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.parse.document.EmptyFutureDeclarations
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations
 import amf.plugins.document.apicontract.parser.spec.declaration._
@@ -20,7 +24,6 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
 }
 import amf.plugins.document.apicontract.parser.spec.domain._
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Response}
-import amf.plugins.features.validation.CoreValidations._
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer

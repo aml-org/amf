@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.oas.emitters
 
-import amf.core.emitter.BaseEmitters.{ScalarEmitter, pos, traverse}
-import amf.core.emitter.SpecOrdering
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
 import amf.plugins.document.apicontract.parser.spec.domain.AbstractSecurityRequirementEmitter
 import amf.plugins.domain.apicontract.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.apicontract.models.security.{OAuth2Settings, OpenIdConnectSettings, SecurityRequirement}

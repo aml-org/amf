@@ -1,11 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.Root
-import amf.core.annotations.{DeclaredElement, DeclaredHeader}
-import amf.core.model.domain.NamedDomainElement
-import amf.core.parser._
+import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader}
+import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.YamlTagValidator
@@ -15,13 +12,12 @@ import amf.plugins.document.apicontract.parser.spec.domain.{
   OasHeaderParametersParser,
   OasLinkParser
 }
-import amf.plugins.domain.apicontract.metamodel._
+import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.metamodel.templates.{ResourceTypeModel, TraitModel}
+import amf.plugins.domain.apicontract.models.Parameter
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.apicontract.models.Parameter
-import amf.validations.ParserSideValidations
 import org.yaml.model._
 
 case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
