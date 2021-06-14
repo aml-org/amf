@@ -1,26 +1,20 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.{Inferred, LexicalInformation, SourceAST, SynthesizedField, VirtualElement, VirtualNode}
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
-import amf.core.parser.{FieldEntry, Position}
-import amf.core.parser.Position.ZERO
-import amf.plugins.document.apicontract.annotations.{InlineDefinition, ParameterNameForPayload}
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.plugins.document.apicontract.annotations.ParameterNameForPayload
 import amf.plugins.document.apicontract.contexts.emitter.oas.{
   Oas2SpecEmitterFactory,
   Oas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasSchemaEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter,
-  ShapeEmitterContext,
-  oas
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{OasLikeShapeEmitterContextAdapter, oas}
 import amf.plugins.domain.apicontract.metamodel.PayloadModel
 import amf.plugins.domain.apicontract.models.Payload
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

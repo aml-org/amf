@@ -1,7 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, _}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
@@ -11,9 +13,10 @@ import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, Sp
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.domain.apicontract.metamodel.{IriTemplateMappingModel, TemplatedLinkModel}
 import amf.plugins.domain.apicontract.models.{IriTemplateMapping, TemplatedLink}
-import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar}
+
+import scala.Console.in
 
 case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {

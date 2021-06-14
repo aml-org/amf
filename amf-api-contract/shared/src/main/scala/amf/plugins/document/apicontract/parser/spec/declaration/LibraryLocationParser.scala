@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.errorhandling.AMFErrorHandler
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import org.yaml.model.{YMapEntry, YScalar, YType}
 
 object LibraryLocationParser {

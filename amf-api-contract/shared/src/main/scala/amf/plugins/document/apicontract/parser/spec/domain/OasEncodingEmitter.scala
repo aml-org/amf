@@ -1,13 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.domain.apicontract.models.Encoding
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.emitter.BaseEmitters._
 import amf.plugins.domain.apicontract.metamodel.EncodingModel
+import amf.plugins.domain.apicontract.models.Encoding
+import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
 

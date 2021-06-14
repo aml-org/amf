@@ -1,22 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.domain
-import amf.core.annotations.SynthesizedField
-import org.yaml.model.{YMap, YMapEntry}
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.DataType
-import amf.plugins.document.apicontract.parser.spec.common.{
-  AnnotationParser,
-  DataNodeParser,
-  QuickFieldParserOps,
-  SpecParserOps
-}
-import amf.core.parser.{Annotations, ScalarNode, YMapOps}
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.utils.IdCounter
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, DataNodeParser, QuickFieldParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.domain.apicontract.metamodel.{ParameterModel, ServerModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Server}
+import org.yaml.model.{YMap, YMapEntry}
+
+import scala.Console.in
 
 /**
   * Single server OAS-like parser

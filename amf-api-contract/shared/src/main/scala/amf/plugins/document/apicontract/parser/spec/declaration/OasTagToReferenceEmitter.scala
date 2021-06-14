@@ -1,18 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.emitter.BaseEmitters.pos
-import amf.core.model.domain.DomainElement
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.render.BaseEmitters.pos
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions.{
   appendParameterDefinitionsPrefix,
   appendResponsesDefinitionsPrefix
 }
 import amf.plugins.document.apicontract.parser.spec.OasShapeDefinitions.appendOas3ComponentsPrefix
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  ShapeEmitterContext
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
 import amf.plugins.document.apicontract.parser.spec.oas.emitters.OasSpecEmitter
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.bindings.{

@@ -1,18 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, ScalarNode, _}
-import amf.core.utils.AmfStrings
 import amf.plugins.document.apicontract.annotations.EmptyPayload
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
 import amf.plugins.document.apicontract.parser.spec.declaration.{AnyDefaultType, DefaultType}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Response}
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.validations.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 

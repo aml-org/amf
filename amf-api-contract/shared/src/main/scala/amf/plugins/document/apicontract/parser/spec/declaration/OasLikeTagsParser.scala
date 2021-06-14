@@ -5,7 +5,7 @@ import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
 import amf.plugins.document.apicontract.parser.spec.domain.TagsParser
 import amf.plugins.domain.apicontract.models.Tag
 import amf.validations.ParserSideValidations.DuplicatedTags
-import org.yaml.model.{YMap, YMapEntry, YType}
+import org.yaml.model.{YMap, YMapEntry}
 
 case class OasLikeTagsParser(parentId: String, entry: YMapEntry)(implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {

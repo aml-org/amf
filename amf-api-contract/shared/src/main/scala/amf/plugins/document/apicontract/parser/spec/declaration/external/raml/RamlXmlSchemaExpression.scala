@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.external.raml
 
-import amf.core.annotations.ExternalFragmentRef
-import amf.core.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
-import amf.core.internal.parser.domain.{AmfScalar, Shape}
-import amf.core.parser.{Annotations, ReferenceFragmentPartition, YMapOps}
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.client.scala.parse.document.ReferenceFragmentPartition
+import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.domain.NodeDataNodeParser
@@ -16,6 +16,8 @@ import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.models.SchemaShape
 import amf.validations.ParserSideValidations.InvalidXmlSchemaType
 import org.yaml.model._
+
+import scala.Console.in
 
 case class DefaultRamlExternalSchemaExpressionFactory()(implicit val ctx: RamlWebApiContext)
     extends RamlExternalSchemaExpressionFactory {
@@ -38,8 +40,9 @@ case class RamlXmlSchemaExpression(key: YNode,
       origin.originalUrlText.map(ReferenceFragmentPartition.apply) match {
         case Some((uriWithoutFragment, fragment)) =>
           val optionalReference = ctx.declarations.fragments.get(uriWithoutFragment)
-          val optionalReferenceId = optionalReference.map(
-            _.encoded.id + fragment.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse(""))
+          val optionalReferenceId =
+            optionalReference.map(
+              _.encoded.id + fragment.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse(""))
           val optionalLocation = optionalReference.flatMap(_.location)
           (optionalReferenceId, optionalLocation, fragment)
         case None => (None, None, None)

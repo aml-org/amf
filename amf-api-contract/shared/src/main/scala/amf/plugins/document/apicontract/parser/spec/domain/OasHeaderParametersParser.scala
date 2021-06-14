@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
-import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
-import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
@@ -12,12 +13,13 @@ import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, Sp
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.{OAS20SchemaVersion, OasTypeParser, SchemaPosition}
 import amf.plugins.document.apicontract.parser.spec.oas.Oas3Syntax
-import amf.plugins.domain.shapes.models.Example
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.apicontract.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload}
-import amf.plugins.features.validation.CoreValidations
+import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import org.yaml.model.{YMap, YMapEntry, YScalar}
+
+import scala.Console.in
 
 case class OasHeaderParametersParser(map: YMap, adopt: Parameter => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Seq[Parameter] = {

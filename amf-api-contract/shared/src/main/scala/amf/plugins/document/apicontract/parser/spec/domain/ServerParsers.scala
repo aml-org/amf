@@ -1,11 +1,5 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
-import amf.core.metamodel.Field
-import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, TemplateUri}
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.common.{RamlScalarNode, SpecParserOps}

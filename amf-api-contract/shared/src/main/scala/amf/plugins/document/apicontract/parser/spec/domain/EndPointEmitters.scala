@@ -1,12 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.{SynthesizedField, VirtualElement}
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{FieldEntry, Fields, Position, Value}
-import amf.core.utils._
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.parser.domain.{FieldEntry, Fields, Value}
+import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.{AmfStrings, TemplateUri}
 import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.declaration.ExtendsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter

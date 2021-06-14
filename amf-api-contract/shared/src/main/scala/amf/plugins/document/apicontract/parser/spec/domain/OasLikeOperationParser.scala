@@ -1,15 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.{SourceAST, VirtualElement}
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, ScalarNode, _}
-import amf.core.utils.{IdCounter, _}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.annotations.{SourceAST, VirtualElement}
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isOasAnnotation
+import amf.plugins.document.apicontract.parser.spec.common
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.apicontract.parser.spec.declaration.OasLikeCreativeWorkParser
 import amf.plugins.document.apicontract.parser.spec.oas.{
   Oas20RequestParser,
@@ -25,6 +27,7 @@ import amf.plugins.domain.apicontract.models.{Operation, Request, Response}
 import amf.validations.ParserSideValidations.{DuplicatedOperationId, InvalidStatusCode}
 import org.yaml.model._
 
+import scala.Console.in
 import scala.collection.mutable
 
 abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
@@ -58,7 +61,7 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
             OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)(
               WebApiShapeParserContextAdapter(ctx))))
 
-    AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("responses")
+    common.AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("responses")
     AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
     operation

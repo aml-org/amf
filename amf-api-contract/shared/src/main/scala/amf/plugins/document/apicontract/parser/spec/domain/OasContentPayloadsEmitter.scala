@@ -1,9 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{SpecOrdering, PartEmitter}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{Annotations, Position}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.PartEmitter
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.domain.apicontract.models.Payload
 import org.yaml.model.YDocument.PartBuilder

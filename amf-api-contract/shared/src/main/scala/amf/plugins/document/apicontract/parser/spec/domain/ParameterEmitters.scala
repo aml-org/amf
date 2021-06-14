@@ -1,16 +1,29 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.{ExplicitField, SynthesizedField, VirtualNode}
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{FieldEntry, Fields, Position, Value}
-import amf.core.remote.Vendor
-import amf.core.utils.AmfStrings
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.annotations.{ExplicitField, SynthesizedField, VirtualNode}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.domain.{FieldEntry, Fields, Value}
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.BaseEmitters.{
+  EntryPartEmitter,
+  MapEntryEmitter,
+  RawValueEmitter,
+  ScalarEmitter,
+  ValueEmitter,
+  pos,
+  raw,
+  sourceOr,
+  traverse
+}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.annotations.{FormBodyParameter, ParameterNameForPayload, RequiredParamPayload}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
@@ -21,12 +34,6 @@ import amf.plugins.document.apicontract.contexts.emitter.raml.{
 }
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter,
-  RamlShapeEmitterContextAdapter,
-  ShapeEmitterContext
-}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter._
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.{OasSchemaEmitter, OasTypeEmitter}
@@ -34,13 +41,17 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
   Raml08TypePartEmitter,
   Raml10TypeEmitter
 }
-import amf.plugins.document.apicontract.parser.spec.raml.CommentEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
+  AgnosticShapeEmitterContextAdapter,
+  CommentEmitter,
+  OasLikeShapeEmitterContextAdapter,
+  RamlShapeEmitterContextAdapter
+}
+import amf.plugins.domain.apicontract.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
+import amf.plugins.domain.apicontract.metamodel.{ParameterModel, PayloadModel}
+import amf.plugins.domain.apicontract.models.{Parameter, Payload}
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.apicontract.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
-import amf.plugins.domain.apicontract.metamodel.{ParameterModel, PayloadModel, ResponseModel}
-import amf.plugins.domain.apicontract.models.{Parameter, Payload}
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType.Bool
 import org.yaml.model.{YNode, YType}

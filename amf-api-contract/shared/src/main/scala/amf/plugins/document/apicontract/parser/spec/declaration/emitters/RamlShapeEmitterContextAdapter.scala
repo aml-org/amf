@@ -1,11 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
-import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
-import amf.core.parser.FieldEntry
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.CustomFacetsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{

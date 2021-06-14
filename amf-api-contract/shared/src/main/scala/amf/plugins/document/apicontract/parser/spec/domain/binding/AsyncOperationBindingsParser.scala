@@ -1,25 +1,22 @@
 package amf.plugins.document.apicontract.parser.spec.domain.binding
 
-import amf.core.metamodel.Field
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, SearchScope, YMapOps}
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorOperationBindings
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.domain.apicontract.metamodel.bindings.{
-  Amqp091OperationBindingModel,
-  HttpOperationBindingModel,
-  KafkaOperationBindingModel,
-  MqttOperationBindingModel,
-  OperationBindingsModel
-}
+import amf.plugins.domain.apicontract.metamodel.bindings._
 import amf.plugins.domain.apicontract.models.bindings.amqp.Amqp091OperationBinding
 import amf.plugins.domain.apicontract.models.bindings.http.HttpOperationBinding
 import amf.plugins.domain.apicontract.models.bindings.kafka.KafkaOperationBinding
 import amf.plugins.domain.apicontract.models.bindings.mqtt.MqttOperationBinding
 import amf.plugins.domain.apicontract.models.bindings.{OperationBinding, OperationBindings}
 import org.yaml.model.{YMap, YMapEntry}
+
+import scala.Console.in
 
 case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
     extends AsyncBindingsParser(entryLike, parent) {

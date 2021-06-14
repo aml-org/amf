@@ -1,20 +1,16 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.emitter.BaseEmitters.{ScalarEmitter, pos, sourceOr, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.domain.{AmfElement, AmfScalar, Linkable}
-import amf.core.parser.{FieldEntry, Position}
-import amf.core.remote.Vendor
-import amf.core.utils._
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.{AmfElement, Linkable}
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.BaseEmitters.{pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.oas.OasLikeSecuritySchemeTypeMappings
-import amf.plugins.domain.apicontract.metamodel.security.ParametrizedSecuritySchemeModel
-import amf.plugins.domain.apicontract.models.security.{
-  OAuth2Settings,
-  OpenIdConnectSettings,
-  ParametrizedSecurityScheme,
-  SecurityRequirement
-}
+import amf.plugins.domain.apicontract.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 case class SecurityRequirementsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
