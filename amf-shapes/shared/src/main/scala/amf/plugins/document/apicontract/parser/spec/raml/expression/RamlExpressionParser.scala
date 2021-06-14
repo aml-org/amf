@@ -1,12 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.raml.expression
 
-import amf.core.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
-import amf.core.model.domain.{AmfArray, Shape}
-import amf.core.parser.{Annotations, Position}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.{AmfArray, Shape}
+import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models._
+import org.mulesoft.lexer.SourceLocation
 import org.yaml.model._
 
 object RamlExpressionParser {
@@ -61,7 +63,7 @@ object RamlExpressionParser {
     shape.annotations.reject(
       a =>
         a.isInstanceOf[LexicalInformation] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceAST] || a
-          .isInstanceOf[SourceLocation])
+          .isInstanceOf[amf.core.internal.annotations.SourceLocation])
     shape.annotations ++= Annotations(part)
     shape.annotations += ParsedFromTypeExpression(expression)
     shape

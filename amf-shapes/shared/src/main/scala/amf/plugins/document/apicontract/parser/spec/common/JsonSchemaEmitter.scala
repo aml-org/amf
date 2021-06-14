@@ -1,11 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.emitter.BaseEmitters.traverse
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.internal.render.BaseEmitters.traverse
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   InlineJsonSchemaShapeEmitterContext,
   JsonSchemaShapeEmitterContext,

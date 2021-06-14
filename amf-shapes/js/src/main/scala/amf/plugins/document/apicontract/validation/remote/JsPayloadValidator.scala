@@ -1,10 +1,9 @@
 package amf.plugins.document.apicontract.validation.remote
-import amf.ProfileName
-import amf.client.plugins.ValidationMode
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.validation.{AMFValidationResult, SeverityLevels}
+import amf.core.client.common.validation.{ProfileName, SeverityLevels, ValidationMode}
+import amf.core.client.scala.model.document.PayloadFragment
+import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.internal.validation.ValidationConfiguration
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 
 import scala.scalajs.js

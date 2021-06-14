@@ -1,13 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.annotations.{ExplicitField, SynthesizedField}
-import amf.core.emitter.BaseEmitters.{pos, raw, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.Position
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.annotations.{ExplicitField, SynthesizedField}
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.render.BaseEmitters.{pos, raw, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.RamlShapeEmitterContext
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YNode, YScalar, YType}

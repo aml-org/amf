@@ -6,7 +6,7 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{FieldEntry, Fields, Position, Value}
-import amf.core.utils._
+import amf.core.internal.utils._
 import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.declaration.ExtendsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter

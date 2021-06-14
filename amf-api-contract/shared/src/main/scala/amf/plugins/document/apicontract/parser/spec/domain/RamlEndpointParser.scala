@@ -5,7 +5,7 @@ import amf.core.annotations.{LexicalInformation, VirtualElement}
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, IdCounter, TemplateUri}
+import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.plugins.document.apicontract.annotations.{EndPointResourceTypeEntry, EndPointTraitEntry}
 import amf.plugins.document.apicontract.contexts.parser.raml.{
   Raml08WebApiContext,

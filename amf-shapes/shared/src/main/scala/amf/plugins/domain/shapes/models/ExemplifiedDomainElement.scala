@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.DomainElement
-import amf.core.parser.Annotations
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField.Examples
 
 trait ExemplifiedDomainElement extends DomainElement {

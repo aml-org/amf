@@ -1,9 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.model.domain.DataNode
-import amf.core.parser.ErrorHandlingContext
-import amf.core.utils.IdCounter
-import amf.plugins.document.apicontract.parser.ShapeParserContext
+import amf.core.client.scala.model.domain.DataNode
+import amf.core.client.scala.parse.document.ErrorHandlingContext
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.parser.spec.common.{DataNodeParser, DataNodeParserContext, ScalarNodeParser}
 import org.yaml.model.YNode
 

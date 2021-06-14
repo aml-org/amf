@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.vocabulary
 
-import amf.core.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.Namespace
 
 object VocabularyMappings {
 

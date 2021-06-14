@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.client.platform.model.document.PayloadFragment
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.DataNode
 import amf.core.internal.render.{AMFSerializer, SpecOrdering}
 import amf.core.internal.unsafe.PlatformSecrets

@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.LexicalInformation
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DataNode}
-import amf.core.parser.errorhandler.WarningOnlyHandler
-import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Annotation, DataNode}
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, _}
+import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.plugins.document.apicontract.annotations.{ExternalReferenceUrl, ParsedJSONExample}
 import amf.plugins.document.apicontract.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.apicontract.parser.spec.common.{
@@ -20,7 +20,6 @@ import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ExemplifiedDomainElement, ScalarShape}
-import amf.plugins.features.validation.CoreValidations
 import amf.validations.ShapeParserSideValidations.{
   ExamplesMustBeAMap,
   ExclusivePropertiesSpecification,
@@ -29,6 +28,9 @@ import amf.validations.ShapeParserSideValidations.{
 import org.mulesoft.lexer.Position
 import org.yaml.model._
 import org.yaml.parser.JsonParser
+import amf.core.client.common.position.Range
+import amf.core.internal.errorhandling.WarningOnlyHandler
+import amf.core.internal.validation.CoreValidations
 
 import scala.collection.mutable.ListBuffer
 

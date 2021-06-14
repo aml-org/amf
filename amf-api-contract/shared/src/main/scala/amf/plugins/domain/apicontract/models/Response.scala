@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.apicontract.metamodel.ResponseModel
 import amf.plugins.domain.apicontract.metamodel.ResponseModel._
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import org.yaml.model.YMapEntry
 
 /**

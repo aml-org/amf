@@ -2,7 +2,7 @@ package amf.plugins.domain.apicontract.models
 
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.utils._
+import amf.core.internal.utils._
 import amf.plugins.domain.apicontract.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 
 trait ExtensibleWebApiDomainElement { this: DomainElement =>

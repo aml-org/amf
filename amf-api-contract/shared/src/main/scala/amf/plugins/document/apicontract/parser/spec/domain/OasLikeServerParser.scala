@@ -11,7 +11,7 @@ import amf.plugins.document.apicontract.parser.spec.common.{
 }
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.utils.IdCounter
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike

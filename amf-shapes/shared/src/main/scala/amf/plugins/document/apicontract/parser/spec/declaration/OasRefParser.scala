@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.annotations.ExternalFragmentRef
-import amf.core.metamodel.domain.LinkableElementModel
-import amf.core.model.domain.{AmfScalar, Linkable, Shape}
-import amf.core.parser._
-import amf.core.utils.UriUtils
+import amf.core.client.scala.model.domain.{AmfScalar, Linkable, Shape}
+import amf.core.internal.annotations.ExternalFragmentRef
+import amf.core.internal.metamodel.domain.LinkableElementModel
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain._
+import amf.core.internal.utils.UriUtils
 import amf.plugins.document.apicontract.annotations.ExternalJsonSchemaShape
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.OasShapeDefinitions

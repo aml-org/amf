@@ -6,7 +6,7 @@ import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.AmfElement
 import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
 import amf.core.parser.{FieldEntry, Position}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.apicontract.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.apicontract.models.templates.{ParametrizedResourceType, ParametrizedTrait}

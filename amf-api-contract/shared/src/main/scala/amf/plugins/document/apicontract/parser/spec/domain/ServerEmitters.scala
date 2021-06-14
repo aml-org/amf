@@ -7,7 +7,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{FieldEntry, Position, Value}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts._
 import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}

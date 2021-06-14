@@ -1,8 +1,8 @@
 package amf.client.model.domain
 
 import amf.client.convert.shapeconverters.ShapeClientConverters._
-import amf.core.client.scala.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
-import amf.core.client.scala.model.{BoolField, StrField}
+import amf.core.client.platform.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
+import amf.core.client.platform.model.{BoolField, StrField}
 import amf.plugins.domain.shapes.models.{Example => InternalExample}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

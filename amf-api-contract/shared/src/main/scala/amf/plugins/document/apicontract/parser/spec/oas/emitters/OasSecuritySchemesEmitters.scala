@@ -3,7 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.oas.emitters
 import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{Fields, Position}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{

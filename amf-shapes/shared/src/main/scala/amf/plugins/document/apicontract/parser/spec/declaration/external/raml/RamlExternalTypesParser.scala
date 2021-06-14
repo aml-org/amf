@@ -1,15 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.external.raml
 
-import amf.core.model.domain.Shape
-import amf.core.parser.YNodeLikeOps
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.parser.YNodeLikeOps
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.common.QuickFieldParserOps
-import amf.plugins.document.apicontract.parser.spec.declaration.{
-  ExampleParser,
-  RamlTypeEntryParser,
-  RamlTypeParser,
-  RamlTypeSyntax
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.{ExampleParser, RamlTypeEntryParser, RamlTypeSyntax}
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.validations.ShapeParserSideValidations.InvalidExternalTypeType
 import org.yaml.model.YNode.MutRef

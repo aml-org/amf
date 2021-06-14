@@ -7,7 +7,7 @@ import amf.core.model.domain.DataNode
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote.Vendor
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,

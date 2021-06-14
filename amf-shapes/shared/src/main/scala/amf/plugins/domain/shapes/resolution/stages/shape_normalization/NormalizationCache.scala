@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
-import amf.core.model.domain.{RecursiveShape, Shape}
+
+import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
 
 import scala.collection.mutable
 

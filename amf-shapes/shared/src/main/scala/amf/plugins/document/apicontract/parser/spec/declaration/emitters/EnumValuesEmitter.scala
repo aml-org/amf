@@ -1,9 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
-import amf.core.emitter.BaseEmitters.{pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.domain.{AmfArray, DataNode}
-import amf.core.parser.{Position, Value}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.{AmfArray, DataNode}
+import amf.core.internal.parser.domain.Value
+import amf.core.internal.render.BaseEmitters.{pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 

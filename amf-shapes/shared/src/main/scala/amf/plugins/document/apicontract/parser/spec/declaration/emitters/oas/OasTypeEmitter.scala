@@ -1,20 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.annotations.{DeclaredElement, NilUnion}
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{Emitter, EntryEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.model.DataType
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{Linkable, RecursiveShape, Shape}
+import amf.core.internal.annotations.{DeclaredElement, NilUnion}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.render.BaseEmitters.pos
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
 import amf.plugins.document.apicontract.annotations.ExternalJsonSchemaShape
 import amf.plugins.document.apicontract.parser.spec.declaration.OasShapeReferenceEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  OasLikeShapeEmitterContext,
-  ShapeEmitterContext,
-  oas
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{OasLikeShapeEmitterContext, oas}
 import amf.plugins.domain.shapes.models._
 import org.yaml.model.{YDocument, YNode}
 

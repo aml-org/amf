@@ -7,7 +7,7 @@ import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.{OasEntryCreativeWorkEmitter, RamlCreativeWorkEmitter}
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext

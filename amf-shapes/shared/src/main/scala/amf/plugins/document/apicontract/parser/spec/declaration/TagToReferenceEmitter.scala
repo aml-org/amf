@@ -1,19 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.annotations.{DeclaredElement, ExternalFragmentRef}
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.PartEmitter
-import amf.core.model.document.{BaseUnit, Fragment}
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
-import amf.core.parser.Position
-import amf.plugins.document.apicontract.parser.spec.OasShapeDefinitions.{
-  appendOas3ComponentsPrefix,
-  appendSchemasPrefix
-}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos}
+import amf.core.internal.render.emitters.PartEmitter
+import amf.plugins.document.apicontract.parser.spec.OasShapeDefinitions.appendSchemasPrefix
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.ShapeEmitterContext
-import amf.plugins.document.apicontract.parser.spec.oas.emitters.OasSpecEmitter
 import org.yaml.model.YDocument.PartBuilder
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.YNode
 
 /**
   *

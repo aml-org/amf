@@ -24,7 +24,7 @@ import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
 import amf.core.parser.{ParserContext, YNodeLikeOps}
 import amf.core.resolution.stages.{ReferenceResolutionStage, TransformationStep}
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.AliasCounter
+import amf.core.internal.utils.AliasCounter
 import amf.plugins.document.apicontract.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.parser.raml.{
   Raml08WebApiContext,

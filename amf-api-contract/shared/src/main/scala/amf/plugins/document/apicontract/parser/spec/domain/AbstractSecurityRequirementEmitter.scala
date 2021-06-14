@@ -5,7 +5,7 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.{AmfElement, AmfScalar, Linkable}
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote.Vendor
-import amf.core.utils._
+import amf.core.internal.utils._
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.oas.OasLikeSecuritySchemeTypeMappings
 import amf.plugins.domain.apicontract.metamodel.security.ParametrizedSecuritySchemeModel

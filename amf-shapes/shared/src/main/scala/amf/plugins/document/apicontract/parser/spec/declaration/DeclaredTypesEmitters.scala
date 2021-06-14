@@ -2,13 +2,17 @@ package amf.plugins.document.apicontract.parser.spec.declaration
 
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
-import amf.core.client.platform.model.document.BaseUnit
+import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
 import amf.core.internal.remote.Vendor
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasNamedTypeEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
+  RamlNamedTypeEmitter,
+  RamlRecursiveShapeTypeEmitter
+}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   OasLikeShapeEmitterContext,
   RamlShapeEmitterContext,

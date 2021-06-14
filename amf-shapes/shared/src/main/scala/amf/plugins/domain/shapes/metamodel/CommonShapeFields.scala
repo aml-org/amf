@@ -1,9 +1,9 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.vocabulary.Namespace.{Shacl, Shapes}
-import amf.core.metamodel.Type.{Bool, Double, Int, Str}
-import amf.core.metamodel.domain.{ExternalModelVocabularies, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.Field
+import amf.core.client.scala.vocabulary.Namespace.{Shacl, Shapes}
+import amf.core.internal.metamodel.Type.{Bool, Double, Int, Str}
+import amf.core.internal.metamodel.domain.{ExternalModelVocabularies, ModelDoc, ModelVocabularies}
 
 trait CommonShapeFields {
 

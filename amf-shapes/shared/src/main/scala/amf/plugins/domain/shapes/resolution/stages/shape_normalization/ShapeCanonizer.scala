@@ -1,14 +1,14 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations._
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.domain._
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.{Annotations, FieldEntry}
+import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.annotations._
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.domain.{Annotations, FieldEntry}
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

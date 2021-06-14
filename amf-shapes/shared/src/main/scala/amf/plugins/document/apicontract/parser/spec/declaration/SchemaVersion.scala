@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.client.exported.config.{
+import amf.core.client.platform.config.{
   JSONSchemaVersion => ClientJSONSchemaVersion,
   JSONSchemaVersions => ClientJSONSchemaVersions
 }

@@ -10,7 +10,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{FieldEntry, Fields, Position, Value}
 import amf.core.remote.Vendor
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.annotations.{FormBodyParameter, ParameterNameForPayload, RequiredParamPayload}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}

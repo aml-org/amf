@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.raml.expression
 
-import amf.core.annotations.LexicalInformation
-import amf.core.model.domain.Shape
-import amf.core.parser.Annotations
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.parser.domain.Annotations
 
 private[expression] trait AnnotationHelper {
   val annotations: Annotations

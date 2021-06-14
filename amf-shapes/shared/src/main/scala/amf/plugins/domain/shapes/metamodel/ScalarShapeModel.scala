@@ -1,10 +1,10 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Iri, Str}
-import amf.core.metamodel.domain._
-import amf.core.vocabulary.Namespace.{Shacl, Shapes}
-import amf.core.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Iri, Str}
+import amf.core.internal.metamodel.domain._
+import amf.core.client.scala.vocabulary.Namespace.{Shacl, Shapes}
+import amf.core.client.scala.vocabulary.ValueType
 import amf.plugins.domain.shapes.models.ScalarShape
 
 /**

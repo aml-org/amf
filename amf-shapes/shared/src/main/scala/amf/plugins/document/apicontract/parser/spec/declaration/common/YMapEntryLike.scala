@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.common
 
-import amf.core.parser.Annotations
+import amf.core.internal.parser.domain.Annotations
 import org.yaml.model._
 
 object YMapEntryLike {

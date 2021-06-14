@@ -1,9 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
-import amf.core.annotations.ExplicitField
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.client.common.position.Position
+import amf.core.internal.annotations.ExplicitField
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel
 import org.yaml.model.YDocument.EntryBuilder

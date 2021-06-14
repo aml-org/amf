@@ -1,8 +1,8 @@
 package amf.client.model.domain
 
 import amf.client.convert.shapeconverters.ShapeClientConverters._
+import amf.core.client.platform.model.domain.Shape
 import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.domain.shapes.models.{AnyShape => InternalAnyShape}
 

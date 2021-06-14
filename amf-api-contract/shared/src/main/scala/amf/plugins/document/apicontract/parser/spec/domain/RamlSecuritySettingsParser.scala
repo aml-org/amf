@@ -3,7 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfArray, DomainElement, Linkable}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, Lazy}
+import amf.core.internal.utils.{AmfStrings, Lazy}
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isRamlAnnotation

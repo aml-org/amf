@@ -1,12 +1,11 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.metamodel.Field
-import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.FileShapeModel._
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel, SchemaShapeModel}
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
 import org.yaml.model.YPart
 
 case class FileShape(override val fields: Fields, override val annotations: Annotations)

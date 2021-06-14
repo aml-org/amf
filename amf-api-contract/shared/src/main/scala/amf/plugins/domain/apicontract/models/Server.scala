@@ -8,7 +8,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.ServerModel
 import amf.plugins.domain.apicontract.metamodel.ServerModel._
 import org.yaml.model.YMap
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.apicontract.models.bindings.ServerBindings
 import amf.plugins.domain.apicontract.models.security.SecurityRequirement
 

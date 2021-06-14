@@ -6,7 +6,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.parser.FieldEntry
-import amf.core.utils._
+import amf.core.internal.utils._
 import amf.plugins.document.apicontract.annotations.FormBodyParameter
 import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.apicontract.contexts.emitter.raml.Raml10SpecEmitterContext

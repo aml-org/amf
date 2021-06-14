@@ -15,7 +15,7 @@ import amf.core.parser.{
   SyamlParsedDocument,
   YMapOps
 }
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.annotations._
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext

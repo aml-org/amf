@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec
 
-import amf.core.remote.Vendor
+import amf.core.internal.remote.Vendor
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 
 object OasShapeDefinitions extends OasShapeDefinitions

@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.client.scala.model.domain.{AmfArray, DomainElement, Linkable, NamedDomainElement}
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
 import amf.plugins.domain.apicontract.metamodel.OperationModel
 import amf.plugins.domain.apicontract.metamodel.OperationModel.{Request => OperationRequest, _}

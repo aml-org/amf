@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.common
 
-import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
-import amf.core.model.domain.Linkable
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
+import amf.core.client.scala.model.domain.Linkable
 
 object ExternalLinkQuery {
 

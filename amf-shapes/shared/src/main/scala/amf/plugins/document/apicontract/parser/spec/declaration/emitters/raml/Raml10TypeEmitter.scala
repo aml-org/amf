@@ -1,12 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.annotations.ExternalFragmentRef
-import amf.core.emitter.BaseEmitters.EntryPartEmitter
-import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
-import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.{BaseUnit, EncodesModel, ExternalFragment}
+import amf.core.client.scala.model.domain.{Linkable, RecursiveShape, Shape}
+import amf.core.internal.annotations.ExternalFragmentRef
+import amf.core.internal.metamodel.Field
+import amf.core.internal.render.BaseEmitters.EntryPartEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.annotations.{
   ExternalReferenceUrl,
   ExternalSchemaWrapper,
@@ -14,9 +15,9 @@ import amf.plugins.document.apicontract.annotations.{
   ParsedJSONSchema
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.common.ExternalLinkQuery.queryResidenceUnitOfLinkTarget
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.RamlShapeEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
-import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.models.{FileShape, ScalarShape, _}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 

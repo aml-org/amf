@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.parser.Position
-import amf.core.utils.AmfStrings
+import amf.core.client.common.position.Position
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, raw, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.ShapeEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter

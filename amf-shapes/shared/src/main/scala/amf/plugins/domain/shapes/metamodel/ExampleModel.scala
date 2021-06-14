@@ -1,13 +1,13 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Bool, Str}
-import amf.core.metamodel.domain.common.NameFieldSchema
-import amf.core.metamodel.domain.templates.KeyField
-import amf.core.metamodel.domain._
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Bool, Str}
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.metamodel.domain.templates.KeyField
+import amf.core.internal.metamodel.domain._
 import amf.plugins.domain.shapes.models.Example
-import amf.core.vocabulary.Namespace._
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.client.scala.vocabulary.Namespace._
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 
 /**
   *

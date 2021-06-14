@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain._
-import amf.core.parser.{Annotations, _}
-import amf.core.remote.Vendor
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.client.scala.model.domain._
+import amf.core.internal.parser.domain.{Annotations, _}
+import amf.core.internal.remote.Vendor
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.common.QuickFieldParserOps
 import amf.plugins.document.apicontract.parser.spec.declaration.SchemaPosition.Schema

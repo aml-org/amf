@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.raml.expression
 
-import amf.core.annotations.LexicalInformation
-import amf.core.parser.{Annotations, Position}
+import amf.core.client.common.position.Position
+import amf.core.internal.annotations.LexicalInformation
 import amf.plugins.document.apicontract.parser.spec.raml.expression.Token._
 
 import scala.collection.mutable

@@ -8,7 +8,7 @@ import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
 import amf.core.remote.{Oas, Oas20}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.OasHeader

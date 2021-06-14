@@ -5,7 +5,7 @@ import amf.core.annotations.SourceVendor
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.Module
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.ReferencesParser

@@ -11,8 +11,8 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.remote._
-import amf.core.utils.TSort.tsort
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.internal.utils.TSort.tsort
+import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec._

@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.emitter.BaseEmitters.pos
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.internal.render.BaseEmitters.pos
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.domain.shapes.models.NilShape
 import org.yaml.model.YDocument.EntryBuilder
 

@@ -1,11 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.metamodel.domain.DomainElementModel.CustomDomainProperties
-import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.core.model.domain.{AmfArray, AmfObject}
-import amf.core.parser.{Annotations, _}
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
+import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
+import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
+import amf.core.client.scala.parse.document.ErrorHandlingContext
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, _}
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser.parseExtensions
 import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.resolveAnnotation

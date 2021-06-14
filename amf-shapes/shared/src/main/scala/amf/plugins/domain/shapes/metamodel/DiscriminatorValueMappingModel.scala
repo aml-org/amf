@@ -1,9 +1,9 @@
 package amf.plugins.domain.shapes.metamodel
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Str
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
-import amf.core.vocabulary.Namespace.Shapes
-import amf.core.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
+import amf.core.client.scala.vocabulary.Namespace.Shapes
+import amf.core.client.scala.vocabulary.ValueType
 import amf.plugins.domain.apicontract.models.DiscriminatorValueMapping
 
 object DiscriminatorValueMappingModel extends DomainElementModel {

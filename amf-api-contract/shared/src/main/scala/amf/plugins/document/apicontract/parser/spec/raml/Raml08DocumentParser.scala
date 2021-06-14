@@ -6,7 +6,7 @@ import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
 import amf.core.remote.Context
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils._
+import amf.core.internal.utils._
 import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.{RamlTypeDefMatcher, WebApiShapeParserContextAdapter}

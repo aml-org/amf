@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, ExternalFragment, Fragment, RecursiveUnit}
-import amf.core.parser.{ParsedReference, Reference, SchemaReference, SyamlParsedDocument}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment, Fragment, RecursiveUnit}
+import amf.core.client.scala.parse.document.{ParsedReference, Reference, SchemaReference, SyamlParsedDocument}
+import amf.core.internal.parser.Root
 import amf.validations.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model.{YDocument, YMap, YNode}
 

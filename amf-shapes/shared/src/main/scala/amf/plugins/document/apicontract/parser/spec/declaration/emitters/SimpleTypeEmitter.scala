@@ -1,16 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
-import amf.core.emitter.BaseEmitters.{EntryPartEmitter, MapEntryEmitter, ValueEmitter, pos}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, MapEntryEmitter, ValueEmitter, pos}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.RamlCommonOASFieldsEmitter
 import amf.plugins.document.apicontract.parser.spec.domain.SingleExampleEmitter
+import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
-import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 
 import scala.collection.mutable.ListBuffer
 

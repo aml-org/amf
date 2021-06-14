@@ -6,7 +6,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainE
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.TemplatedLinkModel
 import amf.plugins.domain.apicontract.metamodel.TemplatedLinkModel._
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 
 case class TemplatedLink(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 

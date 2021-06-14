@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
-import amf.core.emitter.{Emitter, SpecOrdering}
-import amf.core.model.domain.Shape
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.BaseEmitters.MapEntryEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.Emitter
 import amf.plugins.document.apicontract.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
 import amf.plugins.document.apicontract.parser.spec.declaration.RamlLocalReferenceEntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
@@ -11,7 +12,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   RamlShapeEmitterContext,
   SimpleTypeEmitter
 }
-import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.models.{FileShape, ScalarShape, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import org.yaml.model.YType
 

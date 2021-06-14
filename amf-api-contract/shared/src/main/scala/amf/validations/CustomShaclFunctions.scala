@@ -9,7 +9,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement, Shape}
 import amf.core.parser.Annotations
 import amf.core.services.RuntimeValidator.{CustomShaclFunctions, PropertyInfo}
-import amf.core.utils.RegexConverter
+import amf.core.internal.utils.RegexConverter
 import amf.plugins.document.apicontract.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.{FileShape, NodeShape, ScalarShape}

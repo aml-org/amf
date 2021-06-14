@@ -9,7 +9,7 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext

@@ -1,19 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, RawValueEmitter, pos}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, RawValueEmitter, pos}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.CommonOasTypeDefMatcher._
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  OasLikeShapeEmitterContext,
-  ShapeEmitterContext
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.emitter.ContentEmitters
+import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.TypeDef.UndefinedType
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
-import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YType
 
 import scala.collection.mutable.ListBuffer

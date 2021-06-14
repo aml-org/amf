@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.common
 
-import amf.core.emitter.BaseEmitters.pos
-import amf.core.emitter.PartEmitter
-import amf.core.model.domain.DomainElement
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.render.BaseEmitters.pos
+import amf.core.internal.render.emitters.PartEmitter
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.ShapeEmitterContext
 import org.yaml.model.YDocument.PartBuilder

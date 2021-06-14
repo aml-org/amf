@@ -1,8 +1,10 @@
 package amf.client.model.domain
 
-import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.domain.DomainElement
 import amf.plugins.domain.shapes.models.{CreativeWork => InternalClientCreativeWork}
+
+import amf.client.convert.shapeconverters.ShapeClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

@@ -1,7 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, _}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.common.SingleArrayNode
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike

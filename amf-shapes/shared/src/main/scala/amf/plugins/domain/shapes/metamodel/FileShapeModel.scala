@@ -1,9 +1,9 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Array, Str}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.models.FileShape
 
 object FileShapeModel extends AnyShapeModel with CommonShapeFields {

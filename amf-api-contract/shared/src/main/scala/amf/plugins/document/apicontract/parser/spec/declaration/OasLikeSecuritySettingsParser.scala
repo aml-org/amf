@@ -24,7 +24,7 @@ import amf.plugins.domain.apicontract.models.security.{
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.core.parser.YMapOps
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 

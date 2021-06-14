@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, YNodeLikeOps}
-import amf.core.utils.IdCounter
+import amf.core.internal.metamodel.domain.ExternalSourceElementModel
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.parser.YNodeLikeOps
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike

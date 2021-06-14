@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.model.domain.Shape
+import amf.core.client.scala.model.domain.Shape
 import amf.plugins.document.apicontract.parser.RamlTypeDefStringValueMatcher
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models._

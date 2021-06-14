@@ -1,16 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.annotations.{DomainExtensionAnnotation, ExplicitField, SingleValueArray}
-import amf.core.metamodel.Type.ArrayLike
-import amf.core.metamodel.{Field, Obj, Type}
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.model.domain._
-import amf.core.parser.{
+import amf.core.internal.annotations.{DomainExtensionAnnotation, ExplicitField, SingleValueArray}
+import amf.core.internal.metamodel.Type.ArrayLike
+import amf.core.internal.metamodel.{Field, Obj, Type}
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.client.scala.model.domain._
+import amf.core.client.scala.parse.document.ErrorHandlingContext
+import amf.core.internal.annotations.{ExplicitField, SingleValueArray}
+import amf.core.internal.parser.domain.{
   Annotations,
   ArrayNode,
   BaseArrayNode,
   DefaultScalarNode,
-  ErrorHandlingContext,
   ScalarNode,
   TypedNode
 }

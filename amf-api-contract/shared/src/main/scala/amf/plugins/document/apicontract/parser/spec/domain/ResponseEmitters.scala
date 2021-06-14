@@ -7,7 +7,7 @@ import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.plugins.domain.apicontract.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.apicontract.models.Response
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,

@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.pos
-import amf.core.emitter.PartEmitter
-import amf.core.model.domain.Linkable
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.Linkable
+import amf.core.internal.render.BaseEmitters.pos
+import amf.core.internal.render.emitters.PartEmitter
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YNode
 

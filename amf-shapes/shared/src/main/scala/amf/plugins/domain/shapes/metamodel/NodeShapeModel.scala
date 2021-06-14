@@ -1,12 +1,12 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Bool, Int, Str}
-import amf.core.metamodel.domain._
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Array, Bool, Int, Str}
+import amf.core.internal.metamodel.domain._
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
-import amf.core.vocabulary.Namespace.{Shacl, Shapes, Document}
-import amf.core.vocabulary.ValueType
+import amf.core.client.scala.vocabulary.Namespace.{Shacl, Shapes, Document}
+import amf.core.client.scala.vocabulary.ValueType
 import amf.plugins.domain.apicontract.metamodel.IriTemplateMappingModel
 
 /**

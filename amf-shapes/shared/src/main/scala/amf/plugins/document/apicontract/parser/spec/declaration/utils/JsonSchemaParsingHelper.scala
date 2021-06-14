@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.utils
 
-import amf.core.model.domain.Shape
+import amf.core.client.scala.model.domain.Shape
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.domain.shapes.models.UnresolvedShape
 import org.yaml.model.YMapEntry

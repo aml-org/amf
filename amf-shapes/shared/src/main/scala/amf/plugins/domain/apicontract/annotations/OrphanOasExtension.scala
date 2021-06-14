@@ -1,6 +1,6 @@
 package amf.plugins.domain.apicontract.annotations
 
-import amf.core.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, SerializableAnnotation}
+import amf.core.client.scala.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, SerializableAnnotation}
 
 case class OrphanOasExtension(location: String) extends SerializableAnnotation {
   override val name: String  = "orphan-oas-extension"

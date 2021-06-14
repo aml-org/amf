@@ -3,7 +3,7 @@ package amf.plugins.domain.apicontract.models
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.apicontract.metamodel.EncodingModel
 import amf.plugins.domain.apicontract.metamodel.EncodingModel._
 import org.yaml.model.YMap

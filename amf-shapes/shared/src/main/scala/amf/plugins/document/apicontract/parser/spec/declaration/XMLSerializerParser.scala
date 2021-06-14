@@ -1,7 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.annotations.ExplicitField
-import amf.core.parser.{Annotations, ScalarNode, YMapOps}
+import amf.core.internal.annotations.ExplicitField
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel
 import amf.plugins.domain.shapes.models.XMLSerializer

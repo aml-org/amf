@@ -1,13 +1,12 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.metamodel.{Field, Obj}
-import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, ExternalSourceElement, Linkable}
-import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, ExternalSourceElement, Linkable}
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
+import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.metamodel.SchemaShapeModel._
 import org.yaml.model.YPart
-import amf.core.utils.AmfStrings
 
 case class SchemaShape(override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations)

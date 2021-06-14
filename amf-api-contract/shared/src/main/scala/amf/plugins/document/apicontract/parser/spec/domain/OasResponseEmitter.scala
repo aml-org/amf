@@ -10,7 +10,7 @@ import amf.plugins.document.apicontract.annotations.{DefaultPayload, EndPointBod
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.apicontract.models.{Payload, Response, TemplatedLink}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.oas.{
   Oas2SpecEmitterFactory,
   Oas3SpecEmitterFactory,

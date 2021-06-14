@@ -10,7 +10,7 @@ import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils._
+import amf.core.internal.utils._
 import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.document.apicontract.contexts.parser.raml.{ExtensionLikeWebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.model.{Extension, Overlay}

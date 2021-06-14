@@ -2,7 +2,7 @@ package amf.plugins.document.apicontract.parser.spec.domain
 
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, TemplateUri, _}
+import amf.core.internal.utils.{IdCounter, TemplateUri, _}
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext

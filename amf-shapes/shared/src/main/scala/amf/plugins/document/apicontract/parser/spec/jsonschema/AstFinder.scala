@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.Fragment
-import amf.core.parser.SyamlParsedDocument
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.Fragment
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser.Root
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.jsonschema.JsonSchemaRootCreator.createRootFrom

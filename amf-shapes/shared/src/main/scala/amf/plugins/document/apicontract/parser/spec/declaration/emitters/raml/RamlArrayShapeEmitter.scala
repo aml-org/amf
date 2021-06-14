@@ -1,12 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.annotations.ExplicitField
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.annotations.ExplicitField
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlScalarEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.RamlShapeEmitterContext
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel
 import amf.plugins.domain.shapes.models.ArrayShape
 

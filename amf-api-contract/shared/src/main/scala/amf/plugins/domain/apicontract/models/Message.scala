@@ -8,7 +8,7 @@ import amf.plugins.domain.shapes.models.{CreativeWork, Example, ExemplifiedDomai
 import amf.plugins.domain.apicontract.metamodel.MessageModel
 import amf.plugins.domain.apicontract.metamodel.MessageModel._
 import amf.plugins.domain.apicontract.models.bindings.{MessageBinding, MessageBindings}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField.Examples
 
 class Message(override val fields: Fields, override val annotations: Annotations)

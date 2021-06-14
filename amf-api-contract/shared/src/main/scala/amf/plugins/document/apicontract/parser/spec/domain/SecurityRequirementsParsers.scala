@@ -2,7 +2,7 @@ package amf.plugins.document.apicontract.parser.spec.domain
 
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, SearchScope}
-import amf.core.utils.IdCounter
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.apicontract.metamodel.security._

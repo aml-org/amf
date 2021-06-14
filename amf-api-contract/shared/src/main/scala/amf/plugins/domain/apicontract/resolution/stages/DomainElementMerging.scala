@@ -10,9 +10,9 @@ import amf.core.model.DataType
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.parser.{FieldEntry, Value}
-import amf.core.utils.EqInstances._
-import amf.core.utils.EqSyntax._
-import amf.core.utils.TemplateUri
+import amf.core.internal.utils.EqInstances._
+import amf.core.internal.utils.EqSyntax._
+import amf.core.internal.utils.TemplateUri
 import amf.plugins.document.apicontract.annotations.EmptyPayload
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}

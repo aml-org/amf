@@ -8,7 +8,7 @@ import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{Annotations, ParserContext, ReferenceHandler, SyamlParsedDocument}
-import amf.core.utils.MediaTypeMatcher
+import amf.core.internal.utils.MediaTypeMatcher
 import amf.plugins.document.apicontract.references.JsonRefsReferenceHandler
 
 object ExternalJsonYamlRefsParsePlugin extends AMFParsePlugin {

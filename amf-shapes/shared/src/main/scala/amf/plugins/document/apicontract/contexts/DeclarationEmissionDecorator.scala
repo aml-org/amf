@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.contexts
 
-import amf.core.model.domain.DomainElement
+import amf.core.client.scala.model.domain.DomainElement
 
 trait DeclarationEmissionDecorator {
   private var emittingDeclarations: Boolean = false

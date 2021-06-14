@@ -1,6 +1,6 @@
 package amf.client.model.domain
 
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.platform.model.domain.Shape
 import amf.plugins.domain.shapes.models.{ArrayShape => InternalArrayShape, MatrixShape => InternalMatrixShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

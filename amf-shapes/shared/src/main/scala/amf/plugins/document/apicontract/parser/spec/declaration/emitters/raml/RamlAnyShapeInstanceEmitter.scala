@@ -1,13 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  ExamplesEmitter,
-  RamlShapeEmitterContext,
-  ShapeEmitterContext
-}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.render.BaseEmitters.MapEntryEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{ExamplesEmitter, RamlShapeEmitterContext}
 import amf.plugins.domain.shapes.models.AnyShape
 
 import scala.collection.mutable.ListBuffer

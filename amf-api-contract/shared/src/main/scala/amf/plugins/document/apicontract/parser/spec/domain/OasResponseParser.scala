@@ -3,7 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.domain
 import amf.core.annotations.TrackedElement
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.annotations.{DefaultPayload, ExternalReferenceUrl}
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter

@@ -1,18 +1,12 @@
 package amf.plugins.document.apicontract.parser
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.Shape
-import amf.core.parser.{
-  Annotations,
-  Declarations,
-  ErrorHandlingContext,
-  FutureDeclarations,
-  SearchScope,
-  UnresolvedComponents
-}
-import amf.core.remote.Vendor
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.parse.document.{ErrorHandlingContext, UnresolvedComponents}
+import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.{Annotations, Declarations, FutureDeclarations, SearchScope}
+import amf.core.internal.remote.Vendor
 import amf.plugins.document.apicontract.contexts.JsonSchemaRefGuide
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.apicontract.parser.spec.SpecSyntax

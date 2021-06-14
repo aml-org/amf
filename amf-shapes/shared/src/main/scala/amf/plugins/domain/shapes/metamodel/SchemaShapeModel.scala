@@ -1,10 +1,10 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Str
-import amf.core.metamodel.domain._
-import amf.core.vocabulary.Namespace.{Shapes, Core}
-import amf.core.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.domain._
+import amf.core.client.scala.vocabulary.Namespace.{Shapes, Core}
+import amf.core.client.scala.vocabulary.ValueType
 import amf.plugins.domain.shapes.models.SchemaShape
 
 trait SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {

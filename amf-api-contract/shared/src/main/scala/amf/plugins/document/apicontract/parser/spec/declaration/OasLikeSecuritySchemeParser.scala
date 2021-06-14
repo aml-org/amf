@@ -3,7 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.declaration
 import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter

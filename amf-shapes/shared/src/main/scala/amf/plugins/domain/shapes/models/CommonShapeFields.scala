@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.{BoolField, DoubleField, IntField, StrField}
-import amf.core.model.domain.Shape
+import amf.core.client.scala.model.{BoolField, DoubleField, IntField, StrField}
+import amf.core.client.scala.model.domain.Shape
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
 
 trait CommonShapeFields { self: Shape =>

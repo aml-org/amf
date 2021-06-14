@@ -1,9 +1,9 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ScalarShapeModel}
 import org.yaml.model.YPart

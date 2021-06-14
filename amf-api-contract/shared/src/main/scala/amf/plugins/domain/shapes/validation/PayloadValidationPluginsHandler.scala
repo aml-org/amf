@@ -7,7 +7,7 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils._
+import amf.core.internal.utils._
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.validations.ParserSideValidations

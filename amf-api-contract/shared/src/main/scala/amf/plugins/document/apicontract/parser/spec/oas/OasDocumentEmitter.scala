@@ -11,7 +11,7 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote.{Oas, Oas20, Vendor}
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.apicontract.contexts._
 import amf.plugins.document.apicontract.contexts.emitter.oas.{
   Oas3SpecEmitterContext,

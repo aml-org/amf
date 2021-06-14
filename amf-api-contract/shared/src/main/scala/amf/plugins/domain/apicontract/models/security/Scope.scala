@@ -6,7 +6,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.security.ScopeModel
 import amf.plugins.domain.apicontract.metamodel.security.ScopeModel._
 import org.yaml.model.YPart
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 
 case class Scope(fields: Fields, annotations: Annotations) extends DomainElement {
 

@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.ValueEmitter
-import amf.core.emitter.EntryEmitter
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{FieldEntry, Fields, Value}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.parser.domain.{FieldEntry, Fields, Value}
+import amf.core.internal.render.BaseEmitters.ValueEmitter
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.ShapeEmitterContext
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel

@@ -6,7 +6,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.bindings.ServerBindingsModel
 import amf.plugins.domain.apicontract.metamodel.bindings.ServerBindingsModel.{Bindings, Name}
 import org.yaml.model.YMap
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 
 case class ServerBindings(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 

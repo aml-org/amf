@@ -1,17 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.annotations.ExplicitField
-import amf.core.emitter.BaseEmitters.ValueEmitter
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
-import amf.core.parser.FieldEntry
-import amf.core.utils.AmfStrings
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  OasLikeShapeEmitterContext,
-  OasTypeFacetEmitter,
-  ShapeEmitterContext
-}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.annotations.ExplicitField
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.ValueEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.{
   Draft2019DependenciesEmitter,
   Draft4DependenciesEmitter,
@@ -21,6 +17,10 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.emitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.emitter.{
   UnevaluatedEmitter,
   UntranslatableDraft2019FieldsPresentGuard
+}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
+  OasLikeShapeEmitterContext,
+  OasTypeFacetEmitter
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.{
   JSONSchemaDraft201909SchemaVersion,

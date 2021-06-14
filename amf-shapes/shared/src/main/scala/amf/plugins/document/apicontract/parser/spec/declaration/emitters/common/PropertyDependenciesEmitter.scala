@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.common
 
-import amf.core.emitter.BaseEmitters.{ScalarEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.Position
-import amf.core.utils.AmfStrings
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel.Dependencies
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, PropertyDependenciesModel, SchemaDependenciesModel}

@@ -1,16 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.emitter.BaseEmitters.ValueEmitter
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.render.BaseEmitters.ValueEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.async.emitters.Draft6ExamplesEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.{
   JSONSchemaDraft6SchemaVersion,
   JSONSchemaDraft7SchemaVersion
-}
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  OasLikeShapeEmitterContext,
-  ShapeEmitterContext
 }
 import amf.plugins.document.apicontract.parser.spec.oas.emitters.OasExampleEmitters
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}

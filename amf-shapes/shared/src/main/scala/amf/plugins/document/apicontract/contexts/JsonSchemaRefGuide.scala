@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.contexts
 
-import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
-import amf.core.parser.ParsedReference
-import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.UriUtils
+import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
+import amf.core.client.scala.parse.document.ParsedReference
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.utils.UriUtils
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.jsonschema.AstFinder
 import amf.plugins.document.apicontract.parser.spec.jsonschema.JsonSchemaRootCreator.getYNodeFrom

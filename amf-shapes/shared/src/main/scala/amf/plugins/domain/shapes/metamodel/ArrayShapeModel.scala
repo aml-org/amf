@@ -1,11 +1,11 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Bool, Int, SortedArray, Str}
-import amf.core.metamodel.domain._
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Bool, Int, SortedArray, Str}
+import amf.core.internal.metamodel.domain._
 import amf.plugins.domain.shapes.models.{ArrayShape, MatrixShape, TupleShape}
-import amf.core.vocabulary.Namespace.{Shacl, Shapes}
-import amf.core.vocabulary.ValueType
+import amf.core.client.scala.vocabulary.Namespace.{Shacl, Shapes}
+import amf.core.client.scala.vocabulary.ValueType
 
 /**
   * Array shape metamodel
@@ -49,15 +49,19 @@ class DataArrangementShape extends AnyShapeModel {
     Shapes + "collectionFormat",
     ModelDoc(ModelVocabularies.Shapes, "collectionFormat", "Input collection format information"))
 
-  val UnevaluatedItems = Field(
-    Bool,
-    Shapes + "unevaluatedItems",
-    ModelDoc(ModelVocabularies.Shapes, "unevaluatedItems", "Accepts that items may not be evaluated in schema validation"))
+  val UnevaluatedItems = Field(Bool,
+                               Shapes + "unevaluatedItems",
+                               ModelDoc(ModelVocabularies.Shapes,
+                                        "unevaluatedItems",
+                                        "Accepts that items may not be evaluated in schema validation"))
 
   val UnevaluatedItemsSchema = Field(
     ShapeModel,
     Shapes + "unevaluatedItemsSchema",
-    ModelDoc(ModelVocabularies.Shapes, "unevaluatedItemsSchema", "Items that may not be evaluated in schema validation"))
+    ModelDoc(ModelVocabularies.Shapes,
+             "unevaluatedItemsSchema",
+             "Items that may not be evaluated in schema validation")
+  )
 
   val specificFields = List(Items,
                             Contains,

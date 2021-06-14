@@ -2,7 +2,7 @@ package amf.plugins.document.apicontract.parser.spec.oas
 
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
-import amf.core.utils._
+import amf.core.internal.utils._
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.{WebApiShapeParserContextAdapter, spec}
 import amf.plugins.document.apicontract.parser.spec.declaration.Raml10TypeParser

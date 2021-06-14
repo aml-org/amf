@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
 import amf.plugins.domain.apicontract.metamodel.TagModel
 import amf.plugins.domain.apicontract.metamodel.TagModel._
