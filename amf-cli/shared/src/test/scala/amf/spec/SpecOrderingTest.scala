@@ -1,9 +1,9 @@
 package amf.spec
 
-import amf.core.emitter.Emitter
-import amf.core.emitter.SpecOrdering.Lexical
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.internal.render.SpecOrdering.Lexical
+import amf.core.internal.render.emitters.Emitter
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

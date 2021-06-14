@@ -1,9 +1,9 @@
 package amf.resolution
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.Vendor._
-import amf.core.remote.{Async20YamlHint, AsyncApi20, Vendor}
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.remote.Vendor.AMF
+import amf.core.internal.remote.{Async20YamlHint, AsyncApi20, Vendor}
 
 class Async20ResolutionTest extends ResolutionTest {
   override def basePath: String       = "amf-cli/shared/src/test/resources/resolution/async20/"

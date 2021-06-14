@@ -1,10 +1,13 @@
 package amf.parser
 
-import amf.core.model.document.BaseUnit
-import amf.core.parser._
-import amf.core.rdf.RdfModel
-import amf.core.services.ShaclValidationOptions
-import amf.core.validation.core.{SHACLValidator, ValidationReport, ValidationSpecification}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.rdf.RdfModel
+import amf.core.internal.validation.core.{
+  SHACLValidator,
+  ShaclValidationOptions,
+  ValidationReport,
+  ValidationSpecification
+}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import org.yaml.model._

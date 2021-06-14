@@ -1,6 +1,6 @@
 package amf.parser
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.{Amf, AmfJsonHint}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.{Amf, AmfJsonHint}
 import amf.io.FunSuiteCycleTests
 
 class GraphParsingTest extends FunSuiteCycleTests {
