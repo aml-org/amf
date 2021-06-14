@@ -2,16 +2,15 @@ package amf.client.commands
 
 import amf.client.convert.ApiRegister
 import amf.client.environment.{AMFConfiguration, AMLConfiguration}
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
-import amf.core.AMFCompiler
-import amf.core.client.ParserConfig
-import amf.core.model.document.BaseUnit
-import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.plugins.document.apicontract._
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.plugins.document.graph.JsonLdKeywords.Context
+import amf.core.internal.registries.domain.AMFPluginsRegistry
+import amf.core.internal.remote.{Cache, Platform, Vendor}
 import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
 import amf.plugins.domain.VocabulariesRegister
 

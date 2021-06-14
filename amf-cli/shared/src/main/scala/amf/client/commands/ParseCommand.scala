@@ -1,8 +1,7 @@
 package amf.client.commands
 
-import amf.client.environment.{AMFConfiguration, AMLConfiguration}
-import amf.core.client.{ExitCodes, ParserConfig}
-import amf.core.remote.Platform
+import amf.client.environment.AMFConfiguration
+import amf.core.internal.remote.Platform
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
