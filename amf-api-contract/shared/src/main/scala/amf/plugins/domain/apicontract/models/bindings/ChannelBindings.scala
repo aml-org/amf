@@ -1,12 +1,12 @@
 package amf.plugins.domain.apicontract.models.bindings
 
-import amf.core.metamodel.{Field, Obj}
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.bindings.ChannelBindingsModel
 import amf.plugins.domain.apicontract.metamodel.bindings.ChannelBindingsModel.{Bindings, Name}
 import org.yaml.model.YMap
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 
 case class ChannelBindings(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 

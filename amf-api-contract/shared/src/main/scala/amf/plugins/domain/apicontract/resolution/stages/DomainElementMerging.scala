@@ -1,18 +1,17 @@
 package amf.plugins.domain.apicontract.resolution.stages
 
-import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField, Inferred, LexicalInformation, SourceLocation}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.domain.DomainElementModel._
-import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
-import amf.core.metamodel.{Field, Type}
-import amf.core.model.DataType
-import amf.core.model.domain.DataNodeOps.adoptTree
-import amf.core.model.domain._
-import amf.core.parser.{FieldEntry, Value}
-import amf.core.utils.EqInstances._
-import amf.core.utils.EqSyntax._
-import amf.core.utils.TemplateUri
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, DomainElement, ExternalSourceElement}
+import amf.core.internal.annotations.{DeclaredElement, DefaultNode, ExplicitField, Inferred}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.metamodel.domain.templates.OptionalField
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.metamodel.{Field, Type}
+import amf.core.internal.utils.EqInstances._
+import amf.core.internal.utils.EqSyntax._
+import amf.core.internal.utils.TemplateUri
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.EmptyPayload
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
@@ -22,7 +21,6 @@ import amf.plugins.domain.apicontract.metamodel.MessageModel.Examples
 import amf.plugins.domain.apicontract.metamodel.{EndPointModel, OperationModel, RequestModel}
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.utils.AnnotationSyntax._
-import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations.UnusedBaseUriParameter
 import amf.validations.ResolutionSideValidations.UnequalMediaTypeDefinitionsInExtendsPayloads
 

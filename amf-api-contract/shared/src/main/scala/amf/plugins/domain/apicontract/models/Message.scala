@@ -1,15 +1,14 @@
 package amf.plugins.domain.apicontract.models
 
-import amf.core.metamodel.{Field, Obj}
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.client.scala.model.{BoolField, StrField}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.{CreativeWork, Example, ExemplifiedDomainElement, NodeShape}
 import amf.plugins.domain.apicontract.metamodel.MessageModel
 import amf.plugins.domain.apicontract.metamodel.MessageModel._
 import amf.plugins.domain.apicontract.models.bindings.{MessageBinding, MessageBindings}
-import amf.core.utils.AmfStrings
-import amf.plugins.domain.shapes.metamodel.common.ExamplesField.Examples
+import amf.core.internal.utils.AmfStrings
 
 class Message(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement

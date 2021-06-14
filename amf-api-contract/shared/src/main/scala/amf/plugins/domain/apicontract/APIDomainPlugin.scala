@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract
 
-import amf.client.plugins.{AMFDomainPlugin, AMFPlugin}
-import amf.core.metamodel.Obj
-import amf.core.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.internal.metamodel.Obj
+import amf.core.internal.plugins.AMFPlugin
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.apicontract.annotations.serializable.APISerializableAnnotations
 import amf.plugins.domain.apicontract.entities.APIEntities

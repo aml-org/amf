@@ -1,8 +1,8 @@
 package amf.plugins.domain.apicontract.unsafe
 
-import amf.client.plugins.ValidationMode
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.model.domain.Shape
+import amf.core.client.common.validation.ValidationMode
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.validation.ValidationConfiguration
 import amf.plugins.document.apicontract.validation.remote.PlatformPayloadValidator
 
 trait JsonSchemaSecrets {

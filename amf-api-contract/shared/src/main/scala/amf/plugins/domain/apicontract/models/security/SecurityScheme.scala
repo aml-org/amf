@@ -3,6 +3,7 @@ package amf.plugins.domain.apicontract.models.security
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.internal.annotations.{Inferred, SourceAST}
+import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.common.DisplayNameField.DisplayName
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
