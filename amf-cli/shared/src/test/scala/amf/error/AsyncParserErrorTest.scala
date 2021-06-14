@@ -1,5 +1,7 @@
 package amf.error
 
+import amf.core.client.common.position.Range
+
 class AsyncParserErrorTest extends ParserErrorTest {
 
   override protected val basePath: String = "file://amf-cli/shared/src/test/resources/parser-results/async"

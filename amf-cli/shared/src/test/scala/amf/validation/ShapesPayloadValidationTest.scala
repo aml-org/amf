@@ -1,5 +1,7 @@
 package amf.validation
 
+class A {}
+
 import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.TypeDef.{IntType, StrType}
 import amf.plugins.domain.shapes.models._

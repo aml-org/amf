@@ -1,9 +1,7 @@
 package amf.cycle
 
-import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{Amf, Raml10YamlHint}
-import amf.core.remote.{Amf, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class RamlArrayCycleTest extends FunSuiteCycleTests {

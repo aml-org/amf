@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.document.{Document, Module}
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.domain.apicontract.models.api.WebApi

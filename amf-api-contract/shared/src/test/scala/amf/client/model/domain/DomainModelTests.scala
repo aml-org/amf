@@ -1,6 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.convert.ApiClientConverters._
+import amf.core.client.platform.model.domain.ScalarNode
 import amf.plugins.document.{WebApi => WebApiObject}
 import org.scalatest.{FunSuite, Matchers}
 
