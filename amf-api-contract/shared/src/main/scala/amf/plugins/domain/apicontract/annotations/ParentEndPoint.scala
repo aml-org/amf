@@ -1,6 +1,11 @@
 package amf.plugins.domain.apicontract.annotations
 
-import amf.core.model.domain._
+import amf.core.client.scala.model.domain.{
+  AmfElement,
+  AnnotationGraphLoader,
+  ResolvableAnnotation,
+  SerializableAnnotation
+}
 import amf.plugins.domain.apicontract.models.EndPoint
 
 case class ParentEndPoint(reference: String) extends SerializableAnnotation with ResolvableAnnotation {

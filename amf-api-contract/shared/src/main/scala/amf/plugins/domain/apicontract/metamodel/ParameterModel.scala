@@ -1,14 +1,20 @@
 package amf.plugins.domain.apicontract.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Bool, Str}
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies, ShapeModel}
-import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.vocabulary.Namespace.{ApiContract, Document, Shapes}
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
+import amf.core.internal.metamodel.domain.{
+  DomainElementModel,
+  LinkableElementModel,
+  ModelDoc,
+  ModelVocabularies,
+  ShapeModel
+}
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField
+import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.plugins.domain.apicontract.models.Parameter
+import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Document, Shapes}
+import amf.core.internal.metamodel.Field
 
 /**
   * Parameter metaModel.

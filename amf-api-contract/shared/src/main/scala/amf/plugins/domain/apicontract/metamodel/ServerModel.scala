@@ -1,11 +1,11 @@
 package amf.plugins.domain.apicontract.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
+import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Array, Str}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.plugins.domain.apicontract.metamodel.bindings.{ServerBindingModel, ServerBindingsModel}
 import amf.plugins.domain.apicontract.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.apicontract.models.Server

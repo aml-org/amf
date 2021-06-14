@@ -1,11 +1,10 @@
 package amf.plugins.domain.apicontract.metamodel.bindings
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Array
-import amf.core.metamodel.domain.common.NameFieldSchema
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.ApiBinding
-import amf.core.vocabulary.ValueType
+import amf.core.client.scala.vocabulary.Namespace.ApiBinding
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.plugins.domain.apicontract.models.bindings.OperationBindings
 
 object OperationBindingsModel extends DomainElementModel with NameFieldSchema {

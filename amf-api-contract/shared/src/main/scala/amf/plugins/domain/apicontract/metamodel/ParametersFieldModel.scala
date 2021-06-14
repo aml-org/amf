@@ -1,9 +1,8 @@
 package amf.plugins.domain.apicontract.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Array
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
-import amf.core.vocabulary.Namespace.{ApiContract, Core, Security}
+import amf.core.client.scala.vocabulary.Namespace.ApiContract
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 
 trait ParametersFieldModel {
 

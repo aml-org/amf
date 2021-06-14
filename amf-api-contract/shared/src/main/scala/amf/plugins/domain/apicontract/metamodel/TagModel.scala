@@ -1,10 +1,10 @@
 package amf.plugins.domain.apicontract.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
-import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.vocabulary.Namespace.{ApiContract, Core}
-import amf.core.vocabulary.ValueType
+import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Core}
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.apicontract.models.Tag
 

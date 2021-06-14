@@ -1,7 +1,7 @@
 package amf.plugins.domain.apicontract.annotations.serializable
 
-import amf.core.annotations.serializable.SerializableAnnotations
-import amf.core.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.internal.annotations.serializable.SerializableAnnotations
 import amf.plugins.domain.apicontract.annotations.{
   InvalidBinding,
   OrphanOasExtension,
