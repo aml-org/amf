@@ -1,24 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec
 
-import amf.core.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfScalar, DataNode, DomainElement, ObjectNode, Shape}
-import amf.core.parser.{
-  Annotations,
-  Declarations,
-  EmptyFutureDeclarations,
-  Fields,
-  FragmentRef,
-  FutureDeclarations,
-  SearchScope
-}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
+import amf.core.client.scala.parse.document.EmptyFutureDeclarations
+import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
+import amf.core.internal.parser.domain._
 import amf.plugins.document.apicontract.model.DataTypeFragment
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations._
 import amf.plugins.document.apicontract.parser.spec.domain.OasParameter
-import amf.plugins.domain.shapes.metamodel.{CreativeWorkModel, ExampleModel}
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.apicontract.metamodel._
 import amf.plugins.domain.apicontract.metamodel.bindings.{
   ChannelBindingsModel,
@@ -37,6 +28,8 @@ import amf.plugins.domain.apicontract.models.bindings.{
 }
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
+import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import org.yaml.model.{YNode, YPart}
 
 /**

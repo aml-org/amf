@@ -1,16 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.raml
 
-import amf.core.Root
-import amf.core.annotations.DeclaredElement
-import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.YMapOps
-import amf.core.remote.Context
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils._
-import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.apicontract.parser.{RamlTypeDefMatcher, WebApiShapeParserContextAdapter}
 import amf.plugins.document.apicontract.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, _}
+import amf.plugins.document.apicontract.parser.{RamlTypeDefMatcher, WebApiShapeParserContextAdapter}
+import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.{InvalidAbstractDeclarationType, InvalidSecuredByType, InvalidTypesType}
 import amf.validations.ShapeParserSideValidations.InvalidTypeDefinition
