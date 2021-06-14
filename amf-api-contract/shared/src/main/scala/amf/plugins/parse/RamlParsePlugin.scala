@@ -1,12 +1,11 @@
 package amf.plugins.parse
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.exception.InvalidDocumentHeaderException
-import amf.core.model.document.{BaseUnit, ExternalFragment, Module}
-import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.exception.InvalidDocumentHeaderException
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment, Module}
+import amf.core.client.scala.model.domain.ExternalDomainElement
+import amf.core.client.scala.parse.document.{
   LibraryReference,
   LinkReference,
   ParsedReference,
@@ -15,12 +14,13 @@ import amf.core.parser.{
   ReferenceHandler,
   UnspecifiedReference
 }
+import amf.core.internal.parser.Root
+import amf.core.internal.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations
 import amf.plugins.document.apicontract.parser.spec.raml._
 import amf.plugins.document.apicontract.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.apicontract.references.RamlReferenceHandler
-import amf.plugins.features.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
 import org.yaml.model.YNode
 import org.yaml.model.YNode.MutRef
 

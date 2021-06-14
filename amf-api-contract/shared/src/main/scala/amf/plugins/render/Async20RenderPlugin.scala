@@ -1,12 +1,12 @@
 package amf.plugins.render
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderInfo}
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
-import amf.core.model.domain.DomainElement
-import amf.core.remote.Vendor
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document, Fragment, Module}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderInfo}
+import amf.core.internal.remote.Vendor
 import amf.plugins.common.Async20MediaTypes
 import amf.plugins.document.apicontract.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.async.AsyncApi20DocumentEmitter

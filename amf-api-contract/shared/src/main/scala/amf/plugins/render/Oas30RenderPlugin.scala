@@ -1,11 +1,11 @@
 package amf.plugins.render
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.render.AMFRenderPlugin
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document, ExternalFragment, Fragment, Module}
-import amf.core.remote.{Oas30, Vendor}
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment, Fragment, Module}
+import amf.core.internal.plugins.render.AMFRenderPlugin
+import amf.core.internal.remote.Vendor
 import amf.plugins.common.Oas30MediaTypes
 import amf.plugins.document.apicontract.contexts.emitter.oas.Oas3SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.oas.{Oas30ModuleEmitter, Oas3DocumentEmitter, OasFragmentEmitter}
