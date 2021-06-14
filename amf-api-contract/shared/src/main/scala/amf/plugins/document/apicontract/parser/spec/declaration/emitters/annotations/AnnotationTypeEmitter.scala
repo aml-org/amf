@@ -10,6 +10,11 @@ import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasSchemaEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
+  Raml10TypeEmitter,
+  RamlRecursiveShapeEmitter
+}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   OasLikeShapeEmitterContextAdapter,
   RamlShapeEmitterContextAdapter,

@@ -1,7 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.external.raml
 
 import amf.core.client.scala.model.domain.{AmfArray, Shape}
+import amf.core.client.scala.parse.document.{
+  InferredLinkReference,
+  ParsedReference,
+  Reference,
+  ReferenceFragmentPartition,
+  SyamlParsedDocument
+}
+import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.parser.domain.{Annotations, JsonParserFactory}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.document.apicontract.annotations._
 import amf.plugins.document.apicontract.contexts.WebApiContext
@@ -22,6 +32,7 @@ import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
+import amf.core.internal.utils.AmfStrings
 
 import scala.collection.mutable
 

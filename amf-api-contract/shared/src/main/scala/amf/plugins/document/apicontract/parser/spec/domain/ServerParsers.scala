@@ -19,6 +19,7 @@ import amf.plugins.domain.apicontract.models.api.{Api, WebApi}
 import amf.plugins.domain.apicontract.models.{Parameter, Server}
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YType}
+import amf.core.client.common.position.Range
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
 

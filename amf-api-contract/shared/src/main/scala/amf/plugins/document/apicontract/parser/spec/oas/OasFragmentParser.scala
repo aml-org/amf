@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
-import amf.core.client.scala.model.domain.ExternalDomainElement
+import amf.core.client.scala.model.domain.{ExternalDomainElement, Shape}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root

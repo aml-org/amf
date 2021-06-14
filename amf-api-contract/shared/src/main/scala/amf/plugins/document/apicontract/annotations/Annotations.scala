@@ -8,8 +8,8 @@ import amf.core.client.scala.model.domain.{
   PerpetualAnnotation,
   SerializableAnnotation
 }
+import amf.core.client.common.position.Range
 import amf.core.internal.parser.domain._
-import amf.core.parser.Range
 import org.yaml.model.YMapEntry
 
 case class FormBodyParameter() extends SerializableAnnotation with PerpetualAnnotation {

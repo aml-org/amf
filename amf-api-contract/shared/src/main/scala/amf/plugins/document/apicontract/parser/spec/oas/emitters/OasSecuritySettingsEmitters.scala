@@ -19,6 +19,10 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
+import amf.plugins.document.apicontract.parser.spec.raml.emitters.{
+  RamlApiKeySettingsEmitters,
+  RamlOAuth1SettingsEmitters
+}
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.security._
 import amf.plugins.domain.apicontract.models.security._

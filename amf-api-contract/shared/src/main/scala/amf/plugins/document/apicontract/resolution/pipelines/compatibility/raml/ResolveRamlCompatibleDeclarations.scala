@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.client.scala.transform.stages.elements.resolution.ReferenceResolution
 import amf.core.client.scala.transform.stages.elements.resolution.ReferenceResolution.ASSERT_DIFFERENT
-import amf.core.client.scala.transform.stages.selectors.{LinkSelector, MetaModelSelector}
+import amf.core.client.scala.transform.stages.selectors.{LinkSelector, MetaModelSelector, Selector}
 import amf.core.client.scala.vocabulary.Namespace.ApiContract
 import amf.plugins.domain.apicontract.models.Response
 

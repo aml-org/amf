@@ -4,7 +4,7 @@ import amf.core.client.common.position.Position
 import amf.core.internal.parser.domain.Fields
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
-import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
@@ -19,6 +19,7 @@ import amf.plugins.document.apicontract.parser.spec.oas.{
   OasSecuritySchemeType,
   SecuritySchemeType
 }
+import amf.plugins.document.apicontract.parser.spec.raml.emitters.Raml10DescribedByEmitter
 import amf.plugins.document.apicontract.parser.spec.toRaml
 import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.apicontract.models.security.SecurityScheme

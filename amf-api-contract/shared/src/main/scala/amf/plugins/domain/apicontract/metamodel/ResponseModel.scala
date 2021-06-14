@@ -10,8 +10,6 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.scala.client.vocabulary.Namespace._
-import amf.core.scala.client.vocabulary.ValueType
 import amf.plugins.domain.apicontract.models.Response
 
 /**

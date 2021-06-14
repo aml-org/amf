@@ -18,6 +18,7 @@ import amf.validations.ParserSideValidations.{
   CrossSecurityWarningSpecification,
   MissingSecuritySchemeErrorSpecification
 }
+import amf.core.client.common.position.Range
 import org.yaml.model.{YMap, YNode, YPart, YType}
 
 abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
