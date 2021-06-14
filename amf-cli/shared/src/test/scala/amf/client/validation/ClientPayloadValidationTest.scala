@@ -1,15 +1,10 @@
 package amf.client.validation
 
 import amf.client.convert.{ApiRegister, NativeOps}
-import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.client.environment.APIConfiguration
-import amf.client.model.domain._
-import amf.core.client.platform.model.DataTypes
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.validation.payload.PayloadValidator
 import amf.core.internal.validation.ValidationConfiguration
-import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
-import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
 import amf.remod.ClientShapePayloadValidatorFactory
 import org.scalatest.{AsyncFunSuite, Matchers}
 
