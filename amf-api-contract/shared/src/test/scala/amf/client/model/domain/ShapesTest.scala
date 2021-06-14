@@ -1,8 +1,9 @@
 package amf.client.model.domain
 
-import amf.client.convert.CoreRegister
 import amf.client.convert.ApiClientConverters._
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.platform.model.domain.{PropertyShape, ScalarNode}
+import amf.core.internal.convert.CoreRegister
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.document.{WebApi => WebApiObject}
 import org.scalatest.{FunSuite, Matchers}
 
@@ -10,11 +11,11 @@ class ShapesTest extends FunSuite with Matchers with PlatformSecrets {
   WebApiObject.register()
   CoreRegister.register(platform)
 
-  val s                                        = "test string"
-  val clientStringList: ClientList[String]     = Seq(s).asClient
-  val shape                                    = new AnyShape()
-  val creativeWork                             = new CreativeWork()
-  val shapes: Seq[amf.core.model.domain.Shape] = Seq(shape._internal)
+  val s                                                     = "test string"
+  val clientStringList: ClientList[String]                  = Seq(s).asClient
+  val shape                                                 = new AnyShape()
+  val creativeWork                                          = new CreativeWork()
+  val shapes: Seq[amf.core.client.scala.model.domain.Shape] = Seq(shape._internal)
 
   test("test ScalarNode") {
     val scalarNode = new ScalarNode()
