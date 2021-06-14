@@ -1,11 +1,9 @@
 package amf.resolution
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.model.document.BaseUnit
-import amf.core.remote.{Amf, Raml10, Raml10YamlHint}
-import amf.emit.AMFRenderer
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.{Amf, Raml10, Raml10YamlHint}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class ExtensionResolutionTest extends ResolutionTest {
 

@@ -1,6 +1,15 @@
 package amf.resolution
 import amf.client.environment.AMFConfiguration
-import amf.core.internal.remote.Raml10YamlHint
+import amf.core.client.common.validation.SeverityLevels
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline.DEFAULT_PIPELINE
+import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.remote.{Amf, Hint, Oas20, Oas30, Raml08, Raml10, Raml10YamlHint}
+import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.apicontract.resolution.pipelines.AmfTransformationPipeline
 import amf.validations.ParserSideValidations.UnknownSecuritySchemeErrorSpecification

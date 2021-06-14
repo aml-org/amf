@@ -1,7 +1,7 @@
 package amf.resolution
 
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.remote.{Amf, Raml08, Raml08YamlHint, Raml10}
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.remote.{Amf, Raml08, Raml08YamlHint}
 
 class Raml08ResolutionTest extends RamlResolutionTest {
   override val basePath: String =

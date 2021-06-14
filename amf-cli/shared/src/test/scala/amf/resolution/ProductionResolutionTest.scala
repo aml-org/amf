@@ -1,10 +1,10 @@
 package amf.resolution
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.Document
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.internal.remote._
 import amf.plugins.document.apicontract.resolution.pipelines.AmfEditingPipeline
 
 import scala.concurrent.Future

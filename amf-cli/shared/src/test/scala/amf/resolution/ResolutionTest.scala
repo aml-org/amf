@@ -1,9 +1,9 @@
 package amf.resolution
 
 import amf.client.environment.AMFConfiguration
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 
 abstract class ResolutionTest extends FunSuiteCycleTests with ResolutionCapabilities {

@@ -1,13 +1,10 @@
 package amf.resolution
 
 import amf.client.environment.AMFConfiguration
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.model.document.BaseUnit
-import amf.core.remote.{Raml10, Raml10YamlHint}
-import amf.emit.AMFRenderer
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.{Raml10, Raml10YamlHint}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class OverlayResolutionTest extends ResolutionTest {
 

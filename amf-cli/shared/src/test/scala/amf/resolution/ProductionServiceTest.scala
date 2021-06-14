@@ -1,15 +1,13 @@
 package amf.resolution
 
 import amf.client.environment.AMFConfiguration
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.environment.RAMLConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.metamodel.document.DocumentModel
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
-import amf.core.resolution.stages.ReferenceResolutionStage
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.stages.ReferenceResolutionStage
+import amf.core.internal.metamodel.document.DocumentModel
+import amf.core.internal.remote._
 import org.scalatest.Assertion
 
 import scala.concurrent.Future

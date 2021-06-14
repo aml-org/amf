@@ -1,13 +1,8 @@
 package amf.resolution
 
-import amf.client.environment.RAMLConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.AMFGraphConfiguration
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.model.document.BaseUnit
-import amf.core.remote.{Amf, Raml10, Raml10YamlHint}
-import amf.facades.{AMFCompiler, Validation}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.{Amf, Raml10, Raml10YamlHint}
 
 import scala.concurrent.Future
 

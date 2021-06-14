@@ -1,7 +1,7 @@
 package amf.resolution
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.{Amf, Oas20, Oas20YamlHint, Raml10, Raml10YamlHint}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.{Amf, Oas20, Oas20YamlHint, Raml10, Raml10YamlHint}
 
 class ReferencesResolutionTest extends ResolutionTest {
   override val basePath: String = "amf-cli/shared/src/test/resources/upanddown/"
