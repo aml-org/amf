@@ -1,0 +1,99 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/web-api",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
+        "http://a.ml/vocabularies/document#RootDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "My API",
+      "http://a.ml/vocabularies/core#version": "1.0",
+      "http://a.ml/vocabularies/apiContract#endpoint": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/web-api/end-points/%2Fperson"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/web-api/end-points/%2Fperson",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#EndPoint",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#path": "/person",
+      "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/declarations/annotations/paginated": {
+        "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/web-api/end-points/%2Fperson/paginated/scalar_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/declarations/annotations/paginated"
+        }
+      ]
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "paginated",
+      "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/web-api/end-points/%2Fperson/paginated/scalar_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "true",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "scalar_1"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml",
+      "http://a.ml/vocabularies/document#declares": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/declarations/annotations/paginated"
+        }
+      ],
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/web-api"
+      },
+      "http://a.ml/vocabularies/document#version": "3.1.0",
+      "http://a.ml/vocabularies/document#root": true
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/declarations/annotations/paginated",
+      "@type": [
+        "http://a.ml/vocabularies/document#DomainProperty",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/declarations/annotations/paginated/scalar/paginated"
+      },
+      "http://a.ml/vocabularies/core#name": "paginated"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/declarations/annotations/paginated/scalar/paginated",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": "paginated"
+    }
+  ]
+}
