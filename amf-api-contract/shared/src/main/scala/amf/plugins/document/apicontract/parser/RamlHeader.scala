@@ -1,6 +1,8 @@
 package amf.plugins.document.apicontract.parser
 
 import amf.core.Root
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser.Root
 import amf.core.parser.SyamlParsedDocument
 import amf.plugins.document.apicontract.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 

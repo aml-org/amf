@@ -1,18 +1,18 @@
 package amf.plugins.document.apicontract.parser.spec.async.parser
 
-import amf.core.annotations.SynthesizedField
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OasTypeParser}
+import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.domain.apicontract.metamodel.ParameterModel
 import amf.plugins.domain.apicontract.models.Parameter
-import amf.plugins.features.validation.CoreValidations
 import org.yaml.model.YMap
 
 case class AsyncParametersParser(parentId: String, map: YMap)(implicit val ctx: AsyncWebApiContext) {

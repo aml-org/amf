@@ -1,14 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters.bindings
 
-import amf.core.annotations.SynthesizedField
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.domain.Shape
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async.AsyncSchemaEmitter
 import amf.plugins.domain.apicontract.metamodel.bindings.{
   Amqp091ChannelBindingModel,
   Amqp091ChannelExchangeModel,
@@ -22,8 +22,8 @@ import amf.plugins.domain.apicontract.models.bindings.amqp.{
   Amqp091Queue
 }
 import amf.plugins.domain.apicontract.models.bindings.websockets.WebSocketsChannelBinding
-import org.yaml.model.{YDocument, YNode}
 import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 

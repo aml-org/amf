@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters
-import amf.core.emitter.BaseEmitters.{EmptyMapEmitter, MapEntryEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.model.domain.{AmfElement, DomainElement, Linkable, NamedDomainElement}
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.client.scala.model.domain.{AmfElement, DomainElement, Linkable, NamedDomainElement}
+import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.async.emitters.bindings.{
   AsyncApiChannelBindingsEmitter,
   AsyncApiMessageBindingsEmitter,

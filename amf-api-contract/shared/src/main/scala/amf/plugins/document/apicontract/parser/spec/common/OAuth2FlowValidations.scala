@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.internal.metamodel.Field
 import amf.plugins.domain.apicontract.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.apicontract.models.security.OAuth2Flow
 import amf.validations.ParserSideValidations.MissingOAuthFlowField

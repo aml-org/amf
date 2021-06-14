@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.async
 
-import amf.core.metamodel.Field
+import amf.core.internal.metamodel.Field
 import amf.plugins.domain.apicontract.metamodel.OperationModel
 
 sealed trait MessageType {

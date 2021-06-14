@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters
 
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter

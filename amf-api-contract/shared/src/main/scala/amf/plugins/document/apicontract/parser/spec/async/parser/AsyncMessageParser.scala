@@ -1,9 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.async.parser
 
-import amf.core.annotations.{TrackedElement, VirtualElement}
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
-import amf.core.utils.IdCounter
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.annotations.{TrackedElement, VirtualElement}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.utils.IdCounter
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.ExampleIndex
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
@@ -19,14 +21,12 @@ import amf.plugins.document.apicontract.parser.spec.declaration.{
 }
 import amf.plugins.document.apicontract.parser.spec.domain.binding.AsyncMessageBindingsParser
 import amf.plugins.document.apicontract.parser.spec.domain.{ExampleDataParser, Oas3ExampleOptions}
-import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.{Example, NodeShape}
 import amf.plugins.domain.apicontract.metamodel.MessageModel.IsAbstract
 import amf.plugins.domain.apicontract.metamodel.{MessageModel, OperationModel, PayloadModel}
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.bindings.MessageBindings
-import amf.plugins.features.validation.CoreValidations
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.domain.shapes.models.{Example, NodeShape}
 import amf.validations.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 

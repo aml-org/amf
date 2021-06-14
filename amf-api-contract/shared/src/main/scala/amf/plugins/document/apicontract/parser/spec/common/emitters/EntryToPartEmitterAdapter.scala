@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.common.emitters
 
-import amf.core.emitter.{EntryEmitter, PartEmitter}
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import org.yaml.model.YDocument
 
 case class EntryToPartEmitterAdapter(e: EntryEmitter) extends PartEmitter {

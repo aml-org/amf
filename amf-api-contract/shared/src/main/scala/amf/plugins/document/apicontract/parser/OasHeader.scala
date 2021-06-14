@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser
 
-import amf.core.Root
-import amf.core.parser._
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
+import amf.core.internal.utils.AmfStrings
 import org.yaml.model.YMap
-import amf.core.utils.AmfStrings
 
 /**
   *

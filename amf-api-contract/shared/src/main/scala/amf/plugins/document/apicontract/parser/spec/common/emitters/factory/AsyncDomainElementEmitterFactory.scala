@@ -1,7 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.common.emitters.factory
 
-import amf.core.emitter.{PartEmitter, SpecOrdering}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.PartEmitter
 import amf.core.model.domain.DomainElement
 import amf.plugins.document.apicontract.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.async.emitters.{

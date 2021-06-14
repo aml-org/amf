@@ -1,11 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.async
 
-import amf.core.annotations.SourceVendor
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.FieldEntry
-import amf.core.remote.{AsyncApi20, Vendor}
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.{AsyncApi20, Vendor}
+import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter, ValueEmitter, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.emitter.async.AsyncSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.async.emitters.{
   AsyncApiCreativeWorksEmitter,
@@ -18,11 +20,10 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.Agnosti
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.domain.SecurityRequirementsEmitter
 import amf.plugins.document.apicontract.parser.spec.oas.emitters.{InfoEmitter, TagsEmitter}
-import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.models.Tag
 import amf.plugins.domain.apicontract.models.api.{Api, WebApi}
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
 import scala.collection.mutable

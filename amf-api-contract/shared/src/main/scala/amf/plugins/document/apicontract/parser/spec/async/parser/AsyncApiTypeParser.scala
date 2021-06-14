@@ -1,7 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.async.parser
 
 import amf.core.annotations.{DefinedByVendor, SourceVendor}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.errorhandling.AMFErrorHandler
+import amf.core.internal.annotations.DefinedByVendor
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.core.internal.remote.Raml10
+import amf.core.internal.validation.CoreValidations
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.remote.Raml10

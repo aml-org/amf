@@ -1,27 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters
 
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.parser.Position.ZERO
-import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.core.emitter.BaseEmitters.ValueEmitter
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.Fields
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.internal.parser.domain.{FieldEntry, Fields}
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.async.AsyncHelper
-import amf.plugins.document.apicontract.parser.spec.oas.emitters.{
-  OasLikeOperationEmitter,
-  OasLikeOperationPartEmitter,
-  TagsEmitter
-}
-import amf.plugins.document.apicontract.parser.spec.async.AsyncHelper
-import amf.plugins.document.apicontract.parser.spec.oas.emitters.{OasLikeOperationEmitter, TagsEmitter}
+import amf.plugins.document.apicontract.parser.spec.oas.emitters.{OasLikeOperationEmitter, OasLikeOperationPartEmitter}
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.OperationModel
 import amf.plugins.domain.apicontract.models.{Operation, Tag}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.emitter.BaseEmitters._
-import amf.plugins.domain.apicontract.models.{Operation, Tag}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

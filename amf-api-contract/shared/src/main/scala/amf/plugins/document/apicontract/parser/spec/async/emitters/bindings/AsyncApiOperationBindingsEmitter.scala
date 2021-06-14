@@ -1,13 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters.bindings
 
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.domain.Shape
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async.AsyncSchemaEmitter
 import amf.plugins.domain.apicontract.metamodel.bindings.{
   Amqp091OperationBindingModel,
   HttpOperationBindingModel,

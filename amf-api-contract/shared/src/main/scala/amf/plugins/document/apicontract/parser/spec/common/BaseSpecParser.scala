@@ -1,9 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.model.domain.{ArrayNode => _, ScalarNode => _}
-import amf.core.parser._
-import amf.plugins.document.vocabularies.parser.common.DeclarationKeyCollector
+import amf.core.internal.parser.domain.BaseSpecParser
 import amf.plugins.document.apicontract.contexts.WebApiContext
+import amf.plugins.document.vocabularies.parser.common.DeclarationKeyCollector
 import amf.validations.ParserSideValidations.PathTemplateUnbalancedParameters
 import org.yaml.model._
 

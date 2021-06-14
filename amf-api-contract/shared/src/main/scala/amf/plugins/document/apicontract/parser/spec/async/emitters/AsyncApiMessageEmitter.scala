@@ -1,22 +1,21 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.Position.ZERO
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.annotations.ExampleIndex
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
-import amf.plugins.document.apicontract.parser.spec.declaration.{OasTagToReferenceEmitter, emitters}
+import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{AgnosticShapeEmitterContextAdapter, async}
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async.AsyncSchemaEmitter
-import amf.plugins.document.apicontract.parser.spec.domain.{ExampleDataNodePartEmitter, NamedMultipleExampleEmitter}
-import amf.plugins.document.apicontract.parser.spec.oas.emitters.{OasLikeExampleEmitters, TagsEmitter}
-import amf.plugins.domain.shapes.models.{CreativeWork, Example}
+import amf.plugins.document.apicontract.parser.spec.domain.ExampleDataNodePartEmitter
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.{MessageModel, PayloadModel}
 import amf.plugins.domain.apicontract.models._
+import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 

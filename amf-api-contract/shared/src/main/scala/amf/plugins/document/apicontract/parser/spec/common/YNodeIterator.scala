@@ -1,5 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
+import amf.core.internal.utils.AliasCounter
 import amf.core.utils.AliasCounter
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
