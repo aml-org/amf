@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.resolution.stages
 
-import amf.client.remod.ParseConfiguration
-import amf.core.emitter.SpecOrdering
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.parser.{FieldEntry, ParserContext}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.SpecOrdering
 import amf.plugins.document.apicontract.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter

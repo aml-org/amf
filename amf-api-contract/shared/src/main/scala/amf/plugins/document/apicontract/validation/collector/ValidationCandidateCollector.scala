@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.validation.collector
 
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.AmfElement
-import amf.core.traversal.iterator.AmfElementStrategy
-import amf.core.validation.ValidationCandidate
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.AmfElement
+import amf.core.client.scala.traversal.iterator.AmfElementStrategy
+import amf.core.internal.validation.ValidationCandidate
 
 trait ValidationCandidateCollector {
   def collect(element: AmfElement): Seq[ValidationCandidate]

@@ -1,25 +1,11 @@
 package amf.plugins.document.apicontract.validation.plugins
 
-import amf.{
-  AmfProfile,
-  Async20Profile,
-  AsyncProfile,
-  Oas20Profile,
-  Oas30Profile,
-  ProfileName,
-  Raml08Profile,
-  Raml10Profile
-}
-import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
-import amf.client.remod.amfcore.plugins.validate.{
-  AMFValidatePlugin,
-  ValidationConfiguration,
-  ValidationInfo,
-  ValidationOptions,
-  ValidationResult
-}
-import amf.core.model.document.BaseUnit
-import amf.core.validation.AMFValidationReport
+import amf.core.client.common.{HighPriority, PluginPriority}
+import amf.core.client.common.validation._
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.plugins.validation.{AMFValidatePlugin, ValidationInfo, ValidationOptions, ValidationResult}
+import amf.core.internal.validation.core.ValidationResult
 
 import scala.concurrent.{ExecutionContext, Future}
 

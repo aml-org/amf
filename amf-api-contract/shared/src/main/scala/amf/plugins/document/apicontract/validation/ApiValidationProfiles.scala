@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.validation
 
-import amf.core.validation.core.ValidationProfile
+import amf.core.client.common.validation._
+import amf.core.internal.validation.core.ValidationProfile
 import amf.plugins.document.apicontract.validation.AMFRawValidations._
 import amf.plugins.document.apicontract.validation.DefaultAMFValidations.buildProfileFrom
-import amf._
 
 object ApiValidationProfiles {
 

@@ -1,8 +1,13 @@
 package amf.plugins.document.apicontract.validation
 
-import amf.core.validation.core.ShaclSeverityUris._
-import amf.core.validation.core.{FunctionConstraint, NodeConstraint, PropertyConstraint, ValidationSpecification}
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
+import amf.core.internal.validation.core.ShaclSeverityUris.amfToShaclSeverity
+import amf.core.internal.validation.core.{
+  FunctionConstraint,
+  NodeConstraint,
+  PropertyConstraint,
+  ValidationSpecification
+}
 import amf.plugins.document.apicontract.validation.AMFRawValidations.AMFValidation
 
 object RawValidationAdapter extends ImportUtils {

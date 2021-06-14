@@ -1,12 +1,16 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.resolution.stages._
+import amf.core.client.common.validation.{AmfProfile, ProfileName}
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.stages.{
+  CleanReferencesStage,
+  DeclarationsRemovalStage,
+  ExternalSourceRemovalStage,
+  TransformationStep
+}
 import amf.plugins.document.apicontract.resolution.stages.ExtensionsResolutionStage
-import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.apicontract.resolution.stages._
-import amf.{AmfProfile, ProfileName}
+import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 
 class AmfTransformationPipeline private[amf] (override val name: String) extends TransformationPipeline() {
   def profileName: ProfileName = AmfProfile

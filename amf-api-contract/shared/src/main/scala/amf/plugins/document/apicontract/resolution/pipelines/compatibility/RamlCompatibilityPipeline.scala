@@ -2,7 +2,12 @@ package amf.plugins.document.apicontract.resolution.pipelines.compatibility
 
 import amf.{ProfileName, Raml08Profile, Raml10Profile}
 import amf.client.remod.amfcore.resolution.PipelineName
+import amf.core.client.common.validation.{ProfileName, Raml08Profile, Raml10Profile}
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.errorhandling.AMFErrorHandler
+import amf.core.internal.remote.{Raml08, Raml10}
 import amf.core.remote.{Raml08, Raml10}
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.resolution.stages.TransformationStep

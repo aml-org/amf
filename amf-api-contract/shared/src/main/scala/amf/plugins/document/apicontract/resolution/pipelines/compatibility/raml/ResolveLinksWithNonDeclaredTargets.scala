@@ -1,8 +1,7 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.Linkable
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.Linkable
 import amf.plugins.document.apicontract.resolution.pipelines.compatibility.common.AmfElementLinkResolutionStage
 
 // TODO we need to do this because some links might point to properties within declared elements

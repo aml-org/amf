@@ -1,14 +1,8 @@
 package amf.plugins.document
 
 import amf.client.convert.ApiRegister
-import amf.client.execution.BaseExecutionEnvironment
-import amf.core.AMF
-import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.apicontract._
-import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.domain.apicontract.APIDomainPlugin
-
-import scala.scalajs.js.annotation.JSExportAll
+import amf.core.client.platform.execution.BaseExecutionEnvironment
+import amf.core.internal.unsafe.PlatformSecrets
 
 object WebApi extends PlatformSecrets {
 
@@ -18,9 +12,9 @@ object WebApi extends PlatformSecrets {
 
     ApiRegister.register(platform)
 
-    // plugin initialization
-    AMF.registerPlugin(DataShapesDomainPlugin)
-    AMF.registerPlugin(APIDomainPlugin)
+    // TODO: ARM erase. Commented because of amf-core package change. Temporary
+//    AMF.registerPlugin(DataShapesDomainPlugin)
+//    AMF.registerPlugin(APIDomainPlugin)
   }
 
 }

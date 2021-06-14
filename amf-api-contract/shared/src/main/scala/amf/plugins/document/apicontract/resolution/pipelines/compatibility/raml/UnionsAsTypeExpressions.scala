@@ -1,16 +1,15 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.{DomainElement, NamedDomainElement, Shape}
-import amf.core.resolution.stages.TransformationStep
-import amf.core.utils.IdCounter
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement, Shape}
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.RamlUnionEmitterHelper
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.models.UnionShape
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 /**
   * Transforms unions 'anyOf: [A, B]' into type expressions 'A | B' so we generate valid RAML for the old parser

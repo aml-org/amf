@@ -1,23 +1,22 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
-import amf.Async20Profile
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.remote.AsyncApi20
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.resolution.stages.{
+import amf.core.client.common.validation.Async20Profile
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.stages.{
   CleanReferencesStage,
   DeclarationsRemovalStage,
   ExternalSourceRemovalStage,
   TransformationStep
 }
-import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
+import amf.core.internal.remote.AsyncApi20
 import amf.plugins.domain.apicontract.resolution.stages._
 import amf.plugins.domain.apicontract.resolution.stages.async.{
   AsyncContentTypeResolutionStage,
   AsyncExamplePropagationResolutionStage,
   ServerVariableExampleResolutionStage
 }
+import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 
 class Async20TransformationPipeline private (override val name: String) extends TransformationPipeline() {
   def references = new WebApiReferenceResolutionStage()

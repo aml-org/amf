@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.validation.plugins
 
-import amf.core.model.document.BaseUnit
+import amf.core.client.scala.model.document.BaseUnit
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, Vocabulary}
 
 trait AmlAware {

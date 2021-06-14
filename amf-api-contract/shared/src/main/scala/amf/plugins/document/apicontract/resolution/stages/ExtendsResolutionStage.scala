@@ -2,9 +2,22 @@ package amf.plugins.document.apicontract.resolution.stages
 
 import amf.client.errorhandling.IgnoringErrorHandler
 import amf.client.remod.ParseConfiguration
-import amf.core.annotations.{ErrorDeclaration, SourceAST}
+import amf.core.annotations.SourceAST
+import amf.core.client.common.validation.{ProfileName, Raml08Profile}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{DataNode, DomainElement, ElementTree}
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.client.scala.transform.stages.{ReferenceResolutionStage, TransformationStep}
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.AMFErrorHandler
+import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.utils.AliasCounter
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DataNode, DomainElement, ElementTree}

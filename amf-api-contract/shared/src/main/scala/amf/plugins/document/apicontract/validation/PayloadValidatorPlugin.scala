@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.validation
 
-import amf.client.plugins._
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.model.domain._
-import amf.core.validation._
+import amf.core.client.common.validation.ValidationMode
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.validation.payload.{AMFPayloadValidationPlugin, PayloadValidator}
+import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.validation.ValidationConfiguration
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.remod.ShapePayloadValidatorFactory
 

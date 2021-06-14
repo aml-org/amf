@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.resolution.stages
 
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.ScalarNode
-import amf.core.model.domain.templates.{Variable, VariableValue}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.ScalarNode
+import amf.core.client.scala.model.domain.templates.{Variable, VariableValue}
 
 trait Branch {
   val key: Key

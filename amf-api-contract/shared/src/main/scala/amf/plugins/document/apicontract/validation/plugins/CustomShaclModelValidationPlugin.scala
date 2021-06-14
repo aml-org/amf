@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.validation.plugins
-import amf.client.remod.amfcore.plugins.validate.ValidationInfo
-import amf.core.services.RuntimeValidator.CustomShaclFunctions
-import amf.core.services.ShaclValidationOptions
+
+import amf.core.internal.plugins.validation.ValidationInfo
+import amf.core.internal.validation.core.ShaclValidationOptions
 import amf.plugins.document.apicontract.validation.plugins.BaseApiValidationPlugin.standardApiProfiles
 import amf.plugins.features.validation.shacl.ShaclValidator
 import amf.plugins.features.validation.shacl.custom.CustomShaclValidator
+import amf.plugins.features.validation.shacl.custom.CustomShaclValidator.CustomShaclFunctions
 import amf.validations.CustomShaclFunctions
 
 object CustomShaclModelValidationPlugin {

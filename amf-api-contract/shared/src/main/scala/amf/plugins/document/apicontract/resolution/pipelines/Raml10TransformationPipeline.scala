@@ -1,11 +1,10 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.remote.Raml10
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.client.common.validation.{ProfileName, Raml10Profile}
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.remote.Raml10
 import amf.plugins.domain.apicontract.resolution.stages._
-import amf.{ProfileName, Raml10Profile}
 
 class Raml10TransformationPipeline private (override val name: String) extends AmfTransformationPipeline(name) {
   override def profileName: ProfileName = Raml10Profile

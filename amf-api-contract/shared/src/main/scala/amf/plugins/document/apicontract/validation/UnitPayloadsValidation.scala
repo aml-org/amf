@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.validation
 
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.benchmark.ExecutionLog
-import amf.core.metamodel.document.PayloadFragmentModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode}
-import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
-import amf.internal.environment.Environment
+import amf.core.client.common.validation.SeverityLevels
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{ArrayNode, DataNode, ObjectNode}
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.internal.benchmark.ExecutionLog
+import amf.core.internal.metamodel.document.PayloadFragmentModel
+import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
 import amf.plugins.document.apicontract.validation.collector.{CollectorsRunner, ValidationCandidateCollector}
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.validations.ShapePayloadValidations

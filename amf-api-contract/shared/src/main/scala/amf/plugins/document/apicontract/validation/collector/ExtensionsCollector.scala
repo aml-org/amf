@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.validation.collector
 
-import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.extensions.{DomainExtension, Extension, ShapeExtension}
-import amf.core.model.domain.{AmfElement, AmfScalar}
-import amf.core.validation.ValidationCandidate
+import amf.core.client.scala.model.document.PayloadFragment
+import amf.core.client.scala.model.domain.{AmfElement, AmfScalar}
+import amf.core.client.scala.model.domain.extensions.{DomainExtension, Extension, ShapeExtension}
+import amf.core.internal.annotations.DomainExtensionAnnotation
+import amf.core.internal.validation.ValidationCandidate
 import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.resolveAnnotation
 
 object ExtensionsCollector extends ValidationCandidateCollector {

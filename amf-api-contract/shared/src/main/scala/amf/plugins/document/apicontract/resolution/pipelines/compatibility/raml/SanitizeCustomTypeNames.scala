@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.client.scala.transform.stages.TransformationStep
 
 class SanitizeCustomTypeNames() extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {

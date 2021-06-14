@@ -1,15 +1,15 @@
 package amf.plugins.document.apicontract.resolution.pipelines
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.remote.Oas30
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.resolution.stages.TransformationStep
-import amf.plugins.domain.shapes.resolution.stages.RequestParamsLinkStage
+
+import amf.core.client.common.validation.{Oas30Profile, ProfileName}
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.internal.remote.Oas30
 import amf.plugins.domain.apicontract.resolution.stages.{
   OpenApiParametersNormalizationStage,
   ParametersNormalizationStage
 }
-import amf.{Oas30Profile, ProfileName}
+import amf.plugins.domain.shapes.resolution.stages.RequestParamsLinkStage
 
 class Oas30TransformationPipeline private (override val name: String) extends AmfTransformationPipeline(name) {
   override def profileName: ProfileName = Oas30Profile

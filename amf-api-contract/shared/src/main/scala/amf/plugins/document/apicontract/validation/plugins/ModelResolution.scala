@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.validation.plugins
 
-import amf.ProfileName
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.model.document.BaseUnit
-import amf.core.validation.AMFValidationReport
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.validation.ValidationConfiguration
 import amf.plugins.document.apicontract.resolution.pipelines.ValidationTransformationPipeline
 
 trait ModelResolution {

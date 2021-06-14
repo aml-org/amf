@@ -1,10 +1,9 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility
 
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.remote.Oas20
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.internal.remote.Oas20
 import amf.plugins.document.apicontract.resolution.pipelines.Oas20TransformationPipeline
 import amf.plugins.document.apicontract.resolution.pipelines.compatibility.oas._
 import amf.plugins.document.apicontract.resolution.pipelines.compatibility.oas3.CleanRepeatedOperationIds
