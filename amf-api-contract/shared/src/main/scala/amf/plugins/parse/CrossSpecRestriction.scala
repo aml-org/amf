@@ -1,10 +1,10 @@
 package amf.plugins.parse
 
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.parser.{ParserContext, Reference}
-import amf.core.remote.Vendor
-import amf.plugins.features.validation.CoreValidations.InvalidCrossSpec
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.parse.document.{ParserContext, Reference}
+import amf.core.internal.parser.Root
+import amf.core.internal.remote.Vendor
+import amf.core.internal.validation.CoreValidations.InvalidCrossSpec
 
 trait CrossSpecRestriction { this: ApiParsePlugin =>
 

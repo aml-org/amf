@@ -1,14 +1,14 @@
 package amf.plugins.parse
 
-import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
-import amf.client.remod.amfcore.plugins.{LowPriority, PluginPriority}
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.exception.UnsupportedParsedDocumentException
-import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{Annotations, ParserContext, ReferenceHandler, SyamlParsedDocument}
-import amf.core.utils.MediaTypeMatcher
+import amf.core.client.common.{LowPriority, PluginPriority}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.exception.UnsupportedParsedDocumentException
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
+import amf.core.client.scala.model.domain.ExternalDomainElement
+import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument}
+import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.references.JsonRefsReferenceHandler
 
 object ExternalJsonYamlRefsParsePlugin extends AMFParsePlugin {

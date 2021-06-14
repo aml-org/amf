@@ -9,6 +9,7 @@ import amf.plugins.domain.apicontract.entities.APIEntities
 
 import scala.concurrent.{ExecutionContext, Future}
 
+// TODO: restore legacy AMFDomainPlugin or remove this entirely.
 object APIDomainPlugin extends AMFDomainPlugin {
 
   override val ID = "API Domain"

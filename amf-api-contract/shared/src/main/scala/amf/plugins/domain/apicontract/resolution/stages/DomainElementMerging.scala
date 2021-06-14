@@ -1,12 +1,32 @@
 package amf.plugins.domain.apicontract.resolution.stages
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.domain.{AmfArray, AmfElement, DomainElement, ExternalSourceElement}
-import amf.core.internal.annotations.{DeclaredElement, DefaultNode, ExplicitField, Inferred}
+import amf.core.client.scala.model.domain.{
+  AmfArray,
+  AmfElement,
+  AmfScalar,
+  ArrayNode,
+  DataNode,
+  DataNodeOps,
+  DomainElement,
+  ExternalSourceElement,
+  ObjectNode,
+  ScalarNode,
+  Shape
+}
+import amf.core.internal.annotations.{
+  DeclaredElement,
+  DefaultNode,
+  ExplicitField,
+  Inferred,
+  LexicalInformation,
+  SourceLocation
+}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.DomainElementModel
-import amf.core.internal.metamodel.domain.templates.OptionalField
-import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.metamodel.domain.ShapeModel.{Extends, Sources}
+import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
+import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
+import amf.core.internal.parser.domain.{FieldEntry, Value}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.utils.EqInstances._
 import amf.core.internal.utils.EqSyntax._
