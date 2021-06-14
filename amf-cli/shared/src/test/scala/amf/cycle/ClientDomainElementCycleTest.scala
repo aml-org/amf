@@ -1,11 +1,11 @@
 package amf.cycle
-import amf.client.convert.CoreClientConverters._
-import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.render.WebApiDomainElementEmitter
-import amf.client.resolve.ClientErrorHandlerConverter.ErrorHandlerConverter
-import amf.core.model.domain.DomainElement
-import amf.core.remote.{Oas20JsonHint, Oas30JsonHint, Raml10YamlHint, Vendor}
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.convert.ClientErrorHandlerConverter.ErrorHandlerConverter
+import amf.core.internal.remote.{Oas30JsonHint, Raml10YamlHint, Vendor}
 import org.yaml.builder.YamlOutputBuilder
+import amf.client.convert.ApiClientConverters._
 
 class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
 

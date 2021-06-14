@@ -1,11 +1,12 @@
 package amf.compiler
 
-import amf.core.annotations.LexicalInformation
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Annotation
-import amf.core.parser.{Annotations, Range}
-import amf.core.remote.Raml10YamlHint
-import amf.core.traversal.iterator.AmfElementStrategy
+import amf.core.client.common.position.Range
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Annotation
+import amf.core.client.scala.traversal.iterator.AmfElementStrategy
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Raml10YamlHint
 import org.scalatest.{Assertion, AsyncFlatSpec, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}

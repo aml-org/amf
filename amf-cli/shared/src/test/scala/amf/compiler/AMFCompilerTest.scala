@@ -1,15 +1,10 @@
 package amf.compiler
 
-import amf.Raml10Profile
 import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.errorhandling.{DefaultErrorHandler, IgnoringErrorHandler}
-import amf.client.remod.AMFValidator
-import amf.core.Root
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.{UnspecifiedReference, _}
-import amf.core.remote.Syntax.{Syntax, Yaml}
-import amf.core.remote._
+import amf.core.client.scala.errorhandling.{IgnoringErrorHandler, UnhandledErrorHandler}
+import amf.core.client.scala.parse.document.{SyamlParsedDocument, UnspecifiedReference}
+import amf.core.internal.remote.Syntax.Yaml
+import amf.core.internal.remote._
 import amf.plugins.domain.apicontract.models.api.WebApi
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}

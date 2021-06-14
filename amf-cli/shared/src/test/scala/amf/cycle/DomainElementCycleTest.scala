@@ -2,25 +2,25 @@ package amf.cycle
 
 import amf.client.convert.ApiRegister
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
-import amf.core.model.domain.{DomainElement, NamedDomainElement}
-import amf.core.parser.SyamlParsedDocument
-import amf.core.remote.{Hint, Vendor}
-import amf.facades.{AMFCompiler, Validation}
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, DefaultErrorHandler, UnhandledErrorHandler}
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
+import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
+import amf.core.internal.remote.{Hint, Vendor}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.plugins.document.apicontract.parser.spec.common.emitters.ApiDomainElementEmitter
-import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.Api
-import amf.plugins.syntax.SYamlSyntaxPlugin
+import amf.plugins.domain.shapes.models.Example
 import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
 import org.yaml.model.{YDocument, YNode}
 
+import java.io.StringWriter
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with BeforeAndAfterAll {
+trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with BeforeAndAfterAll with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -67,7 +67,8 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
       errors.map(_.completeMessage).mkString("\n")
     else {
       val document = SyamlParsedDocument(document = YDocument(node))
-      SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString
+      val writer   = new StringWriter()
+      SyamlSyntaxRenderPlugin.emit("application/yaml", document, writer).getOrElse("").toString
     }
   }
 

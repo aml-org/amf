@@ -1,15 +1,14 @@
 package amf.compiler
 
 import amf.client.environment.WebAPIConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.{ErrorHandlerProvider, ParseConfiguration}
-import amf.client.remote.Content
-import amf.core.AMFCompiler
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.remote.{Cache, Context, FileNotFound}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.common.remote.Content
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
+import amf.core.internal.remote.{Cache, Context, FileNotFound}
+import amf.core.internal.resource.ResourceLoader
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.facades.Validation
-import amf.internal.resource.ResourceLoader
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.Matchers
 
@@ -34,9 +33,6 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     )
     val url = "resource::really-cool-urn:1.0.0:raml:zip:main.raml"
     val eh  = DefaultErrorHandler()
-    val ehp = new ErrorHandlerProvider {
-      override def errorHandler(): AMFErrorHandler = eh
-    }
     AMFCompiler(
         url,
         None,
@@ -46,7 +42,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
           WebAPIConfiguration
             .WebAPI()
             .withResourceLoaders(List(new URNResourceLoader(mappings)))
-            .withErrorHandlerProvider(ehp))
+            .withErrorHandlerProvider(() => eh))
       ).build()
       .map { _ =>
         eh.getResults should have size 0
@@ -58,7 +54,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     override def fetch(resource: String): Future[Content] = {
       mappings
         .get(resource)
-        .map(platform.resolve)
+        .map(url => platform.fetchContent(url, AMFGraphConfiguration.predefined()))
         .getOrElse(throw FileNotFound(new RuntimeException(s"Couldn't find resource $resource")))
     }
 

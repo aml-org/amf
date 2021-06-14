@@ -1,20 +1,18 @@
 package amf.emit
 
 import amf.client.environment.APIConfiguration
-import amf.core.AMFSerializer
-import amf.core.model.document.Document
-import amf.core.parser._
-import amf.core.remote._
+import amf.core.client.scala.model.document.Document
+import amf.core.internal.remote._
+import amf.core.internal.render.AMFSerializer
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.domain.VocabulariesRegister
-import amf.plugins.domain.apicontract.APIDomainPlugin
-import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.mulesoft.common.test.ListAssertions
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 import org.yaml.model.YMap
+import amf.core.internal.parser._
 
-class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions {
+class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions with PlatformSecrets {
 
   test("Test simple Raml generation") {
     val root = ast(`document/api/bare`, Raml10)
@@ -127,9 +125,9 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
 
     // Remod registering
     VocabulariesRegister.register(platform)
-    amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
+//    amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
+//    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
+//    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
     val mediaType = vendor match {
       case Aml     => "application/yaml"

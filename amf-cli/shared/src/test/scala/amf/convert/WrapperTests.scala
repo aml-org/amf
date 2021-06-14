@@ -1,30 +1,30 @@
 package amf.convert
 
 import _root_.org.scalatest.{Assertion, Matchers}
-import amf._
 import amf.client.convert.NativeOps
-import amf.client.convert.CoreClientConverters.ClientLoader
-import amf.client.convert.CoreClientConverters
-import amf.client.convert.CoreClientConverters._
 import amf.client.exported._
-import amf.client.exported.config.RenderOptions
 import amf.client.model.document._
 import amf.client.model.domain._
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.client.remote.Content
-import amf.core.model.document.{Document => InternalDocument}
-import amf.core.remote._
-import amf.internal.resource.{ClientResourceLoaderAdapter, InternalResourceLoaderAdapter, ResourceLoader}
-import amf.client.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.validation.AMFValidationReport
-import amf.core.vocabulary.Namespace
-import amf.core.vocabulary.Namespace.Xsd
+import amf.core.client.common.remote.Content
+import amf.core.client.common.validation.Raml10Profile
+import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document}
+import amf.core.client.platform.parse.AMFParser
+import amf.core.client.platform.resource.{ClientResourceLoader, ResourceNotFound}
+import amf.core.client.scala.model.document.{Document => InternalDocument}
+import amf.core.client.platform.model.domain.Shape
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.platform.validation.AMFValidationReport
+import amf.core.internal.convert.CoreClientConverters.{ClientFuture, ClientLoader}
+import amf.core.internal.remote._
+import amf.core.internal.resource.{ClientResourceLoaderAdapter, ResourceLoader}
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.apicontract.resolution.pipelines.Raml10TransformationPipeline
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import org.mulesoft.common.test.Diff
-import org.yaml.builder.JsonOutputBuilder
+import amf.client.convert.ApiClientConverters._
+import amf.core.client.platform.model.domain.{ObjectNode, ScalarNode}
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.Namespace.Xsd
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -524,8 +524,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
     case class BadIRIResourceLoader() extends ResourceLoader {
 
-      import amf.client.convert.ApiClientConverters._
-
       override def fetch(resource: String): Future[Content] =
         Future.successful(new Content(input, resource))
 
@@ -1016,7 +1014,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _           <- Future { client.transform(parseResult.baseUnit, PipelineName.from(Raml08.mediaType)) }
     } yield {
       val shape: Shape = parseResult.baseUnit
-        .asInstanceOf[Document]
+        .asInstanceOf[InternalDocument]
         .encodes
         .asInstanceOf[Api[_]]
         .endPoints
@@ -1110,7 +1108,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
     assert(baseUnit.location == expectedLocation)
-    val api       = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
+    val api       = baseUnit.asInstanceOf[InternalDocument].encodes.asInstanceOf[Api[_]]
     val endPoints = api.endPoints.asSeq
     assert(endPoints.size == 1)
 

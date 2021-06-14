@@ -1,10 +1,10 @@
 package amf.emit
 
 import amf.client.environment.AMFConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
 import amf.compiler.CompilerTestBuilder
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 import org.mulesoft.common.io.AsyncFile
 import org.mulesoft.common.test.ListAssertions

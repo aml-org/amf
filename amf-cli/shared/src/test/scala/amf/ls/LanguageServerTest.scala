@@ -1,14 +1,14 @@
 package amf.ls
 
 import amf.client.environment.AMFConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
 import amf.compiler.CompilerTestBuilder
-import amf.core.model.document.Document
-import amf.core.model.domain.templates.ParametrizedDeclaration
-import amf.core.remote.Raml10YamlHint
-import amf.plugins.domain.shapes.models.NodeShape
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.templates.ParametrizedDeclaration
+import amf.core.internal.remote.Raml10YamlHint
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
+import amf.plugins.domain.shapes.models.NodeShape
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 

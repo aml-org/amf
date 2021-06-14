@@ -1,11 +1,11 @@
 package amf.emit
 
 import amf.client.environment.AMFConfiguration
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline._
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline._
+import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 
 // This test suite test the generation of RAML unions

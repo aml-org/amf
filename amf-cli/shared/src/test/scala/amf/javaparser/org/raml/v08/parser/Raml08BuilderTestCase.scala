@@ -1,6 +1,6 @@
 package amf.javaparser.org.raml.v08.parser
 
-import amf.core.remote.{Hint, Raml08YamlHint}
+import amf.core.internal.remote.{Hint, Raml08YamlHint}
 import amf.javaparser.org.raml.ModelResolutionTest
 
 /** Original test in java parser: Calls raml builder, that runs all facets but return the Node tree,

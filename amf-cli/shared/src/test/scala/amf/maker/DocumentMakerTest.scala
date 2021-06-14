@@ -1,16 +1,16 @@
 package amf.maker
 
-import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.model.document.Document
-import amf.core.model.domain.AmfArray
-import amf.core.remote._
-import amf.core.validation.AMFValidationResult
-import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.domain.shapes.models.DomainExtensions._
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.client.environment.WebAPIConfiguration
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.AmfArray
+import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.internal.remote._
+import amf.facades.Validation
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.models.api.WebApi
+import amf.plugins.domain.shapes.models.DomainExtensions._
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future
@@ -118,7 +118,7 @@ class DocumentMakerTest extends WebApiMakerTest {
   }
 
   private def document(): Document = {
-    amf.core.model.domain.extensions.PropertyShape().withScalarSchema("hey")
+    amf.core.client.scala.model.domain.extensions.PropertyShape().withScalarSchema("hey")
     val api = WebApi()
       .withName("test types")
       .withDescription("empty api only for test types")

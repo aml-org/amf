@@ -3,9 +3,8 @@ package amf.extensions
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.remote._
-import amf.core.{AMF, AMFSerializer}
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.internal.remote.{Raml10YamlHint, Vendor}
 import amf.io.FileAssertionTest
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}

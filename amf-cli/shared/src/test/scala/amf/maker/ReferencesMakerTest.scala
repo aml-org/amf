@@ -3,13 +3,13 @@ package amf.maker
 import amf.client.environment.WebAPIConfiguration
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
-import amf.core.model.document.{Document, Fragment}
-import amf.core.model.domain.AmfObject
-import amf.core.remote._
+import amf.core.client.scala.model.document.{Document, Fragment}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.internal.remote._
 import amf.plugins.document.apicontract.model.DataTypeFragment
+import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.shapes.models.DomainExtensions._
 import amf.plugins.domain.shapes.models.NodeShape
-import amf.plugins.domain.apicontract.models.api.WebApi
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -49,7 +49,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
   }
 
   def withoutLocation(e: AmfObject): AmfObject = {
-    e.fields.removeField(amf.core.metamodel.document.DocumentModel.Location)
+    e.fields.removeField(amf.core.internal.metamodel.document.DocumentModel.Location)
     e
   }
 

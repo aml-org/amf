@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.core.remote.{Oas20JsonHint, Oas30JsonHint, Raml10YamlHint, Vendor}
+import amf.core.internal.remote.{Oas20JsonHint, Oas30JsonHint, Raml10YamlHint, Vendor}
 import amf.io.FunSuiteCycleTests
 
 class RamlToOasSecuritySchemesTest extends FunSuiteCycleTests {

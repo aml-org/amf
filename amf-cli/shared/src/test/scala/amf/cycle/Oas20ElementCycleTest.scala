@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.core.remote.{Oas20JsonHint, Vendor}
+import amf.core.internal.remote.{Oas20JsonHint, Vendor}
 
 class Oas20ElementCycleTest extends DomainElementCycleTest {
 

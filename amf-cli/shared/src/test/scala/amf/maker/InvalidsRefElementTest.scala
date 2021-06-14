@@ -1,18 +1,16 @@
 package amf.maker
 
 import amf.client.environment.AMFConfiguration
-import amf.client.errorhandling.IgnoringErrorHandler
 import amf.compiler.CompilerTestBuilder
-import amf.core.annotations.SourceAST
-import amf.core.model.document.Document
-import amf.core.remote.{Oas20YamlHint, Raml10YamlHint}
-import amf.core.remote.{Oas20YamlHint, Raml10, Raml10YamlHint}
-import amf.facades.Validation
+import amf.core.client.scala.errorhandling.IgnoringErrorHandler
+import amf.core.client.scala.model.document.Document
+import amf.core.internal.annotations.SourceAST
+import amf.core.internal.remote.{Oas20YamlHint, Raml10YamlHint}
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorResponse
-import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import amf.plugins.domain.apicontract.models.templates.{ParametrizedResourceType, ParametrizedTrait}
+import amf.plugins.domain.shapes.models.AnyShape
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext

@@ -1,8 +1,5 @@
 package amf.emit
 
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
-import amf.core.remote._
 import amf.io.FunSuiteCycleTests
 import amf.plugins.domain.apicontract.models.api.WebApi
 import org.scalatest.Assertion

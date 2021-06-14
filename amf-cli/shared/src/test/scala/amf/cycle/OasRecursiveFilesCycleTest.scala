@@ -1,6 +1,8 @@
 package amf.cycle
 
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.{Amf, Oas20YamlHint, Oas30YamlHint, PayloadYamlHint}
 import amf.core.remote.{Amf, Oas20YamlHint, Oas30YamlHint, PayloadYamlHint}
 import amf.io.FunSuiteCycleTests
 

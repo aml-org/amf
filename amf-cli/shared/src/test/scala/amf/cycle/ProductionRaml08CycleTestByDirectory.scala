@@ -1,7 +1,7 @@
 package amf.cycle
 
-import amf.core.remote.Syntax.Yaml
-import amf.core.remote.{Hint, Raml08}
+import amf.core.internal.remote.Syntax.Yaml
+import amf.core.internal.remote.{Hint, Raml08}
 
 /**
   * Cycle by directory test for dir: [[amf-cli/shared/src/test/resources/production/raml08/]]

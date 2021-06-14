@@ -1,7 +1,7 @@
 package amf.common
 
-import amf.core.metamodel.Field
-import amf.core.model.domain.{AmfObject, Annotation}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.internal.metamodel.Field
 import org.scalatest._
 
 /**

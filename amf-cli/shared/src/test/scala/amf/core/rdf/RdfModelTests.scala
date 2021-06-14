@@ -1,9 +1,7 @@
 package amf.core.rdf
 
-import amf.core.AMF
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.facades.Validation
-import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
