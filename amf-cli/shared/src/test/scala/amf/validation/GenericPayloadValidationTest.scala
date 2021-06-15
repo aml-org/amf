@@ -9,7 +9,6 @@ import amf.core.internal.plugins.payload.ErrorFallbackValidationPlugin
 import amf.core.internal.remote.{PayloadJsonHint, PayloadYamlHint}
 import amf.core.internal.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
-import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.apicontract.resolution.pipelines.ValidationTransformationPipeline
 import amf.plugins.domain.shapes.validation.CandidateValidator
 import org.scalatest.AsyncFunSuite

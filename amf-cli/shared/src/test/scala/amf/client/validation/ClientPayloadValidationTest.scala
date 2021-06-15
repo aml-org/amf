@@ -1,6 +1,6 @@
 package amf.client.validation
 
-import amf.client.convert.NativeOps
+import amf.cli.internal.convert.NativeOps
 import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.client.exported.WebAPIConfiguration
 import amf.client.model.domain._
@@ -9,7 +9,7 @@ import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.platform.model.domain.{PropertyShape, RecursiveShape, Shape}
 import amf.core.client.platform.validation.AMFShapePayloadValidator
-import amf.core.client.scala.model.domain.{ RecursiveShape => InternalRecursiveShape }
+import amf.core.client.scala.model.domain.{RecursiveShape => InternalRecursiveShape}
 import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
 
@@ -29,11 +29,7 @@ trait PayloadValidationUtils {
     config.payloadValidatorFactory().createFor(s, mediaType, StrictValidationMode)
 }
 
-trait ClientPayloadValidationTest
-    extends AsyncFunSuite
-    with NativeOps
-    with Matchers
-    with PayloadValidationUtils {
+trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers with PayloadValidationUtils {
 
   protected val APPLICATION_YAML = "application/yaml"
   protected val APPLICATION_JSON = "application/json"
