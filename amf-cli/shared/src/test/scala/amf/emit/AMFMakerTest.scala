@@ -2,6 +2,7 @@ package amf.emit
 
 import amf.client.environment.APIConfiguration
 import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.remote._
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
@@ -122,30 +123,10 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   private def ast(document: Document, vendor: Vendor): YMap = {
-
-    // Remod registering
-    VocabulariesRegister.register(platform)
-//    amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-//    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
-//    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
-
-    val mediaType = vendor match {
-      case Aml     => "application/yaml"
-      case Amf     => "application/ld+json"
-      case Payload => "application/amf+json"
-      case r: Raml => "application/yaml"
-      case Oas20   => "application/json"
-      case _       => ""
-    }
-
     val config = APIConfiguration.API()
-
-    val serializer = new AMFSerializer(document, vendor.mediaType, config.renderConfiguration)
-
-    serializer
-      .renderAsYDocument(serializer.getRenderPlugin)
-      .document
-      .node
-      .as[YMap]
+    config.createClient().renderAST(document, vendor.mediaType) match {
+      case doc: SyamlParsedDocument => doc.document.node.as[YMap]
+      case _                        => YMap.empty
+    }
   }
 }
