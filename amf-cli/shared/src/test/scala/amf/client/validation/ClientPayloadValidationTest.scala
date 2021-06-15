@@ -26,7 +26,7 @@ trait PayloadValidationUtils {
 
 trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers with PayloadValidationUtils {
 
-  // TODO: ARM - AMF is missing
+  // TODO: ARM - Will be fixed by PR
 //  test("Test parameter validator int payload") {
 //    AMF.init().flatMap { _ =>
 //      AMF.registerPlugin(PayloadValidatorPlugin)
