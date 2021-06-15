@@ -1,0 +1,109 @@
+{
+  "@graph": [
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "My API",
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/end-points/%2Fperson"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/end-points/%2Fperson",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/person",
+      "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml#/declarations/annotations/paginated": {
+        "@id": "#/web-api/end-points/%2Fperson/paginated/scalar_1"
+      },
+      "doc:customDomainProperties": [
+        {
+          "@id": "#/declarations/annotations/paginated"
+        }
+      ]
+    },
+    {
+      "core:extensionName": "paginated",
+      "@id": "#/web-api/end-points/%2Fperson/paginated/scalar_1",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "true",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "core:name": "scalar_1"
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/annotations/paginated"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "doc:version": "3.1.0",
+      "doc:root": true
+    },
+    {
+      "@id": "#/declarations/annotations/paginated",
+      "@type": [
+        "doc:DomainProperty",
+        "rdf:Property",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:schema": {
+        "@id": "#/declarations/annotations/paginated/scalar/paginated"
+      },
+      "core:name": "paginated"
+    },
+    {
+      "@id": "#/declarations/annotations/paginated/scalar/paginated",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "shacl:name": "paginated"
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-client/shared/src/test/resources/graphs/annotations/api.raml",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  }
+}

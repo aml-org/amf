@@ -1,6 +1,6 @@
 package amf.parser
 import amf.core.emitter.RenderOptions
-import amf.core.remote.{Amf, AmfJsonHint}
+import amf.core.remote.{Amf, AmfJsonHint, RamlYamlHint}
 import amf.io.FunSuiteCycleTests
 
 class GraphParsingTest extends FunSuiteCycleTests {
@@ -82,4 +82,25 @@ class GraphParsingTest extends FunSuiteCycleTests {
           directory = s"$basePath/base-and-absolute-iris/")
   }
 
+  test("Parse annotations with compact URIs") {
+    val ro = RenderOptions().withPrettyPrint.withFlattenedJsonLd.withCompactUris
+    cycle("api.source.jsonld",
+          "api.target.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro),
+          directory = s"$basePath/annotations-compact/")
+
+  }
+
+  test("Parse annotations with expanded URIs") {
+    val ro = RenderOptions().withPrettyPrint.withFlattenedJsonLd
+    cycle("api.source.jsonld",
+          "api.target.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro),
+          directory = s"$basePath/annotations-expanded/")
+
+  }
 }
