@@ -1,0 +1,33 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Party Update Services",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/requests/batch/{batchId}": {
+      "get": {
+        "x-amf-baseUriParameters": {
+          "batchId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "nil"
+              }
+            ]
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

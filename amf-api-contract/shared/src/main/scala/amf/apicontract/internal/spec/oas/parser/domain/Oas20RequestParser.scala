@@ -75,6 +75,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
       "baseUriParameters".asOasExtension,
       entry => {
         entry.value.as[YMap].entries.headOption.foreach { paramEntry =>
+          entries += paramEntry
           val parameter =
             Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), binding = "path")(
               spec.toRaml(ctx))
