@@ -1,17 +1,17 @@
 package amf.validation
 import amf.client.environment.RAMLConfiguration
 import amf.core.client.common.validation.{AmfProfile, PayloadProfile, SeverityLevels}
-import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.plugins.document.graph.emitter.EmbeddedJsonLdEmitter
+import amf.core.internal.plugins.payload.ErrorFallbackValidationPlugin
 import amf.core.internal.remote.{PayloadJsonHint, PayloadYamlHint}
 import amf.core.internal.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.apicontract.resolution.pipelines.ValidationTransformationPipeline
-import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
+import amf.plugins.domain.shapes.validation.CandidateValidator
 import org.scalatest.AsyncFunSuite
 import org.yaml.builder.JsonOutputBuilder
 
@@ -89,9 +89,8 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
 
       candidates flatMap { c =>
-        PayloadValidationPluginsHandler.validateAll(c,
-                                                    SeverityLevels.VIOLATION,
-                                                    new ValidationConfiguration(AMFGraphConfiguration.predefined()))
+        val nextConfig = config.withPlugin(ErrorFallbackValidationPlugin(SeverityLevels.VIOLATION))
+        CandidateValidator.validateAll(c, new ValidationConfiguration(nextConfig))
       } map { report =>
         report.results.foreach { result =>
           assert(result.position.isDefined)

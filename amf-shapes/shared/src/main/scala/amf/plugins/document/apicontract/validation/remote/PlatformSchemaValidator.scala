@@ -1,12 +1,6 @@
 package amf.plugins.document.apicontract.validation.remote
 
-import amf.core.client.common.validation.{
-  ProfileName,
-  ProfileNames,
-  ScalarRelaxedValidationMode,
-  SeverityLevels,
-  ValidationMode
-}
+import amf.core.client.common.validation._
 import amf.core.client.platform.config.JsonSchemaDraft7
 import amf.core.client.scala.config.{ParsingOptions, ShapeRenderOptions}
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
@@ -15,10 +9,10 @@ import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference, SyamlParsedDocument}
-import amf.core.client.scala.validation.payload.{PayloadParsingResult, PayloadValidator}
+import amf.core.client.scala.validation.payload.{AMFShapePayloadValidator, PayloadParsingResult}
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
-import amf.core.internal.plugins.syntax.{SyamlSyntaxParsePlugin, SyamlSyntaxRenderPlugin}
+import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
 import amf.core.internal.validation.ValidationConfiguration
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.plugins.document.apicontract.parser.spec.common.{
@@ -27,7 +21,7 @@ import amf.plugins.document.apicontract.parser.spec.common.{
   JsonSchemaEmitter,
   PayloadEmitter
 }
-import amf.plugins.document.apicontract.validation.remote.PlatformPayloadValidator.supportedMediaTypes
+import amf.plugins.document.apicontract.validation.remote.PlatformShapePayloadValidator.supportedMediaTypes
 import amf.plugins.domain.shapes.models._
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 import org.yaml.parser.YamlParser
@@ -42,41 +36,38 @@ class InvalidJsonValue(e: Throwable)        extends RuntimeException(e)
 class UnknownDiscriminator()                extends RuntimeException
 class UnsupportedMediaType(msg: String)     extends Exception(msg)
 
-object PlatformPayloadValidator {
+object PlatformShapePayloadValidator {
   val supportedMediaTypes: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 }
 
-abstract class PlatformPayloadValidator(shape: Shape, override val configuration: ValidationConfiguration)
-    extends PayloadValidator {
+abstract class PlatformShapePayloadValidator(shape: Shape, mediaType: String, configuration: ValidationConfiguration)
+    extends AMFShapePayloadValidator {
 
-  override val defaultSeverity: String = SeverityLevels.VIOLATION
+  private val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
 
-  override def isValid(mediaType: String, payload: String)(
-      implicit executionContext: ExecutionContext): Future[Boolean] = {
-    Future(validateForPayload(mediaType, payload, BooleanValidationProcessor))
-  }
-
-  override def validate(mediaType: String, payload: String)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
-    Future(
-      validateForPayload(mediaType, payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
+  override def validate(payload: String)(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+    Future.successful(
+      validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
+    )
   }
 
   override def validate(fragment: PayloadFragment)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
-    Future(validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
+    Future.successful(
+      validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
+    )
   }
 
-  override def syncValidate(mediaType: String, payload: String): AMFValidationReport = {
-    validateForPayload(mediaType, payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
+  override def syncValidate(payload: String): AMFValidationReport = {
+    validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
   }
 
-  type LoadedObj
-  type LoadedSchema
-  val validationMode: ValidationMode
+  protected type LoadedObj
+  protected type LoadedSchema
+  protected val validationMode: ValidationMode
 
-  val isFileShape: Boolean = shape.isInstanceOf[FileShape]
+  private val isFileShape: Boolean = shape.isInstanceOf[FileShape]
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 
@@ -108,8 +99,7 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
   }
 
   /* i need to do this check?? */
-  protected def validateForPayload(mediaType: String,
-                                   payload: String,
+  protected def validateForPayload(payload: String,
                                    validationProcessor: ValidationProcessor): validationProcessor.Return = {
     if (!supportedMediaTypes.contains(mediaType)) {
       validationProcessor.processResults(
@@ -210,7 +200,7 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
     }
   }
 
-  def parsePayloadWithErrorHandler(payload: String, mediaType: String, shape: Shape): PayloadParsingResult = {
+  private def parsePayloadWithErrorHandler(payload: String, mediaType: String, shape: Shape): PayloadParsingResult = {
 
     val errorHandler = configuration.eh
     PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)

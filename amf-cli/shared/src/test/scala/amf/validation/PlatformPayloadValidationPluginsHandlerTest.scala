@@ -2,16 +2,14 @@ package amf.validation
 
 import amf.client.environment.RAMLConfiguration
 import amf.client.validation.PayloadValidationUtils
-import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.common.validation.StrictValidationMode
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Module}
 import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.internal.validation.ValidationConfiguration
 import amf.facades.Validation
 import amf.plugins.document.apicontract.resolution.pipelines.AmfTransformationPipeline
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.remod.ShapePayloadValidatorFactory
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -23,7 +21,9 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "file://amf-cli/shared/src/test/resources/validations/"
+  val basePath          = "file://amf-cli/shared/src/test/resources/validations/"
+  val APPLICATION_WADUS = "application/wadus"
+  val APPLICATION_JSON  = "application/json"
 
   def findShape(library: BaseUnit, name: String): AnyShape = {
     val found = library.asInstanceOf[Module].declares.find { e =>
@@ -38,14 +38,12 @@ class PlatformPayloadValidationPluginsHandlerTest
     for {
       validation <- Validation(platform)
       library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
-      validator <- Future {
+      validator <- Future.successful {
         val shape = findShape(library, "A")
-        ShapePayloadValidatorFactory.createPayloadValidator(
-          shape,
-          new ValidationConfiguration(AMFGraphConfiguration.predefined()))
+        config.payloadValidatorFactory().createFor(shape, APPLICATION_JSON, StrictValidationMode)
       }
-      valid   <- validator.isValid("application/json", "{\"a\": 10}")
-      invalid <- validator.isValid("application/json", "{\"a\": \"10\"}").map(!_)
+      valid   <- validator.validate("{\"a\": 10}").map(_.conforms)
+      invalid <- validator.validate("{\"a\": \"10\"}").map(r => !r.conforms)
     } yield {
       assert(valid)
       assert(invalid)
@@ -58,13 +56,11 @@ class PlatformPayloadValidationPluginsHandlerTest
     for {
       validation <- Validation(platform)
       library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
-      validator <- Future {
+      validator <- Future.successful {
         val shape = findShape(library, "B")
-        ShapePayloadValidatorFactory.createPayloadValidator(
-          shape,
-          new ValidationConfiguration(AMFGraphConfiguration.predefined()))
+        config.payloadValidatorFactory().createFor(shape, APPLICATION_JSON, StrictValidationMode)
       }
-      valid <- validator.isValid("application/json", "wadus")
+      valid <- validator.validate("wadus").map(_.conforms)
     } yield {
       assert(valid)
     }
@@ -76,14 +72,12 @@ class PlatformPayloadValidationPluginsHandlerTest
     for {
       validation <- Validation(platform)
       library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
-      validator <- Future {
+      validator <- Future.successful {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")
-        ShapePayloadValidatorFactory.createPayloadValidator(
-          shape,
-          new ValidationConfiguration(AMFGraphConfiguration.predefined()))
+        config.payloadValidatorFactory().createFor(shape, APPLICATION_JSON, StrictValidationMode)
       }
-      valid <- validator.isValid("application/json", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}")
+      valid <- validator.validate("{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}").map(_.conforms)
     } yield {
       assert(valid)
     }
@@ -95,14 +89,12 @@ class PlatformPayloadValidationPluginsHandlerTest
     for {
       validation <- Validation(platform)
       library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
-      validator <- Future {
+      validator <- Future.successful {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")
-        ShapePayloadValidatorFactory.createPayloadValidator(
-          shape,
-          new ValidationConfiguration(AMFGraphConfiguration.predefined()))
+        config.payloadValidatorFactory().createFor(shape, APPLICATION_WADUS, StrictValidationMode)
       }
-      invalid <- validator.isValid("application/wadus", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}").map(!_)
+      invalid <- validator.validate("{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}").map(r => !r.conforms)
     } yield {
       assert(invalid)
     }

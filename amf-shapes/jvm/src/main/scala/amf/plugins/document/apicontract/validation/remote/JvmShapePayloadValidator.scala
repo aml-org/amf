@@ -24,10 +24,11 @@ import org.json.JSONException
 import java.util.regex.PatternSyntaxException
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
-class JvmPayloadValidator(val shape: Shape,
-                          val validationMode: ValidationMode,
-                          override val configuration: ValidationConfiguration)
-    extends PlatformPayloadValidator(shape, configuration) {
+class JvmShapePayloadValidator(private val shape: Shape,
+                               private val mediaType: String,
+                               protected val validationMode: ValidationMode,
+                               private val configuration: ValidationConfiguration)
+    extends PlatformShapePayloadValidator(shape, mediaType, configuration) {
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
     override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)

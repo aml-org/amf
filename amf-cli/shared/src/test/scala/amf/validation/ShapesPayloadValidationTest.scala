@@ -1,14 +1,12 @@
 package amf.validation
 
+import amf.client.environment.APIConfiguration
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
-import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.utils.MediaTypeMatcher
-import amf.core.internal.validation.ValidationConfiguration
-import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.TypeDef.{IntType, StrType}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import amf.remod.ShapePayloadValidatorFactory._
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 
@@ -18,6 +16,17 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
 
   override val executionContext: ExecutionContext = global
+
+  private val AMF_CONFIG       = APIConfiguration.API()
+  private val validatorFactory = AMF_CONFIG.payloadValidatorFactory()
+
+  def createPayloadValidator(shape: Shape, mediaType: String) = {
+    validatorFactory.createFor(shape, mediaType, StrictValidationMode)
+  }
+
+  def createParameterValidator(shape: Shape, mediaType: String) = {
+    validatorFactory.createFor(shape, mediaType, ScalarRelaxedValidationMode)
+  }
 
   case class ShapeInfo(shape: AnyShape, examples: Seq[ExampleInfo], mode: ValidationMode = StrictValidationMode)
   case class ExampleInfo(name: String, example: String, valid: Boolean)
@@ -60,12 +69,10 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
         ExampleInfo("YamlSimpleStrExample", Fixture.YamlSimpleStrExample, valid = false),
         ExampleInfo("JsonSimpleStrExample", Fixture.JsonSimpleStrExample, valid = false),
         ExampleInfo("XmlSimpleStrExample", Fixture.XmlSimpleStrExample, valid = false),
-        // TODO: ARM - Shapes Module: uncomment
-//        ExampleInfo("CustomerYamlExample", Fixture.YamlCustomerExample, valid = true),
+        ExampleInfo("CustomerYamlExample", Fixture.YamlCustomerExample, valid = true),
         ExampleInfo("CustomerInvalidYamlExample", Fixture.YamlInvalidCustomerExample, valid = false),
         ExampleInfo("CustomerNonMandatoryYamlExample", Fixture.YamlCustomerNonMandatoryExample, valid = true),
-        // TODO: ARM - Shapes Module: uncomment
-//        ExampleInfo("CustomerJsonExample", Fixture.JsonCustomerExample, valid = true),
+        ExampleInfo("CustomerJsonExample", Fixture.JsonCustomerExample, valid = true),
         ExampleInfo("CustomerInvalidJsonExample", Fixture.JsonInvalidCustomerExample, valid = false),
         ExampleInfo("CustomerXmlExample", Fixture.XmlCustomerExample, valid = false)
       )
@@ -76,13 +83,11 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
         ExampleInfo("YamlSimpleStrExample", Fixture.YamlSimpleStrExample, valid = false),
         ExampleInfo("JsonSimpleStrExample", Fixture.JsonSimpleStrExample, valid = false),
         ExampleInfo("XmlSimpleStrExample", Fixture.XmlSimpleStrExample, valid = false),
-        // TODO: ARM - Shapes Module: uncomment
-//        ExampleInfo("CustomerYamlExample", Fixture.YamlCustomerExample, valid = false),
-//        ExampleInfo("CustomerJsonExample", Fixture.JsonCustomerExample, valid = false),
+        ExampleInfo("CustomerYamlExample", Fixture.YamlCustomerExample, valid = false),
+        ExampleInfo("CustomerJsonExample", Fixture.JsonCustomerExample, valid = false),
         ExampleInfo("CustomerXmlExample", Fixture.XmlCustomerExample, valid = false),
-        // TODO: ARM - Shapes Module: uncomment
-//        ExampleInfo("UserYamlExample", Fixture.UserYamlExample, valid = false),
-//        ExampleInfo("UserJsonExample", Fixture.UserJsonExample, valid = false),
+        ExampleInfo("UserYamlExample", Fixture.UserYamlExample, valid = false),
+        ExampleInfo("UserJsonExample", Fixture.UserJsonExample, valid = false),
         ExampleInfo("UserXmlExample", Fixture.UserXmlExample, valid = false)
       )
     ),
@@ -114,14 +119,14 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
     si.examples.foreach { ei =>
       test(s"Test ${si.shape.name} with example ${ei.name}") {
         if (si.mode == StrictValidationMode) {
-          createPayloadValidator(si.shape, new ValidationConfiguration(AMFGraphConfiguration.predefined()))
-            .validate(ei.example.guessMediaType(false), ei.example)
+          createPayloadValidator(si.shape, ei.example.guessMediaType(false))
+            .validate(ei.example)
             .map { r =>
               r.conforms should be(ei.valid)
             }
         } else
-          createParameterValidator(si.shape, new ValidationConfiguration(AMFGraphConfiguration.predefined()))
-            .validate(ei.example.guessMediaType(false), ei.example)
+          createParameterValidator(si.shape, ei.example.guessMediaType(false))
+            .validate(ei.example)
             .map { r =>
               r.conforms should be(ei.valid)
             }

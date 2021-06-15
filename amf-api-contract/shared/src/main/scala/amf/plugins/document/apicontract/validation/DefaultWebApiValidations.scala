@@ -3,12 +3,8 @@ package amf.plugins.document.apicontract.validation
 import amf.core.client.common.validation.SeverityLevels.VIOLATION
 import amf.core.client.common.validation.{AmfProfile, ProfileName, ProfileNames, SeverityLevels}
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.validation.core.{
-  SeverityMapping,
-  ShaclSeverityUris,
-  ValidationProfile,
-  ValidationSpecification
-}
+import amf.core.internal.validation.{CoreParserValidations, CorePayloadValidations}
+import amf.core.internal.validation.core.{SeverityMapping, ShaclSeverityUris, ValidationProfile, ValidationSpecification}
 import amf.plugins.document.apicontract.validation.AMFRawValidations.{AMFValidation, ProfileValidations}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations.ConstraintSeverityOverrides
@@ -67,19 +63,23 @@ object DefaultAMFValidations extends ImportUtils {
 
   val staticValidations: Seq[ValidationSpecification] = AMFDialectValidations.staticValidations ++
     ParserSideValidations.validations ++
-    PayloadValidations.validations ++
+    ShapePayloadValidations.validations ++
     RenderSideValidations.validations ++
     ResolutionSideValidations.validations ++
     ShapePayloadValidations.validations ++
-    ShapeParserSideValidations.validations
+    ShapeParserSideValidations.validations ++
+    CorePayloadValidations.validations ++
+    CoreParserValidations.validations
 
   private val levels: ConstraintSeverityOverrides = AMFDialectValidations.levels ++
     ParserSideValidations.levels ++
-    PayloadValidations.levels ++
+    ShapePayloadValidations.levels ++
     RenderSideValidations.levels ++
     ResolutionSideValidations.levels ++
     ShapePayloadValidations.levels ++
-    ShapeParserSideValidations.levels
+    ShapeParserSideValidations.levels ++
+    CorePayloadValidations.levels ++
+    CoreParserValidations.levels
 
   def severityLevelOf(id: String, profile: ProfileName): String =
     severityLevelsOfConstraints
