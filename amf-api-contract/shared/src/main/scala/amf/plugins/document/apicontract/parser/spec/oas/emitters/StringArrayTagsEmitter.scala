@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
 import amf.plugins.domain.apicontract.models.Tag
 import org.yaml.model.YDocument.EntryBuilder
 

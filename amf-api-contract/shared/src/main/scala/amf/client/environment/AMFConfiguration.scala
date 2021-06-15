@@ -30,8 +30,7 @@ import amf.plugins.document.apicontract.validation.plugins.{
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.domain.apicontract.annotations.serializable.APISerializableAnnotations
 import amf.plugins.domain.apicontract.entities.APIEntities
-import amf.plugins.domain.shapes.annotations.serializable.ShapeSerializableAnnotations
-import amf.plugins.domain.shapes.entities.ShapeEntities
+
 import amf.plugins.parse._
 import amf.plugins.render._
 

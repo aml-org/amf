@@ -16,7 +16,7 @@ import amf.plugins.domain.apicontract.resolution.stages.{
   PayloadAndParameterResolutionStage,
   ResponseExamplesResolutionStage
 }
-import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 // Validation pipeline is not registered in AMF configuration, is it only called internally.
 class ValidationTransformationPipeline private[amf] (profile: ProfileName,

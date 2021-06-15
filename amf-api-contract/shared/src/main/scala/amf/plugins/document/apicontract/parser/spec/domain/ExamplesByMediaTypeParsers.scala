@@ -1,11 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
 import amf.core.internal.parser.YMapOps
-import amf.plugins.document.apicontract.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.Example
+
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 import scala.collection.mutable.ListBuffer

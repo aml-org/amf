@@ -5,7 +5,6 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, RecursiveShape, Shape}
 import amf.core.client.scala.transform.stages.TransformationStep
-import amf.plugins.domain.shapes.models.DataArrangementShape
 
 import scala.collection.mutable.ListBuffer
 

@@ -5,11 +5,10 @@ import amf.core.internal.metamodel.domain.ExternalSourceElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.IdCounter
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.spec.domain.OasLikeServerVariableParser
 import amf.plugins.domain.apicontract.models.Parameter
-import amf.plugins.domain.shapes.metamodel.common.ExamplesField
-import amf.plugins.domain.shapes.models.Example
+
 import amf.validations.ShapeParserSideValidations.ExamplesMustBeASeq
 import org.yaml.model.{YMap, YMapEntry, YSequence, YType}
 

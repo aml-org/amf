@@ -6,7 +6,7 @@ import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.remote.Oas30
 import amf.plugins.domain.apicontract.resolution.stages._
-import amf.plugins.domain.shapes.resolution.stages.RequestParamsLinkStage
+import amf.shapes.internal.domain.resolution.RequestParamsLinkStage
 
 class Oas3EditingPipeline private(urlShortening: Boolean, override val name:String)
     extends AmfEditingPipeline(urlShortening, name) {

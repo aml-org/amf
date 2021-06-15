@@ -6,7 +6,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
-import amf.plugins.document.apicontract.contexts.emitter.raml.{
+import amf.shapes.internal.spec.contexts.emitter.raml.{
   Raml08SpecEmitterContext,
   Raml10SpecEmitterContext,
   RamlSpecEmitterContext
@@ -31,7 +31,7 @@ import amf.plugins.document.apicontract.parser.spec.raml.emitters.{
   Raml08SecuritySchemeEmitter,
   Raml10SecuritySchemeEmitter
 }
-import amf.plugins.domain.shapes.models.{CreativeWork, Example}
+
 import amf.plugins.domain.apicontract.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation, Parameter, Payload, Response}

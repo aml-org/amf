@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async
 import amf.plugins.domain.apicontract.metamodel.bindings.{
   Amqp091OperationBindingModel,

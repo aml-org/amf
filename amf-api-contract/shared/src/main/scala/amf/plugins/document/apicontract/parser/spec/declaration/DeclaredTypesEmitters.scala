@@ -4,8 +4,8 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.async.Async20SpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContextAdapter
 
 object AsyncDeclaredTypesEmitters {

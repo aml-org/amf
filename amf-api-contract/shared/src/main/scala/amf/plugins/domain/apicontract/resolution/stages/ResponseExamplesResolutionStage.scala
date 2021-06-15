@@ -3,7 +3,7 @@ package amf.plugins.domain.apicontract.resolution.stages
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.stages.TransformationStep
-import amf.plugins.domain.shapes.models.{AnyShape, Example, ExampleTracking}
+
 import amf.plugins.domain.apicontract.metamodel.ResponseModel
 import amf.plugins.domain.apicontract.models.api.Api
 import amf.plugins.domain.apicontract.models.Payload

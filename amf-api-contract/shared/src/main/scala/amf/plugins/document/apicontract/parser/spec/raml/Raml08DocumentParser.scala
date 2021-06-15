@@ -5,7 +5,7 @@ import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils._
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, _}
 import amf.plugins.document.apicontract.parser.{RamlTypeDefMatcher, WebApiShapeParserContextAdapter}
 import amf.plugins.document.vocabularies.parser.common.DeclarationKey

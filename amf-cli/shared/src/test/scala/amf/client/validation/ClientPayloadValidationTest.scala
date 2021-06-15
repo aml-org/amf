@@ -10,7 +10,7 @@ import amf.core.client.platform.model.DataTypes
 import amf.core.client.platform.model.domain.{PropertyShape, RecursiveShape, Shape}
 import amf.core.client.platform.validation.AMFShapePayloadValidator
 import amf.core.client.scala.model.domain.{RecursiveShape => InternalRecursiveShape}
-import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
+
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.ExecutionContext

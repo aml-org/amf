@@ -10,7 +10,7 @@ import amf.core.internal.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.plugins.domain.shapes.models.AnyShape
+
 import amf.remod.JsonSchemaShapeSerializer.toJsonSchema
 import org.scalatest.{Assertion, AsyncFunSuite}
 

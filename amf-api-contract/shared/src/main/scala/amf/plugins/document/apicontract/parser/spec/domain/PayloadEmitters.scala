@@ -11,8 +11,8 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.annotations.ParsedJSONSchema
-import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
   Raml08TypePartEmitter,
   Raml10TypeEmitter,
@@ -26,7 +26,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
 }
 import amf.plugins.domain.apicontract.metamodel.PayloadModel
 import amf.plugins.domain.apicontract.models.Payload
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YMap, YNode, YType}
 

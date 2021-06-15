@@ -7,7 +7,7 @@ import amf.core.internal.parser.domain.Fields
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.models.{License, Organization}
 import org.yaml.model.YDocument.EntryBuilder

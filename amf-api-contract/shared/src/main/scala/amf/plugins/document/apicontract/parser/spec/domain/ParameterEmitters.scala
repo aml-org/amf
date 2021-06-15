@@ -25,16 +25,16 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.annotations.{FormBodyParameter, ParameterNameForPayload, RequiredParamPayload}
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
-import amf.plugins.document.apicontract.contexts.emitter.raml.{
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.emitter.raml.{
   RamlScalarEmitter,
   RamlSpecEmitterContext,
   XRaml10SpecEmitterContext
 }
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter._
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.{OasSchemaEmitter, OasTypeEmitter}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
@@ -50,8 +50,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
 import amf.plugins.domain.apicontract.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.apicontract.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload}
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
-import amf.plugins.domain.shapes.models._
+
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType.Bool
 import org.yaml.model.{YNode, YType}

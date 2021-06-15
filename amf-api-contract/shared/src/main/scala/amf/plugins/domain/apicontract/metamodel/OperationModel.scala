@@ -3,7 +3,7 @@ package amf.plugins.domain.apicontract.metamodel
 import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
-import amf.plugins.domain.shapes.metamodel.common.DocumentationField
+
 import amf.plugins.domain.apicontract.metamodel.bindings.OperationBindingsModel
 import amf.plugins.domain.apicontract.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.apicontract.models.Operation

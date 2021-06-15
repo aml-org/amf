@@ -13,7 +13,7 @@ import amf.plugins.document.apicontract.annotations.ExternalJsonSchemaShape
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.templates.ResourceType
 import amf.plugins.domain.apicontract.models.{Parameter, Response}
-import amf.plugins.domain.shapes.models.NodeShape
+
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext

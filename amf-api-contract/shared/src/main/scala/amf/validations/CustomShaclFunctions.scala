@@ -9,8 +9,8 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, Doma
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.RegexConverter
 import amf.plugins.document.apicontract.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
-import amf.plugins.domain.shapes.metamodel._
-import amf.plugins.domain.shapes.models.{FileShape, NodeShape, ScalarShape}
+
+
 import amf.plugins.domain.apicontract.metamodel.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
 import amf.plugins.domain.apicontract.metamodel.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
 import amf.plugins.domain.apicontract.metamodel._

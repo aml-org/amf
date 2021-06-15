@@ -6,7 +6,7 @@ import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.apicontract.annotations.OperationTraitEntry
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.apicontract.parser.spec.declaration.OasLikeCreativeWorkParser

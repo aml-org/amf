@@ -7,7 +7,7 @@ import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserCont
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Vendor
 import amf.plugins.common.Raml10MediaTypes
-import amf.plugins.document.apicontract.contexts.parser.raml.{Raml10WebApiContext, RamlWebApiContext}
+import amf.shapes.internal.spec.contexts.parser.raml.{Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.parser.RamlFragmentHeader._
 import amf.plugins.document.apicontract.parser.RamlHeader
 import amf.plugins.document.apicontract.parser.RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay}

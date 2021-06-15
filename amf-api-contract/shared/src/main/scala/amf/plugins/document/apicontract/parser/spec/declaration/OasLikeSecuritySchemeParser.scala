@@ -7,7 +7,7 @@ import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
+import amf.shapes.internal.spec.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorSecurityScheme
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser

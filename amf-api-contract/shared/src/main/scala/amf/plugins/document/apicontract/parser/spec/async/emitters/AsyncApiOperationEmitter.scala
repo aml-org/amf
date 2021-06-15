@@ -6,7 +6,7 @@ import amf.core.internal.parser.domain.{FieldEntry, Fields}
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.async.AsyncHelper
 import amf.plugins.document.apicontract.parser.spec.oas.emitters.{

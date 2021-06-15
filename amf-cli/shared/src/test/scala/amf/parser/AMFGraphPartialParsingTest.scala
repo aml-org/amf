@@ -4,7 +4,7 @@ import amf.client.environment.ShapesConfiguration
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
 import amf.core.client.scala.parse.AMFParser
-import amf.plugins.domain.shapes.models.ScalarShape
+
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}

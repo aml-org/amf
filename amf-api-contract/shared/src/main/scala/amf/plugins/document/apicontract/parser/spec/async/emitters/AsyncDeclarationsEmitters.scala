@@ -6,7 +6,7 @@ import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations
 
 import scala.collection.mutable.ListBuffer

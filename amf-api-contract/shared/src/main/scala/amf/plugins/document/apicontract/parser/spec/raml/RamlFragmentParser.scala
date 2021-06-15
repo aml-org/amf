@@ -9,7 +9,7 @@ import amf.core.internal.metamodel.document.FragmentModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Raml10
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.RamlFragmentHeader._
 import amf.plugins.document.apicontract.parser.spec.declaration._

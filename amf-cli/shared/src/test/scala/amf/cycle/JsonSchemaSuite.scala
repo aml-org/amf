@@ -7,12 +7,12 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
 import amf.core.internal.parser.{ParseConfiguration, Root}
 import amf.core.internal.remote.Platform
-import amf.plugins.document.apicontract.contexts.parser.oas.JsonSchemaWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.apicontract.model.DataTypeFragment
 import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
 import amf.plugins.document.apicontract.parser.spec.jsonschema.JsonSchemaParser
 import amf.plugins.document.apicontract.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
-import amf.plugins.domain.shapes.models.AnyShape
+
 import org.yaml.parser.JsonParser
 
 trait JsonSchemaSuite {

@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
 import amf.core.client.scala.model.document.BaseUnit
-import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.OasSpecEmitterContext
 import org.yaml.model._
 
 case class Oas2DocumentEmitter(document: BaseUnit)(implicit override val spec: OasSpecEmitterContext)

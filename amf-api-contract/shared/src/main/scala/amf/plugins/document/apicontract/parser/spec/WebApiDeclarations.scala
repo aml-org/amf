@@ -28,8 +28,7 @@ import amf.plugins.domain.apicontract.models.bindings.{
 }
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+
 import org.yaml.model.{YNode, YPart}
 
 /**

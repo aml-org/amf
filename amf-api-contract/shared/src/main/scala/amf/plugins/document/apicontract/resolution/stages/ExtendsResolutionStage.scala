@@ -14,12 +14,8 @@ import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.core.internal.utils.AliasCounter
-import amf.plugins.document.apicontract.contexts.emitter.raml.Raml10SpecEmitterContext
-import amf.plugins.document.apicontract.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext
-}
+import amf.shapes.internal.spec.contexts.emitter.raml.Raml10SpecEmitterContext
+import amf.shapes.internal.spec.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
 import amf.plugins.document.apicontract.parser.spec.domain.{Raml10EndPointEmitter, Raml10OperationEmitter}
 import amf.plugins.domain.apicontract.models.templates.{

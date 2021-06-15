@@ -6,7 +6,7 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
-import amf.plugins.document.apicontract.contexts.parser.async.Async20WebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.{

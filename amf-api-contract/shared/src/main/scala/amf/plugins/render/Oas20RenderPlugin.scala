@@ -7,7 +7,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragmen
 import amf.core.internal.plugins.render.AMFRenderPlugin.APPLICATION_JSON
 import amf.core.internal.remote.Vendor
 import amf.plugins.common.Oas20MediaTypes
-import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas2SpecEmitterContext, OasSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.emitter.oas.{Oas2SpecEmitterContext, OasSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.oas.{Oas20ModuleEmitter, Oas2DocumentEmitter, OasFragmentEmitter}
 import org.yaml.model.{YDocument, YNode}
 

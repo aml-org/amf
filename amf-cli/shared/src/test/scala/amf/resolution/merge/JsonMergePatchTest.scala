@@ -13,15 +13,15 @@ import amf.core.internal.render.SpecOrdering
 import amf.emit.AMFRenderer
 import amf.facades.Validation
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
-import amf.plugins.document.apicontract.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
+import amf.shapes.internal.spec.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.async.Subscribe
 import amf.plugins.document.apicontract.parser.spec.async.parser.{AsyncMessageParser, AsyncOperationParser}
 import amf.plugins.document.apicontract.parser.spec.common.DataNodeParser
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.DataNodeEmitter
 import amf.plugins.domain.apicontract.models.{Message, Operation}
-import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncJsonMergePatch, AsyncKeyCriteria, JsonMergePatch}
+import amf.shapes.internal.domain.resolution.merge.{AsyncJsonMergePatch, AsyncKeyCriteria, JsonMergePatch}
 import org.mulesoft.common.io.Fs
 import org.scalatest.{Assertion, Matchers}
 import org.yaml.model.{YDocument, YMap, YNode}

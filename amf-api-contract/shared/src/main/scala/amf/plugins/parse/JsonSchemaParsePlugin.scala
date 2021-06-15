@@ -8,13 +8,13 @@ import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext, ReferenceHandler, SimpleReferenceHandler}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{JsonSchema, Vendor}
-import amf.plugins.document.apicontract.contexts.parser.oas.JsonSchemaWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.apicontract.model.DataTypeFragment
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaUnspecifiedVersion
 import amf.plugins.document.apicontract.parser.spec.jsonschema.JsonSchemaParser
-import amf.plugins.domain.shapes.models.AnyShape
+
 import amf.client.exported.ProvidedMediaType
 object JsonSchemaParsePlugin extends AMFParsePlugin {
 

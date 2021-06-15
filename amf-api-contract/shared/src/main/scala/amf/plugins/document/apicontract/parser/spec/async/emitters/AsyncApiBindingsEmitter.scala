@@ -6,7 +6,7 @@ import amf.core.client.scala.model.domain.{AmfElement, DomainElement, Linkable, 
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.async.emitters.bindings.{
   AsyncApiChannelBindingsEmitter,
   AsyncApiMessageBindingsEmitter,
@@ -15,7 +15,7 @@ import amf.plugins.document.apicontract.parser.spec.async.emitters.bindings.{
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.OrphanAnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.OrphanAnnotationsEmitter
 import amf.plugins.domain.apicontract.models.bindings._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YNode

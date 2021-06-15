@@ -12,7 +12,7 @@ import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope, ArrayNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.model.{Extension, Overlay}
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
@@ -29,8 +29,7 @@ import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.security.{SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMapEntry, YNode, _}
 

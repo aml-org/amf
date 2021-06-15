@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.{AmfArray, DomainElement}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, Lazy}
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.apicontract.parser.spec.common._

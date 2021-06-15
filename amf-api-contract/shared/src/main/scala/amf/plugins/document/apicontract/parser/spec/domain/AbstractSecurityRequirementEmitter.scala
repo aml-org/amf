@@ -8,7 +8,7 @@ import amf.core.internal.render.BaseEmitters.{pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.oas.OasLikeSecuritySchemeTypeMappings
 import amf.plugins.domain.apicontract.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

@@ -6,12 +6,11 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
-import amf.plugins.document.apicontract.contexts.parser.raml.Raml10WebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.DataNodeEmitter
 import amf.plugins.document.apicontract.parser.spec.domain.NodeDataNodeParser
-import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
-import amf.plugins.domain.shapes.models.{Example, ScalarShape}
+
 import org.yaml.model.YDocument
 
 sealed trait PreMergeTransform {

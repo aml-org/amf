@@ -3,7 +3,6 @@ package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.stages.TransformationStep
-import amf.plugins.domain.shapes.models.Example
 
 class MakeExamplesOptional() extends TransformationStep {
 

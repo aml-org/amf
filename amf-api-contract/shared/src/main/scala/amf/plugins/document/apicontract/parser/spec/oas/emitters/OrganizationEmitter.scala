@@ -4,8 +4,8 @@ import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext

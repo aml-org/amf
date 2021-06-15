@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
 import amf.core.internal.parser.{Root, YMapOps}
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.models.api.WebApi
 import org.yaml.model.YMap

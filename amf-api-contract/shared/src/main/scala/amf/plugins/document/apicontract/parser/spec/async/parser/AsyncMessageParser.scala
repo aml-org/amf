@@ -7,7 +7,7 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter
 import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.ExampleIndex
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorMessage
@@ -25,8 +25,7 @@ import amf.plugins.domain.apicontract.metamodel.MessageModel.IsAbstract
 import amf.plugins.domain.apicontract.metamodel.{MessageModel, OperationModel, PayloadModel}
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.bindings.MessageBindings
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.{Example, NodeShape}
+
 import amf.validations.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 

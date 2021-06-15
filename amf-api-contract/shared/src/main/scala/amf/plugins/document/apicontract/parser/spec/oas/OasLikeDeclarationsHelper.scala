@@ -5,11 +5,11 @@ import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
+import amf.shapes.internal.spec.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}
-import amf.plugins.domain.shapes.models.NodeShape
+
 import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations.UnableToParseShape
 import org.yaml.model.{YMap, YScalar}

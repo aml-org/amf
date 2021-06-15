@@ -9,8 +9,7 @@ import amf.core.internal.remote._
 import amf.facades.Validation
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.plugins.domain.shapes.models.DomainExtensions._
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future

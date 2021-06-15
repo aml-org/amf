@@ -4,7 +4,6 @@ import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.remote.{Raml10YamlHint, Vendor}
 import amf.plugins.document.apicontract.annotations.ForceEntry
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 class Raml10ElementCycleTest extends DomainElementCycleTest {
 

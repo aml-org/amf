@@ -10,11 +10,11 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils._
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.annotations.FormBodyParameter
-import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
-import amf.plugins.document.apicontract.contexts.emitter.raml.Raml10SpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.RamlShapeEmitterContextAdapter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
   Raml10TypePartEmitter,
   RamlNamedTypeEmitter,
@@ -25,7 +25,7 @@ import amf.plugins.document.apicontract.parser.spec.oas.Oas3RequestBodyEmitter
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.{OperationModel, RequestModel}
 import amf.plugins.domain.apicontract.models.{Callback, Operation, Request, Tag}
-import amf.plugins.domain.shapes.models.AnyShape
+
 import org.yaml.model.YDocument.PartBuilder
 
 import scala.collection.mutable

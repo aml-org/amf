@@ -7,7 +7,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{

@@ -8,8 +8,7 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.remote._
 import amf.plugins.document.apicontract.model.DataTypeFragment
 import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.plugins.domain.shapes.models.DomainExtensions._
-import amf.plugins.domain.shapes.models.NodeShape
+
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}

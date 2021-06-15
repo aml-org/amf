@@ -4,9 +4,7 @@ import amf.client.environment.RAMLConfiguration
 import amf.core.client.scala.model.document.Fragment
 import amf.core.internal.remote.Raml10
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.plugins.domain.shapes.models.TypeDef._
-import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
-import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
+
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.Matchers._

@@ -12,16 +12,12 @@ import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.validation.CoreValidations
-import amf.plugins.document.apicontract.contexts.WebApiContext
-import amf.plugins.document.apicontract.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext
-}
+import amf.shapes.internal.spec.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorEndPoint
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.DataNodeEmitter
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation}
 import amf.validations.ResolutionSideValidations.ParseResourceTypeFail
 import org.yaml.model._

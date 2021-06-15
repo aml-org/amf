@@ -4,7 +4,6 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.domain.apicontract.models.Parameter
-import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 
 class CleanParameterExamples() extends TransformationStep {
 

@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainE
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{CreativeWork, Example, ExemplifiedDomainElement, NodeShape}
+
 import amf.plugins.domain.apicontract.metamodel.MessageModel
 import amf.plugins.domain.apicontract.metamodel.MessageModel._
 import amf.plugins.domain.apicontract.models.bindings.{MessageBinding, MessageBindings}

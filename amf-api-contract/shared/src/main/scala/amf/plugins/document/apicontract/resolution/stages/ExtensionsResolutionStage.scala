@@ -15,18 +15,14 @@ import amf.core.internal.metamodel.domain.common.{DescriptionField, DisplayNameF
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext
-}
+import amf.shapes.internal.spec.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.model.{Extension, Overlay}
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations
 import amf.plugins.domain.apicontract.metamodel._
 import amf.plugins.domain.apicontract.metamodel.api.BaseApiModel
 import amf.plugins.domain.apicontract.models.api.Api
 import amf.plugins.domain.apicontract.resolution.ExtendsHelper
-import amf.plugins.domain.shapes.metamodel.common._
+
 import amf.validations.ResolutionSideValidations.MissingExtensionInReferences
 
 import scala.collection.mutable

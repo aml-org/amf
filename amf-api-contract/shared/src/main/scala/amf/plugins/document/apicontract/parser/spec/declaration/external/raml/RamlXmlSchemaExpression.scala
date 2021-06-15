@@ -6,15 +6,14 @@ import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
 import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.apicontract.parser.{
   RamlExternalSchemaExpressionFactory,
   ShapeParserContext,
   WebApiShapeParserContextAdapter
 }
-import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
-import amf.plugins.domain.shapes.models.SchemaShape
+
 import amf.validations.ParserSideValidations.InvalidXmlSchemaType
 import org.yaml.model._
 import amf.core.internal.parser.YMapOps

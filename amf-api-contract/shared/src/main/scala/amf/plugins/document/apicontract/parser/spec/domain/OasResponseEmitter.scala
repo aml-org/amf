@@ -10,12 +10,12 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.annotations.{DefaultPayload, EndPointBodyParameter}
-import amf.plugins.document.apicontract.contexts.emitter.oas.{
+import amf.shapes.internal.spec.contexts.emitter.oas.{
   Oas2SpecEmitterFactory,
   Oas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{OasLikeShapeEmitterContextAdapter, oas}
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}

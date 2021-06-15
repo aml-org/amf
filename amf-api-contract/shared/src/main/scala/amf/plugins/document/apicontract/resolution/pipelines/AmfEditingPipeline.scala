@@ -6,7 +6,7 @@ import amf.core.client.common.transform._
 import amf.core.client.scala.transform.stages.{TransformationStep, UrlShortenerStage}
 import amf.plugins.document.apicontract.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.apicontract.resolution.stages._
-import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override val name: String)
     extends TransformationPipeline() {

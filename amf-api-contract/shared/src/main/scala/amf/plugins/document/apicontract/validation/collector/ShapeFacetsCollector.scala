@@ -10,7 +10,6 @@ import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.apicontract.metamodel.{ParameterModel, PayloadModel, RequestModel}
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Request}
-import amf.plugins.domain.shapes.models.{NodeShape, UnionShape}
 
 // RAML centric as it collects custom facets from the RAML "facets" node.
 object ShapeFacetsCollector extends ValidationCandidateCollector {

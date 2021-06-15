@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.CustomFacetsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.RamlPropertyShapeEmitter
 

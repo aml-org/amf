@@ -16,7 +16,7 @@ import amf.plugins.domain.apicontract.resolution.stages.async.{
   AsyncExamplePropagationResolutionStage,
   ServerVariableExampleResolutionStage
 }
-import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 class Async20TransformationPipeline private (override val name: String) extends TransformationPipeline() {
   def references = new WebApiReferenceResolutionStage()

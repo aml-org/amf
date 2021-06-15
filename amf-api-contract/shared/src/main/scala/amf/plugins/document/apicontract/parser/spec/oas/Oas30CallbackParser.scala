@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorCallback
 import amf.plugins.domain.apicontract.metamodel.{CallbackModel, EndPointModel}

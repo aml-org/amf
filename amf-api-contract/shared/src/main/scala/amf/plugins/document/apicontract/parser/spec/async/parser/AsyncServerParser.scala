@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.IdCounter
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike

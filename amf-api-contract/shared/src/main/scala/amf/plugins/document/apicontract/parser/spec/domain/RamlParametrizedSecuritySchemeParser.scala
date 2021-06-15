@@ -2,7 +2,7 @@ package amf.plugins.document.apicontract.parser.spec.domain
 
 import amf.core.internal.annotations.NullSecurity
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.apicontract.metamodel.security._
 import amf.plugins.domain.apicontract.models.security._
 import amf.validations.ParserSideValidations.UnknownSecuritySchemeErrorSpecification

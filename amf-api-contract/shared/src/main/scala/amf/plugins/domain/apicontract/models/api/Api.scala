@@ -7,7 +7,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel.Description
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.remote.Vendor
-import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
+
 import amf.plugins.domain.apicontract.metamodel.api.BaseApiModel.{License => WebApiLicense, _}
 import amf.plugins.domain.apicontract.models.{
   EndPoint,

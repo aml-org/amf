@@ -8,7 +8,7 @@ import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.OasHeader._
 import amf.plugins.document.apicontract.parser.spec.declaration.SchemaPosition.Schema
@@ -17,7 +17,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntry
 import amf.plugins.document.apicontract.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.document.apicontract.parser.{OasHeader, WebApiShapeParserContextAdapter}
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.shapes.models.Example
+
 import amf.plugins.parse.ExternalJsonYamlRefsParsePlugin
 import amf.validations.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}

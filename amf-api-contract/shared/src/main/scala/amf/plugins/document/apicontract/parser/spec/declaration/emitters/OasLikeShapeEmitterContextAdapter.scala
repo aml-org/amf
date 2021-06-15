@@ -7,10 +7,10 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.oas.{DefinitionsQueue, OasSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.{DefinitionsQueue, OasSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.declaration.CustomFacetsEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
 import org.yaml.model.YNode
 
 import scala.util.matching.Regex

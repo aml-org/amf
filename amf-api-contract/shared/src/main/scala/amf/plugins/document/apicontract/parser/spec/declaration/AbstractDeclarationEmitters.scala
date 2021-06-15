@@ -6,10 +6,10 @@ import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.DataNodeEmitter
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType

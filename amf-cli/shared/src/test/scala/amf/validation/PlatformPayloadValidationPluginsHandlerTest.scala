@@ -9,7 +9,7 @@ import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.plugins.document.apicontract.resolution.pipelines.AmfTransformationPipeline
-import amf.plugins.domain.shapes.models.AnyShape
+
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}

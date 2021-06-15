@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import org.yaml.model.YPart
 

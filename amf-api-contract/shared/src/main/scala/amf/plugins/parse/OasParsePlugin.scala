@@ -4,7 +4,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.apicontract.parser.spec.oas.{OasFragmentParser, OasModuleParser}
 

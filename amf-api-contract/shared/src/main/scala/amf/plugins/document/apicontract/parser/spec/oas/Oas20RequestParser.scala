@@ -4,14 +4,14 @@ import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils._
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.spec.declaration.Raml10TypeParser
 import amf.plugins.document.apicontract.parser.spec.domain._
 import amf.plugins.document.apicontract.parser.spec.toRaml
 import amf.plugins.document.apicontract.parser.{WebApiShapeParserContextAdapter, spec}
 import amf.plugins.domain.apicontract.metamodel.RequestModel
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Request}
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+
 import org.yaml.model._
 
 import scala.collection.mutable

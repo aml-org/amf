@@ -9,13 +9,13 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.Vendor
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.async.AsyncSpecEmitterFactory
-import amf.plugins.document.apicontract.contexts.emitter.jsonschema.JsonSchemaEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.oas.Oas3SpecEmitterFactory
-import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.async.AsyncSpecEmitterFactory
+import amf.shapes.internal.spec.contexts.emitter.jsonschema.JsonSchemaEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.Oas3SpecEmitterFactory
+import amf.shapes.internal.spec.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
 import org.yaml.model.YDocument
 

@@ -7,7 +7,7 @@ import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.parser.{Root, YMapOps}
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.async.parser._
 import amf.plugins.document.apicontract.parser.spec.common._

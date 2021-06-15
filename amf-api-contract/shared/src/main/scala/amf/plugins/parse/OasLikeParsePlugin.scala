@@ -2,7 +2,7 @@ package amf.plugins.parse
 
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.DefaultReferenceCollector
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
+import amf.shapes.internal.spec.contexts.parser.OasLikeWebApiContext
 
 trait OasLikeParsePlugin extends ApiParsePlugin {
 

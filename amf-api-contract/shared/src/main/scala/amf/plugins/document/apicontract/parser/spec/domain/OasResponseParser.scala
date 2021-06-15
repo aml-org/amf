@@ -7,7 +7,7 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.{DefaultPayload, ExternalReferenceUrl}
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorResponse
@@ -17,8 +17,7 @@ import amf.plugins.document.apicontract.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.domain.apicontract.metamodel.ResponseModel.Headers
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Response}
-import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+
 import org.yaml.model.YMap
 
 import scala.collection.mutable

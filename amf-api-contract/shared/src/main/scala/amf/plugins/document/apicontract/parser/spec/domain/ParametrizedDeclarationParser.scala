@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.templates.{AbstractDeclaration, Parame
 import amf.core.internal.metamodel.domain.templates.{ParametrizedDeclarationModel, VariableValueModel}
 import amf.core.internal.parser.YNodeLikeOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
-import amf.plugins.document.apicontract.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.DataNodeParser
 import amf.validations.ParserSideValidations.InvalidAbstractDeclarationType

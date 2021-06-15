@@ -14,7 +14,7 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations
 import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{

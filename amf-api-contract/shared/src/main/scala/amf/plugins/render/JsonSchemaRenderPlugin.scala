@@ -8,7 +8,7 @@ import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderInfo}
 import amf.core.internal.remote.{JsonSchema, Vendor}
 import amf.plugins.document.apicontract.annotations.JSONSchemaRoot
 import amf.plugins.document.apicontract.parser.spec.common.JsonSchemaEmitter
-import amf.plugins.domain.shapes.models.AnyShape
+
 import org.yaml.model.YDocument
 import amf.client.exported.ProvidedMediaType
 object JsonSchemaRenderPlugin extends ApiRenderPlugin {

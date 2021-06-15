@@ -4,7 +4,7 @@ import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.client.validation.PayloadValidationUtils
 import amf.core.client.scala.model.DataType.{Boolean, Date, DateTime, DateTimeOnly, Integer, Nil, Number, String}
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape, NodeShape, ScalarShape}
+
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.ExecutionContext

@@ -10,7 +10,7 @@ import amf.core.internal.metamodel.domain.{
   ModelVocabularies,
   ShapeModel
 }
-import amf.plugins.domain.shapes.metamodel.common.ExamplesField
+
 import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.plugins.domain.apicontract.models.Parameter
 import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Document, Shapes}

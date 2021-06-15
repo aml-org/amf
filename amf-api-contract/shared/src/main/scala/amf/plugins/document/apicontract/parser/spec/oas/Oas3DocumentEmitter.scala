@@ -3,7 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.oas
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.common.DeclarationsEmitterWrapper
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 

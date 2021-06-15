@@ -7,7 +7,7 @@ import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.metamodel.document.ModuleModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YNodeLikeOps}
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType.LIBRARY
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser

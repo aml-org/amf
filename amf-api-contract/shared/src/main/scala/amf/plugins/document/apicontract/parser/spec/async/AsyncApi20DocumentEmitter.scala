@@ -8,7 +8,7 @@ import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter,
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.contexts.emitter.async.AsyncSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.async.AsyncSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.async.emitters.{
   AsyncApiCreativeWorksEmitter,
   AsyncApiEndpointsEmitter,
@@ -17,13 +17,13 @@ import amf.plugins.document.apicontract.parser.spec.async.emitters.{
 }
 import amf.plugins.document.apicontract.parser.spec.common.DeclarationsEmitterWrapper
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.domain.SecurityRequirementsEmitter
 import amf.plugins.document.apicontract.parser.spec.oas.emitters.{InfoEmitter, TagsEmitter}
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.models.Tag
 import amf.plugins.domain.apicontract.models.api.{Api, WebApi}
-import amf.plugins.domain.shapes.models.CreativeWork
+
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
 import scala.collection.mutable

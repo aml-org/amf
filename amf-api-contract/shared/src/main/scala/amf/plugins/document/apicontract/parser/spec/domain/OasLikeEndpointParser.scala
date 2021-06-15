@@ -4,9 +4,9 @@ import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.OasLikeWebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.spec.async.parser.AsyncParametersParser
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike

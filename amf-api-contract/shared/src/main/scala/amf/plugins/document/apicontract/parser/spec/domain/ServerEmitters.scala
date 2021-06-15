@@ -10,13 +10,10 @@ import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, MapEntryEmitter,
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.contexts._
-import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
-import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
-  AnnotationsEmitter,
-  DataNodeEmitter
-}
+import amf.shapes.internal.spec.contexts._
+import amf.shapes.internal.spec.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   EnumValuesEmitter,
@@ -27,8 +24,7 @@ import amf.plugins.domain.apicontract.metamodel.ServerModel
 import amf.plugins.domain.apicontract.metamodel.api.BaseApiModel
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.Api
-import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
-import amf.plugins.domain.shapes.models.ScalarShape
+
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 

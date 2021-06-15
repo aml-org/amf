@@ -7,7 +7,7 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.raml.emitters.RamlSecuritySettingsValuesEmitters
 import amf.plugins.domain.apicontract.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.apicontract.models.security.{

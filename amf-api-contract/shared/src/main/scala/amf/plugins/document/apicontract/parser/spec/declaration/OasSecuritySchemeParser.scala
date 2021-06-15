@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
 import amf.core.internal.parser.YMapOps
-import amf.plugins.document.apicontract.contexts.CustomClosedShapeContextDecorator
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
+import amf.shapes.internal.spec.contexts.CustomClosedShapeContextDecorator
+import amf.shapes.internal.spec.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.spec.oas.OasCustomSyntax
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import org.yaml.model.{YMap, YPart}

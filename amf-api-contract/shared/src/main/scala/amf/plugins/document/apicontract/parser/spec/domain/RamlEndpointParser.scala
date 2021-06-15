@@ -6,11 +6,7 @@ import amf.core.internal.parser.{ParseConfiguration, YMapOps}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.plugins.document.apicontract.annotations.{EndPointResourceTypeEntry, EndPointTraitEntry}
-import amf.plugins.document.apicontract.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext
-}
+import amf.shapes.internal.spec.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter, spec}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
@@ -18,7 +14,7 @@ import amf.plugins.domain.apicontract.annotations.ParentEndPoint
 import amf.plugins.domain.apicontract.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.apicontract.models.templates.ParametrizedResourceType
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation, Parameter}
-import amf.plugins.domain.shapes.models.ScalarShape
+
 import amf.validations.ParserSideValidations.{
   DuplicatedEndpointPath,
   InvalidEndpointPath,

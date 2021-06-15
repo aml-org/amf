@@ -14,7 +14,6 @@ import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.domain.apicontract.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.apicontract.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.apicontract.resolution.stages.DataNodeMerging
-import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 
 class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                   domainElemdomainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,

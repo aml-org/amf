@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
 import amf.core.internal.parser.domain.BaseSpecParser
-import amf.plugins.document.apicontract.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
 import amf.plugins.document.vocabularies.parser.common.DeclarationKeyCollector
 import amf.validations.ParserSideValidations.PathTemplateUnbalancedParameters
 import org.yaml.model._

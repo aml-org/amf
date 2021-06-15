@@ -16,11 +16,11 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.TSort.tsort
 import amf.core.internal.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec._
 import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
@@ -36,7 +36,7 @@ import amf.plugins.domain.apicontract.metamodel._
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.plugins.domain.shapes.models.CreativeWork
+
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.render.YamlRender

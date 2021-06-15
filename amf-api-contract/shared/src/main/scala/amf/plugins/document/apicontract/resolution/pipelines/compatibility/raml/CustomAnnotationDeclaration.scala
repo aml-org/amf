@@ -5,7 +5,6 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation
-import amf.plugins.domain.shapes.models.AnyShape
 
 class CustomAnnotationDeclaration() extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {

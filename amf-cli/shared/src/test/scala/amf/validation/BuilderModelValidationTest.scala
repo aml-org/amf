@@ -10,7 +10,7 @@ import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
-import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
+
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.{AsyncFunSuite, Matchers}

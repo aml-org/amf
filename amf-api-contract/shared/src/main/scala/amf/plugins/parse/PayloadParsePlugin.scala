@@ -14,7 +14,7 @@ import amf.core.client.scala.parse.document.{
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Vendor
 import amf.plugins.common.PayloadMediaTypes
-import amf.plugins.document.apicontract.contexts.parser.raml.PayloadContext
+import amf.shapes.internal.spec.contexts.parser.raml.PayloadContext
 import amf.plugins.document.apicontract.parser.PayloadParser
 import org.yaml.model.{YMap, YScalar}
 

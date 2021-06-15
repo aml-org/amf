@@ -14,9 +14,9 @@ import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.parser.domain.{Annotations, JsonParserFactory}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.document.apicontract.annotations._
-import amf.plugins.document.apicontract.contexts.WebApiContext
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.common.ExternalFragmentHelper
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.apicontract.parser.spec.declaration.utils.JsonSchemaParsingHelper
@@ -24,8 +24,7 @@ import amf.plugins.document.apicontract.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.apicontract.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.apicontract.parser.spec.toJsonSchema
 import amf.plugins.document.apicontract.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
-import amf.plugins.domain.shapes.metamodel.AnyShapeModel
-import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
+
 import amf.validations.ParserSideValidations.JsonSchemaFragmentNotFound
 import amf.validations.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.mulesoft.lexer.Position

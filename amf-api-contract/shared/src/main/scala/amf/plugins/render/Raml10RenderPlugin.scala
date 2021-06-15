@@ -8,7 +8,7 @@ import amf.core.internal.plugins.render.AMFRenderPlugin.APPLICATION_YAML
 import amf.core.internal.plugins.render.RenderInfo
 import amf.core.internal.remote.Vendor
 import amf.plugins.common.Raml10MediaTypes
-import amf.plugins.document.apicontract.contexts.emitter.raml.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.emitter.raml.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.model.{
   AnnotationTypeDeclarationFragment,
   DataTypeFragment,

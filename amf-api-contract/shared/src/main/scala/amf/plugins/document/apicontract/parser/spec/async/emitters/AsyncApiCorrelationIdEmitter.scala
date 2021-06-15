@@ -5,7 +5,7 @@ import amf.core.client.common.position.Position.ZERO
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.domain.apicontract.metamodel.CorrelationIdModel
 import amf.plugins.domain.apicontract.models.CorrelationId

@@ -11,7 +11,7 @@ import amf.core.client.scala.parse.document.{
 import amf.core.internal.annotations.Aliases
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.validation.CoreValidations.ExpectedModule
-import amf.plugins.document.apicontract.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
 import amf.validations.ParserSideValidations.InvalidModuleType
 import org.yaml.model.{YMap, YScalar, YType}
 

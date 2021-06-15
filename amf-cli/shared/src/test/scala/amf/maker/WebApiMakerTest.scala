@@ -8,8 +8,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
-import amf.plugins.domain.shapes.models.DomainExtensions.propertyShapeToPropertyShape
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
+
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.WebApi
 import org.mulesoft.common.test.ListAssertions

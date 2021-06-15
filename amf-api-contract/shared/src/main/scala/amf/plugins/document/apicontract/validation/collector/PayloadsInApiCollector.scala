@@ -5,8 +5,6 @@ import amf.core.client.scala.model.domain.{AmfElement, DataNode, ScalarNode, Sha
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.ValidationCandidate
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
-import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
 
 object PayloadsInApiCollector extends ValidationCandidateCollector {
 

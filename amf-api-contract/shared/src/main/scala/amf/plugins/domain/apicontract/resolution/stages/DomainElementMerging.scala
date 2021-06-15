@@ -35,10 +35,8 @@ import amf.core.internal.utils.EqSyntax._
 import amf.core.internal.utils.TemplateUri
 import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.EmptyPayload
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape, ScalarShape}
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
+
 import amf.plugins.domain.apicontract.metamodel.MessageModel.Examples
 import amf.plugins.domain.apicontract.metamodel.{EndPointModel, OperationModel, RequestModel}
 import amf.plugins.domain.apicontract.models._

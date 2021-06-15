@@ -6,8 +6,7 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
-import amf.plugins.domain.shapes.metamodel.{ExampleModel, NodeShapeModel}
+
 import amf.plugins.domain.apicontract.metamodel.bindings.MessageBindingsModel
 import amf.plugins.domain.apicontract.models.Message
 import amf.core.internal.metamodel.Type.{Array, Bool, Str}

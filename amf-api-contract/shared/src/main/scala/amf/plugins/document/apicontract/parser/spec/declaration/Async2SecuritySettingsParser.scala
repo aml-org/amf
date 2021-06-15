@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, OAuth2FlowValidations}
 import amf.plugins.domain.apicontract.metamodel.security._

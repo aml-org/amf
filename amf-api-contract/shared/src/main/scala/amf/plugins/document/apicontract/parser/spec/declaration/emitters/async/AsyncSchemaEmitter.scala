@@ -6,8 +6,8 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.async.Async20SpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.async.parser.AsyncSchemaFormats
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{

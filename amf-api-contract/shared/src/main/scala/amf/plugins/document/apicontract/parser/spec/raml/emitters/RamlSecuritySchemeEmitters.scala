@@ -8,14 +8,11 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
-  AnnotationsEmitter,
-  DataNodeEmitter
-}
+import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
   Raml10TypePartEmitter,
   RamlNamedTypeEmitter
@@ -28,7 +25,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   ShapeEmitterContext
 }
 import amf.plugins.document.apicontract.parser.spec.domain._
-import amf.plugins.domain.shapes.models.AnyShape
+
 import amf.plugins.domain.apicontract.metamodel.security._
 import amf.plugins.domain.apicontract.models.security._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

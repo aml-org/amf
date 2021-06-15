@@ -4,7 +4,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
-import amf.plugins.document.apicontract.contexts.emitter.async.Async20SpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.async.emitters.{
   AsyncApiBindingsPartEmitter,
   AsyncApiCorrelationIdContentEmitter,
@@ -16,7 +16,7 @@ import amf.plugins.document.apicontract.parser.spec.async.emitters.{
   AsyncSingleSchemePartEmitter
 }
 import amf.plugins.document.apicontract.parser.spec.domain.ExampleDataNodePartEmitter
-import amf.plugins.domain.shapes.models.Example
+
 import amf.plugins.domain.apicontract.models.{
   CorrelationId,
   EndPoint,

@@ -7,7 +7,7 @@ import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{Oas30, Vendor}
 import amf.plugins.common.Oas30MediaTypes
-import amf.plugins.document.apicontract.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
+import amf.shapes.internal.spec.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
 import amf.plugins.document.apicontract.parser.OasHeader
 import amf.plugins.document.apicontract.parser.OasHeader.Oas30Header
 import amf.plugins.document.apicontract.parser.spec.OasWebApiDeclarations

@@ -9,13 +9,10 @@ import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, tr
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
-  AnnotationsEmitter,
-  DataNodeEmitter
-}
+import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
@@ -26,7 +23,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
 import amf.plugins.document.apicontract.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.apicontract.parser.spec.raml.emitters.Raml10SecuritySchemeEmitter
 import amf.plugins.document.apicontract.parser.{RamlFragmentHeader, RamlHeader}
-import amf.plugins.domain.shapes.models.AnyShape
+
 import org.yaml.model.YDocument
 
 /**

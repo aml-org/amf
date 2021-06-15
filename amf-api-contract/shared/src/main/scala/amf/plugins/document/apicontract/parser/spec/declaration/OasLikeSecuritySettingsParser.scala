@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}

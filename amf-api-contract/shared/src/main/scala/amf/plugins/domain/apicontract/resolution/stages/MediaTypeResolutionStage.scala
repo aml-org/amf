@@ -7,7 +7,7 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.metamodel.Field
-import amf.plugins.domain.shapes.models.{ExampleTracking, FileShape, NodeShape}
+
 import amf.plugins.domain.apicontract.metamodel._
 import amf.plugins.domain.apicontract.metamodel.api.BaseApiModel
 import amf.plugins.domain.apicontract.models.api.Api

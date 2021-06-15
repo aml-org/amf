@@ -13,7 +13,7 @@ import amf.core.internal.metamodel.domain.{
 }
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.plugins.domain.shapes.metamodel.common.ExamplesField
+
 import amf.plugins.domain.apicontract.models.Payload
 
 /**

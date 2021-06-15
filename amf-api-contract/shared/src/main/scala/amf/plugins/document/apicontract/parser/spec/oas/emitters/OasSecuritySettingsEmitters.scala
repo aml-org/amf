@@ -9,8 +9,8 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
+import amf.shapes.internal.spec.common.emitter.annotations.{
   AnnotationsEmitter,
   DataNodeEmitter,
   OrphanAnnotationsEmitter

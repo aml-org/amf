@@ -8,7 +8,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfObject, Shape}
 import amf.core.client.common.position.{Range => PositionRange}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.{Parameter, Response}
 import org.mulesoft.lexer.InputRange

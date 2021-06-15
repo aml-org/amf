@@ -7,8 +7,8 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.OrphanAnnotationsEmitter
+import amf.shapes.internal.spec.contexts.emitter.oas.OasSpecEmitterContext
+import amf.shapes.internal.spec.common.emitter.annotations.OrphanAnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext

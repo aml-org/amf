@@ -6,7 +6,6 @@ import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.parser.{RamlTypeDefMatcher, TypeName}
 import amf.plugins.domain.apicontract.models.api.Api
-import amf.plugins.domain.shapes.models.TypeDef._
 
 import scala.collection.mutable
 

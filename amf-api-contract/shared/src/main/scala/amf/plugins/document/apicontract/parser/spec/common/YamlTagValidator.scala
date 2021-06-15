@@ -4,8 +4,8 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Syntax
 import amf.core.internal.remote.Syntax.Yaml
-import amf.plugins.document.apicontract.contexts.WebApiContext
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
 import amf.validations.ParserSideValidations
 import org.yaml.model.{YMap, YNode, YType}
 

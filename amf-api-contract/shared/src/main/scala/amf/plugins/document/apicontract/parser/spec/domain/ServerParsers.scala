@@ -7,8 +7,8 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.{AmfStrings, TemplateUri}
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.common.{RamlScalarNode, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.oas.Oas3Syntax

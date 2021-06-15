@@ -9,7 +9,7 @@ import amf.core.internal.metamodel.document.PayloadFragmentModel
 import amf.core.internal.plugins.payload.ErrorFallbackValidationPlugin
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
 import amf.plugins.document.apicontract.validation.collector.{CollectorsRunner, ValidationCandidateCollector}
-import amf.plugins.domain.shapes.validation.CandidateValidator
+
 import amf.validations.ShapePayloadValidations
 import amf.validations.ShapePayloadValidations.SchemaException
 

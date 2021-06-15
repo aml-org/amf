@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorServerBindings
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike

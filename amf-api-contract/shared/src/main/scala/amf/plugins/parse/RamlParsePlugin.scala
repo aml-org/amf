@@ -16,7 +16,7 @@ import amf.core.client.scala.parse.document.{
 }
 import amf.core.internal.parser.Root
 import amf.core.internal.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations
 import amf.plugins.document.apicontract.parser.spec.raml._
 import amf.plugins.document.apicontract.parser.{RamlFragment, RamlHeader}

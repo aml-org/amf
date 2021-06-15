@@ -9,7 +9,7 @@ import amf.plugins.domain.apicontract.resolution.stages.{
   OpenApiParametersNormalizationStage,
   ParametersNormalizationStage
 }
-import amf.plugins.domain.shapes.resolution.stages.RequestParamsLinkStage
+import amf.shapes.internal.domain.resolution.RequestParamsLinkStage
 
 class Oas30TransformationPipeline private (override val name: String) extends AmfTransformationPipeline(name) {
   override def profileName: ProfileName = Oas30Profile

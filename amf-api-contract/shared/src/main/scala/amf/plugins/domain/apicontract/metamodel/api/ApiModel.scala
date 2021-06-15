@@ -6,7 +6,7 @@ import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+
 import amf.plugins.domain.apicontract.metamodel._
 import amf.plugins.domain.apicontract.metamodel.security.SecurityRequirementModel
 

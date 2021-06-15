@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainE
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.domain.shapes.models.{ArrayShape, ExemplifiedDomainElement, NodeShape, ScalarShape}
+
 import amf.plugins.domain.apicontract.metamodel.PayloadModel.{Encoding => EncodingModel, _}
 import amf.plugins.domain.apicontract.metamodel.{ParameterModel, PayloadModel}
 import org.yaml.model.YPart

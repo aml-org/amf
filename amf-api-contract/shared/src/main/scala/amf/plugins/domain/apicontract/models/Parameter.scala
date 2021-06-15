@@ -7,8 +7,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.apicontract.metamodel.ParameterModel
 import amf.plugins.domain.apicontract.metamodel.ParameterModel._
-import amf.plugins.domain.shapes.metamodel.ExampleModel.Description
-import amf.plugins.domain.shapes.models.{ExemplifiedDomainElement, NodeShape, ScalarShape}
+
 import org.yaml.model.YPart
 
 /**

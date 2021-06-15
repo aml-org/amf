@@ -13,7 +13,7 @@ import amf.io.FileAssertionTest
 import amf.plugins.document.apicontract.parser.spec.common.emitters.ApiDomainElementEmitter
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.Api
-import amf.plugins.domain.shapes.models.Example
+
 import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
 import org.yaml.model.{YDocument, YNode}
 

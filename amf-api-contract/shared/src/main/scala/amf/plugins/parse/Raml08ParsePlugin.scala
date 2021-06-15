@@ -7,11 +7,7 @@ import amf.core.client.scala.parse.document.{LinkReference, ParserContext}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Vendor
 import amf.plugins.common.Raml08MediaTypes
-import amf.plugins.document.apicontract.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext
-}
+import amf.shapes.internal.spec.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.parser.RamlFragmentHeader._
 import amf.plugins.document.apicontract.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.apicontract.parser.RamlHeader.{

@@ -14,7 +14,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.contexts.emitter.oas.{
+import amf.shapes.internal.spec.contexts.emitter.oas.{
   Oas3SpecEmitterContext,
   Oas3SpecEmitterFactory,
   OasSpecEmitterContext
@@ -23,10 +23,7 @@ import amf.plugins.document.apicontract.model.{Extension, Overlay}
 import amf.plugins.document.apicontract.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
-  AnnotationsEmitter,
-  OrphanAnnotationsEmitter
-}
+import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, OrphanAnnotationsEmitter}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,

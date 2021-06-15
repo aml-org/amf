@@ -3,7 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.oas
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.YamlTagValidator
 import amf.plugins.document.apicontract.parser.spec.declaration.AbstractDeclarationsParser

@@ -9,10 +9,10 @@ import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, sourceOr, trav
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.{AmfStrings, TemplateUri}
-import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.declaration.ExtendsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.plugins.domain.apicontract.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.YDocument

@@ -7,10 +7,10 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.parser.ParseConfiguration
 import amf.io.FileAssertionTest
-import amf.plugins.document.apicontract.contexts.parser.raml.Raml10WebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.domain.{DefaultExampleOptions, RamlExamplesParser}
-import amf.plugins.domain.shapes.models.{AnyShape, Example}
+
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YDocument, YMap}
 

@@ -7,7 +7,7 @@ import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParsedRefe
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{AsyncApi20, Vendor}
 import amf.plugins.common.Async20MediaTypes
-import amf.plugins.document.apicontract.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
+import amf.shapes.internal.spec.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
 import amf.plugins.document.apicontract.parser.AsyncHeader
 import amf.plugins.document.apicontract.parser.AsyncHeader.Async20Header
 import amf.plugins.document.apicontract.parser.spec.AsyncWebApiDeclarations

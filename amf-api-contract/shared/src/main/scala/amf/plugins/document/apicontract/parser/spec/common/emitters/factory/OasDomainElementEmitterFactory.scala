@@ -8,8 +8,8 @@ import amf.core.internal.parser.domain.{Annotations, Value}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
 import amf.plugins.document.apicontract.annotations.{FormBodyParameter, RequiredParamPayload}
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.apicontract.contexts.emitter.oas.{
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.{
   Oas2SpecEmitterContext,
   Oas3SpecEmitterContext,
   OasSpecEmitterContext
@@ -42,7 +42,6 @@ import amf.plugins.document.apicontract.parser.spec.oas.emitters.{
 import amf.plugins.domain.apicontract.metamodel.ParameterModel
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
-import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 
 case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) extends OasEmitterFactory {
 

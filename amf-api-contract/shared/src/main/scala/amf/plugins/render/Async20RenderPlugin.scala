@@ -8,7 +8,7 @@ import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderInfo}
 import amf.core.internal.remote.Vendor
 import amf.plugins.common.Async20MediaTypes
-import amf.plugins.document.apicontract.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.async.AsyncApi20DocumentEmitter
 import amf.plugins.domain.apicontract.models.api.Api
 import org.yaml.model.YDocument

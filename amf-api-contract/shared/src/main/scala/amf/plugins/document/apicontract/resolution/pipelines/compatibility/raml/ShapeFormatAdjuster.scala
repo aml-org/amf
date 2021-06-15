@@ -3,10 +3,6 @@ package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.stages.TransformationStep
-import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
-import amf.plugins.domain.shapes.models.ScalarShape
-import amf.plugins.domain.shapes.models.TypeDef.{DateOnlyType, DateTimeOnlyType, DateTimeType, TimeOnlyType}
-import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 
 // TODO this is a bug, it's just adjusted to emit correctly for now.....
 class ShapeFormatAdjuster() extends TransformationStep {

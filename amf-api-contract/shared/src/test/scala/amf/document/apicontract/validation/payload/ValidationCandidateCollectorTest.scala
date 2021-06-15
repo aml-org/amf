@@ -2,7 +2,7 @@ package amf.document.apicontract.validation.payload
 
 import amf.core.client.scala.model.domain.ScalarNode
 import amf.plugins.document.apicontract.validation.collector.EnumInShapesCollector
-import amf.plugins.domain.shapes.models.NodeShape
+
 import org.scalatest.{FunSuite, Matchers}
 
 class ValidationCandidateCollectorTest extends FunSuite with Matchers {

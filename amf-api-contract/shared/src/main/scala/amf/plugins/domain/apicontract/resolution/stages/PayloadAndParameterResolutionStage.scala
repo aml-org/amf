@@ -1,7 +1,5 @@
 package amf.plugins.domain.apicontract.resolution.stages
 
-import amf.plugins.domain.shapes.metamodel.common.ExamplesField
-import amf.plugins.domain.shapes.models.{AnyShape, Example, ExampleTracking}
 import amf.plugins.domain.apicontract.models._
 import amf._
 import amf.core.client.common.validation.{AmfProfile, Oas30Profile, ProfileName, Raml08Profile, Raml10Profile}

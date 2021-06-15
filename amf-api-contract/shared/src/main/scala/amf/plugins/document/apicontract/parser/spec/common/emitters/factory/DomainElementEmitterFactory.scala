@@ -14,7 +14,6 @@ import amf.plugins.domain.apicontract.models.bindings.{
 }
 import amf.plugins.domain.apicontract.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 
 trait DomainElementEmitterFactory {
 

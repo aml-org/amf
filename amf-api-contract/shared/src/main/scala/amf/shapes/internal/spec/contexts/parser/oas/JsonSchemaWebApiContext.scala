@@ -1,0 +1,30 @@
+package amf.shapes.internal.spec.contexts.parser.oas
+
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.remote.{JsonSchema, Vendor}
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaVersion
+import amf.plugins.document.apicontract.parser.spec.oas.Oas3Syntax
+import amf.plugins.document.apicontract.parser.spec.{OasWebApiDeclarations, SpecSyntax}
+
+class JsonSchemaWebApiContext(loc: String,
+                              refs: Seq[ParsedReference],
+                              private val wrapped: ParserContext,
+                              private val ds: Option[OasWebApiDeclarations],
+                              options: ParsingOptions = ParsingOptions(),
+                              override val defaultSchemaVersion: JSONSchemaVersion)
+    extends OasWebApiContext(loc, refs, options, wrapped, ds) {
+
+  override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
+  override val syntax: SpecSyntax             = Oas3Syntax
+  override val vendor: Vendor                 = JsonSchema
+  override val linkTypes: Boolean = wrapped match {
+    case _: RamlWebApiContext => false
+    case _: OasWebApiContext  => true // definitions tag
+    case _                    => false
+  } // oas definitions
+
+  override def makeCopy(): JsonSchemaWebApiContext =
+    new JsonSchemaWebApiContext(rootContextDocument, refs, this, Some(declarations), options, defaultSchemaVersion)
+}

@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
+import amf.shapes.internal.spec.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
 import amf.plugins.document.apicontract.parser.spec.domain.TagsParser
 import amf.plugins.domain.apicontract.models.Tag

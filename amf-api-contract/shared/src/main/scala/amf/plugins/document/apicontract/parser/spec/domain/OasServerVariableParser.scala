@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 import amf.core.internal.parser.YMapOps
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.domain.apicontract.models.Parameter
 import amf.validations.ParserSideValidations.ServerVariableMissingDefault
 import org.yaml.model.{YMap, YMapEntry}

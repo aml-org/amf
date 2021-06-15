@@ -4,14 +4,13 @@ import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.annotations.TrackedElement
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.apicontract.metamodel.PayloadModel
 import amf.plugins.domain.apicontract.models.Payload
-import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+
 import org.yaml.model.{YMap, YMapEntry}
 
 import scala.collection.mutable

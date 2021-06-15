@@ -6,8 +6,6 @@ import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement, Sh
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.RamlUnionEmitterHelper
-import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
-import amf.plugins.domain.shapes.models.UnionShape
 
 import scala.collection.mutable
 

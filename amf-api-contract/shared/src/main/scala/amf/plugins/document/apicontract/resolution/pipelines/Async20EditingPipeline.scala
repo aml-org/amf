@@ -11,7 +11,7 @@ import amf.plugins.domain.apicontract.resolution.stages.async.{
   AsyncExamplePropagationResolutionStage,
   ServerVariableExampleResolutionStage
 }
-import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
+import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 class Async20EditingPipeline private (urlShortening: Boolean = true, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {

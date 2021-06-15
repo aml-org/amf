@@ -6,7 +6,6 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.apicontract.metamodel.FragmentsTypesModels._
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
-import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 
 case class DocumentationItemFragment(fields: Fields, annotations: Annotations) extends Fragment {
   override def encodes: CreativeWork = super.encodes.asInstanceOf[CreativeWork]

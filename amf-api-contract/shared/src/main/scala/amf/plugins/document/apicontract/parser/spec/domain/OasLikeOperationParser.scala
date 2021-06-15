@@ -6,8 +6,8 @@ import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
+import amf.shapes.internal.spec.contexts.parser.OasLikeWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}

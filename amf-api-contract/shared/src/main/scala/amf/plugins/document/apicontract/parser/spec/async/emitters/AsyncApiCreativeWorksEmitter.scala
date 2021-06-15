@@ -4,9 +4,8 @@ import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.contexts.SpecEmitterContext
-import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
-import amf.plugins.domain.shapes.models.CreativeWork
+import amf.shapes.internal.spec.contexts.SpecEmitterContext
+
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer

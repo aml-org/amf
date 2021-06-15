@@ -2,16 +2,16 @@ package amf.plugins.document.apicontract.parser
 
 import amf.core.client.scala.parse.document.ParsedReference
 import amf.core.internal.remote.Vendor
-import amf.plugins.document.apicontract.contexts._
-import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas2SpecEmitterContext, OasSpecEmitterContext}
-import amf.plugins.document.apicontract.contexts.emitter.raml.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
-import amf.plugins.document.apicontract.contexts.parser.oas.{
+import amf.shapes.internal.spec.contexts._
+import amf.shapes.internal.spec.contexts.emitter.oas.{Oas2SpecEmitterContext, OasSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.emitter.raml.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
+import amf.shapes.internal.spec.contexts.parser.oas.{
   JsonSchemaWebApiContext,
   Oas2WebApiContext,
   Oas3WebApiContext,
   OasWebApiContext
 }
-import amf.plugins.document.apicontract.contexts.parser.raml.{Raml10WebApiContext, RamlWebApiContext}
+import amf.shapes.internal.spec.contexts.parser.raml.{Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.SpecAwareEmitterContext
 
 /**

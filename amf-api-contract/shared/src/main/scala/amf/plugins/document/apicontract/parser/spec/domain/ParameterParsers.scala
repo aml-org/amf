@@ -10,9 +10,9 @@ import amf.core.internal.utils.{AmfStrings, IdCounter, UriUtils}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.plugins.document.apicontract.annotations._
-import amf.plugins.document.apicontract.contexts.WebApiContext
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -22,8 +22,7 @@ import amf.plugins.document.apicontract.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.domain.apicontract.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.apicontract.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, SchemaContainer}
-import amf.plugins.domain.shapes.models.ExampleTracking._
-import amf.plugins.domain.shapes.models.{AnyShape, Example, FileShape, NodeShape}
+
 import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}

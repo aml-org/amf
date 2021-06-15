@@ -7,14 +7,14 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreParserValidations.UnsupportedExampleMediaTypeErrorSpecification
 import amf.plugins.document.apicontract.annotations.EmptyPayload
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.{AnyDefaultType, DefaultType}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Response}
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable

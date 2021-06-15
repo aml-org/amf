@@ -20,7 +20,7 @@ import amf.core.internal.parser.domain.{Annotations, ArrayNode, ScalarNode, Sear
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.utils._
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
-import amf.plugins.document.apicontract.contexts.parser.raml.{ExtensionLikeWebApiContext, RamlWebApiContext}
+import amf.shapes.internal.spec.contexts.parser.raml.{ExtensionLikeWebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.model.{Extension, Overlay}
 import amf.plugins.document.apicontract.parser.spec._
 import amf.plugins.document.apicontract.parser.spec.common._
@@ -37,8 +37,7 @@ import amf.plugins.domain.apicontract.metamodel.templates.{ResourceTypeModel, Tr
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+
 import amf.validations.ParserSideValidations._
 import amf.validations.ShapeParserSideValidations.{ExclusiveSchemasType, InvalidFragmentType, InvalidTypeDefinition}
 import org.yaml.model._

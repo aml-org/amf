@@ -3,7 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.declaration
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.BaseEmitters.pos
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions.{
   appendParameterDefinitionsPrefix,
   appendResponsesDefinitionsPrefix

@@ -6,7 +6,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
-import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.domain.apicontract.models.Payload
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType

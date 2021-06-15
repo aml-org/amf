@@ -3,7 +3,7 @@ import amf.core.client.scala.model.domain.{AmfArray, DomainElement}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
+import amf.shapes.internal.spec.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import org.yaml.model.YMap

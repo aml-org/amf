@@ -7,15 +7,12 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.CustomFacetsEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
-  AnnotationsEmitter,
-  FacetsInstanceEmitter
-}
+import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, FacetsInstanceEmitter}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.RamlTypePartEmitter
 import amf.plugins.document.apicontract.parser.spec.toOas
-import amf.plugins.domain.shapes.models.AnyShape
+
 import org.yaml.model.YNode
 
 case class RamlShapeEmitterContextAdapter(spec: RamlSpecEmitterContext)

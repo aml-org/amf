@@ -8,7 +8,7 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.annotations.ExampleIndex
-import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{AgnosticShapeEmitterContextAdapter, async}
 import amf.plugins.document.apicontract.parser.spec.domain.ExampleDataNodePartEmitter
@@ -16,7 +16,7 @@ import amf.plugins.document.apicontract.parser.spec.oas.emitters.TagsEmitter
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.{MessageModel, PayloadModel}
 import amf.plugins.domain.apicontract.models._
-import amf.plugins.domain.shapes.models.{CreativeWork, Example}
+
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 

@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser
 
 import amf.core.client.scala.model.document.PayloadFragment
-import amf.plugins.document.apicontract.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.spec.common.DataNodeParser
 import org.yaml.model.{YDocument, YNode}
 

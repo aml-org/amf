@@ -8,26 +8,18 @@ import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, Declarations, FragmentRef, FutureDeclarations, SearchScope}
 import amf.core.internal.remote.Vendor
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.oas.{
-  JsonSchemaWebApiContext,
-  Oas2WebApiContext,
-  Oas3WebApiContext
-}
-import amf.plugins.document.apicontract.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext
-}
-import amf.plugins.document.apicontract.contexts.{JsonSchemaRefGuide, WebApiContext}
+import amf.shapes.internal.spec.contexts.parser.OasLikeWebApiContext
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.{JsonSchemaWebApiContext, Oas2WebApiContext, Oas3WebApiContext}
+import amf.shapes.internal.spec.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.shapes.internal.spec.contexts.{JsonSchemaRefGuide, WebApiContext}
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.external.raml.DefaultRamlExternalSchemaExpressionFactory
 import amf.plugins.document.apicontract.parser.spec.declaration.{DefaultType, RamlTypeParser, SchemaVersion, TypeInfo}
 import amf.plugins.document.apicontract.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.apicontract.parser.spec.{OasWebApiDeclarations, SpecSyntax, toOas, toOasDeclarations}
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 import scala.collection.mutable

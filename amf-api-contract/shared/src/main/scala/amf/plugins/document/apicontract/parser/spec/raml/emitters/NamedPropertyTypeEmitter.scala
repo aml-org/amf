@@ -7,7 +7,7 @@ import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

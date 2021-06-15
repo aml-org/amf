@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
 import amf.core.internal.parser.YMapOps
-import amf.plugins.document.apicontract.contexts.WebApiContext
+import amf.shapes.internal.spec.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec._
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}

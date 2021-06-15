@@ -10,11 +10,11 @@ import amf.core.internal.render.BaseEmitters.{ValueEmitter, _}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
+import amf.shapes.internal.spec.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.OasHeader
 import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.DataNodeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters._
 import amf.plugins.document.apicontract.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.apicontract.parser.spec.oas.emitters.{OasSecuritySchemeEmitter, OasSpecEmitter}

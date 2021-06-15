@@ -9,7 +9,7 @@ import amf.core.internal.render.BaseEmitters.{pos, raw, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.DataNodeEmitter
 import amf.plugins.document.apicontract.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.apicontract.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

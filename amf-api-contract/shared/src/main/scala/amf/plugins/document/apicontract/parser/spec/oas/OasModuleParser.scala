@@ -7,7 +7,7 @@ import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.parser.{Root, YNodeLikeOps}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.ReferencesParser
 import org.yaml.model._

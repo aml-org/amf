@@ -5,7 +5,7 @@ import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
+
 import amf.plugins.domain.apicontract.metamodel.OperationModel
 import amf.plugins.domain.apicontract.metamodel.OperationModel.{Request => OperationRequest, _}
 import amf.plugins.domain.apicontract.models.bindings.OperationBindings
