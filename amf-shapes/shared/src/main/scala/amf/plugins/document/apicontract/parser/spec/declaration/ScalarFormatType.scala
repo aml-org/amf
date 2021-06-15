@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.model.domain.Shape
-import amf.core.parser._
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.parser.YMapOps
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.common.QuickFieldParserOps
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel

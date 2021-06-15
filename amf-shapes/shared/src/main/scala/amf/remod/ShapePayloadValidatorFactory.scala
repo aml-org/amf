@@ -1,10 +1,10 @@
 package amf.remod
 
-import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.model.domain.{RecursiveShape, Shape}
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.PayloadValidator
+import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
+import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
+import amf.core.client.scala.validation.payload.PayloadValidator
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.ValidationConfiguration
 import amf.plugins.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
 
 object ShapePayloadValidatorFactory extends PlatformSecrets {

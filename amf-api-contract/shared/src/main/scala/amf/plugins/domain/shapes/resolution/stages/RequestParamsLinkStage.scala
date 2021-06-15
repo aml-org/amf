@@ -1,12 +1,14 @@
 package amf.plugins.domain.shapes.resolution.stages
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.resolution.stages.TransformationStep
-import amf.core.resolution.stages.elements.resolution.ReferenceResolution
-import amf.core.resolution.stages.selectors.{LinkSelector, Selector}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.stages.elements.resolution.ReferenceResolution
+import amf.core.client.scala.transform.stages.selectors.LinkSelector
 import amf.plugins.domain.apicontract.models.Request
+import amf.core.client.scala.transform.stages.selectors.Selector
+
 object RequestParamsLinkStage extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
     new RequestParamsLinkStage(errorHandler).resolve(model)

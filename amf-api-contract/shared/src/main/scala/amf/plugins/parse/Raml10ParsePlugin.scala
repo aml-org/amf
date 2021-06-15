@@ -1,11 +1,11 @@
 package amf.plugins.parse
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.Root
-import amf.core.exception.InvalidDocumentHeaderException
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
-import amf.core.remote.Vendor
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.exception.InvalidDocumentHeaderException
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext}
+import amf.core.internal.parser.Root
+import amf.core.internal.remote.Vendor
 import amf.plugins.common.Raml10MediaTypes
 import amf.plugins.document.apicontract.contexts.parser.raml.{Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.parser.RamlFragmentHeader._

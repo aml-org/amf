@@ -1,13 +1,13 @@
 package amf.parser
 
 import amf.client.environment.RAMLConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.core.parser.Range
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.AMFValidationResult
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.facades.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{AsyncFunSuite, Succeeded}
+import amf.core.client.common.position.Range
 
 import scala.concurrent.ExecutionContext
 

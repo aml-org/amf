@@ -1,12 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.oas.emitters
 
-import amf.core.annotations.Aliases
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.{BaseUnit, Module}
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.document.{BaseUnit, Module}
+import amf.core.internal.annotations.Aliases
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils.{AmfStrings, IdCounter}
 import org.yaml.model.YDocument.EntryBuilder
 
 class OasSpecEmitter {

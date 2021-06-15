@@ -1,10 +1,10 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Array
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Array
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 import amf.plugins.domain.shapes.models.UnionShape
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 
 object UnionShapeModel extends AnyShapeModel {
 

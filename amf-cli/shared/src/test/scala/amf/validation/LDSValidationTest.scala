@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.ProfileName
-import amf.core.remote.{Hint, Raml10YamlHint}
+import amf.core.client.common.validation.ProfileName
+import amf.core.internal.remote.{Hint, Raml10YamlHint}
 
 class LDSValidationTest extends UniquePlatformReportGenTest {
 

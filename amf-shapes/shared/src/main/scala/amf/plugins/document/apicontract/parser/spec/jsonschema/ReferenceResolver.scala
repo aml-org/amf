@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
-import amf.core.parser.YMapOps
+import amf.core.internal.parser.YMapOps
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import org.yaml.model.{YMap, YNode, YSequence, YType}
 

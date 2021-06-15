@@ -1,16 +1,16 @@
 package amf.plugins.document.apicontract.parser.spec.oas.parser.types
 
-import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
-import amf.core.model.DataType
-import amf.core.model.domain._
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.{Annotations, Fields, FutureDeclarations, Range, ScalarNode, SearchScope, YMapOps, YNodeLikeOps}
-import amf.core.utils.{AmfStrings, IdCounter}
-import amf.core.vocabulary.Namespace
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.annotations.{ExplicitField, NilUnion, SynthesizedField}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
+import amf.core.internal.parser.domain._
+import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
+import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.apicontract.annotations.{CollectionFormatFromItems, JSONSchemaId}
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.OasShapeDefinitions
@@ -30,20 +30,22 @@ import amf.plugins.document.apicontract.parser.spec.domain.{
   RamlExamplesParser
 }
 import amf.plugins.document.apicontract.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
+import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
+import amf.plugins.domain.apicontract.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
+import amf.plugins.domain.apicontract.models
+import amf.plugins.domain.apicontract.models.IriTemplateMapping
 import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{
   DiscriminatorValue,
   DiscriminatorValueTarget
 }
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.models.{FileShape, ScalarShape, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
-import amf.plugins.domain.apicontract.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
-import amf.plugins.domain.apicontract.models
-import amf.plugins.domain.apicontract.models.IriTemplateMapping
 import amf.validations.ShapeParserSideValidations._
 import org.yaml.model._
+import amf.core.client.common.position.Range
+import amf.core.client.scala.vocabulary.Namespace
 
 import scala.collection.mutable
 import scala.util.Try
@@ -300,7 +302,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     private def setValue(key: String, map: YMap, field: Field, shape: Shape): Unit =
       map.key(key, entry => {
-        val value = ScalarNode(entry.value)
+        val value = amf.core.internal.parser.domain.ScalarNode(entry.value)
         shape.set(field, value.text(), Annotations(entry))
       })
   }
@@ -802,8 +804,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       val map = mappingsEntry.value.as[YMap]
       val mappings = map.entries.map(entry => {
         val mapping  = IriTemplateMapping(Annotations(entry))
-        val element  = ScalarNode(entry.key).string()
-        val variable = ScalarNode(entry.value).string()
+        val element  = amf.core.internal.parser.domain.ScalarNode(entry.key).string()
+        val variable = amf.core.internal.parser.domain.ScalarNode(entry.value).string()
         mapping.set(TemplateVariable, element, Annotations(entry.key))
         mapping.set(LinkExpression, variable, Annotations(entry.value))
       })
@@ -814,7 +816,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       val discriminatorValueMapping = map.entries.map { entry =>
         val key: YNode         = entry.key
-        val discriminatorValue = ScalarNode(key).string()
+        val discriminatorValue = amf.core.internal.parser.domain.ScalarNode(key).string()
         val targetShape = {
           val rawRef: String = entry.value
           val definitionName = OasShapeDefinitions.stripDefinitionsPrefix(rawRef)
@@ -903,7 +905,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                                  "Required property boolean value is only supported in JSON Schema draft-3",
                                  entry)
                 }
-                val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
+                val required =
+                  amf.core.internal.parser.domain.ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
                 property.set(
                   PropertyShapeModel.MinCount,
                   AmfScalar(if (required) 1 else 0, Annotations.synthesized()), // does this annotation make sense? should parent not be `synthetized`?

@@ -1,10 +1,9 @@
 package amf.client.convert.shapeconverters
 
-import amf.client.convert.{BidirectionalMatcher, CoreBaseConverter}
-import amf.core.unsafe.PlatformSecrets
 import amf.client.model.domain.{
   AnyShape => ClientAnyShape,
   ArrayShape => ClientArrayShape,
+  CreativeWork => ClientCreativeWork,
   DiscriminatorValueMapping => ClientDiscriminatorValueMapping,
   Example => ClientExample,
   FileShape => ClientFileShape,
@@ -17,11 +16,12 @@ import amf.client.model.domain.{
   SchemaShape => ClientSchemaShape,
   TupleShape => ClientTupleShape,
   UnionShape => ClientUnionShape,
-  XMLSerializer => ClientXMLSerializer,
-  CreativeWork => ClientCreativeWork
+  XMLSerializer => ClientXMLSerializer
 }
-import amf.plugins.domain.shapes.models._
+import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.domain.apicontract.models.{DiscriminatorValueMapping, IriTemplateMapping}
+import amf.plugins.domain.shapes.models._
 
 trait ShapesBaseConverter
     extends CoreBaseConverter

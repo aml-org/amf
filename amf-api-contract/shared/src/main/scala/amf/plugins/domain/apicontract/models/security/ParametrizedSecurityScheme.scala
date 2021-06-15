@@ -1,11 +1,11 @@
 package amf.plugins.domain.apicontract.models.security
 
-import amf.core.annotations.NullSecurity
-import amf.core.metamodel.Field
-import amf.core.model.StrField
-import amf.core.model.domain.NamedDomainElement
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.NamedDomainElement
+import amf.core.internal.annotations.NullSecurity
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.apicontract.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.apicontract.metamodel.security.ParametrizedSecuritySchemeModel.{Settings => SettingsField, _}
 import org.yaml.model.YPart

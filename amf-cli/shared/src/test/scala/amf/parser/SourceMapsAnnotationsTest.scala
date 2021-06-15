@@ -1,18 +1,15 @@
 package amf.parser
 
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.remod.{AMFParser, ParseConfiguration}
-import amf.core.AMFCompiler
-import amf.client.remod.ParseConfiguration
-import amf.core.AMFCompiler
-import amf.core.annotations.{Inferred, SourceAST, SynthesizedField, VirtualNode}
-import amf.core.metamodel.Field
-import amf.core.metamodel.document.DocumentModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{AmfArray, AmfElement, AmfObject}
-import amf.core.parser.{Annotations, FieldEntry}
-import amf.core.remote._
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
+import amf.core.client.scala.parse.AMFParser
+import amf.core.internal.annotations.{Inferred, SourceAST, SynthesizedField, VirtualNode}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.document.DocumentModel
+import amf.core.internal.parser.domain.{Annotations, FieldEntry}
+import amf.core.internal.remote._
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.document.apicontract.parser.spec.raml.expression.ExpressionMember
 import org.mulesoft.lexer.InputRange
 import org.scalatest.{Assertion, AsyncFunSuite}

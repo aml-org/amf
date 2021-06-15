@@ -1,7 +1,7 @@
 package amf.cycle
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.{Amf, Oas20YamlHint, Oas30YamlHint, PayloadYamlHint}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.{Amf, Oas20YamlHint, Oas30YamlHint, PayloadYamlHint}
 import amf.io.FunSuiteCycleTests
 
 class OasRecursiveFilesCycleTest extends FunSuiteCycleTests {

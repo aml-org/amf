@@ -1,11 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
-import amf.core.emitter.EntryEmitter
-import amf.core.model.domain.Shape
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.BaseEmitters.MapEntryEmitter
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.UnionShape
-import amf.plugins.domain.apicontract.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YType
 
 object RamlTypeFacetEmitter {

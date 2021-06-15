@@ -1,19 +1,14 @@
 package amf.io
 
 import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.errorhandling.IgnoringErrorHandler
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.AMFErrorHandler
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.model.document.BaseUnit
-import amf.core.rdf.RdfModel
-import amf.core.remote.Syntax.Syntax
-import amf.core.remote.{Amf, Hint, Vendor}
-import amf.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.rdf.{RdfModel, RdfUnitConverter}
+import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
+import amf.core.internal.remote.Syntax.Syntax
+import amf.core.internal.remote.{Amf, Hint, Vendor}
 import org.scalactic.Fail
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -248,7 +243,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   /** Method for transforming parsed unit. Override if necessary. */
   def transformThroughRdf(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val rdfModel = unit.toNativeRdfModel(RenderOptions().withSourceMaps)
-    BaseUnit.fromNativeRdfModel(unit.id, rdfModel, AMFGraphConfiguration.predefined())
+    new RdfUnitConverter().fromNativeRdfModel(unit.id, rdfModel, AMFGraphConfiguration.predefined())
   }
 
   /** Method to render parsed unit. Override if necessary. */

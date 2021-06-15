@@ -1,16 +1,13 @@
 package amf.resolution
 
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.environment.WebAPIConfiguration
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.FieldsFilter.All
-import amf.core.model.domain.{AmfObject, RecursiveShape}
-import amf.core.remote.Syntax.Yaml
-import amf.core.remote.{AsyncApi20, Hint, Oas20YamlHint, Raml10YamlHint}
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.unsafe.PlatformSecrets
-import amf.facades.{AMFCompiler, Validation}
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.FieldsFilter.All
+import amf.core.client.scala.model.domain.{AmfObject, RecursiveShape}
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.remote.Syntax.Yaml
+import amf.core.internal.remote.{AsyncApi20, Hint, Oas20YamlHint, Raml10YamlHint}
+import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.collections.FilterType
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers.{contain, convertToAnyShouldWrapper}

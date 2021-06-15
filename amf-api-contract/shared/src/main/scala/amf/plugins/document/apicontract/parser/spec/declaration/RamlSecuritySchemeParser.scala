@@ -1,21 +1,22 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
-import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.annotations.{ExternalFragmentRef, LexicalInformation}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
 import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.apicontract.parser.spec.domain.{RamlParametersParser, RamlSecuritySettingsParser}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
 import amf.plugins.domain.apicontract.models.{Parameter, Response}
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.validations.ParserSideValidations._
 import amf.validations.ShapeParserSideValidations.ExclusivePropertiesSpecification
-import org.yaml.model.{YMap, YNode, YPart, YScalar, YType}
-
+import org.yaml.model._
+import amf.core.client.common.position.Range
 import scala.collection.mutable
 
 case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(

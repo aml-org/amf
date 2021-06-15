@@ -1,15 +1,16 @@
 package amf.plugins.document.apicontract.contexts.emitter
 
-import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.emitter.BaseEmitters.ArrayEmitter
-import amf.core.emitter._
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
-import amf.core.parser.FieldEntry
-import amf.core.utils._
+import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.ArrayEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.{SpecEmitterContext, SpecEmitterFactory}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{

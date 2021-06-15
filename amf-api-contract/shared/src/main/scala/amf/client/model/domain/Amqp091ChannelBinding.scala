@@ -1,13 +1,14 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-import amf.client.model.{StrField, BoolField}
-
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
+import amf.core.client.platform.model.{BoolField, StrField}
+import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 import amf.plugins.domain.apicontract.models.bindings.amqp.{
+  Amqp091ChannelBinding => InternalAmqp091ChannelBinding,
   Amqp091ChannelExchange => InternalAmqp091ChannelExchange,
-  Amqp091Queue => InternalAmqp091Queue,
-  Amqp091ChannelBinding => InternalAmqp091ChannelBinding
+  Amqp091Queue => InternalAmqp091Queue
 }
+
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 case class Amqp091ChannelBinding(override private[amf] val _internal: InternalAmqp091ChannelBinding)

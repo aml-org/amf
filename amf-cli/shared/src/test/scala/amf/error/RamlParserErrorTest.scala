@@ -1,15 +1,11 @@
 package amf.error
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.Range
-import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-import amf.facades.AMFCompiler
+import amf.core.client.common.position.Range
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 import amf.plugins.domain.shapes.models.{ScalarShape, UnresolvedShape}
 import amf.validations.ParserSideValidations.ClosedShapeSpecification
 import amf.validations.ShapeParserSideValidations.MissingRequiredUserDefinedFacet
-
-import scala.concurrent.Future
 
 class Raml10ParserErrorTest extends RamlParserErrorTest {
 

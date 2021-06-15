@@ -1,16 +1,16 @@
 package amf.plugins.domain.apicontract.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
-import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
-import amf.core.vocabulary.ValueType
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, NodeShapeModel}
 import amf.plugins.domain.apicontract.metamodel.bindings.MessageBindingsModel
 import amf.plugins.domain.apicontract.models.Message
+import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 
 trait MessageModel
     extends TagsModel

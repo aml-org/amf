@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.resolution.stages
 
-import amf.core.model.domain.DataNodeOps.adoptTree
-import amf.core.model.domain.{AmfArray, AmfElement, DataNode, DomainElement}
+import amf.core.client.scala.model.domain.DataNodeOps.adoptTree
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, DataNode, DomainElement}
 
 trait InnerAdoption {
 

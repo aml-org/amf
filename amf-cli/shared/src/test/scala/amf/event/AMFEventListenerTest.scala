@@ -1,12 +1,11 @@
 package amf.event
 
 import amf.client.environment.RAMLConfiguration
-import amf.client.exported.config.AMFEventNames
-import amf.client.remod.ParseConfiguration
-import amf.client.remod.amfcore.config.{AMFEvent, AMFEventListener}
-import amf.core.AMFCompiler
-import amf.core.remote.{Cache, Context}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.platform.config.AMFEventNames
+import amf.core.client.scala.config.{AMFEvent, AMFEventListener}
+import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
+import amf.core.internal.remote.{Cache, Context}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.facades.Validation
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.{Assertion, Matchers}

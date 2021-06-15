@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.common.emitters.factory
 
-import amf.core.emitter.{PartEmitter, SpecOrdering}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.Shape
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.PartEmitter
 import amf.plugins.document.apicontract.contexts.emitter.raml.{
   Raml08SpecEmitterContext,
   Raml10SpecEmitterContext,

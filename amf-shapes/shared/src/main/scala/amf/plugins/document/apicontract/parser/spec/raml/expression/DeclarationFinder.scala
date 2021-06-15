@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.raml.expression
 
-import amf.core.parser.SearchScope
+import amf.core.internal.parser.domain.SearchScope
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.domain.shapes.models.AnyShape
 

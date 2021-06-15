@@ -1,11 +1,11 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.resolution.stages.TransformationStep
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.apicontract.models.security.{ApiKeySettings, OAuth2Settings, SecurityScheme}
+import amf.plugins.domain.shapes.models.AnyShape
 
 class SecuritySettingsMapper() extends TransformationStep {
 

@@ -1,8 +1,8 @@
 package amf.plugins.render
 
-import amf.client.remod.amfcore.plugins.render.RenderInfo
-import amf.core.model.document.{Document, Fragment, Module}
-import amf.core.model.domain.DomainElement
+import amf.core.client.scala.model.document.{Document, Fragment, Module}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.plugins.render.RenderInfo
 import amf.plugins.document.apicontract.model.{Extension, Overlay}
 import amf.plugins.domain.apicontract.models.api.Api
 

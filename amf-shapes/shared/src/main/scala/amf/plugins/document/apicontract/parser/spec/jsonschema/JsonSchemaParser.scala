@@ -1,12 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.exception.UnsupportedParsedDocumentException
-import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.document.Fragment
-import amf.core.parser.{Annotations, SyamlParsedDocument}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.exception.UnsupportedParsedDocumentException
+import amf.core.client.scala.model.document.Fragment
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.metamodel.domain.ExternalSourceElementModel
+import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
@@ -51,6 +52,7 @@ class JsonSchemaParser {
               .set(SchemaShapeModel.MediaType, "application/json", Annotations.synthesized())
         }
 
+      // TODO: check
       case _ => throw UnsupportedParsedDocumentException
     }
   }

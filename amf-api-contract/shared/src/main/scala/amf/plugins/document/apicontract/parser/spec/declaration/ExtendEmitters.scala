@@ -1,12 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.AmfElement
-import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
-import amf.core.parser.{FieldEntry, Position}
-import amf.core.utils.AmfStrings
+import amf.core.client.common.position.Position
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.AmfElement
+import amf.core.client.scala.model.domain.templates.{ParametrizedDeclaration, VariableValue}
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{pos, raw, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.apicontract.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.apicontract.models.templates.{ParametrizedResourceType, ParametrizedTrait}

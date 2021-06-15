@@ -1,13 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTypeParser
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.apicontract.metamodel.PayloadModel
 import amf.plugins.domain.apicontract.models.Payload
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import org.yaml.model.{YMap, YNode}
 
 case class OasPayloadParser(node: YNode, producer: Option[String] => Payload)(implicit ctx: OasWebApiContext)

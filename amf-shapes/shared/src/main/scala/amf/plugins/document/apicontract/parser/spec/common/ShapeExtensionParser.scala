@@ -1,11 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.Shape
-import amf.core.model.domain.extensions.ShapeExtension
-import amf.core.parser.YMapOps
-import amf.core.remote.{Oas, Raml}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.extensions.ShapeExtension
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.remote.{Oas, Raml}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.declaration.TypeInfo
 import amf.validations.ShapeParserSideValidations.{

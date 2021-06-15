@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter

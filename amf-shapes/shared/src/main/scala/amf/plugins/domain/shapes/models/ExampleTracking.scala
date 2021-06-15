@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.annotations.TrackedElement
-import amf.core.model.domain.Shape
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.annotations.TrackedElement
 
 // TODO tidy up code
 object ExampleTracking {

@@ -1,11 +1,12 @@
 package amf.plugins.domain.apicontract.models.api
 
-import amf.core.annotations.{SourceVendor, SynthesizedField}
-import amf.core.metamodel.Field
-import amf.core.model.StrField
-import amf.core.model.domain.NamedDomainElement
-import amf.core.parser.{Annotations, Fields}
-import amf.core.remote.Vendor
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.NamedDomainElement
+import amf.core.internal.annotations.{SourceVendor, SynthesizedField}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.ShapeModel.Description
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.remote.Vendor
 import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
 import amf.plugins.domain.apicontract.metamodel.api.BaseApiModel.{License => WebApiLicense, _}
 import amf.plugins.domain.apicontract.models.{

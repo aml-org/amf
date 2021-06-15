@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, ScalarNode}
-import amf.core.resolution.VariableReplacer.VariableRegex
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.client.scala.transform.VariableReplacer.VariableRegex
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import org.yaml.model.YNode
 
 import scala.collection.mutable

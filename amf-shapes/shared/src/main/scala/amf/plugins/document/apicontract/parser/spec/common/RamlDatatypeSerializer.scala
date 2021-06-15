@@ -1,11 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.client.execution.BaseExecutionEnvironment
-import amf.client.remod.AMFGraphConfiguration
-import amf.core.AMFSerializer
-import amf.core.model.document.Module
-import amf.core.remote.Raml10
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.model.document.Module
+import amf.core.internal.remote.Raml10
+import amf.core.internal.render.AMFSerializer
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.document.apicontract.annotations.{GeneratedRamlDatatype, ParsedRamlDatatype}
 import amf.plugins.domain.shapes.models.AnyShape
 

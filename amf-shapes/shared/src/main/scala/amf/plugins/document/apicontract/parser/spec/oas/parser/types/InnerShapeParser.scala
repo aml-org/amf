@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.oas.parser.types
 
-import amf.core.metamodel.Field
-import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, YMapOps}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.declaration.{OasTypeParser, SchemaVersion}
 import org.yaml.model.YMap

@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.document._
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.core.model.domain.AmfObject
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.vocabulary.Namespace.{Shapes, ApiContract, Security}
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.document.FragmentModel
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.plugins.document.apicontract.model._
-import amf.core.vocabulary.Namespace.{ApiContract, Security, Shapes}
-import amf.core.vocabulary.ValueType
 
 object FragmentsTypesModels {
 

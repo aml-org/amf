@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.plugins.domain.apicontract.models.Tag
+import amf.plugins.domain.apicontract.models.api.Api
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
-import amf.plugins.domain.apicontract.models.api.Api
-import amf.plugins.domain.apicontract.models.Tag
 
 class MandatoryDocumentationTitle() extends TransformationStep {
 

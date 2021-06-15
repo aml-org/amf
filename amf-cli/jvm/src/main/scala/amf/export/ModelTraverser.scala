@@ -1,7 +1,7 @@
 package amf.`export`
 
-import amf.core.metamodel.{Field, Obj, Type}
-import amf.core.metamodel.Type.{Any, ArrayLike, Scalar}
+import amf.core.internal.metamodel.Type.{Any, ArrayLike, Scalar}
+import amf.core.internal.metamodel.{Field, Obj, Type}
 
 object ModelTraverser {
 
@@ -12,9 +12,10 @@ object ModelTraverser {
     if (context.isProcessed(name)) List()
     else {
       context.addProcessed(name)
-      val attributes                     = makeAttributes(obj)
-      val model                   = Model(name, obj, attributes)
-      val toTraverse: List[Model] = attributes.map(t => t._2).flatMap(v => v.linkedObj).flatMap(d => traverse(d, context))
+      val attributes = makeAttributes(obj)
+      val model      = Model(name, obj, attributes)
+      val toTraverse: List[Model] =
+        attributes.map(t => t._2).flatMap(v => v.linkedObj).flatMap(d => traverse(d, context))
       List(model) ::: toTraverse
     }
   }
@@ -56,13 +57,14 @@ abstract class Attribute(val name: String) {
 
 case class ArrayAttribute(attribute: Attribute) extends Attribute("") {
   override def toString: String       = attribute.toString
-  override def linkedObj: Option[Obj]  = attribute.linkedObj
+  override def linkedObj: Option[Obj] = attribute.linkedObj
   def isTraversable: Boolean          = linkedObj.nonEmpty
   def namespace: String               = attribute.namespace
   override def docDescription: String = attribute.docDescription
 }
 
-case class TraversableAttribute(override val name: String, obj: Obj, docDescription: String, namespace: String) extends Attribute(name) {
+case class TraversableAttribute(override val name: String, obj: Obj, docDescription: String, namespace: String)
+    extends Attribute(name) {
   override def linkedObj: Option[Obj] = Some(obj)
 }
 

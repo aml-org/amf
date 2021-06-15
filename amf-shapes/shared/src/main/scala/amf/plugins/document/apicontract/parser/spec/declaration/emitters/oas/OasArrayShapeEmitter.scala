@@ -1,20 +1,20 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.emitter.BaseEmitters.ValueEmitter
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.render.BaseEmitters.ValueEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.annotations.CollectionFormatFromItems
 import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  OasLikeShapeEmitterContext,
-  OasTypeFacetEmitter,
-  ShapeEmitterContext
-}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.FacetsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.emitter.UnevaluatedEmitter.unevaluatedItemsInfo
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.emitter.{
   UnevaluatedEmitter,
   UntranslatableDraft2019FieldsPresentGuard
+}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
+  OasLikeShapeEmitterContext,
+  OasTypeFacetEmitter
 }
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel.{UnevaluatedItems, UnevaluatedItemsSchema}
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel}

@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.resolution.pipelines
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.remote.Oas30
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.resolution.stages.TransformationStep
+
+import amf.core.client.common.validation.{Oas30Profile, ProfileName}
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.internal.remote.Oas30
+import amf.plugins.domain.apicontract.resolution.stages._
 import amf.plugins.domain.shapes.resolution.stages.RequestParamsLinkStage
-import amf.plugins.domain.apicontract.resolution.stages.{OpenApiParametersNormalizationStage, ParametersNormalizationStage}
-import amf.{Oas30Profile, ProfileName}
 
 class Oas3EditingPipeline private(urlShortening: Boolean, override val name:String)
     extends AmfEditingPipeline(urlShortening, name) {

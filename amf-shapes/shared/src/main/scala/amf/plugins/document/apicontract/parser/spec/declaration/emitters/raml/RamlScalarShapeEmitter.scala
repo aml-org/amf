@@ -1,17 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, RawValueEmitter, ValueEmitter, pos}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, RawValueEmitter, ValueEmitter, pos}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   NumberTypeToYTypeConverter,
-  RamlShapeEmitterContext,
-  ShapeEmitterContext
+  RamlShapeEmitterContext
 }
 import amf.plugins.document.apicontract.parser.{
   OasTypeDefMatcher,

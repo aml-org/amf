@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.Annotations
-import amf.core.utils.IdCounter
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.parser.spec.domain.{SafeNamedMultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, Example}

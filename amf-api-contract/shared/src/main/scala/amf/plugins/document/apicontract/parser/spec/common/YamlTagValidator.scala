@@ -1,10 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.common
-
-import amf.core.Root
-import amf.core.parser.SyamlParsedDocument
-import amf.core.remote.Syntax
-import amf.core.remote.Syntax.Yaml
-import amf.core.validation.SeverityLevels
+import amf.core.client.common.validation.SeverityLevels
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser.Root
+import amf.core.internal.remote.Syntax
+import amf.core.internal.remote.Syntax.Yaml
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.validations.ParserSideValidations

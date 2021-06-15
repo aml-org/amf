@@ -1,13 +1,13 @@
 package amf.plugins.domain.apicontract.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.metamodel.domain.common.NameFieldSchema
-import amf.core.metamodel.domain.templates.KeyField
-import amf.core.vocabulary.Namespace.{ApiContract, Core}
-import amf.core.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.plugins.domain.apicontract.models.Callback
+import amf.core.client.scala.vocabulary.Namespace.ApiContract
+import amf.core.client.scala.vocabulary.ValueType
 
 /**
   * Callback metaModel.

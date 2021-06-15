@@ -1,12 +1,12 @@
 package amf.plugins.domain.apicontract.models.bindings
 
-import amf.core.metamodel.Field
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.bindings.OperationBindingsModel
 import amf.plugins.domain.apicontract.metamodel.bindings.OperationBindingsModel.{Bindings, Name}
 import org.yaml.model.YMap
+import amf.core.internal.utils.AmfStrings
 
 case class OperationBindings(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 

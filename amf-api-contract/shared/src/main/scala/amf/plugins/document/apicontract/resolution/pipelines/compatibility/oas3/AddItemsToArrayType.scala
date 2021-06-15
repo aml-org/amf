@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.oas3
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape}
 
 class AddItemsToArrayType() extends TransformationStep {

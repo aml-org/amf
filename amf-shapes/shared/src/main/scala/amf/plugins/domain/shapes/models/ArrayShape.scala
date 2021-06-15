@@ -1,9 +1,9 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.{AmfArray, DomainElement, Linkable, Shape}
-import amf.core.model.{BoolField, IntField}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.{AmfArray, DomainElement, Linkable, Shape}
+import amf.core.client.scala.model.{BoolField, IntField}
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel._
 import amf.plugins.domain.shapes.metamodel.TupleShapeModel.TupleItems
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ArrayShapeModel, MatrixShapeModel, TupleShapeModel}

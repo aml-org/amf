@@ -1,39 +1,48 @@
 package amf.plugins.document.apicontract.parser.spec.raml
 
-import amf.core.Root
-import amf.core.annotations._
-import amf.core.metamodel.Field
-import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel}
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
-import amf.core.model.document._
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, _}
-import amf.core.utils._
-import amf.plugins.document.vocabularies.parser.common.DeclarationKey
+import amf.core.client.scala.model.document.{BaseUnit, Document, ExtensionLike, Module}
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.annotations.{
+  Aliases,
+  DeclaredElement,
+  ExternalFragmentRef,
+  SingleValueArray,
+  SourceVendor,
+  SynthesizedField
+}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.extensions.CustomDomainPropertyModel
+import amf.core.internal.parser.domain.{Annotations, ArrayNode, ScalarNode, SearchScope}
+import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.utils._
+import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.plugins.document.apicontract.contexts.parser.raml.{ExtensionLikeWebApiContext, RamlWebApiContext}
 import amf.plugins.document.apicontract.model.{Extension, Overlay}
-import amf.plugins.document.apicontract.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter}
 import amf.plugins.document.apicontract.parser.spec._
 import amf.plugins.document.apicontract.parser.spec.common._
 import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.domain._
 import amf.plugins.document.apicontract.parser.spec.raml.RamlAnnotationTargets.targetsFor
+import amf.plugins.document.apicontract.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
-import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.apicontract.metamodel.templates.{ResourceTypeModel, TraitModel}
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
+import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.validations.ParserSideValidations._
 import amf.validations.ShapeParserSideValidations.{ExclusiveSchemasType, InvalidFragmentType, InvalidTypeDefinition}
 import org.yaml.model._
+import amf.core.internal.parser.YScalarYRead
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

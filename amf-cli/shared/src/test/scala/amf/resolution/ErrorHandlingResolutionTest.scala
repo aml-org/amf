@@ -1,21 +1,17 @@
 package amf.resolution
-import amf.ProfileName
 import amf.client.environment.AMFConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.client.errorhandling.{DefaultErrorHandler, IgnoringErrorHandler}
-import amf.core.annotations.LexicalInformation
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline.DEFAULT_PIPELINE
-import amf.core.resolution.pipelines.TransformationPipelineRunner
-import amf.core.services.RuntimeResolver
-import amf.core.validation.{AMFValidationResult, SeverityLevels}
-import amf.facades.Validation
+import amf.core.client.common.validation.SeverityLevels
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline.DEFAULT_PIPELINE
+import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.remote.{Amf, Hint, Oas20, Oas30, Raml08, Raml10, Raml10YamlHint}
+import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.apicontract.resolution.pipelines.AmfTransformationPipeline
-import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations.UnknownSecuritySchemeErrorSpecification
 import org.scalatest.Assertion
 import org.scalatest.Matchers._

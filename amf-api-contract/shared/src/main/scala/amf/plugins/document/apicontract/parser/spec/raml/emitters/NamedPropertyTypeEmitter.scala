@@ -1,14 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.raml.emitters
 
-import amf.core.emitter.BaseEmitters.{pos, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.internal.render.BaseEmitters.{pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 case class NamedPropertyTypeEmitter(annotation: CustomDomainProperty,

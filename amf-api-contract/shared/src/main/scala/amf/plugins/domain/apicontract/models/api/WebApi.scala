@@ -1,6 +1,6 @@
 package amf.plugins.domain.apicontract.models.api
 
-import amf.core.parser.{Annotations, Fields}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import org.yaml.model.{YMap, YNode}
 

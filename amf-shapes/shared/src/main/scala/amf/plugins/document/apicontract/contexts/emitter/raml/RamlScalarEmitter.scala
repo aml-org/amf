@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.contexts.emitter.raml
 
-import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.emitter.BaseEmitters.{BaseValueEmitter, ValueEmitter, sourceOr}
-import amf.core.emitter.EntryEmitter
-import amf.core.emitter.SpecOrdering.Default
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.FieldEntry
-import amf.core.remote.Raml10
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.internal.annotations.DomainExtensionAnnotation
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.Raml10
+import amf.core.internal.render.BaseEmitters.{BaseValueEmitter, ValueEmitter, sourceOr}
+import amf.core.internal.render.SpecOrdering.Default
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.ShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YNode, YScalar, YType}

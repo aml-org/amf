@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.{Linkable, Shape}
-import amf.core.resolution.stages.TransformationStep
-import amf.core.utils.IdCounter
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.{Linkable, Shape}
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.parser.{RamlTypeDefMatcher, TypeName}
-import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.apicontract.models.api.Api
+import amf.plugins.domain.shapes.models.TypeDef._
 
 import scala.collection.mutable
 

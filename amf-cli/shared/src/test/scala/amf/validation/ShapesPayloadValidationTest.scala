@@ -1,19 +1,13 @@
 package amf.validation
 
-import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.{AMF, AMFSerializer}
-import amf.core.registries.AMFPluginsRegistry
-import amf.core.services.RuntimeValidator
+import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.internal.utils.MediaTypeMatcher
+import amf.core.internal.validation.ValidationConfiguration
 import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.TypeDef.{IntType, StrType}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import amf.plugins.features.validation.custom.AMFValidatorPlugin
-import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.remod.ShapePayloadValidatorFactory
-import amf.core.utils.MediaTypeMatcher
 import amf.remod.ShapePayloadValidatorFactory._
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
@@ -24,10 +18,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
 
   override val executionContext: ExecutionContext = global
-
-  AMF.registerPlugin(PayloadValidatorPlugin)
-  RuntimeValidator.register(AMFValidatorPlugin)
-  AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
 
   case class ShapeInfo(shape: AnyShape, examples: Seq[ExampleInfo], mode: ValidationMode = StrictValidationMode)
   case class ExampleInfo(name: String, example: String, valid: Boolean)

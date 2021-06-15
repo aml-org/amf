@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.model.StrField
-import amf.core.model.domain.ExternalDomainElement
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.ExternalDomainElement
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YNode, YScalar}

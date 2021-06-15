@@ -1,7 +1,13 @@
 package amf.plugins.domain.apicontract.annotations
 
-import amf.core.model.domain._
-import amf.core.parser.Range
+import amf.core.client.scala.model.domain.{
+  AmfElement,
+  Annotation,
+  AnnotationGraphLoader,
+  PerpetualAnnotation,
+  SerializableAnnotation
+}
+import amf.core.client.common.position.Range
 
 case class ParameterBindingInBodyLexicalInfo(range: Range) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String = "parameter-binding-in-body-lexical-info"

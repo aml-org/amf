@@ -1,9 +1,10 @@
 package amf.client.model.domain
-import amf.client.model.StrField
+import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.domain.{DomainElement, Linkable}
 import amf.plugins.domain.apicontract.models.bindings.{
   ChannelBinding => InternalChannelBinding,
-  OperationBinding => InternalOperationBinding,
   MessageBinding => InternalMessageBinding,
+  OperationBinding => InternalOperationBinding,
   ServerBinding => InternalServerBinding
 }
 

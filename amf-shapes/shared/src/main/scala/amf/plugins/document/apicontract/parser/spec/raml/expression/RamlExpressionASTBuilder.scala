@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.raml.expression
 
-import amf.core.annotations.{DeclaredElement, VirtualNode}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
-import amf.core.parser.Annotations
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
+import amf.core.internal.annotations.{DeclaredElement, VirtualNode}
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.parser.spec.raml.expression.Token._
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models._

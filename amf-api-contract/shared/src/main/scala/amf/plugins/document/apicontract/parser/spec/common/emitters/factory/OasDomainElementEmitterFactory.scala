@@ -1,11 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.common.emitters.factory
 
-import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.annotations.{DeclaredElement, DeclaredHeader, SynthesizedField}
-import amf.core.emitter.{PartEmitter, SpecOrdering}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{Annotations, Value}
+import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, SynthesizedField}
+import amf.core.internal.parser.domain.{Annotations, Value}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.PartEmitter
 import amf.plugins.document.apicontract.annotations.{FormBodyParameter, RequiredParamPayload}
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.oas.{
@@ -14,13 +15,7 @@ import amf.plugins.document.apicontract.contexts.emitter.oas.{
   OasSpecEmitterContext
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.OasCreativeWorkEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter,
-  ShapeEmitterContext,
-  oas
-}
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasTypePartEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{OasLikeShapeEmitterContextAdapter, oas}
 import amf.plugins.document.apicontract.parser.spec.domain.{
   ExampleDataNodePartEmitter,
   Oas3ExampleValuesPartEmitter,
@@ -44,22 +39,10 @@ import amf.plugins.document.apicontract.parser.spec.oas.emitters.{
   OrganizationPartEmitter,
   TagEmitter
 }
-import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import amf.plugins.domain.apicontract.metamodel.ParameterModel
+import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
-import amf.plugins.domain.apicontract.models.{
-  Callback,
-  EndPoint,
-  License,
-  Organization,
-  Parameter,
-  Payload,
-  Request,
-  Response,
-  Server,
-  Tag,
-  TemplatedLink
-}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 
 case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) extends OasEmitterFactory {
 

@@ -1,16 +1,15 @@
 package amf.validation
 
-import amf.Raml10Profile
 import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
-import amf.client.remod.{AMFGraphConfiguration, AMFValidator}
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.AMFSerializer
-import amf.core.model.document.{Document, Module, PayloadFragment}
-import amf.core.model.domain.ScalarNode
-import amf.core.vocabulary.Namespace
-import amf.core.vocabulary.Namespace.Xsd
+import amf.core.client.common.validation.Raml10Profile
+import amf.core.client.scala.model.document.{Document, Module, PayloadFragment}
+import amf.core.client.scala.model.domain.ScalarNode
+import amf.core.client.scala.validation.AMFValidator
+import amf.core.internal.render.AMFSerializer
 import amf.facades.Validation
 import amf.io.FileAssertionTest
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.Namespace.Xsd
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
@@ -50,8 +49,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
 
     val s =
       new AMFSerializer(fragment, "application/payload+yaml", WebAPIConfiguration.WebAPI().renderConfiguration).renderToString
-    s should be("1\n") // without cuotes
-
+    s should be("1\n") // without quotes
   }
 
   test("Build number type with format") {

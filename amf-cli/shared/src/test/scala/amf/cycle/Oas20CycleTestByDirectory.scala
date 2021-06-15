@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.core.remote.{Hint, Oas20JsonHint, Oas20YamlHint}
+import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas20YamlHint}
 
 /**
   * Cycle by directory test for dir: [[amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml]]

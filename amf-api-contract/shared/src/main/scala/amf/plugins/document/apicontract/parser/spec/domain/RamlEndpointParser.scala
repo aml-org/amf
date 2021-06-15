@@ -1,11 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.client.remod.ParseConfiguration
-import amf.core.annotations.{LexicalInformation, VirtualElement}
-import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
-import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, IdCounter, TemplateUri}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.parser.{ParseConfiguration, YMapOps}
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.plugins.document.apicontract.annotations.{EndPointResourceTypeEntry, EndPointTraitEntry}
 import amf.plugins.document.apicontract.contexts.parser.raml.{
   Raml08WebApiContext,
@@ -15,11 +14,11 @@ import amf.plugins.document.apicontract.contexts.parser.raml.{
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter, spec}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
-import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.apicontract.annotations.ParentEndPoint
 import amf.plugins.domain.apicontract.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.apicontract.models.templates.ParametrizedResourceType
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation, Parameter}
+import amf.plugins.domain.shapes.models.ScalarShape
 import amf.validations.ParserSideValidations.{
   DuplicatedEndpointPath,
   InvalidEndpointPath,
@@ -28,6 +27,9 @@ import amf.validations.ParserSideValidations.{
 }
 import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
+import amf.core.client.common.position.Range
+import amf.core.client.scala.model.DataType
+import amf.core.internal.annotations.{LexicalInformation, VirtualElement}
 
 import scala.collection.mutable
 

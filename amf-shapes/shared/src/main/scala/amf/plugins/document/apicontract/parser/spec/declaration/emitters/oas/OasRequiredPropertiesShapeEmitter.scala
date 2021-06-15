@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.emitter.BaseEmitters.{TextScalarEmitter, pos}
-import amf.core.emitter.EntryEmitter
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.{Annotations, FieldEntry, Position}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.parser.domain.{Annotations, FieldEntry}
+import amf.core.internal.render.BaseEmitters.{TextScalarEmitter, pos}
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.ShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 

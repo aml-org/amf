@@ -1,7 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.oas.parser.types
 
-import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, ScalarNode, YMapOps, YNodeLikeOps}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.{OasTypeParser, SchemaVersion}

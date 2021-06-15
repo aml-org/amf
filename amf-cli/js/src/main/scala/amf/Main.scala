@@ -1,18 +1,16 @@
 package amf
 
-import amf.client.commands.{CmdLineParser, ParseCommand, PatchCommand, TranslateCommand, ValidateCommand}
-import amf.client.environment.{AMFConfiguration, AMLConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.remod.AMFGraphConfiguration
-import amf.core.benchmark.ExecutionLog
-import amf.core.client.{ExitCodes, ParserConfig}
-import amf.core.unsafe.PlatformSecrets
+import amf.client.commands._
+import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.core.internal.benchmark.ExecutionLog
+import amf.core.internal.unsafe.PlatformSecrets
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.language.postfixOps
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * Main entry point for the application

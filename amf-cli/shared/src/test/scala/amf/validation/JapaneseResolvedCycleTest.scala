@@ -1,13 +1,22 @@
 package amf.validation
 
 import amf.client.environment.AMFConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
-import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
-import amf.core.services.RuntimeResolver
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
+import amf.core.internal.remote.{
+  Amf,
+  AmfJsonHint,
+  Oas20,
+  Oas20YamlHint,
+  Oas30,
+  Oas30YamlHint,
+  Raml08,
+  Raml10,
+  Raml10YamlHint
+}
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.apicontract.resolution.pipelines.AmfEditingPipeline
 

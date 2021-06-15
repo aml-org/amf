@@ -1,24 +1,26 @@
 package amf.plugins.document.apicontract.validation.remote
 
-import amf.client.exported.config.JsonSchemaDraft7
-import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
-import amf.client.remod.amfcore.config.{ParsingOptions, ShapeRenderOptions}
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.model.DataType
-import amf.core.model.document.PayloadFragment
-import amf.core.model.domain._
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.{
-  ErrorHandlingContext,
-  FragmentRef,
-  JsonParserFactory,
-  ParsedReference,
-  SearchScope,
-  SyamlParsedDocument
+import amf.core.client.common.validation.{
+  ProfileName,
+  ProfileNames,
+  ScalarRelaxedValidationMode,
+  SeverityLevels,
+  ValidationMode
 }
-import amf.core.validation._
-import amf.core.validation.core.ValidationSpecification
+import amf.core.client.platform.config.JsonSchemaDraft7
+import amf.core.client.scala.config.{ParsingOptions, ShapeRenderOptions}
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.document.PayloadFragment
+import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference, SyamlParsedDocument}
+import amf.core.client.scala.validation.payload.{PayloadParsingResult, PayloadValidator}
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
+import amf.core.internal.plugins.syntax.{SyamlSyntaxParsePlugin, SyamlSyntaxRenderPlugin}
+import amf.core.internal.validation.ValidationConfiguration
+import amf.core.internal.validation.core.ValidationSpecification
 import amf.plugins.document.apicontract.parser.spec.common.{
   DataNodeParser,
   DataNodeParserContext,
@@ -27,11 +29,10 @@ import amf.plugins.document.apicontract.parser.spec.common.{
 }
 import amf.plugins.document.apicontract.validation.remote.PlatformPayloadValidator.supportedMediaTypes
 import amf.plugins.domain.shapes.models._
-import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.{ProfileName, ProfileNames}
 import org.yaml.parser.YamlParser
 
+import java.io.StringWriter
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -158,7 +159,8 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
       JsonSchemaEmitter(shape, declarations, options = renderOptions, errorHandler = configuration.eh)
     val document = SyamlParsedDocument(document = emitter.emitDocument())
     validationProcessor.keepResults(configuration.eh.getResults)
-    SYamlSyntaxPlugin.unparse("application/json", document)
+    val writer = new StringWriter()
+    SyamlSyntaxRenderPlugin.emit("application/json", document, writer).map(_.toString)
   }
 
   protected def literalRepresentation(payload: PayloadFragment): Option[String] = {
@@ -166,7 +168,8 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
       case Some("") => None
       case _ =>
         val document = PayloadEmitter(payload.encodes)(UnhandledErrorHandler).emitDocument()
-        SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(document)).map(_.toString)
+        val writer   = new StringWriter()
+        SyamlSyntaxRenderPlugin.emit("application/json", SyamlParsedDocument(document), writer).map(_.toString)
     }
 
     futureText map { text =>

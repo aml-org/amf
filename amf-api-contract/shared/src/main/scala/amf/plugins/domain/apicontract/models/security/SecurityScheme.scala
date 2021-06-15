@@ -1,15 +1,17 @@
 package amf.plugins.domain.apicontract.models.security
 
-import amf.core.annotations.{Inferred, SourceAST}
-import amf.core.metamodel.{Field, Obj}
-import amf.core.model.{StrField, domain}
-import amf.core.model.domain._
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement, Linkable, NamedDomainElement, Shape}
+import amf.core.internal.annotations.{Inferred, SourceAST}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.common.DisplayNameField.DisplayName
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
+import amf.plugins.domain.apicontract.metamodel.security.ParametrizedSecuritySchemeModel.Description
 import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel.{Settings => SettingsField, _}
 import amf.plugins.domain.apicontract.models.{Parameter, Response}
 import org.yaml.model.YPart
-import amf.core.utils.AmfStrings
 
 class SecurityScheme(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
@@ -141,7 +143,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
         val clonedValue = v.value match {
           case s: Settings => s.cloneSettings(cloned.id)
           case a: AmfArray =>
-            domain.AmfArray(a.values.map {
+            AmfArray(a.values.map {
               case p: Parameter => p.cloneParameter(cloned.id)
               case r: Response  => r.cloneResponse(cloned.id)
               case o            => o

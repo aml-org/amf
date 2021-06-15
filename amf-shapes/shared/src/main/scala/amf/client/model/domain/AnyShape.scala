@@ -1,8 +1,9 @@
 package amf.client.model.domain
 
 import amf.client.convert.shapeconverters.ShapeClientConverters._
-import amf.client.model.StrField
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.platform.model.domain.Shape
+import amf.core.client.scala.model.StrField
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.domain.shapes.models.{AnyShape => InternalAnyShape}
 
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}

@@ -1,5 +1,6 @@
 package amf.core.utils
 
+import amf.core.internal.utils.{AmfStrings, QName}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

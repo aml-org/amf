@@ -1,10 +1,10 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-
-import amf.client.model.{BoolField, StrField}
+import amf.core.client.platform.model.{BoolField, StrField}
 import amf.plugins.domain.apicontract.models.{Parameter => InternalParameter}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 
 /**
   * Parameter model class.

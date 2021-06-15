@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.emitter
 
-import amf.core.emitter.BaseEmitters.ValueEmitter
-import amf.core.emitter.EntryEmitter
-import amf.core.metamodel.Field
-import amf.core.model.domain.Shape
-import amf.core.parser.Fields
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.Fields
+import amf.core.internal.render.BaseEmitters.ValueEmitter
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasEntryShapeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.{
   JSONSchemaDraft201909SchemaVersion,

@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.domain
-import amf.core.metamodel.Field
-import org.yaml.model.YMap
-import amf.core.parser.Annotations
-import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
-import amf.core.model.domain.{AmfArray, DomainElement}
+import amf.core.client.scala.model.domain.{AmfArray, DomainElement}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
-import amf.core.parser.YMapOps
+import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
+import org.yaml.model.YMap
 
 abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {

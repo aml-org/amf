@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.{pos, traverse}
-import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.Position
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.render.BaseEmitters.{pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.RamlShapeEmitterContext
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models.UnionShape
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

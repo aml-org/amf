@@ -1,14 +1,11 @@
 package amf.emit
 
 import amf.client.environment.WebAPIConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.ParseConfiguration
-import amf.core.annotations.SourceAST
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.parser.ParserContext
-import amf.core.remote.Raml10YamlHint
-import amf.facades.{AMFCompiler, Validation}
+import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.annotations.SourceAST
+import amf.core.internal.parser.ParseConfiguration
 import amf.io.FileAssertionTest
 import amf.plugins.document.apicontract.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter

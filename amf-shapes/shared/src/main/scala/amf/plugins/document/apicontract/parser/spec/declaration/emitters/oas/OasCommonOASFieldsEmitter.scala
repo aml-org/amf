@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.emitter.BaseEmitters.{RawValueEmitter, ValueEmitter}
-import amf.core.emitter.EntryEmitter
-import amf.core.metamodel.Field
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, FieldEntry, Fields, Value}
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
+import amf.core.internal.render.BaseEmitters.{RawValueEmitter, ValueEmitter}
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.RamlFormatTranslator
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{

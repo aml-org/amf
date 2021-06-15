@@ -1,5 +1,6 @@
 package amf.validation
-import amf.core.remote.{Hint, Raml10YamlHint}
+
+import amf.core.internal.remote.{Hint, Raml10YamlHint}
 
 class RamlJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/japanese/raml/"

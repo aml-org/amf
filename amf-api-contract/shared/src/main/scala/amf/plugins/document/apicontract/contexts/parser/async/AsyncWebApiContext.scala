@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.contexts.parser.async
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.model.document.ExternalFragment
-import amf.core.parser.{ParsedReference, ParserContext}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.model.document.ExternalFragment
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.spec.AsyncWebApiDeclarations
 import amf.plugins.document.apicontract.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}

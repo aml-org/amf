@@ -1,15 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.async.parser
 
-import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.utils.IdCounter
-import amf.core.parser._
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.metamodel.domain.ExternalSourceElementModel
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.spec.domain.OasLikeServerVariableParser
+import amf.plugins.domain.apicontract.models.Parameter
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.shapes.models.Example
-import amf.plugins.domain.apicontract.models.Parameter
-import amf.validations.ParserSideValidations
 import amf.validations.ShapeParserSideValidations.ExamplesMustBeASeq
 import org.yaml.model.{YMap, YMapEntry, YSequence, YType}
 

@@ -1,5 +1,6 @@
 package amf.client.model.document
 
+import amf.core.client.platform.model.document.Fragment
 import amf.plugins.document.apicontract.model.{
   AnnotationTypeDeclarationFragment => InternalAnnotationTypeDeclarationFragment,
   DataTypeFragment => InternalDataTypeFragment,

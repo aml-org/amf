@@ -1,12 +1,9 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-
-import amf.client.model.StrField
-import amf.core.model.{BoolField, IntField}
-import amf.plugins.domain.apicontract.metamodel.bindings.MqttOperationBindingModel.{Qos, Retain}
-
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
+import amf.core.client.platform.model.{BoolField, IntField, StrField}
 import amf.plugins.domain.apicontract.models.bindings.mqtt.{MqttOperationBinding => InternalMqttOperationBinding}
+
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 case class MqttOperationBinding(override private[amf] val _internal: InternalMqttOperationBinding)

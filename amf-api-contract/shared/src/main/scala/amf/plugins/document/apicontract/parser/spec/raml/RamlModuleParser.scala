@@ -1,11 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.raml
 
-import amf.core.Root
-import amf.core.annotations.SourceVendor
-import amf.core.metamodel.document.ModuleModel
-import amf.core.model.document.Module
-import amf.core.model.domain.AmfArray
-import amf.core.parser.{Annotations, _}
+import amf.core.client.scala.model.document.Module
+import amf.core.client.scala.model.domain.AmfArray
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.metamodel.document.ModuleModel
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.{Root, YNodeLikeOps}
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType.LIBRARY
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter

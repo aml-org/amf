@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.contexts.emitter.jsonschema
 
-import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.remote.Vendor
+import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.internal.remote.Vendor
 import amf.plugins.document.apicontract.contexts.emitter.oas.{
   InlinedJsonSchemaEmitterFactory,
   Oas2SpecEmitterContext,
@@ -10,12 +10,7 @@ import amf.plugins.document.apicontract.contexts.emitter.oas.{
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.JsonSchemaDeclarationsPath
-import amf.plugins.document.apicontract.parser.spec.declaration.{
-  JSONSchemaDraft201909SchemaVersion,
-  JSONSchemaVersion,
-  OAS20SchemaVersion,
-  SchemaVersion
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.{OAS20SchemaVersion, SchemaVersion}
 
 import scala.util.matching.Regex
 

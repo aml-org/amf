@@ -1,15 +1,11 @@
 package amf.plugins.domain.shapes.resolution.stages.elements
 
-import amf.ProfileName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.Shape
-import amf.core.resolution.pipelines.elements.ElementTransformationPipeline
-import amf.core.resolution.stages.elements.resolution.ElementStageTransformer
-import amf.plugins.domain.shapes.resolution.stages.{
-  ShapeChainLinksTransformer,
-  ShapeLinksTransformer,
-  ShapeTransformer
-}
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.transform.pipelines.elements.ElementTransformationPipeline
+import amf.core.client.scala.transform.stages.elements.resolution.ElementStageTransformer
+import amf.plugins.domain.shapes.resolution.stages.{ShapeChainLinksTransformer, ShapeTransformer}
 
 class CompleteShapeTransformationPipeline(shape: Shape, errorHandler: AMFErrorHandler, profileName: ProfileName)
     extends ElementTransformationPipeline[Shape](shape, errorHandler: AMFErrorHandler) {

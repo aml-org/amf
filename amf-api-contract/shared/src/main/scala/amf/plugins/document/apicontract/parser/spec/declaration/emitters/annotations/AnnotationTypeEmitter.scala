@@ -1,24 +1,24 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations
 
-import amf.core.emitter.BaseEmitters.ValueEmitter
-import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape}
-import amf.core.parser.{FieldEntry, Value}
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, RecursiveShape}
+import amf.core.internal.metamodel.domain.extensions.CustomDomainPropertyModel
+import amf.core.internal.parser.domain.{FieldEntry, Value}
+import amf.core.internal.render.BaseEmitters.ValueEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter,
-  RamlShapeEmitterContextAdapter,
-  ShapeEmitterContext
-}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasSchemaEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
   Raml10TypeEmitter,
   RamlRecursiveShapeEmitter
+}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
+  OasLikeShapeEmitterContextAdapter,
+  RamlShapeEmitterContextAdapter,
+  ShapeEmitterContext
 }
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape

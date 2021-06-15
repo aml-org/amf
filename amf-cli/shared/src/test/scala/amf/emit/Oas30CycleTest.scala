@@ -1,7 +1,7 @@
 package amf.emit
 
-import amf.core.remote.Syntax.{Json, Yaml}
-import amf.core.remote._
+import amf.core.internal.remote.Syntax.Json
+import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 
 class Oas30CycleTest extends FunSuiteCycleTests {

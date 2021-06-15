@@ -1,20 +1,20 @@
 package amf.plugins.document.apicontract.resolution.stages
 
-import amf.core.annotations.{Inferred, SynthesizedField, VirtualNode}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.core.metamodel.domain.DomainElementModel.Sources
-import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.metamodel.domain.templates.KeyField
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
-import amf.core.metamodel.{Field, Type}
-import amf.core.model.domain._
-import amf.core.parser.{Annotations, FieldEntry, Value}
-import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain._
+import amf.core.internal.annotations.{Inferred, SynthesizedField, VirtualNode}
+import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.internal.metamodel.domain.ShapeModel.Sources
+import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
+import amf.core.internal.metamodel.domain.templates.KeyField
+import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
+import amf.core.internal.metamodel.{Field, Type}
+import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.domain.apicontract.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.apicontract.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.apicontract.resolution.stages.DataNodeMerging
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 
 class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                   domainElemdomainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,

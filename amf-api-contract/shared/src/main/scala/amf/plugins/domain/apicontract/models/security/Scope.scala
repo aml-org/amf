@@ -1,12 +1,12 @@
 package amf.plugins.domain.apicontract.models.security
 
-import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.security.ScopeModel
 import amf.plugins.domain.apicontract.metamodel.security.ScopeModel._
 import org.yaml.model.YPart
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 
 case class Scope(fields: Fields, annotations: Annotations) extends DomainElement {
 

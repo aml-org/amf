@@ -1,11 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
-import amf.core.metamodel.Field
-import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, TemplateUri}
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.internal.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.{AmfStrings, TemplateUri}
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.spec.common.{RamlScalarNode, SpecParserOps}
@@ -18,6 +19,7 @@ import amf.plugins.domain.apicontract.models.api.{Api, WebApi}
 import amf.plugins.domain.apicontract.models.{Parameter, Server}
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YType}
+import amf.core.client.common.position.Range
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
 

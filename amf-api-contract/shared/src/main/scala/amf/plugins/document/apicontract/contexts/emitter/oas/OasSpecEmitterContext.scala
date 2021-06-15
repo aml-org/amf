@@ -1,22 +1,19 @@
 package amf.plugins.document.apicontract.contexts.emitter.oas
-import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
-import amf.core.emitter._
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
-import amf.core.parser.FieldEntry
-import amf.core.remote.{Oas20, Oas30, Vendor}
+import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.{Oas20, Oas30, Vendor}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters._
 import amf.plugins.document.apicontract.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.plugins.document.apicontract.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
   AnnotationTypeEmitter,
   FacetsInstanceEmitter,
@@ -29,9 +26,6 @@ import amf.plugins.document.apicontract.parser.spec.oas.emitters._
 import amf.plugins.domain.apicontract.models.api.Api
 import amf.plugins.domain.apicontract.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation, Parameter}
-import org.yaml.model.YDocument.PartBuilder
-
-import scala.util.matching.Regex
 
 abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterContext)
     extends OasLikeSpecEmitterFactory

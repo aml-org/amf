@@ -1,14 +1,13 @@
 package amf.plugins.document.apicontract.resolution.pipelines
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.remote.Oas20
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.client.common.validation.{Oas20Profile, ProfileName}
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.remote.Oas20
 import amf.plugins.document.apicontract.resolution.pipelines.Oas20EditingPipeline.cachePipeline
 import amf.plugins.domain.apicontract.resolution.stages.{
   OpenApiParametersNormalizationStage,
   ParametersNormalizationStage
 }
-import amf.{Oas20Profile, ProfileName}
 
 class Oas20EditingPipeline private (urlShortening: Boolean, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {

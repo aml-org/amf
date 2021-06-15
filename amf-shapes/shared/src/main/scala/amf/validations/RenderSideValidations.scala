@@ -1,16 +1,16 @@
 package amf.validations
 
-import amf.ProfileName
-import amf.core.validation.core.ValidationSpecification
-import amf.core.validation.core.ValidationSpecification.RENDER_SIDE_VALIDATION
-import amf.core.vocabulary.Namespace
-import amf.core.vocabulary.Namespace.AmfRender
-import amf.plugins.features.validation.Validations
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.Namespace.AmfRender
+import amf.core.internal.validation.Validations
+import amf.core.internal.validation.core.ValidationSpecification
+import amf.core.internal.validation.core.ValidationSpecification.RENDER_SIDE_VALIDATION
 
 // noinspection TypeAnnotation
 object RenderSideValidations extends Validations {
   override val specification: String = RENDER_SIDE_VALIDATION
-  override val namespace: Namespace = AmfRender
+  override val namespace: Namespace  = AmfRender
 
   val RenderValidation = validation(
     "render-validation",

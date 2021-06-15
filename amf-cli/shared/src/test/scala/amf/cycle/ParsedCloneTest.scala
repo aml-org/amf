@@ -1,10 +1,10 @@
 package amf.cycle
 
-import amf.core.annotations.ErrorDeclaration
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.DeclaresModel
-import amf.core.remote.{Amf, Oas30JsonHint, Raml10YamlHint}
-import amf.core.validation.AMFValidationResult
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.DeclaresModel
+import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.internal.annotations.ErrorDeclaration
+import amf.core.internal.remote.{Amf, Oas30JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.plugins.domain.apicontract.models.security.{HttpSettings, SecurityScheme}
 import amf.plugins.domain.apicontract.models.templates.Trait

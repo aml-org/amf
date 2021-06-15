@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.annotations.ExplicitField
-import amf.core.emitter.BaseEmitters.{EntryPartEmitter, RawEmitter}
-import amf.core.emitter.EntryEmitter
-import amf.core.model.domain.Shape
-import amf.core.parser.FieldEntry
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.annotations.ExplicitField
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, RawEmitter}
+import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YType
 
 case class RamlRequiredShapeEmitter(shape: Shape, minCount: Option[FieldEntry]) {

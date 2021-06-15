@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
 import amf.client.environment.WebAPIConfiguration
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.parser.{ParserContext, YMapOps}
-import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.AliasCounter
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.utils.AliasCounter
 import amf.plugins.document.apicontract.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike

@@ -1,17 +1,13 @@
 package amf.convert
 
-import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.remod.AMFRenderer
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.AMFSerializer
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.services.RuntimeResolver
+import amf.client.environment.AMFConfiguration
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.{Amf, Raml10YamlHint}
+import amf.core.internal.render.AMFSerializer
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.apicontract.resolution.pipelines.{Raml10EditingPipeline, Raml10TransformationPipeline}
+import amf.plugins.document.apicontract.resolution.pipelines.Raml10EditingPipeline
 import org.scalatest.Assertion
 import org.yaml.builder.YDocumentBuilder
 import org.yaml.model.YDocument

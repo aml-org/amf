@@ -1,12 +1,12 @@
 package amf.validations
 
-import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
-import amf.core.validation.core.ValidationSpecification
-import amf.core.validation.core.ValidationSpecification.PAYLOAD_VALIDATION
-import amf.core.vocabulary.Namespace
-import amf.core.vocabulary.Namespace.AmfValidation
-import amf.plugins.features.validation.Validations
-import amf._
+import amf.core.client.common.validation.SeverityLevels.{VIOLATION, WARNING}
+import amf.core.client.common.validation._
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.Namespace.AmfValidation
+import amf.core.internal.validation.Validations
+import amf.core.internal.validation.core.ValidationSpecification
+import amf.core.internal.validation.core.ValidationSpecification.PAYLOAD_VALIDATION
 
 // noinspection TypeAnnotation
 object ShapePayloadValidations extends Validations {

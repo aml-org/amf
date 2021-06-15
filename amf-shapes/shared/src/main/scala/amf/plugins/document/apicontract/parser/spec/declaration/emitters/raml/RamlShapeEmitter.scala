@@ -1,14 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.{EntryPartEmitter, ValueEmitter, pos}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{RecursiveShape, Shape}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, pos}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlScalarEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration._
+import amf.plugins.document.apicontract.parser.spec.declaration.OasEntryCreativeWorkEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
   AnnotationsEmitter,
   DataNodeEmitter,
@@ -18,7 +19,6 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   EnumValuesEmitter,
   RamlShapeEmitterContext,
   RamlTypeFacetEmitter,
-  ShapeEmitterContext,
   XMLSerializerEmitter
 }
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel

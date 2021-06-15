@@ -1,21 +1,20 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.async
 
-import amf.core.emitter.BaseEmitters.pos
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.BaseEmitters.pos
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.async.parser.AsyncSchemaFormats
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
   OasLikeShapeEmitterContextAdapter,
   RamlShapeEmitterContextAdapter,
   oas
 }
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasTypePartEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.{RAML10SchemaVersion, SchemaVersion}
 import amf.plugins.document.apicontract.parser.spec.toRaml
 import org.yaml.model.YDocument.EntryBuilder

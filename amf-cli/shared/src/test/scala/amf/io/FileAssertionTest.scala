@@ -1,8 +1,8 @@
 package amf.io
 
-import org.mulesoft.common.test.Tests.{checkLinesDiff, checkDiff}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
+import org.mulesoft.common.test.Tests.{checkDiff, checkLinesDiff}
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}

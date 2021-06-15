@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.async.parser
 
-import amf.core.annotations.{DefinedByVendor, SourceVendor}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{Annotations, SearchScope}
-import amf.core.remote.Raml10
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.internal.annotations.DefinedByVendor
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.core.internal.remote.Raml10
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.SchemaPosition._
@@ -12,7 +13,6 @@ import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.{WebApiDeclarations, toRaml}
 import amf.plugins.domain.apicontract.models.Payload
-import amf.plugins.features.validation.CoreValidations
 import org.yaml.model.YMapEntry
 
 object AsyncSchemaFormats {

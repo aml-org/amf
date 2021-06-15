@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContext
 
 object OasDeclaredShapesEmitter {

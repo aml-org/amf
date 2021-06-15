@@ -1,13 +1,18 @@
 package amf.plugins.parse
 
-import amf.client.remod.amfcore.plugins.{LowPriority, PluginPriority}
-import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.exception.UnsupportedParsedDocumentException
-import amf.core.model.document.{BaseUnit, PayloadFragment}
-import amf.core.parser.{ParserContext, ReferenceHandler, SimpleReferenceHandler, SyamlParsedDocument}
-import amf.core.remote.{Payload, Vendor}
+import amf.core.client.common.{LowPriority, PluginPriority}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.exception.UnsupportedParsedDocumentException
+import amf.core.client.scala.model.document.PayloadFragment
+import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.parse.document.{
+  ParserContext,
+  ReferenceHandler,
+  SimpleReferenceHandler,
+  SyamlParsedDocument
+}
+import amf.core.internal.parser.Root
+import amf.core.internal.remote.Vendor
 import amf.plugins.common.PayloadMediaTypes
 import amf.plugins.document.apicontract.contexts.parser.raml.PayloadContext
 import amf.plugins.document.apicontract.parser.PayloadParser

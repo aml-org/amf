@@ -1,13 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  OasLikeShapeEmitterContext,
-  ShapeEmitterContext
-}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.metamodel.Field
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContext
 
 abstract class OasTypePartCollector(shape: Shape,
                                     ordering: SpecOrdering,

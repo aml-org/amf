@@ -2,15 +2,20 @@ package amf.iterator
 
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.compiler.CompilerTestBuilder
-import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.metamodel.domain.common.DescriptionField
-import amf.core.model.document.Document
-import amf.core.model.document.FieldsFilter.Local
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.model.domain.{AmfObject, AmfScalar}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.remote.Raml10YamlHint
-import amf.core.traversal.iterator.{AmfElementStrategy, DomainElementStrategy, IdCollector, InstanceCollector}
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.document.FieldsFilter.Local
+import amf.core.client.scala.model.domain.{AmfObject, AmfScalar}
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.client.scala.traversal.iterator.{
+  AmfElementStrategy,
+  DomainElementStrategy,
+  IdCollector,
+  InstanceCollector
+}
+import amf.core.internal.annotations.DomainExtensionAnnotation
+import amf.core.internal.metamodel.domain.common.DescriptionField
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.remote.Raml10YamlHint
 import amf.plugins.domain.apicontract.models.Parameter
 import amf.plugins.domain.apicontract.models.api.WebApi
 import org.scalatest.AsyncFunSuite

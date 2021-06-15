@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.Raml10Profile
-import amf.core.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.client.common.validation.Raml10Profile
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import org.scalatest.FunSuite
 
 class AMFValidationReportTest extends FunSuite {

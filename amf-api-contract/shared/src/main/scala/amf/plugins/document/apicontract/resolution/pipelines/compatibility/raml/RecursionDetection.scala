@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, RecursiveShape, Shape}
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, RecursiveShape, Shape}
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.domain.shapes.models.DataArrangementShape
 
 import scala.collection.mutable.ListBuffer

@@ -1,23 +1,25 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.apicontract.annotations.OperationTraitEntry
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.apicontract.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter}
-import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.apicontract.parser.spec.declaration.OasLikeCreativeWorkParser
 import amf.plugins.document.apicontract.parser.spec.oas.Oas30CallbackParser
 import amf.plugins.document.apicontract.parser.spec.toOas
+import amf.plugins.document.apicontract.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
 import amf.plugins.domain.apicontract.metamodel.OperationModel
 import amf.plugins.domain.apicontract.metamodel.OperationModel.Method
 import amf.plugins.domain.apicontract.models.{Operation, Response}
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
+import amf.core.client.common.position.Range
 
 import scala.collection.mutable
 

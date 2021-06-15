@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.Shape
-import amf.core.parser._
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain._
+import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.parser.RamlTypeDefMatcher.{
   JSONSchema,
   XMLSchema,
@@ -12,23 +13,11 @@ import amf.plugins.document.apicontract.parser.RamlTypeDefMatcher.{
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.RamlTypeDetection.parseFormat
 import amf.plugins.document.apicontract.parser.spec.raml.expression.RamlExpressionParser
-import amf.plugins.document.apicontract.parser.{
-  RamlTypeDefMatcher,
-  RamlTypeDefStringValueMatcher,
-  RamlWebApiContextType,
-  ShapeParserContext,
-  TypeName
-}
+import amf.plugins.document.apicontract.parser._
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
-import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.models.{ScalarShape, _}
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping._
-import amf.validations.ShapeParserSideValidations.{
-  ExclusiveSchemaType,
-  InvalidAbstractDeclarationParameterInType,
-  InvalidTypeDefinition,
-  JsonSchemaInheritanceWarning,
-  SchemaDeprecated
-}
+import amf.validations.ShapeParserSideValidations._
 import amf.validations.ShapeResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
 import org.yaml.model._
 

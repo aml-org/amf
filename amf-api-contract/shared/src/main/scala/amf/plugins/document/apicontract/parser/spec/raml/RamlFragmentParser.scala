@@ -1,13 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.raml
 
-import amf.core.Root
-import amf.core.annotations.SourceVendor
-import amf.core.metamodel.document.FragmentModel
-import amf.core.model.document.{ExternalFragment, Fragment}
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfScalar, ExternalDomainElement, Shape}
-import amf.core.parser.{Annotations, _}
-import amf.core.remote.Raml10
+import amf.core.client.scala.model.document.{ExternalFragment, Fragment}
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.{AmfScalar, ExternalDomainElement, Shape}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.metamodel.document.FragmentModel
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.remote.Raml10
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.RamlFragmentHeader._

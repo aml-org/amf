@@ -1,15 +1,15 @@
 package amf.client.render
 
-import amf.client.convert.CoreClientConverters._
-import amf.client.model.domain.DomainElement
-import amf.client.resolve.ClientErrorHandler
-import amf.client.resolve.ClientErrorHandlerConverter.ErrorHandlerConverter
-import amf.core.emitter.YNodeDocBuilderPopulator
-import amf.core.remote.Vendor
+import amf.core.client.platform.errorhandling.ClientErrorHandler
+import amf.core.client.platform.model.domain.DomainElement
+import amf.core.internal.convert.ClientErrorHandlerConverter.ErrorHandlerConverter
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.YNodeDocBuilderPopulator
 import amf.plugins.document.apicontract.parser.spec.common.emitters.{
   ApiDomainElementEmitter => InternalDomainElementEmitter
 }
 import org.yaml.builder.DocBuilder
+import amf.client.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

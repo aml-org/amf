@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec
 
-import amf.core.validation.SeverityLevels
+import amf.core.client.common.validation.SeverityLevels
 
 trait CustomSyntax {
   val nodes: Map[String, SpecNode]

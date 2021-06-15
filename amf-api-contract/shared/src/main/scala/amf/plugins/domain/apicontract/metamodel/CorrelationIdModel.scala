@@ -1,11 +1,11 @@
 package amf.plugins.domain.apicontract.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Str
-import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.Core
-import amf.core.vocabulary.ValueType
+import amf.core.client.scala.vocabulary.Namespace.Core
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.plugins.domain.apicontract.models.CorrelationId
 
 object CorrelationIdModel

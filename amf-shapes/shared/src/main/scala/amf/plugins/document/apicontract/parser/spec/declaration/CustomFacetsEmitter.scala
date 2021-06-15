@@ -1,15 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.{FieldEntry, Position}
-import amf.core.utils.AmfStrings
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  OasLikeShapeEmitterContext,
-  ShapeEmitterContext
-}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils.AmfStrings
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.OasLikeShapeEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasPropertyShapeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 

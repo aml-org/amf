@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.parser._
+import amf.core.internal.parser.YMapOps
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec._

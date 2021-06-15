@@ -1,9 +1,9 @@
 package amf.plugins.parse
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.Root
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.document.{LibraryReference, LinkReference, ParsedReference, ParserContext}
+import amf.core.internal.parser.Root
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.apicontract.parser.spec.oas.{OasFragmentParser, OasModuleParser}

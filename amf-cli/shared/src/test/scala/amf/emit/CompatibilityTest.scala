@@ -1,17 +1,14 @@
 package amf.emit
 
-import amf.ProfileName
 import amf.client.environment.WebAPIConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.AMFCompiler
-import amf.client.remod.{AMFParser, AMFValidator}
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
-import amf.core.services.RuntimeValidator
-import amf.facades.Validation
-import amf.internal.resource.StringResourceLoader
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.AMFParser
+import amf.core.client.scala.validation.AMFValidator
+import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
+import amf.core.internal.resource.StringResourceLoader
 import amf.io.FileAssertionTest
 import org.scalatest.{Assertion, AsyncFunSuite}
 

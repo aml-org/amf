@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.parser.{Annotations, _}
-import amf.core.remote.{Oas, Raml}
-import amf.core.utils.AmfStrings
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.{Oas, Raml}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, QuickFieldParserOps}
 import amf.plugins.document.apicontract.vocabulary.VocabularyMappings

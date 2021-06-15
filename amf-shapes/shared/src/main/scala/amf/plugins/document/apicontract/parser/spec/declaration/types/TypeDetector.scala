@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.types
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.parser.{YMapOps, YNodeLikeOps}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.plugins.document.apicontract.parser.OasTypeDefMatcher.matchType
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._

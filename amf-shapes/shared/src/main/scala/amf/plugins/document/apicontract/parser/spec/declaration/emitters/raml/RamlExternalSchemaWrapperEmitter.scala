@@ -1,21 +1,18 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.{EntryPartEmitter, ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.model.domain.Shape
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  ExamplesEmitter,
-  RamlShapeEmitterContext,
-  ShapeEmitterContext
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{ExamplesEmitter, RamlShapeEmitterContext}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument.PartBuilder
 
@@ -53,7 +50,7 @@ case class RamlExternalSchemaWrapperEmitter(shape: AnyShape,
 
   private def emitReference(shape: Shape, b: PartBuilder): Unit = shape match {
     case shape: AnyShape if shapeWasParsedFromAnExternalFragment(shape) =>
-      RamlExternalSourceEmitter(shape.asInstanceOf[AnyShape], references).emit(b)
+      RamlExternalSourceEmitter(shape, references).emit(b)
     case shape: Shape if hasExternalReferenceUrl(shape) =>
       RamlExternalReferenceUrlEmitter(shape)().emit(b)
 
@@ -63,7 +60,7 @@ case class RamlExternalSchemaWrapperEmitter(shape: AnyShape,
 
   private def shapeWasParsedFromAnExternalFragment(shape: AnyShape) = {
     shape.fromExternalSource && references.exists {
-      case e: ExternalFragment => e.encodes.id.equals(shape.asInstanceOf[AnyShape].externalSourceID.getOrElse(""))
+      case e: ExternalFragment => e.encodes.id.equals(shape.externalSourceID.getOrElse(""))
       case _                   => false
     }
   }

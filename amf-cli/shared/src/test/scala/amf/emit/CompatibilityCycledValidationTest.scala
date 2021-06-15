@@ -1,16 +1,15 @@
 package amf.emit
 
-import amf._
 import amf.client.environment.AMFConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote.Syntax.Syntax
-import amf.core.remote._
-import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
-import amf.core.validation.AMFValidationReport
+import amf.core.client.common.validation._
+import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.remote.Syntax.Syntax
+import amf.core.internal.remote._
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FunSuiteCycleTests
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
@@ -28,7 +27,7 @@ class CompatibilityCycledValidationTest extends CompatibilityCycle {
   testCycleCompatibility("raml10", Raml10YamlHint, Oas20, basePath)
 }
 
-trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
+trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformSecrets {
 
   private val REPORT_CONFORMS = "Conforms? true"
 

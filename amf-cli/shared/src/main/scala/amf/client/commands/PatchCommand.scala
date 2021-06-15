@@ -1,10 +1,8 @@
 package amf.client.commands
 
-import amf.client.environment.{AMFConfiguration, AMLConfiguration}
-import amf.client.remod.AMFGraphConfiguration
-import amf.core.client.{ExitCodes, ParserConfig}
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Platform
+import amf.client.environment.AMFConfiguration
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Platform
 import amf.plugins.document.vocabularies.model.document.DialectInstancePatch
 
 import scala.concurrent.{ExecutionContext, Future}

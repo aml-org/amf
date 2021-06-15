@@ -1,7 +1,6 @@
 package amf.remod
 
-import amf.client.execution.BaseExecutionEnvironment
-import amf.client.remod.AMFGraphConfiguration
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.plugins.document.apicontract.parser.spec.common.RamlDatatypeSerializer
 import amf.plugins.domain.shapes.models.AnyShape
 

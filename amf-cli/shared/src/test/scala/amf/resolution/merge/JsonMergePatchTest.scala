@@ -1,15 +1,15 @@
 package amf.resolution.merge
 
-import amf.client.convert.BaseUnitConverter
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.ParseConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.emitter.BaseEmitters.traverse
-import amf.core.emitter.SpecOrdering
-import amf.core.model.document.Document
-import amf.core.model.domain.{DataNode, ScalarNode}
-import amf.core.parser.{ParserContext, YMapOps}
-import amf.core.remote.Vendor.AMF
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.{DataNode, ScalarNode}
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.convert.BaseUnitConverter
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.remote.Vendor.AMF
+import amf.core.internal.render.BaseEmitters.traverse
+import amf.core.internal.render.SpecOrdering
 import amf.emit.AMFRenderer
 import amf.facades.Validation
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
@@ -20,13 +20,14 @@ import amf.plugins.document.apicontract.parser.spec.async.parser.{AsyncMessagePa
 import amf.plugins.document.apicontract.parser.spec.common.DataNodeParser
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
-import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncJsonMergePatch, AsyncKeyCriteria, JsonMergePatch}
 import amf.plugins.domain.apicontract.models.{Message, Operation}
+import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncJsonMergePatch, AsyncKeyCriteria, JsonMergePatch}
 import org.mulesoft.common.io.Fs
 import org.scalatest.{Assertion, Matchers}
 import org.yaml.model.{YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
+import amf.core.internal.parser._
 
 import scala.concurrent.{ExecutionContext, Future}
 

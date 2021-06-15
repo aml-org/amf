@@ -1,18 +1,19 @@
 package amf.compiler
 
 import amf.client.environment.AMFConfiguration
-import amf.client.errorhandling.IgnoringErrorHandler
-import amf.core.annotations.{LexicalInformation, ReferenceTargets, SourceAST}
-import amf.core.model.document.Document
-import amf.core.model.domain.NamedDomainElement
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.{Annotations, Position, Range}
-import amf.core.remote.{Oas20YamlHint, Raml10YamlHint}
+import amf.core.client.common.position.{Position, Range}
+import amf.core.client.scala.errorhandling.IgnoringErrorHandler
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.NamedDomainElement
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.annotations.{LexicalInformation, ReferenceTargets, SourceAST}
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.{Oas20YamlHint, Raml10YamlHint}
 import amf.plugins.document.apicontract.annotations.ExternalJsonSchemaShape
-import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.templates.ResourceType
 import amf.plugins.domain.apicontract.models.{Parameter, Response}
+import amf.plugins.domain.shapes.models.NodeShape
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -77,7 +78,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val document                       = unit.asInstanceOf[Document]
       val properties: Seq[PropertyShape] = document.declares.head.asInstanceOf[NodeShape].properties
       assertRange(properties.head.range.name.annotations().find(classOf[LexicalInformation]).get.range,
-                  new amf.core.parser.Range(Position(7, 8), Position(7, 9)))
+                  new Range(Position(7, 8), Position(7, 9)))
       assertRange(
         properties
           .find(_.name.value() == "n")
@@ -88,7 +89,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new amf.core.parser.Range(Position(9, 8), Position(9, 9))
+        new Range(Position(9, 8), Position(9, 9))
       )
       assertRange(
         properties
@@ -100,7 +101,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new amf.core.parser.Range(Position(11, 8), Position(11, 9))
+        new Range(Position(11, 8), Position(11, 9))
       )
       assertRange(
         properties
@@ -112,7 +113,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new amf.core.parser.Range(Position(14, 8), Position(14, 9))
+        new Range(Position(14, 8), Position(14, 9))
       )
       succeed
     }
@@ -127,7 +128,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val properties: Seq[PropertyShape] = document.declares.head.asInstanceOf[NodeShape].properties
 
       assertRange(properties.head.range.name.annotations().find(classOf[LexicalInformation]).get.range,
-                  new amf.core.parser.Range(Position(8, 6), Position(8, 7)))
+                  new Range(Position(8, 6), Position(8, 7)))
       assertRange(
         properties
           .find(_.name.value() == "n")
@@ -138,7 +139,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new amf.core.parser.Range(Position(9, 6), Position(9, 7))
+        new Range(Position(9, 6), Position(9, 7))
       )
       assertRange(
         properties
@@ -150,7 +151,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new amf.core.parser.Range(Position(11, 6), Position(11, 7))
+        new Range(Position(11, 6), Position(11, 7))
       )
       assertRange(
         properties
@@ -162,7 +163,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
           .find(classOf[LexicalInformation])
           .get
           .range,
-        new amf.core.parser.Range(Position(12, 6), Position(12, 7))
+        new Range(Position(12, 6), Position(12, 7))
       )
 
       succeed
@@ -176,10 +177,8 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     } yield {
       val document = unit.asInstanceOf[Document]
       val point    = document.declares.head.asInstanceOf[ResourceType].asEndpoint(document)
-      assertRange(point.annotations.find(classOf[LexicalInformation]).get.range,
-                  amf.core.parser.Range((6, 2), (9, 12)))
-      assertRange(point.path.annotations().find(classOf[LexicalInformation]).get.range,
-                  amf.core.parser.Range((6, 2), (6, 5)))
+      assertRange(point.annotations.find(classOf[LexicalInformation]).get.range, Range((6, 2), (9, 12)))
+      assertRange(point.path.annotations().find(classOf[LexicalInformation]).get.range, Range((6, 2), (6, 5)))
       succeed
     }
   }
@@ -290,7 +289,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
-  private def assertRange(actual: amf.core.parser.Range, expected: amf.core.parser.Range) = {
+  private def assertRange(actual: Range, expected: Range) = {
     assert(actual.start.line == expected.start.line)
     assert(actual.start.column == expected.start.column)
     assert(actual.end.line == expected.end.line)

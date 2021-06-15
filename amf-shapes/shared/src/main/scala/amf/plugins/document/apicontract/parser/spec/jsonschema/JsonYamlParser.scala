@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
-import amf.core.parser.JsonParserFactory
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
+import amf.core.internal.parser.domain.JsonParserFactory
 import org.yaml.parser.{YParser, YamlParser}
 
 object JsonYamlParser {

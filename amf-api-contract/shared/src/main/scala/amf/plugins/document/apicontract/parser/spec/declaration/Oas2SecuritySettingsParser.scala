@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.annotations.VirtualElement
-import amf.core.model.domain.AmfArray
-import amf.core.parser.{Annotations, ScalarNode, YMapOps}
-import amf.core.utils.{AmfStrings, Lazy}
+import amf.core.client.scala.model.domain.AmfArray
+import amf.core.internal.annotations.VirtualElement
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.utils.{AmfStrings, Lazy}
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser

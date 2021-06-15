@@ -1,8 +1,8 @@
 package amf.validation
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.Syntax.Json
-import amf.core.remote._
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.Syntax.Json
+import amf.core.internal.remote.{Amf, AmfJsonHint, Oas20, Oas20YamlHint, Oas30, Oas30YamlHint, Raml10, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class JapaneseCycleTest extends FunSuiteCycleTests {

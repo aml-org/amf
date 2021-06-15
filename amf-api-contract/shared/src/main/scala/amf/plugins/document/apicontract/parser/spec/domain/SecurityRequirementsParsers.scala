@@ -1,13 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.model.domain.AmfArray
-import amf.core.parser.{Annotations, ScalarNode, SearchScope}
-import amf.core.utils.IdCounter
+import amf.core.client.scala.model.domain.AmfArray
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.utils.IdCounter
+import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.apicontract.metamodel.security._
 import amf.plugins.domain.apicontract.models.security._
-import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations.{
   InvalidSecurityRequirementObject,
   ScopeNamesMustBeEmpty,

@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.plugins.document.apicontract.annotations.FormBodyParameter
 import amf.plugins.domain.apicontract.models.{Parameter, Payload}
 import org.yaml.model.YPart

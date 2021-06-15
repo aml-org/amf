@@ -1,14 +1,13 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.remote.Raml08
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.client.common.validation.{ProfileName, Raml08Profile}
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.remote.Raml08
 import amf.plugins.domain.apicontract.resolution.stages.{
   OpenApiParametersNormalizationStage,
   ParametersNormalizationStage
 }
-import amf.{ProfileName, Raml08Profile}
 
 class Raml08TransformationPipeline private (override val name: String) extends AmfTransformationPipeline(name) {
   override def profileName: ProfileName = Raml08Profile

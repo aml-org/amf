@@ -1,14 +1,14 @@
 package amf.cycle
 
 import amf.client.environment.WebAPIConfiguration
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.remod.AMFGraphConfiguration
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.rdf.RdfUnitConverter
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.io.FileAssertionTest
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.{Assertion, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -16,7 +16,7 @@ import scala.concurrent.{ExecutionContext, Future}
  * TODO: implement test also in JS.
  *  It isn't currently implemented there because of some strange errors when loading text/n3 rdf
  */
-trait FromRdfCycleTest extends AsyncBeforeAndAfterEach with FileAssertionTest with Matchers {
+trait FromRdfCycleTest extends AsyncBeforeAndAfterEach with FileAssertionTest with Matchers with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -43,7 +43,7 @@ trait FromRdfCycleTest extends AsyncBeforeAndAfterEach with FileAssertionTest wi
     val content      = fs.syncFile(fullPath).read()
     val rdfFramework = platform.rdfFramework.get
     val modelDoc     = rdfFramework.syntaxToRdfModel("text/n3", content)
-    val result = BaseUnit.fromNativeRdfModel(
+    val result = new RdfUnitConverter().fromNativeRdfModel(
       baseUnitId,
       modelDoc.model,
       WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler))

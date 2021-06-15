@@ -1,8 +1,7 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
 
-import amf.client.model.StrField
-import amf.core.model.{BoolField, IntField}
+import amf.core.client.platform.model.{StrField, BoolField, IntField}
 import amf.plugins.domain.apicontract.models.bindings.amqp.{Amqp091OperationBinding => InternalAmqp091OperationBinding}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

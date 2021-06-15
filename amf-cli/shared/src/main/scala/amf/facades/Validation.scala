@@ -1,32 +1,23 @@
 package amf.facades
 
-import amf.client.execution.BaseExecutionEnvironment
-import amf.core.remote.Platform
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.EffectiveValidations
-import amf.core.validation.core.ValidationSpecification
-import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
+import amf.core.client.common.validation.{ProfileName, Raml10Profile}
+import amf.core.client.platform.execution.BaseExecutionEnvironment
+import amf.core.internal.remote.Platform
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.EffectiveValidations
+import amf.core.internal.validation.core.ValidationSpecification
 import amf.plugins.domain.VocabulariesRegister
-import amf.plugins.domain.apicontract.APIDomainPlugin
-import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.emitters.ShaclJsonLdShapeGraphEmitter
-import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.{ProfileName, Raml10Profile}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class Validation(platform: Platform) {
 
   def init()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
+//    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     // Remod registering
     VocabulariesRegister.register(platform)
-    amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerFeaturePlugin(AMFValidatorPlugin)
-    amf.core.AMF.init()
+    Future.successful {}
   }
 
   def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = Raml10Profile): String =

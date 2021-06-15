@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters
 
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork

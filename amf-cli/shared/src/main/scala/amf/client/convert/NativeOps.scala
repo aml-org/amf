@@ -1,6 +1,6 @@
 package amf.client.convert
 
-import amf.client.convert.CoreClientConverters._
+import amf.core.internal.convert.CoreClientConverters.{ClientFuture, ClientList, ClientOption}
 
 import scala.concurrent.Future
 import scala.language.implicitConversions

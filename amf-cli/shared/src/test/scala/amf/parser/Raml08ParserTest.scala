@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.core.remote.{Amf, Raml08YamlHint}
+import amf.core.internal.remote.{Amf, Raml08YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class Raml08ParserTest extends FunSuiteCycleTests {

@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
-import amf.core.annotations.SourceAST
-import amf.core.emitter.PartEmitter
-import amf.core.model.domain.AmfElement
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.AmfElement
+import amf.core.internal.annotations.SourceAST
+import amf.core.internal.render.emitters.PartEmitter
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YNode
 import org.yaml.render.YamlRender

@@ -1,8 +1,8 @@
 package amf
-import amf.core.vocabulary.Namespace
+
+import amf.core.client.scala.vocabulary.Namespace
 import amf.plugins.document.apicontract.validation.AMFRawValidations.AMFValidation
 import amf.plugins.document.apicontract.validation.{AMFRawValidations, DefaultAMFValidations, ImportUtils}
-import amf.plugins.features.validation.Validations
 
 object ValidationsExporter extends ImportUtils {
 

@@ -1,13 +1,14 @@
 package amf.plugins.document.apicontract.parser.spec.raml
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.document.BaseUnitModel
-import amf.core.model.document.{BaseUnit, Module, _}
-import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.remote.{Raml, Raml10}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Fragment, Module}
+import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.internal.metamodel.document.BaseUnitModel
+import amf.core.internal.remote.Raml10
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.spec.declaration._
@@ -15,19 +16,17 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotat
   AnnotationsEmitter,
   DataNodeEmitter
 }
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   RamlShapeEmitterContext,
   RamlShapeEmitterContextAdapter,
-  ShapeEmitterContext,
-  raml
+  ShapeEmitterContext
 }
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.apicontract.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.apicontract.parser.spec.raml.emitters.Raml10SecuritySchemeEmitter
 import amf.plugins.document.apicontract.parser.{RamlFragmentHeader, RamlHeader}
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument
 
 /**

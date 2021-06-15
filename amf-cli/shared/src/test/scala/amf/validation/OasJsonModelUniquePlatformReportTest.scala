@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.Oas30Profile
-import amf.core.remote.{Hint, Oas20JsonHint, Oas30JsonHint, Oas30YamlHint}
+import amf.core.client.common.validation.Oas30Profile
+import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas30JsonHint}
 
 class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 

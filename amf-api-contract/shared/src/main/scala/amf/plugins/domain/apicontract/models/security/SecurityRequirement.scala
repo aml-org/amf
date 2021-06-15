@@ -1,12 +1,12 @@
 package amf.plugins.domain.apicontract.models.security
 
-import amf.core.metamodel.{Field, Obj}
-import amf.core.model.domain.NamedDomainElement
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.NamedDomainElement
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.apicontract.metamodel.security.SecurityRequirementModel._
 import org.yaml.model.YPart
+import amf.core.internal.utils.AmfStrings
 
 case class SecurityRequirement(fields: Fields, annotations: Annotations) extends NamedDomainElement {
 

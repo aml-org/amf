@@ -1,13 +1,13 @@
 package amf.plugins.parse
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParsedReference, ParserContext, ReferenceHandler, SimpleReferenceHandler}
-import amf.core.remote.{JsonSchema, Vendor}
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext, ReferenceHandler, SimpleReferenceHandler}
+import amf.core.internal.parser.Root
+import amf.core.internal.remote.{JsonSchema, Vendor}
 import amf.plugins.document.apicontract.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.apicontract.model.DataTypeFragment
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter

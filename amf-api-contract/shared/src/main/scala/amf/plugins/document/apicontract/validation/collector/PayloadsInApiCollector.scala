@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.validation.collector
 
-import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.{AmfElement, DataNode, ScalarNode, Shape}
-import amf.core.parser.Annotations
-import amf.core.utils._
-import amf.core.validation.ValidationCandidate
+import amf.core.client.scala.model.document.PayloadFragment
+import amf.core.client.scala.model.domain.{AmfElement, DataNode, ScalarNode, Shape}
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.MediaTypeMatcher
+import amf.core.internal.validation.ValidationCandidate
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
 

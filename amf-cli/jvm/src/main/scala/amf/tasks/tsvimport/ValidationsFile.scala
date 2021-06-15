@@ -1,10 +1,9 @@
 package amf.tasks.tsvimport
 
-import java.io.{BufferedReader, File, FileReader}
-
-import amf.core.validation.SeverityLevels
+import amf.core.client.common.validation.SeverityLevels
 import amf.plugins.document.apicontract.validation.AMFRawValidations.AMFValidation
 
+import java.io.{BufferedReader, File, FileReader}
 import scala.collection.JavaConverters._
 
 /**

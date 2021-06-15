@@ -1,20 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.client.execution.BaseExecutionEnvironment
-import amf.client.remod.AMFGraphConfiguration
-import amf.core.AMFSerializer
-import amf.core.emitter.SpecOrdering
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.DataNode
-import amf.core.remote.Payload
-import amf.core.unsafe.PlatformSecrets
-import amf.core.utils._
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.PayloadFragment
+import amf.core.client.scala.model.domain.DataNode
+import amf.core.internal.render.{AMFSerializer, SpecOrdering}
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.utils.MediaTypeMatcher
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YDocument
-
-import scala.concurrent.ExecutionContext
 
 trait PayloadSerializer extends PlatformSecrets {
 

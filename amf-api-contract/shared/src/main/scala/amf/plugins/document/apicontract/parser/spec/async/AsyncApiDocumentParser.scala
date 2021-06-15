@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.async
-import amf.core.Root
-import amf.core.annotations.{DeclaredElement, SourceVendor}
-import amf.core.metamodel.document.DocumentModel
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.document.Document
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
-import amf.plugins.document.vocabularies.parser.common.DeclarationKey
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.annotations.{DeclaredElement, SourceVendor}
+import amf.core.internal.metamodel.document.DocumentModel
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.parser.{Root, YMapOps}
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.async.parser._
@@ -25,6 +25,7 @@ import amf.plugins.document.apicontract.parser.spec.domain.binding.{
   AsyncServerBindingsParser
 }
 import amf.plugins.document.apicontract.parser.spec.oas.OasLikeDeclarationsHelper
+import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.metamodel.bindings.{
   ChannelBindingsModel,

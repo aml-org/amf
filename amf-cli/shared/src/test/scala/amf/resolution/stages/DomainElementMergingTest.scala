@@ -1,13 +1,13 @@
 package amf.resolution.stages
 
-import amf.client.remod.ParseConfiguration
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.parser.ParserContext
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.parser.ParseConfiguration
 import amf.plugins.document.apicontract.contexts.parser.raml.Raml10WebApiContext
-import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.apicontract.models.EndPoint
 import amf.plugins.domain.apicontract.models.templates.{ParametrizedTrait, Trait}
 import amf.plugins.domain.apicontract.resolution.stages.DomainElementMerging
+import amf.plugins.domain.shapes.models.ScalarShape
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

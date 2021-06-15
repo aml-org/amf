@@ -1,14 +1,15 @@
 package amf.client.environment
 
-import amf.client.remod.{AMFParser, AMFResult, InvalidBaseUnitTypeException}
-import amf.core.metamodel.document.{DocumentModel, ModuleModel}
-import amf.core.model.document.{Document, Module}
+import amf.core.client.scala.AMFResult
+import amf.core.client.scala.model.document.{Document, Module}
+import amf.core.client.scala.parse.{AMFParser, InvalidBaseUnitTypeException}
+import amf.core.internal.metamodel.document.{DocumentModel, ModuleModel}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * The AMF Client contains common AMF operations.
-  * For more complex uses see [[AMFParser]] or [[amf.client.remod.AMFRenderer]]
+  * For more complex uses see [[AMFParser]] or [[amf.core.client.scala.render.AMFRenderer]]
   */
 class AMFClient private[amf] (override protected val configuration: AMFConfiguration)
     extends AMLClient(configuration) {
@@ -18,7 +19,7 @@ class AMFClient private[amf] (override protected val configuration: AMFConfigura
   override def getConfiguration: AMFConfiguration = configuration
 
   /**
-    * parse a [[amf.core.model.document.Document]]
+    * parse a [[amf.core.client.platform.model.document.Document]]
     * @param url of the resource to parse
     * @return a Future [[AMFDocumentResult]]
     */
@@ -29,7 +30,7 @@ class AMFClient private[amf] (override protected val configuration: AMFConfigura
   }
 
   /**
-    * parse a [[amf.core.model.document.Module]]
+    * parse a [[amf.core.client.scala.model.document.Module]]
     * @param url of the resource to parse
     * @return a Future [[AMFLibraryResult]]
     */

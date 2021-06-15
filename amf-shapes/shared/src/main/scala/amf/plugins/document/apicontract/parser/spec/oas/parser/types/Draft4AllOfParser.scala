@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.oas.parser.types
 
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.{AmfArray, Shape}
-import amf.core.parser.{Annotations, YMapOps}
+import amf.core.client.scala.model.domain.{AmfArray, Shape}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.declaration.{OasTypeParser, SchemaVersion}
 import amf.validations.ShapeParserSideValidations.InvalidAndType

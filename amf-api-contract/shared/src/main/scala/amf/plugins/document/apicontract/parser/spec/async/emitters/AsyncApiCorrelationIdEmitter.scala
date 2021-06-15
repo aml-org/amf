@@ -1,17 +1,16 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters
 
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
+import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.domain.apicontract.metamodel.CorrelationIdModel
 import amf.plugins.domain.apicontract.models.CorrelationId
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.emitter.BaseEmitters._
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
-import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
 
 import scala.collection.mutable.ListBuffer
 

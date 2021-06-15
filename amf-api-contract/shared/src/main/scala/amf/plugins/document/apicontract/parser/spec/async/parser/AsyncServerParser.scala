@@ -1,19 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.async.parser
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser._
-import amf.core.parser.Annotations
-import amf.core.utils.IdCounter
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.apicontract.parser.spec.domain.binding.AsyncServerBindingsParser
 import amf.plugins.document.apicontract.parser.spec.domain.{OasLikeSecurityRequirementParser, OasLikeServerParser}
+import amf.plugins.document.apicontract.parser.spec.domain.binding.AsyncServerBindingsParser
 import amf.plugins.domain.apicontract.metamodel.ServerModel
-import amf.plugins.domain.apicontract.models.security.SecurityRequirement
-import amf.plugins.domain.apicontract.models.api.AsyncApi
 import amf.plugins.domain.apicontract.models.Server
+import amf.plugins.domain.apicontract.models.api.AsyncApi
+import amf.plugins.domain.apicontract.models.security.SecurityRequirement
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 case class AsyncServersParser(map: YMap, api: AsyncApi)(implicit val ctx: AsyncWebApiContext) {

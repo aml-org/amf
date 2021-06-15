@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.emitter
 
-import amf.core.metamodel.Field
-import amf.core.model.domain.Shape
+import amf.core.internal.metamodel.Field
+import amf.core.client.scala.model.domain.Shape
 import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaDraft201909SchemaVersion
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.ShapeEmitterContext
 import amf.validations.ShapePayloadValidations.UntranslatableDraft2019Fields

@@ -1,13 +1,12 @@
 package amf.validation
 
 import amf.client.environment.WebAPIConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.remote.Syntax.{Json, Syntax, Yaml}
-import amf.core.remote._
-import amf.core.unsafe.PlatformSecrets
-import amf.emit.AMFRenderer
-import amf.facades.{AMFCompiler, Validation}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.remote.Syntax.{Json, Syntax, Yaml}
+import amf.core.internal.remote._
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.facades.Validation
 import org.mulesoft.common.test.Tests.checkDiff
 import org.scalatest.AsyncFunSuite
 
@@ -23,58 +22,66 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
       v                    <- Validation(platform)
-      clientWithValidation <- config.withCustomValidationsEnabled.map(_.createClient())
+      clientWithValidation <- config.withCustomValidationsEnabled().map(_.createClient())
       bu                   <- clientWithValidation.parse(basePath + exampleFile).map(_.bu)
       r                    <- Future.successful(clientWithValidation.render(bu, target.mediaType))
     } yield r
   }
 
   test("Loading and serializing validations") {
-    val expectedFile             = "validation_profile_example_gold.yaml"
-    val exampleFile              = "validation_profile_example.yaml"
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expectedFile = "validation_profile_example_gold.yaml"
+    val exampleFile  = "validation_profile_example.yaml"
+    val expected: Future[String] =
+      platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
   test("prefixes can be loaded") {
-    val expectedFile                      = "validation_profile_prefixes.yaml.jsonld" // TODO: delete this when deprecating legacy json-ld emitter
-    val expectedFlattenedFile             = "validation_profile_prefixes.yaml.flattened.jsonld"
-    val exampleFile                       = "validation_profile_prefixes.yaml"
-    val expected: Future[String]          = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    val expectedFlattened: Future[String] = platform.resolve(basePath + expectedFlattenedFile).map(_.stream.toString)
-    val validation                        = Validation(platform)
+    val expectedFile          = "validation_profile_prefixes.yaml.jsonld" // TODO: delete this when deprecating legacy json-ld emitter
+    val expectedFlattenedFile = "validation_profile_prefixes.yaml.flattened.jsonld"
+    val exampleFile           = "validation_profile_prefixes.yaml"
+    val expected: Future[String] =
+      platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
+    val expectedFlattened: Future[String] = platform
+      .fetchContent(basePath + expectedFlattenedFile, AMFGraphConfiguration.predefined())
+      .map(_.stream.toString)
+    val validation = Validation(platform)
     cycle(exampleFile, VocabularyYamlHint, Json, Amf).zip(expected).map(checkDiff)
   }
 
   test("Prefixes can be parsed") {
-    val expectedFile             = "validation_profile_prefixes.yaml"
-    val exampleFile              = "validation_profile_prefixes.yaml.jsonld"
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    val validation               = Validation(platform)
+    val expectedFile = "validation_profile_prefixes.yaml"
+    val exampleFile  = "validation_profile_prefixes.yaml.jsonld"
+    val expected: Future[String] =
+      platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
+    val validation = Validation(platform)
     cycle(exampleFile, AmfJsonHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of encodes") {
-    val expectedFile             = "validation_profile_example_gold.yaml"
-    val exampleFile              = "validation_profile_example.yaml"
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    val validation               = Validation(platform)
+    val expectedFile = "validation_profile_example_gold.yaml"
+    val exampleFile  = "validation_profile_example.yaml"
+    val expected: Future[String] =
+      platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
+    val validation = Validation(platform)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of range") {
-    val expectedFile             = "validation_profile_example_gold.yaml"
-    val exampleFile              = "validation_profile_example.yaml"
-    val validation               = Validation(platform)
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expectedFile = "validation_profile_example_gold.yaml"
+    val exampleFile  = "validation_profile_example.yaml"
+    val validation   = Validation(platform)
+    val expected: Future[String] =
+      platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with union type") {
-    val expectedFile             = "validation_profile_example_gold.yaml"
-    val exampleFile              = "validation_profile_example.yaml"
-    val validation               = Validation(platform)
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expectedFile = "validation_profile_example_gold.yaml"
+    val exampleFile  = "validation_profile_example.yaml"
+    val validation   = Validation(platform)
+    val expected: Future[String] =
+      platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 

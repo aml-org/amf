@@ -1,14 +1,15 @@
 package amf.plugins.document.apicontract.contexts
 
-import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter._
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
-import amf.core.parser.FieldEntry
-import amf.core.remote._
+import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.BaseEmitters.ArrayEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
   AnnotationEmitter,

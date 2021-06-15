@@ -1,20 +1,20 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.annotations.{LexicalInformation, NilUnion}
-import amf.core.emitter.BaseEmitters.{EntryPartEmitter, ValueEmitter, pos}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Bool
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{Annotations, FieldEntry, Value}
-import amf.core.vocabulary.Namespace
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations.{LexicalInformation, NilUnion}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Bool
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
+import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, pos}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   EnumValuesEmitter,
   OasLikeShapeEmitterContext,
-  ShapeEmitterContext,
   XMLSerializerEmitter
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{

@@ -1,7 +1,8 @@
 package amf.client.model.domain
 
-import amf.client.model.StrField
+import amf.core.client.platform.model.StrField
 import amf.client.convert.ApiClientConverters._
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement}
 
 import amf.plugins.domain.apicontract.models.{CorrelationId => InternalCorrelationId}
 

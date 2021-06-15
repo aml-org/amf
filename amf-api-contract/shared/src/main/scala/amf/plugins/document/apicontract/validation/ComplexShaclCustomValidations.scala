@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.validation
 
-import amf.core.validation.core.{PropertyConstraint, ValidationSpecification}
+import amf.core.internal.validation.core.{PropertyConstraint, ValidationSpecification}
 
 import scala.collection.mutable.ArrayBuffer
 

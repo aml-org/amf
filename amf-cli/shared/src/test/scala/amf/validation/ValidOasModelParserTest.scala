@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.core.remote.{Hint, Oas20JsonHint, Oas30JsonHint}
-import amf.{Oas20Profile, Oas30Profile}
+import amf.core.client.common.validation.{Oas20Profile, Oas30Profile}
+import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas30JsonHint}
 
 class ValidOasModelParserTest extends ValidModelTest {
 

@@ -1,11 +1,11 @@
 package amf.plugins.domain.apicontract.models.bindings
-import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.bindings.BindingType.Type
 import amf.plugins.domain.apicontract.metamodel.bindings.EmptyBindingModel
 import amf.plugins.domain.apicontract.models.Key
+import amf.core.internal.utils.AmfStrings
 
 class EmptyBinding(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement

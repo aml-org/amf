@@ -1,12 +1,16 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter._
-import amf.core.metamodel.Field
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.core.utils._
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.parser.domain.{FieldEntry, Fields}
+import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, NullEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.core.internal.utils.{IdCounter, _}
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.apicontract.parser.spec.OasShapeDefinitions
 import amf.plugins.document.apicontract.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
@@ -17,9 +21,7 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotat
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.domain.shapes.models.Example
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument._
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -198,7 +200,7 @@ case class SingleExampleEmitter(key: String, example: Example, ordering: SpecOrd
     )
   }
 
-  private val valueEmitter: Either[EntryEmitter, PartEmitter] = example.fields.entry(Name) match {
+  private val valueEmitter: Either[EntryEmitter, PartEmitter] = example.fields.entry(NameFieldSchema.Name) match {
     case Some(_) => Left(NamedExampleEmitter(example, ordering))
     case _       => Right(RamlExampleValuesEmitter(example, ordering))
   }

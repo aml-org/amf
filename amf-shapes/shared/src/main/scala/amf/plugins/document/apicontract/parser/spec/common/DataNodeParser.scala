@@ -1,15 +1,22 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.annotations.{ReferenceId, ScalarType}
-import amf.core.metamodel.domain.ScalarNodeModel
-import amf.core.model.DataType
-import amf.core.model.document.{EncodesModel, ExternalFragment}
-import amf.core.model.domain.ScalarNode.forDataType
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
-import amf.core.parser.{Annotations, _}
-import amf.core.utils._
-import amf.plugins.features.validation.CoreValidations.SyamlError
+import amf.core.internal.annotations.{ReferenceId, ScalarType}
+import amf.core.internal.metamodel.domain.ScalarNodeModel
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.document.{EncodesModel, ExternalFragment}
+import amf.core.client.scala.model.domain.ScalarNode.forDataType
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.{
+  DataNode,
+  LinkNode,
+  ScalarNode,
+  ArrayNode => DataArrayNode,
+  ObjectNode => DataObjectNode
+}
+import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference}
+import amf.core.internal.parser.domain.{Annotations, _}
+import amf.core.internal.utils._
+import amf.core.internal.validation.CoreValidations.SyamlError
 import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
 import org.mulesoft.common.time.SimpleDateTime
 import org.mulesoft.lexer.InputRange
@@ -106,7 +113,7 @@ case class ScalarNodeParser(
     parent: Option[String] = None,
     idCounter: IdCounter = new IdCounter)(implicit ctx: ErrorHandlingContext with DataNodeParserContext) {
 
-  private def newScalarNode(value: amf.core.parser.ScalarNode,
+  private def newScalarNode(value: amf.core.internal.parser.domain.ScalarNode,
                             dataType: String,
                             annotations: Annotations): ScalarNode = {
     val scalar = new ScalarNode(Fields(), annotations)
@@ -117,7 +124,7 @@ case class ScalarNodeParser(
 
   protected def parseScalar(node: YNode, dataType: String): DataNode = {
     val finalDataType = DataType(dataType)
-    val scalarNode    = amf.core.parser.ScalarNode(node)
+    val scalarNode    = amf.core.internal.parser.domain.ScalarNode(node)
     val dataNode = newScalarNode(scalarNode, finalDataType, Annotations(node))
       .withSynthesizeName(idCounter.genId("scalar"))
     parent.foreach(p => dataNode.adopted(p))

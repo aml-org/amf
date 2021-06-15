@@ -1,9 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.TrackedElement
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.annotations.TrackedElement
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.utils.AmfStrings
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.{DefaultPayload, ExternalReferenceUrl}
 import amf.plugins.document.apicontract.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
@@ -12,12 +14,11 @@ import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations.ErrorResp
 import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.apicontract.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
-import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.apicontract.metamodel.ResponseModel.Headers
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Response}
-import amf.plugins.features.validation.CoreValidations
+import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import org.yaml.model.YMap
 
 import scala.collection.mutable

@@ -1,16 +1,13 @@
 package amf.emit
 
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.AMFSerializer
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.Syntax
-import amf.core.remote._
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Syntax.Syntax
+import amf.core.internal.remote.{Platform, Vendor}
+import amf.core.internal.render.AMFSerializer
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.domain.VocabulariesRegister
-import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.domain.apicontract.APIDomainPlugin
-import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -20,9 +17,9 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
 
   // Remod registering
   VocabulariesRegister.register(platform)
-  amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
+//  amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
+//  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
+//  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
   /** Print ast to string. */
   def renderToString(implicit executionContext: ExecutionContext): String = render()

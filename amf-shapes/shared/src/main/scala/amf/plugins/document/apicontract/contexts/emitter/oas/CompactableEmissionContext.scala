@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.contexts.emitter.oas
 
-import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.utils.IdCounter
+import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.contexts.emitter.oas.AliasDefinitions.{Id, Label}
 
 import scala.collection.mutable

@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.{pos, raw}
-import amf.core.emitter.PartEmitter
-import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.model.domain.Shape
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.BaseEmitters.{pos, raw}
+import amf.core.internal.render.emitters.PartEmitter
 import amf.plugins.domain.shapes.models.ShapeHelpers
 import org.yaml.model.YDocument.PartBuilder
 

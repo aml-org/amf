@@ -1,8 +1,8 @@
 package amf.client.environment
 
-import amf.client.remod.AMFResult
-import amf.core.model.document.{Document, Module}
-import amf.core.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.client.scala.AMFResult
+import amf.core.client.scala.model.document.{Document, Module}
+import amf.core.client.scala.validation.AMFValidationResult
 
 /**
   * An [[AMFResult]] where the parsing result is a [[Document]]
@@ -15,7 +15,7 @@ class AMFDocumentResult(val document: Document, results: Seq[AMFValidationResult
 /**
   * An [[AMFResult]] where the parsing result is a library a.k.a. [[Module]]
   * @param library The library parsed
-  * @param report The [[AMFValidationReport]] from parsing the library
+  * @param report The Seq [[AMFValidationReport]] from parsing the library
   * @see [[AMFClient.parseLibrary parseLibrary]]
   */
 class AMFLibraryResult(val library: Module, results: Seq[AMFValidationResult]) extends AMFResult(library, results)

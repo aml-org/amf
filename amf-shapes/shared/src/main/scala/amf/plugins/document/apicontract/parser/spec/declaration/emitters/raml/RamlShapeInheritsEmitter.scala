@@ -1,14 +1,16 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.annotations.DeclaredElement
-import amf.core.emitter.BaseEmitters.{pos, raw}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
-import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters.{pos, raw}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.RamlShapeEmitterContext
 import amf.plugins.domain.shapes.models.{AnyShape, ShapeHelpers, UnionShape}
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(

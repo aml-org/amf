@@ -1,12 +1,12 @@
 package amf.resolution
 
 import amf.client.environment.AMFConfiguration
-import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions}
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.Yaml
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Syntax.Yaml
+import amf.core.internal.remote._
 
 import scala.concurrent.ExecutionContext
 

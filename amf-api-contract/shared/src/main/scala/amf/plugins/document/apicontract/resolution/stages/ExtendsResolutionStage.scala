@@ -1,17 +1,19 @@
 package amf.plugins.document.apicontract.resolution.stages
 
-import amf.client.errorhandling.IgnoringErrorHandler
-import amf.client.remod.ParseConfiguration
-import amf.core.annotations.{ErrorDeclaration, SourceAST}
-import amf.core.emitter.SpecOrdering
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
-import amf.core.parser.{ParserContext, YNodeLikeOps}
-import amf.core.resolution.stages.{ReferenceResolutionStage, TransformationStep}
-import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.AliasCounter
+import amf.core.client.common.validation.{ProfileName, Raml08Profile}
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{DataNode, DomainElement, ElementTree}
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.client.scala.transform.stages.{ReferenceResolutionStage, TransformationStep}
+import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.parser.{ParseConfiguration, YNodeLikeOps}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.utils.AliasCounter
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.utils.AliasCounter
 import amf.plugins.document.apicontract.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.parser.raml.{
   Raml08WebApiContext,
@@ -29,9 +31,7 @@ import amf.plugins.domain.apicontract.models.templates.{
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation}
 import amf.plugins.domain.apicontract.resolution.ExtendsHelper
 import amf.plugins.domain.apicontract.resolution.stages.DomainElementMerging
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
-import amf.{ProfileName, Raml08Profile}
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model._
 

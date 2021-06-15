@@ -1,10 +1,10 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-
-import amf.client.model.StrField
+import amf.core.client.platform.model.StrField
 import amf.plugins.domain.apicontract.models.{Payload => InternalPayload}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 
 /**
   * Payload model class.

@@ -1,9 +1,9 @@
 package amf.plugins.domain.apicontract.models
 
-import amf.core.metamodel.Field
-import amf.core.model.StrField
-import amf.core.model.domain.NamedDomainElement
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.NamedDomainElement
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.LicenseModel
 import amf.plugins.domain.apicontract.metamodel.LicenseModel._
 import org.yaml.model.YNode

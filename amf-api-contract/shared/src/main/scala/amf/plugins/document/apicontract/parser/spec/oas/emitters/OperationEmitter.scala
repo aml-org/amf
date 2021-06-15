@@ -1,20 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.oas.emitters
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.document.BaseUnit
-import amf.core.parser.FieldEntry
-import amf.core.utils._
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils._
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.annotations.FormBodyParameter
 import amf.plugins.document.apicontract.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.apicontract.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  RamlShapeEmitterContextAdapter
-}
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.RamlShapeEmitterContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
   Raml10TypePartEmitter,
@@ -23,11 +22,10 @@ import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.{
 }
 import amf.plugins.document.apicontract.parser.spec.domain._
 import amf.plugins.document.apicontract.parser.spec.oas.Oas3RequestBodyEmitter
-import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel.{OperationModel, RequestModel}
 import amf.plugins.domain.apicontract.models.{Callback, Operation, Request, Tag}
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument.PartBuilder
 
 import scala.collection.mutable

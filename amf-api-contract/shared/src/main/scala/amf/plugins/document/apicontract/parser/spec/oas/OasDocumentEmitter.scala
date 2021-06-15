@@ -1,18 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.annotations._
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter._
-import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.document._
-import amf.core.model.domain.AmfScalar
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.Position.ZERO
-import amf.core.parser.{FieldEntry, Position}
-import amf.core.remote.{Oas, Oas20, Vendor}
-import amf.core.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.apicontract.contexts._
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.{Oas20, Vendor}
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.emitter.oas.{
   Oas3SpecEmitterContext,
   Oas3SpecEmitterFactory,
@@ -22,29 +23,22 @@ import amf.plugins.document.apicontract.model.{Extension, Overlay}
 import amf.plugins.document.apicontract.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  ShapeEmitterContext
-}
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
   AnnotationsEmitter,
   OrphanAnnotationsEmitter
 }
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
-import amf.plugins.document.apicontract.parser.spec.domain._
-import amf.plugins.document.apicontract.parser.spec.oas.emitters.{
-  InfoEmitter,
-  OasSpecEmitter,
-  OperationEmitter,
-  TagsEmitter,
-  UserDocumentationsEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
+  AgnosticShapeEmitterContextAdapter,
+  ShapeEmitterContext
 }
+import amf.plugins.document.apicontract.parser.spec.domain._
+import amf.plugins.document.apicontract.parser.spec.oas.emitters._
 import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
 import amf.plugins.domain.apicontract.metamodel._
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 

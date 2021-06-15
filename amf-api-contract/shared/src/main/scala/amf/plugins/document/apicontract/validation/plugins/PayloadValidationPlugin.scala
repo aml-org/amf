@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.validation.plugins
-import amf.ProfileName
-import amf.client.remod.amfcore.plugins.PluginPriority
-import amf.client.remod.amfcore.plugins.validate.{ValidationConfiguration, ValidationInfo, ValidationOptions}
-import amf.core.model.document.BaseUnit
-import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations, ShaclReportAdaptation}
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.internal.plugins.validation.{ValidationInfo, ValidationOptions}
+import amf.core.internal.validation.{EffectiveValidations, ShaclReportAdaptation}
 import amf.plugins.document.apicontract.validation.UnitPayloadsValidation
 import amf.plugins.document.apicontract.validation.collector.{
   EnumInShapesCollector,

@@ -1,8 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas
 
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.core.client.common.position.Position
+import amf.core.internal.parser.domain.{FieldEntry, Fields}
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.IriTemplateEmitter
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import org.yaml.model.YDocument.EntryBuilder

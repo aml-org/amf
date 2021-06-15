@@ -1,7 +1,8 @@
 package amf.tools
 
-import amf.core.metamodel.Obj
+import amf.core.internal.metamodel.Obj
 import org.reflections.Reflections
+
 import scala.collection.JavaConverters._
 
 object ObjLoader {

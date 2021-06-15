@@ -1,32 +1,16 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, ScalarNode}
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
-import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
-import amf.plugins.domain.apicontract.metamodel.security.{
-  ApiKeySettingsModel,
-  OAuth1SettingsModel,
-  OAuth2FlowModel,
-  ScopeModel,
-  SettingsModel
-}
-import amf.plugins.domain.apicontract.models.security.{
-  ApiKeySettings,
-  OAuth1Settings,
-  OAuth2Flow,
-  OAuth2Settings,
-  Scope,
-  SecurityScheme,
-  Settings,
-  WithSettings
-}
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isOasAnnotation
-import amf.core.parser.YMapOps
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.apicontract.parser.spec.common.WellKnownAnnotation.isOasAnnotation
+import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
+import amf.plugins.domain.apicontract.metamodel.security._
+import amf.plugins.domain.apicontract.models.security._
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext)
     extends SpecParserOps {

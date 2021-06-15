@@ -1,9 +1,9 @@
 package amf.plugins.domain.shapes.metamodel
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
-import amf.core.vocabulary.Namespace._
-import amf.core.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
+import amf.core.client.scala.vocabulary.Namespace._
+import amf.core.client.scala.vocabulary.ValueType
 import amf.plugins.domain.shapes.models.NilShape
 
 object NilShapeModel extends AnyShapeModel {

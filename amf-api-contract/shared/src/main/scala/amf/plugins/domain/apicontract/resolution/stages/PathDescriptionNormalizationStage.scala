@@ -1,11 +1,12 @@
 package amf.plugins.domain.apicontract.resolution.stages
 
 import amf._
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.AmfScalar
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.common.validation.{Async20Profile, Oas30Profile, ProfileName}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.internal.metamodel.Field
 import amf.plugins.domain.apicontract.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.apicontract.models.api.Api
 import amf.plugins.domain.apicontract.models.{EndPoint, Operation}

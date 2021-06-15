@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.model
 
-import amf.core.model.document.ExtensionLike
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.document.ExtensionLike
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.apicontract.metamodel.ExtensionModel
 
 class Extension(override val fields: Fields, override val annotations: Annotations)

@@ -1,7 +1,7 @@
 package amf.resolution
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.model.document.BaseUnit
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.model.document.BaseUnit
 import amf.emit.AMFRenderer
 
 import scala.concurrent.Future

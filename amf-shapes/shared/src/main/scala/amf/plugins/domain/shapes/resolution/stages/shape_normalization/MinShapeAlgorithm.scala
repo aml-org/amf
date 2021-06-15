@@ -1,16 +1,16 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.{Inferred, InheritanceProvenance, LexicalInformation}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.DataType
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
-import amf.core.parser.{Annotations, Value}
-import amf.core.utils.IdCounter
-import amf.core.validation.AMFValidationResult
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
+import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.internal.annotations.{Inferred, InheritanceProvenance, LexicalInformation}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.domain.{Annotations, Value}
+import amf.core.internal.utils.IdCounter
 import amf.plugins.document.apicontract.annotations.ParsedJSONSchema
 import amf.plugins.document.apicontract.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._

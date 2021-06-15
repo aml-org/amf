@@ -1,19 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.annotations.ExplicitField
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{Annotations, ScalarNode, YMapOps}
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
+import amf.core.internal.annotations.ExplicitField
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
 import amf.plugins.document.apicontract.parser.spec.declaration._
+import amf.plugins.domain.apicontract.metamodel.PayloadModel
+import amf.plugins.domain.apicontract.models.Payload
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
-import amf.plugins.domain.apicontract.metamodel.PayloadModel
-import amf.plugins.domain.apicontract.models.Payload
 import amf.validations.ParserSideValidations.InvalidPayload
 import org.yaml.model._
 

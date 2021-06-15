@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.contexts
 
-import amf.core.model.domain.Shape
-import amf.core.remote.Vendor
-import amf.core.validation.SeverityLevels
+import amf.core.client.common.validation.SeverityLevels
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.remote.Vendor
 import amf.plugins.document.apicontract.contexts.parser.{OasLikeSpecVersionFactory, OasLikeWebApiContext}
 import amf.plugins.document.apicontract.parser.spec.{CustomSyntax, SpecNode, SpecSyntax}
 import org.yaml.model.{YMap, YNode, YPart}

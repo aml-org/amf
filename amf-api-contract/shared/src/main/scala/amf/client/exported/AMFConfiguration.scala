@@ -1,8 +1,5 @@
 package amf.client.exported
 import amf.client.convert.ApiClientConverters._
-import amf.client.convert.VocabulariesClientConverter.DialectConverter
-import amf.client.convert.TransformationPipelineConverter._
-import amf.client.convert.VocabulariesClientConverter
 import amf.client.environment.{
   AMFConfiguration => InternalAMFConfiguration,
   AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
@@ -10,15 +7,16 @@ import amf.client.environment.{
   RAMLConfiguration => InternalRAMLConfiguration,
   WebAPIConfiguration => InternalWebAPIConfiguration
 }
-import amf.client.exported.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
-import amf.client.exported.transform.TransformationPipeline
 import amf.client.model.document.Dialect
-import amf.client.reference.UnitCache
-import amf.client.resolve.ClientErrorHandlerConverter._
-import amf.client.resource.ResourceLoader
-import amf.client.validate.ValidationProfile
-
-import scala.concurrent.ExecutionContext
+import amf.core.client.common.validation.ValidationProfile
+import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
+import amf.core.client.platform.errorhandling.ErrorHandlerProvider
+import amf.core.client.platform.reference.UnitCache
+import amf.core.client.platform.resource.ResourceLoader
+import amf.core.client.platform.transform.TransformationPipeline
+import amf.core.internal.convert.ClientErrorHandlerConverter._
+import amf.core.internal.convert.TransformationPipelineConverter._
+import amf.client.convert.VocabulariesClientConverter.DialectConverter
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll

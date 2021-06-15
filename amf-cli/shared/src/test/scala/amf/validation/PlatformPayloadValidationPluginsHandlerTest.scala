@@ -1,15 +1,14 @@
 package amf.validation
 
 import amf.client.environment.RAMLConfiguration
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.client.validation.PayloadValidationUtils
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.{BaseUnit, Module}
-import amf.core.remote.Raml10YamlHint
-import amf.core.resolution.pipelines.TransformationPipelineRunner
-import amf.core.unsafe.PlatformSecrets
-import amf.facades.{AMFCompiler, Validation}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Module}
+import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.ValidationConfiguration
+import amf.facades.Validation
 import amf.plugins.document.apicontract.resolution.pipelines.AmfTransformationPipeline
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.remod.ShapePayloadValidatorFactory

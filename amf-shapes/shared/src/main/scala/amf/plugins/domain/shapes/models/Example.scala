@@ -1,17 +1,22 @@
 package amf.plugins.domain.shapes.models
 
-import amf.client.execution.BaseExecutionEnvironment
-import amf.client.remod.AMFGraphConfiguration
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.domain._
-import amf.core.model.{BoolField, StrField}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.model.domain.{
+  DataNode,
+  DomainElement,
+  ExternalSourceElement,
+  Linkable,
+  NamedDomainElement
+}
+import amf.core.client.scala.model.{BoolField, StrField}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.ExternalSourceElementModel
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.apicontract.parser.spec.common.PayloadSerializer
+import amf.plugins.domain.apicontract.models.Key
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
-import amf.plugins.domain.apicontract.models.Key
 import org.yaml.model.YPart
 
 /**

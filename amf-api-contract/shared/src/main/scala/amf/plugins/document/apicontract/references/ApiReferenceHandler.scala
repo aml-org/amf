@@ -1,9 +1,20 @@
 package amf.plugins.document.apicontract.references
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.parser._
-import amf.core.remote._
-import amf.core.utils._
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.parse.document.{
+  CompilerReferenceCollector,
+  ExtensionReference,
+  InferredLinkReference,
+  LibraryReference,
+  LinkReference,
+  ParsedDocument,
+  ParserContext,
+  ReferenceHandler,
+  SyamlParsedDocument
+}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.remote.{AsyncApi20, Oas20, Oas30, Raml08, Raml10}
+import amf.core.internal.utils.MediaTypeMatcher
 import amf.plugins.document.apicontract.parser.RamlHeader
 import amf.plugins.document.apicontract.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.plugins.document.apicontract.parser.spec.declaration.LibraryLocationParser

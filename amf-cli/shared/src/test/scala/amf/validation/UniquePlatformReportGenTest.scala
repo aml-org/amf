@@ -1,16 +1,14 @@
 package amf.validation
 
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
-import amf._
 import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.AMFResult
-import amf.core.errorhandling.AmfReportBuilder
-import amf.core.remote.Syntax.Yaml
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipelineRunner
-import amf.core.validation.AMFValidationReport
-import amf.facades.Validation
+import amf.core.client.common.validation._
+import amf.core.client.scala.AMFResult
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.remote.Syntax.Yaml
+import amf.core.internal.remote._
 import amf.io.FileAssertionTest
 import amf.plugins.document.apicontract.resolution.pipelines.ValidationTransformationPipeline
 
@@ -59,7 +57,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     val finalHint     = overridedHint.getOrElse(hint)
     for {
       withProfile <- if (profileFile.isDefined)
-        initialConfig.withCustomValidationsEnabled.flatMap(_.withCustomProfile(directory + profileFile.get))
+        initialConfig.withCustomValidationsEnabled().flatMap(_.withCustomProfile(directory + profileFile.get))
       else Future.successful(initialConfig)
       parseResult <- parse(directory + api, withProfile, finalHint)
       report      <- withProfile.createClient().validate(parseResult.bu, profile)
@@ -104,7 +102,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
       report <- {
         TransformationPipelineRunner(errorHandler).run(model, new ValidationTransformationPipeline(profile))
         val results = errorHandler.getResults
-        val report  = new AmfReportBuilder(model, profile).buildReport(results)
+        val report  = AMFValidationReport(model.id, profile, results)
         handleReport(report, golden)
       }
     } yield {

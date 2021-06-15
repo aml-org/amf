@@ -1,8 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.async.parser
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.SearchScope.Named
-import amf.core.parser._
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.domain.SearchScope.Named
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
@@ -11,11 +13,10 @@ import amf.plugins.document.apicontract.parser.spec.async.AsyncHelper
 import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
 import amf.plugins.document.apicontract.parser.spec.declaration.OasLikeTagsParser
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.apicontract.parser.spec.domain.binding.AsyncOperationBindingsParser
 import amf.plugins.document.apicontract.parser.spec.domain.OasLikeOperationParser
+import amf.plugins.document.apicontract.parser.spec.domain.binding.AsyncOperationBindingsParser
 import amf.plugins.domain.apicontract.metamodel.{AbstractModel, OperationModel}
-import amf.plugins.domain.apicontract.models.{Message, Operation}
-import amf.plugins.features.validation.CoreValidations
+import amf.plugins.domain.apicontract.models.Operation
 import amf.validations.ParserSideValidations
 import org.yaml.model._
 

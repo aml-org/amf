@@ -1,8 +1,8 @@
 package amf.emit
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.Syntax.Yaml
-import amf.core.remote.{Amf, AsyncApi20, Async20YamlHint}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.Syntax.Yaml
+import amf.core.internal.remote.{Amf, Async20YamlHint, AsyncApi20}
 import amf.io.FunSuiteCycleTests
 
 class Async20CycleTest extends FunSuiteCycleTests {

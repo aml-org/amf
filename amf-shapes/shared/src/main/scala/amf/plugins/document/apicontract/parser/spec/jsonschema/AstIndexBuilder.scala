@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
-import amf.core.utils.AliasCounter
+import amf.core.internal.utils.AliasCounter
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration._

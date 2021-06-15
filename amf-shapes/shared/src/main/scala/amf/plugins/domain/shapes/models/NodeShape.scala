@@ -1,10 +1,10 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain._
-import amf.core.model.{BoolField, IntField, StrField}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.client.scala.model.{BoolField, IntField, StrField}
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel}
 import amf.plugins.domain.apicontract.models.{DiscriminatorValueMapping, IriTemplateMapping}

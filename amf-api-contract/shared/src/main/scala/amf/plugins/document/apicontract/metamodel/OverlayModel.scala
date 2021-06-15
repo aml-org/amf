@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.metamodel
 
-import amf.core.metamodel.document.{DocumentModel, ExtensionLikeModel}
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
+import amf.core.client.scala.vocabulary.Namespace.ApiContract
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.document.{DocumentModel, ExtensionLikeModel}
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.plugins.document.apicontract.model.Overlay
-import amf.core.vocabulary.Namespace.ApiContract
-import amf.core.vocabulary.ValueType
 
 /**
   * An overlay adds or overrides nodes of a RAML API definition while preserving its behavioral, functional aspects.

@@ -1,21 +1,19 @@
 package amf.validation
 
-import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.plugins.{StrictValidationMode, ValidationMode}
-import amf.client.remod.{AMFGraphClient, AMFGraphConfiguration}
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.Shape
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.services.RuntimeResolver
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.{AMFValidationReport, SeverityLevels}
-import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
+import amf.client.environment.WebAPIConfiguration
+import amf.core.client.common.validation.{SeverityLevels, StrictValidationMode, ValidationMode}
+import amf.core.client.scala.AMFGraphClient
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.remote.{Hint, Raml08, Raml08YamlHint, Raml10, Raml10YamlHint}
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.ValidationConfiguration
+import amf.facades.Validation
 import amf.plugins.domain.apicontract.models.api.WebApi
+import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}

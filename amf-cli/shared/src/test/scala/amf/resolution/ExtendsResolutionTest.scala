@@ -1,12 +1,10 @@
 package amf.resolution
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.emit.AMFRenderer
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.remote._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 trait ExtendsResolutionTest extends ResolutionTest {
 

@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, pos, raw, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos, raw, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.annotations.ParsedJSONSchema
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{ExamplesEmitter, ShapeEmitterContext}
 import amf.plugins.domain.shapes.models.AnyShape

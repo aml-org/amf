@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.core.remote.{AmfJsonHint, Hint}
+import amf.core.internal.remote.{AmfJsonHint, Hint}
 import amf.validation.{MultiPlatformReportGenTest, UniquePlatformReportGenTest}
 
 class UniqueAmfGraphSyamlConversionExceptionTest extends UniquePlatformReportGenTest {

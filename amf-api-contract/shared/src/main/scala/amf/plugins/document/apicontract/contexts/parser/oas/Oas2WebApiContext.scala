@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.contexts.parser.oas
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.parser.{ParsedReference, ParserContext}
-import amf.core.remote.{Oas20, Vendor}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.remote.{Oas20, Vendor}
 import amf.plugins.document.apicontract.parser.spec.oas.Oas2Syntax
 import amf.plugins.document.apicontract.parser.spec.{OasWebApiDeclarations, SpecSyntax}
 

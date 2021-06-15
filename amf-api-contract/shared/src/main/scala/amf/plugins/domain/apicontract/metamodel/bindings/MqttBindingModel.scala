@@ -1,11 +1,11 @@
 package amf.plugins.domain.apicontract.metamodel.bindings
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Bool, Int, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.Namespace.ApiBinding
-import amf.core.vocabulary.ValueType
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.vocabulary.Namespace.ApiBinding
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Bool, Str, Int}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.plugins.domain.apicontract.models.bindings.mqtt.{
   MqttMessageBinding,
   MqttOperationBinding,

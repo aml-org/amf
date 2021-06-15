@@ -1,7 +1,8 @@
 package amf.client.model.domain
 
 import amf.client.convert.shapeconverters.ShapeClientConverters._
-import amf.client.model.BoolField
+import amf.core.client.platform.model.domain.Shape
+import amf.core.client.scala.model.BoolField
 import amf.plugins.domain.shapes.models.{TupleShape => InternalTupleShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

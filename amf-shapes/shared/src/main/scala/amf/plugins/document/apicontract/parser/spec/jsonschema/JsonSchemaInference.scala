@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
-import amf.core.errorhandling.AMFErrorHandler
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.validations.ShapeParserSideValidations.InvalidJsonSchemaVersion
 import org.yaml.model.{YMap, YNode, YScalar}

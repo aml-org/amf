@@ -1,20 +1,21 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters
 
-import amf.core.annotations.SynthesizedField
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.parser.{FieldEntry, Position, Value}
-import org.yaml.model.{YDocument, YNode}
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.model.domain.Shape
-import amf.core.parser.Position.ZERO
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.parser.domain.{FieldEntry, Value}
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{AgnosticShapeEmitterContextAdapter, async}
 import amf.plugins.domain.apicontract.metamodel.ParameterModel
 import amf.plugins.domain.apicontract.models.Parameter
 import org.yaml.model.YDocument.PartBuilder
+import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
 
@@ -77,9 +78,7 @@ case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: Sp
   private def emitLocation(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit =
     if (!isInferred(f.value)) result += ValueEmitter("location", f)
 
-  private def isInferred(value: Value) = {
-    value.annotations.contains(classOf[SynthesizedField])
-  }
+  private def isInferred(value: Value) = value.annotations.contains(classOf[SynthesizedField])
 
   override def position(): Position = pos(parameter.annotations)
 }

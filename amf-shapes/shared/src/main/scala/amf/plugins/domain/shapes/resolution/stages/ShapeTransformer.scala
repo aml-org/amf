@@ -1,9 +1,9 @@
 package amf.plugins.domain.shapes.resolution.stages
 
-import amf.ProfileName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.Shape
-import amf.core.resolution.stages.elements.resolution.ElementStageTransformer
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.transform.stages.elements.resolution.ElementStageTransformer
 import amf.plugins.domain.shapes.resolution.stages.recursion.RecursionErrorRegister
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization.{
   NormalizationContext,

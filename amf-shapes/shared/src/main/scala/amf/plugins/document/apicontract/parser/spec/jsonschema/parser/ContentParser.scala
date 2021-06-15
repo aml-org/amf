@@ -1,7 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema.parser
 
-import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, YMapOps}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.common.QuickFieldParserOps
 import amf.plugins.document.apicontract.parser.spec.declaration.{

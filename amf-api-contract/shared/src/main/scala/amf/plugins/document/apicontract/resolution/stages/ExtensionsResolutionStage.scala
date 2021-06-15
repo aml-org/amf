@@ -1,18 +1,20 @@
 package amf.plugins.document.apicontract.resolution.stages
 
-import amf.client.remod.ParseConfiguration
-import amf.core.annotations.Aliases
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Type.Scalar
-import amf.core.metamodel.document.BaseUnitModel
-import amf.core.metamodel.domain.common._
-import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
-import amf.core.metamodel.{Field, Type}
-import amf.core.model.document._
-import amf.core.model.domain._
-import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
-import amf.core.resolution.stages.{ReferenceResolutionStage, TransformationStep}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.common.validation.{ProfileName, Raml08Profile}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document, EncodesModel, ExtensionLike, Fragment, Module}
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
+import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext}
+import amf.core.client.scala.transform.stages.{ReferenceResolutionStage, TransformationStep}
+import amf.core.internal.annotations.Aliases
+import amf.core.internal.metamodel.Type.Scalar
+import amf.core.internal.metamodel.document.BaseUnitModel
+import amf.core.internal.metamodel.{Field, Type}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
+import amf.core.internal.metamodel.domain.common.{DescriptionField, DisplayNameField, NameFieldSchema, NameFieldShacl}
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.parser.raml.{
   Raml08WebApiContext,
   Raml10WebApiContext,
@@ -20,14 +22,12 @@ import amf.plugins.document.apicontract.contexts.parser.raml.{
 }
 import amf.plugins.document.apicontract.model.{Extension, Overlay}
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations
-import amf.plugins.domain.shapes.metamodel.common._
 import amf.plugins.domain.apicontract.metamodel._
 import amf.plugins.domain.apicontract.metamodel.api.BaseApiModel
 import amf.plugins.domain.apicontract.models.api.Api
 import amf.plugins.domain.apicontract.resolution.ExtendsHelper
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import amf.plugins.domain.shapes.metamodel.common._
 import amf.validations.ResolutionSideValidations.MissingExtensionInReferences
-import amf.{ProfileName, Raml08Profile}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

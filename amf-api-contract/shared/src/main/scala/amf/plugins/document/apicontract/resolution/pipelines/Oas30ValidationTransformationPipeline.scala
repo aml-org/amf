@@ -1,8 +1,7 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
-import amf.Oas30Profile
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.common.validation.Oas30Profile
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.domain.shapes.resolution.stages.RequestParamsLinkStage
 
 class Oas30ValidationTransformationPipeline private (override val name: String)

@@ -1,8 +1,17 @@
 package amf.resolution
 
-import amf.core.remote.Syntax.Json
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.remote.Syntax.Json
+import amf.core.internal.remote.{
+  Oas20,
+  Oas20JsonHint,
+  Oas20YamlHint,
+  Oas30,
+  Oas30JsonHint,
+  Oas30YamlHint,
+  Raml10,
+  Raml10YamlHint
+}
 
 import scala.concurrent.ExecutionContext
 

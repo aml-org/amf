@@ -1,7 +1,7 @@
 package amf.resolution
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote._
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote._
 
 class ParameterResolutionTest extends ResolutionTest {
 

@@ -1,16 +1,16 @@
 package amf.plugins.document.apicontract.contexts.parser.raml
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.model.domain.Shape
-import amf.core.parser.{ParsedReference, ParserContext}
-import amf.core.remote.{Payload, Vendor}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.remote.Vendor
+import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.plugins.document.apicontract.contexts.WebApiContext
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType.RamlWebApiContextType
+import amf.plugins.document.apicontract.parser.spec.{RamlWebApiDeclarations, SpecSyntax}
 import amf.plugins.document.apicontract.parser.spec.declaration.TypeInfo
 import amf.plugins.document.apicontract.parser.spec.domain.ParsingHelpers
-import amf.plugins.document.apicontract.parser.spec.{RamlWebApiDeclarations, SpecSyntax}
 import amf.plugins.document.apicontract.parser.{RamlShapeTypeBeautifier, RamlWebApiContextType}
-import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model._
 
@@ -182,5 +182,5 @@ class PayloadContext(loc: String,
   override val syntax: SpecSyntax = new SpecSyntax {
     override val nodes: Map[String, Set[String]] = Map()
   }
-  override val vendor: Vendor = Payload
+  override val vendor: Vendor = Vendor.PAYLOAD
 }

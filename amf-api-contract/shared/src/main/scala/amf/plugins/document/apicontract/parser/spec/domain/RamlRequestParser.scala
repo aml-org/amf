@@ -1,16 +1,17 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.model.domain.{AmfArray, DomainElement}
-import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, Lazy}
+import amf.core.client.scala.model.domain.{AmfArray, DomainElement}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.{AmfStrings, Lazy}
 import amf.plugins.document.apicontract.annotations.EmptyPayload
 import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.common.SpecParserOps
 import amf.plugins.document.apicontract.parser.spec.declaration.{AnyDefaultType, DefaultType, Raml10TypeParser}
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.apicontract.metamodel.{PayloadModel, RequestModel}
 import amf.plugins.domain.apicontract.models.{Parameter, Payload, Request}
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.validations.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
 import amf.validations.ShapeParserSideValidations.ExclusivePropertiesSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}

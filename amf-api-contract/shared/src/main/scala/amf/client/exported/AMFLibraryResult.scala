@@ -1,7 +1,8 @@
 package amf.client.exported
 import amf.client.environment.{AMFLibraryResult => InternalAMFLibraryResult}
-import amf.client.convert.ApiClientConverters._
-import amf.client.model.document.Module
+import amf.core.client.platform.AMFResult
+import amf.core.client.platform.model.document.Module
+import amf.core.internal.convert.CoreClientConverters._
 
 import scala.scalajs.js.annotation.JSExportAll
 

@@ -1,37 +1,28 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters
 
-import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.emitter.BaseEmitters.MultipleValuesArrayEmitter
-import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
-import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
-import amf.core.parser.FieldEntry
-import amf.core.remote.Vendor
+import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.BaseEmitters.MultipleValuesArrayEmitter
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.DeclarationEmissionDecorator
 import amf.plugins.document.apicontract.contexts.emitter.oas.{CompactableEmissionContext, OasCompactEmitterFactory}
+import amf.plugins.document.apicontract.parser.spec.declaration._
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.{
   AnnotationsEmitter,
   FacetsInstanceEmitter,
   OasAnnotationEmitter,
   OasFacetsInstanceEmitter
 }
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml.RamlTypePartEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.schema.json.CompactOasRecursiveShapeEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.{
-  CompactOasTypesEmitters,
-  CustomFacetsEmitter,
-  JSONSchemaDraft201909SchemaVersion,
-  JSONSchemaVersion,
-  OasCustomFacetsEmitter,
-  OasRefEmitter,
-  OasShapeReferenceEmitter,
-  SchemaVersion
-}
-import amf.plugins.domain.shapes.models.{AnyShape, Example}
+import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.{YDocument, YNode}
 
 import scala.util.matching.Regex

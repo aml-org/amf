@@ -1,25 +1,9 @@
 package amf.plugins.document.apicontract.parser
 
-import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.Shape
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.{Annotations, FragmentRef, FutureDeclarations, ParsedReference, ParserContext, SearchScope}
-import amf.core.remote.Vendor
-import amf.core.validation.core.ValidationSpecification
+import amf.core.client.scala.model.document.PayloadFragment
 import amf.plugins.document.apicontract.contexts.WebApiContext
-import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.document.apicontract.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext}
-import amf.plugins.document.apicontract.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.apicontract.parser.RamlWebApiContextType.RamlWebApiContextType
-import amf.plugins.document.apicontract.parser.spec.{SpecSyntax, toOas}
 import amf.plugins.document.apicontract.parser.spec.common.DataNodeParser
-import amf.plugins.document.apicontract.parser.spec.declaration.TypeInfo
-import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.apicontract.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
-import org.mulesoft.lexer.SourceLocation
-import org.yaml.model.{SyamlException, YDocument, YError, YMap, YNode, YPart}
+import org.yaml.model.{YDocument, YNode}
 
 class PayloadParser(document: YDocument, location: String, mediaType: String)(implicit ctx: WebApiContext) {
 

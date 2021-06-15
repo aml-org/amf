@@ -1,14 +1,21 @@
 package amf.plugins.document.apicontract.contexts.emitter.raml
-import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.emitter.BaseEmitters.pos
-import amf.core.emitter._
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
-import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape, ShapeExtension}
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
-import amf.core.parser.{FieldEntry, Position}
-import amf.core.remote.{Raml08, Raml10, Vendor}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
+import amf.core.client.scala.model.domain.extensions.{
+  CustomDomainProperty,
+  DomainExtension,
+  PropertyShape,
+  ShapeExtension
+}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.{Raml08, Raml10, Vendor}
+import amf.core.internal.render.BaseEmitters.pos
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.plugins.document.apicontract.contexts.emitter.oas.{
   Oas2SpecEmitterContext,
   Oas2SpecEmitterFactory,

@@ -1,16 +1,16 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.ExplicitField
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.domain._
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.Annotations
-import amf.core.traversal.ModelTraversalRegistry
+import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.client.scala.traversal.ModelTraversalRegistry
+import amf.core.internal.annotations.ExplicitField
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.resolution.stages.recursion.{LinkableRegisterCriteria, RecursionErrorRegister}
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
 private[stages] object ShapeExpander {
   def apply(s: Shape, context: NormalizationContext, recursionRegister: RecursionErrorRegister): Shape =

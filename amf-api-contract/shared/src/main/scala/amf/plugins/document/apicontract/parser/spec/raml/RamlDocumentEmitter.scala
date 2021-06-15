@@ -1,18 +1,21 @@
 package amf.plugins.document.apicontract.parser.spec.raml
 
-import amf.core.annotations._
-import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
-import amf.core.emitter._
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.core.model.document._
-import amf.core.model.domain._
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.Position.ZERO
-import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
-import amf.core.remote._
-import amf.core.utils.TSort.tsort
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, Module}
+import amf.core.client.scala.model.domain.AmfElement
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.parse.document.EmptyFutureDeclarations
+import amf.core.internal.annotations.{Aliases, ExplicitField, SourceAST, SourceVendor}
+import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.remote.{Raml10, Vendor}
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.TSort.tsort
+import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec._
@@ -29,11 +32,11 @@ import amf.plugins.document.apicontract.parser.spec.raml.emitters.{
   NamedPropertyTypeEmitter,
   RamlSecuritySchemesEmitters
 }
-import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.apicontract.metamodel._
 import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.api.WebApi
+import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.render.YamlRender

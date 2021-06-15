@@ -1,23 +1,25 @@
 package amf.emit
 
-import amf.client.environment.{AsyncAPIConfiguration, OASConfiguration, WebAPIConfiguration}
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.remote.{Oas20JsonHint, Vendor}
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.services.RuntimeResolver
-import amf.facades.{AMFCompiler, Validation}
+import amf.client.environment.{WebAPIConfiguration, AsyncAPIConfiguration}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.facades.Validation
 import amf.io.FileAssertionTest
-import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.apicontract.models.api.WebApi
+import amf.plugins.domain.shapes.models.AnyShape
+import amf.remod.JsonSchemaShapeSerializer.toJsonSchema
 import amf.remod.RamlShapeSerializer.toRamlDatatype
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
+class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

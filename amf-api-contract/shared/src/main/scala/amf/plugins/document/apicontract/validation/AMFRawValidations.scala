@@ -1,10 +1,8 @@
 package amf.plugins.document.apicontract.validation
 
-import amf._
-import amf.core.validation.{SeverityLevels => Severity}
-import amf.core.vocabulary.Namespace.XsdTypes
-import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.apicontract.validation.AMFRawValidations.AMFValidation
+import amf.core.client.common.validation.{AmfProfile, Async20Profile, Oas20Profile, Oas30Profile, ProfileName, Raml08Profile, Raml10Profile, SeverityLevels}
+import amf.core.client.scala.vocabulary.Namespace.XsdTypes
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.apicontract.metamodel._
 
 object AMFRawValidations {
@@ -41,7 +39,7 @@ object AMFRawValidations {
                     value: String = "0",
                     ramlErrorMessage: String = "",
                     openApiErrorMessage: String = "",
-                    severity: String = Severity.VIOLATION): AMFValidation = {
+                    severity: String = SeverityLevels.VIOLATION): AMFValidation = {
 
       def iri(s: String) = Namespace.defaultAliases.uri(s).iri()
       val sameMessage    = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
@@ -69,7 +67,7 @@ object AMFRawValidations {
               value: String = "0",
               ramlErrorMessage: String = "",
               openApiErrorMessage: String = "",
-              severity: String = Severity.VIOLATION): AMFValidation = {
+              severity: String = SeverityLevels.VIOLATION): AMFValidation = {
 
       val sameMessage = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
 
@@ -219,7 +217,7 @@ object AMFRawValidations {
         constraint = shape("mandatoryHeaderNamePattern"),
         ramlErrorMessage = "Header name must comply RFC-7230",
         openApiErrorMessage = "Header name must comply RFC-7230",
-        severity = Severity.WARNING
+        severity = SeverityLevels.WARNING
       ),
       AMFValidation(
         owlClass = doc("DomainElement"),
@@ -682,28 +680,28 @@ object AMFRawValidations {
         owlClass = sh("NodeShape"),
         owlProperty = shape("unevaluatedPropertiesSchema"),
         constraint = maxCount,
-        severity = Severity.WARNING,
+        severity = SeverityLevels.WARNING,
         message = "Unevaluated properties facet won't be taken into account in validation"
       ),
       AMFValidation(
         owlClass = shape("ArrayShape"),
         owlProperty = shape("unevaluatedItemsSchema"),
         constraint = maxCount,
-        severity = Severity.WARNING,
+        severity = SeverityLevels.WARNING,
         message = "Unevaluated items facet won't be taken into account in validation"
       ),
       AMFValidation(
         owlClass = shape("ArrayShape"),
         owlProperty = sh("qualifiedMinCount"),
         constraint = maxCount,
-        severity = Severity.WARNING,
+        severity = SeverityLevels.WARNING,
         message = "minContains facet won't be taken into account in validation"
       ),
       AMFValidation(
         owlClass = shape("ArrayShape"),
         owlProperty = sh("qualifiedMaxCount"),
         constraint = maxCount,
-        severity = Severity.WARNING,
+        severity = SeverityLevels.WARNING,
         message = "maxContains facet won't be taken into account in validation"
       )
     )
@@ -787,7 +785,7 @@ object AMFRawValidations {
         message = "Documentation title MUST be a non-empty string",
         constraint = sh("minLength"),
         value = "1",
-        severity = Severity.WARNING // TODO: should be violation
+        severity = SeverityLevels.WARNING // TODO: should be violation
       ),
       AMFValidation(
         owlClass = core("CreativeWork"),
@@ -795,7 +793,7 @@ object AMFRawValidations {
         message = "Documentation content MUST be a non-empty string",
         constraint = sh("minLength"),
         value = "1",
-        severity = Severity.WARNING // TODO: should be violation
+        severity = SeverityLevels.WARNING // TODO: should be violation
       ),
       AMFValidation(
         owlClass = doc("DomainProperty"),
@@ -819,7 +817,7 @@ object AMFRawValidations {
         owlProperty = security("requestTokenUri"),
         constraint = minCount,
         value = "1",
-        severity = Severity.WARNING
+        severity = SeverityLevels.WARNING
       ),
       AMFValidation(
         message = "authorizationUri is required when security type is OAuth 1.0",
@@ -827,7 +825,7 @@ object AMFRawValidations {
         owlProperty = security("authorizationUri"),
         constraint = minCount,
         value = "1",
-        severity = Severity.WARNING
+        severity = SeverityLevels.WARNING
       ),
       AMFValidation(
         message = "tokenCredentialsUri is required when security type is OAuth 1.0",
@@ -835,7 +833,7 @@ object AMFRawValidations {
         owlProperty = security("tokenCredentialsUri"),
         constraint = minCount,
         value = "1",
-        severity = Severity.WARNING
+        severity = SeverityLevels.WARNING
       ),
       AMFValidation(
         uri = amfParser("raml-root-schemes-values"),
@@ -1127,7 +1125,7 @@ object AMFRawValidations {
         constraint = shape("mandatoryHeaderBindingNamePattern"),
         ramlErrorMessage = "Header name must comply RFC-7230",
         openApiErrorMessage = "Header name must comply RFC-7230",
-        severity = Severity.WARNING
+        severity = SeverityLevels.WARNING
       ),
       AMFValidation(
         message = "Documentation 'url' field is mandatory",

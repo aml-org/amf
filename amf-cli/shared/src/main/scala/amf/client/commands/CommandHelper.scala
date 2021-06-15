@@ -2,16 +2,14 @@ package amf.client.commands
 
 import amf.client.convert.ApiRegister
 import amf.client.environment.{AMFConfiguration, AMLConfiguration}
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
-import amf.core.AMFCompiler
-import amf.core.client.ParserConfig
-import amf.core.model.document.BaseUnit
-import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.plugins.document.apicontract._
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
+import amf.core.internal.registries.domain.AMFPluginsRegistry
+import amf.core.internal.remote.{Cache, Context, Platform, Vendor}
 import amf.plugins.document.apicontract.validation.PayloadValidatorPlugin
 import amf.plugins.domain.VocabulariesRegister
 
@@ -24,8 +22,9 @@ trait CommandHelper {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     ApiRegister.register(platform)
     VocabulariesRegister.register(platform) // validation dialect was not being parsed by static config.
-    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
-    amf.core.AMF.init()
+//    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
+//    amf.core.AMF.init()
+    Future.successful {}
   }
 
   def ensureUrl(inputFile: String): String =
@@ -107,8 +106,8 @@ trait CommandHelper {
       case Some(effectiveMediaType) => effectiveMediaType
       case None =>
         vendor match {
-          case Some(effectiveVendor) if AMFPluginsRegistry.documentPluginForID(effectiveVendor).isDefined =>
-            AMFPluginsRegistry.documentPluginForID(effectiveVendor).get.documentSyntaxes.head
+//          case Some(effectiveVendor) if AMFPluginsRegistry.documentPluginForID(effectiveVendor).isDefined =>
+//            AMFPluginsRegistry.documentPluginForID(effectiveVendor).get.documentSyntaxes.head
           case _ => "*/*"
         }
     }

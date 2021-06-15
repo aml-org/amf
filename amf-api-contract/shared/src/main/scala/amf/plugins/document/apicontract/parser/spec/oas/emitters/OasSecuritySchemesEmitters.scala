@@ -1,16 +1,19 @@
 package amf.plugins.document.apicontract.parser.spec.oas.emitters
 
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.parser.{Fields, Position}
-import amf.core.utils.AmfStrings
+import amf.core.client.common.position.Position
+import amf.core.internal.parser.domain.Fields
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.utils.AmfStrings
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.declaration.OasTagToReferenceEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.apicontract.parser.spec.oas.{
   OasLikeSecuritySchemeTypeMappings,
   OasSecuritySchemeType,
@@ -20,7 +23,6 @@ import amf.plugins.document.apicontract.parser.spec.raml.emitters.Raml10Describe
 import amf.plugins.document.apicontract.parser.spec.toRaml
 import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer

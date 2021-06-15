@@ -1,7 +1,7 @@
 package amf.cycle
 
-import amf.core.remote.Oas20JsonHint
-import amf.core.remote.Vendor.OAS20
+import amf.core.internal.remote.Oas20JsonHint
+import amf.core.internal.remote.Vendor.OAS20
 import amf.io.FunSuiteCycleTests
 
 class Oas20CycleTest extends FunSuiteCycleTests {

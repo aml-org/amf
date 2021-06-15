@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.core.remote.{Oas20, Raml08, Raml08YamlHint, Raml10}
+import amf.core.internal.remote.{Oas20, Raml08, Raml08YamlHint, Raml10}
 import amf.io.FunSuiteCycleTests
 
 class Cycle08ToVersion extends FunSuiteCycleTests {

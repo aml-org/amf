@@ -1,8 +1,8 @@
 package amf.plugins.domain.shapes.metamodel.common
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.Core
+import amf.core.client.scala.vocabulary.Namespace.Core
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 
 /**

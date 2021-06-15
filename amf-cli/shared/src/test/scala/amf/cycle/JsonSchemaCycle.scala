@@ -1,8 +1,10 @@
 package amf.cycle
 
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.core.remote.Vendor
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.remote.Vendor
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
 import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
@@ -16,8 +18,6 @@ import amf.plugins.document.apicontract.parser.spec.declaration.{
 }
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.render.JsonRender
-import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions => ImmutableShapeRenderOptions}
-import amf.core.errorhandling.UnhandledErrorHandler
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -194,7 +194,7 @@ object JsonSchemaTestEmitters {
 case class JsonSchemaTestEmitter(to: JSONSchemaVersion) extends SchemaEmitter {
 
   private val options =
-    ImmutableShapeRenderOptions().withSchemaVersion(SchemaVersion.toClientOptions(to))
+    ShapeRenderOptions().withSchemaVersion(SchemaVersion.toClientOptions(to))
 
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
     val shape     = fragment.encodes

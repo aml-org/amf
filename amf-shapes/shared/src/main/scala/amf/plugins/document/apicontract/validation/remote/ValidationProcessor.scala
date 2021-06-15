@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.validation.remote
 
-import amf.ProfileName
-import amf.core.model.domain.DomainElement
-import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
+import amf.core.client.common.validation.{ProfileName, SeverityLevels}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 
 trait ValidationProcessor {

@@ -1,17 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.emitter
 
-import amf.core.annotations.{ExplicitField, SynthesizedField}
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, FieldEntry, Position}
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{
-  OasLikeShapeEmitterContext,
-  ShapeEmitterContext,
-  oas
-}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.annotations.{ExplicitField, SynthesizedField}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, FieldEntry}
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{OasLikeShapeEmitterContext, oas}
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument

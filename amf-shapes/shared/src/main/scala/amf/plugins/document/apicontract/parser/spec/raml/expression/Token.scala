@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.parser.spec.raml.expression
 
-import amf.core.annotations.LexicalInformation
+import amf.core.internal.annotations.LexicalInformation
 
 private[expression] object Token {
   val START_GROUP = "START_GROUP"

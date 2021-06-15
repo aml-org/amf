@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.async.emitters
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DomainElement
-import amf.core.parser.EmptyFutureDeclarations
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.parse.document.EmptyFutureDeclarations
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.document.apicontract.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.apicontract.parser.spec.WebApiDeclarations
 

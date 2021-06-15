@@ -1,11 +1,11 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.annotations.ExplicitField
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
-import amf.core.traversal.ModelTraversalRegistry
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.{Linkable, RecursiveShape, Shape}
+import amf.core.client.scala.traversal.ModelTraversalRegistry
+import amf.core.internal.annotations.ExplicitField
+import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
-import amf.plugins.features.validation.CoreValidations.{RecursiveShapeSpecification, ResolutionValidation}
 
 trait ShapeHelpers { this: Shape =>
 

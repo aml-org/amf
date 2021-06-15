@@ -1,12 +1,9 @@
 package amf.validation
 
-import amf.client.errorhandling.IgnoringErrorHandler
-import amf.client.remod.{AMFGraphConfiguration, AMFResult}
 import amf.client.environment.AMFConfiguration
-import amf.client.remod.AMFResult
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote.{Hint, Oas20YamlHint}
+import amf.core.client.scala.AMFResult
+import amf.core.client.scala.errorhandling.IgnoringErrorHandler
+import amf.core.internal.remote.{Hint, Oas20YamlHint}
 import amf.cycle.JsonSchemaSuite
 
 import scala.concurrent.Future

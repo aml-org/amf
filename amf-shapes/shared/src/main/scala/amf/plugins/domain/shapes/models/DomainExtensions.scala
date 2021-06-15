@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.extensions.PropertyShape
+import amf.core.client.scala.model.domain.extensions.PropertyShape
 
 import scala.language.implicitConversions
 

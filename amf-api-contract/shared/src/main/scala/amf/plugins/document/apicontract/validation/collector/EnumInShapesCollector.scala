@@ -1,11 +1,11 @@
 package amf.plugins.document.apicontract.validation.collector
 
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.{AmfElement, DataNode, ScalarNode, Shape}
-import amf.core.validation.ValidationCandidate
+import amf.core.client.scala.model.document.PayloadFragment
+import amf.core.client.scala.model.domain.{AmfElement, DataNode, ScalarNode, Shape}
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.utils.MediaTypeMatcher
+import amf.core.internal.validation.ValidationCandidate
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.core.utils._
 
 object EnumInShapesCollector extends ValidationCandidateCollector {
 

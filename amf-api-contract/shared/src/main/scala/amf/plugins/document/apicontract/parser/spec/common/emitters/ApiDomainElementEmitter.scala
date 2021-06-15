@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.common.emitters
 
-import amf.core.emitter.DomainElementEmitter
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DomainElement
-import amf.core.remote.Vendor
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.emitters.DomainElementEmitter
 import amf.plugins.document.apicontract.parser.spec.common.emitters.factory.DomainElementEmitterFactory
 import amf.validations.RenderSideValidations
 import org.yaml.model.YNode

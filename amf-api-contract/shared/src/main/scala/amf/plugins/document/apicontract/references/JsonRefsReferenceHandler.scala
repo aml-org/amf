@@ -1,16 +1,8 @@
 package amf.plugins.document.apicontract.references
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.parser.{
-  CompilerReferenceCollector,
-  InferredLinkReference,
-  LinkReference,
-  ParsedDocument,
-  ParserContext,
-  ReferenceHandler,
-  SyamlParsedDocument
-}
-import amf.plugins.features.validation.CoreValidations.UnresolvedReference
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.parse.document._
+import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import org.yaml.model._
 
 class JsonRefsReferenceHandler extends ReferenceHandler {

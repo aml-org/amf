@@ -1,19 +1,17 @@
 package amf.client.environment
 
 import amf.client.convert.ApiRegister
-import amf.client.exported.config.AMFLogger
-import amf.client.remod.ErrorHandlerProvider
-import amf.client.remod.amfcore.config._
-import amf.client.remod.amfcore.plugins.AMFPlugin
-import amf.client.remod.amfcore.registry.AMFRegistry
-import amf.core.metamodel.ModelDefaultBuilder
-import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.validation.core.ValidationProfile
-import amf.internal.reference.UnitCache
-import amf.internal.resource.ResourceLoader
-import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.apicontract._
+import amf.core.client.platform.config.AMFLogger
+import amf.core.client.scala.config._
+import amf.core.client.scala.errorhandling.ErrorHandlerProvider
+import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.internal.metamodel.ModelDefaultBuilder
+import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.registries.AMFRegistry
+import amf.core.internal.registries.domain.AMFPluginsRegistry
+import amf.core.internal.resource.{AMFResolvers, ResourceLoader}
+import amf.core.internal.validation.core.ValidationProfile
 import amf.plugins.document.apicontract.annotations.serializable.WebAPISerializableAnnotations
 import amf.plugins.document.apicontract.entities.WebAPIEntities
 import amf.plugins.document.apicontract.resolution.pipelines._
@@ -30,11 +28,11 @@ import amf.plugins.document.apicontract.validation.plugins.{
   FullShaclModelValidationPlugin,
   PayloadValidationPlugin
 }
-import amf.plugins.domain.shapes.annotations.serializable.ShapeSerializableAnnotations
-import amf.plugins.domain.shapes.entities.ShapeEntities
+import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.domain.apicontract.annotations.serializable.APISerializableAnnotations
 import amf.plugins.domain.apicontract.entities.APIEntities
-import amf.plugins.features.validation.AMFValidatorPlugin
+import amf.plugins.domain.shapes.annotations.serializable.ShapeSerializableAnnotations
+import amf.plugins.domain.shapes.entities.ShapeEntities
 import amf.plugins.parse._
 import amf.plugins.render._
 
@@ -45,8 +43,8 @@ sealed trait APIConfigurationBuilder {
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
     val configuration = AMLConfiguration.predefined()
-    ApiRegister.register() // TODO ARM remove when APIMF-3000 is done
-    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
+    ApiRegister.register()                                                     // TODO ARM remove when APIMF-3000 is done
+    AMFPluginsRegistry.registerPayloadValidationPlugin(PayloadValidatorPlugin) // TODO remove with tomi's PR (APIMF-2981)
     val result = new AMFConfiguration(
       configuration.resolvers,
       configuration.errorHandlerProvider,

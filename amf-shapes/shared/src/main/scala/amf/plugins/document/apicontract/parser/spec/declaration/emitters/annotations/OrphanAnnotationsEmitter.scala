@@ -1,7 +1,8 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations
 
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.domain.extensions.DomainExtension
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.ShapeEmitterContext
 
 case class OrphanAnnotationsEmitter(orphans: Seq[DomainExtension], ordering: SpecOrdering)(

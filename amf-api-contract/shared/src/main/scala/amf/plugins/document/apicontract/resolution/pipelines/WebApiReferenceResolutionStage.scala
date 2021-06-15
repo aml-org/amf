@@ -1,8 +1,8 @@
 package amf.plugins.document.apicontract.resolution.pipelines
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.resolution.stages.ReferenceResolutionStage
+
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.transform.stages.ReferenceResolutionStage
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.apicontract.metamodel.MessageModel
 import amf.plugins.domain.apicontract.models.{Message, Parameter, Request, Response}
 

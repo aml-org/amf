@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.annotations
 
-import amf.core.model.domain.{
+import amf.core.client.scala.model.domain.{
   AmfElement,
   Annotation,
   AnnotationGraphLoader,

@@ -1,7 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.async.parser
 
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
@@ -10,7 +12,6 @@ import amf.plugins.document.apicontract.parser.spec.common.{AnnotationParser, Sp
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.domain.apicontract.metamodel.CorrelationIdModel
 import amf.plugins.domain.apicontract.models.CorrelationId
-import amf.plugins.features.validation.CoreValidations
 import org.yaml.model.{YMap, YNode}
 
 case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(implicit val ctx: AsyncWebApiContext)

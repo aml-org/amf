@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.core.remote.{Hint, Oas20YamlHint}
+import amf.core.internal.remote.{Hint, Oas20YamlHint}
 
 class OasYamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 

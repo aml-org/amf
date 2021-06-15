@@ -1,6 +1,6 @@
 package amf.compiler
 
-import amf.core.parser.ReferenceFragmentPartition
+import amf.core.client.scala.parse.document.ReferenceFragmentPartition
 import org.scalatest.{Matchers, WordSpec}
 
 class ReferenceFragmentPartitionTest extends WordSpec with Matchers{

@@ -1,8 +1,7 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.metamodel.Obj
-import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.SchemaDependenciesModel
 import amf.plugins.domain.shapes.metamodel.SchemaDependenciesModel.SchemaTarget
 import org.yaml.model.YMapEntry

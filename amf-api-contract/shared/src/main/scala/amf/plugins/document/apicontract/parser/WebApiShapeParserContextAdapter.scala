@@ -1,21 +1,13 @@
 package amf.plugins.document.apicontract.parser
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.Root
-import amf.core.model.domain.Shape
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.{
-  Annotations,
-  Declarations,
-  EmptyFutureDeclarations,
-  FragmentRef,
-  FutureDeclarations,
-  ParsedReference,
-  ParserContext,
-  SearchScope
-}
-import amf.core.remote.Vendor
-import amf.core.validation.core.ValidationSpecification
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParsedReference, ParserContext}
+import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.{Annotations, Declarations, FragmentRef, FutureDeclarations, SearchScope}
+import amf.core.internal.remote.Vendor
+import amf.core.internal.validation.core.ValidationSpecification
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.apicontract.contexts.parser.oas.{

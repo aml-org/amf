@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.model.domain.Shape
+import amf.core.client.scala.model.domain.Shape
 
 private[stages] trait ShapeNormalizer {
 

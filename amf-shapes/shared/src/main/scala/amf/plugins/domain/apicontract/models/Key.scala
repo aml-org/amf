@@ -1,6 +1,6 @@
 package amf.plugins.domain.apicontract.models
 
-import amf.core.model.StrField
+import amf.core.client.scala.model.StrField
 
 trait Key {
 

@@ -1,12 +1,13 @@
 package amf.compiler
 
 import amf.client.environment.AMFConfiguration
-import amf.client.errorhandling.IgnoringErrorHandler
-import amf.core.annotations.{LexicalInformation, SourceAST, SourceNode}
-import amf.core.model.document.Document
-import amf.core.model.domain.{AmfArray, AmfObject, Shape}
-import amf.core.parser.{Annotations, Range => PositionRange}
-import amf.core.remote.{Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
+import amf.core.client.scala.errorhandling.IgnoringErrorHandler
+import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode}
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, Shape}
+import amf.core.client.common.position.{Range => PositionRange}
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.{Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.plugins.domain.apicontract.models.{Parameter, Response}

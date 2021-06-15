@@ -1,10 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema.parser
 
-import amf.core.annotations.SynthesizedField
-import amf.core.metamodel.Field
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, YMapOps}
-import amf.core.validation.core.ValidationSpecification
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.validation.core.ValidationSpecification
 import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.plugins.document.apicontract.parser.spec.common.QuickFieldParserOps
 import amf.plugins.document.apicontract.parser.spec.declaration.{OasTypeParser, SchemaVersion}

@@ -2,8 +2,8 @@ package amf.maker
 
 import amf.client.environment.RAMLConfiguration
 import amf.compiler.CompilerTestBuilder
-import amf.core.validation.{AMFValidationReport, SeverityLevels}
-import amf.{ProfileName, Raml08Profile, Raml10Profile}
+import amf.core.client.common.validation.{ProfileName, Raml08Profile, Raml10Profile, SeverityLevels}
+import amf.core.client.scala.validation.AMFValidationReport
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}

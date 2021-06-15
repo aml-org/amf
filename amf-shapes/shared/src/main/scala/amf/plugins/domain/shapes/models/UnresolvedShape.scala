@@ -1,9 +1,10 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.ModelDoc
-import amf.core.model.domain.{AmfScalar, DomainElement, Linkable, Shape}
-import amf.core.parser.{Annotations, Fields, UnresolvedReference}
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Linkable, Shape}
+import amf.core.client.scala.parse.document.UnresolvedReference
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.ModelDoc
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.apicontract.parser.spec.common.ShapeExtensionParser
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import org.yaml.model.{YNode, YPart}

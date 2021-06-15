@@ -1,10 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.raml.emitters
 
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DataNode
-import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.DataNode
+import amf.core.internal.parser.domain.{FieldEntry, Fields}
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.contexts.SpecEmitterContext
 import amf.plugins.document.apicontract.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.apicontract.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
@@ -28,7 +31,6 @@ import amf.plugins.document.apicontract.parser.spec.domain._
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.apicontract.metamodel.security._
 import amf.plugins.domain.apicontract.models.security._
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer

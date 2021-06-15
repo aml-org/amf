@@ -1,12 +1,6 @@
 package amf.error
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.parser.Range
-import amf.core.remote.Async20YamlHint
-import amf.facades.AMFCompiler
-
-import scala.concurrent.Future
+import amf.core.client.common.position.Range
 
 class AsyncParserErrorTest extends ParserErrorTest {
 

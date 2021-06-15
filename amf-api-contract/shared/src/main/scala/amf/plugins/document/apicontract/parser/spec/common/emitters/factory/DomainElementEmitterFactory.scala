@@ -1,11 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.common.emitters.factory
 
-import amf.core.emitter.PartEmitter
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.remote.Vendor
-import amf.plugins.domain.shapes.models.{CreativeWork, Example}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.emitters.PartEmitter
 import amf.plugins.domain.apicontract.models._
 import amf.plugins.domain.apicontract.models.bindings.{
   ChannelBindings,
@@ -15,6 +14,7 @@ import amf.plugins.domain.apicontract.models.bindings.{
 }
 import amf.plugins.domain.apicontract.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.apicontract.models.templates.{ResourceType, Trait}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 
 trait DomainElementEmitterFactory {
 

@@ -1,7 +1,7 @@
 package amf.emit
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.{AmfJsonHint, _}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 
 class CompleteCycleTest extends FunSuiteCycleTests {

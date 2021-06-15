@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.common
 
-import amf.core.emitter.BaseEmitters.traverse
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.internal.render.BaseEmitters.traverse
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument
 
 case class DeclarationsEmitterWrapper(emitters: Seq[EntryEmitter], ordering: SpecOrdering) extends EntryEmitter {

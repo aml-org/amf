@@ -1,19 +1,14 @@
 package amf.resolution
 
 import amf.client.environment.AMFConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.ParseConfiguration
-import amf.client.remod.amfcore.resolution.PipelineName
 import amf.compiler.CompilerTestBuilder
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
-import amf.core.parser.ParserContext
-import amf.core.remote.{Raml10, Raml10YamlHint, Vendor}
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.services.RuntimeResolver
-import amf.core.vocabulary.Namespace
-import amf.facades.Validation
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.remote.{Raml10, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.apicontract.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.apicontract.parser.spec.raml.expression.RamlExpressionParser

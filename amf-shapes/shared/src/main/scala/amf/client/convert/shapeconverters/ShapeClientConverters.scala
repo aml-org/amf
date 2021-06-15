@@ -1,6 +1,6 @@
 package amf.client.convert.shapeconverters
 
-import amf.client.convert.CoreClientConverters
+import amf.core.internal.convert.CoreClientConverters
 
 object ShapeClientConverters extends ShapesBaseConverter with ShapesBaseClientConverter {
   // Overriding to match type

@@ -1,15 +1,13 @@
 package amf.validations
 
 import java.util.regex.Pattern
-
-import amf.core.annotations.SynthesizedField
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement, Shape}
-import amf.core.parser.Annotations
-import amf.core.services.RuntimeValidator.{CustomShaclFunctions, PropertyInfo}
-import amf.core.utils.RegexConverter
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement, Shape}
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.RegexConverter
 import amf.plugins.document.apicontract.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.{FileShape, NodeShape, ScalarShape}
@@ -19,6 +17,7 @@ import amf.plugins.domain.apicontract.metamodel._
 import amf.plugins.domain.apicontract.metamodel.api.BaseApiModel
 import amf.plugins.domain.apicontract.models.{IriTemplateMapping, Parameter}
 import amf.plugins.domain.apicontract.models.security.{OAuth2Settings, OpenIdConnectSettings}
+import amf.plugins.features.validation.shacl.custom.CustomShaclValidator.CustomShaclFunctions
 
 object CustomShaclFunctions {
 

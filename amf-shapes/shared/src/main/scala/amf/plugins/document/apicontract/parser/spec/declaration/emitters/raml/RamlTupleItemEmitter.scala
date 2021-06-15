@@ -1,11 +1,12 @@
 package amf.plugins.document.apicontract.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.pos
-import amf.core.emitter.{PartEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.Shape
-import amf.core.parser.Position
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.BaseEmitters.pos
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.PartEmitter
+import amf.plugins.document.apicontract.parser.spec.declaration.emitters.RamlShapeEmitterContext
 import org.yaml.model.YDocument.PartBuilder
 
 case class RamlTupleItemEmitter(item: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(

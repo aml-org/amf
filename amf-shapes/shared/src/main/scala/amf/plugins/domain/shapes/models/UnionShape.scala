@@ -1,11 +1,11 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel._
 import org.yaml.model.YPart
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 
 case class UnionShape(override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {

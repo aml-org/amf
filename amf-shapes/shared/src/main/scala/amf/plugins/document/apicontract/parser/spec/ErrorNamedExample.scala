@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec
 
-import amf.core.annotations.ErrorDeclaration
-import amf.core.parser.{Annotations, Fields}
+import amf.core.internal.annotations.ErrorDeclaration
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YPart

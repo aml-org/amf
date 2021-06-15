@@ -3,10 +3,11 @@ package amf.maker
 import amf.client.environment.WebAPIConfiguration
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
-import amf.core.metamodel.Field
-import amf.core.model.document.Document
-import amf.core.model.domain.AmfObject
-import amf.core.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
+import amf.core.internal.remote.Raml10YamlHint
+import amf.core.internal.metamodel.Field
+import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.plugins.domain.shapes.models.DomainExtensions.propertyShapeToPropertyShape
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
 import amf.plugins.domain.apicontract.models._

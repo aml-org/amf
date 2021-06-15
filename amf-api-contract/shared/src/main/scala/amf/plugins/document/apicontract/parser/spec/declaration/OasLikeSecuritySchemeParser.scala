@@ -1,9 +1,11 @@
 package amf.plugins.document.apicontract.parser.spec.declaration
 
-import amf.core.annotations.LexicalInformation
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
-import amf.core.utils.AmfStrings
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.core.internal.utils.AmfStrings
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.apicontract.annotations.ExternalReferenceUrl
 import amf.plugins.document.apicontract.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
@@ -12,11 +14,11 @@ import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
 import amf.plugins.document.apicontract.parser.spec.toRaml
 import amf.plugins.domain.apicontract.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.apicontract.models.security.SecurityScheme
-import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations.{
   CrossSecurityWarningSpecification,
   MissingSecuritySchemeErrorSpecification
 }
+import amf.core.client.common.position.Range
 import org.yaml.model.{YMap, YNode, YPart, YType}
 
 abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(

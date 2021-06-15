@@ -1,12 +1,12 @@
 package amf.plugins.document.apicontract.contexts.parser.raml
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.parser.{ParsedReference, ParserContext}
-import amf.core.remote.{Raml08, Vendor}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.remote.{Raml08, Vendor}
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType
 import amf.plugins.document.apicontract.parser.RamlWebApiContextType.RamlWebApiContextType
-import amf.plugins.document.apicontract.parser.spec.raml.Raml08Syntax
 import amf.plugins.document.apicontract.parser.spec.{RamlWebApiDeclarations, SpecSyntax}
+import amf.plugins.document.apicontract.parser.spec.raml.Raml08Syntax
 
 class Raml08WebApiContext(loc: String,
                           refs: Seq[ParsedReference],

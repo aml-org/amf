@@ -1,11 +1,11 @@
 package amf.resolution.element
-import amf.ProfileNames
-import amf.client.model.DataTypes
-import amf.core.annotations.SourceLocation
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.domain.Shape
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.Annotations
+import amf.core.client.common.validation.ProfileNames
+import amf.core.client.platform.model.DataTypes
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.annotations.SourceLocation
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
 import amf.plugins.domain.shapes.resolution.stages.elements.CompleteShapeTransformationPipeline
 import org.scalatest.FunSuite

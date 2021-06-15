@@ -1,11 +1,11 @@
 package amf.plugins.parse
 
-import amf.client.remod.amfcore.config.ParsingOptions
-import amf.core.Root
-import amf.core.exception.InvalidDocumentHeaderException
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParsedReference, ParserContext}
-import amf.core.remote.{Oas20, Vendor}
+import amf.core.client.scala.config.ParsingOptions
+import amf.core.client.scala.exception.InvalidDocumentHeaderException
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.parser.Root
+import amf.core.internal.remote.{Oas20, Vendor}
 import amf.plugins.common.Oas20MediaTypes
 import amf.plugins.document.apicontract.contexts.parser.oas.{Oas2WebApiContext, OasWebApiContext}
 import amf.plugins.document.apicontract.parser.OasHeader

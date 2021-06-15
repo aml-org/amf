@@ -1,8 +1,8 @@
 package amf.plugins.domain.shapes.annotations.serializable
 
-import amf.core.annotations.serializable.SerializableAnnotations
-import amf.core.annotations.{InheritanceProvenance, InheritedShapes, NilUnion}
-import amf.core.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.internal.annotations.serializable.SerializableAnnotations
+import amf.core.internal.annotations.{InheritanceProvenance, InheritedShapes, NilUnion}
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 
 private[amf] object ShapeSerializableAnnotations extends SerializableAnnotations {
