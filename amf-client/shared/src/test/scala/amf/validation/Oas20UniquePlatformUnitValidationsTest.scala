@@ -98,11 +98,17 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("invalid 'example' field in parameter object") {
-    validate("invalid-example-field.json", Some("invalid-example-field.report"), Oas20Profile)
+    validate("invalid-example-field.json",
+             Some("invalid-example-field.report"),
+             Oas20Profile,
+             overridedHint = Some(OasJsonHint))
   }
 
   test("Validate ref key in operation object") {
     validate("invalid-ref-key-operation.json", Some("invalid-ref-key-operation.report"), Oas20Profile)
   }
 
+  test("Validate oas20 with a baseUriParameters annotation") {
+    validate("base-uri-annotation.json", Some("base-uri-annotation.report"), Oas20Profile)
+  }
 }
