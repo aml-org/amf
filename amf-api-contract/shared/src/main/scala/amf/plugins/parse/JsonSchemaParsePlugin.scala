@@ -15,7 +15,7 @@ import amf.plugins.document.apicontract.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaUnspecifiedVersion
 import amf.plugins.document.apicontract.parser.spec.jsonschema.JsonSchemaParser
 import amf.plugins.domain.shapes.models.AnyShape
-
+import amf.client.exported.ProvidedMediaType
 object JsonSchemaParsePlugin extends AMFParsePlugin {
 
   override val id: String = Vendor.JSONSCHEMA.name
@@ -51,7 +51,7 @@ object JsonSchemaParsePlugin extends AMFParsePlugin {
   /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-  override def mediaTypes: Seq[String] = Seq(JsonSchema.mediaType)
+  override def mediaTypes: Seq[String] = Seq(ProvidedMediaType.JsonSchema)
 
   /**
     * media types which specifies vendors that may be referenced.

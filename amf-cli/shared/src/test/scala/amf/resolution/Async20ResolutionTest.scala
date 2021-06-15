@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.core.client.scala.config.RenderOptions
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.common.transform._
 import amf.core.internal.remote.Vendor.AMF
 import amf.core.internal.remote.{Async20YamlHint, AsyncApi20, Vendor}
 
@@ -50,7 +50,7 @@ class Async20ResolutionTest extends ResolutionTest {
       Async20YamlHint,
       target = AMF,
       renderOptions = Some(config.renderOptions),
-      pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE)
+      pipeline = Some(PipelineId.Default)
     )
   }
 
@@ -62,7 +62,7 @@ class Async20ResolutionTest extends ResolutionTest {
       Async20YamlHint,
       target = AMF,
       renderOptions = Some(config.renderOptions),
-      pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE)
+      pipeline = Some(PipelineId.Default)
     )
   }
 
@@ -180,7 +180,7 @@ class Async20ResolutionTest extends ResolutionTest {
   }
 
   override val defaultVendor: Option[Vendor] = Some(AsyncApi20)
-  override val defaultPipelineToUse: String  = TransformationPipeline.EDITING_PIPELINE
+  override val defaultPipelineToUse: String  = PipelineId.Editing
 
   override def defaultRenderOptions: RenderOptions =
     RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint

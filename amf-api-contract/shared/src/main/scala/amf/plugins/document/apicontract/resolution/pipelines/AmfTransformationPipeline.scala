@@ -8,6 +8,7 @@ import amf.core.client.scala.transform.stages.{
   ExternalSourceRemovalStage,
   TransformationStep
 }
+import amf.core.client.common.transform._
 import amf.plugins.document.apicontract.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.apicontract.resolution.stages._
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
@@ -40,6 +41,6 @@ class AmfTransformationPipeline private[amf] (override val name: String) extends
 }
 
 object AmfTransformationPipeline {
-  val name: String = TransformationPipeline.DEFAULT_PIPELINE
+  val name: String = PipelineId.Default
   def apply()      = new AmfTransformationPipeline(name)
 }

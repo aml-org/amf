@@ -11,7 +11,7 @@ import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.collections.FilterType
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers.{contain, convertToAnyShouldWrapper}
-
+import amf.core.client.common.transform._
 import scala.concurrent.{ExecutionContext, Future}
 
 class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with ResolutionCapabilities {
@@ -37,7 +37,7 @@ class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with Re
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
           .createClient()
           .parse(s"file://$basePath${data.path}")
-        _ <- Future(transform(parseResult.bu, TransformationPipeline.EDITING_PIPELINE, data.hint.vendor, config))
+        _ <- Future(transform(parseResult.bu, PipelineId.Editing, data.hint.vendor, config))
       } yield {
         val elements                    = parseResult.bu.iterator(fieldsFilter = All).toList
         val fixpointValues: Seq[String] = elements.filterType[RecursiveShape].map(_.fixpoint.value())

@@ -10,7 +10,7 @@ import amf.plugins.document.apicontract.annotations.JSONSchemaRoot
 import amf.plugins.document.apicontract.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument
-
+import amf.client.exported.ProvidedMediaType
 object JsonSchemaRenderPlugin extends ApiRenderPlugin {
 
   override def vendor: Vendor = Vendor.JSONSCHEMA
@@ -24,7 +24,7 @@ object JsonSchemaRenderPlugin extends ApiRenderPlugin {
 
   override def defaultSyntax(): String = AMFRenderPlugin.APPLICATION_JSON
 
-  override def mediaTypes: Seq[String] = Seq(JsonSchema.mediaType)
+  override def mediaTypes: Seq[String] = Seq(ProvidedMediaType.JsonSchema)
 
   override def unparseAsYDocument(unit: BaseUnit,
                                   renderOptions: RenderOptions,

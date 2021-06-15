@@ -5,7 +5,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -74,8 +74,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
       _          <- Validation(platform)
       sourceUnit <- client.parse(basePath + sourceFile).map(_.bu)
     } yield {
-      findShapeFunc(
-        client.transform(sourceUnit, PipelineName.from(Vendor.OAS20.name, TransformationPipeline.DEFAULT_PIPELINE)).bu)
+      findShapeFunc(client.transformDefault(sourceUnit, Vendor.OAS20.mediaType).bu)
         .map(toRamlDatatype(_, amfConfig))
         .getOrElse("")
     }

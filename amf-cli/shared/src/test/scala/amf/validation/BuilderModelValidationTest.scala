@@ -14,7 +14,7 @@ import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.{AsyncFunSuite, Matchers}
-
+import amf.client.exported.ProvidedMediaType
 import scala.concurrent.ExecutionContext
 
 class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest with Matchers {
@@ -48,7 +48,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
     val fragment = PayloadFragment(scalar, "application/yaml")
 
     val s =
-      new AMFSerializer(fragment, "application/payload+yaml", WebAPIConfiguration.WebAPI().renderConfiguration).renderToString
+      new AMFSerializer(fragment, ProvidedMediaType.PayloadYaml, WebAPIConfiguration.WebAPI().renderConfiguration).renderToString
     s should be("1\n") // without quotes
   }
 
@@ -63,7 +63,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
         | myType:
         |   type: number
         |   format: int""".stripMargin
-    val s     = new AMFSerializer(m, "application/raml+yaml", RAMLConfiguration.RAML().renderConfiguration).renderToString
+    val s     = new AMFSerializer(m, ProvidedMediaType.Raml10, RAMLConfiguration.RAML().renderConfiguration).renderToString
     val diffs = Diff.ignoreAllSpace.diff(s, e)
     if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")
     succeed

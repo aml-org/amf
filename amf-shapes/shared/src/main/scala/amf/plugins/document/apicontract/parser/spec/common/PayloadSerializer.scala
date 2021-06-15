@@ -4,13 +4,13 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.DataNode
+import amf.core.internal.remote.Vendor
 import amf.core.internal.render.{AMFSerializer, SpecOrdering}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.plugins.document.apicontract.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YDocument
-
 trait PayloadSerializer extends PlatformSecrets {
 
   protected def toJson(example: Example, config: AMFGraphConfiguration): String = {
@@ -40,7 +40,7 @@ trait PayloadSerializer extends PlatformSecrets {
 
   private def dump(dataNode: DataNode, config: AMFGraphConfiguration): String = {
     new AMFSerializer(PayloadFragment(dataNode, "application/json"),
-                      "application/payload+json",
+                      Vendor.PAYLOAD.mediaType + "+json",
                       config.renderConfiguration).render()
   }
 }

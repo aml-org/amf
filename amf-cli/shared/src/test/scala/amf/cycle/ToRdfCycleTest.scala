@@ -44,7 +44,7 @@ class ToRdfCycleTest
 //  private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {
 //    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
 //    build(path, config)
-//      .map(transform(_, TransformationPipeline.EDITING_PIPELINE, vendor, config))
+//      .map(transform(_, PipelineId.Editing, vendor, config))
 //      .map(bu => new RdfExportable())
 //      .map(_.toN3())
 //  }

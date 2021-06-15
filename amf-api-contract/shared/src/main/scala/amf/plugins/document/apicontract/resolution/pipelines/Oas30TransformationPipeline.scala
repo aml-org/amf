@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
 import amf.core.client.common.validation.{Oas30Profile, ProfileName}
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.remote.Oas30
@@ -23,5 +23,5 @@ class Oas30TransformationPipeline private (override val name: String) extends Am
 
 object Oas30TransformationPipeline {
   def apply()      = new Oas30TransformationPipeline(name)
-  val name: String = PipelineName.from(Oas30.name, TransformationPipeline.DEFAULT_PIPELINE)
+  val name: String = PipelineName.from(Oas30.mediaType, PipelineId.Default)
 }

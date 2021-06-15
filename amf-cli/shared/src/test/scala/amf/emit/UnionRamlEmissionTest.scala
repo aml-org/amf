@@ -3,8 +3,7 @@ package amf.emit
 import amf.client.environment.AMFConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.PipelineName
-import amf.core.client.scala.transform.pipelines.TransformationPipeline._
+import amf.core.client.common.transform._
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 
@@ -19,7 +18,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
         amfConfig
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
           .createClient()
-          .transform(unit, PipelineName.from(Raml10.name, pipeline))
+          .transform(unit, PipelineName.from(Raml10.mediaType, pipeline))
           .bu
       case None => unit
     }
@@ -35,7 +34,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "basic-scalar.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Basic scalar - Default Resolution") {
@@ -43,7 +42,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "basic-scalar.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
   test("Complex scalar - No Resolution") {
@@ -55,7 +54,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "complex-scalar.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Complex scalar - Default Resolution") {
@@ -63,7 +62,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "complex-scalar.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
   test("Basic Types - No Resolution") {
@@ -75,7 +74,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "basic-types.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Basic Types - Default Resolution") {
@@ -83,7 +82,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "basic-types.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
   test("Object - No Resolution") {
@@ -91,11 +90,11 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
   }
 
   test("Object - Editing Resolution") {
-    cycle("object.raml", "object.out.editing.raml", Raml10YamlHint, Raml10, pipeline = Some(EDITING_PIPELINE))
+    cycle("object.raml", "object.out.editing.raml", Raml10YamlHint, Raml10, pipeline = Some(PipelineId.Editing))
   }
 
   test("Object - Default Resolution") {
-    cycle("object.raml", "object.out.default.raml", Raml10YamlHint, Raml10, pipeline = Some(DEFAULT_PIPELINE))
+    cycle("object.raml", "object.out.default.raml", Raml10YamlHint, Raml10, pipeline = Some(PipelineId.Default))
   }
 
   test("Objects - No Resolution") {
@@ -103,11 +102,11 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
   }
 
   test("Objects - Editing Resolution") {
-    cycle("objects.raml", "objects.out.editing.raml", Raml10YamlHint, Raml10, pipeline = Some(EDITING_PIPELINE))
+    cycle("objects.raml", "objects.out.editing.raml", Raml10YamlHint, Raml10, pipeline = Some(PipelineId.Editing))
   }
 
   test("Objects - Default Resolution") {
-    cycle("objects.raml", "objects.out.default.raml", Raml10YamlHint, Raml10, pipeline = Some(DEFAULT_PIPELINE))
+    cycle("objects.raml", "objects.out.default.raml", Raml10YamlHint, Raml10, pipeline = Some(PipelineId.Default))
   }
 
   test("Complex object - No Resolution") {
@@ -119,7 +118,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "complex-object.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Complex object - Default Resolution") {
@@ -127,7 +126,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "complex-object.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
   test("Expanded anyOf - Simple Scalar - No Resolution") {
@@ -139,7 +138,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "anyof-simple-scalar.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Expanded anyOf - Simple Scalar - Default Resolution") {
@@ -147,7 +146,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "anyof-simple-scalar.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
   test("Expanded anyOf - Complex Scalar - No Resolution") {
@@ -159,7 +158,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "anyof-complex-scalar.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Expanded anyOf - Complex Scalar - Default Resolution") {
@@ -167,7 +166,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "anyof-complex-scalar.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
   test("Optional Scalar - No Resolution") {
@@ -179,7 +178,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "optional-scalar.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Optional Scalar - Default Resolution") {
@@ -187,7 +186,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "optional-scalar.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
   test("Optional Object - No Resolution") {
@@ -199,7 +198,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "optional-object.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Optional Object - Default Resolution") {
@@ -207,7 +206,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "optional-object.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
   test("Recursive - No Resolution") {
@@ -216,11 +215,11 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
 
   // TODO testd because we are not emitting the recursives shapes (!!!)
   ignore("Recursive - Editing Resolution") {
-    cycle("recursive.raml", "recursive.out.editing.raml", Raml10YamlHint, Raml10, pipeline = Some(EDITING_PIPELINE))
+    cycle("recursive.raml", "recursive.out.editing.raml", Raml10YamlHint, Raml10, pipeline = Some(PipelineId.Editing))
   }
 
   ignore("Recursive - Default Resolution") {
-    cycle("recursive.raml", "recursive.out.default.raml", Raml10YamlHint, Raml10, pipeline = Some(DEFAULT_PIPELINE))
+    cycle("recursive.raml", "recursive.out.default.raml", Raml10YamlHint, Raml10, pipeline = Some(PipelineId.Default))
   }
 
   test("Inner Union - No Resolution") {
@@ -232,7 +231,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "inner-union.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Inner Union - Default Resolution") {
@@ -240,7 +239,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "inner-union.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
   test("Complex Union - No Resolution") {
@@ -252,7 +251,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "complex-union.out.editing.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(EDITING_PIPELINE))
+          pipeline = Some(PipelineId.Editing))
   }
 
   test("Complex Union - Default Resolution") {
@@ -260,7 +259,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           "complex-union.out.default.raml",
           Raml10YamlHint,
           Raml10,
-          pipeline = Some(DEFAULT_PIPELINE))
+          pipeline = Some(PipelineId.Default))
   }
 
 }

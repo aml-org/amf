@@ -1,6 +1,6 @@
 package amf.plugins.document.apicontract.resolution.pipelines.compatibility
 
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.remote.Oas30
@@ -26,5 +26,5 @@ class Oas3CompatibilityPipeline private (override val name: String) extends Tran
 
 object Oas3CompatibilityPipeline {
   def apply(): Oas3CompatibilityPipeline = new Oas3CompatibilityPipeline(name)
-  val name: String                       = PipelineName.from(Oas30.name, TransformationPipeline.COMPATIBILITY_PIPELINE)
+  val name: String                       = PipelineName.from(Oas30.mediaType, PipelineId.Compatibility)
 }

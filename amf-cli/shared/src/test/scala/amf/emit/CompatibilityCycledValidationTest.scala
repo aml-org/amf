@@ -4,7 +4,7 @@ import amf.client.environment.AMFConfiguration
 import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Syntax.Syntax
@@ -87,7 +87,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     amfConfig
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .createClient()
-      .transform(unit, PipelineName.from(config.target.name, TransformationPipeline.COMPATIBILITY_PIPELINE))
+      .transformCompatibility(unit, config.target.mediaType)
       .bu
   }
 

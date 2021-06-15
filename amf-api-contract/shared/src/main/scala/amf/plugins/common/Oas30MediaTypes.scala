@@ -1,11 +1,13 @@
 package amf.plugins.common
 
+import amf.client.exported.ProvidedMediaType
+
 object Oas30MediaTypes {
 
   val mediaTypes = Seq(
-    "application/oas30+json",
-    "application/oas30+yaml",
-    "application/oas30",
+    ProvidedMediaType.Oas30Json,
+    ProvidedMediaType.Oas30Yaml,
+    ProvidedMediaType.Oas30,
     "application/openapi30",
     "application/openapi30+yaml",
     "application/openapi30+json"

@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.remote.Raml08
 import amf.plugins.domain.apicontract.resolution.stages.{
@@ -19,5 +19,5 @@ class Raml08TransformationPipeline private (override val name: String) extends A
 
 object Raml08TransformationPipeline {
   def apply()      = new Raml08TransformationPipeline(name)
-  val name: String = PipelineName.from(Raml08.name, TransformationPipeline.DEFAULT_PIPELINE)
+  val name: String = PipelineName.from(Raml08.mediaType, PipelineId.Default)
 }

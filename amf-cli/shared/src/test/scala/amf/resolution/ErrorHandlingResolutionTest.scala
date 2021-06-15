@@ -3,8 +3,7 @@ import amf.client.environment.AMFConfiguration
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.PipelineName
-import amf.core.client.scala.transform.pipelines.TransformationPipeline.DEFAULT_PIPELINE
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.annotations.LexicalInformation
@@ -92,7 +91,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.createClient().transform(unit, PipelineName.from(config.target.name, DEFAULT_PIPELINE)).bu
+        amfConfig.createClient().transformDefault(unit, config.target.mediaType).bu
       case Amf =>
         TransformationPipelineRunner(amfConfig.errorHandlerProvider.errorHandler())
           .run(unit, AmfTransformationPipeline())

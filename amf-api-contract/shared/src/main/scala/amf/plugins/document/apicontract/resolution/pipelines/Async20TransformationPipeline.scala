@@ -1,7 +1,7 @@
 package amf.plugins.document.apicontract.resolution.pipelines
 
 import amf.core.client.common.validation.Async20Profile
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.transform.stages.{
   CleanReferencesStage,
@@ -39,5 +39,5 @@ class Async20TransformationPipeline private (override val name: String) extends 
 
 object Async20TransformationPipeline {
   def apply()      = new Async20TransformationPipeline(name)
-  val name: String = PipelineName.from(AsyncApi20.name, TransformationPipeline.DEFAULT_PIPELINE)
+  val name: String = PipelineName.from(AsyncApi20.mediaType, PipelineId.Default)
 }

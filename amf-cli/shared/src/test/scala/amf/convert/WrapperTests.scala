@@ -12,7 +12,7 @@ import amf.core.client.platform.parse.AMFParser
 import amf.core.client.platform.resource.{ClientResourceLoader, ResourceNotFound}
 import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.platform.model.domain.Shape
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.platform.validation.AMFValidationReport
 import amf.core.internal.convert.CoreClientConverters.{ClientFuture, ClientLoader}
 import amf.core.internal.remote._

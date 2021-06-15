@@ -1,11 +1,12 @@
 package amf.plugins.common
 
+import amf.client.exported.ProvidedMediaType
+import amf.core.internal.remote.Vendor
+
 object Raml10MediaTypes {
 
   val mediaTypes = Seq(
-    "application/raml10",
-    "application/raml10+yaml",
-    "application/raml",
-    "application/raml+yaml"
+    Vendor.RAML10.mediaType,
+    ProvidedMediaType.Raml10 // defines yaml syntax explicitly
   )
 }
