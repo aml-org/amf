@@ -29,7 +29,8 @@ import amf.plugins.document.apicontract.parser.spec.jsonschema.{
 import amf.plugins.document.vocabularies.parser.common.DeclarationContext
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
-import org.yaml.model._
+import amf.core.internal.parser._
+import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar}
 
 import scala.collection.mutable
 
