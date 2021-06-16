@@ -1,10 +1,14 @@
 package amf.apicontract.client.platform.model.domain
 
+import amf.apicontract.client.platform.model.domain.bindings.ServerBindings
+import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.convert.ApiClientConverters.ClientList
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.DomainElement
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import amf.apicontract.client.scala.model.domain.{Server => InternalServer}
+import amf.apicontract.internal.convert.ApiClientConverters._
 
 /**
   * Server model class.

@@ -1,9 +1,12 @@
 package amf.apicontract.client.platform.model.domain
 
+import amf.apicontract.client.platform.model.domain.bindings.MessageBindings
 import amf.apicontract.client.scala.model.domain
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.client.platform.model.{BoolField, StrField}
+import amf.apicontract.client.scala.model.domain.{Message => InternalMessage}
+import amf.shapes.client.platform.model.domain.{CreativeWork, Example, NodeShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -11,7 +14,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Message model class.
   */
 @JSExportAll
-class Message(override private[amf] val _internal: domain.Message)
+class Message(override private[amf] val _internal: InternalMessage)
     extends NamedDomainElement
     with DomainElement
     with Linkable {

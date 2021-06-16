@@ -1,8 +1,9 @@
 package amf.apicontract.client.platform.model.domain
 
-import amf.apicontract.internal.convert.ApiClientConverters.ClientList
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.DomainElement
 import amf.core.client.platform.model.{BoolField, StrField}
+import amf.apicontract.client.scala.model.domain.{Encoding => InternalEncoding}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

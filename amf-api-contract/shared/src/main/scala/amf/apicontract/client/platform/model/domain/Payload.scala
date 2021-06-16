@@ -1,8 +1,10 @@
 package amf.apicontract.client.platform.model.domain
 
-import amf.apicontract.internal.convert.ApiClientConverters.ClientList
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement, Shape}
+import amf.apicontract.client.scala.model.domain.{Payload => InternalPayload}
+import amf.shapes.client.platform.model.domain.{Example, NodeShape, ScalarShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -10,7 +12,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Payload model class.
   */
 @JSExportAll
-case class Payload(override private[amf] val _internal: InternalPayload) extends DomainElement with NamedDomainElement {
+case class Payload(override private[amf] val _internal: InternalPayload)
+    extends DomainElement
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.Payload")
   def this() = this(InternalPayload())

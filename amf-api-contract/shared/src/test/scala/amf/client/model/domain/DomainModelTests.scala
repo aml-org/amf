@@ -1,33 +1,37 @@
 package amf.client.model.domain
 
+import amf.apicontract.client.platform.model.domain.api.WebApi
+import amf.apicontract.client.platform.model.domain.bindings.mqtt.MqttServerLastWill
+import amf.apicontract.client.platform.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
+import amf.apicontract.client.platform.model.domain.security.{
+  OAuth2Flow,
+  ParametrizedSecurityScheme,
+  Scope,
+  SecurityRequirement,
+  SecurityScheme,
+  Settings
+}
 import amf.apicontract.client.platform.model.domain.{
   Callback,
-  ChannelBindings,
   CorrelationId,
   Encoding,
   EndPoint,
   License,
   Message,
-  MessageBindings,
-  MqttServerLastWill,
-  OAuth2Flow,
   Operation,
-  OperationBindings,
   Organization,
   Parameter,
-  ParametrizedSecurityScheme,
   Payload,
   Request,
   Response,
-  Scope,
-  SecurityRequirement,
-  SecurityScheme,
   Server,
-  ServerBindings,
-  Settings,
   Tag,
-  TemplatedLink,
-  WebApi
+  TemplatedLink
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode

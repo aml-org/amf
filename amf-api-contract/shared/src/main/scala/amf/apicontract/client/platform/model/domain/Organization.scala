@@ -2,6 +2,8 @@ package amf.apicontract.client.platform.model.domain
 
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
+import amf.apicontract.client.scala.model.domain.{Organization => InternalOrganization}
+import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

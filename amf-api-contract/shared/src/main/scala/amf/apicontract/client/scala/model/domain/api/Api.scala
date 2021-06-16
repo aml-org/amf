@@ -1,6 +1,7 @@
 package amf.apicontract.client.scala.model.domain.api
 
-import amf.apicontract.client.scala.model.domain.{EndPoint, License, Organization, SecuredElement, Server, ServerContainer, Tag}
+import amf.apicontract.client.scala.model.domain.{License, License => _, _}
+import amf.apicontract.internal.metamodel.domain.api.BaseApiModel.{License => WebApiLicense, _}
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.NamedDomainElement
 import amf.core.internal.annotations.{SourceVendor, SynthesizedField}
@@ -8,10 +9,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel.Description
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.remote.Vendor
-import amf.apicontract.internal.metamodel.domain.api.BaseApiModel.{License => WebApiLicense, _}
-import amf.plugins.domain.apicontract.models.Tag
-import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
-import org.yaml.model.{YMap, YNode}
+import amf.shapes.client.scala.domain.models.{CreativeWork, DocumentedElement}
 
 /**
   * Web Api internal model

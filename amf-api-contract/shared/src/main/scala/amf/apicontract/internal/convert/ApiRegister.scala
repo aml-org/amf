@@ -11,52 +11,33 @@ import amf.apicontract.client.platform.model.document.{
   SecuritySchemeFragment,
   TraitFragment
 }
-import amf.apicontract.client.platform.model.domain.{
+import amf.apicontract.client.platform.model.domain.api.AsyncApi
+import amf.apicontract.client.platform.model.domain.bindings.{ChannelBindings, EmptyBinding}
+import amf.apicontract.client.platform.model.domain.bindings.amqp.{
   Amqp091ChannelBinding,
   Amqp091ChannelExchange,
-  Amqp091MessageBinding,
   Amqp091OperationBinding,
-  Amqp091Queue,
-  AsyncApi,
+  Amqp091Queue
+}
+import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
+import amf.apicontract.client.platform.model.domain.bindings.kafka.KafkaMessageBinding
+import amf.apicontract.client.platform.model.domain.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
+import amf.apicontract.client.platform.model.domain.security.Settings
+import amf.apicontract.client.platform.model.domain.{
   Callback,
-  ChannelBindings,
   CorrelationId,
-  EmptyBinding,
   Encoding,
   EndPoint,
-  HttpMessageBinding,
-  HttpOperationBinding,
-  KafkaMessageBinding,
-  KafkaOperationBinding,
   License,
-  MessageBindings,
-  MqttMessageBinding,
-  MqttOperationBinding,
-  MqttServerBinding,
-  MqttServerLastWill,
-  OAuth2Flow,
   Operation,
-  OperationBindings,
   Organization,
   Parameter,
-  ParametrizedResourceType,
-  ParametrizedSecurityScheme,
-  ParametrizedTrait,
   Payload,
   Request,
-  ResourceType,
   Response,
-  Scope,
-  SecurityRequirement,
-  SecurityScheme,
   Server,
-  ServerBindings,
-  Settings,
   Tag,
-  TemplatedLink,
-  Trait,
-  WebApi,
-  WebSocketsChannelBinding
+  TemplatedLink
 }
 import amf.apicontract.internal.metamodel.document.{ExtensionModel, OverlayModel}
 import amf.apicontract.client.scala.model.{document, domain}

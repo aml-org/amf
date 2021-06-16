@@ -4,6 +4,9 @@ import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import amf.apicontract.client.scala.model.domain.{Tag => InternalTag}
+import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.shapes.client.platform.model.domain.CreativeWork
 
 /**
   * Tag model class.

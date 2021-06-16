@@ -1,6 +1,7 @@
 package amf.apicontract.internal.convert
 
 import amf.core.internal.convert.CoreClientConverters
+import amf.shapes.internal.convert.{ShapesBaseClientConverter, ShapesBaseConverter}
 
 object ApiClientConverters
     extends ApiBaseConverter

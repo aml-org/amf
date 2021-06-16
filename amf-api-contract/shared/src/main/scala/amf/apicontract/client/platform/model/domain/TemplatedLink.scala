@@ -5,6 +5,9 @@ import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import amf.apicontract.client.scala.model.domain.{TemplatedLink => InternalTemplatedLink}
+import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.shapes.client.platform.model.domain.IriTemplateMapping
 
 @JSExportAll
 case class TemplatedLink(override private[amf] val _internal: InternalTemplatedLink)

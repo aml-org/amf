@@ -6,6 +6,8 @@ import amf.core.internal.convert.ClientErrorHandlerConverter.ErrorHandlerConvert
 import amf.core.internal.remote.Vendor
 import amf.core.internal.render.YNodeDocBuilderPopulator
 import org.yaml.builder.DocBuilder
+import amf.apicontract.client.scala.render.{ApiDomainElementEmitter => InternalApiDomainElementEmitter}
+import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -17,7 +19,7 @@ object ApiDomainElementEmitter {
                        emissionStructure: Vendor,
                        eh: ClientErrorHandler,
                        builder: DocBuilder[T]): Unit = {
-    val node = InternalDomainElementEmitter.emit(element, emissionStructure, ErrorHandlerConverter.asInternal(eh))
+    val node = InternalApiDomainElementEmitter.emit(element, emissionStructure, ErrorHandlerConverter.asInternal(eh))
     YNodeDocBuilderPopulator.populate(node, builder)
   }
 }

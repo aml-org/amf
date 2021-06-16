@@ -1,5 +1,6 @@
 package amf.apicontract.client.scala.model.domain
 
+import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.metamodel.domain.ServerModel.Security
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.annotations.SynthesizedField

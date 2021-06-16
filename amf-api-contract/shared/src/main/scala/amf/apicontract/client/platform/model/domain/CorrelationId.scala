@@ -2,6 +2,8 @@ package amf.apicontract.client.platform.model.domain
 
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.apicontract.client.scala.model.domain.{CorrelationId => InternalCorrelationId}
+import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

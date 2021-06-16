@@ -1,8 +1,13 @@
 package amf.apicontract.client.platform.model.domain
 
+import amf.apicontract.client.platform.model.domain.bindings.OperationBindings
+import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.convert.ApiClientConverters.ClientList
 import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.client.platform.model.{BoolField, StrField}
+import amf.apicontract.client.scala.model.domain.{Operation => InternalOperation}
+import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.shapes.client.platform.model.domain.CreativeWork
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

@@ -5,6 +5,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.client.exported.BaseAMLClient
 import amf.core.client.platform.AMFResult
 import amf.core.client.platform.model.document.BaseUnit
+import amf.apicontract.client.scala.{AMFClient => InternalAMFClient}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -13,7 +14,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * For more complex uses see [[AMFParser]] or [[amf.client.remod.AMFRenderer]]
   */
 @JSExportAll
-class AMFClient private (private val _internal: AMFClient) extends BaseAMLClient(_internal) {
+class AMFClient private (private val _internal: InternalAMFClient) extends BaseAMLClient(_internal) {
 
   @JSExportTopLevel("AMFClient")
   def this(configuration: AMFConfiguration) = {

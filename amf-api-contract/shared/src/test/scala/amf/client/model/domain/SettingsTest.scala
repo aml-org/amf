@@ -1,6 +1,7 @@
 package amf.client.model.domain
 
-import amf.apicontract.client.platform.model.domain.{
+import amf.apicontract.client.platform.model.domain.OpenIdConnectSettings
+import amf.apicontract.client.platform.model.domain.security.{
   ApiKeySettings,
   HttpApiKeySettings,
   HttpSettings,
