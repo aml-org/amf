@@ -1,5 +1,13 @@
 package amf.apicontract.internal.metamodel.domain
 
+import amf.apicontract.client.scala.model.domain.Organization
+import amf.core.client.scala.vocabulary.Namespace.Core
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Iri, Str}
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+
 /**
   * Organization metamodel
   */

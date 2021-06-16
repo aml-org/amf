@@ -1,12 +1,12 @@
 package amf.apicontract.internal.metamodel.domain.security
 
-import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Array, Bool, Str}
-import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.apicontract.client.scala.model.domain.security.OAuth2Flow
 import amf.core.client.scala.vocabulary.Namespace.Security
 import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Array, Str}
+import amf.core.internal.metamodel.domain.templates.KeyField
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
 object OAuth2FlowModel extends DomainElementModel with KeyField {
 

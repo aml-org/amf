@@ -7,6 +7,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel
 
 /**
   * Link metaModel.
@@ -25,9 +26,10 @@ object TemplatedLinkModel
                           ApiContract + "operationId",
                           ModelDoc(ModelVocabularies.ApiContract, "operationId", "Identifier of the target operation"))
 
-  val OperationRef = Field(Str,
-                           ApiContract + "operationRef",
-                           ModelDoc(ModelVocabularies.ApiContract, "operationRef", "Reference of the target operation"))
+  val OperationRef = Field(
+    Str,
+    ApiContract + "operationRef",
+    ModelDoc(ModelVocabularies.ApiContract, "operationRef", "Reference of the target operation"))
 
   val Mapping = Field(Array(IriTemplateMappingModel),
                       ApiContract + "mapping",

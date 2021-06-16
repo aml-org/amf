@@ -1,13 +1,13 @@
 package amf.apicontract.internal.metamodel.domain.security
 
 import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
-import amf.core.client.scala.vocabulary.Namespace.{Core, Security}
+import amf.core.client.scala.vocabulary.Namespace.Security
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.common.NameFieldSchema
-import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.Type.Array
+import amf.core.internal.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.metamodel.domain.templates.KeyField
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
 object SecurityRequirementModel extends DomainElementModel with NameFieldSchema with KeyField {
 

@@ -1,6 +1,8 @@
 package amf.apicontract.internal.metamodel.domain
 
 import amf.apicontract.client.scala.model.domain.EndPoint
+import amf.apicontract.internal.metamodel.domain.bindings.ChannelBindingsModel
+import amf.apicontract.internal.metamodel.domain.security.SecurityRequirementModel
 import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field

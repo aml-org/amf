@@ -1,20 +1,12 @@
 package amf.apicontract.internal.metamodel.domain.security
 
+import amf.apicontract.client.scala.model.domain.security._
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.{Core, Security}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Str, Array}
+import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.apicontract.client.scala.model.domain.security.{
-  ApiKeySettings,
-  HttpApiKeySettings,
-  HttpSettings,
-  OAuth1Settings,
-  OAuth2Settings,
-  OpenIdConnectSettings,
-  Settings
-}
 
 trait SettingsModel extends DomainElementModel
 

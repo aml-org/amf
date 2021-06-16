@@ -1,10 +1,10 @@
 package amf.apicontract.internal.metamodel.domain.api
 
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiContract
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.apicontract.client.scala.model.domain.api.WebApi
 
 object WebApiModel extends ApiModel {
 

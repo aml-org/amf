@@ -1,14 +1,14 @@
 package amf.apicontract.internal.metamodel.domain.api
 
-import amf.apicontract.internal.metamodel.domain.{EndPointModel, LicenseModel, OrganizationModel, ServerModel, TagsModel}
-import amf.core.internal.metamodel.Type.{Array, Bool, Str}
+import amf.apicontract.internal.metamodel.domain._
+import amf.apicontract.internal.metamodel.domain.security.SecurityRequirementModel
 import amf.core.client.scala.vocabulary.Namespace._
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.plugins.domain.apicontract.metamodel._
-import amf.apicontract.internal.metamodel.domain.security.SecurityRequirementModel
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 
 /**
   * Web Api metamodel

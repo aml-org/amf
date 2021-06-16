@@ -4,10 +4,11 @@ import amf.apicontract.client.scala.model.domain.Parameter
 import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Document, Shapes}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Bool, Str}
+import amf.core.internal.metamodel.Type.{Array, Bool, Str}
+import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.internal.metamodel.domain._
+import amf.shapes.internal.domain.metamodel.common.ExamplesField
 
 /**
   * Parameter metaModel.

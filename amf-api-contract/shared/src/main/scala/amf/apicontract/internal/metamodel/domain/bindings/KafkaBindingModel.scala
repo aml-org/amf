@@ -1,11 +1,11 @@
 package amf.apicontract.internal.metamodel.domain.bindings
 
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
-import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
 
 object KafkaOperationBindingModel extends OperationBindingModel with BindingVersion {
   val GroupId =

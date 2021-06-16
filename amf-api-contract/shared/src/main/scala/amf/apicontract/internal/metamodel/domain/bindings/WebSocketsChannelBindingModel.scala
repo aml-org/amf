@@ -1,12 +1,12 @@
 package amf.apicontract.internal.metamodel.domain.bindings
 
+import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Str
-import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
-import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 
 object WebSocketsChannelBindingModel
     extends ChannelBindingModel

@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.model.domain.Encoding
 import amf.core.client.scala.vocabulary.Namespace.ApiContract
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Bool, Str}
+import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
