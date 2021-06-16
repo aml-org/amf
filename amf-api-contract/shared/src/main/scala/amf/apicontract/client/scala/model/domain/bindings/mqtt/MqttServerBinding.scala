@@ -6,8 +6,8 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.bindings.MqttServerBindingModel._
 import amf.apicontract.internal.metamodel.domain.bindings.MqttServerLastWillModel._
 import amf.apicontract.internal.metamodel.domain.bindings.{MqttServerBindingModel, MqttServerLastWillModel}
-import amf.plugins.domain.apicontract.models.Key
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, ServerBinding}
+import amf.apicontract.internal.transformation.stages.Key
 
 class MqttServerBinding(override val fields: Fields, override val annotations: Annotations)
     extends ServerBinding

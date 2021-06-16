@@ -6,6 +6,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.remote.Vendor
 import amf.core.internal.render.emitters.DomainElementEmitter
+import amf.shapes.internal.validation.definitions.RenderSideValidations
 import org.yaml.model.YNode
 
 object ApiDomainElementEmitter extends DomainElementEmitter[Vendor] {

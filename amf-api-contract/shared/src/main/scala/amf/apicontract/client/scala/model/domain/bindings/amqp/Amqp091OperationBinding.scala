@@ -5,8 +5,8 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.bindings.Amqp091OperationBindingModel
 import amf.apicontract.internal.metamodel.domain.bindings.Amqp091OperationBindingModel._
-import amf.plugins.domain.apicontract.models.Key
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, OperationBinding}
+import amf.apicontract.internal.transformation.stages.Key
 
 class Amqp091OperationBinding(override val fields: Fields, override val annotations: Annotations)
     extends OperationBinding

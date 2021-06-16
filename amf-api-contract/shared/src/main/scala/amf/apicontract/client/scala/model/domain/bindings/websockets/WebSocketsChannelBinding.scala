@@ -5,8 +5,8 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.bindings.WebSocketsChannelBindingModel
 import amf.apicontract.internal.metamodel.domain.bindings.WebSocketsChannelBindingModel._
-import amf.plugins.domain.apicontract.models.Key
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, ChannelBinding}
+import amf.apicontract.internal.transformation.stages.Key
 
 class WebSocketsChannelBinding(override val fields: Fields, override val annotations: Annotations)
     extends ChannelBinding

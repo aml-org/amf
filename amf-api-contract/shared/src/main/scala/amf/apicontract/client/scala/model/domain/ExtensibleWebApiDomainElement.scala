@@ -1,7 +1,9 @@
 package amf.apicontract.client.scala.model.domain
 
+import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.metamodel.domain.ShapeModel.Extends
+import amf.core.internal.utils.AmfStrings
 
 trait ExtensibleWebApiDomainElement { this: DomainElement =>
 

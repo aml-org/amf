@@ -1,6 +1,7 @@
 package amf.apicontract.client.scala.model.domain
 
 import amf.core.client.scala.model.domain.Shape
+import amf.shapes.client.scala.domain.models.Example
 
 trait SchemaContainer {
   def schema: Shape

@@ -2,11 +2,13 @@ package amf.apicontract.client.scala.model.domain
 
 import amf.apicontract.client.scala.model.domain.bindings.MessageBindings
 import amf.apicontract.internal.metamodel.domain.MessageModel
+import amf.apicontract.internal.metamodel.domain.MessageModel._
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.domain.models.{CreativeWork, Example, ExemplifiedDomainElement, NodeShape}
 
 class Message(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement

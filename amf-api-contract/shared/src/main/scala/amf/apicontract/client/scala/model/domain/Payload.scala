@@ -7,6 +7,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainE
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.domain.models.{ArrayShape, ExemplifiedDomainElement, NodeShape, ScalarShape}
 import org.yaml.model.YPart
 
 /**

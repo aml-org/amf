@@ -11,7 +11,6 @@ import amf.core.internal.utils.AmfStrings
 import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel.Description
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel.{Settings => SettingsField, _}
-import amf.plugins.domain.apicontract.models.Response
 import org.yaml.model.YPart
 
 class SecurityScheme(override val fields: Fields, override val annotations: Annotations)

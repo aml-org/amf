@@ -10,8 +10,8 @@ import amf.apicontract.internal.metamodel.domain.bindings.{
   Amqp091ChannelExchangeModel => ChannelExchange,
   Amqp091QueueModel => QueueModel
 }
-import amf.plugins.domain.apicontract.models.Key
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, ChannelBinding}
+import amf.apicontract.internal.transformation.stages.Key
 
 class Amqp091ChannelBinding(override val fields: Fields, override val annotations: Annotations)
     extends ChannelBinding

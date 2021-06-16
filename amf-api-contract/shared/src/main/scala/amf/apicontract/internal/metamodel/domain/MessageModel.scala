@@ -9,6 +9,8 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.shapes.internal.domain.metamodel.{ExampleModel, NodeShapeModel}
+import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
 
 trait MessageModel
     extends TagsModel

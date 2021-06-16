@@ -9,6 +9,8 @@ import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.domain.models.{CreativeWork, DocumentedElement}
+import amf.shapes.internal.domain.metamodel.common.DocumentationField._
 
 /**
   * Operation internal model.

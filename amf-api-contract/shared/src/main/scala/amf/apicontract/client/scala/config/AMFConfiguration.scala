@@ -3,10 +3,19 @@ package amf.apicontract.client.scala.config
 import amf.apicontract.client.scala.AMFClient
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
-import amf.apicontract.internal.plugins.{ExternalJsonYamlRefsParsePlugin, JsonSchemaParsePlugin, JsonSchemaRenderPlugin}
+import amf.apicontract.internal.plugins.{
+  ExternalJsonYamlRefsParsePlugin,
+  JsonSchemaParsePlugin,
+  JsonSchemaRenderPlugin
+}
 import amf.apicontract.internal.spec.async.{Async20ParsePlugin, Async20RenderPlugin}
 import amf.apicontract.internal.spec.oas.{Oas20ParsePlugin, Oas20RenderPlugin, Oas30ParsePlugin, Oas30RenderPlugin}
-import amf.apicontract.internal.spec.raml.{Raml08ParsePlugin, Raml08RenderPlugin, Raml10ParsePlugin, Raml10RenderPlugin}
+import amf.apicontract.internal.spec.raml.{
+  Raml08ParsePlugin,
+  Raml08RenderPlugin,
+  Raml10ParsePlugin,
+  Raml10RenderPlugin
+}
 import amf.client.environment.AMLConfiguration
 import amf.core.client.platform.config.AMFLogger
 import amf.core.client.scala.config._
@@ -20,15 +29,32 @@ import amf.core.internal.resource.{AMFResolvers, ResourceLoader}
 import amf.core.internal.validation.core.ValidationProfile
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
 import amf.apicontract.internal.spec.payload.{PayloadParsePlugin, PayloadRenderPlugin}
-import amf.apicontract.internal.transformation.{Async20EditingPipeline, Oas20CachePipeline, Oas20EditingPipeline, Oas3CachePipeline, Oas3EditingPipeline, Raml08CachePipeline, Raml08EditingPipeline, Raml10CachePipeline, Raml10EditingPipeline}
-import amf.plugins.document.apicontract.resolution.pipelines._
-import amf.apicontract.internal.transformation.compatibility.{Oas20CompatibilityPipeline, Oas3CompatibilityPipeline, Raml08CompatibilityPipeline, Raml10CompatibilityPipeline}
-import amf.apicontract.internal.validation.payload.JsonSchemaShapePayloadValidationPlugin
+import amf.apicontract.internal.transformation.{
+  Async20EditingPipeline,
+  Async20TransformationPipeline,
+  Oas20CachePipeline,
+  Oas20EditingPipeline,
+  Oas20TransformationPipeline,
+  Oas30TransformationPipeline,
+  Oas3CachePipeline,
+  Oas3EditingPipeline,
+  Raml08CachePipeline,
+  Raml08EditingPipeline,
+  Raml08TransformationPipeline,
+  Raml10CachePipeline,
+  Raml10EditingPipeline,
+  Raml10TransformationPipeline
+}
+import amf.apicontract.internal.transformation.compatibility.{
+  Oas20CompatibilityPipeline,
+  Oas3CompatibilityPipeline,
+  Raml08CompatibilityPipeline,
+  Raml10CompatibilityPipeline
+}
+import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
-import amf.plugins.document.apicontract.validation.plugins.FullShaclModelValidationPlugin
+import amf.apicontract.internal.validation.shacl.{CustomShaclModelValidationPlugin, FullShaclModelValidationPlugin}
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.parse._
-import amf.plugins.render._
 import amf.shapes.client.scala.annotations.ShapeSerializableAnnotations
 import amf.shapes.client.scala.entities.ShapeEntities
 
