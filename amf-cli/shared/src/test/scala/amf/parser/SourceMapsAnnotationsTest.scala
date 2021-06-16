@@ -1,6 +1,7 @@
 package amf.parser
 
-import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.client.scala.parse.AMFParser

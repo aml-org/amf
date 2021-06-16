@@ -1,6 +1,6 @@
 package amf.maker
 
-import amf.apicontract.client.scala.config.WebAPIConfiguration
+import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain._
 import amf.common.AmfObjectTestMatcher
@@ -10,8 +10,7 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.metamodel.Field
 import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
-import amf.shapes.client.scala.domain.models.XMLSerializer
-import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
 import org.mulesoft.common.test.ListAssertions
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 

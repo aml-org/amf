@@ -1,7 +1,7 @@
 package amf.client.model.domain
 
 import amf.apicontract.client.platform.model.domain.security._
-import amf.apicontract.client.scala.config.APIConfiguration
+import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
 import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}

@@ -1,6 +1,6 @@
 package amf.compiler
 
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.ResourceType
 import amf.apicontract.client.scala.model.domain.{Parameter, Response}

@@ -1,6 +1,6 @@
 package amf.cli.client
 
-import amf.apicontract.client.scala.config.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.cli.internal.commands._
 import amf.core.internal.benchmark.ExecutionLog
 import amf.core.internal.benchmark.ExecutionLog.executionContext

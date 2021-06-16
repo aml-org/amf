@@ -6,7 +6,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.annotations.SourceLocation
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.domain.resolution.elements.CompleteShapeTransformationPipeline
 import org.scalatest.FunSuite

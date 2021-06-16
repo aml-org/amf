@@ -1,6 +1,6 @@
 package amf.cli.internal.convert
 
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.Raml10EditingPipeline
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler

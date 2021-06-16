@@ -12,7 +12,7 @@ import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.RegexConverter
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{FileShape, IriTemplateMapping, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel._
 import amf.validation.internal.shacl.custom.CustomShaclValidator.CustomShaclFunctions

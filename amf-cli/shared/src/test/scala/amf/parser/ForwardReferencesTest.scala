@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.apicontract.client.scala.config.RAMLConfiguration
+import amf.apicontract.client.scala.RAMLConfiguration
 import amf.core.client.common.position.Range
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.validation.AMFValidationResult

@@ -1,5 +1,5 @@
 package amf.validation
-import amf.apicontract.client.scala.config.RAMLConfiguration
+import amf.apicontract.client.scala.RAMLConfiguration
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.apicontract.internal.validation.payload.CandidateValidator
 import amf.core.client.common.validation.{AmfProfile, PayloadProfile, SeverityLevels}

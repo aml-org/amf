@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.apicontract.client.scala.config.APIConfiguration
+import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.remote._

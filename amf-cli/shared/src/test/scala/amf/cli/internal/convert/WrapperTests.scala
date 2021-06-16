@@ -1,7 +1,7 @@
 package amf.cli.internal.convert
 
 import _root_.org.scalatest.Matchers
-import amf.apicontract.client.platform.config.{
+import amf.apicontract.client.platform.{
   AMFConfiguration,
   AsyncAPIConfiguration,
   RAMLConfiguration,

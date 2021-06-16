@@ -21,7 +21,7 @@ import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain._
 import amf.core.internal.remote.Vendor
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.SchemaVersion

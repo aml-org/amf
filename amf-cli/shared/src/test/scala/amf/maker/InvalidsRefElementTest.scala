@@ -1,6 +1,6 @@
 package amf.maker
 
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.client.scala.model.document.Document

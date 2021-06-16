@@ -1,6 +1,7 @@
 package amf.extensions
 
-import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.ParsingOptions

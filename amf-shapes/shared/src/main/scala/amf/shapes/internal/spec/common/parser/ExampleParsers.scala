@@ -9,7 +9,7 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode, _}
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.annotations.{ExternalReferenceUrl, ParsedJSONExample}
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{AnyShape, Example, ExemplifiedDomainElement, ScalarShape}
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.domain.metamodel.common.ExamplesField

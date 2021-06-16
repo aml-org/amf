@@ -1,7 +1,7 @@
 package amf.cli.internal.commands
 
 import amf.aml.client.scala.model.document.DialectInstancePatch
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Platform
 

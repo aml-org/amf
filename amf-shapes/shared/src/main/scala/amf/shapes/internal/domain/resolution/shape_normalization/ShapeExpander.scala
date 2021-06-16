@@ -10,7 +10,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.resolution.recursion.{LinkableRegisterCriteria, RecursionErrorRegister}
-import amf.shapes.client.scala.domain.models.UnresolvedShape
+import amf.shapes.client.scala.model.domain.UnresolvedShape
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,

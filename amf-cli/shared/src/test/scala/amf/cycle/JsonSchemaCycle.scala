@@ -1,6 +1,7 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler

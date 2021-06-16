@@ -1,6 +1,7 @@
 package amf.javaparser.org.raml
 
-import amf.apicontract.client.scala.config.{AMFConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, WebAPIConfiguration}
+
 import amf.apicontract.internal.transformation.AmfEditingPipeline
 import amf.core.client.common.validation._
 import amf.core.client.scala.config.RenderOptions

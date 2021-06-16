@@ -1,6 +1,6 @@
 package amf.client.validation
 
-import amf.apicontract.client.platform.config.WebAPIConfiguration
+import amf.apicontract.client.platform.WebAPIConfiguration
 import amf.cli.internal.convert.NativeOps
 import amf.shapes.internal.convert.ShapeClientConverters._
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode}
@@ -10,6 +10,7 @@ import amf.core.client.platform.model.domain.{PropertyShape, RecursiveShape, Sha
 import amf.core.client.platform.validation.AMFShapePayloadValidator
 import amf.core.client.scala.model.domain.{RecursiveShape => InternalRecursiveShape}
 import amf.shapes.client.platform.model.domain._
+import amf.shapes.client.scala.model.domain.{ScalarShape => InternalScalarShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.ExecutionContext

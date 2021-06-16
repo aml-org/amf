@@ -2,7 +2,7 @@ package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
 import amf.core.client.platform.model.{BoolField, StrField}
-import amf.shapes.client.scala.model.domain
+import amf.shapes.client.scala.model.domain.{Example => InternalExample}
 import amf.shapes.internal.convert.ShapeClientConverters.ClientOption
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -12,7 +12,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
   * Example model class
   */
 @JSExportAll
-case class Example(override private[amf] val _internal: domain.Example)
+case class Example(override private[amf] val _internal: InternalExample)
     extends DomainElement
     with Linkable
     with NamedDomainElement {

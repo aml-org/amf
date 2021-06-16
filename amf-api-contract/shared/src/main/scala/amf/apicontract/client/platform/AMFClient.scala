@@ -1,7 +1,6 @@
 package amf.apicontract.client.platform
 
 import amf.aml.client.platform.BaseAMLClient
-import amf.apicontract.client.platform.config.AMFConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.AMFResult
 import amf.core.client.platform.model.document.BaseUnit

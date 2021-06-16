@@ -15,8 +15,7 @@ import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.annotations._
-import amf.shapes.client.scala.domain.models.UnresolvedShape
-import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape, UnresolvedShape}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.{ExternalFragmentHelper, NodeDataNodeParser}

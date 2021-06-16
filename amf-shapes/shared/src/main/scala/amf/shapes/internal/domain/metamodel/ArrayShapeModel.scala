@@ -5,7 +5,7 @@ import amf.core.internal.metamodel.Type.{Bool, Int, SortedArray, Str}
 import amf.core.internal.metamodel.domain._
 import amf.core.client.scala.vocabulary.Namespace.{Shacl, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
-import amf.shapes.client.scala.domain.models.TupleShape
+import amf.shapes.client.scala.model.domain.{ArrayShape, MatrixShape, TupleShape}
 
 /**
   * Array shape metamodel

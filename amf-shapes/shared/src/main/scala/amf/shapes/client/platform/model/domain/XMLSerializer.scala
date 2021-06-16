@@ -2,7 +2,7 @@ package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.domain.DomainElement
 import amf.core.client.platform.model.{BoolField, StrField}
-import amf.shapes.client.scala.model.domain.XMLSerializer
+import amf.shapes.client.scala.model.domain.{XMLSerializer => InternalXMLSerializer}
 import amf.shapes.internal.convert.ShapeClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * XMLSerializer model class.
   */
 @JSExportAll
-case class XMLSerializer(override private[amf] val _internal: XMLSerializer) extends DomainElement {
+case class XMLSerializer(override private[amf] val _internal: InternalXMLSerializer) extends DomainElement {
 
   @JSExportTopLevel("model.domain.XMLSerializer")
   def this() = this(InternalXMLSerializer())

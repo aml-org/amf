@@ -9,7 +9,7 @@ import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.domain.models.DocumentedElement
+import amf.shapes.client.scala.model.domain.DocumentedElement
 import amf.shapes.client.scala.model.domain.{CreativeWork, DocumentedElement}
 
 /**

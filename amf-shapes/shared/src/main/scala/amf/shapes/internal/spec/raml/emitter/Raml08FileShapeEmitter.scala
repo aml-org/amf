@@ -5,7 +5,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{FileShape, ScalarShape}
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import org.yaml.model.YDocument

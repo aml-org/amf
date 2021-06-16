@@ -2,7 +2,7 @@ package amf.cli.internal.commands
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.internal.utils.VocabulariesRegister
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.convert.ApiRegister
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions

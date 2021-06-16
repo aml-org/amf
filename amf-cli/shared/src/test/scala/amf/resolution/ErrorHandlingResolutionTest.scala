@@ -1,5 +1,5 @@
 package amf.resolution
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.AmfTransformationPipeline
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnknownSecuritySchemeErrorSpecification
 import amf.core.client.common.validation.SeverityLevels

@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.config.WebAPIConfiguration
+import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.RdfUnitConverter

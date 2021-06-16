@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext

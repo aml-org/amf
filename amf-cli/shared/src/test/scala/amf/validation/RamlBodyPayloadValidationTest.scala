@@ -1,7 +1,6 @@
 package amf.validation
 
-import amf.apicontract.client.scala.AMFClient
-import amf.apicontract.client.scala.config.WebAPIConfiguration
+import amf.apicontract.client.scala.{AMFClient, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.common.validation.{StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.document.{BaseUnit, Document}

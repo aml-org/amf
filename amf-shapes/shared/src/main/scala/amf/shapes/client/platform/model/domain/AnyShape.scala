@@ -3,11 +3,11 @@ package amf.shapes.client.platform.model.domain
 import amf.core.client.platform.model.domain.Shape
 import amf.core.client.scala.model.StrField
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.scala.domain.models
+import amf.shapes.client.scala.model.domain
 import amf.shapes.internal.convert.ShapeClientConverters._
 
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
-import amf.shapes.client.scala.domain.models.{AnyShape => InternalAnyShape}
+import amf.shapes.client.scala.model.domain.{AnyShape => InternalAnyShape}
 import amf.shapes.client.scala.model.domain
 import amf.shapes.internal.convert.ShapeClientConverters._
 

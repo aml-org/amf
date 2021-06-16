@@ -6,7 +6,7 @@ import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.spec.common.TypeDef.{JSONSchemaType, _}
-import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,

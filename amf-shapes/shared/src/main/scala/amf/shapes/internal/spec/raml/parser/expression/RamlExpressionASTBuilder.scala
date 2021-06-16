@@ -5,7 +5,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.internal.annotations.{DeclaredElement, VirtualNode}
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, UnionShape}
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.shapes.internal.spec.raml.parser.expression.Token._

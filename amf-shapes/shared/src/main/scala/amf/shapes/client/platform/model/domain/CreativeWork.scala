@@ -2,7 +2,7 @@ package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.DomainElement
-import amf.shapes.client.scala.model.domain.CreativeWork
+import amf.shapes.client.scala.model.domain.{CreativeWork => InternalCreativeWork}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.shapes.internal.convert.ShapeClientConverters._
@@ -11,7 +11,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
   * CreativeWork model class.
   */
 @JSExportAll
-case class CreativeWork(private[amf] val _internal: CreativeWork) extends DomainElement {
+case class CreativeWork(private[amf] val _internal: InternalCreativeWork) extends DomainElement {
 
   @JSExportTopLevel("model.domain.CreativeWork")
   def this() = this(InternalCreativeWork())

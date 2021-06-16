@@ -1,7 +1,8 @@
 package amf.validation
 
 import _root_.org.scalatest.AsyncFunSuite
-import amf.apicontract.client.scala.config.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
+
 import amf.core.client.common.validation._
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.validation.AMFValidationReport

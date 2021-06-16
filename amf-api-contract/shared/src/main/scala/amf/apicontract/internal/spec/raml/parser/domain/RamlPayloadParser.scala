@@ -11,7 +11,7 @@ import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
-import amf.shapes.client.scala.domain.models.NodeShape
+import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.spec.common.parser.AnnotationParser

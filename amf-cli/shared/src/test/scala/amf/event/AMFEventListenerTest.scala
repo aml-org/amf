@@ -1,6 +1,6 @@
 package amf.event
 
-import amf.apicontract.client.scala.config.RAMLConfiguration
+import amf.apicontract.client.scala.RAMLConfiguration
 import amf.core.client.platform.config.AMFEventNames
 import amf.core.client.scala.config.{AMFEvent, AMFEventListener}
 import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}

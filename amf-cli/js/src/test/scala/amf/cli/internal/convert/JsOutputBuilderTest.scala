@@ -1,6 +1,6 @@
 package amf.cli.internal.convert
 
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import org.yaml.builder.JsOutputBuilder
 import org.yaml.model.YDocument

@@ -9,7 +9,7 @@ import amf.core.internal.render.BaseEmitters.EntryPartEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.shapes.internal.annotations.{ExternalReferenceUrl, ExternalSchemaWrapper, ForceEntry, ParsedJSONSchema}
-import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,

@@ -1,6 +1,7 @@
 package amf.emit
 
-import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Vendor

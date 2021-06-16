@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.apicontract.client.scala.config.WebAPIConfiguration
+import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}

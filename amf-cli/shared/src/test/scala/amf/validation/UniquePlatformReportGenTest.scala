@@ -1,7 +1,8 @@
 package amf.validation
 
+import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import org.scalatest.{Assertion, AsyncFunSuite}
-import amf.apicontract.client.scala.config.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation._
 import amf.core.client.scala.AMFResult

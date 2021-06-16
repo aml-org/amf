@@ -8,7 +8,7 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{Example, ScalarShape}
 import amf.shapes.internal.domain.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.shapes.internal.spec.common.emitter.DataNodeEmitter

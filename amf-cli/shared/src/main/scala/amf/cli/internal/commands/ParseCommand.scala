@@ -1,6 +1,6 @@
 package amf.cli.internal.commands
 
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.internal.remote.Platform
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -1,13 +1,13 @@
 package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.domain.Shape
-import amf.shapes.client.scala.model.domain
+import amf.shapes.client.scala.model.domain.{ArrayShape => InternalArrayShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.shapes.internal.convert.ShapeClientConverters._
 
 @JSExportAll
-case class ArrayShape(private[amf] override val _internal: domain.ArrayShape) extends DataArrangeShape(_internal) {
+case class ArrayShape(private[amf] override val _internal: InternalArrayShape) extends DataArrangeShape(_internal) {
 
   @JSExportTopLevel("model.domain.ArrayShape")
   def this() = this(InternalArrayShape())

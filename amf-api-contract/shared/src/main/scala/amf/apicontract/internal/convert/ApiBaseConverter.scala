@@ -1,9 +1,7 @@
 package amf.apicontract.internal.convert
 
 import amf.apicontract.client.platform
-import amf.apicontract.client.platform.config
 import amf.apicontract.client.platform.model.domain
-import amf.apicontract.client.scala.config.AMFConfiguration
 import amf.apicontract.client.scala.model.domain.{
   Callback,
   CorrelationId,
@@ -63,7 +61,7 @@ import amf.apicontract.client.scala.model.domain.security.{
   Settings
 }
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
-import amf.apicontract.client.scala.{AMFDocumentResult, AMFLibraryResult}
+import amf.apicontract.client.scala.{AMFConfiguration, AMFDocumentResult, AMFLibraryResult}
 import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.internal.convert.ShapesBaseConverter
@@ -543,9 +541,9 @@ trait TemplatedLinkConverter extends PlatformSecrets {
 }
 
 trait AMFConfigurationConverter {
-  implicit object AMFConfigurationMatcher extends BidirectionalMatcher[AMFConfiguration, config.AMFConfiguration] {
-    override def asClient(from: AMFConfiguration): config.AMFConfiguration   = new config.AMFConfiguration(from)
-    override def asInternal(from: config.AMFConfiguration): AMFConfiguration = from._internal
+  implicit object AMFConfigurationMatcher extends BidirectionalMatcher[AMFConfiguration, platform.AMFConfiguration] {
+    override def asClient(from: AMFConfiguration): platform.AMFConfiguration   = new platform.AMFConfiguration(from)
+    override def asInternal(from: platform.AMFConfiguration): AMFConfiguration = from._internal
   }
 }
 

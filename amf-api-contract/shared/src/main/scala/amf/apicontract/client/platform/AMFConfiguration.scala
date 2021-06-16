@@ -1,12 +1,10 @@
-package amf.apicontract.client.platform.config
+package amf.apicontract.client.platform
 
 import amf.aml.client.platform.BaseAMLConfiguration
 import amf.aml.client.platform.model.document.Dialect
-import amf.apicontract.client.platform.AMFClient
-import amf.apicontract.client.scala.config
+import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.common.validation.ValidationProfile
-import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
 import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
@@ -14,17 +12,13 @@ import amf.core.client.platform.resource.ResourceLoader
 import amf.core.client.platform.transform.TransformationPipeline
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.core.internal.convert.TransformationPipelineConverter._
-import amf.apicontract.client.scala.config.{
-  AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
-  OASConfiguration => InternalOASConfiguration,
-  RAMLConfiguration => InternalRAMLConfiguration,
-  WebAPIConfiguration => InternalWebAPIConfiguration
-}
+import amf.apicontract.client.scala.{WebAPIConfiguration => InternalWebAPIConfiguration, RAMLConfiguration => InternalRAMLConfiguration, OASConfiguration => InternalOASConfiguration, AsyncAPIConfiguration => InternalAsyncAPIConfiguration}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import amf.apicontract.client.scala
 
 @JSExportAll
-class AMFConfiguration private[amf] (private[amf] override val _internal: config.AMFConfiguration)
+class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
     extends BaseAMLConfiguration(_internal) {
 
   override def createClient(): AMFClient = new AMFClient(this)

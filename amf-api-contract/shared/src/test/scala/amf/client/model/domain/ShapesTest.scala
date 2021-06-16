@@ -1,6 +1,6 @@
 package amf.client.model.domain
 
-import amf.apicontract.client.scala.config.APIConfiguration
+import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain._
 import amf.core.internal.convert.CoreRegister

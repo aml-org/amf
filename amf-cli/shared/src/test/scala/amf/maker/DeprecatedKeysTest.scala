@@ -1,6 +1,6 @@
 package amf.maker
 
-import amf.apicontract.client.scala.config.RAMLConfiguration
+import amf.apicontract.client.scala.RAMLConfiguration
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.common.validation.{ProfileName, Raml08Profile, Raml10Profile, SeverityLevels}
 import amf.core.client.scala.validation.AMFValidationReport

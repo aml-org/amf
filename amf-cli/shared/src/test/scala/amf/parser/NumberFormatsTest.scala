@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.apicontract.client.scala.config.RAMLConfiguration
+import amf.apicontract.client.scala.RAMLConfiguration
 import amf.core.client.scala.model.document.Fragment
 import amf.core.internal.remote.Raml10
 import amf.core.internal.unsafe.PlatformSecrets

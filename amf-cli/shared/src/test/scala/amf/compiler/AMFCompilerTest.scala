@@ -1,6 +1,7 @@
 package amf.compiler
 
-import amf.apicontract.client.scala.config.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, IgnoringErrorHandler, UnhandledErrorHandler}

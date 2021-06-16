@@ -1,6 +1,7 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.render.ApiDomainElementEmitter

@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
 import amf.apicontract.internal.transformation.Raml10TransformationPipeline
@@ -13,7 +13,7 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.remote.{Raml10, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{ArrayShape, MatrixShape, ScalarShape, UnionShape}
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser

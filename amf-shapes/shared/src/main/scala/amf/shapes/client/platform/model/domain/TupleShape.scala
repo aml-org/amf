@@ -7,9 +7,10 @@ import amf.shapes.internal.convert.ShapeClientConverters.ClientList
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.shapes.internal.convert.ShapeClientConverters._
+import amf.shapes.client.scala.model.domain.{TupleShape => InternalTupleShape}
 
 @JSExportAll
-case class TupleShape(private[amf] override val _internal: domain.TupleShape) extends DataArrangeShape(_internal) {
+case class TupleShape(private[amf] override val _internal: InternalTupleShape) extends DataArrangeShape(_internal) {
 
   @JSExportTopLevel("model.domain.TupleShape")
   def this() = this(InternalTupleShape())

@@ -5,7 +5,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.IdCounter
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ExampleModel}
 import amf.shapes.internal.spec.common.emitter.{

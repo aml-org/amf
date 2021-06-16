@@ -6,9 +6,10 @@ import amf.shapes.client.scala.model.domain
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.shapes.internal.convert.ShapeClientConverters._
+import amf.shapes.client.scala.model.domain.{ScalarShape => InternalScalarShape}
 
 @JSExportAll
-case class ScalarShape(override private[amf] val _internal: domain.ScalarShape) extends AnyShape(_internal) {
+case class ScalarShape(override private[amf] val _internal: InternalScalarShape) extends AnyShape(_internal) {
 
   @JSExportTopLevel("model.domain.ScalarShape")
   def this() = this(InternalScalarShape())

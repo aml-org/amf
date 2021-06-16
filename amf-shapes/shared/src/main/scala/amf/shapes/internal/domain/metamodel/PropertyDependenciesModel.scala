@@ -5,7 +5,7 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type._
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
-import amf.shapes.client.scala.domain.models.SchemaDependencies
+import amf.shapes.client.scala.model.domain.SchemaDependencies
 import amf.shapes.client.scala.model.domain.PropertyDependencies
 
 /**

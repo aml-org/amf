@@ -21,7 +21,7 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
-import amf.shapes.client.scala.domain.models.NodeShape
+import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.{Example, NodeShape}
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
 import amf.shapes.internal.spec.common.parser.{

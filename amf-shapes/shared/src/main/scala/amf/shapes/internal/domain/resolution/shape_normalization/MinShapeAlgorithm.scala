@@ -13,7 +13,7 @@ import amf.core.internal.parser.domain.{Annotations, Value}
 import amf.core.internal.utils.IdCounter
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.annotations.ParsedJSONSchema
-import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,

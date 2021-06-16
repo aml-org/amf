@@ -16,7 +16,7 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.internal.annotations.OrphanOasExtension
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{CreativeWork, Example}
 import amf.shapes.internal.spec.common.emitter.ExampleDataNodePartEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

@@ -1,6 +1,7 @@
 package amf.iterator
 
-import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.compiler.CompilerTestBuilder

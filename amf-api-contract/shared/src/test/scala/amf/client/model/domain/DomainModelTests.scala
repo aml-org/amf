@@ -33,7 +33,7 @@ import amf.apicontract.client.platform.model.domain.{
   Tag,
   TemplatedLink
 }
-import amf.apicontract.client.scala.config.APIConfiguration
+import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
 import amf.shapes.client.platform.model.domain.{

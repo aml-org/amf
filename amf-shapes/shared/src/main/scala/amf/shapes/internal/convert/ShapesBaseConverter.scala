@@ -3,7 +3,7 @@ package amf.shapes.internal.convert
 import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.platform.model.domain
-import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,

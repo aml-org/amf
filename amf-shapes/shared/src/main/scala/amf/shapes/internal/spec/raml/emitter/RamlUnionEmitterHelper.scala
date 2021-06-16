@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.raml.emitter
 
 import amf.core.client.scala.model.domain.Shape
-import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,

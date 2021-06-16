@@ -1,6 +1,6 @@
 package amf.maker
 
-import amf.apicontract.client.scala.config.WebAPIConfiguration
+import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder

@@ -6,7 +6,7 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.Value
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, UnionShapeModel}
-import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, UnionShape}
 
 abstract class ShapeLinksTransformer extends ElementStageTransformer[Shape] {

@@ -3,7 +3,7 @@ package amf.cli.internal.commands
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.DialectInstance
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Platform

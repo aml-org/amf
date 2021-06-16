@@ -1,7 +1,8 @@
 package amf.validation
 
 import amf.apicontract.client.common.ProvidedMediaType
-import amf.apicontract.client.scala.config.{RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
+
 import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.model.document.{Document, Module, PayloadFragment}
 import amf.core.client.scala.model.domain.ScalarNode
@@ -10,7 +11,7 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
 import amf.core.internal.render.AMFSerializer
 import amf.io.FileAssertionTest
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.{AsyncFunSuite, Matchers}

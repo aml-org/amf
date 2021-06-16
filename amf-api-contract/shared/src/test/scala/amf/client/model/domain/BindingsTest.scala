@@ -11,7 +11,7 @@ import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
 }
 import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.apicontract.client.platform.model.domain.bindings._
-import amf.apicontract.client.scala.config.APIConfiguration
+import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.shapes.client.platform.model.domain.AnyShape
 import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}

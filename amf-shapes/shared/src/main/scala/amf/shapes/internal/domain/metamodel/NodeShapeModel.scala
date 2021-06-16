@@ -6,7 +6,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Bool, Int, Str}
 import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
-import amf.shapes.client.scala.domain.models.NodeShape
+import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.AnyShape
 
 /**

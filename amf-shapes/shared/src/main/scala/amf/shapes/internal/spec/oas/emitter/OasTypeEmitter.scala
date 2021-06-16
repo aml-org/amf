@@ -10,7 +10,7 @@ import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
 import amf.shapes.internal.annotations.ExternalJsonSchemaShape
-import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,

@@ -1,6 +1,6 @@
 package amf.recursive.shapes
 
-import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation.{ProfileName, Raml10Profile}
 import amf.core.client.scala.errorhandling.DefaultErrorHandler

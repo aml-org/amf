@@ -15,7 +15,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields, FutureDeclarations,
 import amf.core.internal.utils.IdCounter
 import amf.shapes.internal.annotations.{CollectionFormatFromItems, JSONSchemaId, TypePropertyLexicalInfo}
 import amf.shapes.internal.spec.common.TypeDef._
-import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
   DiscriminatorValue,
   DiscriminatorValueTarget

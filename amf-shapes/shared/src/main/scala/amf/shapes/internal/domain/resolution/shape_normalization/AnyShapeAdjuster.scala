@@ -2,7 +2,7 @@ package amf.shapes.internal.domain.resolution.shape_normalization
 
 import amf.core.internal.metamodel.Field
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,

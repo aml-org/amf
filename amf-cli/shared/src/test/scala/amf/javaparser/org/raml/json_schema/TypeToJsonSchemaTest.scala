@@ -1,6 +1,7 @@
 package amf.javaparser.org.raml.json_schema
 
-import amf.apicontract.client.scala.config.{AMFConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, WebAPIConfiguration}
+
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.remote.{Hint, Oas20YamlHint, Oas30YamlHint, Vendor}

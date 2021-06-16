@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.apicontract.client.scala.config.RAMLConfiguration
+import amf.apicontract.client.scala.RAMLConfiguration
 import amf.apicontract.internal.transformation.AmfTransformationPipeline
 import amf.client.validation.PayloadValidationUtils
 import amf.core.client.common.validation.StrictValidationMode

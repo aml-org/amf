@@ -5,7 +5,7 @@ import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.Emitter
 import amf.shapes.internal.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
-import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,
@@ -45,8 +45,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
       case shape: AnyShape      => RamlAnyShapeEmitter(shape, ordering, Nil).emitters()
       case other =>
         Seq(
-          common.emitter.CommentEmitter(other,
-                                        s"Unsupported shape class for emit raml 08 spec ${other.getClass.toString}`"))
+          common.emitter
+            .CommentEmitter(other, s"Unsupported shape class for emit raml 08 spec ${other.getClass.getSimpleName}`"))
     }
   }
 
@@ -61,8 +61,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
         emitter.SimpleTypeEmitter(scalar, ordering).emitters() :+ MapEntryEmitter("repeat", "true", YType.Bool)
       case other =>
         Seq(
-          common.emitter.CommentEmitter(other,
-                                        s"Cannot emit array shape with items ${other.getClass.toString} in raml 08"))
+          common.emitter
+            .CommentEmitter(other, s"Cannot emit array shape with items ${other.getClass.getSimpleName} in raml 08"))
     }
   }
 

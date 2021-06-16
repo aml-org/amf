@@ -8,7 +8,7 @@ import amf.core.client.scala.validation.payload.{
   ValidatePayloadRequest
 }
 import amf.core.internal.validation.ValidationConfiguration
-import amf.shapes.client.scala.domain.models.SchemaShape
+import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape}
 import amf.shapes.internal.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
 

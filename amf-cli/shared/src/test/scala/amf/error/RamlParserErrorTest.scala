@@ -4,7 +4,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.Clo
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-import amf.shapes.client.scala.domain.models.UnresolvedShape
+import amf.shapes.client.scala.model.domain.UnresolvedShape
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnresolvedShape}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.MissingRequiredUserDefinedFacet
 

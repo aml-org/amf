@@ -1,6 +1,7 @@
 package amf.cli.internal.commands
 
-import amf.apicontract.client.scala.config.{RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
+
 import amf.core.internal.remote.{Aml, Oas20, Raml10}
 import amf.core.internal.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
