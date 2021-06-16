@@ -1,13 +1,14 @@
 package amf.emit
 
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.aml.internal.utils.VocabulariesRegister
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote.{Platform, Vendor}
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.plugins.domain.VocabulariesRegister
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -17,9 +18,6 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
 
   // Remod registering
   VocabulariesRegister.register(platform)
-//  amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-//  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
-//  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
   /** Print ast to string. */
   def renderToString(implicit executionContext: ExecutionContext): String = render()

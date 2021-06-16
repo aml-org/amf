@@ -1,17 +1,18 @@
 package amf.resolution
 
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
+import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.FieldsFilter.All
 import amf.core.client.scala.model.domain.{AmfObject, RecursiveShape}
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote.{AsyncApi20, Hint, Oas20YamlHint, Raml10YamlHint}
 import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.collections.FilterType
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers.{contain, convertToAnyShouldWrapper}
-import amf.core.client.common.transform._
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with ResolutionCapabilities {

@@ -1,20 +1,21 @@
 package amf.validation
 
-import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.common.ProvidedMediaType
+import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
+
 import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.model.document.{Document, Module, PayloadFragment}
 import amf.core.client.scala.model.domain.ScalarNode
 import amf.core.client.scala.validation.AMFValidator
-import amf.core.internal.render.AMFSerializer
-import amf.facades.Validation
-import amf.io.FileAssertionTest
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
-import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
+import amf.core.internal.render.AMFSerializer
+import amf.io.FileAssertionTest
+import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.{AsyncFunSuite, Matchers}
-import amf.client.exported.ProvidedMediaType
+
 import scala.concurrent.ExecutionContext
 
 class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest with Matchers {
@@ -36,8 +37,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
     doc.withReferences(Seq(module))
 
     for {
-      validation <- Validation(platform)
-      report     <- AMFValidator.validate(module, Raml10Profile, RAMLConfiguration.RAML10())
+      report <- AMFValidator.validate(module, Raml10Profile, RAMLConfiguration.RAML10())
     } yield {
       report.conforms should be(true)
     }

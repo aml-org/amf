@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit

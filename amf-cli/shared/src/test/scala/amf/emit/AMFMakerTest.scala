@@ -1,12 +1,11 @@
 package amf.emit
 
-import amf.client.environment.APIConfiguration
+import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.remote._
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.plugins.domain.VocabulariesRegister
 import org.mulesoft.common.test.ListAssertions
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}

@@ -1,15 +1,19 @@
 package amf.client.model.domain
 
-import amf.client.convert.ApiClientConverters._
+import amf.apicontract.client.platform.model.domain.security._
+import amf.apicontract.client.scala.APIConfiguration
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
-import amf.plugins.document.{WebApi => WebApiObject}
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
 
-class SettingsTest extends FunSuite with Matchers {
-  WebApiObject.register()
+class SettingsTest extends FunSuite with Matchers with BeforeAndAfterAll {
 
   val s                                    = "test string"
   val clientStringList: ClientList[String] = Seq(s).asClient
+
+  override protected def beforeAll(): Unit = {
+    APIConfiguration.API() // TODO: ARM remove after wrappers are deleted
+  }
 
   test("test Settings") {
     val node = new ScalarNode()

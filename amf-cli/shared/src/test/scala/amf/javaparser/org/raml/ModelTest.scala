@@ -1,26 +1,19 @@
 package amf.javaparser.org.raml
 
-import amf.client.environment.{AMFConfiguration, WebAPIConfiguration}
-import amf.core.client.common.validation.{
-  Async20Profile,
-  Oas20Profile,
-  Oas30Profile,
-  ProfileName,
-  Raml08Profile,
-  Raml10Profile
-}
+import amf.apicontract.client.scala.{AMFConfiguration, WebAPIConfiguration}
+
+import amf.apicontract.internal.transformation.AmfEditingPipeline
+import amf.core.client.common.validation._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, EncodesModel, Module}
-import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.remote.{Raml10YamlHint, _}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.emit.AMFRenderer
-import amf.plugins.document.apicontract.resolution.pipelines.AmfEditingPipeline
-import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
+import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 
 import scala.concurrent.Future
 

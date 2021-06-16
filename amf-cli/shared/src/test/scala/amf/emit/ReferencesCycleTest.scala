@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit

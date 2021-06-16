@@ -4,7 +4,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.templates.{ParametrizedDeclaration, VariableValue}
 import amf.core.internal.remote.{Hint, Raml10, Raml10YamlHint, Vendor}
 import amf.io.FunSuiteCycleTests
-import amf.plugins.domain.apicontract.models.api.WebApi
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import org.scalatest.Assertion
 
 import scala.concurrent.Future

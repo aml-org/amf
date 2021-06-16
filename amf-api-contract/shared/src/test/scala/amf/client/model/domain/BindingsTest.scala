@@ -1,17 +1,31 @@
 package amf.client.model.domain
 
-import amf.client.convert.ApiClientConverters._
-import amf.plugins.document.{WebApi => WebApiObject}
-import amf.plugins.domain.apicontract.models.{bindings => InternalBindings}
-import org.scalatest.{FunSuite, Matchers}
+import amf.apicontract.client.platform.model.domain.bindings.amqp._
+import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
+import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
+import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
+  MqttMessageBinding,
+  MqttOperationBinding,
+  MqttServerBinding,
+  MqttServerLastWill
+}
+import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
+import amf.apicontract.client.platform.model.domain.bindings._
+import amf.apicontract.client.scala.APIConfiguration
+import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.shapes.client.platform.model.domain.AnyShape
+import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
 
-class BindingsTest extends FunSuite with Matchers {
-  WebApiObject.register()
+class BindingsTest extends FunSuite with Matchers with BeforeAndAfterAll {
 
   val s                                    = "test string"
   val stringSeq                            = Seq(s)
   val clientStringList: ClientList[String] = stringSeq.asClient
   val shape                                = new AnyShape()
+
+  override protected def beforeAll(): Unit = {
+    APIConfiguration.API() // TODO: ARM remove after wrappers are deleted
+  }
 
   test("test Amqp091ChannelExchange") {
     val exchange = new Amqp091ChannelExchange()
@@ -23,6 +37,7 @@ class BindingsTest extends FunSuite with Matchers {
     exchange.durable.value() shouldBe true
     exchange.autoDelete.value() shouldBe false
     exchange.vHost.value() shouldBe s
+
   }
 
   test("test Amqp091Queue") {
@@ -85,8 +100,9 @@ class BindingsTest extends FunSuite with Matchers {
   }
 
   test("test ChannelBindings") {
-    val internalChannelBindings: Seq[InternalBindings.ChannelBinding] = Seq(new Amqp091ChannelBinding()._internal)
-    val clientChannelBindings                                         = internalChannelBindings.asClient
+    val internalChannelBindings: Seq[amf.apicontract.client.scala.model.domain.bindings.ChannelBinding] =
+      Seq(new Amqp091ChannelBinding()._internal)
+    val clientChannelBindings = internalChannelBindings.asClient
 
     val channelBindings = new ChannelBindings()
       .withName(s)
@@ -136,8 +152,9 @@ class BindingsTest extends FunSuite with Matchers {
   }
 
   test("test MessageBindings") {
-    val bindings: Seq[InternalBindings.MessageBinding] = Seq(new Amqp091MessageBinding()._internal)
-    val clientBindings                                 = bindings.asClient
+    val bindings: Seq[amf.apicontract.client.scala.model.domain.bindings.MessageBinding] =
+      Seq(new Amqp091MessageBinding()._internal)
+    val clientBindings = bindings.asClient
     val binding = new MessageBindings()
       .withName(s)
       .withBindings(clientBindings)
@@ -173,8 +190,9 @@ class BindingsTest extends FunSuite with Matchers {
   }
 
   test("test OperationBindings") {
-    val OperationBindings: Seq[InternalBindings.OperationBinding] = Seq(new MqttOperationBinding()._internal)
-    val clientOperationBindings                                   = OperationBindings.asClient
+    val OperationBindings: Seq[amf.apicontract.client.scala.model.domain.bindings.OperationBinding] =
+      Seq(new MqttOperationBinding()._internal)
+    val clientOperationBindings = OperationBindings.asClient
     val operationBindings = new OperationBindings()
       .withName(s)
       .withBindings(clientOperationBindings)
@@ -183,8 +201,9 @@ class BindingsTest extends FunSuite with Matchers {
   }
 
   test("test ServerBindings") {
-    val internalServerBindings: Seq[InternalBindings.ServerBinding] = Seq(new MqttServerBinding()._internal)
-    val clientServerBindings: ClientList[ServerBinding]             = internalServerBindings.asClient
+    val internalServerBindings: Seq[amf.apicontract.client.scala.model.domain.bindings.ServerBinding] =
+      Seq(new MqttServerBinding()._internal)
+    val clientServerBindings: ClientList[ServerBinding] = internalServerBindings.asClient
     val serverBindings = new ServerBindings()
       .withName(s)
       .withBindings(clientServerBindings)

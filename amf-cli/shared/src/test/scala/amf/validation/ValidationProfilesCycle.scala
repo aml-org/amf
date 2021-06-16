@@ -1,12 +1,11 @@
 package amf.validation
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
 import org.mulesoft.common.test.Tests.checkDiff
 import org.scalatest.AsyncFunSuite
 
@@ -21,7 +20,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
   private def cycle(exampleFile: String, hint: Hint, syntax: Syntax, target: Vendor): Future[String] = {
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
-      v                    <- Validation(platform)
+
       clientWithValidation <- config.withCustomValidationsEnabled().map(_.createClient())
       bu                   <- clientWithValidation.parse(basePath + exampleFile).map(_.bu)
       r                    <- Future.successful(clientWithValidation.render(bu, target.mediaType))
@@ -45,7 +44,6 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val expectedFlattened: Future[String] = platform
       .fetchContent(basePath + expectedFlattenedFile, AMFGraphConfiguration.predefined())
       .map(_.stream.toString)
-    val validation = Validation(platform)
     cycle(exampleFile, VocabularyYamlHint, Json, Amf).zip(expected).map(checkDiff)
   }
 
@@ -54,7 +52,6 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile  = "validation_profile_prefixes.yaml.jsonld"
     val expected: Future[String] =
       platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
-    val validation = Validation(platform)
     cycle(exampleFile, AmfJsonHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
@@ -63,14 +60,12 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile  = "validation_profile_example.yaml"
     val expected: Future[String] =
       platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
-    val validation = Validation(platform)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of range") {
     val expectedFile = "validation_profile_example_gold.yaml"
     val exampleFile  = "validation_profile_example.yaml"
-    val validation   = Validation(platform)
     val expected: Future[String] =
       platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
@@ -79,7 +74,6 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
   test("Loading and serializing validations with union type") {
     val expectedFile = "validation_profile_example_gold.yaml"
     val exampleFile  = "validation_profile_example.yaml"
-    val validation   = Validation(platform)
     val expected: Future[String] =
       platform.fetchContent(basePath + expectedFile, AMFGraphConfiguration.predefined()).map(_.stream.toString)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)

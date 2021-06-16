@@ -1,6 +1,7 @@
 package amf.error
 
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.unsafe.PlatformSecrets

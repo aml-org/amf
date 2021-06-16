@@ -1,16 +1,17 @@
 package amf.emit
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.WebAPIConfiguration
+import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
+import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.parser.ParseConfiguration
 import amf.io.FileAssertionTest
-import amf.plugins.document.apicontract.contexts.parser.raml.Raml10WebApiContext
-import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.apicontract.parser.spec.domain.{DefaultExampleOptions, RamlExamplesParser}
-import amf.plugins.domain.shapes.models.{AnyShape, Example}
+import amf.shapes.client.scala.model.domain.Example
+import amf.shapes.client.scala.model.domain.{AnyShape, Example}
+import amf.shapes.internal.spec.common.parser.{DefaultExampleOptions, RamlExamplesParser}
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YDocument, YMap}
 

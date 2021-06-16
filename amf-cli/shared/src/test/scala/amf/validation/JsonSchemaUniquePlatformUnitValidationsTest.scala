@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.AMFResult
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.internal.remote.{Hint, Oas20YamlHint}

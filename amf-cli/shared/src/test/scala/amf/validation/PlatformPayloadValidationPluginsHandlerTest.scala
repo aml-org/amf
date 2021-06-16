@@ -1,15 +1,14 @@
 package amf.validation
 
-import amf.client.environment.RAMLConfiguration
+import amf.apicontract.client.scala.RAMLConfiguration
+import amf.apicontract.internal.transformation.AmfTransformationPipeline
 import amf.client.validation.PayloadValidationUtils
 import amf.core.client.common.validation.StrictValidationMode
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Module}
 import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
-import amf.plugins.document.apicontract.resolution.pipelines.AmfTransformationPipeline
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -36,8 +35,7 @@ class PlatformPayloadValidationPluginsHandlerTest
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
     val client = config.createClient()
     for {
-      validation <- Validation(platform)
-      library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
+      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future.successful {
         val shape = findShape(library, "A")
         config.payloadValidatorFactory().createFor(shape, APPLICATION_JSON, StrictValidationMode)
@@ -54,8 +52,7 @@ class PlatformPayloadValidationPluginsHandlerTest
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
     val client = config.createClient()
     for {
-      validation <- Validation(platform)
-      library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
+      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future.successful {
         val shape = findShape(library, "B")
         config.payloadValidatorFactory().createFor(shape, APPLICATION_JSON, StrictValidationMode)
@@ -70,8 +67,7 @@ class PlatformPayloadValidationPluginsHandlerTest
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
     val client = config.createClient()
     for {
-      validation <- Validation(platform)
-      library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
+      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future.successful {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")
@@ -87,8 +83,7 @@ class PlatformPayloadValidationPluginsHandlerTest
     val config = RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler)
     val client = config.createClient()
     for {
-      validation <- Validation(platform)
-      library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
+      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future.successful {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")

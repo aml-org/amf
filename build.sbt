@@ -54,19 +54,12 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   logBuffered in Test := false
 )
 
-val customValidationVersion = versions("amf.custom.validations")
+val amlVersion = versions("amf.aml")
 
-lazy val customValidationJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "customValidationJVM")
-lazy val customValidationJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "customValidationJS")
-lazy val customValidationLibJVM = "com.github.amlorg" %% "amf-custom-validation" % customValidationVersion
-lazy val customValidationLibJS  = "com.github.amlorg" %% "amf-custom-validation_sjs0.6" % customValidationVersion
-
-val coreVersion = versions("amf.core")
-
-lazy val coreJVMRef = ProjectRef(Common.workspaceDirectory / "amf-core", "coreJVM")
-lazy val coreJSRef  = ProjectRef(Common.workspaceDirectory / "amf-core", "coreJS")
-lazy val coreLibJVM = "com.github.amlorg" %% "amf-core" % coreVersion
-lazy val coreLibJS  = "com.github.amlorg" %% "amf-core_sjs0.6" % coreVersion
+lazy val amlJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "amlJVM")
+lazy val amlJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "amlJS")
+lazy val amlLibJVM = "com.github.amlorg" %% "amf-aml" % amlVersion
+lazy val amlLibJS  = "com.github.amlorg" %% "amf-aml_sjs0.6" % amlVersion
 
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
@@ -96,12 +89,12 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
   .disablePlugins(SonarPlugin)
 
 lazy val shapesJVM =
-  shapes.jvm.in(file("./amf-shapes/jvm")).sourceDependency(customValidationJVMRef, customValidationLibJVM)
+  shapes.jvm.in(file("./amf-shapes/jvm")).sourceDependency(amlJVMRef, amlLibJVM)
 
 lazy val shapesJS =
   shapes.js
     .in(file("./amf-shapes/js"))
-    .sourceDependency(customValidationJSRef, customValidationLibJS)
+    .sourceDependency(amlJSRef, amlLibJS)
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 

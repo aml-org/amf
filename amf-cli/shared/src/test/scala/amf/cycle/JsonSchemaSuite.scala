@@ -1,18 +1,19 @@
 package amf.cycle
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.client.scala.model.document.DataTypeFragment
+import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
+import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.core.client.scala.AMFResult
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
 import amf.core.internal.parser.{ParseConfiguration, Root}
 import amf.core.internal.remote.Platform
-import amf.plugins.document.apicontract.contexts.parser.oas.JsonSchemaWebApiContext
-import amf.plugins.document.apicontract.model.DataTypeFragment
-import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
-import amf.plugins.document.apicontract.parser.spec.jsonschema.JsonSchemaParser
-import amf.plugins.document.apicontract.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
+import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import org.yaml.parser.JsonParser
 
 trait JsonSchemaSuite {

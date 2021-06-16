@@ -1,17 +1,16 @@
 package amf.maker
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.WebAPIConfiguration
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.model.domain._
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
-import amf.core.internal.remote.Raml10YamlHint
-import amf.core.internal.metamodel.Field
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfObject
+import amf.core.internal.metamodel.Field
 import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
-import amf.plugins.domain.shapes.models.DomainExtensions.propertyShapeToPropertyShape
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
-import amf.plugins.domain.apicontract.models._
-import amf.plugins.domain.apicontract.models.api.WebApi
+import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
+import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
 import org.mulesoft.common.test.ListAssertions
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 

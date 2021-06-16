@@ -1,16 +1,16 @@
 package amf.maker
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.WebAPIConfiguration
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.remote._
-import amf.facades.Validation
-import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
-import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.plugins.domain.shapes.models.DomainExtensions._
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
+import amf.shapes.client.scala.model.domain.NodeShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future
@@ -49,12 +49,10 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => IgnoreErrorHandler)
-    Validation(platform).flatMap { v =>
-      config.createClient().parse(basePath + file).map { unit =>
-        val actual = unit.bu.asInstanceOf[Document]
-        AmfObjectMatcher(expected).assert(actual)
-        Succeeded
-      }
+    config.createClient().parse(basePath + file).map { unit =>
+      val actual = unit.bu.asInstanceOf[Document]
+      AmfObjectMatcher(expected).assert(actual)
+      Succeeded
     }
   }
   object IgnoreErrorHandler extends AMFErrorHandler {

@@ -1,7 +1,7 @@
 package amf.client.model
 
-import amf.client.model.domain.ScalarShape
 import amf.core.client.platform.model.DataTypes
+import amf.shapes.client.platform.model.domain.ScalarShape
 import org.scalatest.{FunSuite, Matchers}
 
 class ScalarModelTest extends FunSuite with Matchers {

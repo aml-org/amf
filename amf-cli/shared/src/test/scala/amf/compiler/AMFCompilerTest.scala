@@ -1,6 +1,8 @@
 package amf.compiler
 
-import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, IgnoringErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -9,7 +11,6 @@ import amf.core.client.scala.validation.AMFValidator
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Syntax.{Syntax, Yaml}
 import amf.core.internal.remote._
-import amf.plugins.domain.apicontract.models.api.WebApi
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YMap, YMapEntry}

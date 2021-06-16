@@ -1,11 +1,14 @@
 package amf.iterator
 
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+
+import amf.apicontract.client.scala.model.domain.Parameter
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.document.FieldsFilter.Local
-import amf.core.client.scala.model.domain.{AmfObject, AmfScalar}
 import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.client.scala.model.domain.{AmfObject, AmfScalar}
 import amf.core.client.scala.traversal.iterator.{
   AmfElementStrategy,
   DomainElementStrategy,
@@ -16,8 +19,6 @@ import amf.core.internal.annotations.DomainExtensionAnnotation
 import amf.core.internal.metamodel.domain.common.DescriptionField
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.remote.Raml10YamlHint
-import amf.plugins.domain.apicontract.models.Parameter
-import amf.plugins.domain.apicontract.models.api.WebApi
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext

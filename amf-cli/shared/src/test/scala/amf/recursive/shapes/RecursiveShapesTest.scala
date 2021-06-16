@@ -1,12 +1,12 @@
 package amf.recursive.shapes
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation.{ProfileName, Raml10Profile}
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Hint, Oas20, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.apicontract.resolution.pipelines.ValidationTransformationPipeline
 import amf.validation.MultiPlatformReportGenTest
 import org.scalatest.Assertion
 

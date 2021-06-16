@@ -1,21 +1,24 @@
 package amf.client.model.domain
 
-import amf.client.convert.ApiClientConverters._
-import amf.core.client.platform.model.domain.{PropertyShape, ScalarNode}
+import amf.apicontract.client.scala.APIConfiguration
+import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.core.client.platform.model.domain._
 import amf.core.internal.convert.CoreRegister
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.plugins.document.{WebApi => WebApiObject}
-import org.scalatest.{FunSuite, Matchers}
+import amf.shapes.client.platform.model.domain._
+import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
 
-class ShapesTest extends FunSuite with Matchers with PlatformSecrets {
-  WebApiObject.register()
-  CoreRegister.register(platform)
+class ShapesTest extends FunSuite with Matchers with PlatformSecrets with BeforeAndAfterAll {
 
   val s                                                     = "test string"
   val clientStringList: ClientList[String]                  = Seq(s).asClient
   val shape                                                 = new AnyShape()
   val creativeWork                                          = new CreativeWork()
   val shapes: Seq[amf.core.client.scala.model.domain.Shape] = Seq(shape._internal)
+
+  override protected def beforeAll(): Unit = {
+    APIConfiguration.API() // TODO: ARM remove after wrappers are deleted
+  }
 
   test("test ScalarNode") {
     val scalarNode = new ScalarNode()

@@ -1,13 +1,12 @@
 package amf.parser
 
-import amf.client.environment.RAMLConfiguration
+import amf.apicontract.client.scala.RAMLConfiguration
+import amf.core.client.common.position.Range
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{AsyncFunSuite, Succeeded}
-import amf.core.client.common.position.Range
 
 import scala.concurrent.ExecutionContext
 
@@ -81,21 +80,19 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
   private def validate(file: String, fixture: (AMFValidationResult => Unit)*) = {
     val eh     = DefaultErrorHandler()
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => eh)
-    Validation(platform).flatMap { _ =>
-      config
-        .createClient()
-        .parse(file)
-        .map(_.bu)
-        .map { _ =>
-          val report = eh.getResults.distinct
-          if (report.size == fixture.size) {
-            fixture.zip(report).foreach {
-              case (fn, result) => fn(result)
-            }
-          } else fail(s"Report and fixture sizes are different!\nActual:\n${report.map(_.toString).mkString("\n")}")
-          Succeeded
-        }
-    }
+    config
+      .createClient()
+      .parse(file)
+      .map(_.bu)
+      .map { _ =>
+        val report = eh.getResults.distinct
+        if (report.size == fixture.size) {
+          fixture.zip(report).foreach {
+            case (fn, result) => fn(result)
+          }
+        } else fail(s"Report and fixture sizes are different!\nActual:\n${report.map(_.toString).mkString("\n")}")
+        Succeeded
+      }
   }
 
 }

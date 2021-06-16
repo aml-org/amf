@@ -1,8 +1,8 @@
 package amf.cycle
 
 import amf.core.internal.remote.{Raml08YamlHint, Raml10YamlHint, Vendor}
-import amf.plugins.document.apicontract.annotations.ForceEntry
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.shapes.internal.annotations.ForceEntry
+import amf.shapes.client.scala.model.domain.AnyShape
 
 class Raml08ElementCycleTest extends DomainElementCycleTest {
 

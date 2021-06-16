@@ -1,11 +1,10 @@
 package amf.cycle
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.RdfUnitConverter
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
 import amf.io.FileAssertionTest
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.{Assertion, Matchers}
@@ -35,8 +34,6 @@ trait FromRdfCycleTest extends AsyncBeforeAndAfterEach with FileAssertionTest wi
     thrown.getMessage should include("unknown @types")
     thrown.getMessage should include("file:///myDialect.yaml#/declarations/MyVeryCoolMapping")
   }
-
-  override protected def beforeEach(): Future[Unit] = Validation(platform).map(_ => Unit)
 
   private def build(path: String, baseUnitId: String): Option[BaseUnit] = {
     val fullPath     = basePath + path

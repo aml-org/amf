@@ -6,8 +6,8 @@ import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.annotations.ErrorDeclaration
 import amf.core.internal.remote.{Amf, Oas30JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.plugins.domain.apicontract.models.security.{HttpSettings, SecurityScheme}
-import amf.plugins.domain.apicontract.models.templates.Trait
+import amf.apicontract.client.scala.model.domain.security.{HttpSettings, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.templates.Trait
 import org.scalatest.Matchers._
 
 class ParsedCloneTest extends FunSuiteCycleTests {

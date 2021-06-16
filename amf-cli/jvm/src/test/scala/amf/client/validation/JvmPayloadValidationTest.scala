@@ -1,8 +1,8 @@
 package amf.client.validation
 
-import amf.client.model.domain.ScalarShape
-import amf.convert.NativeOpsFromJvm
+import amf.cli.internal.convert.NativeOpsFromJvm
 import amf.core.client.platform.model.DataTypes
+import amf.shapes.client.platform.model.domain.ScalarShape
 
 class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFromJvm {
 

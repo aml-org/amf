@@ -6,8 +6,9 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.annotations.SourceLocation
 import amf.core.internal.parser.domain.Annotations
-import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
-import amf.plugins.domain.shapes.resolution.stages.elements.CompleteShapeTransformationPipeline
+import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.model.domain.NodeShape
+import amf.shapes.internal.domain.resolution.elements.CompleteShapeTransformationPipeline
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

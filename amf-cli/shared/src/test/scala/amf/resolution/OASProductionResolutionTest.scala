@@ -1,11 +1,11 @@
 package amf.resolution
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.internal.transformation.Oas20TransformationPipeline
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote._
-import amf.plugins.document.apicontract.resolution.pipelines.Oas20TransformationPipeline
 
 class OASProductionResolutionTest extends ResolutionTest {
   override val basePath = "amf-cli/shared/src/test/resources/production/"

@@ -1,19 +1,14 @@
 package amf.validation
 
-import amf.client.environment.{AMFClient, WebAPIConfiguration}
-import amf.core.client.common.validation.{SeverityLevels, StrictValidationMode, ValidationMode}
-import amf.core.client.scala.AMFGraphClient
+import amf.apicontract.client.scala.{AMFClient, WebAPIConfiguration}
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.common.validation.{StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Shape
-import amf.core.client.common.transform._
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
-import amf.core.internal.validation.ValidationConfiguration
-import amf.facades.Validation
-import amf.plugins.domain.apicontract.models.api.WebApi
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -102,7 +97,6 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
     val config = WebAPIConfiguration.WebAPI()
     val client = config.createClient()
     for {
-      _ <- Validation(platform)
       model <- client
         .parse(api)
         .map(_.bu)

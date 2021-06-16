@@ -1,12 +1,13 @@
 package amf.validation
 
-import amf.client.environment.APIConfiguration
+import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.utils.MediaTypeMatcher
-import amf.plugins.domain.shapes.models.TypeDef.{IntType, StrType}
-import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
+import amf.shapes.internal.spec.common.TypeDef.{IntType, StrType}
+import amf.shapes.client.scala.model.domain.UnionShape
+import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
+import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 

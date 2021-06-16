@@ -1,13 +1,12 @@
 package amf.validation
 
-import amf.client.environment.{OASConfiguration, RAMLConfiguration}
+import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.exception.UnsupportedMediaTypeException
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Oas20, Raml10}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -44,9 +43,7 @@ class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
 
   def parse(url: String, mediaType: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
     val client = config.createClient()
-    Validation(platform).flatMap { _ =>
-      client.parse(url, mediaType).map(_.bu)
-    }
+    client.parse(url, mediaType).map(_.bu)
   }
 
 }

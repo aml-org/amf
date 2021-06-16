@@ -1,6 +1,9 @@
 package amf.resolution
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
+import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
+import amf.apicontract.internal.transformation.Raml10TransformationPipeline
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -10,11 +13,10 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.remote.{Raml10, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.apicontract.contexts.parser.raml.Raml10WebApiContext
-import amf.plugins.document.apicontract.parser.spec.raml.expression.RamlExpressionParser
-import amf.plugins.document.apicontract.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
-import amf.plugins.document.apicontract.resolution.pipelines.Raml10TransformationPipeline
-import amf.plugins.domain.shapes.models._
+import amf.shapes.client.scala.model.domain.UnionShape
+import amf.shapes.client.scala.model.domain.{ArrayShape, MatrixShape, ScalarShape, UnionShape}
+import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
 
 class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
 

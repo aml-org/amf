@@ -1,13 +1,52 @@
 package amf.client.model.domain
 
-import amf.client.convert.ApiClientConverters._
+import amf.apicontract.client.platform.model.domain.api.WebApi
+import amf.apicontract.client.platform.model.domain.bindings.mqtt.MqttServerLastWill
+import amf.apicontract.client.platform.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
+import amf.apicontract.client.platform.model.domain.security.{
+  OAuth2Flow,
+  ParametrizedSecurityScheme,
+  Scope,
+  SecurityRequirement,
+  SecurityScheme,
+  Settings
+}
+import amf.apicontract.client.platform.model.domain.{
+  Callback,
+  CorrelationId,
+  Encoding,
+  EndPoint,
+  License,
+  Message,
+  Operation,
+  Organization,
+  Parameter,
+  Payload,
+  Request,
+  Response,
+  Server,
+  Tag,
+  TemplatedLink
+}
+import amf.apicontract.client.scala.APIConfiguration
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
-import amf.plugins.document.{WebApi => WebApiObject}
-import org.scalatest.{FunSuite, Matchers}
+import amf.shapes.client.platform.model.domain.{
+  AnyShape,
+  CreativeWork,
+  Example,
+  IriTemplateMapping,
+  PropertyDependencies,
+  XMLSerializer
+}
+import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
 
-class DomainModelTests extends FunSuite with Matchers {
-
-  WebApiObject.register()
+class DomainModelTests extends FunSuite with Matchers with BeforeAndAfterAll {
 
   val s                                    = "test string"
   val clientStringList: ClientList[String] = Seq(s).asClient
@@ -15,6 +54,10 @@ class DomainModelTests extends FunSuite with Matchers {
   val parameters                           = Seq(new Parameter()._internal)
   val settings                             = new Settings()
   val creativeWork                         = new CreativeWork()
+
+  override protected def beforeAll(): Unit = {
+    APIConfiguration.API() // TODO: ARM remove after wrappers are deleted
+  }
 
   test("test CreativeWork") {
     val creativeWork: CreativeWork = new CreativeWork()
