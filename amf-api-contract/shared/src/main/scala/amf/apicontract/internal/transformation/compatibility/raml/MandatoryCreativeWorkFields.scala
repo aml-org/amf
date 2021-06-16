@@ -3,6 +3,7 @@ package amf.apicontract.internal.transformation.compatibility.raml
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.stages.TransformationStep
+import amf.shapes.client.scala.domain.models.CreativeWork
 
 class MandatoryCreativeWorkFields() extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {

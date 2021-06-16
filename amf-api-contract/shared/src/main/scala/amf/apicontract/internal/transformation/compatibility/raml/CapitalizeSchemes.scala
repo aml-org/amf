@@ -1,15 +1,15 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 
 import amf.apicontract.client.scala.model.domain.Operation
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.metamodel.domain.OperationModel
+import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.metamodel.Field
-import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
-import amf.apicontract.client.scala.model.domain.api.Api
 
 import scala.language.postfixOps
 

@@ -1,10 +1,9 @@
 package amf.apicontract.internal.transformation.compatibility.oas
 
-import amf.apicontract.client.scala.model.domain.Operation
+import amf.apicontract.client.scala.model.domain.{Operation, Response}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.stages.TransformationStep
-import amf.plugins.domain.apicontract.models.Response
 
 class MandatoryResponses() extends TransformationStep {
 

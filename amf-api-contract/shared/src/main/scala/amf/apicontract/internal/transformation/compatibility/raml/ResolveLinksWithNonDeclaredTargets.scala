@@ -1,8 +1,8 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 
+import amf.apicontract.internal.transformation.compatibility.common.AmfElementLinkResolutionStage
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Linkable
-import amf.apicontract.internal.transformation.compatibility.common.AmfElementLinkResolutionStage
 
 // TODO we need to do this because some links might point to properties within declared elements
 class ResolveLinksWithNonDeclaredTargets() extends AmfElementLinkResolutionStage {

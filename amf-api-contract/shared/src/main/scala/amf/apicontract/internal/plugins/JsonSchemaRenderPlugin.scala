@@ -7,6 +7,9 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderInfo}
 import amf.core.internal.remote.Vendor
+import amf.shapes.client.scala.annotations.JSONSchemaRoot
+import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import org.yaml.model.YDocument
 
 object JsonSchemaRenderPlugin extends ApiRenderPlugin {

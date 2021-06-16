@@ -3,8 +3,9 @@ package amf.apicontract.internal.transformation.compatibility.raml
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, RecursiveShape, Shape}
+import amf.core.client.scala.model.domain._
 import amf.core.client.scala.transform.stages.TransformationStep
+import amf.shapes.client.scala.domain.models.DataArrangementShape
 
 import scala.collection.mutable.ListBuffer
 

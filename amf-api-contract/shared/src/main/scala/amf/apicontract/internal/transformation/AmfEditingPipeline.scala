@@ -1,12 +1,11 @@
 package amf.apicontract.internal.transformation
 
-import amf.apicontract.internal.spec.common.transformation.stage.{AmfParametersNormalizationStage, AnnotationRemovalStage, MediaTypeResolutionStage, ParametersNormalizationStage, PathDescriptionNormalizationStage, PayloadAndParameterResolutionStage, ResponseExamplesResolutionStage, SecurityResolutionStage, ServersNormalizationStage}
+import amf.apicontract.internal.spec.common.transformation.stage._
 import amf.apicontract.internal.transformation.stages.ExtensionsResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{AmfProfile, ProfileName}
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.transform.stages.{TransformationStep, UrlShortenerStage}
-import amf.plugins.domain.apicontract.resolution.stages._
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override val name: String)

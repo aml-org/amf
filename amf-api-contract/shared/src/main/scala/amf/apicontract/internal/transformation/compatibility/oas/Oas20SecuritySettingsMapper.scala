@@ -1,8 +1,8 @@
 package amf.apicontract.internal.transformation.compatibility.oas
 
-import amf.apicontract.internal.transformation.compatibility.common.SecuritySettingsMapper
-import amf.apicontract.internal.metamodel.domain.security.OAuth2FlowModel
 import amf.apicontract.client.scala.model.domain.security._
+import amf.apicontract.internal.metamodel.domain.security.OAuth2FlowModel
+import amf.apicontract.internal.transformation.compatibility.common.SecuritySettingsMapper
 
 class Oas20SecuritySettingsMapper() extends SecuritySettingsMapper {
 

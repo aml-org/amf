@@ -9,6 +9,7 @@ import amf.core.client.scala.transform.stages.selectors.NodeShapeSelector
 import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.metamodel.MetaModelTypeMapping
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.shapes.client.scala.domain.models.NodeShape
 
 class MakeRequiredFieldImplicitForOptionalProperties()
     extends TransformationStep()
