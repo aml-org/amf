@@ -1,17 +1,16 @@
 package amf.apicontract.internal.validation.payload.collector
 
+import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{Parameter, Payload, Request}
+import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel, RequestModel}
 import amf.core.client.scala.model.document.PayloadFragment
-import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.validation.ValidationCandidate
-import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
-import amf.plugins.domain.apicontract.metamodel.RequestModel
-import amf.apicontract.client.scala.model.domain.security.SecurityScheme
-import amf.plugins.domain.apicontract.models.Request
+import amf.shapes.client.scala.domain.models.{NodeShape, UnionShape}
 
 // RAML centric as it collects custom facets from the RAML "facets" node.
 object ShapeFacetsCollector extends ValidationCandidateCollector {

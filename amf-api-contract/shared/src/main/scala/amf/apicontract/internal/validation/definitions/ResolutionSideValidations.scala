@@ -6,8 +6,7 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.AmfResolution
 import amf.core.internal.validation.Validations
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.core.internal.validation.core.ValidationSpecification.RESOLUTION_SIDE_VALIDATION
-; // noinspection TypeAnnotation
+import amf.core.internal.validation.core.ValidationSpecification.RESOLUTION_SIDE_VALIDATION; // noinspection TypeAnnotation
 
 object ResolutionSideValidations extends Validations {
   override val specification: String = RESOLUTION_SIDE_VALIDATION

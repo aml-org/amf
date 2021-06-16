@@ -1,11 +1,11 @@
 package amf.apicontract.internal.validation.payload.collector
 
+import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.resolveAnnotation
 import amf.core.client.scala.model.document.PayloadFragment
-import amf.core.client.scala.model.domain.{AmfElement, AmfScalar}
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, Extension, ShapeExtension}
+import amf.core.client.scala.model.domain.{AmfElement, AmfScalar}
 import amf.core.internal.annotations.DomainExtensionAnnotation
 import amf.core.internal.validation.ValidationCandidate
-import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.resolveAnnotation
 
 object ExtensionsCollector extends ValidationCandidateCollector {
   override def collect(element: AmfElement): Seq[ValidationCandidate] = {

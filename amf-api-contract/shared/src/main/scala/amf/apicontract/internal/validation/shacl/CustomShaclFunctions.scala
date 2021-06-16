@@ -1,17 +1,17 @@
 package amf.apicontract.internal.validation.shacl
 
-import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
-import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain._
-import amf.core.internal.annotations.SynthesizedField
-import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.internal.parser.domain.Annotations
-import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
+import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings}
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
 import amf.apicontract.internal.metamodel.domain.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
-import amf.plugins.domain.apicontract.metamodel.TemplatedLinkModel
-import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings}
+import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
+import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
+import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.RegexConverter
 import amf.plugins.features.validation.shacl.custom.CustomShaclValidator.CustomShaclFunctions
 import amf.shapes.client.scala.domain.models.{FileShape, IriTemplateMapping, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel._

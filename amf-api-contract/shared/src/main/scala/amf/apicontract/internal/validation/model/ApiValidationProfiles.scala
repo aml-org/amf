@@ -1,5 +1,7 @@
 package amf.apicontract.internal.validation.model
 
+import amf.apicontract.internal.validation.model.AMFRawValidations._
+import amf.apicontract.internal.validation.model.DefaultAMFValidations.buildProfileFrom
 import amf.core.client.common.validation._
 import amf.core.internal.validation.core.ValidationProfile
 

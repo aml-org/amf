@@ -1,7 +1,7 @@
 package amf.apicontract.internal.validation.definitions
 
-import amf.core.client.common.validation.{Async20Profile, Oas20Profile, ProfileName}
 import amf.core.client.common.validation.SeverityLevels.{VIOLATION, WARNING}
+import amf.core.client.common.validation.{Async20Profile, Oas20Profile, ProfileName}
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.AmfParser
 import amf.core.internal.validation.Validations
