@@ -2,8 +2,8 @@ package amf.apicontract.internal.spec.common.emitter
 
 import amf.apicontract.internal.spec.raml
 import amf.apicontract.internal.spec.oas.emitter
-import amf.apicontract.internal.spec.oas.emitter.OasLikeShapeEmitterContextAdapter
-import amf.apicontract.internal.spec.oas.emitter.context.OasSpecEmitterContext
+import amf.apicontract.internal.spec.oas.emitter.context
+import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeShapeEmitterContextAdapter, OasSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
@@ -68,8 +68,9 @@ case class OasAnnotationTypeEmitter(property: CustomDomainProperty, ordering: Sp
     implicit spec: OasSpecEmitterContext)
     extends AnnotationTypeEmitter(property, ordering) {
 
-  private val fs                                                              = property.fields
-  protected override implicit val shapeCtx: OasLikeShapeEmitterContextAdapter = emitter.OasLikeShapeEmitterContextAdapter(spec)
+  private val fs = property.fields
+  protected override implicit val shapeCtx: OasLikeShapeEmitterContextAdapter =
+    context.OasLikeShapeEmitterContextAdapter(spec)
 
   override protected val shapeEmitters: Seq[Emitter] = fs
     .entry(CustomDomainPropertyModel.Schema)
@@ -83,8 +84,9 @@ case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
     implicit spec: RamlSpecEmitterContext)
     extends AnnotationTypeEmitter(property, ordering) {
 
-  protected override implicit val shapeCtx: RamlShapeEmitterContextAdapter = raml.emitter.RamlShapeEmitterContextAdapter(spec)
-  private val fs                                                           = property.fields
+  protected override implicit val shapeCtx: RamlShapeEmitterContextAdapter =
+    raml.emitter.RamlShapeEmitterContextAdapter(spec)
+  private val fs = property.fields
   override protected val shapeEmitters: Seq[Emitter] = fs
     .entry(CustomDomainPropertyModel.Schema)
     .map({ f =>

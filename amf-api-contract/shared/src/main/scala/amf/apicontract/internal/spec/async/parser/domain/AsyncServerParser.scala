@@ -7,7 +7,7 @@ import amf.apicontract.internal.metamodel.domain.ServerModel
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncServerBindingsParser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.parser.{OasLikeSecurityRequirementParser, WebApiShapeParserContextAdapter}
-import amf.apicontract.internal.spec.oas.parser.OasLikeServerParser
+import amf.apicontract.internal.spec.oas.parser.domain.OasLikeServerParser
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations

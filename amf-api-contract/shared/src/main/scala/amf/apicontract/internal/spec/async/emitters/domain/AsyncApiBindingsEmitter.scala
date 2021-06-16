@@ -1,10 +1,16 @@
 package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.client.scala.model.domain.bindings._
-import amf.apicontract.internal.spec.async.emitters.bindings.{AsyncApiChannelBindingsEmitter, AsyncApiMessageBindingsEmitter, AsyncApiOperationBindingsEmitter, AsyncApiServerBindingsEmitter}
+import amf.apicontract.internal.spec.async.emitters.bindings.{
+  AsyncApiChannelBindingsEmitter,
+  AsyncApiMessageBindingsEmitter,
+  AsyncApiOperationBindingsEmitter,
+  AsyncApiServerBindingsEmitter
+}
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.apicontract.internal.spec.oas.emitter.domain.OasTagToReferenceEmitter
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.extensions.DomainExtension
@@ -60,7 +66,7 @@ case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrder
 
   def emitLink(b: PartBuilder): Unit = {
     val linkable = bindings.asInstanceOf[DomainElement with Linkable]
-    oas.emitter.OasTagToReferenceEmitter(linkable).emit(b)
+    OasTagToReferenceEmitter(linkable).emit(b)
   }
 
   def obtainBindings(value: AmfElement): Seq[AmfElement] = {

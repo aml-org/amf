@@ -8,7 +8,23 @@ import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser
-import amf.apicontract.internal.spec.oas.parser._
+import amf.apicontract.internal.spec.oas.parser.{domain, _}
+import amf.apicontract.internal.spec.oas.parser.domain.{
+  Oas20EndpointParser,
+  Oas20OperationParser,
+  Oas2SecuritySchemeParser,
+  Oas2SecuritySettingsParser,
+  Oas30EndpointParser,
+  Oas30OperationParser,
+  Oas3SecuritySchemeParser,
+  Oas3SecuritySettingsParser,
+  OasLikeEndpointParser,
+  OasLikeOperationParser,
+  OasLikeSecuritySettingsParser,
+  OasLikeServerVariableParser,
+  OasServerVariableParser,
+  OasServersParser
+}
 import amf.core.internal.utils.IdCounter
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
@@ -48,7 +64,7 @@ case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) ext
     Oas2ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
-    OasServerVariableParser(entry, parent)(ctx)
+    domain.OasServerVariableParser(entry, parent)(ctx)
 
   override def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser =
     Oas20OperationParser(entry, adopt)(ctx)
@@ -79,7 +95,7 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
     new Oas3ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
-    parser.OasServerVariableParser(entry, parent)(ctx)
+    OasServerVariableParser(entry, parent)(ctx)
 
   override def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser =
     Oas30OperationParser(entry, adopt)(ctx)

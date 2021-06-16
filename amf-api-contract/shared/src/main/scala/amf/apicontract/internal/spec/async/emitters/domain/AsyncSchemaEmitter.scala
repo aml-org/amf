@@ -2,8 +2,7 @@ package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.internal.spec.async.emitters.context.Async20SpecEmitterContext
 import amf.apicontract.internal.spec.async.parser.domain.AsyncSchemaFormats
-import amf.apicontract.internal.spec.oas.emitter.OasLikeShapeEmitterContextAdapter
-import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeShapeEmitterContextAdapter, OasLikeSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter
 import amf.apicontract.internal.spec.spec.toRaml
 import amf.core.client.common.position.Position

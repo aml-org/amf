@@ -1,7 +1,8 @@
 package amf.apicontract.internal.spec.common.parser
 
 import amf.apicontract.internal.spec.raml.parser
-import amf.apicontract.internal.spec.raml.parser.LibraryLocationParser
+import amf.apicontract.internal.spec.raml.parser.document
+import amf.apicontract.internal.spec.raml.parser.document.LibraryLocationParser
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, Fragment, Module}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.Aliases
@@ -59,7 +60,7 @@ case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YM
               .entries
               .foreach(e => {
                 val alias: String = e.key.as[YScalar].text
-                val urlOption     = parser.LibraryLocationParser(e)(ctx.eh)
+                val urlOption     = document.LibraryLocationParser(e)(ctx.eh)
                 urlOption.foreach { url =>
                   target(url).foreach {
                     case module: DeclaresModel =>

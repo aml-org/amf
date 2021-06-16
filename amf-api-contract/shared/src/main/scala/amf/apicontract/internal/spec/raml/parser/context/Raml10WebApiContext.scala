@@ -1,7 +1,6 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
 import amf.apicontract.internal.spec.common.{ExtensionWebApiDeclarations, RamlWebApiDeclarations}
-import amf.apicontract.internal.spec.raml.parser.Raml10Syntax
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{Raml10, Vendor}

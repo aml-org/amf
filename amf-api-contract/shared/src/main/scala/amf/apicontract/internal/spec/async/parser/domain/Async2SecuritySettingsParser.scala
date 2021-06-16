@@ -3,8 +3,13 @@ package amf.apicontract.internal.spec.async.parser.domain
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.spec.common.parser.{Async2SettingsProducers, SettingsProducers, WebApiShapeParserContextAdapter}
-import amf.apicontract.internal.spec.oas.parser.{OAuth2FlowValidations, OasLikeSecuritySettingsParser}
+import amf.apicontract.internal.spec.common.parser.{
+  Async2SettingsProducers,
+  SettingsProducers,
+  WebApiShapeParserContextAdapter
+}
+import amf.apicontract.internal.spec.oas.parser.OAuth2FlowValidations
+import amf.apicontract.internal.spec.oas.parser.domain.{OAuth2FlowValidations, OasLikeSecuritySettingsParser}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}

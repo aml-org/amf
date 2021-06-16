@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.common.reference
 
 import amf.apicontract.internal.spec.raml.RamlHeader.{Raml10Extension, Raml10Overlay}
+import amf.apicontract.internal.spec.raml.parser.document.LibraryLocationParser
 import amf.apicontract.internal.spec.raml.{RamlHeader, parser}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document._
@@ -102,7 +103,7 @@ class ApiReferenceHandler(vendor: String) extends ReferenceHandler {
   }
 
   private def library(entry: YMapEntry)(implicit errorHandler: AMFErrorHandler): Unit =
-    parser.LibraryLocationParser(entry) match {
+    LibraryLocationParser(entry) match {
       case Some(location) => references += (location, LibraryReference, entry.value)
       case _              => errorHandler.violation(ModuleNotFound, "", "Missing library location", entry)
     }

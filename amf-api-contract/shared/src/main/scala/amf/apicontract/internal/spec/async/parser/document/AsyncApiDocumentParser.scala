@@ -1,17 +1,37 @@
 package amf.apicontract.internal.spec.async.parser.document
 
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
-import amf.apicontract.client.scala.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
+import amf.apicontract.client.scala.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.internal.metamodel.domain.bindings.{ChannelBindingsModel, MessageBindingsModel, OperationBindingsModel, ServerBindingsModel}
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  ChannelBindingsModel,
+  MessageBindingsModel,
+  OperationBindingsModel,
+  ServerBindingsModel
+}
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
-import amf.apicontract.internal.spec.async.parser.bindings.{AsyncChannelBindingsParser, AsyncMessageBindingsParser, AsyncOperationBindingsParser, AsyncServerBindingsParser}
+import amf.apicontract.internal.spec.async.parser.bindings.{
+  AsyncChannelBindingsParser,
+  AsyncMessageBindingsParser,
+  AsyncOperationBindingsParser,
+  AsyncServerBindingsParser
+}
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.parser.domain._
 import amf.apicontract.internal.spec.common.parser._
-import amf.apicontract.internal.spec.oas.parser.{OasLikeDeclarationsHelper, OasLikeInformationParser, OasLikeTagsParser}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{InvalidIdentifier, MandatoryChannelsProperty}
+import amf.apicontract.internal.spec.oas.parser.document.OasLikeDeclarationsHelper
+import amf.apicontract.internal.spec.oas.parser.OasLikeTagsParser
+import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser, OasLikeTagsParser}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  InvalidIdentifier,
+  MandatoryChannelsProperty
+}
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument

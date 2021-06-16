@@ -4,8 +4,9 @@ import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.client.scala.model.domain.{Parameter, Server}
 import amf.apicontract.internal.metamodel.domain.ServerModel
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.apicontract.internal.spec.oas.parser.{Oas3Syntax, OasLikeServerParser, OasServersParser}
+import amf.apicontract.internal.spec.oas.parser.context.{Oas3Syntax, OasWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.OasServersParser
+import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeServerParser, OasServersParser}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.DataType

@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.raml.emitter
 
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
-import amf.apicontract.internal.spec.oas.emitter.OasLikeShapeEmitterContextAdapter
+import amf.apicontract.internal.spec.oas.emitter.context.OasLikeShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.spec.toOas
 import amf.core.client.scala.model.document.BaseUnit

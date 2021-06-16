@@ -1,6 +1,16 @@
 package amf.apicontract.internal.spec.raml
 
-import amf.apicontract.client.scala.model.document.{AnnotationTypeDeclarationFragment, DataTypeFragment, DocumentationItemFragment, Extension, NamedExampleFragment, Overlay, ResourceTypeFragment, SecuritySchemeFragment, TraitFragment}
+import amf.apicontract.client.scala.model.document.{
+  AnnotationTypeDeclarationFragment,
+  DataTypeFragment,
+  DocumentationItemFragment,
+  Extension,
+  NamedExampleFragment,
+  Overlay,
+  ResourceTypeFragment,
+  SecuritySchemeFragment,
+  TraitFragment
+}
 import amf.apicontract.internal.plugins.ApiRenderPlugin
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
@@ -13,7 +23,8 @@ import amf.plugins.document.apicontract.model._
 import amf.plugins.document.apicontract.parser.spec.raml.RamlFragmentEmitter
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.spec.raml.emitter.context.{Raml08SpecEmitterContext, RamlSpecEmitterContext}
-import amf.apicontract.internal.spec.raml.emitter.{RamlDocumentEmitter, RamlFragmentEmitter}
+import amf.apicontract.internal.spec.raml.emitter.RamlFragmentEmitter
+import amf.apicontract.internal.spec.raml.emitter.document.{RamlDocumentEmitter, RamlFragmentEmitter}
 import amf.shapes.internal.spec.contexts.emitter.raml.Raml08SpecEmitterContext
 import org.yaml.model.YDocument
 

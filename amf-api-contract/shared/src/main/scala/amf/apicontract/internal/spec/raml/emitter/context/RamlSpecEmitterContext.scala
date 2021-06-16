@@ -13,9 +13,28 @@ import amf.apicontract.internal.spec.oas.emitter.context.{
   Oas2SpecEmitterFactory,
   OasSpecEmitterFactory
 }
-import amf.apicontract.internal.spec.oas.emitter.{Raml08PayloadsEmitter, Raml10PayloadsEmitter, RamlPayloadsEmitter}
+import amf.apicontract.internal.spec.oas.emitter.Raml10PayloadsEmitter
+import amf.apicontract.internal.spec.oas.emitter.domain.{
+  Raml08PayloadsEmitter,
+  Raml10PayloadsEmitter,
+  RamlPayloadsEmitter
+}
 import amf.apicontract.internal.spec.raml.RamlHeader
 import amf.apicontract.internal.spec.raml.emitter._
+import amf.apicontract.internal.spec.raml.emitter.document.{
+  Raml08RootLevelEmitters,
+  Raml10RootLevelEmitters,
+  RamlRootLevelEmitters
+}
+import amf.apicontract.internal.spec.raml.emitter.domain.{
+  Raml08NamedSecuritySchemeEmitter,
+  Raml08ResponseEmitter,
+  Raml10NamedSecuritySchemeEmitter,
+  Raml10ResponseEmitter,
+  RamlCustomFacetsEmitter,
+  RamlNamedSecuritySchemeEmitter,
+  RamlResponseEmitter
+}
 import amf.core.client.common.position.Position
 import amf.core.client.scala.config.ShapeRenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler

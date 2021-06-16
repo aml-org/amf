@@ -22,7 +22,7 @@ import scala.util.matching.Regex
 
 abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterContext) extends SpecEmitterFactory {
 
-  protected implicit val shapeCtx = emitter.OasLikeShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   def typeEmitters(shape: Shape,
                    ordering: SpecOrdering,

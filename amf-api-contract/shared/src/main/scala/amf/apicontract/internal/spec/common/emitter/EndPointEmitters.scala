@@ -2,9 +2,9 @@ package amf.apicontract.internal.spec.common.emitter
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, ParameterModel}
-import amf.apicontract.internal.spec.oas.emitter.Raml10PayloadsEmitter
-import amf.apicontract.internal.spec.raml.emitter.ExtendsEmitter
+import amf.apicontract.internal.spec.oas.emitter.domain.Raml10PayloadsEmitter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
+import amf.apicontract.internal.spec.raml.emitter.domain.ExtendsEmitter
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}

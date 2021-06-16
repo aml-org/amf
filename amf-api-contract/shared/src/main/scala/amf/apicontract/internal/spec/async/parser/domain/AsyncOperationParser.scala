@@ -8,7 +8,7 @@ import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorOperationTrait
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser
-import amf.apicontract.internal.spec.oas.parser.OasLikeOperationParser
+import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeOperationParser, OasLikeTagsParser}
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
@@ -37,7 +37,7 @@ abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operat
     map.key(
       "tags",
       entry => {
-        val tags = parser.OasLikeTagsParser(operation.id, entry).parse()
+        val tags = OasLikeTagsParser(operation.id, entry).parse()
         operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
       }
     )

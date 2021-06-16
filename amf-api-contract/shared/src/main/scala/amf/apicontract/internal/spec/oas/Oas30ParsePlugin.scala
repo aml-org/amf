@@ -2,7 +2,8 @@ package amf.apicontract.internal.spec.oas
 
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.oas.parser.context.{Oas3WebApiContext, OasWebApiContext}
-import amf.apicontract.internal.spec.oas.parser.{Oas3DocumentParser, OasFragmentParser}
+import amf.apicontract.internal.spec.oas.parser.OasFragmentParser
+import amf.apicontract.internal.spec.oas.parser.document.{Oas3DocumentParser, OasFragmentParser}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit

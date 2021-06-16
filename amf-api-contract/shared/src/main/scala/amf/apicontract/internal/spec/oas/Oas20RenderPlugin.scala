@@ -1,7 +1,8 @@
 package amf.apicontract.internal.spec.oas
 
 import amf.apicontract.internal.spec.oas.emitter.context.{Oas2SpecEmitterContext, OasSpecEmitterContext}
-import amf.apicontract.internal.spec.oas.emitter.{Oas20ModuleEmitter, Oas2DocumentEmitter, OasFragmentEmitter}
+import amf.apicontract.internal.spec.oas.emitter.OasFragmentEmitter
+import amf.apicontract.internal.spec.oas.emitter.document.{Oas20ModuleEmitter, Oas2DocumentEmitter, OasFragmentEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler

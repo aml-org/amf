@@ -10,7 +10,8 @@ import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.{MessageType, Publish, Subscribe}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessage
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
-import amf.apicontract.internal.spec.oas.parser.OasLikeTagsParser
+import amf.apicontract.internal.spec.oas.parser.domain
+import amf.apicontract.internal.spec.oas.parser.domain.OasLikeTagsParser
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
@@ -22,7 +23,13 @@ import amf.core.internal.validation.CoreValidations
 import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
 import amf.shapes.client.scala.domain.models.{Example, NodeShape}
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
-import amf.shapes.internal.spec.common.parser.{AnnotationParser, ExampleDataParser, Oas3ExampleOptions, OasLikeCreativeWorkParser, YMapEntryLike}
+import amf.shapes.internal.spec.common.parser.{
+  AnnotationParser,
+  ExampleDataParser,
+  Oas3ExampleOptions,
+  OasLikeCreativeWorkParser,
+  YMapEntryLike
+}
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 
 object AsyncMessageParser {
@@ -135,7 +142,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     map.key(
       "tags",
       entry => {
-        val tags = OasLikeTagsParser(message.id, entry).parse()
+        val tags = domain.OasLikeTagsParser(message.id, entry).parse()
         message.set(MessageModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
       }
     )

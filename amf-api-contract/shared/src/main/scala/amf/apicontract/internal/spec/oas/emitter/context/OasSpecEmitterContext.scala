@@ -1,12 +1,23 @@
 package amf.apicontract.internal.spec.oas.emitter.context
 
 import amf.apicontract.client.scala.model.domain.api.Api
-import amf.apicontract.client.scala.model.domain.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.security.{
+  ParametrizedSecurityScheme,
+  SecurityRequirement,
+  SecurityScheme
+}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.apicontract.internal.spec.common.emitter._
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaEmitterContext
 import amf.apicontract.internal.spec.oas.emitter
-import amf.apicontract.internal.spec.oas.emitter.{Oas2SecuritySchemesEmitters, Oas3SecuritySchemesEmitters, OasSecurityRequirementEmitter, OasSecuritySchemesEmitters}
+import amf.apicontract.internal.spec.oas.emitter.domain.{
+  Oas2SecuritySchemesEmitters,
+  Oas3SecuritySchemesEmitters,
+  OasSecurityRequirementEmitter,
+  OasSecuritySchemesEmitters,
+  OasTagToReferenceEmitter
+}
+import amf.apicontract.internal.spec.oas.emitter.Oas2SecuritySchemesEmitters
 import amf.core.client.scala.config.ShapeRenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -25,10 +36,10 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
     extends OasLikeSpecEmitterFactory
     with OasCompactEmitterFactory {
 
-  protected override implicit val shapeCtx = emitter.OasLikeShapeEmitterContextAdapter(spec)
+  protected override implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter =
-    (link, _) => emitter.OasTagToReferenceEmitter(link)
+    (link, _) => OasTagToReferenceEmitter(link)
 
   override def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter =
     OasCustomFacetsEmitter.apply

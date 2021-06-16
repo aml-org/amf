@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
-import amf.apicontract.internal.spec.oas.parser.OasLikeServerVariableParser
+import amf.apicontract.internal.spec.oas.parser.domain.OasLikeServerVariableParser
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.metamodel.domain.ExternalSourceElementModel
 import amf.core.internal.parser.YMapOps

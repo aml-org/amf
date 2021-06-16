@@ -3,8 +3,8 @@ package amf.apicontract.internal.spec.common.parser
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
-import amf.apicontract.internal.spec.raml.parser.RamlParametrizedSecuritySchemeParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.spec.raml.parser.domain.RamlParametrizedSecuritySchemeParser
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter

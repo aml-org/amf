@@ -1,10 +1,15 @@
 package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.client.scala.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
+import amf.apicontract.client.scala.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.internal.spec.async.emitters.context.Async20SpecEmitterContext
-import amf.apicontract.internal.spec.oas.emitter.OasLikeEmitterFactory
+import amf.apicontract.internal.spec.oas.emitter.domain.OasLikeEmitterFactory
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.SpecOrdering
@@ -12,7 +17,8 @@ import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.client.scala.domain.models.Example
 import amf.shapes.internal.spec.common.emitter.ExampleDataNodePartEmitter
 
-case class AsyncDomainElementEmitterFactory()(implicit val ctx: Async20SpecEmitterContext) extends OasLikeEmitterFactory {
+case class AsyncDomainElementEmitterFactory()(implicit val ctx: Async20SpecEmitterContext)
+    extends OasLikeEmitterFactory {
 
   override def parameterEmitter(p: Parameter): Option[PartEmitter] =
     Some(AsyncApiSingleParameterPartEmitter(p, SpecOrdering.Lexical))
@@ -55,6 +61,7 @@ case class AsyncDomainElementEmitterFactory()(implicit val ctx: Async20SpecEmitt
 }
 
 object AsyncDomainElementEmitterFactory {
-  def apply(eh: AMFErrorHandler): AsyncDomainElementEmitterFactory = AsyncDomainElementEmitterFactory()(new Async20SpecEmitterContext(eh))
+  def apply(eh: AMFErrorHandler): AsyncDomainElementEmitterFactory =
+    AsyncDomainElementEmitterFactory()(new Async20SpecEmitterContext(eh))
 
 }

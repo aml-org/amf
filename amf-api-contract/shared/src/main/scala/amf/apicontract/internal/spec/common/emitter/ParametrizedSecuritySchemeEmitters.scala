@@ -1,8 +1,12 @@
 package amf.apicontract.internal.spec.common.emitter
 
-import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings, ParametrizedSecurityScheme}
+import amf.apicontract.client.scala.model.domain.security.{
+  OAuth2Settings,
+  OpenIdConnectSettings,
+  ParametrizedSecurityScheme
+}
 import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel
-import amf.apicontract.internal.spec.raml.emitter.RamlSecuritySettingsValuesEmitters
+import amf.apicontract.internal.spec.raml.emitter.domain.RamlSecuritySettingsValuesEmitters
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.{AmfElement, AmfScalar}
 import amf.core.internal.annotations.{NullSecurity, SingleValueArray}

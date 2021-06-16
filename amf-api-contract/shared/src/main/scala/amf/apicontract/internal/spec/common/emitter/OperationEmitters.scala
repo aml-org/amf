@@ -4,9 +4,11 @@ import amf.apicontract.client.scala.model.domain.{Callback, Operation, Tag}
 import amf.apicontract.internal.metamodel.domain.{OperationModel, RequestModel}
 import amf.apicontract.internal.spec.oas.emitter
 import amf.apicontract.internal.spec.oas.emitter.context.OasSpecEmitterContext
-import amf.apicontract.internal.spec.oas.emitter.{OasDocumentEmitter, OasTagToReferenceEmitter, StringArrayTagsEmitter}
+import amf.apicontract.internal.spec.oas.emitter.document.OasDocumentEmitter
+import amf.apicontract.internal.spec.oas.emitter.domain.{OasTagToReferenceEmitter, StringArrayTagsEmitter}
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
-import amf.apicontract.internal.spec.raml.emitter.{ExtendsEmitter, RamlResponsesEmitter, RamlShapeEmitterContextAdapter}
+import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
+import amf.apicontract.internal.spec.raml.emitter.domain.{ExtendsEmitter, RamlResponsesEmitter}
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.annotations.SynthesizedField
@@ -129,7 +131,7 @@ abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrde
 
     fs.entry(OperationModel.Tags)
       .map(f =>
-        result += emitter.StringArrayTagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering))
+        result += StringArrayTagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering))
 
     fs.entry(OperationModel.Documentation)
       .map(

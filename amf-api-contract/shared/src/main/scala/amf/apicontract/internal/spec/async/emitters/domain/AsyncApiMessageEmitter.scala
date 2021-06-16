@@ -6,8 +6,8 @@ import amf.apicontract.internal.metamodel.domain.{MessageModel, PayloadModel}
 import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas
-import amf.apicontract.internal.spec.oas.emitter.TagsEmitter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.apicontract.internal.spec.oas.emitter.domain.{OasTagToReferenceEmitter, TagsEmitter}
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
@@ -150,7 +150,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
     )
   }
 
-  def emitLink(b: PartBuilder): Unit = oas.emitter.OasTagToReferenceEmitter(message).emit(b)
+  def emitLink(b: PartBuilder): Unit = OasTagToReferenceEmitter(message).emit(b)
 
   def emitTraits(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit = {
     result += AsyncTraitMessagesEmitter(f.arrayValues[Message], ordering)

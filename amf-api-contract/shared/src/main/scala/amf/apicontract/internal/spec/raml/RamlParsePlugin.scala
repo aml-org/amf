@@ -2,8 +2,9 @@ package amf.apicontract.internal.spec.raml
 
 import amf.apicontract.internal.plugins.ApiParsePlugin
 import amf.apicontract.internal.spec.common.WebApiDeclarations
-import amf.apicontract.internal.spec.raml.parser.RamlFragmentParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.spec.raml.parser.document
+import amf.apicontract.internal.spec.raml.parser.document.RamlFragmentParser
 import amf.apicontract.internal.spec.raml.reference.RamlReferenceHandler
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -30,7 +31,7 @@ trait RamlParsePlugin extends ApiParsePlugin {
 
     validateReferences(root.references, ctx)
     RamlHeader(root) match { // todo review this, should we use the raml web api context for get the version parser?
-      case Some(f: RamlFragment) => parser.RamlFragmentParser(root, f)(updated).parseFragment()
+      case Some(f: RamlFragment) => document.RamlFragmentParser(root, f)(updated).parseFragment()
       case Some(header)          => parseSpecificVersion(root, updated, header)
       case _ => // unreachable as it is covered in canParse()
         throw new InvalidDocumentHeaderException(vendor.name)

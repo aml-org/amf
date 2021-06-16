@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.model.domain.{Parameter, Payload}
 import amf.apicontract.internal.annotations._
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel}
 import amf.apicontract.internal.spec.oas.emitter
-import amf.apicontract.internal.spec.oas.emitter.{OasContentPayloadsEmitter, OasLikeShapeEmitterContextAdapter}
+import amf.apicontract.internal.spec.oas.emitter.{OasLikeShapeEmitterContextAdapter, context}
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml
 import amf.core.client.common.position.Position
@@ -23,7 +23,12 @@ import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.parser.spec.OasDefinitions
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
-import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.apicontract.internal.spec.oas.emitter.context.{
+  Oas3SpecEmitterFactory,
+  OasLikeShapeEmitterContextAdapter,
+  OasSpecEmitterContext
+}
+import amf.apicontract.internal.spec.oas.emitter.domain.OasContentPayloadsEmitter
 import amf.apicontract.internal.spec.raml.emitter.context.{RamlSpecEmitterContext, XRaml10SpecEmitterContext}
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.contexts.emitter.oas.Oas3SpecEmitterFactory
@@ -439,7 +444,7 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
     implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
-  protected implicit val shapeCtx = emitter.OasLikeShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   protected def emitParameter(b: EntryBuilder): Unit = {
     b.entry(
@@ -520,7 +525,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
     implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx = emitter.OasLikeShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = context.OasLikeShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit =
     handleInlinedRefOr(b, payload) {

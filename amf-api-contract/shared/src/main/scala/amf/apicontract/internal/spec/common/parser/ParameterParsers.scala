@@ -5,8 +5,8 @@ import amf.apicontract.internal.annotations._
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
 import amf.apicontract.internal.spec.common.{OasParameter, Parameters}
-import amf.apicontract.internal.spec.oas.parser.OasContentsParser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.apicontract.internal.spec.oas.parser.domain.OasContentsParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   ParameterNameRequired,

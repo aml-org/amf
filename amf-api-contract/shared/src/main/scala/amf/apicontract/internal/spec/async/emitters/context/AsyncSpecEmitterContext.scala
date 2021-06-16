@@ -8,8 +8,8 @@ import amf.apicontract.internal.spec.common.emitter.{
   AnnotationTypeEmitter,
   ParametrizedSecuritySchemeEmitter
 }
-import amf.apicontract.internal.spec.oas.emitter.OasSecurityRequirementEmitter
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
+import amf.apicontract.internal.spec.oas.emitter.domain.OasSecurityRequirementEmitter
 import amf.core.client.scala.config.ShapeRenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit

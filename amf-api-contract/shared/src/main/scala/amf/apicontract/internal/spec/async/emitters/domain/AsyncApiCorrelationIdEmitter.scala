@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.CorrelationId
 import amf.apicontract.internal.metamodel.domain.CorrelationIdModel
 import amf.apicontract.internal.spec.oas
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.apicontract.internal.spec.oas.emitter.domain.OasTagToReferenceEmitter
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
@@ -53,7 +54,7 @@ case class AsyncApiCorrelationIdContentEmitter(idObj: CorrelationId, ordering: S
     )
   }
 
-  private def emitLink(b: PartBuilder): Unit = oas.emitter.OasTagToReferenceEmitter(idObj).emit(b)
+  private def emitLink(b: PartBuilder): Unit = OasTagToReferenceEmitter(idObj).emit(b)
 
   override def position(): Position = pos(idObj.annotations)
 }

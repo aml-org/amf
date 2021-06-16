@@ -1,7 +1,6 @@
 package amf.apicontract.internal.spec.raml
 
 import amf.apicontract.internal.spec.common.{RamlWebApiDeclarations, WebApiDeclarations}
-import amf.apicontract.internal.spec.raml.parser.Raml08DocumentParser
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
@@ -10,6 +9,8 @@ import amf.core.internal.parser.Root
 import amf.core.internal.remote.Vendor
 import RamlHeader.Raml08
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, RamlWebApiContext}
+import amf.apicontract.internal.spec.raml.parser.document
+import amf.apicontract.internal.spec.raml.parser.document.Raml08DocumentParser
 import amf.plugins.document.apicontract.parser.spec.RamlWebApiDeclarations
 import amf.plugins.document.apicontract.parser.RamlFragment
 import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
@@ -40,7 +41,7 @@ object Raml08ParsePlugin extends RamlParsePlugin {
 
   override protected def parseSpecificVersion(root: Root, ctx: RamlWebApiContext, header: RamlHeader): BaseUnit = {
     header match {
-      case Raml08 => parser.Raml08DocumentParser(root)(ctx).parseDocument()
+      case Raml08 => document.Raml08DocumentParser(root)(ctx).parseDocument()
       case _ => // unreachable as it is covered in canParse()
         throw new InvalidDocumentHeaderException(vendor.name)
     }

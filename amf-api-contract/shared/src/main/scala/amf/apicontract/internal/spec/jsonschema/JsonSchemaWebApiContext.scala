@@ -1,13 +1,18 @@
 package amf.apicontract.internal.spec.jsonschema
 
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
-import amf.apicontract.internal.spec.oas.parser.Oas3Syntax
-import amf.apicontract.internal.spec.oas.parser.context.{Oas3VersionFactory, OasSpecVersionFactory, OasWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.{
+  Oas3Syntax,
+  Oas3VersionFactory,
+  OasSpecVersionFactory,
+  OasWebApiContext
+}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{JsonSchema, Vendor}
-import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
+import amf.shapes.internal.spec.common.JSONSchemaVersion
+import amf.shapes.internal.spec.common.parser.SpecSyntax
 
 class JsonSchemaWebApiContext(loc: String,
                               refs: Seq[ParsedReference],

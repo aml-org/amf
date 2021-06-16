@@ -5,6 +5,7 @@ import amf.apicontract.internal.metamodel.domain.ParameterModel
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.apicontract.internal.spec.oas.emitter.domain.OasTagToReferenceEmitter
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.Shape
@@ -72,7 +73,7 @@ case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: Sp
   }
 
   def emitLink(b: PartBuilder): Unit = {
-    oas.emitter.OasTagToReferenceEmitter(parameter).emit(b)
+    OasTagToReferenceEmitter(parameter).emit(b)
   }
 
   private def emitLocation(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit =

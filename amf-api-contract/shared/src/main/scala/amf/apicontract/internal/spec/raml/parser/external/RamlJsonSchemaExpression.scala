@@ -2,8 +2,9 @@ package amf.apicontract.internal.spec.raml.parser.external
 
 import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.oas.parser
-import amf.apicontract.internal.spec.oas.parser.Oas2DocumentParser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.apicontract.internal.spec.oas.parser.document
+import amf.apicontract.internal.spec.oas.parser.document.Oas2DocumentParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.core.client.scala.model.domain.{AmfArray, Shape}
 import amf.core.client.scala.parse.document._
@@ -165,9 +166,10 @@ case class RamlJsonSchemaExpression(key: YNode,
       jsonSchemaContext.localJSONSchemaContext = Some(schemaEntry.node)
       jsonSchemaContext.setJsonSchemaAST(schemaEntry.node)
 
-      parser.Oas2DocumentParser(
-        Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
-        jsonSchemaContext)
+      document
+        .Oas2DocumentParser(
+          Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
+          jsonSchemaContext)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/", None)(jsonSchemaContext)
       val resolvedShapes = jsonSchemaContext.declarations.shapes.values.toSeq
       val shapesMap      = mutable.Map[String, AnyShape]()

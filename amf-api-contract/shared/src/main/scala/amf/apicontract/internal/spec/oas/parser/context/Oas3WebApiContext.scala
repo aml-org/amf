@@ -1,7 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.context
 
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
-import amf.apicontract.internal.spec.oas.parser.Oas3Syntax
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{Oas30, Vendor}
