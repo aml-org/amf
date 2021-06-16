@@ -5,8 +5,8 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Str
 import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ModelDoc, ModelVocabularies, ShapeModel}
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
-import amf.shapes.client.scala.domain.models.AnyShape
 
 trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with ExamplesField with DocumentationField {
 

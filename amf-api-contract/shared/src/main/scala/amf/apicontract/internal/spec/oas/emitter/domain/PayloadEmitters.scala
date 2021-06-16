@@ -15,8 +15,9 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.shapes.client.scala.annotations.ParsedJSONSchema
-import amf.shapes.client.scala.domain.models.{AnyShape, NodeShape}
+import amf.shapes.internal.annotations.ParsedJSONSchema
+import amf.shapes.client.scala.domain.models.NodeShape
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import amf.shapes.internal.spec.common.emitter.CommentEmitter
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.raml.emitter.{

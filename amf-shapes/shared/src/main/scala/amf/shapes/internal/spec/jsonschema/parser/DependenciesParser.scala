@@ -3,8 +3,14 @@ package amf.shapes.internal.spec.jsonschema.parser
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.domain.models.{Dependencies, NodeShape, PropertyDependencies, SchemaDependencies}
-import amf.shapes.internal.domain.metamodel.{DependenciesModel, NodeShapeModel, PropertyDependenciesModel, SchemaDependenciesModel}
+import amf.shapes.client.scala.domain.models.SchemaDependencies
+import amf.shapes.client.scala.model.domain.{Dependencies, NodeShape, PropertyDependencies}
+import amf.shapes.internal.domain.metamodel.{
+  DependenciesModel,
+  NodeShapeModel,
+  PropertyDependenciesModel,
+  SchemaDependenciesModel
+}
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.{SingleArrayNode, YMapEntryLike}
 import amf.shapes.internal.spec.common.SchemaVersion

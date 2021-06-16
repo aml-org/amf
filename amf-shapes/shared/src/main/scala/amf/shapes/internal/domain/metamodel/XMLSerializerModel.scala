@@ -5,7 +5,7 @@ import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Bool, Str}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.shapes.client.scala.domain.models.XMLSerializer
+import amf.shapes.client.scala.model.domain.XMLSerializer
 
 /**
   * Scalar shape metamodel

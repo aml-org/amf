@@ -1,7 +1,7 @@
 package amf.shapes.client.scala.render
 
 import amf.core.client.scala.AMFGraphConfiguration
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.raml.emitter.RamlDatatypeSerializer
 
 object RamlShapeRenderer extends RamlDatatypeSerializer {

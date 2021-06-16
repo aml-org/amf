@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.raml.parser.expression
 
 import amf.core.internal.parser.domain.SearchScope
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
 
 private[expression] sealed trait DeclarationFinder {

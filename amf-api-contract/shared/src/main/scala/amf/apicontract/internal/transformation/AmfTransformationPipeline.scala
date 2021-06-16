@@ -1,7 +1,7 @@
 package amf.apicontract.internal.transformation
 
 import amf.apicontract.internal.spec.common.transformation.stage._
-import amf.apicontract.internal.transformation.stages.ExtensionsResolutionStage
+import amf.apicontract.internal.transformation.stages.{ExtensionsResolutionStage, WebApiReferenceResolutionStage}
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{AmfProfile, ProfileName}
 import amf.core.client.scala.transform.pipelines.TransformationPipeline

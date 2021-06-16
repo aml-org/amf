@@ -13,7 +13,7 @@ import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext, ReferenceHandler, SimpleReferenceHandler}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Vendor
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.JSONSchemaUnspecifiedVersion
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 

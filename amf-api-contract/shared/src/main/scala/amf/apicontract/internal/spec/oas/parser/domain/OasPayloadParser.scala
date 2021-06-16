@@ -6,7 +6,7 @@ import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapePa
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
-import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YNode}

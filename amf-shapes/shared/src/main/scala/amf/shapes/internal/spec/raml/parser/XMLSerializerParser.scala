@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.raml.parser
 import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
-import amf.shapes.client.scala.domain.models.XMLSerializer
+import amf.shapes.client.scala.model.domain.XMLSerializer
 import amf.shapes.internal.domain.metamodel.XMLSerializerModel
 import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.{YMap, YNode}

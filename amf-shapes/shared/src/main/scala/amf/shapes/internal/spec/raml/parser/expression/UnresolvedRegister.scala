@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.raml.parser.expression
 
-import amf.shapes.client.scala.domain.models.UnresolvedShape
+import amf.shapes.client.scala.model.domain.UnresolvedShape
 import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.{YNode, YPart}
 

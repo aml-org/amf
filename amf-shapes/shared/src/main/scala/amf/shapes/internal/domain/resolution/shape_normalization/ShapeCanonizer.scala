@@ -8,8 +8,20 @@ import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.shapes.internal.domain.metamodel._
-
-import amf.shapes.client.scala.domain.models.{AnyShape, ArrayShape, Example, FileShape, InheritanceChain, MatrixShape, NilShape, NodeShape, ScalarShape, TupleShape, UnionShape}
+import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  Example,
+  FileShape,
+  InheritanceChain,
+  MatrixShape,
+  NilShape,
+  NodeShape,
+  ScalarShape,
+  TupleShape,
+  UnionShape
+}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

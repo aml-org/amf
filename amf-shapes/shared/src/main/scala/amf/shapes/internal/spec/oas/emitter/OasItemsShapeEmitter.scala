@@ -6,7 +6,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.ArrayShape
+import amf.shapes.client.scala.model.domain.ArrayShape
 import amf.shapes.internal.domain.metamodel.ArrayShapeModel
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

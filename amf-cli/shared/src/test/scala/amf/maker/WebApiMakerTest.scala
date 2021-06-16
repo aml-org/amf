@@ -9,8 +9,9 @@ import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.metamodel.Field
 import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
-import amf.shapes.client.scala.domain.models.DomainExtensions.propertyShapeToPropertyShape
-import amf.shapes.client.scala.domain.models.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
+import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
+import amf.shapes.client.scala.domain.models.XMLSerializer
+import amf.shapes.client.scala.model.domain.AnyShape
 import org.mulesoft.common.test.ListAssertions
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 

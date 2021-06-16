@@ -4,7 +4,7 @@ import amf.core.internal.metamodel.Type.Str
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.client.scala.vocabulary.Namespace.Shapes
 import amf.core.client.scala.vocabulary.ValueType
-import amf.shapes.client.scala.domain.models.DiscriminatorValueMapping
+import amf.shapes.client.scala.model.domain.DiscriminatorValueMapping
 
 object DiscriminatorValueMappingModel extends DomainElementModel {
 

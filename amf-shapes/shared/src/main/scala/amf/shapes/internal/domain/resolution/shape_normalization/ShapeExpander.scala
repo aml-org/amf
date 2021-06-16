@@ -9,9 +9,20 @@ import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.shapes.internal.domain.metamodel._
-
 import amf.shapes.internal.domain.resolution.recursion.{LinkableRegisterCriteria, RecursionErrorRegister}
-import amf.shapes.client.scala.domain.models.{AnyShape, ArrayShape, FileShape, MatrixShape, NilShape, NodeShape, ScalarShape, TupleShape, UnionShape, UnresolvedShape}
+import amf.shapes.client.scala.domain.models.UnresolvedShape
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  FileShape,
+  MatrixShape,
+  NilShape,
+  NodeShape,
+  ScalarShape,
+  TupleShape,
+  UnionShape,
+  UnresolvedShape
+}
 
 private[resolution] object ShapeExpander {
   def apply(s: Shape, context: NormalizationContext, recursionRegister: RecursionErrorRegister): Shape =

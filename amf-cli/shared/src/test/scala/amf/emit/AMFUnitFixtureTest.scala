@@ -5,7 +5,7 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.{Document, Module}
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.scala.domain.models.{CreativeWork, ScalarShape}
+import amf.shapes.client.scala.domain.models.ScalarShape
 
 /**
   *

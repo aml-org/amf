@@ -19,7 +19,8 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.shapes.client.scala.domain.models.{AnyShape, CreativeWork}
+import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork}
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.common.emitter.{

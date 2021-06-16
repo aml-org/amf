@@ -6,7 +6,6 @@ import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.NodeShape
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import amf.shapes.internal.domain.metamodel.NodeShapeModel.Dependencies
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
@@ -18,6 +17,7 @@ import org.yaml.model.YType
 
 import scala.collection.mutable.ListBuffer
 import amf.core.internal.utils._
+import amf.shapes.client.scala.model.domain.NodeShape
 
 case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlShapeEmitterContext)

@@ -8,7 +8,7 @@ import amf.core.internal.remote.Vendor
 import amf.core.internal.render.{AMFSerializer, SpecOrdering}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 import org.yaml.model.YDocument
 trait PayloadSerializer extends PlatformSecrets {
 

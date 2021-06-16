@@ -4,8 +4,9 @@ import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.{AmfArray, Shape}
 import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.annotations.ParsedFromTypeExpression
-import amf.shapes.client.scala.domain.models.{ArrayShape, UnionShape}
+import amf.shapes.internal.annotations.ParsedFromTypeExpression
+import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.{ArrayShape, UnionShape}
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, UnionShapeModel}
 import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model._

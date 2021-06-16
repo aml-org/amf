@@ -6,17 +6,18 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.TupleShape
+import amf.shapes.client.scala.model.domain.TupleShape
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, TupleShapeModel}
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasTupleItemsShapeEmitter(array: TupleShape,
-                                     ordering: SpecOrdering,
-                                     references: Seq[BaseUnit],
-                                     additionalEntry: Option[ValueEmitter],
-                                     pointer: Seq[String] = Nil,
-                                     schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+case class OasTupleItemsShapeEmitter(
+    array: TupleShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    additionalEntry: Option[ValueEmitter],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
 
   val itemEmitters: Seq[OasTypeEmitter] = {

@@ -5,8 +5,8 @@ import amf.core.client.scala.model.document.Document
 import amf.core.internal.remote.JsonSchema
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.scala.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.internal.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
+import amf.shapes.client.scala.model.domain.AnyShape
 
 trait JsonSchemaSerializer extends PlatformSecrets {
   // todo, check if its resolved?

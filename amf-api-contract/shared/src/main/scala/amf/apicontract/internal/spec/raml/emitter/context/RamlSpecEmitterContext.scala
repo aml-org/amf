@@ -43,7 +43,7 @@ import amf.core.internal.remote.{Raml08, Raml10, Vendor}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter._
 import amf.shapes.internal.spec.common.emitter.annotations._
 import amf.shapes.internal.spec.common.{RAML08SchemaVersion, RAML10SchemaVersion, SchemaVersion}

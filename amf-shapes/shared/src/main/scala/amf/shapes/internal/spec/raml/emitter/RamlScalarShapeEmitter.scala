@@ -7,8 +7,6 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, RawValueEmitter, ValueEmitter, pos}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.TypeDef
-import amf.shapes.client.scala.domain.models.ScalarShape
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.parser.{TypeDefXsdMapping, TypeDefYTypeMapping}
 import amf.shapes.internal.spec.common.emitter.{NumberTypeToYTypeConverter, RamlShapeEmitterContext}
@@ -16,6 +14,8 @@ import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import amf.shapes.internal.spec.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher, TypeName}
 import org.yaml.model.YType
 import amf.core.internal.utils._
+import amf.shapes.client.scala.model.domain.ScalarShape
+import amf.shapes.internal.spec.common.TypeDef
 
 import scala.collection.mutable.ListBuffer
 

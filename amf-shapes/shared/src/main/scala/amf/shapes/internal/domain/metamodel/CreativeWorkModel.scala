@@ -6,7 +6,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Iri, Str}
 import amf.core.internal.metamodel.domain.common.DescriptionField
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
-import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.client.scala.model.domain.CreativeWork
 
 /**
   * Creative work metamodel

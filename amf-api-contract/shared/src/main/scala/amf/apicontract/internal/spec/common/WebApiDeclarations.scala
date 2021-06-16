@@ -27,7 +27,8 @@ import amf.core.client.scala.model.domain.{DataNode, DomainElement, ObjectNode, 
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.internal.parser.domain._
-import amf.shapes.client.scala.domain.models.{AnyShape, CreativeWork, Example}
+import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import amf.shapes.internal.spec.common.error.ErrorNamedExample
 import org.yaml.model.{YNode, YPart}

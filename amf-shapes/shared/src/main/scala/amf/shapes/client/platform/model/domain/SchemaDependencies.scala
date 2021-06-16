@@ -2,16 +2,16 @@ package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, Shape}
+import amf.shapes.client.scala.model.domain.SchemaDependencies
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-import amf.shapes.client.scala.domain.models.{ SchemaDependencies => InternalSchemaDependencies }
 import amf.shapes.internal.convert.ShapeClientConverters._
 
 /**
   * Schema dependencies model class
   */
 @JSExportAll
-case class SchemaDependencies(override private[amf] val _internal: InternalSchemaDependencies) extends DomainElement {
+case class SchemaDependencies(override private[amf] val _internal: SchemaDependencies) extends DomainElement {
 
   @JSExportTopLevel("model.domain.SchemaDependencies")
   def this() = this(InternalSchemaDependencies())

@@ -8,7 +8,8 @@ import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.domain.models.{CreativeWork, Example, ExemplifiedDomainElement, NodeShape}
+import amf.shapes.client.scala.domain.models.NodeShape
+import amf.shapes.client.scala.model.domain.{CreativeWork, Example, ExemplifiedDomainElement, NodeShape}
 
 class Message(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement

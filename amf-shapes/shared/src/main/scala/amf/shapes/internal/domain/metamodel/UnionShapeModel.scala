@@ -4,7 +4,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Array
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
-import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.UnionShape
 
 object UnionShapeModel extends AnyShapeModel {
 

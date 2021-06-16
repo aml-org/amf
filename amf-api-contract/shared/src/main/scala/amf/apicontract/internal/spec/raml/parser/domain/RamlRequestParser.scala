@@ -10,7 +10,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.{AmfStrings, Lazy}
 import amf.core.internal.validation.CoreParserValidations.UnsupportedExampleMediaTypeErrorSpecification
-import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
 import amf.shapes.internal.spec.raml.parser.{AnyDefaultType, DefaultType, Raml10TypeParser}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExclusivePropertiesSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}

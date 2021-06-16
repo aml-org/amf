@@ -7,14 +7,22 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.ValueEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.NodeShape
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
-import amf.shapes.internal.domain.metamodel.NodeShapeModel.{AdditionalPropertiesSchema, UnevaluatedProperties, UnevaluatedPropertiesSchema}
+import amf.shapes.internal.domain.metamodel.NodeShapeModel.{
+  AdditionalPropertiesSchema,
+  UnevaluatedProperties,
+  UnevaluatedPropertiesSchema
+}
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
-import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, OAS30SchemaVersion}
+import amf.shapes.internal.spec.common.{
+  JSONSchemaDraft201909SchemaVersion,
+  JSONSchemaDraft7SchemaVersion,
+  OAS30SchemaVersion
+}
 import amf.shapes.internal.spec.jsonschema.emitter.UnevaluatedEmitter.unevaluatedPropertiesInfo
 import amf.shapes.internal.spec.jsonschema.emitter._
 import amf.core.internal.utils._
+import amf.shapes.client.scala.model.domain.NodeShape
 
 import scala.collection.mutable.ListBuffer
 

@@ -5,7 +5,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.internal.domain.metamodel.UnionShapeModel
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

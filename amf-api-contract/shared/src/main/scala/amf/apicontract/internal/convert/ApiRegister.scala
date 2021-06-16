@@ -67,6 +67,7 @@ import amf.core.internal.metamodel.document.PayloadFragmentModel
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.platform.model.domain.NilShape
+import amf.shapes.client.scala.model
 
 /** Shared WebApi registrations. */
 // TODO: could be renamed to ApiRegister??
@@ -187,49 +188,49 @@ private[amf] object ApiRegister extends PlatformSecrets {
 
     // DataShapes (domain)
     platform.registerWrapper(AnyShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.AnyShape => new AnyShape(s)
+      case s: model.domain.AnyShape => new AnyShape(s)
     }
     platform.registerWrapper(NilShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.NilShape => NilShape(s)
+      case s: model.domain.NilShape => NilShape(s)
     }
     platform.registerWrapper(ArrayShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.ArrayShape => ArrayShape(s)
+      case s: model.domain.ArrayShape => ArrayShape(s)
     }
     platform.registerWrapper(MatrixShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.MatrixShape => new MatrixShape(s.toArrayShape)
+      case s: model.domain.MatrixShape => new MatrixShape(s.toArrayShape)
     }
     platform.registerWrapper(TupleShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.TupleShape => TupleShape(s)
+      case s: model.domain.TupleShape => TupleShape(s)
     }
     platform.registerWrapper(CreativeWorkModel) {
-      case s: amf.shapes.client.scala.domain.models.CreativeWork => CreativeWork(s)
+      case s: model.domain.CreativeWork => CreativeWork(s)
     }
     platform.registerWrapper(ExampleModel) {
-      case s: amf.shapes.client.scala.domain.models.Example => Example(s)
+      case s: model.domain.Example => Example(s)
     }
     platform.registerWrapper(FileShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.FileShape => FileShape(s)
+      case s: model.domain.FileShape => FileShape(s)
     }
     platform.registerWrapper(NodeShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.NodeShape => NodeShape(s)
+      case s: model.domain.NodeShape => NodeShape(s)
     }
     platform.registerWrapper(ScalarShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.ScalarShape => ScalarShape(s)
+      case s: model.domain.ScalarShape => ScalarShape(s)
     }
     platform.registerWrapper(SchemaShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.SchemaShape => SchemaShape(s)
+      case s: model.domain.SchemaShape => SchemaShape(s)
     }
     platform.registerWrapper(XMLSerializerModel) {
-      case s: amf.shapes.client.scala.domain.models.XMLSerializer => XMLSerializer(s)
+      case s: model.domain.XMLSerializer => XMLSerializer(s)
     }
     platform.registerWrapper(PropertyDependenciesModel) {
-      case s: amf.shapes.client.scala.domain.models.PropertyDependencies => PropertyDependencies(s)
+      case s: model.domain.PropertyDependencies => PropertyDependencies(s)
     }
     platform.registerWrapper(SchemaDependenciesModel) {
-      case s: amf.shapes.client.scala.domain.models.SchemaDependencies => SchemaDependencies(s)
+      case s: model.domain.SchemaDependencies => SchemaDependencies(s)
     }
     platform.registerWrapper(UnionShapeModel) {
-      case s: amf.shapes.client.scala.domain.models.UnionShape => UnionShape(s)
+      case s: model.domain.UnionShape => UnionShape(s)
     }
     platform.registerWrapper(amf.core.internal.metamodel.domain.RecursiveShapeModel) {
       case s: amf.core.client.scala.model.domain.RecursiveShape => RecursiveShape(s)
@@ -238,7 +239,7 @@ private[amf] object ApiRegister extends PlatformSecrets {
       case s: domain.TemplatedLink => TemplatedLink(s)
     }
     platform.registerWrapper(IriTemplateMappingModel) {
-      case s: amf.shapes.client.scala.domain.models.IriTemplateMapping => IriTemplateMapping(s)
+      case s: model.domain.IriTemplateMapping => IriTemplateMapping(s)
     }
     platform.registerWrapper(CorrelationIdModel) {
       case s: domain.CorrelationId => CorrelationId(s)

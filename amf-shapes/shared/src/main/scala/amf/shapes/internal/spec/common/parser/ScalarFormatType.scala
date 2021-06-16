@@ -2,11 +2,11 @@ package amf.shapes.internal.spec.common.parser
 
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.YMapOps
-import amf.shapes.client.scala.domain.TypeDef
-import amf.shapes.client.scala.domain.TypeDef.{DoubleType, FloatType, IntType, LongType}
+import amf.shapes.internal.spec.common.TypeDef.{DoubleType, FloatType, IntType, LongType}
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.TypeDef
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidShapeFormat
 import org.yaml.model.{YMap, YScalar}
 

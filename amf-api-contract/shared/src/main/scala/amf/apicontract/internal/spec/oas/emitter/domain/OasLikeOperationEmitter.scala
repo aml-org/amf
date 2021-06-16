@@ -8,7 +8,7 @@ import amf.core.internal.parser.domain.Fields
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.common.emitter.{OasEntryCreativeWorkEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.YDocument

@@ -5,9 +5,13 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.Fields
 import amf.core.internal.render.BaseEmitters.ValueEmitter
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel.{Encoding, MediaType, Schema}
-import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, SchemaVersion}
+import amf.shapes.internal.spec.common.{
+  JSONSchemaDraft201909SchemaVersion,
+  JSONSchemaDraft7SchemaVersion,
+  SchemaVersion
+}
 import amf.shapes.internal.spec.oas.emitter.OasEntryShapeEmitter
 
 trait TypeParserFactory {

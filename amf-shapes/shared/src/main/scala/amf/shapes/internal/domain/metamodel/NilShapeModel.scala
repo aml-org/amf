@@ -4,7 +4,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.client.scala.vocabulary.Namespace._
 import amf.core.client.scala.vocabulary.ValueType
-import amf.shapes.client.scala.domain.models.NilShape
+import amf.shapes.client.scala.model.domain.NilShape
 
 object NilShapeModel extends AnyShapeModel {
 

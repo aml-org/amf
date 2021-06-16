@@ -5,7 +5,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{Linkable, Shape}
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.utils.IdCounter
-import amf.shapes.client.scala.domain.TypeDef.{JSONSchemaType, TypeExpressionType, UndefinedType, XMLSchemaType}
+import amf.shapes.internal.spec.common.TypeDef.{JSONSchemaType, TypeExpressionType, UndefinedType, XMLSchemaType}
 import amf.shapes.internal.spec.{RamlTypeDefMatcher, TypeName}
 
 import scala.collection.mutable

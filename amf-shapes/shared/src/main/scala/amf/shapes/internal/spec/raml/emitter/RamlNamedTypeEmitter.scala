@@ -8,7 +8,8 @@ import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.shapes.client.scala.domain.models.{AnyShape, ShapeHelpers}
+import amf.shapes.client.scala.domain.models.ShapeHelpers
+import amf.shapes.client.scala.model.domain.{AnyShape, ShapeHelpers}
 import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter

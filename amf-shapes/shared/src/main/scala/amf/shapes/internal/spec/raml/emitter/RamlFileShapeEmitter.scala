@@ -4,12 +4,12 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.FileShape
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, FileShapeModel, ScalarShapeModel}
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 
 import scala.collection.mutable.ListBuffer
 import amf.core.internal.utils._
+import amf.shapes.client.scala.model.domain.FileShape
 
 case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlShapeEmitterContext)

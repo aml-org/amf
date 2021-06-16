@@ -11,7 +11,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.internal.utils.{IdCounter, _}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr

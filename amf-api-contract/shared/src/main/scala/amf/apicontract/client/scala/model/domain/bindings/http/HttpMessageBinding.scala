@@ -6,7 +6,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.bindings.HttpMessageBindingModel
 import amf.apicontract.internal.metamodel.domain.bindings.HttpMessageBindingModel._
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, MessageBinding}
-import amf.shapes.client.scala.domain.models.Key
+import amf.shapes.client.scala.model.domain.Key
 
 class HttpMessageBinding(override val fields: Fields, override val annotations: Annotations)
     extends MessageBinding

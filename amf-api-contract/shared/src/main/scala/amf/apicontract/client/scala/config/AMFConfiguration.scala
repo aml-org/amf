@@ -55,8 +55,8 @@ import amf.apicontract.internal.transformation.compatibility.{
 import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.shacl.{CustomShaclModelValidationPlugin, FullShaclModelValidationPlugin}
-import amf.shapes.client.scala.annotations.ShapeSerializableAnnotations
-import amf.shapes.client.scala.entities.ShapeEntities
+import amf.shapes.internal.annotations.ShapeSerializableAnnotations
+import amf.shapes.internal.entities.ShapeEntities
 
 import scala.concurrent.Future
 

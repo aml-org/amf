@@ -15,7 +15,7 @@ import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, tr
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.common.emitter._
 import amf.shapes.internal.spec.raml.emitter.Raml10TypeEmitter

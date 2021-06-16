@@ -7,10 +7,11 @@ import amf.shapes.client.scala.domain.models
 import amf.shapes.internal.convert.ShapeClientConverters._
 
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
-import amf.shapes.client.scala.domain.models.{ AnyShape => InternalAnyShape }
+import amf.shapes.client.scala.domain.models.{AnyShape => InternalAnyShape}
+import amf.shapes.client.scala.model.domain
 import amf.shapes.internal.convert.ShapeClientConverters._
 
-class AnyShape(override private[amf] val _internal: models.AnyShape) extends Shape with PlatformSecrets {
+class AnyShape(override private[amf] val _internal: domain.AnyShape) extends Shape with PlatformSecrets {
 
   @JSExportTopLevel("model.domain.AnyShape")
   def this() = this(InternalAnyShape())

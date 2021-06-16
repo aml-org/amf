@@ -7,7 +7,7 @@ import amf.core.internal.parser.ParseConfiguration
 import amf.apicontract.client.scala.model.domain.templates.{ParametrizedTrait, Trait}
 import amf.apicontract.internal.spec.common.transformation.stage.DomainElementMerging
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.client.scala.model.domain.ScalarShape
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

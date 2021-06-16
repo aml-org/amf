@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec
 
-import amf.shapes.client.scala.domain.TypeDef
-import amf.shapes.client.scala.domain.TypeDef._
+import amf.shapes.internal.spec.common.TypeDef._
+import amf.shapes.internal.spec.common.TypeDef
 
 /**
   * Raml type to TypeDef matcher

@@ -4,7 +4,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas, Raml}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnexpectedVendor

@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.oas.emitter
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.annotations.TypePropertyLexicalInfo
+import amf.shapes.internal.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YType
 
 object OasTypeFacetEmitter {

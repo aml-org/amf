@@ -10,7 +10,8 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfObject, Shape}
 import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
-import amf.shapes.client.scala.domain.models.{AnyShape, NodeShape}
+import amf.shapes.client.scala.domain.models.NodeShape
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.mulesoft.lexer.InputRange
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 

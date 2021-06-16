@@ -1,8 +1,8 @@
 package amf.shapes.internal.domain.parser
 
 import amf.core.client.scala.model.DataType
-import amf.shapes.client.scala.domain.TypeDef
-import amf.shapes.client.scala.domain.TypeDef._
+import amf.shapes.internal.spec.common.TypeDef._
+import amf.shapes.internal.spec.common.TypeDef
 import org.yaml.model.YType
 
 /**

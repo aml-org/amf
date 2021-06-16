@@ -8,7 +8,7 @@ import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.client.scala.annotations.ExternalReferenceUrl
+import amf.shapes.internal.annotations.ExternalReferenceUrl
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 /**

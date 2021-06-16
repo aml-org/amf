@@ -11,7 +11,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.client.scala.annotations.ExternalReferenceUrl
+import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YMapEntry}
 

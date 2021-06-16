@@ -11,7 +11,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, FacetsInstanceEmitter}
 import amf.shapes.internal.spec.common.emitter.{
   CustomFacetsEmitter,

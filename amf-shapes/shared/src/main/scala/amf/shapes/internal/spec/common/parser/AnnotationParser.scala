@@ -8,7 +8,7 @@ import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainPropert
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, _}
-import amf.shapes.client.scala.annotations.OrphanOasExtension
+import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.ShapeParserContext
 import WellKnownAnnotation.resolveAnnotation
 import amf.shapes.internal.spec.common.parser.AnnotationParser.parseExtensions

@@ -10,7 +10,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.validation.ValidationCandidate
-import amf.shapes.client.scala.domain.models.{NodeShape, UnionShape}
+import amf.shapes.client.scala.domain.models.UnionShape
 
 // RAML centric as it collects custom facets from the RAML "facets" node.
 object ShapeFacetsCollector extends ValidationCandidateCollector {

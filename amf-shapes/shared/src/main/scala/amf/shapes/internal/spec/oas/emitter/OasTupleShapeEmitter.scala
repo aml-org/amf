@@ -5,8 +5,8 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.ValueEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.annotations.CollectionFormatFromItems
-import amf.shapes.client.scala.domain.models.TupleShape
+import amf.shapes.internal.annotations.CollectionFormatFromItems
+import amf.shapes.client.scala.model.domain.TupleShape
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, NodeShapeModel, TupleShapeModel}
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.FacetsEmitter

@@ -2,9 +2,14 @@ package amf.apicontract.internal.validation.payload
 
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.scala.model.domain.Shape
-import amf.core.client.scala.validation.payload.{AMFShapePayloadValidationPlugin, AMFShapePayloadValidator, ValidatePayloadRequest}
+import amf.core.client.scala.validation.payload.{
+  AMFShapePayloadValidationPlugin,
+  AMFShapePayloadValidator,
+  ValidatePayloadRequest
+}
 import amf.core.internal.validation.ValidationConfiguration
-import amf.shapes.client.scala.domain.models.{AnyShape, SchemaShape}
+import amf.shapes.client.scala.domain.models.SchemaShape
+import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape}
 import amf.shapes.internal.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
 
 object JsonSchemaShapePayloadValidationPlugin extends AMFShapePayloadValidationPlugin {

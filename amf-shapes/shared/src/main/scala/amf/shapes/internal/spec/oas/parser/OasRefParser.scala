@@ -6,8 +6,9 @@ import amf.core.internal.metamodel.domain.LinkableElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain._
 import amf.core.internal.utils.UriUtils
-import amf.shapes.client.scala.annotations.ExternalJsonSchemaShape
-import amf.shapes.client.scala.domain.models.{AnyShape, UnresolvedShape}
+import amf.shapes.internal.annotations.ExternalJsonSchemaShape
+import amf.shapes.client.scala.domain.models.UnresolvedShape
+import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper

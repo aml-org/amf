@@ -8,7 +8,7 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Module}
 import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}

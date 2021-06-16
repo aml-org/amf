@@ -9,8 +9,8 @@ import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.annotations.ExternalReferenceUrl
-import amf.shapes.client.scala.domain.models.SchemaShape
+import amf.shapes.internal.annotations.ExternalReferenceUrl
+import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel
 import amf.shapes.internal.spec.common.parser.NodeDataNodeParser
 import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser

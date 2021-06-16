@@ -11,8 +11,13 @@ import amf.core.internal.remote.Vendor
 import amf.core.internal.render.BaseEmitters.MultipleValuesArrayEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.domain.models.AnyShape
-import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, FacetsInstanceEmitter, OasAnnotationEmitter, OasFacetsInstanceEmitter}
+import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.spec.common.emitter.annotations.{
+  AnnotationsEmitter,
+  FacetsInstanceEmitter,
+  OasAnnotationEmitter,
+  OasFacetsInstanceEmitter
+}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSONSchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.contexts.DeclarationEmissionDecorator
 import amf.shapes.internal.spec.contexts.emitter.oas.{CompactableEmissionContext, OasCompactEmitterFactory}

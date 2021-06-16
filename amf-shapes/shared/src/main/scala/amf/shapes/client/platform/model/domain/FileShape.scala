@@ -1,14 +1,14 @@
 package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.{BoolField, DoubleField, IntField, StrField}
+import amf.shapes.client.scala.model.domain
 import amf.shapes.internal.convert.ShapeClientConverters.ClientList
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-import amf.shapes.client.scala.domain.models.{ FileShape => InternalFileShape }
 import amf.shapes.internal.convert.ShapeClientConverters._
 
 @JSExportAll
-case class FileShape(override private[amf] val _internal: InternalFileShape) extends AnyShape(_internal) {
+case class FileShape(override private[amf] val _internal: domain.FileShape) extends AnyShape(_internal) {
 
   @JSExportTopLevel("model.domain.FileShape")
   def this() = this(InternalFileShape())

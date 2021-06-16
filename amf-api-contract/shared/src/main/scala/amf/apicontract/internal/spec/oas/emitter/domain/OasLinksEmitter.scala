@@ -11,7 +11,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.domain.models.IriTemplateMapping
+import amf.shapes.client.scala.model.domain.IriTemplateMapping
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

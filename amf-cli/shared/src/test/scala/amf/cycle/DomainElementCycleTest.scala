@@ -13,7 +13,7 @@ import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
 import amf.core.internal.remote.{Hint, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
 import org.yaml.model.{YDocument, YNode}
 

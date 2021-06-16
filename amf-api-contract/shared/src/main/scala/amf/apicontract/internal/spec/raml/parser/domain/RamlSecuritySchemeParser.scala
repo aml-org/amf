@@ -20,7 +20,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
-import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import amf.shapes.internal.spec.raml.parser.Raml10TypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExclusivePropertiesSpecification

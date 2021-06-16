@@ -5,7 +5,7 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YScalarYRead
 import amf.core.internal.parser.domain.{Annotations, _}
 import amf.core.internal.remote.Vendor
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaPosition.Schema
 import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, YMapEntryLike}

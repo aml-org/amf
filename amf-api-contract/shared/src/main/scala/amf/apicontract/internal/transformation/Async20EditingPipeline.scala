@@ -12,6 +12,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
   ParametersNormalizationStage,
   PathDescriptionNormalizationStage
 }
+import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Async20Profile, ProfileName}
 import amf.core.client.scala.transform.stages.TransformationStep

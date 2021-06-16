@@ -30,6 +30,7 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, FileShape, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, FileShapeModel}
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter

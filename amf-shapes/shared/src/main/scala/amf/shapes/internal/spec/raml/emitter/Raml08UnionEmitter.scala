@@ -4,7 +4,8 @@ import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
-import amf.shapes.client.scala.domain.models.{AnyShape, UnionShape}
+import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.{AnyShape, UnionShape}
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.PartBuilder
 

@@ -18,7 +18,7 @@ import amf.core.internal.parser.domain.{Annotations, FragmentRef, SearchScope}
 import amf.core.internal.remote.Vendor
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AliasCounter, IdCounter}
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide

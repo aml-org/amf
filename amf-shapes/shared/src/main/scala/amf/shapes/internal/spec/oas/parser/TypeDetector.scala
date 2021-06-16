@@ -2,9 +2,9 @@ package amf.shapes.internal.spec.oas.parser
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
-import amf.shapes.client.scala.domain.TypeDef
-import amf.shapes.client.scala.domain.TypeDef._
+import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.OasTypeDefMatcher.matchType
+import amf.shapes.internal.spec.common.TypeDef
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidJsonSchemaType
 import org.yaml.model.{YMap, YScalar}
 

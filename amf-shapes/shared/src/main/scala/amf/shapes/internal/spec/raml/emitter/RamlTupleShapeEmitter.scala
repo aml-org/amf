@@ -4,7 +4,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.TupleShape
+import amf.shapes.client.scala.model.domain.TupleShape
 import amf.shapes.internal.domain.metamodel.ArrayShapeModel
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter

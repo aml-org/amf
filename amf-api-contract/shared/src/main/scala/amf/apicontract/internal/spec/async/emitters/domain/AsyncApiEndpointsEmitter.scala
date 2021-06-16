@@ -8,7 +8,7 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.annotations.OrphanOasExtension
+import amf.shapes.internal.annotations.OrphanOasExtension
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer

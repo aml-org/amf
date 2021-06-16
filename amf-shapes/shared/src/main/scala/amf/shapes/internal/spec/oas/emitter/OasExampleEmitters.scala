@@ -4,7 +4,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.spec.common.emitter.{NamedMultipleExampleEmitter, ShapeEmitterContext, SingleExampleEmitter}
 
 import scala.collection.mutable.ListBuffer

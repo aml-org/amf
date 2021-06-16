@@ -7,7 +7,8 @@ import amf.core.client.scala.parse.document.{ErrorHandlingContext, UnresolvedCom
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, Declarations, FutureDeclarations, SearchScope}
 import amf.core.internal.remote.Vendor
-import amf.shapes.client.scala.domain.models.{AnyShape, CreativeWork, Example}
+import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}

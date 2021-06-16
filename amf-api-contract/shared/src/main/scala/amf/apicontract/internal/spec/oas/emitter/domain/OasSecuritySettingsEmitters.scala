@@ -13,7 +13,7 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.annotations.OrphanOasExtension
+import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, OrphanAnnotationsEmitter}
 import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, ShapeEmitterContext}
 import org.yaml.model.YDocument.EntryBuilder

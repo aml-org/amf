@@ -11,7 +11,7 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YScalarYRead
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.domain.models.NodeShape
+import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YScalar}
 

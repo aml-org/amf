@@ -14,7 +14,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.spec.common.emitter.ExampleDataNodePartEmitter
 
 case class AsyncDomainElementEmitterFactory()(implicit val ctx: Async20SpecEmitterContext)

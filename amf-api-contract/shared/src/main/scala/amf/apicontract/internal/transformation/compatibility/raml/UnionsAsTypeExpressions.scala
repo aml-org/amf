@@ -5,8 +5,8 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement, Shape}
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.utils.IdCounter
-import amf.shapes.client.scala.annotations.ParsedFromTypeExpression
-import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.internal.annotations.ParsedFromTypeExpression
+import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.internal.spec.raml.emitter.RamlUnionEmitterHelper
 
 import scala.collection.mutable

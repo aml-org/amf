@@ -4,6 +4,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
   OpenApiParametersNormalizationStage,
   ParametersNormalizationStage
 }
+import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Oas20Profile, ProfileName}
 import amf.core.internal.remote.Oas20

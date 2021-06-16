@@ -9,7 +9,8 @@ import amf.core.internal.render.BaseEmitters.{pos, raw}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.shapes.client.scala.domain.models.{AnyShape, ShapeHelpers, UnionShape}
+import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.{AnyShape, ShapeHelpers, UnionShape}
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 

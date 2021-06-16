@@ -5,7 +5,7 @@ import amf.core.internal.metamodel.Type.Str
 import amf.core.internal.metamodel.domain._
 import amf.core.client.scala.vocabulary.Namespace.{Core, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
-import amf.shapes.client.scala.domain.models.SchemaShape
+import amf.shapes.client.scala.model.domain.SchemaShape
 
 trait SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
   val MediaType =

@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.raml.emitter
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 
 import scala.collection.mutable.ListBuffer

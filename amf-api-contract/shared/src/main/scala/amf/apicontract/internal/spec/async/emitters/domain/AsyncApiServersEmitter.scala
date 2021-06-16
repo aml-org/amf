@@ -2,14 +2,18 @@ package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.client.scala.model.domain.Server
 import amf.apicontract.internal.metamodel.domain.ServerModel
-import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, OasServerVariablesEmitter, SecurityRequirementsEmitter}
+import amf.apicontract.internal.spec.common.emitter.{
+  AgnosticShapeEmitterContextAdapter,
+  OasServerVariablesEmitter,
+  SecurityRequirementsEmitter
+}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.annotations.OrphanOasExtension
+import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.{YDocument, YNode}
 

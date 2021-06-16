@@ -8,7 +8,7 @@ import amf.core.internal.remote.Vendor
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.oas.emitter
 import amf.shapes.internal.spec.raml.emitter.{RamlNamedTypeEmitter, RamlRecursiveShapeTypeEmitter}
 import amf.shapes.internal.validation.definitions.RenderSideValidations.RenderValidation
@@ -29,11 +29,12 @@ case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit],
             val labeledShape = definitionsQueue.dequeue()
             // used to force shape to be emitted with OasTypeEmitter, and not as a ref
             spec.setForceEmission(Some(labeledShape.shape.id))
-            emitter.OasNamedTypeEmitter(labeledShape.shape,
-                                ordering,
-                                references,
-                                pointer = Seq("definitions"),
-                                Some(labeledShape.label))
+            emitter
+              .OasNamedTypeEmitter(labeledShape.shape,
+                                   ordering,
+                                   references,
+                                   pointer = Seq("definitions"),
+                                   Some(labeledShape.label))
               .emit(entryBuilder)
           }
         }
@@ -99,8 +100,9 @@ case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit]
       b.entry(
         key,
         _.obj(
-          traverse(ordering.sorted(types.map(emitter.OasNamedTypeEmitter(_, ordering, references, pointer = Seq(key)))),
-                   _))
+          traverse(
+            ordering.sorted(types.map(emitter.OasNamedTypeEmitter(_, ordering, references, pointer = Seq(key)))),
+            _))
       )
   }
 }

@@ -3,16 +3,18 @@ package amf.shapes.internal.spec.oas.emitter
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.TypeDef
-import amf.shapes.client.scala.domain.models.FileShape
 import amf.shapes.internal.domain.metamodel.FileShapeModel
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import amf.core.internal.utils._
+import amf.shapes.client.scala.model.domain.FileShape
+import amf.shapes.internal.spec.common.TypeDef
 
 import scala.collection.mutable.ListBuffer
 
-case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit], isHeader: Boolean)(
-    override implicit val spec: OasLikeShapeEmitterContext)
+case class OasFileShapeEmitter(scalar: FileShape,
+                               ordering: SpecOrdering,
+                               references: Seq[BaseUnit],
+                               isHeader: Boolean)(override implicit val spec: OasLikeShapeEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 

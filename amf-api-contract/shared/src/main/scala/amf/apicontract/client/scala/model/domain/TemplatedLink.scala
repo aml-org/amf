@@ -7,7 +7,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainE
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.domain.models.IriTemplateMapping
+import amf.shapes.client.scala.model.domain.IriTemplateMapping
 
 case class TemplatedLink(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 

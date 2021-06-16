@@ -5,8 +5,8 @@ import amf.core.client.scala.model.document.Module
 import amf.core.internal.remote.Raml10
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.scala.annotations.{GeneratedRamlDatatype, ParsedRamlDatatype}
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.internal.annotations.{GeneratedRamlDatatype, ParsedRamlDatatype}
+import amf.shapes.client.scala.model.domain.AnyShape
 
 import scala.concurrent.ExecutionContext
 

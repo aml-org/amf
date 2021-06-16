@@ -9,8 +9,21 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
-import amf.shapes.client.scala.annotations.ExternalJsonSchemaShape
+import amf.shapes.internal.annotations.ExternalJsonSchemaShape
 import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  FileShape,
+  InheritanceChain,
+  MatrixShape,
+  NilShape,
+  NodeShape,
+  ScalarShape,
+  SchemaShape,
+  TupleShape,
+  UnionShape
+}
 import amf.shapes.internal.spec.common.emitter.{OasLikeShapeEmitterContext, OasShapeReferenceEmitter}
 import amf.shapes.internal.spec.oas.emitter
 import org.yaml.model.{YDocument, YNode}
@@ -58,7 +71,8 @@ case class OasTypeEmitter(shape: Shape,
           .emitters()
       case matrix: MatrixShape =>
         val copiedMatrix = matrix.copy(fields = matrix.fields.filter(f => !ignored.contains(f._1))).withId(matrix.id)
-        emitter.OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath, isHeader)
+        emitter
+          .OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath, isHeader)
           .emitters()
       case array: TupleShape =>
         val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))

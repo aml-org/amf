@@ -8,8 +8,9 @@ import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.remote._
-import amf.shapes.client.scala.domain.models.DomainExtensions.propertyShapeToPropertyShape
-import amf.shapes.client.scala.domain.models.{AnyShape, NodeShape}
+import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
+import amf.shapes.client.scala.domain.models.NodeShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future

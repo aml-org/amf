@@ -9,7 +9,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.render.JsonSchemaShapeRenderer.toJsonSchema
 import org.scalatest.{Assertion, AsyncFunSuite}
 

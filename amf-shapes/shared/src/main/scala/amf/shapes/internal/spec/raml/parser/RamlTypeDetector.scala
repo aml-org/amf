@@ -5,12 +5,21 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.domain.TypeDef
-import amf.shapes.client.scala.domain.TypeDef.{JSONSchemaType, _}
+import amf.shapes.internal.spec.common.TypeDef.{JSONSchemaType, _}
 import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  MatrixShape,
+  NilShape,
+  NodeShape,
+  ScalarShape,
+  UnionShape
+}
 import amf.shapes.internal.domain.parser.TypeDefXsdMapping._
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema, isWellKnownType, matchWellKnownType}
 import amf.shapes.internal.spec._
+import amf.shapes.internal.spec.common.TypeDef
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
 import amf.shapes.internal.spec.raml.parser.RamlTypeDetection.parseFormat
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._

@@ -5,8 +5,8 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.annotations.ParsedJSONSchema
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.internal.annotations.ParsedJSONSchema
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

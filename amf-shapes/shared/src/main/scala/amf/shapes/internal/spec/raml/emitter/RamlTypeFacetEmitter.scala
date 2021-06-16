@@ -3,8 +3,8 @@ package amf.shapes.internal.spec.raml.emitter
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.annotations.TypePropertyLexicalInfo
-import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.internal.annotations.TypePropertyLexicalInfo
+import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.internal.domain.metamodel.NodeShapeModel
 import org.yaml.model.YType
 

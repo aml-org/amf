@@ -2,7 +2,8 @@ package amf.shapes.internal.spec.raml.parser.external
 
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.YNodeLikeOps
-import amf.shapes.client.scala.domain.models.{AnyShape, SchemaShape}
+import amf.shapes.client.scala.domain.models.SchemaShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import amf.shapes.internal.spec.raml.parser.{ExampleParser, RamlTypeEntryParser, RamlTypeSyntax}

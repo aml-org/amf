@@ -5,11 +5,11 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.TupleShape
 import amf.shapes.internal.domain.metamodel.TupleShapeModel
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.internal.utils._
+import amf.shapes.client.scala.model.domain.TupleShape
 
 case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlShapeEmitterContext)

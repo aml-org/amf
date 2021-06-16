@@ -7,7 +7,7 @@ import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.domain._
 import amf.core.client.scala.vocabulary.Namespace._
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 
 /**
   *

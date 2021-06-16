@@ -8,8 +8,20 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.render.BaseEmitters.EntryPartEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.annotations.{ExternalReferenceUrl, ExternalSchemaWrapper, ForceEntry, ParsedJSONSchema}
+import amf.shapes.internal.annotations.{ExternalReferenceUrl, ExternalSchemaWrapper, ForceEntry, ParsedJSONSchema}
 import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  FileShape,
+  MatrixShape,
+  NilShape,
+  NodeShape,
+  ScalarShape,
+  SchemaShape,
+  TupleShape,
+  UnionShape
+}
 import amf.shapes.internal.spec.common.emitter.{RamlExternalReferenceUrlEmitter, RamlShapeEmitterContext}
 import amf.shapes.internal.spec.raml.parser.ExternalLinkQuery.queryResidenceUnitOfLinkTarget
 import org.yaml.model.YDocument.EntryBuilder

@@ -5,9 +5,8 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
 import amf.core.internal.render.BaseEmitters.{RawValueEmitter, ValueEmitter}
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.TypeDef
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
-import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
+import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, TypeDef}
 import amf.shapes.internal.spec.common.emitter.{NumberTypeToYTypeConverter, ShapeEmitterContext}
 import amf.shapes.internal.spec.raml.emitter.RamlFormatTranslator
 

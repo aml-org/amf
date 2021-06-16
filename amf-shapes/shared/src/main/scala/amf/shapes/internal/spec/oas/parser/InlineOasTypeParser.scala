@@ -13,25 +13,44 @@ import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, Fields, FutureDeclarations, SearchScope}
 import amf.core.internal.utils.IdCounter
-import amf.shapes.client.scala.annotations.{CollectionFormatFromItems, JSONSchemaId, TypePropertyLexicalInfo}
-import amf.shapes.client.scala.domain.TypeDef
-import amf.shapes.client.scala.domain.TypeDef._
+import amf.shapes.internal.annotations.{CollectionFormatFromItems, JSONSchemaId, TypePropertyLexicalInfo}
+import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.client.scala.domain.models._
-import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
+import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
+  DiscriminatorValue,
+  DiscriminatorValueTarget
+}
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common._
+import amf.shapes.internal.spec.common.{TypeDef, _}
 import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.datanode.{DataNodeParser, ScalarNodeParser}
-import amf.shapes.internal.spec.jsonschema.parser.{ContentParser, Draft2019ShapeDependenciesParser, Draft4ShapeDependenciesParser, UnevaluatedParser}
+import amf.shapes.internal.spec.jsonschema.parser.{
+  ContentParser,
+  Draft2019ShapeDependenciesParser,
+  Draft4ShapeDependenciesParser,
+  UnevaluatedParser
+}
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
 import amf.shapes.internal.spec.raml.parser.XMLSerializerParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import org.yaml.model._
 import amf.core.internal.utils._
 import amf.core.internal.parser._
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  FileShape,
+  MatrixShape,
+  NodeShape,
+  ScalarShape,
+  SchemaShape,
+  TupleShape,
+  UnionShape,
+  UnresolvedShape
+}
 
 import scala.collection.mutable
 import scala.util.Try
@@ -484,7 +503,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
   }
 
-  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
 
     override def parse(): AnyShape = {
       adopt(shape)
@@ -539,7 +559,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
     override def parse(): AnyShape = {
       checkJsonIdentity(shape, map, adopt, ctx.futureDeclarations)
       super.parse()
@@ -768,7 +789,10 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     required
       .foreach {
         case (name, nodes) if nodes.size > 1 =>
-          ctx.eh.violation(DuplicateRequiredItem, shape.id, s"'$name' is duplicated in 'required' property", nodes.last)
+          ctx.eh.violation(DuplicateRequiredItem,
+                           shape.id,
+                           s"'$name' is duplicated in 'required' property",
+                           nodes.last)
         case _ => // ignore
       }
 
@@ -954,7 +978,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       )
 
       map.key("enum", ShapeModel.Values in shape using enumParser)
-      map.key("externalDocs", AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
+      map.key("externalDocs",
+              AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
       map.key(

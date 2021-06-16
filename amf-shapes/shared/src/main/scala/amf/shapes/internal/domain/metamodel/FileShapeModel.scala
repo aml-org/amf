@@ -4,7 +4,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
-import amf.shapes.client.scala.domain.models.FileShape
+import amf.shapes.client.scala.model.domain.FileShape
 
 object FileShapeModel extends AnyShapeModel with CommonShapeFields {
 

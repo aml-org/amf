@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.jsonschema.parser
 
 import amf.core.client.scala.model.domain.Shape
-import amf.shapes.client.scala.domain.models.UnresolvedShape
+import amf.shapes.client.scala.model.domain.UnresolvedShape
 import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.YMapEntry
 

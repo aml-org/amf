@@ -2,6 +2,15 @@ package amf.shapes.internal.spec.raml.emitter
 
 import amf.core.client.scala.model.domain.Shape
 import amf.shapes.client.scala.domain.models._
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  NilShape,
+  NodeShape,
+  ScalarShape,
+  ShapeHelpers,
+  UnionShape
+}
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.parser.TypeDefXsdMapping
 import amf.shapes.internal.spec.RamlTypeDefStringValueMatcher

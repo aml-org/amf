@@ -5,7 +5,8 @@ import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.stages.TransformationStep
-import amf.shapes.client.scala.domain.models.{CreativeWork, DocumentedElement}
+import amf.shapes.client.scala.domain.models.DocumentedElement
+import amf.shapes.client.scala.model.domain.{CreativeWork, DocumentedElement}
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 
 class MandatoryDocumentationTitle() extends TransformationStep {

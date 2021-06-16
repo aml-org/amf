@@ -33,8 +33,8 @@ import amf.core.internal.parser.domain.{Annotations, ArrayNode, ScalarNode, Sear
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
-import amf.shapes.client.scala.domain.models.CreativeWork
-import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
+import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.{
   AnnotationParser,

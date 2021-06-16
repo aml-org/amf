@@ -5,7 +5,7 @@ import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.{pos, raw}
 import amf.core.internal.render.emitters.PartEmitter
-import amf.shapes.client.scala.domain.models.ShapeHelpers
+import amf.shapes.client.scala.model.domain.ShapeHelpers
 import org.yaml.model.YDocument.PartBuilder
 
 case class RamlExternalSourceEmitter(shape: Shape with ShapeHelpers, references: Seq[BaseUnit]) extends PartEmitter {

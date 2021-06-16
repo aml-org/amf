@@ -2,7 +2,16 @@ package amf.shapes.internal.domain.resolution.shape_normalization
 
 import amf.core.internal.metamodel.Field
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.client.scala.domain.models.{AnyShape, ArrayShape, FileShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
+import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  FileShape,
+  NodeShape,
+  ScalarShape,
+  SchemaShape,
+  UnionShape
+}
 
 /*
  * Search unique and identifiers fields to guess if tha any shape really its something else

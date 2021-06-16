@@ -3,7 +3,8 @@ package amf.apicontract.internal.spec.common.transformation.stage
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.internal.annotations.TrackedElement
 import amf.core.internal.metamodel.Field
-import amf.shapes.client.scala.domain.models.{AnyShape, Example}
+import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 
 trait ExamplePropagationHelper {

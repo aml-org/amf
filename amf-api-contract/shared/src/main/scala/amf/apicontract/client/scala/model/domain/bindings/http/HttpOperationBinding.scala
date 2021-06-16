@@ -6,7 +6,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.bindings.HttpOperationBindingModel
 import amf.apicontract.internal.metamodel.domain.bindings.HttpOperationBindingModel._
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, OperationBinding}
-import amf.shapes.client.scala.domain.models.Key
+import amf.shapes.client.scala.model.domain.Key
 
 class HttpOperationBinding(override val fields: Fields, override val annotations: Annotations)
     extends OperationBinding

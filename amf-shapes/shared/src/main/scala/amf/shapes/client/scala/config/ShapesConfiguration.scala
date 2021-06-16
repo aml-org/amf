@@ -1,8 +1,8 @@
 package amf.shapes.client.scala.config
 
 import amf.aml.client.scala.AMLConfiguration
-import amf.shapes.client.scala.annotations.ShapeSerializableAnnotations
-import amf.shapes.client.scala.entities.ShapeEntities
+import amf.shapes.internal.annotations.ShapeSerializableAnnotations
+import amf.shapes.internal.entities.ShapeEntities
 
 object ShapesConfiguration {
 

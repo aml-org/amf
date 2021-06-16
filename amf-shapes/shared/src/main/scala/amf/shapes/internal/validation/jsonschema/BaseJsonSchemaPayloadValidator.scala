@@ -15,7 +15,8 @@ import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchSc
 import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
 import amf.core.internal.validation.ValidationConfiguration
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.shapes.client.scala.domain.models.{AnyShape, FileShape, ScalarShape, UnionShape}
+import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.{AnyShape, FileShape, ScalarShape, UnionShape}
 import amf.shapes.internal.spec.common.emitter.PayloadEmitter
 import amf.shapes.internal.spec.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter

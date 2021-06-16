@@ -5,7 +5,7 @@ import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import org.yaml.model.{YDocument, YNode}
 

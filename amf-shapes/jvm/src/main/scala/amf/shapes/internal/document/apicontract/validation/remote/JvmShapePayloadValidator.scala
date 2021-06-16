@@ -6,11 +6,24 @@ import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.utils.RegexConverter
 import amf.core.internal.validation.ValidationConfiguration
-import amf.shapes.client.scala.domain.models.ScalarShape
-import amf.shapes.internal.document.apicontract.validation.json.{InvalidJSONValueException, JSONObject, JSONTokenerHack, ScalarTokenerHack}
+import amf.shapes.client.scala.model.domain.ScalarShape
+import amf.shapes.internal.document.apicontract.validation.json.{
+  InvalidJSONValueException,
+  JSONObject,
+  JSONTokenerHack,
+  ScalarTokenerHack
+}
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.shapes.internal.validation.jsonschema.{BaseJsonSchemaPayloadValidator, BooleanValidationProcessor, ExampleUnknownException, InvalidJsonObject, InvalidJsonValue, ReportValidationProcessor, ValidationProcessor}
+import amf.shapes.internal.validation.jsonschema.{
+  BaseJsonSchemaPayloadValidator,
+  BooleanValidationProcessor,
+  ExampleUnknownException,
+  InvalidJsonObject,
+  InvalidJsonValue,
+  ReportValidationProcessor,
+  ValidationProcessor
+}
 import org.everit.json.schema.internal._
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}

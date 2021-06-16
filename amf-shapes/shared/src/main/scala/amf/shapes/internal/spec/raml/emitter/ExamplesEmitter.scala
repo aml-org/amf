@@ -5,9 +5,14 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.IdCounter
-import amf.shapes.client.scala.domain.models.{AnyShape, Example}
+import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ExampleModel}
-import amf.shapes.internal.spec.common.emitter.{SafeNamedMultipleExampleEmitter, ShapeEmitterContext, SingleExampleEmitter}
+import amf.shapes.internal.spec.common.emitter.{
+  SafeNamedMultipleExampleEmitter,
+  ShapeEmitterContext,
+  SingleExampleEmitter
+}
 
 import scala.collection.mutable.ListBuffer
 

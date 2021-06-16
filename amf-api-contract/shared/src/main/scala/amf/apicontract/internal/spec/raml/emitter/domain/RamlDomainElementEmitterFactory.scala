@@ -21,7 +21,8 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
-import amf.shapes.client.scala.domain.models.{CreativeWork, Example}
+import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.{CreativeWork, Example}
 import amf.shapes.internal.spec.common.emitter.{RamlCreativeWorkEmitter, RamlExampleValuesEmitter}
 import amf.shapes.internal.spec.raml.emitter.{Raml08TypePartEmitter, Raml10TypePartEmitter}
 

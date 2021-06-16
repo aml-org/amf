@@ -2,13 +2,13 @@ package amf.shapes.client.platform.model.domain
 
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.{BoolField, DoubleField, IntField, StrField}
+import amf.shapes.client.scala.model.domain
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-import amf.shapes.client.scala.domain.models.{ ScalarShape => InternalScalarShape }
 import amf.shapes.internal.convert.ShapeClientConverters._
 
 @JSExportAll
-case class ScalarShape(override private[amf] val _internal: InternalScalarShape) extends AnyShape(_internal) {
+case class ScalarShape(override private[amf] val _internal: domain.ScalarShape) extends AnyShape(_internal) {
 
   @JSExportTopLevel("model.domain.ScalarShape")
   def this() = this(InternalScalarShape())

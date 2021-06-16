@@ -4,8 +4,9 @@ import amf.apicontract.client.scala.config.APIConfiguration
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.utils.MediaTypeMatcher
-import amf.shapes.client.scala.domain.TypeDef.{IntType, StrType}
-import amf.shapes.client.scala.domain.models.{AnyShape, NilShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
+import amf.shapes.internal.spec.common.TypeDef.{IntType, StrType}
+import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._

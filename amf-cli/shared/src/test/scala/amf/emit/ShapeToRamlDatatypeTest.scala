@@ -6,7 +6,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Vendor
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.render.RamlShapeRenderer.toRamlDatatype
 import org.scalatest.{Assertion, AsyncFunSuite}
 

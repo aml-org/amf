@@ -18,7 +18,8 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.remote.Vendor
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel.{License => WebApiLicense, _}
 import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
-import amf.shapes.client.scala.domain.models.{CreativeWork, DocumentedElement}
+import amf.shapes.client.scala.domain.models.DocumentedElement
+import amf.shapes.client.scala.model.domain.{CreativeWork, DocumentedElement}
 import org.yaml.model.{YMap, YNode}
 
 /**

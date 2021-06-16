@@ -10,7 +10,7 @@ import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorResponse
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait}
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext

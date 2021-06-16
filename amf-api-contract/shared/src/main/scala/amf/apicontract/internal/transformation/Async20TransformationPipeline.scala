@@ -10,6 +10,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
   AnnotationRemovalStage,
   PathDescriptionNormalizationStage
 }
+import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.Async20Profile
 import amf.core.client.scala.transform.pipelines.TransformationPipeline

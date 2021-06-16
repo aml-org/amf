@@ -12,10 +12,26 @@ import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{Annotations, Value}
 import amf.core.internal.utils.IdCounter
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.client.scala.annotations.ParsedJSONSchema
-import amf.shapes.client.scala.domain.models.{AnyShape, ArrayShape, Example, FileShape, MatrixShape, NilShape, NodeShape, ScalarShape, SchemaShape, TupleShape, UnionShape}
+import amf.shapes.internal.annotations.ParsedJSONSchema
+import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  Example,
+  FileShape,
+  MatrixShape,
+  NilShape,
+  NodeShape,
+  ScalarShape,
+  SchemaShape,
+  TupleShape,
+  UnionShape
+}
 import amf.shapes.internal.spec.RamlShapeTypeBeautifier
-import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{InvalidTypeInheritanceErrorSpecification, InvalidTypeInheritanceWarningSpecification}
+import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.{
+  InvalidTypeInheritanceErrorSpecification,
+  InvalidTypeInheritanceWarningSpecification
+}
 
 import scala.collection.mutable
 
@@ -26,7 +42,8 @@ class InheritanceIncompatibleShapeError(val message: String,
                                         val isViolation: Boolean = false)
     extends Exception(message)
 
-private[resolution] class MinShapeAlgorithm()(implicit val context: NormalizationContext) extends RestrictionComputation {
+private[resolution] class MinShapeAlgorithm()(implicit val context: NormalizationContext)
+    extends RestrictionComputation {
 
   // this is inverted, it is safe because recursive shape does not have facets
   def computeMinRecursive(baseShape: Shape, recursiveShape: RecursiveShape): Shape = {

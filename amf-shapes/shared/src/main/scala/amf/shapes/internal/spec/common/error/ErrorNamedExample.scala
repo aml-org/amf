@@ -2,7 +2,7 @@ package amf.shapes.internal.spec.common.error
 
 import amf.core.internal.annotations.ErrorDeclaration
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import org.yaml.model.YPart
 

@@ -13,15 +13,30 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode => ParserScalarN
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.remote.Raml08
 import amf.core.internal.utils.{AmfStrings, IdCounter}
-import amf.shapes.client.scala.annotations.{
+import amf.shapes.internal.annotations.{
   InlineDefinition,
   ParsedJSONSchema,
   SchemaIsJsonSchema,
   TypePropertyLexicalInfo
 }
-import amf.shapes.client.scala.domain.TypeDef._
+import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.client.scala.domain.models._
-import amf.shapes.client.scala.domain.{ScalarType, TypeDef}
+import amf.shapes.client.scala.domain.ScalarType
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  Example,
+  FileShape,
+  MatrixShape,
+  NilShape,
+  NodeShape,
+  ScalarShape,
+  SchemaShape,
+  TupleShape,
+  UnionShape,
+  UnresolvedShape,
+  XMLSerializer
+}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema}

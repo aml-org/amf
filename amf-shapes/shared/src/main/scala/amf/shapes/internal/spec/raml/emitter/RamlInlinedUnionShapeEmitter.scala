@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.raml.emitter
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.domain.models.UnionShape
+import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 import org.yaml.model.YDocument.PartBuilder
 

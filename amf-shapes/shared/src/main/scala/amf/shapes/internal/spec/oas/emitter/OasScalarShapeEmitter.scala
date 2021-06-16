@@ -4,13 +4,13 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, RawValueEmitter, pos}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.annotations.TypePropertyLexicalInfo
-import amf.shapes.client.scala.domain.TypeDef
-import amf.shapes.client.scala.domain.TypeDef.UndefinedType
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.internal.annotations.TypePropertyLexicalInfo
+import amf.shapes.internal.spec.common.TypeDef.UndefinedType
+import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.parser.TypeDefXsdMapping
 import amf.shapes.internal.spec.CommonOasTypeDefMatcher.{matchFormat, matchType}
+import amf.shapes.internal.spec.common.TypeDef
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import amf.shapes.internal.spec.jsonschema.emitter.ContentEmitters
 import org.yaml.model.YType

@@ -2,7 +2,7 @@ package amf.apicontract.internal.annotations
 
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.internal.annotations.SourceLocation
-import amf.shapes.client.scala.annotations.{ParsedJSONSchema, SchemaIsJsonSchema}
+import amf.shapes.internal.annotations.{ParsedJSONSchema, SchemaIsJsonSchema}
 
 import scala.language.implicitConversions
 

@@ -4,7 +4,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.NilShape
+import amf.shapes.client.scala.model.domain.NilShape
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
 
 case class RamlNilShapeEmitter(shape: NilShape, ordering: SpecOrdering, references: Seq[BaseUnit])(

@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.jsonschema.parser
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel.{Encoding, MediaType}
 import amf.shapes.internal.spec.ShapeParserContext

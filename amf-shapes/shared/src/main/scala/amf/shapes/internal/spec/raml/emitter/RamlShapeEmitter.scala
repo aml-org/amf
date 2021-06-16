@@ -8,11 +8,17 @@ import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, po
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.emitter
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, FacetsEmitter}
-import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, EnumValuesEmitter, OasEntryCreativeWorkEmitter, RamlShapeEmitterContext, XMLSerializerEmitter}
+import amf.shapes.internal.spec.common.emitter.{
+  DataNodeEmitter,
+  EnumValuesEmitter,
+  OasEntryCreativeWorkEmitter,
+  RamlShapeEmitterContext,
+  XMLSerializerEmitter
+}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YType
 

@@ -6,8 +6,8 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.client.scala.model.domain._
 import amf.core.internal.parser.domain.{Annotations, Value}
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.client.scala.domain.models.AnyShape
 
 private[shape_normalization] trait RestrictionComputation {
 

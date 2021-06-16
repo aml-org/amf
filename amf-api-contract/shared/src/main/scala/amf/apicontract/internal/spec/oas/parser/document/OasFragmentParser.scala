@@ -28,7 +28,6 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.scala.domain.models.Example
 import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition}
 import amf.shapes.internal.spec.common.parser.{
   ExampleOptions,
@@ -40,6 +39,7 @@ import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 import amf.core.internal.utils._
+import amf.shapes.client.scala.model.domain.Example
 
 case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))

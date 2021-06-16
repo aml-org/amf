@@ -4,8 +4,8 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.BaseEmitters.ValueEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.annotations.CollectionFormatFromItems
-import amf.shapes.client.scala.domain.models.ArrayShape
+import amf.shapes.internal.annotations.CollectionFormatFromItems
+import amf.shapes.client.scala.model.domain.ArrayShape
 import amf.shapes.internal.domain.metamodel.ArrayShapeModel.{UnevaluatedItems, UnevaluatedItemsSchema}
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, NodeShapeModel}
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion

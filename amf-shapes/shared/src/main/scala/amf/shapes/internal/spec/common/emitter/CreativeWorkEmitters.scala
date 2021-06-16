@@ -5,8 +5,8 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
-import amf.shapes.client.scala.domain.models.CreativeWork
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

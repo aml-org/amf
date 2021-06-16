@@ -7,7 +7,7 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YNode, YScalar, YType}

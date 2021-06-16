@@ -4,7 +4,7 @@ import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.emitters.PartEmitter
-import amf.shapes.client.scala.annotations.ExternalReferenceUrl
+import amf.shapes.internal.annotations.ExternalReferenceUrl
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YNode}
 

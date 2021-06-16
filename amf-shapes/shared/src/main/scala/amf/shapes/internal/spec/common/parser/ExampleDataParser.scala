@@ -5,8 +5,8 @@ import amf.core.internal.metamodel.domain.ExternalSourceElementModel
 import amf.core.internal.parser.YNodeLikeOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.IdCounter
-import amf.shapes.client.scala.annotations.ExternalReferenceUrl
-import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.internal.annotations.ExternalReferenceUrl
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.spec.ShapeParserContext
 import org.yaml.model.YNode.MutRef

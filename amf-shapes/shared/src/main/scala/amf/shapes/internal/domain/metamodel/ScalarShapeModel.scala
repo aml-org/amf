@@ -5,7 +5,7 @@ import amf.core.internal.metamodel.Type.{Iri, Str}
 import amf.core.internal.metamodel.domain._
 import amf.core.client.scala.vocabulary.Namespace.{Shacl, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.client.scala.model.domain.ScalarShape
 
 /**
   * Scalar shape metamodel

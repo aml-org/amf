@@ -16,7 +16,7 @@ import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.Lazy
-import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
 import amf.shapes.internal.spec.raml.parser.Raml10TypeParser
 import org.yaml.model.{YMap, YMapEntry, YNode}
 

@@ -4,12 +4,18 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, MapEntryEmitter, ValueEmitter, pos}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.annotations.TypePropertyLexicalInfo
-import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.internal.annotations.TypePropertyLexicalInfo
+import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.parser.TypeDefXsdMapping
 import amf.shapes.internal.spec.common.emitter
-import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, EnumValuesEmitter, NumberTypeToYTypeConverter, ShapeEmitterContext, SingleExampleEmitter}
+import amf.shapes.internal.spec.common.emitter.{
+  DataNodeEmitter,
+  EnumValuesEmitter,
+  NumberTypeToYTypeConverter,
+  ShapeEmitterContext,
+  SingleExampleEmitter
+}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 
 import scala.collection.mutable.ListBuffer

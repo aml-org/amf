@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.oas.parser
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.YMapEntryLike

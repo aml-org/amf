@@ -17,7 +17,7 @@ import amf.core.client.scala.model.document.ExternalFragment
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.YMapOps
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 

@@ -33,8 +33,8 @@ import amf.core.internal.parser.domain.{Annotations, ArrayNode, ScalarNode, Sear
 import amf.core.internal.parser.{Root, YMapOps, YScalarYRead}
 import amf.core.internal.utils._
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
-import amf.shapes.client.scala.domain.models.CreativeWork
-import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
+import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, RamlCreativeWorkParser, RamlScalarNode, YMapEntryLike}
 import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, RamlTypeEntryParser, RamlTypeSyntax, StringDefaultType}

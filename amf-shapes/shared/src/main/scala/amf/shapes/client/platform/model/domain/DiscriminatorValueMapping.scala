@@ -2,13 +2,13 @@ package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, Shape}
+import amf.shapes.client.scala.model.domain.DiscriminatorValueMapping
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-import amf.shapes.client.scala.domain.models.{ DiscriminatorValueMapping => InternalDiscriminatorValueMapping }
 import amf.shapes.internal.convert.ShapeClientConverters._
 
 @JSExportAll
-case class DiscriminatorValueMapping(override private[amf] val _internal: InternalDiscriminatorValueMapping)
+case class DiscriminatorValueMapping(override private[amf] val _internal: DiscriminatorValueMapping)
     extends DomainElement {
 
   @JSExportTopLevel("model.domain.DiscriminatorValueMapping")

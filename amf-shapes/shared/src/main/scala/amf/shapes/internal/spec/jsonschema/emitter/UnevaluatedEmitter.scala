@@ -9,7 +9,7 @@ import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.{ArrayShapeModel, NodeShapeModel}
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
 import amf.shapes.internal.spec.oas.emitter.OasEntryShapeEmitter

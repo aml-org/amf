@@ -20,7 +20,7 @@ import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter,
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 

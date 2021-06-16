@@ -6,7 +6,8 @@ import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.domain.models.{Dependencies, NodeShape, PropertyDependencies, SchemaDependencies}
+import amf.shapes.client.scala.domain.models.SchemaDependencies
+import amf.shapes.client.scala.model.domain.{Dependencies, NodeShape, PropertyDependencies, SchemaDependencies}
 import amf.shapes.internal.domain.metamodel.NodeShapeModel.Dependencies
 import amf.shapes.internal.domain.metamodel.{NodeShapeModel, PropertyDependenciesModel, SchemaDependenciesModel}
 import amf.shapes.internal.spec.oas.emitter.OasTypeEmitter

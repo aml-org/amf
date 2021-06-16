@@ -8,9 +8,13 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.client.scala.annotations.ExternalReferenceUrl
-import amf.shapes.client.scala.domain.models.AnyShape
-import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, RamlExternalReferenceUrlEmitter, RamlShapeEmitterContext}
+import amf.shapes.internal.annotations.ExternalReferenceUrl
+import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.spec.common.emitter.{
+  DataNodeEmitter,
+  RamlExternalReferenceUrlEmitter,
+  RamlShapeEmitterContext
+}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YDocument.PartBuilder
 

@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.common.emitter
 
-import amf.shapes.client.scala.domain.TypeDef
+import amf.shapes.internal.spec.common.TypeDef
 import org.yaml.model.YType
 
 object NumberTypeToYTypeConverter {
