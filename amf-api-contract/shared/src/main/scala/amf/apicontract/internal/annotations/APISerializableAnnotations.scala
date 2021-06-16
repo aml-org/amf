@@ -2,6 +2,7 @@ package amf.apicontract.internal.annotations
 
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.internal.annotations.serializable.SerializableAnnotations
+import amf.shapes.client.scala.annotations.{OrphanOasExtension, TypePropertyLexicalInfo}
 
 private[amf] object APISerializableAnnotations extends SerializableAnnotations {
 

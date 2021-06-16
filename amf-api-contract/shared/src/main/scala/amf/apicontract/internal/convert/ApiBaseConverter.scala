@@ -4,15 +4,65 @@ import amf.apicontract.client.platform
 import amf.apicontract.client.platform.config
 import amf.apicontract.client.platform.model.domain
 import amf.apicontract.client.scala.config.AMFConfiguration
-import amf.apicontract.client.scala.model.domain.bindings._
-import amf.apicontract.client.scala.model.domain.bindings.amqp._
-import amf.apicontract.client.scala.model.domain.bindings.http._
-import amf.apicontract.client.scala.model.domain.bindings.kafka._
-import amf.apicontract.client.scala.model.domain.bindings.mqtt._
-import amf.apicontract.client.scala.model.domain.bindings.websockets._
-import amf.apicontract.client.scala.model.domain.security._
+import amf.apicontract.client.scala.model.domain.{
+  Callback,
+  CorrelationId,
+  Encoding,
+  EndPoint,
+  License,
+  Message,
+  Operation,
+  Organization,
+  Parameter,
+  Payload,
+  Request,
+  Response,
+  Server,
+  Tag,
+  TemplatedLink
+}
+import amf.apicontract.client.scala.model.domain.bindings.amqp.{
+  Amqp091ChannelBinding,
+  Amqp091ChannelExchange,
+  Amqp091MessageBinding,
+  Amqp091OperationBinding,
+  Amqp091Queue
+}
+import amf.apicontract.client.scala.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
+import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
+  MqttMessageBinding,
+  MqttOperationBinding,
+  MqttServerBinding,
+  MqttServerLastWill
+}
+import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
+import amf.apicontract.client.scala.model.domain.bindings.{
+  ChannelBinding,
+  ChannelBindings,
+  EmptyBinding,
+  MessageBinding,
+  MessageBindings,
+  OperationBinding,
+  OperationBindings,
+  ServerBinding,
+  ServerBindings
+}
+import amf.apicontract.client.scala.model.domain.security.{
+  ApiKeySettings,
+  HttpApiKeySettings,
+  HttpSettings,
+  OAuth1Settings,
+  OAuth2Flow,
+  OAuth2Settings,
+  OpenIdConnectSettings,
+  ParametrizedSecurityScheme,
+  Scope,
+  SecurityRequirement,
+  SecurityScheme,
+  Settings
+}
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
-import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.{AMFDocumentResult, AMFLibraryResult}
 import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -265,7 +315,7 @@ trait EndPointConverter extends PlatformSecrets {
 trait ResourceTypeConverter extends PlatformSecrets {
 
   implicit object ResourceTypeMatcher extends BidirectionalMatcher[ResourceType, domain.templates.ResourceType] {
-    override def asClient(from: ResourceType): domain.templates.ResourceType   = ClientResourceType(from)
+    override def asClient(from: ResourceType): domain.templates.ResourceType   = domain.templates.ResourceType(from)
     override def asInternal(from: domain.templates.ResourceType): ResourceType = from._internal
   }
 }
@@ -273,7 +323,7 @@ trait ResourceTypeConverter extends PlatformSecrets {
 trait TraitConverter extends PlatformSecrets {
 
   implicit object TraitMatcher extends BidirectionalMatcher[Trait, domain.templates.Trait] {
-    override def asClient(from: Trait): domain.templates.Trait   = ClientTrait(from)
+    override def asClient(from: Trait): domain.templates.Trait   = domain.templates.Trait(from)
     override def asInternal(from: domain.templates.Trait): Trait = from._internal
   }
 }
@@ -428,35 +478,35 @@ trait SecurityRequirementConverter extends PlatformSecrets {
 trait SettingsConverter extends PlatformSecrets {
 
   implicit object OAuth1SettingsMatcher extends BidirectionalMatcher[OAuth1Settings, domain.security.OAuth1Settings] {
-    override def asClient(from: OAuth1Settings): domain.security.OAuth1Settings   = ClientOAuth1Settings(from)
+    override def asClient(from: OAuth1Settings): domain.security.OAuth1Settings   = domain.security.OAuth1Settings(from)
     override def asInternal(from: domain.security.OAuth1Settings): OAuth1Settings = from._internal
   }
 
   implicit object OAuth2SettingsMatcher extends BidirectionalMatcher[OAuth2Settings, domain.security.OAuth2Settings] {
-    override def asClient(from: OAuth2Settings): domain.security.OAuth2Settings   = ClientOAuth2Settings(from)
+    override def asClient(from: OAuth2Settings): domain.security.OAuth2Settings   = domain.security.OAuth2Settings(from)
     override def asInternal(from: domain.security.OAuth2Settings): OAuth2Settings = from._internal
   }
 
   implicit object ApiKeySettingsMatcher extends BidirectionalMatcher[ApiKeySettings, domain.security.ApiKeySettings] {
-    override def asClient(from: ApiKeySettings): domain.security.ApiKeySettings   = ClientApiKeySettings(from)
+    override def asClient(from: ApiKeySettings): domain.security.ApiKeySettings   = domain.security.ApiKeySettings(from)
     override def asInternal(from: domain.security.ApiKeySettings): ApiKeySettings = from._internal
   }
 
   implicit object HttpApiKeySettingsMatcher
       extends BidirectionalMatcher[HttpApiKeySettings, domain.security.HttpApiKeySettings] {
     override def asClient(from: HttpApiKeySettings): domain.security.HttpApiKeySettings =
-      ClientHttpApiKeySettings(from)
+      domain.security.HttpApiKeySettings(from)
     override def asInternal(from: domain.security.HttpApiKeySettings): HttpApiKeySettings = from._internal
   }
 
   implicit object HttpSettingsMatcher extends BidirectionalMatcher[HttpSettings, domain.security.HttpSettings] {
-    override def asClient(from: HttpSettings): domain.security.HttpSettings   = ClientHttpSettings(from)
+    override def asClient(from: HttpSettings): domain.security.HttpSettings   = domain.security.HttpSettings(from)
     override def asInternal(from: domain.security.HttpSettings): HttpSettings = from._internal
   }
   implicit object OpenIdConnectSettingsMatcher
       extends BidirectionalMatcher[OpenIdConnectSettings, domain.security.OpenIdConnectSettings] {
     override def asClient(from: OpenIdConnectSettings): domain.security.OpenIdConnectSettings =
-      ClientOpenIdConnectSettings(from)
+      domain.security.OpenIdConnectSettings(from)
     override def asInternal(from: domain.security.OpenIdConnectSettings): OpenIdConnectSettings = from._internal
   }
 

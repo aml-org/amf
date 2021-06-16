@@ -1,79 +1,72 @@
 package amf.apicontract.internal.convert
 
-import amf.apicontract.client.platform.model.document.{
-  AnnotationTypeDeclaration,
-  DataType,
-  DocumentationItem,
-  Extension,
-  NamedExample,
-  Overlay,
-  ResourceTypeFragment,
-  SecuritySchemeFragment,
-  TraitFragment
-}
-import amf.apicontract.client.platform.model.domain.api.AsyncApi
-import amf.apicontract.client.platform.model.domain.bindings.{ChannelBindings, EmptyBinding}
+import amf.apicontract.client.platform.model.document._
+import amf.apicontract.client.platform.model.domain.api.{AsyncApi, WebApi}
 import amf.apicontract.client.platform.model.domain.bindings.amqp.{
   Amqp091ChannelBinding,
   Amqp091ChannelExchange,
+  Amqp091MessageBinding,
   Amqp091OperationBinding,
   Amqp091Queue
 }
 import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
-import amf.apicontract.client.platform.model.domain.bindings.kafka.KafkaMessageBinding
-import amf.apicontract.client.platform.model.domain.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
-import amf.apicontract.client.platform.model.domain.security.Settings
-import amf.apicontract.client.platform.model.domain.{
-  Callback,
-  CorrelationId,
-  Encoding,
-  EndPoint,
-  License,
-  Operation,
-  Organization,
-  Parameter,
-  Payload,
-  Request,
-  Response,
-  Server,
-  Tag,
-  TemplatedLink
+import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
+import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
+  MqttMessageBinding,
+  MqttOperationBinding,
+  MqttServerBinding,
+  MqttServerLastWill
 }
-import amf.apicontract.internal.metamodel.document.{ExtensionModel, OverlayModel}
-import amf.apicontract.client.scala.model.{document, domain}
+import amf.apicontract.client.platform.model.domain.bindings.{
+  ChannelBindings,
+  EmptyBinding,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
+import amf.apicontract.client.platform.model.domain.security._
+import amf.apicontract.client.platform.model.domain.templates.{
+  ParametrizedResourceType,
+  ParametrizedTrait,
+  ResourceType,
+  Trait
+}
+import amf.apicontract.client.platform.model.domain._
+import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.apicontract.client.scala.model.document.{
   AnnotationTypeDeclarationFragment,
   DataTypeFragment,
   DocumentationItemFragment,
   NamedExampleFragment
 }
-import amf.client.model.domain._
+import amf.apicontract.client.scala.model.{document, domain}
+import amf.apicontract.internal.metamodel.document.FragmentsTypesModels._
+import amf.apicontract.internal.metamodel.document.{ExtensionModel, OverlayModel}
+import amf.apicontract.internal.metamodel.domain.bindings._
+import amf.apicontract.internal.metamodel.domain._
+import amf.shapes.internal.domain.metamodel._
+import amf.shapes.client.platform.model.domain._
+import amf.apicontract.internal.metamodel.domain.security._
+import amf.apicontract.internal.metamodel.domain.api._
+import amf.apicontract.internal.metamodel.domain.templates.{
+  ParametrizedResourceTypeModel,
+  ParametrizedTraitModel,
+  ResourceTypeModel,
+  TraitModel
+}
+import amf.apicontract.internal.metamodel.domain._
+import amf.apicontract.internal.metamodel.domain.security.{
+  ParametrizedSecuritySchemeModel,
+  ScopeModel,
+  SecurityRequirementModel,
+  SecuritySchemeModel
+}
 import amf.core.client.platform.model.document.PayloadFragment
 import amf.core.client.platform.model.domain.RecursiveShape
 import amf.core.internal.metamodel.document.PayloadFragmentModel
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.apicontract.internal.metamodel.document.FragmentsTypesModels._
-import amf.apicontract.internal.metamodel.domain.{
-  CallbackModel,
-  CorrelationIdModel,
-  EncodingModel,
-  EndPointModel,
-  LicenseModel,
-  OperationModel,
-  OrganizationModel,
-  ParameterModel,
-  PayloadModel,
-  RequestModel,
-  ResponseModel,
-  ServerModel,
-  TagModel,
-  TemplatedLinkModel
-}
-import amf.plugins.document.apicontract.model
-import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.plugins.domain.apicontract.metamodel.amf.apicontract.internal.metamodel.domain.templates
-import amf.plugins.domain.{apicontract, shapes}
+import amf.shapes.client.platform.model.domain.NilShape
 
 /** Shared WebApi registrations. */
 // TODO: could be renamed to ApiRegister??
@@ -141,24 +134,24 @@ private[amf] object ApiRegister extends PlatformSecrets {
     platform.registerWrapper(EncodingModel) {
       case s: domain.Encoding => Encoding(s)
     }
-    platform.registerWrapper(templates.ParametrizedResourceTypeModel) {
+    platform.registerWrapper(ParametrizedResourceTypeModel) {
       case s: amf.apicontract.client.scala.model.domain.templates.ParametrizedResourceType =>
         ParametrizedResourceType(s)
     }
     platform.registerWrapper(TagModel) {
       case s: domain.Tag => Tag(s)
     }
-    platform.registerWrapper(templates.ParametrizedTraitModel) {
+    platform.registerWrapper(ParametrizedTraitModel) {
       case s: amf.apicontract.client.scala.model.domain.templates.ParametrizedTrait => ParametrizedTrait(s)
     }
-    platform.registerWrapper(apicontract.metamodel.security.ParametrizedSecuritySchemeModel) {
+    platform.registerWrapper(ParametrizedSecuritySchemeModel) {
       case s: amf.apicontract.client.scala.model.domain.security.ParametrizedSecurityScheme =>
         ParametrizedSecurityScheme(s)
     }
-    platform.registerWrapper(apicontract.metamodel.security.SecurityRequirementModel) {
+    platform.registerWrapper(SecurityRequirementModel) {
       case s: amf.apicontract.client.scala.model.domain.security.SecurityRequirement => SecurityRequirement(s)
     }
-    platform.registerWrapper(apicontract.metamodel.security.SecuritySchemeModel) {
+    platform.registerWrapper(SecuritySchemeModel) {
       case s: amf.apicontract.client.scala.model.domain.security.SecurityScheme => SecurityScheme(s)
     }
     platform.registerWrapper(PayloadModel) {
@@ -170,73 +163,73 @@ private[amf] object ApiRegister extends PlatformSecrets {
     platform.registerWrapper(ResponseModel) {
       case s: domain.Response => Response(s)
     }
-    platform.registerWrapper(apicontract.metamodel.security.ScopeModel) {
+    platform.registerWrapper(ScopeModel) {
       case s: amf.apicontract.client.scala.model.domain.security.Scope => Scope(s)
     }
-    platform.registerWrapper(apicontract.metamodel.security.OAuth2FlowModel) {
+    platform.registerWrapper(OAuth2FlowModel) {
       case of: amf.apicontract.client.scala.model.domain.security.OAuth2Flow => OAuth2Flow(of)
     }
-    platform.registerWrapper(apicontract.metamodel.security.SettingsModel) {
+    platform.registerWrapper(SettingsModel) {
       case s: amf.apicontract.client.scala.model.domain.security.Settings => new Settings(s)
     }
-    platform.registerWrapper(apicontract.metamodel.api.WebApiModel) {
+    platform.registerWrapper(WebApiModel) {
       case s: amf.apicontract.client.scala.model.domain.api.WebApi => WebApi(s)
     }
-    platform.registerWrapper(apicontract.metamodel.api.AsyncApiModel) {
+    platform.registerWrapper(AsyncApiModel) {
       case s: amf.apicontract.client.scala.model.domain.api.AsyncApi => AsyncApi(s)
     }
-    platform.registerWrapper(apicontract.metamodel.templates.TraitModel) {
+    platform.registerWrapper(TraitModel) {
       case s: amf.apicontract.client.scala.model.domain.templates.Trait => Trait(s)
     }
-    platform.registerWrapper(apicontract.metamodel.templates.ResourceTypeModel) {
+    platform.registerWrapper(ResourceTypeModel) {
       case s: amf.apicontract.client.scala.model.domain.templates.ResourceType => ResourceType(s)
     }
 
     // DataShapes (domain)
-    platform.registerWrapper(shapes.metamodel.AnyShapeModel) {
-      case s: shapes.models.AnyShape => new AnyShape(s)
+    platform.registerWrapper(AnyShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.AnyShape => new AnyShape(s)
     }
-    platform.registerWrapper(shapes.metamodel.NilShapeModel) {
-      case s: shapes.models.NilShape => NilShape(s)
+    platform.registerWrapper(NilShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.NilShape => NilShape(s)
     }
-    platform.registerWrapper(shapes.metamodel.ArrayShapeModel) {
-      case s: shapes.models.ArrayShape => ArrayShape(s)
+    platform.registerWrapper(ArrayShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.ArrayShape => ArrayShape(s)
     }
-    platform.registerWrapper(shapes.metamodel.MatrixShapeModel) {
-      case s: shapes.models.MatrixShape => new MatrixShape(s.toArrayShape)
+    platform.registerWrapper(MatrixShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.MatrixShape => new MatrixShape(s.toArrayShape)
     }
-    platform.registerWrapper(shapes.metamodel.TupleShapeModel) {
-      case s: shapes.models.TupleShape => TupleShape(s)
+    platform.registerWrapper(TupleShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.TupleShape => TupleShape(s)
     }
-    platform.registerWrapper(shapes.metamodel.CreativeWorkModel) {
-      case s: shapes.models.CreativeWork => CreativeWork(s)
+    platform.registerWrapper(CreativeWorkModel) {
+      case s: amf.shapes.client.scala.domain.models.CreativeWork => CreativeWork(s)
     }
-    platform.registerWrapper(shapes.metamodel.ExampleModel) {
-      case s: shapes.models.Example => Example(s)
+    platform.registerWrapper(ExampleModel) {
+      case s: amf.shapes.client.scala.domain.models.Example => Example(s)
     }
-    platform.registerWrapper(shapes.metamodel.FileShapeModel) {
-      case s: shapes.models.FileShape => FileShape(s)
+    platform.registerWrapper(FileShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.FileShape => FileShape(s)
     }
-    platform.registerWrapper(shapes.metamodel.NodeShapeModel) {
-      case s: shapes.models.NodeShape => NodeShape(s)
+    platform.registerWrapper(NodeShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.NodeShape => NodeShape(s)
     }
-    platform.registerWrapper(shapes.metamodel.ScalarShapeModel) {
-      case s: shapes.models.ScalarShape => ScalarShape(s)
+    platform.registerWrapper(ScalarShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.ScalarShape => ScalarShape(s)
     }
-    platform.registerWrapper(shapes.metamodel.SchemaShapeModel) {
-      case s: shapes.models.SchemaShape => SchemaShape(s)
+    platform.registerWrapper(SchemaShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.SchemaShape => SchemaShape(s)
     }
-    platform.registerWrapper(shapes.metamodel.XMLSerializerModel) {
-      case s: shapes.models.XMLSerializer => XMLSerializer(s)
+    platform.registerWrapper(XMLSerializerModel) {
+      case s: amf.shapes.client.scala.domain.models.XMLSerializer => XMLSerializer(s)
     }
-    platform.registerWrapper(shapes.metamodel.PropertyDependenciesModel) {
-      case s: shapes.models.PropertyDependencies => PropertyDependencies(s)
+    platform.registerWrapper(PropertyDependenciesModel) {
+      case s: amf.shapes.client.scala.domain.models.PropertyDependencies => PropertyDependencies(s)
     }
-    platform.registerWrapper(shapes.metamodel.SchemaDependenciesModel) {
-      case s: shapes.models.SchemaDependencies => SchemaDependencies(s)
+    platform.registerWrapper(SchemaDependenciesModel) {
+      case s: amf.shapes.client.scala.domain.models.SchemaDependencies => SchemaDependencies(s)
     }
-    platform.registerWrapper(shapes.metamodel.UnionShapeModel) {
-      case s: shapes.models.UnionShape => UnionShape(s)
+    platform.registerWrapper(UnionShapeModel) {
+      case s: amf.shapes.client.scala.domain.models.UnionShape => UnionShape(s)
     }
     platform.registerWrapper(amf.core.internal.metamodel.domain.RecursiveShapeModel) {
       case s: amf.core.client.scala.model.domain.RecursiveShape => RecursiveShape(s)
@@ -245,7 +238,7 @@ private[amf] object ApiRegister extends PlatformSecrets {
       case s: domain.TemplatedLink => TemplatedLink(s)
     }
     platform.registerWrapper(IriTemplateMappingModel) {
-      case s: apicontract.models.IriTemplateMapping => IriTemplateMapping(s)
+      case s: amf.shapes.client.scala.domain.models.IriTemplateMapping => IriTemplateMapping(s)
     }
     platform.registerWrapper(CorrelationIdModel) {
       case s: domain.CorrelationId => CorrelationId(s)
