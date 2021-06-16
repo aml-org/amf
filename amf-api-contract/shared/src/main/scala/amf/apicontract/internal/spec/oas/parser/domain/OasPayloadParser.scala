@@ -1,5 +1,16 @@
 package amf.apicontract.internal.spec.oas.parser.domain
 
+import amf.apicontract.client.scala.model.domain.Payload
+import amf.apicontract.internal.metamodel.domain.PayloadModel
+import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
+import org.yaml.model.{YMap, YNode}
+
 case class OasPayloadParser(node: YNode, producer: Option[String] => Payload)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
   def parse(): Payload = {

@@ -6,6 +6,9 @@ import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
+import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
+import amf.shapes.internal.validation.definitions.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 

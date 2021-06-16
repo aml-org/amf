@@ -4,6 +4,7 @@ import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
 import amf.apicontract.internal.spec.oas.parser.context.{
+  Oas2Syntax,
   Oas2WebApiContext,
   Oas3Syntax,
   Oas3WebApiContext,
@@ -20,7 +21,7 @@ import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain._
 import amf.core.internal.remote.Vendor
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.shapes.client.scala.domain.models.{AnyShape, Example}
+import amf.shapes.client.scala.domain.models.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}

@@ -12,8 +12,14 @@ import amf.apicontract.internal.spec.common.OasParameter
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.OasLikeSecuritySchemeTypeMappings
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.apicontract.internal.spec.oas.parser.OasResponseParser
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser, OasLikeTagsParser, OasResponseParser}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  InvalidAnnotationType,
+  InvalidParameterType,
+  InvalidSecurityRequirementsSeq,
+  InvalidSecuritySchemeType,
+  MandatoryPathsProperty
+}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
@@ -27,6 +33,17 @@ import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.plugins.document.vocabularies.parser.common.DeclarationKey
+import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.{
+  AnnotationParser,
+  OasLikeCreativeWorkParser,
+  RamlCreativeWorkParser,
+  YMapEntryLike
+}
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
+import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model.{YMapEntry, YNode, _}
 
 import scala.collection.mutable

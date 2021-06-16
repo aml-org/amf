@@ -19,6 +19,12 @@ import amf.core.internal.utils.TemplateUri
 import amf.core.internal.validation.CoreValidations
 import amf.apicontract.internal.annotations.AnnotationSyntax._
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnusedBaseUriParameter
+import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.UnequalMediaTypeDefinitionsInExtendsPayloads
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.client.scala.domain.models.{AnyShape, NodeShape, ScalarShape}
+import amf.shapes.internal.domain.metamodel.AnyShapeModel.Examples
+import amf.shapes.internal.domain.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
 
 import scala.collection.mutable
 

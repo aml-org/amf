@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.{Payload, Request}
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel, PayloadModel, RequestModel}
+import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.InvalidConsumesWithFileParameter
 import amf.core.client.common.validation.{Oas20Profile, ProfileName}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -11,6 +12,7 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.metamodel.Field
+import amf.shapes.client.scala.domain.models.{ExampleTracking, FileShape, NodeShape}
 
 /** Apply root and operation mime types to payloads.
   *

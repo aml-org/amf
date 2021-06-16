@@ -3,10 +3,11 @@ package amf.apicontract.internal.spec.oas.parser.document
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.core.internal.parser.Root
+import amf.core.internal.parser.{Root, YMapOps}
 import org.yaml.model.YMap
 
-case class Oas2DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext) extends OasDocumentParser(root) {
+case class Oas2DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
+    extends OasDocumentParser(root) {
 
   override def parseWebApi(map: YMap): WebApi = {
     val api = super.parseWebApi(map)

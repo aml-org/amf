@@ -6,6 +6,7 @@ import amf.apicontract.internal.spec.common.Parameters
 import amf.apicontract.internal.spec.common.parser.OasParametersParser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.domain.AmfArray
+import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.Lazy
 import org.yaml.model.{YMap, YNode}

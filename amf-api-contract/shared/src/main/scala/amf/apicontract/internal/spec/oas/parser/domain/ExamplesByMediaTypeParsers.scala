@@ -2,6 +2,9 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
 import amf.core.internal.parser.YMapOps
+import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.internal.domain.metamodel.ExampleModel
+import amf.shapes.internal.spec.common.parser.{ExampleDataParser, ExampleOptions, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 import scala.collection.mutable.ListBuffer

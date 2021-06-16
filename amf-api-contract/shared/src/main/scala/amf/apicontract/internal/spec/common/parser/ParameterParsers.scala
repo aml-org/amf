@@ -8,10 +8,9 @@ import amf.apicontract.internal.spec.common.{OasParameter, Parameters}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.oas.parser.domain.OasContentsParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  ParameterNameRequired,
-  UnresolvedParameter
-}
+import amf.apicontract.internal.spec.spec.{OasDefinitions, toOas}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain._
 import amf.core.internal.annotations._
@@ -22,8 +21,12 @@ import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter, UriUtils}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.core.internal.validation.core.ValidationSpecification
+import amf.shapes.client.scala.annotations.ExternalReferenceUrl
 import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
-import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
+import amf.shapes.client.scala.domain.models.{AnyShape, Example, FileShape, NodeShape}
+import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition}
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasExamplesParser, YMapEntryLike}
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.spec.raml.parser.{
   Raml08TypeParser,
   Raml10TypeParser,

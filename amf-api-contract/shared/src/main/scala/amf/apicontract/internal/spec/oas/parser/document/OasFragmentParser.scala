@@ -9,6 +9,17 @@ import amf.apicontract.internal.spec.common.parser.{
   WebApiShapeParserContextAdapter
 }
 import amf.apicontract.internal.spec.oas.OasHeader
+import amf.apicontract.internal.spec.oas.OasHeader.{
+  Oas20AnnotationTypeDeclaration,
+  Oas20DataType,
+  Oas20DocumentationItem,
+  Oas20Header,
+  Oas20NamedExample,
+  Oas20ResourceType,
+  Oas20SecurityScheme,
+  Oas20Trait,
+  Oas30Header
+}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
@@ -17,7 +28,18 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition}
+import amf.shapes.internal.spec.common.parser.{
+  ExampleOptions,
+  OasLikeCreativeWorkParser,
+  RamlNamedExampleParser,
+  YMapEntryLike
+}
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}
+import amf.core.internal.utils._
 
 case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
@@ -96,7 +118,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         OasTypeParser(YMapEntryLike(filterMap),
                       "type",
                       (shape: Shape) => shape.withId(root.location + "#/shape"),
-                      OAS20SchemaVersion(Schema))(WebApiShapeParserContextAdapter(ctx))
+                      OAS20SchemaVersion(SchemaPosition.Schema))(WebApiShapeParserContextAdapter(ctx))
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 

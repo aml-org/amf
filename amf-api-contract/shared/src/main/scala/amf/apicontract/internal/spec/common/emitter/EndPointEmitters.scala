@@ -5,6 +5,7 @@ import amf.apicontract.internal.metamodel.domain.{EndPointModel, ParameterModel}
 import amf.apicontract.internal.spec.oas.emitter.domain.Raml10PayloadsEmitter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.domain.ExtendsEmitter
+import amf.apicontract.internal.spec.spec.toOas
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
@@ -46,7 +47,7 @@ case class Raml10EndPointEmitter(endpoint: EndPoint,
           val (path, other) = f.array.values.asInstanceOf[Seq[Parameter]].partition(p => p.isPath)
 
           result ++= OasParametersEmitter("parameters".asRamlAnnotation, other, ordering, references = references)(
-            amf.plugins.document.apicontract.parser.spec.toOas(spec)).ramlEndpointEmitters()
+            toOas(spec)).ramlEndpointEmitters()
 
           val explicitParams = getExplicitParams(path)
           if (explicitParams.nonEmpty) {

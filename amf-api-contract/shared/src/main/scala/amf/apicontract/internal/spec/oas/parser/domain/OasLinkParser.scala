@@ -5,10 +5,16 @@ import amf.apicontract.internal.metamodel.domain.TemplatedLinkModel
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorLink
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.core.client.scala.model.domain.AmfScalar
+import amf.apicontract.internal.spec.spec.OasDefinitions
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.ExclusiveLinkTargetError
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
+import amf.shapes.client.scala.annotations.ExternalReferenceUrl
+import amf.shapes.client.scala.domain.models.IriTemplateMapping
+import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext)

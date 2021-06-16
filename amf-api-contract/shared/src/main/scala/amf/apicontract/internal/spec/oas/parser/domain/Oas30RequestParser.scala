@@ -5,9 +5,12 @@ import amf.apicontract.internal.metamodel.domain.{RequestModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorRequest
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.RequestBodyContentRequired
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
+import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YMapEntry}
 
 import scala.collection.mutable

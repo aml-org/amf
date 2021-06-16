@@ -30,9 +30,16 @@ import amf.apicontract.internal.spec.oas.emitter.context.{
 }
 import amf.apicontract.internal.spec.oas.emitter.domain.OasContentPayloadsEmitter
 import amf.apicontract.internal.spec.raml.emitter.context.{RamlSpecEmitterContext, XRaml10SpecEmitterContext}
+import amf.apicontract.internal.spec.spec.OasDefinitions
+import amf.shapes.client.scala.domain.models.{AnyShape, ArrayShape, FileShape, NodeShape, ScalarShape}
+import amf.shapes.internal.domain.metamodel.{AnyShapeModel, FileShapeModel}
+import amf.shapes.internal.spec.common.emitter.{CommentEmitter, OasResponseExamplesEmitter}
+import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.contexts.emitter.oas.Oas3SpecEmitterFactory
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
+import amf.shapes.internal.spec.oas.emitter.{OasSchemaEmitter, OasTypeEmitter}
+import amf.shapes.internal.spec.raml.emitter.{Raml08TypePartEmitter, Raml10TypeEmitter}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType.Bool
 import org.yaml.model.{YNode, YType}

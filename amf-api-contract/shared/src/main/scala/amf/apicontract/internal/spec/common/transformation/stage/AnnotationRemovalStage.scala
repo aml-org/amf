@@ -5,6 +5,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document, FieldsFilter}
 import amf.core.client.scala.model.domain.Annotation
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.client.scala.traversal.iterator.InstanceCollector
+import amf.shapes.client.scala.annotations.{ExternalJsonSchemaShape, ExternalReferenceUrl}
 
 class AnnotationRemovalStage() extends TransformationStep() {
 

@@ -10,10 +10,17 @@ import amf.apicontract.internal.spec.common.Parameters
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.context.{OasLikeWebApiContext, OasWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.domain.ParametrizedDeclarationParser
+import amf.apicontract.internal.spec.spec.toRaml
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  DuplicatedEndpointPath,
+  InvalidEndpointPath,
+  InvalidEndpointType
+}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -100,7 +107,7 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
       entries += entry
       val uriParameters =
         RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id), binding = "path")(
-          spec.toRaml(ctx))
+          toRaml(ctx))
           .parse()
       parameters = parameters.add(Parameters(path = uriParameters))
     }

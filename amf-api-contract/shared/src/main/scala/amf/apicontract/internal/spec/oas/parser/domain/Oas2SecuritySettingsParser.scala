@@ -2,12 +2,18 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security.{OAuth2FlowModel, OAuth2SettingsModel}
-import amf.apicontract.internal.spec.common.parser.{Oas2SettingsProducers, SettingsProducers, WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{
+  Oas2SettingsProducers,
+  SettingsProducers,
+  WebApiContext,
+  WebApiShapeParserContextAdapter
+}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.annotations.VirtualElement
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, Lazy}
+import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.YMap
 
 class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext)

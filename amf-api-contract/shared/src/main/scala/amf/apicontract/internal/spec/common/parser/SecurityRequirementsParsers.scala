@@ -5,6 +5,7 @@ import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.raml.parser.domain.RamlParametrizedSecuritySchemeParser
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidSecurityRequirementObject
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter

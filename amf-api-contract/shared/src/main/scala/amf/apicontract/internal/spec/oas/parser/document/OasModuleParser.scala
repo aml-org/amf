@@ -9,6 +9,7 @@ import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.parser.{Root, YNodeLikeOps}
 import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.YMap
+import amf.core.internal.utils._
 
 /**
   *

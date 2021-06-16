@@ -3,7 +3,9 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.License
 import amf.apicontract.internal.metamodel.domain.LicenseModel
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.spec.toOas
 import amf.core.internal.parser.YMapOps
+import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YNode}
 
 /**

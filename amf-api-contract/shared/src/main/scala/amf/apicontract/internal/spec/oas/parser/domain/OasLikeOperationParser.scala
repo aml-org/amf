@@ -6,15 +6,21 @@ import amf.apicontract.internal.metamodel.domain.OperationModel.Method
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.{OperationModel, ResponseModel}
 import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.isOasAnnotation
-import amf.apicontract.internal.spec.common.parser.{OasLikeSecurityRequirementParser, SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{
+  OasLikeSecurityRequirementParser,
+  SpecParserOps,
+  WebApiShapeParserContextAdapter
+}
 import amf.apicontract.internal.spec.oas.parser.context.{Oas3WebApiContext, OasLikeWebApiContext, OasWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.domain.ParametrizedDeclarationParser
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{DuplicatedOperationId, InvalidStatusCode}
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.annotations.{SourceAST, VirtualElement}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -50,7 +56,7 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
             OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)(
               WebApiShapeParserContextAdapter(ctx))))
 
-    common.AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("responses")
+    AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("responses")
     AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
     operation

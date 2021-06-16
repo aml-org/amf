@@ -5,6 +5,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorEndPoint
 import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.ParseResourceTypeFail
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
@@ -17,7 +18,8 @@ import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.RamlWebApiContextType
+import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
 import org.yaml.model._
 
 import scala.collection.mutable

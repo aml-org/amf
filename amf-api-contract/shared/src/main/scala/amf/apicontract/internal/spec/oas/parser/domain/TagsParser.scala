@@ -3,8 +3,11 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.Tag
 import amf.apicontract.internal.metamodel.domain.TagModel
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.spec.toOas
+import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser}
 import org.yaml.model.{YMap, YNode, YScalar, YSequence}
 
 import scala.collection.mutable

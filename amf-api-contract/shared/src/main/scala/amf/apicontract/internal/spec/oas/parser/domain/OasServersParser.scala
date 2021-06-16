@@ -6,6 +6,7 @@ import amf.core.client.scala.model.domain.{AmfArray, DomainElement}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.YMap
 
 abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(implicit val ctx: OasLikeWebApiContext)

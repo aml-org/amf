@@ -1,8 +1,7 @@
 package amf.apicontract.internal.spec.common.parser
 
-import amf.core.internal.parser.YScalarYRead
-import amf.plugins.document.apicontract.parser.spec.common._
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
+import amf.core.internal.parser.YScalarYRead
 import org.yaml.model._
 
 abstract class SecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit ctx: WebApiContext)

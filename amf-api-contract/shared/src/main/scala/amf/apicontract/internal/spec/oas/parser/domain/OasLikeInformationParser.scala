@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.common.parser.WebApiBaseSpecParser
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
+import amf.core.internal.parser.YMapOps
 import org.yaml.model.{YMap, YMapEntry}
 
 case class OasLikeInformationParser(entry: YMapEntry, api: Api, override implicit val ctx: OasLikeWebApiContext)

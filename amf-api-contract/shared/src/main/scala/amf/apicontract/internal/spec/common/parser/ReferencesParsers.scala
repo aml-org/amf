@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.common.parser
 import amf.apicontract.internal.spec.raml.parser
 import amf.apicontract.internal.spec.raml.parser.document
 import amf.apicontract.internal.spec.raml.parser.document.LibraryLocationParser
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidModuleType
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, Fragment, Module}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.Aliases

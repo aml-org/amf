@@ -3,9 +3,14 @@ package amf.apicontract.internal.spec.common.transformation.stage
 import amf.apicontract.client.scala.model.domain.Payload
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.metamodel.domain.ResponseModel
+import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.{
+  ExamplesWithInvalidMimeType,
+  ExamplesWithNoSchemaDefined
+}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.stages.TransformationStep
+import amf.shapes.client.scala.domain.models.{AnyShape, Example, ExampleTracking}
 
 /** Apply response examples to payloads schemas matching by media type
   *

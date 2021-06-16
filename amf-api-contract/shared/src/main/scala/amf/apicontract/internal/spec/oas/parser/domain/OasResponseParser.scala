@@ -6,14 +6,22 @@ import amf.apicontract.internal.metamodel.domain.ResponseModel.Headers
 import amf.apicontract.internal.metamodel.domain.{PayloadModel, RequestModel, ResponseModel}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorResponse
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
-import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.apicontract.internal.spec.oas.parser.context.{Oas2Syntax, Oas3Syntax, OasWebApiContext}
+import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.annotations.TrackedElement
+import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
+import amf.shapes.client.scala.annotations.ExternalReferenceUrl
+import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.YMap
 
 import scala.collection.mutable
+import amf.core.internal.utils._
 
 case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {

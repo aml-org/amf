@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.oas
 
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
+import amf.apicontract.internal.spec.oas.OasHeader.Oas30Header
 import amf.apicontract.internal.spec.oas.parser.context.{Oas3WebApiContext, OasWebApiContext}
 import amf.apicontract.internal.spec.oas.parser.OasFragmentParser
 import amf.apicontract.internal.spec.oas.parser.document.{Oas3DocumentParser, OasFragmentParser}

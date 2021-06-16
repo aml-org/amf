@@ -3,15 +3,26 @@ package amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.client.scala.model.domain.{Parameter, Payload, Request}
 import amf.apicontract.internal.metamodel.domain.RequestModel
 import amf.apicontract.internal.spec.common.Parameters
-import amf.apicontract.internal.spec.common.parser.{OasParametersParser, Raml08ParameterParser, RamlParametersParser, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{
+  OasParametersParser,
+  Raml08ParameterParser,
+  RamlParametersParser,
+  WebApiShapeParserContextAdapter
+}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.apicontract.internal.spec.spec
+import amf.apicontract.internal.spec.spec.toRaml
 import amf.core.client.scala.model.domain.AmfArray
+import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.Lazy
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.internal.spec.raml.parser.Raml10TypeParser
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+import amf.core.internal.utils._
 
 case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Option[Request] = {

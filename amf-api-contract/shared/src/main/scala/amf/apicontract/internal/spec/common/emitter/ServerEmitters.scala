@@ -5,7 +5,9 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.metamodel.domain.ServerModel
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.apicontract.internal.spec.oas.parser.domain.BaseUriSplitter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
+import amf.apicontract.internal.spec.spec.toRaml
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
@@ -16,9 +18,10 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.apicontract.parser.spec.toRaml
+import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
-import amf.shapes.internal.spec.contexts.emitter.oas.Oas3SpecEmitterFactory
+import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, EnumValuesEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder

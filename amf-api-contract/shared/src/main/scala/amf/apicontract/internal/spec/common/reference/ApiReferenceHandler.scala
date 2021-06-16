@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.common.reference
 import amf.apicontract.internal.spec.raml.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.apicontract.internal.spec.raml.parser.document.LibraryLocationParser
 import amf.apicontract.internal.spec.raml.{RamlHeader, parser}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document._
 import amf.core.internal.parser.YMapOps

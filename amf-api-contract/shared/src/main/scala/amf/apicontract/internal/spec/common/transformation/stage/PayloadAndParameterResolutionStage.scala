@@ -7,6 +7,8 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.transform.stages.TransformationStep
+import amf.shapes.client.scala.domain.models.{AnyShape, Example, ExampleTracking}
+import amf.shapes.internal.domain.metamodel.common.ExamplesField
 
 /**
   * Propagate examples defined in parameters and payloads onto their corresponding shape so they are validated

@@ -2,11 +2,16 @@ package amf.apicontract.internal.spec.oas.parser.document
 
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnableToParseShape
 import amf.core.client.scala.model.domain.{AmfScalar, NamedDomainElement}
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}
+import amf.shapes.client.scala.domain.models.NodeShape
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YScalar}
 
 trait OasLikeDeclarationsHelper {

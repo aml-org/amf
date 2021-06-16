@@ -5,16 +5,27 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, TraitModel}
-import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationsParser, WebApiShapeParserContextAdapter, YamlTagValidator}
+import amf.apicontract.internal.spec.common.parser.{
+  AbstractDeclarationsParser,
+  WebApiShapeParserContextAdapter,
+  YamlTagValidator
+}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.apicontract.internal.spec.oas.parser.OasLinkParser
-import amf.apicontract.internal.spec.oas.parser.domain.{Oas30RequestParser, OasHeaderParametersParser, OasLinkParser}
+import amf.core.internal.utils._
+import amf.apicontract.internal.spec.oas.parser.domain.{
+  Oas30CallbackParser,
+  Oas30RequestParser,
+  OasHeaderParametersParser,
+  OasLinkParser
+}
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader}
-import amf.core.internal.parser.Root
+import amf.core.internal.parser.{Root, YMapOps}
 import amf.plugins.document.vocabularies.parser.common.DeclarationKey
+import amf.shapes.internal.spec.common.parser.Oas3NamedExamplesParser
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
-case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext) extends OasDocumentParser(root) {
+case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
+    extends OasDocumentParser(root) {
 
   override def parseWebApi(map: YMap): WebApi = {
     YamlTagValidator.validate(root)

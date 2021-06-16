@@ -9,6 +9,12 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  InvalidAbstractDeclarationType,
+  NullAbstractDeclaration
+}
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.datanode.{AbstractVariables, DataNodeParser}
 import org.yaml.model._
 
 /**

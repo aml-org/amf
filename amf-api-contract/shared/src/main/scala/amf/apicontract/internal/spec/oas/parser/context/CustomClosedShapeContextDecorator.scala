@@ -4,6 +4,7 @@ import amf.apicontract.internal.spec.common.parser.{CustomSyntax, SpecNode}
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.remote.Vendor
+import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.yaml.model.{YMap, YNode, YPart}
 
 class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customSyntax: CustomSyntax)

@@ -5,9 +5,10 @@ import amf.apicontract.client.scala.model.domain.{Parameter, Server}
 import amf.apicontract.internal.metamodel.domain.ServerModel
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.oas.parser.context.{Oas3Syntax, OasWebApiContext}
-import amf.apicontract.internal.spec.oas.parser.OasServersParser
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeServerParser, OasServersParser}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.spec.spec.{toOas, toRaml}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
@@ -16,7 +17,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.{AmfStrings, TemplateUri}
-import amf.plugins.document.apicontract.parser.spec.{toOas, toRaml}
+import amf.shapes.internal.spec.common.parser.{RamlScalarNode, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
@@ -188,8 +189,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         entry => {
           val uriParameters =
             RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id), binding = "path")(
-              toRaml(ctx))
-              .parse()
+              toRaml(ctx)).parse()
 
           server.set(ServerModel.Variables, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
         }

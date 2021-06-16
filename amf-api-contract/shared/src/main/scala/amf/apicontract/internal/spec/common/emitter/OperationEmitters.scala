@@ -9,6 +9,7 @@ import amf.apicontract.internal.spec.oas.emitter.domain.{OasTagToReferenceEmitte
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.domain.{ExtendsEmitter, RamlResponsesEmitter}
+import amf.apicontract.internal.spec.spec.toOas
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.annotations.SynthesizedField
@@ -20,8 +21,16 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.plugins.document.apicontract.parser.spec._
+import amf.shapes.client.scala.domain.models.{AnyShape, CreativeWork}
+import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
+import amf.shapes.internal.spec.common.emitter.{
+  OasEntryCreativeWorkEmitter,
+  RamlShapeEmitterContext,
+  ShapeEmitterContext
+}
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
+import amf.shapes.internal.spec.raml.emitter.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 

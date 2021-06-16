@@ -5,6 +5,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, AmfS
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.{DataNodeModel, ShapeModel}
 import amf.core.internal.parser.domain.FieldEntry
+import amf.shapes.client.scala.domain.models.Key
 
 case class JsonMergePatch(isNull: AmfElement => Boolean,
                           keyCriteria: KeyCriteria,

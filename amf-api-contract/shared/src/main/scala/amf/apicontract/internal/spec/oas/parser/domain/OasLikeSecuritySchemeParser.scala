@@ -6,6 +6,11 @@ import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorSecuritySche
 import amf.apicontract.internal.spec.common.parser.{SecuritySchemeParser, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.spec.raml.parser.domain.RamlDescribedByParser
+import amf.apicontract.internal.spec.spec.toRaml
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  CrossSecurityWarningSpecification,
+  MissingSecuritySchemeErrorSpecification
+}
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.annotations.LexicalInformation
@@ -13,6 +18,8 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations
+import amf.shapes.client.scala.annotations.ExternalReferenceUrl
+import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YNode, YPart, YType}
 
 abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
