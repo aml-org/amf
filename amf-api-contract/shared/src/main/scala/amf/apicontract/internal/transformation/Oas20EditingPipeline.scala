@@ -1,11 +1,13 @@
 package amf.apicontract.internal.transformation
 
-import amf.apicontract.internal.spec.common.transformation.stage.{OpenApiParametersNormalizationStage, ParametersNormalizationStage}
+import amf.apicontract.internal.spec.common.transformation.stage.{
+  OpenApiParametersNormalizationStage,
+  ParametersNormalizationStage
+}
 import amf.apicontract.internal.transformation.Oas20EditingPipeline.cachePipeline
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Oas20Profile, ProfileName}
 import amf.core.internal.remote.Oas20
-import amf.plugins.domain.apicontract.resolution.stages.OpenApiParametersNormalizationStage
 
 class Oas20EditingPipeline private (urlShortening: Boolean, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {

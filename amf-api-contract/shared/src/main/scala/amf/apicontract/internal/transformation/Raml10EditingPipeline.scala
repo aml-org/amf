@@ -1,10 +1,12 @@
 package amf.apicontract.internal.transformation
 
-import amf.apicontract.internal.spec.common.transformation.stage.{ParametersNormalizationStage, Raml10ParametersNormalizationStage}
+import amf.apicontract.internal.spec.common.transformation.stage.{
+  ParametersNormalizationStage,
+  Raml10ParametersNormalizationStage
+}
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{ProfileName, Raml10Profile}
 import amf.core.internal.remote.Raml10
-import amf.plugins.domain.apicontract.resolution.stages._
 
 class Raml10EditingPipeline private (urlShortening: Boolean, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {

@@ -1,11 +1,14 @@
 package amf.apicontract.internal.transformation
 
-import amf.apicontract.internal.spec.common.transformation.stage.{OpenApiParametersNormalizationStage, ParametersNormalizationStage, RequestParamsLinkStage}
+import amf.apicontract.internal.spec.common.transformation.stage.{
+  OpenApiParametersNormalizationStage,
+  ParametersNormalizationStage,
+  RequestParamsLinkStage
+}
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Oas30Profile, ProfileName}
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.remote.Oas30
-import amf.plugins.domain.apicontract.resolution.stages.OpenApiParametersNormalizationStage
 
 class Oas30TransformationPipeline private (override val name: String) extends AmfTransformationPipeline(name) {
   override def profileName: ProfileName = Oas30Profile

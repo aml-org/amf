@@ -1,10 +1,11 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 
+import amf.apicontract.client.scala.model.domain.security.{ApiKeySettings, OAuth2Settings, SecurityScheme}
+import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.transform.stages.TransformationStep
-import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
-import amf.apicontract.client.scala.model.domain.security.{ApiKeySettings, OAuth2Settings, SecurityScheme}
+import amf.shapes.client.scala.domain.models.AnyShape
 
 class SecuritySettingsMapper() extends TransformationStep {
 

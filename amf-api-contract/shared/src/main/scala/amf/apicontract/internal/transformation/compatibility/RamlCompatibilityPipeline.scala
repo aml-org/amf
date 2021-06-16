@@ -1,13 +1,16 @@
 package amf.apicontract.internal.transformation.compatibility
 
-import amf.apicontract.internal.spec.common.transformation.stage.{AnnotationRemovalStage, MediaTypeResolutionStage, RamlCompatiblePayloadAndParameterResolutionStage}
-import amf.core.client.common.validation.{ProfileName, Raml08Profile, Raml10Profile}
+import amf.apicontract.internal.spec.common.transformation.stage.{
+  AnnotationRemovalStage,
+  MediaTypeResolutionStage,
+  RamlCompatiblePayloadAndParameterResolutionStage
+}
+import amf.apicontract.internal.transformation.compatibility.raml._
 import amf.core.client.common.transform._
+import amf.core.client.common.validation.{ProfileName, Raml08Profile, Raml10Profile}
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.transform.stages.TransformationStep
 import amf.core.internal.remote.{Raml08, Raml10}
-import amf.apicontract.internal.transformation.compatibility.raml._
-import amf.plugins.domain.apicontract.resolution.stages.RamlCompatiblePayloadAndParameterResolutionStage
 
 class RamlCompatibilityPipeline private[amf] (override val name: String, profile: ProfileName)
     extends TransformationPipeline() {

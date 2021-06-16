@@ -1,9 +1,9 @@
 package amf.apicontract.internal.transformation.compatibility.common
 
+import amf.apicontract.client.scala.model.domain.security._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.transform.stages.TransformationStep
-import amf.apicontract.client.scala.model.domain.security._
 
 abstract class SecuritySettingsMapper() extends TransformationStep {
 

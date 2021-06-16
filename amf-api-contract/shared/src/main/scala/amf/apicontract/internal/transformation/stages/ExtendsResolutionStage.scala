@@ -1,6 +1,11 @@
 package amf.apicontract.internal.transformation.stages
 
-import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
+import amf.apicontract.client.scala.model.domain.templates.{
+  ParametrizedResourceType,
+  ParametrizedTrait,
+  ResourceType,
+  Trait
+}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
 import amf.apicontract.internal.spec.common.emitter.{Raml10EndPointEmitter, Raml10OperationEmitter}
@@ -21,7 +26,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExceededMaxYamlReferences
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model._
 

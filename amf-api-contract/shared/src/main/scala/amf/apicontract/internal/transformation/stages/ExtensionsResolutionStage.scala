@@ -7,9 +7,10 @@ import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.common.transformation.ExtendsHelper
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.MissingExtensionInReferences
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.{BaseUnit, Document, EncodesModel, ExtensionLike, Fragment, Module}
+import amf.core.client.scala.model.document._
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext}
 import amf.core.client.scala.transform.stages.{ReferenceResolutionStage, TransformationStep}
@@ -22,7 +23,7 @@ import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
