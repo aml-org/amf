@@ -1,12 +1,9 @@
 package amf.apicontract.internal.spec.async.transformation
 
-import amf.apicontract.internal.metamodel.domain.OperationModel
-import amf.apicontract.internal.spec.common.transformation.AsyncKeyCriteria
+import amf.apicontract.internal.metamodel.domain.{AbstractModel, MessageModel, OperationModel}
 import amf.apicontract.internal.spec.common.transformation.stage.{AsyncKeyCriteria, JsonMergePatch}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
-import amf.plugins.domain.apicontract.metamodel.OperationModel
-import amf.plugins.domain.apicontract.resolution.stages.PayloadMediaTypeMerge
 
 object AsyncJsonMergePatch {
   def apply(): JsonMergePatch =

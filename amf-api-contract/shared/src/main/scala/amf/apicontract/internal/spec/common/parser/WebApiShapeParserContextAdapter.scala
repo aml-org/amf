@@ -1,11 +1,13 @@
 package amf.apicontract.internal.spec.common.parser
 
-import amf.apicontract.internal.spec.async.parser.AsyncWebApiContext
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
+import amf.apicontract.internal.spec.oas.parser.Oas3Syntax
 import amf.apicontract.internal.spec.oas.parser.context.{Oas2WebApiContext, Oas3WebApiContext, OasLikeWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.external.DefaultRamlExternalSchemaExpressionFactory
+import amf.apicontract.internal.spec.spec.{toOas, toOasDeclarations}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
@@ -14,9 +16,13 @@ import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain._
 import amf.core.internal.remote.Vendor
 import amf.core.internal.validation.core.ValidationSpecification
+import amf.shapes.client.scala.domain.models.{AnyShape, Example}
+import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.spec.common.SchemaVersion
+import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
-import amf.shapes.internal.spec.contexts.parser.oas.Oas3WebApiContext
-import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.raml.parser.{DefaultType, RamlTypeParser, TypeInfo}
+import amf.shapes.internal.spec.{RamlExternalSchemaExpressionFactory, ShapeParserContext}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 import scala.collection.mutable

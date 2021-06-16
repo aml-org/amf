@@ -9,6 +9,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
+import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, OasLikeShapeEmitterContext}
 import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
 import amf.shapes.internal.spec.contexts.emitter.oas.DefinitionsQueue
 import org.yaml.model.YNode
@@ -20,8 +21,6 @@ case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext)
     with OasLikeShapeEmitterContext {
 
   override def nameRegex: Regex = spec.nameRegex
-
-//  override def recursiveShapeEmitter(recursive: RecursiveShape, ordering: SpecOrdering, schemaPath: Seq[(String, String)]): EntryEmitter = OasRecursiveShapeEmitter(recursive, ordering, schemaPath)
 
   override def forceEmission: Option[String] = spec match {
     case oasCtx: OasSpecEmitterContext => oasCtx.forceEmission

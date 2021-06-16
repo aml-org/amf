@@ -13,6 +13,8 @@ import amf.core.internal.render.BaseEmitters.ArrayEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.internal.spec.common.SchemaVersion
+import amf.shapes.internal.spec.common.emitter.{OasRefEmitter, RefEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationEmitter, OasAnnotationEmitter}
 import org.yaml.model.YType
 

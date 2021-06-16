@@ -7,6 +7,9 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.Vendor
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
+import amf.shapes.internal.spec.{RamlShapeTypeBeautifier, RamlWebApiContextType}
+import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.spec.raml.parser.TypeInfo
 import org.yaml.model._
 
 import scala.collection.mutable

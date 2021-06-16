@@ -1,18 +1,18 @@
-package amf.apicontract.internal.spec.async.parser
+package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Server
+import amf.apicontract.client.scala.model.domain.api.AsyncApi
+import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.metamodel.domain.ServerModel
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncServerBindingsParser
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.apicontract.internal.spec.common.parser.{OasLikeSecurityRequirementParser, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.oas.parser.OasLikeServerParser
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.IdCounter
-import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
-import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.apicontract.client.scala.model.domain.api.AsyncApi
-import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
-import amf.apicontract.internal.spec.common.parser.{OasLikeSecurityRequirementParser, WebApiShapeParserContextAdapter}
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 case class AsyncServersParser(map: YMap, api: AsyncApi)(implicit val ctx: AsyncWebApiContext) {

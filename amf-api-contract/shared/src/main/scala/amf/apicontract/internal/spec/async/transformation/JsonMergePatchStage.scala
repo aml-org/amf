@@ -1,7 +1,8 @@
 package amf.apicontract.internal.spec.async.transformation
 
 import amf.apicontract.client.scala.model.domain.api.Api
-import amf.apicontract.client.scala.model.domain.{Message, Operation}
+import amf.apicontract.client.scala.model.domain.{Message, Operation, Payload}
+import amf.apicontract.internal.metamodel.domain.MessageModel
 import amf.apicontract.internal.metamodel.domain.PayloadModel.{MediaType, SchemaMediaType}
 import amf.apicontract.internal.spec.common.transformation.stage.CustomMerge
 import amf.core.client.scala.errorhandling.AMFErrorHandler

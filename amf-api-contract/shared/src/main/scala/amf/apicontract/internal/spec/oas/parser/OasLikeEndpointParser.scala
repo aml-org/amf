@@ -2,7 +2,6 @@ package amf.apicontract.internal.spec.oas.parser
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
-import amf.apicontract.internal.spec.async.parser.{AsyncParametersParser, AsyncWebApiContext}
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncChannelBindingsParser
 import amf.apicontract.internal.spec.raml.parser.ParametrizedDeclarationParser
 import amf.core.client.scala.model.domain.AmfArray
@@ -12,8 +11,16 @@ import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.plugins.document.apicontract.parser.spec.domain._
 import amf.plugins.domain.apicontract.metamodel.OperationModel
 import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.apicontract.internal.spec.async.parser.domain.AsyncParametersParser
 import amf.apicontract.internal.spec.common.Parameters
-import amf.apicontract.internal.spec.common.parser.{OasLikeSecurityRequirementParser, OasParametersParser, RamlParametersParser, SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{
+  OasLikeSecurityRequirementParser,
+  OasParametersParser,
+  RamlParametersParser,
+  SpecParserOps,
+  WebApiShapeParserContextAdapter
+}
 import amf.apicontract.internal.spec.oas.parser.context.{OasLikeWebApiContext, OasWebApiContext}
 import amf.plugins.domain.apicontract.models.Parameter
 import org.yaml.model._

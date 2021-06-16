@@ -1,14 +1,20 @@
 package amf.apicontract.internal.spec.async.parser.bindings
 
-import amf.core.client.scala.model.domain.AmfScalar
-import amf.core.internal.metamodel.Field
-import amf.core.internal.parser.domain.{Annotations, SearchScope}
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
-import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorServerBindings
-import amf.apicontract.internal.metamodel.domain.bindings.{MqttServerBindingModel, MqttServerLastWillModel, ServerBindingsModel}
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
 import amf.apicontract.client.scala.model.domain.bindings.{ServerBinding, ServerBindings}
-import amf.apicontract.internal.spec.async.parser.AsyncWebApiContext
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  MqttServerBindingModel,
+  MqttServerLastWillModel,
+  ServerBindingsModel
+}
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorServerBindings
+import amf.apicontract.internal.spec.spec.OasDefinitions
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
 case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
@@ -36,8 +42,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): ServerBindings =
     new ErrorServerBindings(fullRef, entryLike.asMap)
 
-  override protected def parseMqtt(entry: YMapEntry, parent: String)(
-      implicit ctx: AsyncWebApiContext): ServerBinding = {
+  override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): ServerBinding = {
     val binding = MqttServerBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 

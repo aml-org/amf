@@ -2,8 +2,12 @@ package amf.apicontract.internal.spec.async.emitters.context
 
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.client.scala.model.domain.security.{ParametrizedSecurityScheme, SecurityRequirement}
-import amf.apicontract.internal.spec.async.emitters.AsyncDeclaredTypesEmitters
-import amf.apicontract.internal.spec.common.emitter.{AbstractSecurityRequirementEmitter, AnnotationTypeEmitter, ParametrizedSecuritySchemeEmitter}
+import amf.apicontract.internal.spec.async.emitters.document.AsyncDeclaredTypesEmitters
+import amf.apicontract.internal.spec.common.emitter.{
+  AbstractSecurityRequirementEmitter,
+  AnnotationTypeEmitter,
+  ParametrizedSecuritySchemeEmitter
+}
 import amf.apicontract.internal.spec.oas.emitter.OasSecurityRequirementEmitter
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.core.client.scala.config.ShapeRenderOptions
@@ -17,8 +21,11 @@ import amf.core.internal.remote.{AsyncApi20, Vendor}
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
+import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, RefEmitter, TagToReferenceEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
 import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterFactory
+import amf.shapes.internal.spec.oas.emitter.{OasRecursiveShapeEmitter, OasTypeEmitter}
 import org.yaml.model.YDocument.PartBuilder
 
 import scala.util.matching.Regex

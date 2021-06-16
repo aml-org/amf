@@ -1,13 +1,13 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.client.scala.model.domain.{CorrelationId, Message, Payload, Tag}
 import amf.apicontract.internal.annotations.ExampleIndex
-import amf.apicontract.internal.metamodel.domain.PayloadModel
-import amf.apicontract.internal.spec.async.emitters
+import amf.apicontract.internal.metamodel.domain.{MessageModel, PayloadModel}
+import amf.apicontract.internal.spec.async.emitters.domain
+import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas
+import amf.apicontract.internal.spec.oas.emitter.TagsEmitter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import amf.apicontract.internal.spec.oas.emitter.{OasTagToReferenceEmitter, TagsEmitter}
-import amf.apicontract.internal.spec.raml.emitter
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
@@ -15,11 +15,9 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async
-import amf.plugins.document.apicontract.parser.spec.domain.ExampleDataNodePartEmitter
-import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
-import amf.plugins.domain.apicontract.metamodel.PayloadModel
-import amf.plugins.domain.apicontract.models._
+import amf.shapes.client.scala.annotations.OrphanOasExtension
+import amf.shapes.client.scala.domain.models.{CreativeWork, Example}
+import amf.shapes.internal.spec.common.emitter.ExampleDataNodePartEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 
@@ -159,7 +157,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
   }
 
   private def emitHeader(result: ListBuffer[EntryEmitter], field: FieldEntry): Unit = {
-    result += emitters.AsyncSchemaEmitter("headers", field.element.asInstanceOf[Shape], ordering, Seq())
+    result += domain.AsyncSchemaEmitter("headers", field.element.asInstanceOf[Shape], ordering, Seq())
   }
 
   private def emitPayloads(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit = {
@@ -170,7 +168,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
       fs.entry(PayloadModel.SchemaMediaType).map(field => result += ValueEmitter("schemaFormat", field))
       fs.entry(PayloadModel.Schema)
         .map(field =>
-          result += AsyncSchemaEmitter("payload", field.element.asInstanceOf[Shape], ordering, List(), schemaMediaType))
+          result += domain.AsyncSchemaEmitter("payload", field.element.asInstanceOf[Shape], ordering, List(), schemaMediaType))
     }
   }
 

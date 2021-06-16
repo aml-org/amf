@@ -1,7 +1,8 @@
-package amf.apicontract.internal.spec.async.parser
+package amf.apicontract.internal.spec.async.parser.context
 
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
+import amf.apicontract.internal.spec.async.parser.domain.{Async2SecuritySchemeParser, Async2SecuritySettingsParser, AsyncOperationParser, AsyncServerVariableParser}
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
 import amf.apicontract.internal.spec.common.parser.SecuritySchemeParser
 import amf.apicontract.internal.spec.oas.parser._

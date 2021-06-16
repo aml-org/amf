@@ -1,20 +1,23 @@
 package amf.apicontract.internal.spec.async.emitters.bindings
 
-import amf.apicontract.internal.spec.async.emitters
-import amf.apicontract.internal.spec.async.emitters.AsyncSchemaEmitter
-import amf.core.client.common.position.Position
-import amf.core.client.scala.model.domain.Shape
-import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.internal.render.SpecOrdering
-import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async
-import amf.apicontract.internal.metamodel.domain.bindings.{Amqp091OperationBindingModel, HttpOperationBindingModel, KafkaOperationBindingModel, MqttOperationBindingModel}
 import amf.apicontract.client.scala.model.domain.bindings.OperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091OperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaOperationBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttOperationBinding
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  Amqp091OperationBindingModel,
+  HttpOperationBindingModel,
+  KafkaOperationBindingModel,
+  MqttOperationBindingModel
+}
+import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
@@ -51,7 +54,7 @@ class HttpOperationBindingEmitter(binding: HttpOperationBinding, ordering: SpecO
         fs.entry(HttpOperationBindingModel.OperationType).foreach(f => result += ValueEmitter("type", f))
         fs.entry(HttpOperationBindingModel.Method).foreach(f => result += ValueEmitter("method", f))
         fs.entry(HttpOperationBindingModel.Query)
-          .foreach(f => result += AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq()))
+          .foreach(f => result += domain.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq()))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)
@@ -74,11 +77,11 @@ class KafkaOperationBindingEmitter(binding: KafkaOperationBinding, ordering: Spe
 
         fs.entry(KafkaOperationBindingModel.GroupId)
           .foreach(
-            f => result += emitters.AsyncSchemaEmitter("groupId", f.element.asInstanceOf[Shape], ordering, Seq())
+            f => result += domain.AsyncSchemaEmitter("groupId", f.element.asInstanceOf[Shape], ordering, Seq())
           )
         fs.entry(KafkaOperationBindingModel.ClientId)
           .foreach(
-            f => result += emitters.AsyncSchemaEmitter("clientId", f.element.asInstanceOf[Shape], ordering, Seq())
+            f => result += domain.AsyncSchemaEmitter("clientId", f.element.asInstanceOf[Shape], ordering, Seq())
           )
         emitBindingVersion(fs, result)
 

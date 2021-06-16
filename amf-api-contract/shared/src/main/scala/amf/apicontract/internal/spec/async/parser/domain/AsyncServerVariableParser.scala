@@ -1,13 +1,16 @@
-package amf.apicontract.internal.spec.async.parser
+package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Parameter
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.oas.parser.OasLikeServerVariableParser
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.metamodel.domain.ExternalSourceElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.IdCounter
-import amf.validations.ShapeParserSideValidations.ExamplesMustBeASeq
+import amf.shapes.client.scala.domain.models.Example
+import amf.shapes.internal.domain.metamodel.common.ExamplesField
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExamplesMustBeASeq
 import org.yaml.model.{YMap, YMapEntry, YSequence, YType}
 
 case class AsyncServerVariableParser(entry: YMapEntry, parent: String)(implicit override val ctx: AsyncWebApiContext)

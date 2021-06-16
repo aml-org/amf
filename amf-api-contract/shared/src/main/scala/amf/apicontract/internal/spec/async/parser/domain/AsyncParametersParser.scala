@@ -1,17 +1,18 @@
-package amf.apicontract.internal.spec.async.parser
+package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.internal.metamodel.domain.ParameterModel
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
-import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
-import amf.plugins.document.apicontract.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OasTypeParser}
-import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
+import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.YMap
 
 case class AsyncParametersParser(parentId: String, map: YMap)(implicit val ctx: AsyncWebApiContext) {

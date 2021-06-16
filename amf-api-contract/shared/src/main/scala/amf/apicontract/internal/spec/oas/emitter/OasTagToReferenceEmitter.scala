@@ -1,13 +1,24 @@
 package amf.apicontract.internal.spec.oas.emitter
 
-import amf.apicontract.client.scala.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
+import amf.apicontract.client.scala.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
+import amf.apicontract.internal.spec.common.spec.OasDefinitions.{
+  appendParameterDefinitionsPrefix,
+  appendResponsesDefinitionsPrefix
+}
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.BaseEmitters.pos
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions.{appendParameterDefinitionsPrefix, appendResponsesDefinitionsPrefix}
+import amf.shapes.internal.spec.common.emitter.ShapeReferenceEmitter
+import amf.shapes.internal.spec.oas.OasShapeDefinitions.appendOas3ComponentsPrefix
+import amf.shapes.internal.spec.oas.emitter.OasSpecEmitter
 
 case class OasTagToReferenceEmitter(link: DomainElement)(implicit val specContext: OasLikeSpecEmitterContext)
     extends OasSpecEmitter

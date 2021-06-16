@@ -8,8 +8,12 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.validation.CoreValidations
 import amf.apicontract.internal.metamodel.domain.bindings.BindingType
 import amf.apicontract.client.scala.model.domain.bindings._
-import amf.apicontract.internal.spec.async.parser.AsyncWebApiContext
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)

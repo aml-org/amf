@@ -1,5 +1,9 @@
 package amf.apicontract.internal.spec.async
 
+import amf.apicontract.internal.spec.async.AsyncHeader.Async20Header
+import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext, AsyncWebApiContext}
+import amf.apicontract.internal.spec.async.parser.document
+import amf.apicontract.internal.spec.common.AsyncWebApiDeclarations
 import amf.apicontract.internal.spec.oas.OasLikeParsePlugin
 import amf.apicontract.internal.spec.raml.Raml10ParsePlugin
 import amf.core.client.scala.config.ParsingOptions
@@ -8,11 +12,6 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{AsyncApi20, Vendor}
-import amf.plugins.document.apicontract.parser.AsyncHeader.Async20Header
-import amf.apicontract.internal.spec.async.parser
-import amf.apicontract.internal.spec.async.parser.{Async20WebApiContext, AsyncApi20DocumentParser, AsyncWebApiContext}
-import amf.apicontract.internal.spec.common.AsyncWebApiDeclarations
-import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
 
 object Async20ParsePlugin extends OasLikeParsePlugin {
 
@@ -34,7 +33,7 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
 
   private def parseAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
     AsyncHeader(root) match {
-      case Some(Async20Header) => parser.AsyncApi20DocumentParser(root).parseDocument()
+      case Some(Async20Header) => document.AsyncApi20DocumentParser(root).parseDocument()
       case _ => // unreachable as it is covered in canParse()
         throw new InvalidDocumentHeaderException(vendor.name)
     }

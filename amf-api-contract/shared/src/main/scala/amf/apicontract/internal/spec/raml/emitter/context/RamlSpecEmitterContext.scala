@@ -1,10 +1,18 @@
 package amf.apicontract.internal.spec.raml.emitter.context
 
 import amf.apicontract.client.scala.model.document.{Extension, Overlay}
-import amf.apicontract.client.scala.model.domain.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.security.{
+  ParametrizedSecurityScheme,
+  SecurityRequirement,
+  SecurityScheme
+}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter, Response}
 import amf.apicontract.internal.spec.common.emitter._
-import amf.apicontract.internal.spec.oas.emitter.context.{Oas2SpecEmitterContext, Oas2SpecEmitterFactory, OasSpecEmitterFactory}
+import amf.apicontract.internal.spec.oas.emitter.context.{
+  Oas2SpecEmitterContext,
+  Oas2SpecEmitterFactory,
+  OasSpecEmitterFactory
+}
 import amf.apicontract.internal.spec.oas.emitter.{Raml08PayloadsEmitter, Raml10PayloadsEmitter, RamlPayloadsEmitter}
 import amf.apicontract.internal.spec.raml.RamlHeader
 import amf.apicontract.internal.spec.raml.emitter._
@@ -12,7 +20,12 @@ import amf.core.client.common.position.Position
 import amf.core.client.scala.config.ShapeRenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
-import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape, ShapeExtension}
+import amf.core.client.scala.model.domain.extensions.{
+  CustomDomainProperty,
+  DomainExtension,
+  PropertyShape,
+  ShapeExtension
+}
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
@@ -20,7 +33,21 @@ import amf.core.internal.remote.{Raml08, Raml10, Vendor}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.internal.spec.common.{RAML08SchemaVersion, RAML10SchemaVersion, SchemaVersion}
+import amf.shapes.internal.spec.common.emitter.{
+  CustomFacetsEmitter,
+  OasRefEmitter,
+  RamlRefEmitter,
+  RamlShapeEmitterContext,
+  RefEmitter,
+  ShapeEmitterContext,
+  TagToReferenceEmitter
+}
 import amf.shapes.internal.spec.common.emitter.annotations._
+import amf.shapes.internal.spec.raml.emitter.{Raml08TypePartEmitter, Raml10TypePartEmitter, RamlTypePartEmitter}
+import amf.shapes.internal.spec.raml.parser.{RamlLocalReferenceEmitter, RamlTagToReferenceEmitter}
+import amf.shapes.internal.validation.definitions.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable

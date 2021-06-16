@@ -1,11 +1,9 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.client.scala.model.domain.CorrelationId
 import amf.apicontract.internal.metamodel.domain.CorrelationIdModel
 import amf.apicontract.internal.spec.oas
-import amf.apicontract.internal.spec.oas.emitter.OasTagToReferenceEmitter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import amf.apicontract.internal.spec.raml.emitter
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}

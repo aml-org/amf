@@ -1,8 +1,7 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.document
 
 import amf.apicontract.internal.spec.async.emitters.context.Async20SpecEmitterContext
 import amf.apicontract.internal.spec.oas.emitter
-import amf.apicontract.internal.spec.oas.emitter.OasLikeShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape

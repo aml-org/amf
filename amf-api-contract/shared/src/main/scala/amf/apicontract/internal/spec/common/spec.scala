@@ -1,5 +1,6 @@
-package amf.apicontract.internal.spec.common
+package amf.apicontract.internal.spec
 
+import amf.apicontract.internal.spec.common.{OasWebApiDeclarations, RamlWebApiDeclarations, WebApiDeclarations}
 import amf.apicontract.internal.spec.common.emitter.SpecEmitterContext
 import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
@@ -9,10 +10,8 @@ import amf.apicontract.internal.spec.raml.emitter.context.{Raml10SpecEmitterCont
 import amf.apicontract.internal.spec.raml.parser.context.{Raml10WebApiContext, RamlWebApiContext}
 import amf.core.client.scala.parse.document.ParsedReference
 import amf.core.internal.remote.Vendor
-import amf.shapes.internal.spec.contexts.emitter.oas.Oas2SpecEmitterContext
-import amf.shapes.internal.spec.contexts.emitter.raml.Raml10SpecEmitterContext
-import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
-import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
+import amf.shapes.internal.spec.common.emitter.SpecAwareEmitterContext
+import amf.shapes.internal.spec.oas.OasShapeDefinitions
 
 /**
   * Oas package object

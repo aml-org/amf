@@ -3,6 +3,10 @@ package amf.apicontract.internal.spec.common.parser
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
 import amf.apicontract.internal.spec.common.{OasParameter, WebApiDeclarations}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  ClosedShapeSpecification,
+  ClosedShapeSpecificationWarning
+}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.client.scala.model.domain.Shape
@@ -14,7 +18,12 @@ import amf.core.internal.remote.Vendor
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AliasCounter, IdCounter}
 import amf.plugins.document.vocabularies.parser.common.DeclarationContext
+import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, SchemaVersion}
+import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
+import amf.shapes.internal.spec.datanode.DataNodeParserContext
+import amf.shapes.internal.spec.jsonschema.ref.{AstFinder, AstIndex, AstIndexBuilder, JsonSchemaInference}
 import org.yaml.model._
 
 import scala.collection.mutable

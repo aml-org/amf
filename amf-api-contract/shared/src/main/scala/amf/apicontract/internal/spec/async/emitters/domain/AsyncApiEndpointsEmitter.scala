@@ -1,4 +1,4 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.apicontract.internal.metamodel.domain.EndPointModel
@@ -8,8 +8,7 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
-import amf.plugins.domain.apicontract.models.Parameter
+import amf.shapes.client.scala.annotations.OrphanOasExtension
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer

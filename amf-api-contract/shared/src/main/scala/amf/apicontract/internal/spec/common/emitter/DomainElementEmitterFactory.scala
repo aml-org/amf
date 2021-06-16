@@ -1,10 +1,19 @@
 package amf.apicontract.internal.spec.common.emitter
 
-import amf.apicontract.client.scala.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
-import amf.apicontract.client.scala.model.domain.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
+import amf.apicontract.client.scala.model.domain.security.{
+  ParametrizedSecurityScheme,
+  SecurityRequirement,
+  SecurityScheme
+}
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.internal.spec.async.emitters.AsyncEmitterFactory
+import amf.apicontract.internal.spec.async.emitters.domain.AsyncDomainElementEmitterFactory
 import amf.apicontract.internal.spec.oas.emitter.{Oas20EmitterFactory, Oas30EmitterFactory}
 import amf.apicontract.internal.spec.raml.emitter.{Raml08EmitterFactory, Raml10EmitterFactory}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -12,6 +21,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.internal.remote.Vendor
 import amf.core.internal.render.emitters.PartEmitter
+import amf.shapes.client.scala.domain.models.{CreativeWork, Example}
 
 trait DomainElementEmitterFactory {
 
@@ -81,7 +91,7 @@ object DomainElementEmitterFactory {
     case Vendor.RAML10  => Some(Raml10EmitterFactory(eh))
     case Vendor.OAS20   => Some(Oas20EmitterFactory(eh))
     case Vendor.OAS30   => Some(Oas30EmitterFactory(eh))
-    case Vendor.ASYNC20 => Some(AsyncEmitterFactory(eh))
+    case Vendor.ASYNC20 => Some(AsyncDomainElementEmitterFactory(eh))
     case _              => None
   }
 }

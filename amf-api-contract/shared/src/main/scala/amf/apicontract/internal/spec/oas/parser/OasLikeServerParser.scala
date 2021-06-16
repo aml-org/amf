@@ -10,8 +10,8 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.IdCounter
-import amf.plugins.domain.apicontract.metamodel.ServerModel
-import amf.plugins.domain.apicontract.models.Server
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, QuickFieldParserOps, YMapEntryLike}
+import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.yaml.model.{YMap, YMapEntry}
 
 /**

@@ -1,30 +1,28 @@
-package amf.apicontract.internal.spec.async.parser
+package amf.apicontract.internal.spec.async.parser.domain
 
-import amf.apicontract.client.scala.model.domain.{Message, Payload}
+import amf.apicontract.client.scala.model.domain.bindings.MessageBindings
+import amf.apicontract.client.scala.model.domain.{Message, Payload, Request, Response}
 import amf.apicontract.internal.annotations.ExampleIndex
-import amf.apicontract.internal.metamodel.domain.{OperationModel, PayloadModel}
+import amf.apicontract.internal.metamodel.domain.MessageModel.IsAbstract
+import amf.apicontract.internal.metamodel.domain.{MessageModel, OperationModel, PayloadModel}
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncMessageBindingsParser
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.{MessageType, Publish, Subscribe}
+import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessage
+import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.oas.parser.OasLikeTagsParser
+import amf.apicontract.internal.spec.spec.OasDefinitions
+import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.annotations.{TrackedElement, VirtualElement}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter
 import amf.core.internal.validation.CoreValidations
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
-import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessage
-import amf.plugins.document.apicontract.parser.spec.async.Subscribe
-import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
-import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.apicontract.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OasLikeCreativeWorkParser}
-import amf.plugins.document.apicontract.parser.spec.domain.{ExampleDataParser, Oas3ExampleOptions}
-import amf.plugins.domain.apicontract.metamodel.MessageModel.IsAbstract
-import amf.plugins.domain.apicontract.metamodel.PayloadModel
-import amf.plugins.domain.apicontract.models._
-import amf.apicontract.client.scala.model.domain.bindings.MessageBindings
-import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
-import amf.validations.ParserSideValidations
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.client.scala.domain.models.{Example, NodeShape}
+import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, ExampleDataParser, Oas3ExampleOptions, OasLikeCreativeWorkParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 
 object AsyncMessageParser {

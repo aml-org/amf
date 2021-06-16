@@ -12,6 +12,8 @@ import amf.core.internal.remote.Vendor
 import amf.core.internal.render.BaseEmitters.ArrayEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.shapes.internal.spec.common.SchemaVersion
+import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, RefEmitter, TagToReferenceEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationEmitter, FacetsInstanceEmitter}
 import amf.shapes.internal.spec.contexts.DeclarationEmissionDecorator
 import org.yaml.model.YDocument.PartBuilder

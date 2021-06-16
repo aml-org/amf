@@ -1,4 +1,6 @@
-package amf.apicontract.internal.spec.async.parser
+package amf.apicontract.internal.spec.async.parser.context
+
+import amf.shapes.internal.spec.common.parser.SpecSyntax
 
 object Async20Syntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] = Map(

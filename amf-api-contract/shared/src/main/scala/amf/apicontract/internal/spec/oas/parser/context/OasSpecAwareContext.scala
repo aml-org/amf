@@ -10,6 +10,7 @@ import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser
 import amf.apicontract.internal.spec.oas.parser._
 import amf.core.internal.utils.IdCounter
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 trait OasSpecAwareContext extends SpecAwareContext {}

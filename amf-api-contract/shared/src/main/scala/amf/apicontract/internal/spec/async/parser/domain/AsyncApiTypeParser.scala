@@ -1,19 +1,20 @@
-package amf.apicontract.internal.spec.async.parser
+package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Payload
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
+import amf.apicontract.internal.spec.spec.toRaml
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.internal.annotations.DefinedByVendor
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.core.internal.remote.Raml10
 import amf.core.internal.validation.CoreValidations
-import amf.plugins.document.apicontract.parser.spec.declaration.SchemaPosition._
-import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.apicontract.parser.spec.toRaml
+import amf.shapes.internal.spec.common._
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
+import amf.shapes.internal.spec.raml.parser.{AnyDefaultType, Raml10TypeParser, TypeInfo}
 import org.yaml.model.YMapEntry
 
 object AsyncSchemaFormats {
@@ -38,7 +39,7 @@ object AsyncSchemaFormats {
 
   def getSchemaVersion(value: Option[String])(implicit errorHandler: AMFErrorHandler): SchemaVersion =
     value match {
-      case Some(format) if oas30Schema.contains(format) => OAS30SchemaVersion(Schema)
+      case Some(format) if oas30Schema.contains(format) => OAS30SchemaVersion(SchemaPosition.Schema)
       case Some(format) if ramlSchema.contains(format)  => RAML10SchemaVersion
       // async20 schemas are handled with draft 7. Avro schema is not supported
       case _ => JSONSchemaDraft7SchemaVersion

@@ -3,8 +3,15 @@ package amf.apicontract.internal.spec.common.parser
 import amf.apicontract.client.scala.model.domain.{Parameter, Payload, SchemaContainer}
 import amf.apicontract.internal.annotations._
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel, ResponseModel}
+import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
 import amf.apicontract.internal.spec.common.{OasParameter, Parameters}
 import amf.apicontract.internal.spec.oas.parser.OasContentsParser
+import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
+import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  ParameterNameRequired,
+  UnresolvedParameter
+}
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain._
 import amf.core.internal.annotations._
@@ -15,10 +22,15 @@ import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter, UriUtils}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
-import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.plugins.document.apicontract.parser.spec.{OasDefinitions, toOas}
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
+import amf.shapes.internal.spec.raml.parser.{
+  Raml08TypeParser,
+  Raml10TypeParser,
+  RamlTypeSyntax,
+  StringDefaultType,
+  TypeInfo
+}
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
 import scala.language.postfixOps

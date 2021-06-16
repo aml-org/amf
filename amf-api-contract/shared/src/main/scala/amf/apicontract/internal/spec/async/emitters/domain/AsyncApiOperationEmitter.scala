@@ -1,20 +1,18 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.client.scala.model.domain.{Operation, Tag}
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.spec.async.AsyncHelper
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.{OasLikeOperationEmitter, OasLikeOperationPartEmitter, TagsEmitter}
+import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.internal.parser.domain.{FieldEntry, Fields}
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
-import amf.plugins.document.apicontract.parser.spec.oas.emitters.TagsEmitter
-import amf.plugins.domain.apicontract.annotations.OrphanOasExtension
-import amf.plugins.domain.apicontract.models.Tag
+import amf.shapes.client.scala.annotations.OrphanOasExtension
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable

@@ -1,20 +1,22 @@
 package amf.apicontract.internal.spec.async.emitters.bindings
 
-import amf.apicontract.internal.spec.async.emitters
-import amf.apicontract.internal.spec.async.emitters.AsyncSchemaEmitter
-import amf.core.client.common.position.Position
-import amf.core.client.scala.model.domain.Shape
-import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.internal.render.SpecOrdering
-import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async
-import amf.apicontract.internal.metamodel.domain.bindings.{Amqp091MessageBindingModel, HttpMessageBindingModel, KafkaMessageBindingModel}
 import amf.apicontract.client.scala.model.domain.bindings.MessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.amqp.Amqp091MessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.http.HttpMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.kafka.KafkaMessageBinding
 import amf.apicontract.client.scala.model.domain.bindings.mqtt.MqttMessageBinding
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  Amqp091MessageBindingModel,
+  HttpMessageBindingModel,
+  KafkaMessageBindingModel
+}
+import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode}
 
@@ -50,7 +52,7 @@ class HttpMessageEmitter(binding: HttpMessageBinding, ordering: SpecOrdering)(
         val fs     = binding.fields
 
         fs.entry(HttpMessageBindingModel.Headers)
-          .foreach(f => result += AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq()))
+          .foreach(f => result += domain.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq()))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)
@@ -73,7 +75,7 @@ class KafkaMessageEmitter(binding: KafkaMessageBinding, ordering: SpecOrdering)(
 
         fs.entry(KafkaMessageBindingModel.MessageKey)
           .foreach(
-            f => result += emitters.AsyncSchemaEmitter("key", f.element.asInstanceOf[Shape], ordering, Seq())
+            f => result += domain.AsyncSchemaEmitter("key", f.element.asInstanceOf[Shape], ordering, Seq())
           )
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)

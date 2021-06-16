@@ -1,23 +1,22 @@
-package amf.apicontract.internal.spec.async.parser
+package amf.apicontract.internal.spec.async.parser.domain
 
 import amf.apicontract.client.scala.model.domain.Operation
-import amf.apicontract.internal.metamodel.domain.OperationModel
+import amf.apicontract.internal.metamodel.domain.{AbstractModel, OperationModel}
 import amf.apicontract.internal.spec.async.AsyncHelper
 import amf.apicontract.internal.spec.async.parser.bindings.AsyncOperationBindingsParser
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
+import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorOperationTrait
+import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.oas.parser
-import amf.apicontract.internal.spec.oas.parser.{OasLikeOperationParser, OasLikeTagsParser}
+import amf.apicontract.internal.spec.oas.parser.OasLikeOperationParser
+import amf.apicontract.internal.spec.spec.OasDefinitions
+import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.domain.SearchScope.Named
 import amf.core.internal.validation.CoreValidations
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
-import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorOperationTrait
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.apicontract.parser.spec.common.AnnotationParser
-import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.domain.apicontract.metamodel.OperationModel
-import amf.validations.ParserSideValidations
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model._
 
 object AsyncOperationParser {

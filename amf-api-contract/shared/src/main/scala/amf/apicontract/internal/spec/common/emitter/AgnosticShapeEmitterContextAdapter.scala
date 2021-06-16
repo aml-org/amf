@@ -13,6 +13,8 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.Vendor
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.shapes.internal.spec.common.SchemaVersion
+import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
 import org.yaml.model.YDocument
 

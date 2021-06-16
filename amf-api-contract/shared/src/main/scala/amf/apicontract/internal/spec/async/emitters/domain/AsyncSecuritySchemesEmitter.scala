@@ -1,14 +1,14 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.domain
 
+import amf.apicontract.client.scala.model.domain.security._
+import amf.apicontract.internal.metamodel.domain.security._
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
+import amf.apicontract.internal.spec.oas.emitter.Oas3OAuth2SettingsEmitters
 import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
-import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.client.scala.model.domain.security._
-import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
-import amf.apicontract.internal.spec.oas.emitter.Oas3OAuth2SettingsEmitters
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 

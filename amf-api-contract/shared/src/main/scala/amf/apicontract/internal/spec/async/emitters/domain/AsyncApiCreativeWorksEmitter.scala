@@ -1,10 +1,12 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.internal.spec.common.emitter.SpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.internal.domain.metamodel.CreativeWorkModel
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer

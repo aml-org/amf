@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.common.parser
 
-import amf.apicontract.internal.spec.async.parser.AsyncWebApiContext
+import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.parse.document.SyamlParsedDocument

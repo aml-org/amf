@@ -1,6 +1,9 @@
 package amf.apicontract.internal.spec.async
 
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.plugins.ApiRenderPlugin
+import amf.apicontract.internal.spec.async.emitters.context.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
+import amf.apicontract.internal.spec.async.emitters.document.AsyncApi20DocumentEmitter
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -8,10 +11,6 @@ import amf.core.client.scala.model.document.{BaseUnit, Document, Fragment, Modul
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderInfo}
 import amf.core.internal.remote.Vendor
-import amf.apicontract.internal.spec.async.emitters.AsyncApi20DocumentEmitter
-import amf.apicontract.client.scala.model.domain.api.Api
-import amf.apicontract.internal.spec.async.emitters.context.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
-import amf.shapes.internal.spec.contexts.emitter.async.Async20SpecEmitterContext
 import org.yaml.model.YDocument
 
 object Async20RenderPlugin extends ApiRenderPlugin {

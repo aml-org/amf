@@ -1,10 +1,12 @@
-package amf.apicontract.internal.spec.async.parser
+package amf.apicontract.internal.spec.async.parser.context
 
 import amf.apicontract.internal.spec.common.AsyncWebApiDeclarations
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.MalformedJsonReference
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.ExternalFragment
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
 
 import scala.collection.mutable
 

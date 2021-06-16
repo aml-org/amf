@@ -1,4 +1,10 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.domain
+
+import amf.apicontract.client.scala.model.domain.bindings._
+import amf.apicontract.internal.spec.async.emitters.bindings.{AsyncApiChannelBindingsEmitter, AsyncApiMessageBindingsEmitter, AsyncApiOperationBindingsEmitter, AsyncApiServerBindingsEmitter}
+import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
+import amf.apicontract.internal.spec.oas
+import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.extensions.DomainExtension
@@ -6,14 +12,7 @@ import amf.core.client.scala.model.domain.{AmfElement, DomainElement, Linkable, 
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.apicontract.internal.spec.async.emitters.bindings.{AsyncApiChannelBindingsEmitter, AsyncApiMessageBindingsEmitter, AsyncApiOperationBindingsEmitter, AsyncApiServerBindingsEmitter}
-import amf.apicontract.internal.spec.raml.emitter
 import amf.shapes.internal.spec.common.emitter.annotations.OrphanAnnotationsEmitter
-import amf.apicontract.client.scala.model.domain.bindings._
-import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
-import amf.apicontract.internal.spec.oas
-import amf.apicontract.internal.spec.oas.emitter.OasTagToReferenceEmitter
-import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YNode
 

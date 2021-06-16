@@ -1,19 +1,19 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.internal.spec.async.emitters.context.Async20SpecEmitterContext
-import amf.apicontract.internal.spec.async.parser.AsyncSchemaFormats
+import amf.apicontract.internal.spec.async.parser.domain.AsyncSchemaFormats
 import amf.apicontract.internal.spec.oas.emitter.OasLikeShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter
-import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
+import amf.apicontract.internal.spec.spec.toRaml
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.parser.spec.toRaml
 import amf.shapes.internal.spec.common.{RAML10SchemaVersion, SchemaVersion}
+import amf.shapes.internal.spec.oas.emitter.OasTypePartEmitter
 import amf.shapes.internal.spec.raml.emitter.Raml10TypeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -46,8 +46,7 @@ case class AsyncSchemaEmitter(key: String,
       key,
       b => {
         val newCtx = new Async20SpecEmitterContext(spec.eh, schemaVersion = schemaVersion)
-        oas
-          .OasTypePartEmitter(shape, ordering, references = references)(OasLikeShapeEmitterContextAdapter(newCtx))
+        OasTypePartEmitter(shape, ordering, references = references)(OasLikeShapeEmitterContextAdapter(newCtx))
           .emit(b)
       }
     )

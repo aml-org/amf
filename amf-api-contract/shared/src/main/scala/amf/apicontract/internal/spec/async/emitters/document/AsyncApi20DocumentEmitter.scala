@@ -1,6 +1,13 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.document
 
 import amf.apicontract.client.scala.model.domain.Tag
+import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
+import amf.apicontract.internal.metamodel.domain.api.WebApiModel
+import amf.apicontract.internal.spec.async.emitters.context.AsyncSpecEmitterContext
+import amf.apicontract.internal.spec.async.emitters.domain.{AsyncApiCreativeWorksEmitter, AsyncApiEndpointsEmitter, AsyncApiServersEmitter}
+import amf.apicontract.internal.spec.common.emitter
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SecurityRequirementsEmitter}
+import amf.apicontract.internal.spec.oas.emitter.{InfoEmitter, TagsEmitter}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.parser.domain.FieldEntry
@@ -9,13 +16,6 @@ import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter,
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.parser.spec.oas.emitters.TagsEmitter
-import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
-import amf.apicontract.internal.spec.async.emitters.context.AsyncSpecEmitterContext
-import amf.apicontract.internal.spec.common.emitter
-import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, DeclarationsEmitterWrapper, SecurityRequirementsEmitter}
-import amf.apicontract.internal.spec.oas.emitter.{InfoEmitter, TagsEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 

@@ -1,7 +1,20 @@
 package amf.apicontract.internal.spec.async.emitters.bindings
 
-import amf.apicontract.internal.spec.async.emitters
-import amf.apicontract.internal.spec.async.emitters.AsyncSchemaEmitter
+import amf.apicontract.client.scala.model.domain.bindings.ChannelBinding
+import amf.apicontract.client.scala.model.domain.bindings.amqp.{
+  Amqp091ChannelBinding,
+  Amqp091ChannelExchange,
+  Amqp091Queue
+}
+import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  Amqp091ChannelBindingModel,
+  Amqp091ChannelExchangeModel,
+  Amqp091QueueModel,
+  WebSocketsChannelBindingModel
+}
+import amf.apicontract.internal.spec.async.emitters.domain
+import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.SynthesizedField
@@ -9,12 +22,6 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async
-import amf.apicontract.internal.metamodel.domain.bindings.{Amqp091ChannelBindingModel, Amqp091ChannelExchangeModel, Amqp091QueueModel, WebSocketsChannelBindingModel}
-import amf.apicontract.client.scala.model.domain.bindings.ChannelBinding
-import amf.apicontract.client.scala.model.domain.bindings.amqp.{Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091Queue}
-import amf.apicontract.client.scala.model.domain.bindings.websockets.WebSocketsChannelBinding
-import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode}
 
@@ -50,11 +57,11 @@ class WebSocketChannelBindingEmitter(binding: WebSocketsChannelBinding, ordering
         fs.entry(WebSocketsChannelBindingModel.Method).foreach(f => result += ValueEmitter("method", f))
         fs.entry(WebSocketsChannelBindingModel.Query)
           .foreach(
-            f => result += AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq())
+            f => result += domain.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq())
           )
         fs.entry(WebSocketsChannelBindingModel.Headers)
           .foreach(
-            f => result += emitters.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq())
+            f => result += domain.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq())
           )
         emitBindingVersion(fs, result)
 

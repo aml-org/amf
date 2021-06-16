@@ -1,11 +1,10 @@
-package amf.apicontract.internal.spec.async.emitters
+package amf.apicontract.internal.spec.async.emitters.domain
 
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.internal.metamodel.domain.ParameterModel
+import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas
-import amf.apicontract.internal.spec.oas.emitter.OasTagToReferenceEmitter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import amf.apicontract.internal.spec.raml.emitter
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.Shape
@@ -15,7 +14,6 @@ import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
-import amf.plugins.document.apicontract.parser.spec.declaration.emitters.async
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YNode}
 
