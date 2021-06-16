@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.raml
 
-import amf.apicontract.client.platform.ProvidedMediaType
+import amf.apicontract.client.common.ProvidedMediaType
 import amf.core.internal.remote.Vendor
 
 object Raml08MediaTypes {

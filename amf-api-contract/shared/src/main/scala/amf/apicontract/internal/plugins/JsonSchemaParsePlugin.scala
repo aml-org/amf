@@ -1,6 +1,6 @@
 package amf.apicontract.internal.plugins
 
-import amf.apicontract.client.platform.ProvidedMediaType
+import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter

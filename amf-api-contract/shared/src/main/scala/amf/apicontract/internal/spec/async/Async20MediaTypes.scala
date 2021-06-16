@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.async
 
-import amf.apicontract.client.platform.ProvidedMediaType
+import amf.apicontract.client.common.ProvidedMediaType
 
 object Async20MediaTypes {
 

@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.apicontract.client.platform.ProvidedMediaType
+import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.config.{RAMLConfiguration, WebAPIConfiguration}
 import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.model.document.{Document, Module, PayloadFragment}

@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.oas
 
-import amf.apicontract.client.platform.ProvidedMediaType
+import amf.apicontract.client.common.ProvidedMediaType
 
 object Oas20MediaTypes {
 

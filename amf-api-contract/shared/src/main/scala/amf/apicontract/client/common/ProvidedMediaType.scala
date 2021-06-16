@@ -1,4 +1,4 @@
-package amf.apicontract.client.platform
+package amf.apicontract.client.common
 
 import amf.core.internal.remote.Vendor
 
