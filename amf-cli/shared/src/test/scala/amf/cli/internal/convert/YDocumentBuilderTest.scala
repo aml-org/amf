@@ -1,13 +1,13 @@
 package amf.cli.internal.convert
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.internal.transformation.Raml10EditingPipeline
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Amf, Raml10YamlHint}
 import amf.core.internal.render.AMFSerializer
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.apicontract.resolution.pipelines.Raml10EditingPipeline
 import org.scalatest.Assertion
 import org.yaml.builder.YDocumentBuilder
 import org.yaml.model.{YDocument, YPart}

@@ -1,6 +1,8 @@
 package amf.validation
 
-import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.platform.ProvidedMediaType
+import amf.apicontract.client.scala.config.{RAMLConfiguration, WebAPIConfiguration}
+import amf.client.environment.WebAPIConfiguration
 import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.model.document.{Document, Module, PayloadFragment}
 import amf.core.client.scala.model.domain.ScalarNode
@@ -10,11 +12,10 @@ import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
-
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.{AsyncFunSuite, Matchers}
-import amf.client.exported.ProvidedMediaType
+
 import scala.concurrent.ExecutionContext
 
 class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest with Matchers {

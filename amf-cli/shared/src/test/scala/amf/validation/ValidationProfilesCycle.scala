@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.config.WebAPIConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Syntax.{Json, Syntax, Yaml}

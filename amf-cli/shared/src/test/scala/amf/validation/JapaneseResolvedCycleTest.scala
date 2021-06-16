@@ -1,6 +1,7 @@
 package amf.validation
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.internal.transformation.AmfEditingPipeline
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -17,7 +18,6 @@ import amf.core.internal.remote.{
   Raml10YamlHint
 }
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.apicontract.resolution.pipelines.AmfEditingPipeline
 
 class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
 

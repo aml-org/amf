@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.plugins.document.apicontract.validation.runtimeexpression.{AsyncExpressionValidator, ExpressionValidator, Oas3ExpressionValidator}
+import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, ExpressionValidator, Oas3ExpressionValidator}
 import org.scalatest.{FunSuite, Matchers}
 
 class ExpressionValidatorTest extends FunSuite with Matchers {

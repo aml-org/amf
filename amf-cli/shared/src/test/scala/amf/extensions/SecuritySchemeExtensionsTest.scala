@@ -1,13 +1,14 @@
 package amf.extensions
 
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.AsyncAPIConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.{Hint, Oas20YamlHint, Oas30YamlHint, Raml08YamlHint, Raml10YamlHint, Vendor}
 import amf.core.internal.render.AMFSerializer
 import amf.io.FileAssertionTest
-import amf.plugins.domain.apicontract.models.security.SecurityScheme
+import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}

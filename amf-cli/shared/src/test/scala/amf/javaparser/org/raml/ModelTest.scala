@@ -1,6 +1,8 @@
 package amf.javaparser.org.raml
 
-import amf.client.environment.{AMFConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.config.{AMFConfiguration, WebAPIConfiguration}
+import amf.apicontract.internal.transformation.AmfEditingPipeline
+import amf.client.environment.WebAPIConfiguration
 import amf.core.client.common.validation.{
   Async20Profile,
   Oas20Profile,
@@ -19,7 +21,6 @@ import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.remote.{Raml10YamlHint, _}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.emit.AMFRenderer
-import amf.plugins.document.apicontract.resolution.pipelines.AmfEditingPipeline
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 
 import scala.concurrent.Future

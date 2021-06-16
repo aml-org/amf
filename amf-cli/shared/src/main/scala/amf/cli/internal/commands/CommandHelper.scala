@@ -1,7 +1,8 @@
 package amf.cli.internal.commands
 
-import amf.client.convert.ApiRegister
-import amf.client.environment.{AMFConfiguration, AMLConfiguration}
+import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.internal.convert.ApiRegister
+import amf.client.environment.AMLConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit

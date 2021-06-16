@@ -1,6 +1,7 @@
 package amf.emit
 
-import amf.client.environment.{WebAPIConfiguration, AsyncAPIConfiguration}
+import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.AsyncAPIConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
@@ -11,8 +12,7 @@ import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.io.FileAssertionTest
-import amf.plugins.domain.apicontract.models.api.WebApi
-
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.remod.JsonSchemaShapeSerializer.toJsonSchema
 import amf.remod.RamlShapeSerializer.toRamlDatatype
 import org.scalatest.{Assertion, AsyncFunSuite}

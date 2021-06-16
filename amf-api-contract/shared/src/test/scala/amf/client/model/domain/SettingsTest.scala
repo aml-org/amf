@@ -1,6 +1,17 @@
 package amf.client.model.domain
 
-import amf.client.convert.ApiClientConverters._
+import amf.apicontract.client.platform.model.domain.{
+  ApiKeySettings,
+  HttpApiKeySettings,
+  HttpSettings,
+  OAuth1Settings,
+  OAuth2Flow,
+  OAuth2Settings,
+  OpenIdConnectSettings,
+  Scope,
+  Settings
+}
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
 import amf.plugins.document.{WebApi => WebApiObject}
 import org.scalatest.{FunSuite, Matchers}

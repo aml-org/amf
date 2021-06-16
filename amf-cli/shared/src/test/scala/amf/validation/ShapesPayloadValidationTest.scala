@@ -1,10 +1,9 @@
 package amf.validation
 
-import amf.client.environment.APIConfiguration
+import amf.apicontract.client.scala.config.APIConfiguration
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.utils.MediaTypeMatcher
-
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 

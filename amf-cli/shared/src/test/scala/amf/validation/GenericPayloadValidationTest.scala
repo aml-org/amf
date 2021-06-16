@@ -1,5 +1,6 @@
 package amf.validation
-import amf.client.environment.RAMLConfiguration
+import amf.apicontract.client.scala.config.RAMLConfiguration
+import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation.{AmfProfile, PayloadProfile, SeverityLevels}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Module, PayloadFragment}
@@ -9,8 +10,6 @@ import amf.core.internal.plugins.payload.ErrorFallbackValidationPlugin
 import amf.core.internal.remote.{PayloadJsonHint, PayloadYamlHint}
 import amf.core.internal.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
-import amf.plugins.document.apicontract.resolution.pipelines.ValidationTransformationPipeline
-
 import org.scalatest.AsyncFunSuite
 import org.yaml.builder.JsonOutputBuilder
 

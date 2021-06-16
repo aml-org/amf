@@ -1,6 +1,7 @@
 package amf.compiler
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.model.domain.{Parameter, Response}
 import amf.core.client.common.position.{Position, Range}
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.client.scala.model.document.Document
@@ -10,10 +11,9 @@ import amf.core.internal.annotations.{LexicalInformation, ReferenceTargets, Sour
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas20YamlHint, Raml10YamlHint}
 import amf.plugins.document.apicontract.annotations.ExternalJsonSchemaShape
-import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.plugins.domain.apicontract.models.templates.ResourceType
-import amf.plugins.domain.apicontract.models.{Parameter, Response}
-
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.model.domain.templates.ResourceType
+import amf.plugins.domain.apicontract.models.Response
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext

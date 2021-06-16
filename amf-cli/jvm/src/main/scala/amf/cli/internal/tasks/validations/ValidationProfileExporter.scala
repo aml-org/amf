@@ -1,8 +1,8 @@
 package amf.cli.internal.tasks.validations
 
-import java.io.{BufferedWriter, FileWriter}
+import amf.apicontract.internal.validation.model.DefaultAMFValidations
 
-import amf.plugins.document.apicontract.validation.DefaultAMFValidations
+import java.io.{BufferedWriter, FileWriter}
 
 object ValidationProfileExporter {
 

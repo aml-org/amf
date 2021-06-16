@@ -1,6 +1,6 @@
 package amf.cli.internal.commands
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.config.AMFConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Platform
 import amf.plugins.document.vocabularies.model.document.DialectInstancePatch

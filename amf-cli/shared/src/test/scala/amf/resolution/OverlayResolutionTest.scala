@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.config.AMFConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Raml10, Raml10YamlHint}
 

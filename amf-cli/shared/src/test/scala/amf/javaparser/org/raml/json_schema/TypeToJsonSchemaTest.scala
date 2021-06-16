@@ -1,11 +1,11 @@
 package amf.javaparser.org.raml.json_schema
 
-import amf.client.environment.{AMFConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.config.{AMFConfiguration, WebAPIConfiguration}
+import amf.client.environment.WebAPIConfiguration
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.remote.{Hint, Oas20YamlHint, Oas30YamlHint, Vendor}
 import amf.javaparser.org.raml.ModelValidationTest
-
 import amf.remod.JsonSchemaShapeSerializer.{buildJsonSchema, toJsonSchema}
 
 /* this test parse a raml only with declared types, resolve them and serialize a json schema.*/

@@ -3,7 +3,7 @@ package amf.cycle
 import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.remote.{Raml10YamlHint, Vendor}
 import amf.plugins.document.apicontract.annotations.ForceEntry
-import amf.plugins.domain.apicontract.models.security.SecurityScheme
+import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 
 class Raml10ElementCycleTest extends DomainElementCycleTest {
 

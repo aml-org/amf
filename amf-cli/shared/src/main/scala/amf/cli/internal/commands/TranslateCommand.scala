@@ -1,6 +1,7 @@
 package amf.cli.internal.commands
 
-import amf.client.environment.{AMFConfiguration, AMLConfiguration}
+import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.client.environment.AMLConfiguration
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit

@@ -1,6 +1,7 @@
 package amf.validation
 
-import amf.client.environment.{AMFClient, WebAPIConfiguration}
+import amf.apicontract.client.scala.AMFClient
+import amf.apicontract.client.scala.config.WebAPIConfiguration
 import amf.core.client.common.validation.{SeverityLevels, StrictValidationMode, ValidationMode}
 import amf.core.client.scala.AMFGraphClient
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -13,7 +14,7 @@ import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.ValidationConfiguration
 import amf.facades.Validation
-import amf.plugins.domain.apicontract.models.api.WebApi
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -1,7 +1,9 @@
 package amf.validation
 
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
-import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.config.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.internal.transformation.ValidationTransformationPipeline
+import amf.client.environment.AsyncAPIConfiguration
 import amf.core.client.common.validation._
 import amf.core.client.scala.AMFResult
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
@@ -10,7 +12,6 @@ import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
 import amf.io.FileAssertionTest
-import amf.plugins.document.apicontract.resolution.pipelines.ValidationTransformationPipeline
 
 import scala.concurrent.{ExecutionContext, Future}
 

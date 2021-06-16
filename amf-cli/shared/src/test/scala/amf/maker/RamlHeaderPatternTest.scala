@@ -1,8 +1,8 @@
 package amf.maker
 
-import amf.plugins.document.apicontract.parser.RamlFragmentHeader.Raml10DataType
-import amf.plugins.document.apicontract.parser.RamlHeader
-import amf.plugins.document.apicontract.parser.RamlHeader.{Raml08, Raml10, Raml10Library}
+import amf.apicontract.internal.spec.raml.RamlHeader
+import amf.apicontract.internal.spec.raml.RamlFragmentHeader.Raml10DataType
+import RamlHeader.{Raml08, Raml10, Raml10Library}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

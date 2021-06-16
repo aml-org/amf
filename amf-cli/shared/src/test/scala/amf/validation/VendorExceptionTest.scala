@@ -1,6 +1,7 @@
 package amf.validation
 
-import amf.client.environment.{OASConfiguration, RAMLConfiguration}
+import amf.apicontract.client.scala.config.{OASConfiguration, RAMLConfiguration}
+import amf.client.environment.OASConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.exception.UnsupportedMediaTypeException

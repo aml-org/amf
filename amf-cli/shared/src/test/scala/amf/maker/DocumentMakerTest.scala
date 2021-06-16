@@ -1,15 +1,14 @@
 package amf.maker
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.config.WebAPIConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.remote._
 import amf.facades.Validation
-import amf.plugins.domain.apicontract.metamodel.api.WebApiModel
-import amf.plugins.domain.apicontract.models.api.WebApi
-
+import amf.apicontract.internal.metamodel.domain.api.WebApiModel
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future

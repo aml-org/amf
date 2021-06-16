@@ -1,13 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.config.WebAPIConfiguration
+import amf.apicontract.internal.spec.async.parser.Async20WebApiContext
+import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
-import amf.shapes.internal.spec.contexts.parser.async.Async20WebApiContext
-import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.apicontract.parser.spec.declaration.{
   JSONSchemaDraft201909SchemaVersion,

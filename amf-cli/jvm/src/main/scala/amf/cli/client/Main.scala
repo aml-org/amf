@@ -1,7 +1,8 @@
 package amf.cli.client
 
+import amf.apicontract.client.scala.config.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.cli.internal.commands._
-import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.AsyncAPIConfiguration
 import amf.core.internal.benchmark.ExecutionLog
 import amf.core.internal.benchmark.ExecutionLog.executionContext
 import amf.core.internal.unsafe.PlatformSecrets
@@ -30,7 +31,6 @@ object Main extends PlatformSecrets {
           case Some(ParserConfig.TRANSLATE) => Await.result(runTranslate(cfg), 1 day)
           case Some(ParserConfig.VALIDATE)  => Await.result(runValidate(cfg), 1 day)
           case Some(ParserConfig.PARSE) =>
-
             val f = runParse(cfg)
             val ff = f.transform { r =>
               if (cfg.trace) {

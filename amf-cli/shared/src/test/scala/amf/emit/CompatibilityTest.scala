@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.config.WebAPIConfiguration
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler

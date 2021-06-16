@@ -1,12 +1,12 @@
 package amf.resolution
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.config.AMFConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
 import amf.core.internal.remote._
-import amf.plugins.document.apicontract.resolution.pipelines.{AmfEditingPipeline, AmfTransformationPipeline}
+import amf.plugins.document.apicontract.resolution.pipelines.AmfTransformationPipeline
 
 trait ResolutionCapabilities {
   protected def transform(unit: BaseUnit, pipeline: String, vendor: Vendor, amfConfig: AMFConfiguration): BaseUnit = {

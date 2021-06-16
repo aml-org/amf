@@ -1,11 +1,11 @@
 package amf.cycle
-import amf.client.render.WebApiDomainElementEmitter
+import amf.apicontract.client.platform.render.ApiDomainElementEmitter
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.convert.ClientErrorHandlerConverter.ErrorHandlerConverter
 import amf.core.internal.remote.{Oas30JsonHint, Raml10YamlHint, Vendor}
 import org.yaml.builder.YamlOutputBuilder
-import amf.client.convert.ApiClientConverters._
+import amf.apicontract.internal.convert.ApiClientConverters._
 
 class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
 
@@ -64,7 +64,7 @@ trait ClientDomainElementCycleTest extends DomainElementCycleTest {
       .map { interalElement =>
         val stringBuilder = YamlOutputBuilder()
         val eh            = ErrorHandlerConverter.asClient(DefaultErrorHandler())
-        WebApiDomainElementEmitter.emitToBuilder(interalElement, vendor, eh, stringBuilder)
+        ApiDomainElementEmitter.emitToBuilder(interalElement, vendor, eh, stringBuilder)
         stringBuilder.result.toString
       }
       .getOrElse("")

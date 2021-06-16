@@ -1,7 +1,8 @@
 package amf.cli.client
 
+import amf.apicontract.client.platform.config.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.cli.internal.convert.NativeOpsFromJvm
-import amf.client.exported.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.exported.AsyncAPIConfiguration
 import amf.core.client.platform.AMFResult
 import amf.core.client.platform.model.document.{BaseUnit, Document}
 import amf.core.internal.remote._

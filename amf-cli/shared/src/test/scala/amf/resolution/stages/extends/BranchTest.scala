@@ -1,8 +1,9 @@
 package amf.resolution.stages.`extends`
 
+import amf.apicontract.internal.transformation.stages.{Branch, BranchContainer, Key}
 import amf.core.client.scala.model.domain.templates.Variable
 import amf.core.client.scala.model.domain.{DataNode, ScalarNode}
-import amf.plugins.document.apicontract.resolution.stages.{Branch, BranchContainer, Key}
+import amf.plugins.document.apicontract.resolution.stages.BranchContainer
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 

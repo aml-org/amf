@@ -1,6 +1,7 @@
 package amf.compiler
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.client.scala.model.domain.{Parameter, Response}
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.client.scala.model.document.Document
@@ -8,9 +9,8 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfObject, Shape}
 import amf.core.client.common.position.{Range => PositionRange}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
-
-import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.plugins.domain.apicontract.models.{Parameter, Response}
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.plugins.domain.apicontract.models.Response
 import org.mulesoft.lexer.InputRange
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 

@@ -1,5 +1,6 @@
 package amf.resolution
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.apicontract.internal.transformation.AmfTransformationPipeline
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -10,7 +11,6 @@ import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.remote.{Amf, Hint, Oas20, Oas30, Raml08, Raml10, Raml10YamlHint}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.apicontract.resolution.pipelines.AmfTransformationPipeline
 import amf.validations.ParserSideValidations.UnknownSecuritySchemeErrorSpecification
 import org.scalatest.Assertion
 import org.scalatest.Matchers._

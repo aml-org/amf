@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.client.environment.RAMLConfiguration
+import amf.apicontract.client.scala.config.RAMLConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.unsafe.PlatformSecrets

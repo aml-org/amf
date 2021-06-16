@@ -1,6 +1,6 @@
 package amf.client.model.domain
 
-import amf.client.convert.ApiClientConverters._
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.{PropertyShape, ScalarNode}
 import amf.core.internal.convert.CoreRegister
 import amf.core.internal.unsafe.PlatformSecrets

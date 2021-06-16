@@ -1,14 +1,13 @@
 package amf.maker
 
-import amf.client.environment.WebAPIConfiguration
+import amf.apicontract.client.scala.config.WebAPIConfiguration
+import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.model.document.{Document, Fragment}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.remote._
-import amf.plugins.document.apicontract.model.DataTypeFragment
-import amf.plugins.domain.apicontract.models.api.WebApi
-
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}

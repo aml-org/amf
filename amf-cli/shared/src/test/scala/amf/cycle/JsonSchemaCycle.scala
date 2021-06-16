@@ -1,6 +1,8 @@
 package amf.cycle
 
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.model.document.DataTypeFragment
+import amf.client.environment.AsyncAPIConfiguration
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Vendor
@@ -8,7 +10,6 @@ import amf.core.internal.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
 import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
-import amf.plugins.document.apicontract.model.DataTypeFragment
 import amf.plugins.document.apicontract.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.document.apicontract.parser.spec.declaration.{
   JSONSchemaDraft201909SchemaVersion,

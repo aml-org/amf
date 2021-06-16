@@ -1,6 +1,7 @@
 package amf.cli.internal.convert
 
-import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.config.AMFConfiguration
+import amf.client.environment.AsyncAPIConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.render.AMFSerializer
 import org.yaml.builder.JsOutputBuilder

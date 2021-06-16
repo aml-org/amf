@@ -1,6 +1,35 @@
 package amf.client.model.domain
 
-import amf.client.convert.ApiClientConverters._
+import amf.apicontract.client.platform.model.domain.{
+  Callback,
+  ChannelBindings,
+  CorrelationId,
+  Encoding,
+  EndPoint,
+  License,
+  Message,
+  MessageBindings,
+  MqttServerLastWill,
+  OAuth2Flow,
+  Operation,
+  OperationBindings,
+  Organization,
+  Parameter,
+  ParametrizedSecurityScheme,
+  Payload,
+  Request,
+  Response,
+  Scope,
+  SecurityRequirement,
+  SecurityScheme,
+  Server,
+  ServerBindings,
+  Settings,
+  Tag,
+  TemplatedLink,
+  WebApi
+}
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
 import amf.plugins.document.{WebApi => WebApiObject}
 import org.scalatest.{FunSuite, Matchers}

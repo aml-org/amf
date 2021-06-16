@@ -1,5 +1,9 @@
 package amf.resolution.merge
 
+import amf.apicontract.client.scala.model.domain.{Message, Operation}
+import amf.apicontract.internal.spec.async.Subscribe
+import amf.apicontract.internal.spec.async.transformation.AsyncJsonMergePatch
+import amf.apicontract.internal.spec.common.transformation.AsyncKeyCriteria
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.Document
@@ -13,15 +17,19 @@ import amf.core.internal.render.SpecOrdering
 import amf.emit.AMFRenderer
 import amf.facades.Validation
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
-import amf.shapes.internal.spec.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
-import amf.plugins.document.apicontract.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.apicontract.parser.spec.async.Subscribe
-import amf.plugins.document.apicontract.parser.spec.async.parser.{AsyncMessageParser, AsyncOperationParser}
+import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
+import amf.apicontract.internal.spec.async.parser.{
+  Async20WebApiContext,
+  AsyncMessageParser,
+  AsyncOperationParser,
+  AsyncWebApiContext
+}
+import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
+import amf.apicontract.internal.spec.common.transformation.stage.{AsyncKeyCriteria, JsonMergePatch}
 import amf.plugins.document.apicontract.parser.spec.common.DataNodeParser
 import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
 import amf.shapes.internal.spec.common.emitter.annotations.DataNodeEmitter
-import amf.plugins.domain.apicontract.models.{Message, Operation}
-import amf.shapes.internal.domain.resolution.merge.{AsyncJsonMergePatch, AsyncKeyCriteria, JsonMergePatch}
+import amf.plugins.domain.apicontract.models.Operation
 import org.mulesoft.common.io.Fs
 import org.scalatest.{Assertion, Matchers}
 import org.yaml.model.{YDocument, YMap, YNode}

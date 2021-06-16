@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.client.environment.AMFConfiguration
+import amf.apicontract.client.scala.config.AMFConfiguration
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler

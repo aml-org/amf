@@ -1,7 +1,8 @@
 package amf.cli.client
 
+import amf.apicontract.client.scala.config.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.cli.internal.commands._
-import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.AsyncAPIConfiguration
 import amf.core.internal.benchmark.ExecutionLog
 import amf.core.internal.unsafe.PlatformSecrets
 

@@ -1,10 +1,9 @@
 package amf.parser
 
-import amf.client.environment.RAMLConfiguration
+import amf.apicontract.client.scala.config.RAMLConfiguration
 import amf.core.client.scala.model.document.Fragment
 import amf.core.internal.remote.Raml10
 import amf.core.internal.unsafe.PlatformSecrets
-
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.Matchers._
