@@ -1,13 +1,16 @@
 package amf.apicontract.internal.spec.oas.emitter.domain
 
 import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.client.scala.model.domain.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.security.{
+  ParametrizedSecurityScheme,
+  SecurityRequirement,
+  SecurityScheme
+}
 import amf.apicontract.internal.annotations.{FormBodyParameter, RequiredParamPayload}
 import amf.apicontract.internal.metamodel.domain.ParameterModel
 import amf.apicontract.internal.spec.common.emitter._
 import amf.apicontract.internal.spec.oas.OasLikeSecuritySchemeTypeMappings
 import amf.apicontract.internal.spec.oas.emitter.context._
-import amf.apicontract.internal.spec.oas.emitter.Oas3RequestBodyPartEmitter
 import amf.apicontract.internal.spec.oas.emitter.document.{EndPointPartEmitter, Oas3RequestBodyPartEmitter}
 import amf.core.client.scala.config.ShapeRenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -17,7 +20,11 @@ import amf.core.internal.parser.domain.{Annotations, Value}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.client.scala.domain.models.{CreativeWork, Example}
-import amf.shapes.internal.spec.common.emitter.{ExampleDataNodePartEmitter, Oas3ExampleValuesPartEmitter, OasCreativeWorkEmitter}
+import amf.shapes.internal.spec.common.emitter.{
+  ExampleDataNodePartEmitter,
+  Oas3ExampleValuesPartEmitter,
+  OasCreativeWorkEmitter
+}
 import amf.shapes.internal.spec.oas.emitter.OasTypePartEmitter
 
 case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) extends OasEmitterFactory {

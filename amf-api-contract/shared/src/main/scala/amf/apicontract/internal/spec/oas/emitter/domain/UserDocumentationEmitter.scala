@@ -1,12 +1,18 @@
 package amf.apicontract.internal.spec.oas.emitter.domain
 
-import amf.apicontract.internal.spec.common.emitter.SpecEmitterContext
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
 import amf.core.client.common.position.Position
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.internal.spec.common.emitter.{
+  OasEntryCreativeWorkEmitter,
+  RamlCreativeWorkEmitter,
+  ShapeEmitterContext
+}
 import org.yaml.model.YDocument.EntryBuilder
 
 case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {

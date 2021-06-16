@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.oas.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.Response
+import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas.emitter.context.OasSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
@@ -9,6 +10,7 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.OrphanAnnotationsEmitter
 import org.yaml.model.YDocument.EntryBuilder
 

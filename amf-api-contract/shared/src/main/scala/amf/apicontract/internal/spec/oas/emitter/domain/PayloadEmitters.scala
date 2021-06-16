@@ -15,7 +15,16 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.client.scala.annotations.ParsedJSONSchema
+import amf.shapes.client.scala.domain.models.{AnyShape, NodeShape}
+import amf.shapes.internal.spec.common.emitter.CommentEmitter
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.raml.emitter.{
+  Raml08TypePartEmitter,
+  Raml10TypeEmitter,
+  Raml10TypePartEmitter,
+  RamlRequiredShapeEmitter
+}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YMap, YNode, YType}
 
@@ -36,11 +45,10 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
           .foreach(mediaType => {
             b.complexEntry(
               ScalarEmitter(mediaType.scalar).emit(_),
-              raml
-                .Raml10TypePartEmitter(shape,
-                                       ordering,
-                                       Some(AnnotationsEmitter(payload, ordering)),
-                                       references = references)
+              Raml10TypePartEmitter(shape,
+                                    ordering,
+                                    Some(AnnotationsEmitter(payload, ordering)),
+                                    references = references)
                 .emit(_)
             )
           })

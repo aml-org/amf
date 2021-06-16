@@ -6,10 +6,21 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, RequestModel}
 import amf.apicontract.internal.spec.common.Parameters
-import amf.apicontract.internal.spec.common.emitter.{OasParametersEmitter, OasWithExtensionsSecurityRequirementsEmitter, SecurityRequirementsEmitter}
-import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterContext, Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.apicontract.internal.spec.common.emitter.{
+  AgnosticShapeEmitterContextAdapter,
+  OasParametersEmitter,
+  OasWithExtensionsSecurityRequirementsEmitter,
+  SecurityRequirementsEmitter
+}
+import amf.apicontract.internal.spec.oas.OasHeader.{Oas20Extension, Oas20Overlay}
+import amf.apicontract.internal.spec.oas.emitter.context.{
+  Oas3SpecEmitterContext,
+  Oas3SpecEmitterFactory,
+  OasSpecEmitterContext
+}
 import amf.apicontract.internal.spec.oas.emitter.domain._
 import amf.apicontract.internal.spec.raml.emitter.domain.ExtendsEmitter
+import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfScalar
@@ -24,7 +35,11 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.client.scala.annotations.OrphanOasExtension
+import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
+import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, OrphanAnnotationsEmitter}
+import amf.shapes.internal.spec.oas.emitter.OasSpecEmitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 

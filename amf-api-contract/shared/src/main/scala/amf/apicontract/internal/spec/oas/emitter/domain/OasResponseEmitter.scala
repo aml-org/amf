@@ -4,7 +4,12 @@ import amf.apicontract.client.scala.model.domain.{Payload, Response, TemplatedLi
 import amf.apicontract.internal.annotations.{DefaultPayload, EndPointBodyParameter}
 import amf.apicontract.internal.metamodel.domain.{PayloadModel, RequestModel, ResponseModel}
 import amf.apicontract.internal.spec.common.emitter.RamlParametersEmitter
-import amf.apicontract.internal.spec.oas.emitter.context.{Oas2SpecEmitterFactory, Oas3SpecEmitterFactory, OasLikeShapeEmitterContextAdapter, OasSpecEmitterContext}
+import amf.apicontract.internal.spec.oas.emitter.context.{
+  Oas2SpecEmitterFactory,
+  Oas3SpecEmitterFactory,
+  OasLikeShapeEmitterContextAdapter,
+  OasSpecEmitterContext
+}
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.AmfScalar
@@ -14,7 +19,10 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
+import amf.shapes.internal.spec.common.emitter.OasResponseExamplesEmitter
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.oas.emitter.OasSchemaEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
@@ -94,7 +102,7 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
                 .entry(PayloadModel.Schema)
                 .map { f =>
                   if (!f.value.annotations.contains(classOf[SynthesizedField])) {
-                    result += oas.OasSchemaEmitter(f, ordering, references)
+                    result += OasSchemaEmitter(f, ordering, references)
                   }
                 }
             })

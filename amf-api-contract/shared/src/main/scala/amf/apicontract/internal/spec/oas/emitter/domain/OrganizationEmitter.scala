@@ -2,11 +2,12 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.Organization
 import amf.apicontract.internal.metamodel.domain.OrganizationModel
-import amf.apicontract.internal.spec.common.emitter.SpecEmitterContext
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
 import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 

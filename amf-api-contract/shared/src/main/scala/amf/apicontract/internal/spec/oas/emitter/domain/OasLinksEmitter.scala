@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.TemplatedLink
 import amf.apicontract.internal.metamodel.domain.TemplatedLinkModel
-import amf.apicontract.internal.spec.common.emitter.OasServerEmitter
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, OasServerEmitter}
 import amf.apicontract.internal.spec.oas.emitter.context.OasSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
@@ -11,6 +11,9 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.shapes.client.scala.domain.models.IriTemplateMapping
+import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
+import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 

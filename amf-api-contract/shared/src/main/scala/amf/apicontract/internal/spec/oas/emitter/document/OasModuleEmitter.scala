@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.oas.emitter.document
 
 import amf.apicontract.client.scala.model.document._
+import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeShapeEmitterContextAdapter, OasSpecEmitterContext}
 import amf.apicontract.internal.spec.oas.emitter.domain.OasSecuritySchemeEmitter
 import amf.apicontract.internal.spec.oas.{OasHeader, OasLikeSecuritySchemeTypeMappings}
@@ -14,6 +15,15 @@ import amf.core.internal.render.BaseEmitters.{ValueEmitter, _}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
+import amf.plugins.document.vocabularies.emitters.dialects.ReferencesEmitter
+import amf.shapes.internal.spec.common.emitter.{
+  DataNodeEmitter,
+  NamedExampleEmitter,
+  OasCreativeWorkItemsEmitter,
+  OasLikeShapeEmitterContext,
+  ShapeEmitterContext
+}
+import amf.shapes.internal.spec.oas.emitter.{OasSpecEmitter, OasTypeEmitter}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
@@ -104,7 +114,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     override val header: OasHeaderEmitter                       = OasHeaderEmitter(OasHeader.Oas20DataType)
 
     val emitters: Seq[EntryEmitter] =
-      oas.OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()
+      OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()
   }
 
   case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclarationFragment, ordering: SpecOrdering)

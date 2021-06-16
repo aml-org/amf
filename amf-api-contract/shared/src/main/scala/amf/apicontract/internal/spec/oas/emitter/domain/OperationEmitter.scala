@@ -3,7 +3,11 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 import amf.apicontract.client.scala.model.domain.{Callback, Operation, Request, Tag}
 import amf.apicontract.internal.annotations.FormBodyParameter
 import amf.apicontract.internal.metamodel.domain.{OperationModel, RequestModel}
-import amf.apicontract.internal.spec.common.emitter.{OasCallbacksEmitter, OasParametersEmitter, OasWithExtensionsSecurityRequirementsEmitter}
+import amf.apicontract.internal.spec.common.emitter.{
+  OasCallbacksEmitter,
+  OasParametersEmitter,
+  OasWithExtensionsSecurityRequirementsEmitter
+}
 import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.apicontract.internal.spec.oas.emitter.document.Oas3RequestBodyEmitter
 import amf.apicontract.internal.spec.raml.emitter
@@ -18,6 +22,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils._
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.client.scala.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.YDocument.PartBuilder
 

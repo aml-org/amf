@@ -4,7 +4,11 @@ import amf.apicontract.client.scala.model.domain.{Parameter, Payload, Response}
 import amf.apicontract.internal.spec.common.emitter._
 import amf.apicontract.internal.spec.common.{OasParameter, WebApiDeclarations}
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeShapeEmitterContextAdapter, OasSpecEmitterContext}
-import amf.apicontract.internal.spec.oas.emitter.domain.{Oas3LinkDeclarationEmitter, OasResponseEmitter, OasTagToReferenceEmitter}
+import amf.apicontract.internal.spec.oas.emitter.domain.{
+  Oas3LinkDeclarationEmitter,
+  OasResponseEmitter,
+  OasTagToReferenceEmitter
+}
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
@@ -19,6 +23,8 @@ import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.internal.spec.common.emitter.{OasResponseExamplesEmitter, ShapeEmitterContext}
+import amf.shapes.internal.spec.oas.emitter.OasDeclaredShapesEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer

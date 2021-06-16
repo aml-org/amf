@@ -9,6 +9,10 @@ import amf.apicontract.client.scala.model.domain.bindings.{
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.apicontract.internal.spec.spec.OasDefinitions.{
+  appendParameterDefinitionsPrefix,
+  appendResponsesDefinitionsPrefix
+}
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.BaseEmitters.pos

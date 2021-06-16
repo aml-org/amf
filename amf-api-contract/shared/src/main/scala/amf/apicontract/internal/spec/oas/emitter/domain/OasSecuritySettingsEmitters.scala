@@ -2,8 +2,7 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.internal.spec.common.emitter.SpecEmitterContext
-import amf.apicontract.internal.spec.raml.emitter.RamlOAuth1SettingsEmitters
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter.domain.{RamlApiKeySettingsEmitters, RamlOAuth1SettingsEmitters}
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.DataNode
@@ -14,7 +13,9 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, OrphanAnnotationsEmitter}
+import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, ShapeEmitterContext}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 

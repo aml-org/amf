@@ -3,7 +3,12 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 import amf.apicontract.client.scala.model.domain.Payload
 import amf.apicontract.internal.annotations.ParameterNameForPayload
 import amf.apicontract.internal.metamodel.domain.PayloadModel
-import amf.apicontract.internal.spec.oas.emitter.context.{Oas2SpecEmitterFactory, Oas3SpecEmitterFactory, OasLikeShapeEmitterContextAdapter, OasSpecEmitterContext}
+import amf.apicontract.internal.spec.oas.emitter.context.{
+  Oas2SpecEmitterFactory,
+  Oas3SpecEmitterFactory,
+  OasLikeShapeEmitterContextAdapter,
+  OasSpecEmitterContext
+}
 import amf.apicontract.internal.spec.oas.parser.domain.OasEncodingsEmitter
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
@@ -12,7 +17,9 @@ import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.shapes.internal.spec.common.emitter.OasResponseExamplesEmitter
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.oas.emitter.OasSchemaEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
@@ -54,7 +61,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         }
 
         fs.entry(PayloadModel.Schema).map { f =>
-          result += oas.OasSchemaEmitter(f, ordering, references)
+          result += OasSchemaEmitter(f, ordering, references)
         }
 
         result ++= AnnotationsEmitter(payload, ordering).emitters

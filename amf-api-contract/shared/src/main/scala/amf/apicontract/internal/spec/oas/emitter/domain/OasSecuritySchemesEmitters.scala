@@ -2,9 +2,11 @@ package amf.apicontract.internal.spec.oas.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
+import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas.emitter.context.OasSpecEmitterContext
 import amf.apicontract.internal.spec.oas.{OasLikeSecuritySchemeTypeMappings, OasSecuritySchemeType, SecuritySchemeType}
 import amf.apicontract.internal.spec.raml.emitter.domain.Raml10DescribedByEmitter
+import amf.apicontract.internal.spec.spec.toRaml
 import amf.core.client.common.position.Position
 import amf.core.internal.parser.domain.Fields
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
@@ -12,6 +14,8 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
+import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer
