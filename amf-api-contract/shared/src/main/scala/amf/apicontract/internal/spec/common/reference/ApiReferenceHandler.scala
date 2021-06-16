@@ -22,10 +22,15 @@ class ApiReferenceHandler(vendor: String) extends ReferenceHandler {
   }
 
   private def collect(parsed: ParsedDocument)(implicit errorHandler: AMFErrorHandler): CompilerReferenceCollector = {
-    val doc = parsed.asInstanceOf[SyamlParsedDocument].document
-    libraries(doc)
-    links(doc)
-    if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(doc)
+    parsed match {
+      case syaml : SyamlParsedDocument =>
+        val doc = syaml.document
+        libraries(doc)
+        links(doc)
+        if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(doc)
+      case _: AntlrParsedDocument =>
+        // ignore @TODO: add proper reference collection here
+    }
     references
   }
 
