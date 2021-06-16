@@ -12,6 +12,10 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreParserValidations.UnsupportedExampleMediaTypeErrorSpecification
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.raml.parser.{AnyDefaultType, DefaultType}
+import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable

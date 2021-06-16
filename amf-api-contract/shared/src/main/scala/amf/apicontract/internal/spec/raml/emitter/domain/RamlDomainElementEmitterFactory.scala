@@ -1,18 +1,29 @@
 package amf.apicontract.internal.spec.raml.emitter.domain
 
 import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.client.scala.model.domain.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.security.{
+  ParametrizedSecurityScheme,
+  SecurityRequirement,
+  SecurityScheme
+}
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.internal.spec.common.emitter._
 import amf.apicontract.internal.spec.oas.emitter.domain.{Raml10PayloadEmitter, Raml10PayloadPartEmitter}
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
-import amf.apicontract.internal.spec.raml.emitter.context.{Raml08SpecEmitterContext, Raml10SpecEmitterContext, RamlSpecEmitterContext}
+import amf.apicontract.internal.spec.raml.emitter.context.{
+  Raml08SpecEmitterContext,
+  Raml10SpecEmitterContext,
+  RamlSpecEmitterContext
+}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
+import amf.shapes.client.scala.domain.models.{CreativeWork, Example}
+import amf.shapes.internal.spec.common.emitter.{RamlCreativeWorkEmitter, RamlExampleValuesEmitter}
+import amf.shapes.internal.spec.raml.emitter.{Raml08TypePartEmitter, Raml10TypePartEmitter}
 
 case class Raml10EmitterFactory()(implicit val ctx: Raml10SpecEmitterContext) extends RamlEmitterFactory {
 

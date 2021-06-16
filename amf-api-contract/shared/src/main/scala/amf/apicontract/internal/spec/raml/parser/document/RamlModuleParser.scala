@@ -2,13 +2,16 @@ package amf.apicontract.internal.spec.raml.parser.document
 
 import amf.apicontract.internal.spec.common.parser.{ReferencesParser, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.spec.raml.parser.document.RamlAnnotationTargets.targetsFor
 import amf.core.client.scala.model.document.Module
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.metamodel.document.ModuleModel
-import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.{Root, YNodeLikeOps}
+import amf.shapes.internal.spec.RamlWebApiContextType.LIBRARY
+import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.YMap
 
 /**

@@ -1,5 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
+import amf.shapes.internal.spec.common.parser.SpecSyntax
+
 object Raml10Syntax extends RamlSyntax {
 
   private val shapeFacets = Set(

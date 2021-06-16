@@ -7,6 +7,8 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import amf.shapes.internal.spec.common.emitter.CustomFacetsEmitter
+import amf.shapes.internal.spec.raml.emitter.RamlPropertyShapeEmitter
 
 case class RamlCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)

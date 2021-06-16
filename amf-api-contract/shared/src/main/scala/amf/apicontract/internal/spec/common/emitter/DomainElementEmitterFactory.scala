@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.common.emitter
 
+import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.bindings.{
   ChannelBindings,
   MessageBindings,
@@ -12,11 +13,8 @@ import amf.apicontract.client.scala.model.domain.security.{
   SecurityScheme
 }
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
-import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.internal.spec.async.emitters.domain.AsyncDomainElementEmitterFactory
-import amf.apicontract.internal.spec.oas.emitter.Oas30EmitterFactory
 import amf.apicontract.internal.spec.oas.emitter.domain.{Oas20EmitterFactory, Oas30EmitterFactory}
-import amf.apicontract.internal.spec.raml.emitter.Raml08EmitterFactory
 import amf.apicontract.internal.spec.raml.emitter.domain.{Raml08EmitterFactory, Raml10EmitterFactory}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty

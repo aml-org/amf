@@ -3,12 +3,24 @@ package amf.apicontract.internal.spec.raml.parser.domain
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
-import amf.apicontract.internal.spec.common.parser.{SpecField, SpecNode, SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{
+  SpecField,
+  SpecNode,
+  SpecParserOps,
+  WebApiShapeParserContextAdapter
+}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  MissingRequiredFieldForGrantType,
+  UnknownScopeErrorSpecification
+}
 import amf.core.client.scala.model.domain.{AmfArray, DomainElement}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, Lazy}
+import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.datanode.DataNodeParser
+import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 
 import scala.collection.mutable

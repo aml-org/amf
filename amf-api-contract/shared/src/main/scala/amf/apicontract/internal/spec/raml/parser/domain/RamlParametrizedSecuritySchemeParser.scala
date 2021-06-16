@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.raml.parser.domain
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnknownSecuritySchemeErrorSpecification
 import amf.core.internal.annotations.NullSecurity
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import org.yaml.model._

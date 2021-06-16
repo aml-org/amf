@@ -4,13 +4,27 @@ import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{Parameter, Response}
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
-import amf.apicontract.internal.spec.common.parser.{RamlParametersParser, SecuritySchemeParser, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{
+  RamlParametersParser,
+  SecuritySchemeParser,
+  WebApiShapeParserContextAdapter
+}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  CrossSecurityWarningSpecification,
+  InvalidSecuritySchemeDescribedByType,
+  MissingSecuritySchemeErrorSpecification
+}
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.raml.parser.Raml10TypeParser
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExclusivePropertiesSpecification
+import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 
 import scala.collection.mutable

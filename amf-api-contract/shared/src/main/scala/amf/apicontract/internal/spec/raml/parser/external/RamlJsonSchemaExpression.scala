@@ -1,19 +1,28 @@
 package amf.apicontract.internal.spec.raml.parser.external
 
 import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
-import amf.apicontract.internal.spec.oas.parser
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.oas.parser.document
-import amf.apicontract.internal.spec.oas.parser.document.Oas2DocumentParser
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.spec.spec.toJsonSchema
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.JsonSchemaFragmentNotFound
 import amf.core.client.scala.model.domain.{AmfArray, Shape}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.ShapeModel
-import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, JsonParserFactory}
+import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.plugins.document.apicontract.parser.spec.toJsonSchema
+import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.annotations._
+import amf.shapes.client.scala.domain.models.{AnyShape, SchemaShape, UnresolvedShape}
+import amf.shapes.internal.domain.metamodel.AnyShapeModel
+import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.common.parser.{ExternalFragmentHelper, NodeDataNodeParser}
+import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
+import amf.shapes.internal.spec.oas.parser.OasTypeParser
+import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._

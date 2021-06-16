@@ -9,6 +9,7 @@ import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.parser.CompilerContext
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.parser.YamlParser

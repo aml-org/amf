@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.raml.emitter.document
 
 import amf.apicontract.client.scala.model.document._
+import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.domain.Raml10SecuritySchemeEmitter
@@ -14,7 +15,10 @@ import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, tr
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.client.scala.domain.models.AnyShape
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter._
+import amf.shapes.internal.spec.raml.emitter.Raml10TypeEmitter
 import org.yaml.model.YDocument
 
 /**

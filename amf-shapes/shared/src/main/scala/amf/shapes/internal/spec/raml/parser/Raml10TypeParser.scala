@@ -13,20 +13,24 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode => ParserScalarN
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.remote.Raml08
 import amf.core.internal.utils.{AmfStrings, IdCounter}
-import amf.shapes.client.scala.annotations.{InlineDefinition, ParsedJSONSchema, SchemaIsJsonSchema, TypePropertyLexicalInfo}
+import amf.shapes.client.scala.annotations.{
+  InlineDefinition,
+  ParsedJSONSchema,
+  SchemaIsJsonSchema,
+  TypePropertyLexicalInfo
+}
 import amf.shapes.client.scala.domain.TypeDef._
 import amf.shapes.client.scala.domain.models._
 import amf.shapes.client.scala.domain.{ScalarType, TypeDef}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
-import amf.shapes.internal.spec
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
+import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.common.{parser, _}
-import amf.shapes.internal.spec.common.parser.{AnnotationParser, CommonEnumParser, DefaultExampleOptions, EnumParsing, ExampleOptions, NodeDataNodeParser, OasLikeCreativeWorkParser, QuickFieldParserOps, RamlExamplesParser, RamlSingleExampleParser, ScalarFormatType, ShapeExtensionParser, YMapEntryLike}
 import amf.shapes.internal.spec.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.shapes.internal.spec.jsonschema.parser.Draft4ShapeDependenciesParser
-import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
 import amf.shapes.internal.spec.raml.parser.RamlTypeDetection.parseFormat
+import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
 import amf.shapes.internal.spec.{RamlTypeDefMatcher, ShapeParserContext, TypeName}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import amf.shapes.internal.vocabulary.VocabularyMappings

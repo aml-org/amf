@@ -2,12 +2,19 @@ package amf.apicontract.internal.spec.raml.parser.external
 
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidXmlSchemaType
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.client.scala.parse.document.ReferenceFragmentPartition
 import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
+import amf.shapes.client.scala.annotations.ExternalReferenceUrl
+import amf.shapes.client.scala.domain.models.SchemaShape
+import amf.shapes.internal.domain.metamodel.SchemaShapeModel
+import amf.shapes.internal.spec.common.parser.NodeDataNodeParser
+import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
+import amf.shapes.internal.spec.{RamlExternalSchemaExpressionFactory, ShapeParserContext}
 import org.yaml.model._
 
 case class DefaultRamlExternalSchemaExpressionFactory()(implicit val ctx: RamlWebApiContext)

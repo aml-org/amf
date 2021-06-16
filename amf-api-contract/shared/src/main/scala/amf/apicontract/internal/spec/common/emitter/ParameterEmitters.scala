@@ -3,10 +3,18 @@ package amf.apicontract.internal.spec.common.emitter
 import amf.apicontract.client.scala.model.domain.{Parameter, Payload}
 import amf.apicontract.internal.annotations._
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel}
-import amf.apicontract.internal.spec.oas.emitter
-import amf.apicontract.internal.spec.oas.emitter.{OasLikeShapeEmitterContextAdapter, context}
-import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
+import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
+import amf.apicontract.internal.spec.oas.emitter.context
+import amf.apicontract.internal.spec.oas.emitter.context.{
+  Oas3SpecEmitterFactory,
+  OasLikeShapeEmitterContextAdapter,
+  OasSpecEmitterContext
+}
+import amf.apicontract.internal.spec.oas.emitter.domain.OasContentPayloadsEmitter
 import amf.apicontract.internal.spec.raml
+import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
+import amf.apicontract.internal.spec.raml.emitter.context.{RamlSpecEmitterContext, XRaml10SpecEmitterContext}
+import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -21,22 +29,11 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
-import amf.plugins.document.apicontract.parser.spec.OasDefinitions
-import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorParameter
-import amf.apicontract.internal.spec.oas.emitter.context.{
-  Oas3SpecEmitterFactory,
-  OasLikeShapeEmitterContextAdapter,
-  OasSpecEmitterContext
-}
-import amf.apicontract.internal.spec.oas.emitter.domain.OasContentPayloadsEmitter
-import amf.apicontract.internal.spec.raml.emitter.context.{RamlSpecEmitterContext, XRaml10SpecEmitterContext}
-import amf.apicontract.internal.spec.spec.OasDefinitions
-import amf.shapes.client.scala.domain.models.{AnyShape, ArrayShape, FileShape, NodeShape, ScalarShape}
+import amf.shapes.client.scala.domain.models._
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, FileShapeModel}
-import amf.shapes.internal.spec.common.emitter.{CommentEmitter, OasResponseExamplesEmitter}
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
-import amf.shapes.internal.spec.contexts.emitter.oas.Oas3SpecEmitterFactory
+import amf.shapes.internal.spec.common.emitter.{CommentEmitter, OasResponseExamplesEmitter}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import amf.shapes.internal.spec.oas.emitter.{OasSchemaEmitter, OasTypeEmitter}
 import amf.shapes.internal.spec.raml.emitter.{Raml08TypePartEmitter, Raml10TypeEmitter}

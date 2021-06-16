@@ -17,9 +17,12 @@ import amf.core.client.scala.model.domain.{AmfScalar, ExternalDomainElement, Sha
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.metamodel.document.FragmentModel
-import amf.core.internal.parser.Root
+import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Raml10
+import amf.shapes.internal.spec.common.parser.{RamlCreativeWorkParser, YMapEntryLike}
+import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, StringDefaultType}
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YScalar}
 
 /**

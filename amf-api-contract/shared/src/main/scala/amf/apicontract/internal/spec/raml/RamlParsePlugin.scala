@@ -4,7 +4,6 @@ import amf.apicontract.internal.plugins.ApiParsePlugin
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.raml.parser.document
-import amf.apicontract.internal.spec.raml.parser.document.RamlFragmentParser
 import amf.apicontract.internal.spec.raml.reference.RamlReferenceHandler
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -14,7 +13,6 @@ import amf.core.client.scala.model.domain.ExternalDomainElement
 import amf.core.client.scala.parse.document._
 import amf.core.internal.parser.Root
 import amf.core.internal.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
-import amf.plugins.document.apicontract.parser.RamlFragment
 import org.yaml.model.YNode
 import org.yaml.model.YNode.MutRef
 

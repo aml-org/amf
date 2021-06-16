@@ -9,10 +9,12 @@ import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
-case class NamedPropertyTypeEmitter(annotation: CustomDomainProperty, references: Seq[BaseUnit], ordering: SpecOrdering)(
-    implicit val spec: RamlSpecEmitterContext)
+case class NamedPropertyTypeEmitter(annotation: CustomDomainProperty,
+                                    references: Seq[BaseUnit],
+                                    ordering: SpecOrdering)(implicit val spec: RamlSpecEmitterContext)
     extends EntryEmitter
     with PartEmitter {
 

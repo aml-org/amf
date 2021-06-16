@@ -9,9 +9,16 @@ import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, TraitModel}
 import amf.apicontract.internal.spec.common.parser.{WebApiShapeParserContextAdapter, _}
 import amf.apicontract.internal.spec.common.{OasParameter, RamlWebApiDeclarations, WebApiDeclarations}
-import amf.apicontract.internal.spec.oas.parser.domain.{OasResponseParser, OrganizationParser, TagsParser}
+import amf.apicontract.internal.spec.oas.parser.domain.{
+  LicenseParser,
+  OasResponseParser,
+  OrganizationParser,
+  TagsParser
+}
 import amf.apicontract.internal.spec.raml.parser.context.{ExtensionLikeWebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.document.RamlAnnotationTargets.targetsFor
+import amf.apicontract.internal.spec.spec.toOas
+import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.scala.model.document.{BaseUnit, Document, ExtensionLike, Module}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
@@ -26,6 +33,17 @@ import amf.core.internal.parser.{Root, YMapOps, YScalarYRead}
 import amf.core.internal.utils._
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.plugins.document.vocabularies.parser.common.DeclarationKey
+import amf.shapes.client.scala.domain.models.CreativeWork
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.internal.spec.RamlWebApiContextType
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, RamlCreativeWorkParser, RamlScalarNode, YMapEntryLike}
+import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, RamlTypeEntryParser, RamlTypeSyntax, StringDefaultType}
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
+  ExclusiveSchemasType,
+  InvalidFragmentType,
+  InvalidTypeDefinition
+}
+import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 
 import scala.collection.mutable

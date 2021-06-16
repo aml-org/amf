@@ -1,11 +1,13 @@
 package amf.apicontract.internal.spec.raml.parser.domain
 
 import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
-import amf.core.client.scala.model.domain.AmfScalar
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidAbstractDeclarationType
 import amf.core.client.scala.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.metamodel.domain.templates.{ParametrizedDeclarationModel, VariableValueModel}
 import amf.core.internal.parser.YNodeLikeOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.yaml.model._
 
 object ParametrizedDeclarationParser {

@@ -5,8 +5,21 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.annotations.{EndPointResourceTypeEntry, EndPointTraitEntry, ParentEndPoint}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, ParameterModel}
 import amf.apicontract.internal.spec.common.Parameters
-import amf.apicontract.internal.spec.common.parser.{OasParametersParser, RamlSecurityRequirementParser, SpecParserOps, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.{
+  OasParametersParser,
+  RamlSecurityRequirementParser,
+  SpecParserOps,
+  WebApiShapeParserContextAdapter
+}
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.apicontract.internal.spec.spec
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  DuplicatedEndpointPath,
+  InvalidEndpointPath,
+  SlashInUriParameterValues,
+  UnusedBaseUriParameter
+}
+import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.NestedEndpoint
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
@@ -15,6 +28,10 @@ import amf.core.internal.annotations.{LexicalInformation, VirtualElement}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{ParseConfiguration, YMapOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
+import amf.shapes.client.scala.domain.models.ScalarShape
+import amf.shapes.internal.spec.RamlWebApiContextType
+import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 
 import scala.collection.mutable

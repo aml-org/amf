@@ -2,7 +2,11 @@ package amf.apicontract.internal.spec.raml.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.internal.spec.common.emitter.{RamlParametersEmitter, SpecEmitterContext}
+import amf.apicontract.internal.spec.common.emitter.{
+  AgnosticShapeEmitterContextAdapter,
+  RamlParametersEmitter,
+  SpecEmitterContext
+}
 import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.core.client.common.position.Position
@@ -13,8 +17,13 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
+import amf.shapes.internal.spec.raml.emitter.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
+import amf.shapes.internal.spec.raml.parser.RamlTagToReferenceEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable.ListBuffer

@@ -4,6 +4,9 @@ import amf.apicontract.internal.spec.common.RamlWebApiDeclarations
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{Raml08, Vendor}
+import amf.shapes.internal.spec.RamlWebApiContextType
+import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.spec.common.parser.SpecSyntax
 
 class Raml08WebApiContext(loc: String,
                           refs: Seq[ParsedReference],

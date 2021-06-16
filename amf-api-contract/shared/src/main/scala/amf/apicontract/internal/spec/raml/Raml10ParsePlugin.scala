@@ -1,20 +1,16 @@
 package amf.apicontract.internal.spec.raml
 
 import amf.apicontract.internal.spec.common.{RamlWebApiDeclarations, WebApiDeclarations}
-import amf.apicontract.internal.spec.raml.parser.RamlModuleParser
+import amf.apicontract.internal.spec.raml.RamlFragmentHeader._
+import amf.apicontract.internal.spec.raml.RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay}
+import amf.apicontract.internal.spec.raml.parser.context.{Raml10WebApiContext, RamlWebApiContext}
+import amf.apicontract.internal.spec.raml.parser.document.{ExtensionLikeParser, Raml10DocumentParser, RamlModuleParser}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Vendor
-import RamlFragmentHeader._
-import RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay}
-import amf.apicontract.internal.spec.raml.parser.context.{Raml10WebApiContext, RamlWebApiContext}
-import amf.apicontract.internal.spec.raml.parser.document.{ExtensionLikeParser, Raml10DocumentParser, RamlModuleParser}
-import amf.plugins.document.apicontract.parser.spec.raml.Raml10DocumentParser
-import amf.plugins.document.apicontract.parser.spec.RamlWebApiDeclarations
-import amf.shapes.internal.spec.contexts.parser.raml.RamlWebApiContext
 
 object Raml10ParsePlugin extends RamlParsePlugin {
 

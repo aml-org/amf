@@ -1,35 +1,21 @@
 package amf.apicontract.internal.spec.raml
 
-import amf.apicontract.client.scala.model.document.{
-  AnnotationTypeDeclarationFragment,
-  DataTypeFragment,
-  DocumentationItemFragment,
-  Extension,
-  NamedExampleFragment,
-  Overlay,
-  ResourceTypeFragment,
-  SecuritySchemeFragment,
-  TraitFragment
-}
-import amf.apicontract.internal.plugins.ApiRenderPlugin
-import amf.core.client.common.{NormalPriority, PluginPriority}
-import amf.core.client.scala.config.RenderOptions
-import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment, Fragment, Module}
-import amf.core.internal.plugins.render.AMFRenderPlugin.APPLICATION_YAML
-import amf.core.internal.plugins.render.RenderInfo
-import amf.core.internal.remote.Vendor
-import amf.plugins.document.apicontract.model._
-import amf.plugins.document.apicontract.parser.spec.raml.RamlFragmentEmitter
+import amf.apicontract.client.scala.model.document._
 import amf.apicontract.client.scala.model.domain.api.Api
+import amf.apicontract.internal.plugins.ApiRenderPlugin
 import amf.apicontract.internal.spec.raml.emitter.context.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
-import amf.apicontract.internal.spec.raml.emitter.RamlFragmentEmitter
 import amf.apicontract.internal.spec.raml.emitter.document.{
   RamlDocumentEmitter,
   RamlFragmentEmitter,
   RamlModuleEmitter
 }
-import amf.shapes.internal.spec.contexts.emitter.raml.Raml10SpecEmitterContext
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document._
+import amf.core.internal.plugins.render.AMFRenderPlugin.APPLICATION_YAML
+import amf.core.internal.plugins.render.RenderInfo
+import amf.core.internal.remote.Vendor
 import org.yaml.model.{YDocument, YNode}
 
 object Raml10RenderPlugin extends ApiRenderPlugin {

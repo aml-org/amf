@@ -13,7 +13,6 @@ import amf.apicontract.internal.spec.oas.emitter.context.{
   Oas2SpecEmitterFactory,
   OasSpecEmitterFactory
 }
-import amf.apicontract.internal.spec.oas.emitter.Raml10PayloadsEmitter
 import amf.apicontract.internal.spec.oas.emitter.domain.{
   Raml08PayloadsEmitter,
   Raml10PayloadsEmitter,
@@ -26,15 +25,7 @@ import amf.apicontract.internal.spec.raml.emitter.document.{
   Raml10RootLevelEmitters,
   RamlRootLevelEmitters
 }
-import amf.apicontract.internal.spec.raml.emitter.domain.{
-  Raml08NamedSecuritySchemeEmitter,
-  Raml08ResponseEmitter,
-  Raml10NamedSecuritySchemeEmitter,
-  Raml10ResponseEmitter,
-  RamlCustomFacetsEmitter,
-  RamlNamedSecuritySchemeEmitter,
-  RamlResponseEmitter
-}
+import amf.apicontract.internal.spec.raml.emitter.domain._
 import amf.core.client.common.position.Position
 import amf.core.client.scala.config.ShapeRenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -53,17 +44,9 @@ import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.shapes.client.scala.domain.models.AnyShape
-import amf.shapes.internal.spec.common.{RAML08SchemaVersion, RAML10SchemaVersion, SchemaVersion}
-import amf.shapes.internal.spec.common.emitter.{
-  CustomFacetsEmitter,
-  OasRefEmitter,
-  RamlRefEmitter,
-  RamlShapeEmitterContext,
-  RefEmitter,
-  ShapeEmitterContext,
-  TagToReferenceEmitter
-}
+import amf.shapes.internal.spec.common.emitter._
 import amf.shapes.internal.spec.common.emitter.annotations._
+import amf.shapes.internal.spec.common.{RAML08SchemaVersion, RAML10SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.raml.emitter.{Raml08TypePartEmitter, Raml10TypePartEmitter, RamlTypePartEmitter}
 import amf.shapes.internal.spec.raml.parser.{RamlLocalReferenceEmitter, RamlTagToReferenceEmitter}
 import amf.shapes.internal.validation.definitions.RenderSideValidations.RenderValidation

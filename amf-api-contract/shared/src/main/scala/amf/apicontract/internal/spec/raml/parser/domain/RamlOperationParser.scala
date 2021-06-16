@@ -10,13 +10,19 @@ import amf.apicontract.internal.spec.common.parser.{
   SpecParserOps,
   WebApiShapeParserContextAdapter
 }
-import amf.apicontract.internal.spec.oas.parser.domain.StringTagsParser
+import amf.apicontract.internal.spec.oas.parser.domain.{Oas30CallbackParser, StringTagsParser}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.spec.spec.toOas
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidOperationType
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
-import amf.core.internal.utils.IdCounter
+import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
+import amf.core.internal.utils.{AmfStrings, IdCounter}
+import amf.shapes.internal.spec.RamlWebApiContextType
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser}
+import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 
 import scala.collection.mutable

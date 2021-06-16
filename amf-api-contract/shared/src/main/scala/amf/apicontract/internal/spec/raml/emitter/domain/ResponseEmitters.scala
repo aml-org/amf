@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.raml.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.Response
 import amf.apicontract.internal.metamodel.domain.{RequestModel, ResponseModel}
-import amf.apicontract.internal.spec.common.emitter.RamlParametersEmitter
+import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, RamlParametersEmitter}
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
@@ -12,6 +12,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.{OasResponseExamplesEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 

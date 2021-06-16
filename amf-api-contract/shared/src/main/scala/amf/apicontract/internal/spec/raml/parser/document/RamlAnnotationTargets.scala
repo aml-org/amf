@@ -1,5 +1,9 @@
 package amf.apicontract.internal.spec.raml.parser.document
 
+import amf.shapes.internal.spec.RamlWebApiContextType
+import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
+import amf.shapes.internal.vocabulary.VocabularyMappings
+
 object RamlAnnotationTargets {
 
   def targetsFor(contextType: RamlWebApiContextType): List[String] = contextType match {

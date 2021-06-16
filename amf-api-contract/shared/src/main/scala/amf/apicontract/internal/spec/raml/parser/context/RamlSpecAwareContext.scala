@@ -4,32 +4,15 @@ import amf.apicontract.client.scala.model.domain.security.{SecurityScheme, WithS
 import amf.apicontract.client.scala.model.domain.{EndPoint, Parameter, Request, Response}
 import amf.apicontract.internal.spec.common.emitter.{SpecAwareContext, SpecVersionFactory}
 import amf.apicontract.internal.spec.common.parser._
-import amf.apicontract.internal.spec.raml.parser._
 import amf.apicontract.internal.spec.raml.parser.document.{
   Raml08DocumentParser,
   Raml10DocumentParser,
   RamlDocumentParser
 }
-import amf.apicontract.internal.spec.raml.parser.domain.{
-  Raml08EndpointParser,
-  Raml08PayloadParser,
-  Raml08RequestParser,
-  Raml08ResponseParser,
-  Raml10EndpointParser,
-  Raml10PayloadParser,
-  Raml10RequestParser,
-  Raml10ResponseParser,
-  Raml10SecuritySettingsParser,
-  RamlEndpointParser,
-  RamlOperationParser,
-  RamlPayloadParser,
-  RamlRequestParser,
-  RamlResponseParser,
-  RamlSecuritySchemeParser,
-  RamlSecuritySettingsParser
-}
+import amf.apicontract.internal.spec.raml.parser.domain._
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.internal.parser.Root
+import amf.shapes.internal.spec.raml.parser._
 import org.yaml.model._
 
 import scala.collection.mutable

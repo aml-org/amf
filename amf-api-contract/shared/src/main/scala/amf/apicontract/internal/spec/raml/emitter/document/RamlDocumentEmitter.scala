@@ -11,6 +11,7 @@ import amf.apicontract.internal.spec.oas.emitter.domain.{LicenseEmitter, Organiz
 import amf.apicontract.internal.spec.raml.emitter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.domain.{NamedPropertyTypeEmitter, RamlSecuritySchemesEmitters}
+import amf.apicontract.internal.spec.spec.toOas
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
@@ -27,7 +28,9 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.TSort.tsort
 import amf.core.internal.utils.{AmfStrings, IdCounter}
+import amf.shapes.client.scala.domain.models.CreativeWork
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.common.emitter.{OasCreativeWorkEmitter, RamlCreativeWorkEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
@@ -133,9 +136,9 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
     if (declarations.securitySchemes.nonEmpty)
       result += emitter.domain.RamlSecuritySchemesEmitters(declarations.securitySchemes.values.toSeq,
-                                            document.references,
-                                            ordering,
-                                            spec.factory.namedSecurityEmitter)
+                                                           document.references,
+                                                           ordering,
+                                                           spec.factory.namedSecurityEmitter)
 
     val oasParams = declarations.parameters.values.map(OasParameter(_)) ++ declarations.payloads.values
       .map(OasParameter(_))

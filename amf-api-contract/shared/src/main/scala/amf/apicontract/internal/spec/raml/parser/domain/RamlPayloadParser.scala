@@ -4,11 +4,17 @@ import amf.apicontract.client.scala.model.domain.Payload
 import amf.apicontract.internal.metamodel.domain.PayloadModel
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidPayload
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
+import amf.shapes.client.scala.domain.models.{AnyShape, NodeShape}
+import amf.shapes.internal.domain.metamodel.NodeShapeModel
+import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.raml.parser._
 import org.yaml.model._
 
 /**
