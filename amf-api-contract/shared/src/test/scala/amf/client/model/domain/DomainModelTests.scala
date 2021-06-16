@@ -35,12 +35,17 @@ import amf.apicontract.client.platform.model.domain.{
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
-import amf.plugins.document.{WebApi => WebApiObject}
+import amf.shapes.client.platform.model.domain.{
+  AnyShape,
+  CreativeWork,
+  Example,
+  IriTemplateMapping,
+  PropertyDependencies,
+  XMLSerializer
+}
 import org.scalatest.{FunSuite, Matchers}
 
 class DomainModelTests extends FunSuite with Matchers {
-
-  WebApiObject.register()
 
   val s                                    = "test string"
   val clientStringList: ClientList[String] = Seq(s).asClient

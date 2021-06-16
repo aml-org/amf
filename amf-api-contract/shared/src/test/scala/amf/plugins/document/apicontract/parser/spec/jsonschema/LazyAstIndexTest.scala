@@ -1,6 +1,7 @@
 package amf.plugins.document.apicontract.parser.spec.jsonschema
 
 import amf.plugins.document.apicontract.parser.spec.declaration.JSONSchemaDraft4SchemaVersion
+import amf.shapes.internal.spec.common.JSONSchemaDraft4SchemaVersion
 import org.scalatest.{FunSuite, Matchers}
 
 class LazyAstIndexTest extends FunSuite with Matchers with IndexHelper {

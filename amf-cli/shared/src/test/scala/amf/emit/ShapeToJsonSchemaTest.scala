@@ -1,16 +1,16 @@
 package amf.emit
 
 import amf.apicontract.client.scala.config.WebAPIConfiguration
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
 import amf.io.FileAssertionTest
-import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.remod.JsonSchemaShapeSerializer.toJsonSchema
+import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.render.JsonSchemaShapeRenderer.toJsonSchema
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -93,7 +93,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
         .map(_.schema)
         .collectFirst({ case any: AnyShape => any })
 
-    cycle("json-expression.raml", "json-expression-new.json", func, toJsonSchema)
+    cycle("json-expression.raml", "json-expression-new.json", func)
   }
 
   test("Test recursive shape") {
@@ -106,7 +106,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
         .map(_.schema)
         .collectFirst({ case any: AnyShape => any })
 
-    cycle("recursive.raml", "recursive.json", func, toJsonSchema)
+    cycle("recursive.raml", "recursive.json", func)
   }
 
   test("Test shape id preservation") {
@@ -132,7 +132,6 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
   private def parse(file: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
     val client = config.createClient()
     for {
-      _    <- Validation(platform)
       unit <- client.parse(basePath + file).map(_.bu)
     } yield {
       unit
@@ -142,7 +141,6 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
   private def cycle(file: String,
                     golden: String,
                     findShapeFunc: BaseUnit => Option[AnyShape],
-                    renderFn: AnyShape => String = toJsonSchema,
                     hint: Hint = Raml10YamlHint): Future[Assertion] = {
     val config = WebAPIConfiguration
       .WebAPI()

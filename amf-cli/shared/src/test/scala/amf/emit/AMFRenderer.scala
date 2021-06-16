@@ -1,7 +1,6 @@
 package amf.emit
 
 import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.environment.AsyncAPIConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.Syntax
@@ -18,9 +17,6 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
 
   // Remod registering
   VocabulariesRegister.register(platform)
-//  amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-//  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
-//  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
   /** Print ast to string. */
   def renderToString(implicit executionContext: ExecutionContext): String = render()

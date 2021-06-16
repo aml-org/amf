@@ -8,7 +8,6 @@ import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
 import amf.core.internal.remote.{Cache, Context, FileNotFound}
 import amf.core.internal.resource.ResourceLoader
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.Matchers
 
@@ -17,10 +16,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecrets with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
-  override protected def beforeEach(): Future[Unit] = {
-    Validation.apply(platform).map(_.init())
-  }
 
   test("Resource loader shouldn't have absolute path if ref and base aren't absolute") {
     val mappings = Map(

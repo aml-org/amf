@@ -6,20 +6,15 @@ import amf.core.client.scala.config.{AMFEvent, AMFEventListener}
 import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
 import amf.core.internal.remote.{Cache, Context}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.{Assertion, Matchers}
 
 import scala.collection.mutable.ListBuffer
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class AMFEventListenerTest extends AsyncBeforeAndAfterEach with PlatformSecrets with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
-  override protected def beforeEach(): Future[Unit] = {
-    Validation.apply(platform).map(_.init())
-  }
 
   ignore("Test event listener in parsing") {
     val url = "file://amf-cli/shared/src/test/resources/validations/aip/ex1.raml"

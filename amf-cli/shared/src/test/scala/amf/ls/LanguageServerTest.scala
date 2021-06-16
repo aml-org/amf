@@ -8,6 +8,7 @@ import amf.core.client.scala.model.domain.templates.ParametrizedDeclaration
 import amf.core.internal.remote.Raml10YamlHint
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
+import amf.shapes.client.scala.domain.models.NodeShape
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 

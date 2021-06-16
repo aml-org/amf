@@ -3,36 +3,30 @@ package amf.resolution.merge
 import amf.apicontract.client.scala.model.domain.{Message, Operation}
 import amf.apicontract.internal.spec.async.Subscribe
 import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext, AsyncWebApiContext}
+import amf.apicontract.internal.spec.async.parser.domain.{AsyncMessageParser, AsyncOperationParser}
 import amf.apicontract.internal.spec.async.transformation.AsyncJsonMergePatch
-import amf.apicontract.internal.spec.common.transformation.AsyncKeyCriteria
+import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
+import amf.apicontract.internal.spec.common.transformation.stage.{AsyncKeyCriteria, JsonMergePatch}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{DataNode, ScalarNode}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.convert.BaseUnitConverter
-import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.parser.{ParseConfiguration, _}
 import amf.core.internal.remote.Vendor.AMF
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.emit.AMFRenderer
-import amf.facades.Validation
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
-import amf.shapes.internal.spec.contexts.parser.async.AsyncWebApiContext
-import amf.apicontract.internal.spec.async.parser.AsyncOperationParser
-import amf.apicontract.internal.spec.async.parser.domain.{AsyncMessageParser, AsyncOperationParser}
-import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
-import amf.apicontract.internal.spec.common.transformation.stage.{AsyncKeyCriteria, JsonMergePatch}
-import amf.plugins.document.apicontract.parser.spec.common.DataNodeParser
-import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.shapes.internal.spec.common.emitter.annotations.DataNodeEmitter
-import amf.plugins.domain.apicontract.models.Operation
+import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.mulesoft.common.io.Fs
 import org.scalatest.{Assertion, Matchers}
 import org.yaml.model.{YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
-import amf.core.internal.parser._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -117,7 +111,6 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     val golden   = fixture.golden
     val document = fixture.handler.build(fixture.target, fixture.patch)
     for {
-      _ <- Validation(platform)
       f <- Future.successful {
         renderOptions match {
           case Some(ro) => fixture.handler.renderToString(document, ro)

@@ -3,7 +3,7 @@ package amf.error
 import amf.core.client.common.position.Range
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
-
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.MissingRequiredUserDefinedFacet
 import amf.validations.ParserSideValidations.ClosedShapeSpecification
 import amf.validations.ShapeParserSideValidations.MissingRequiredUserDefinedFacet
 

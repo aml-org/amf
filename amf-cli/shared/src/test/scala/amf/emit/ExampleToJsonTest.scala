@@ -9,7 +9,8 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.parser.ParseConfiguration
 import amf.io.FileAssertionTest
-import amf.plugins.document.apicontract.parser.spec.domain.{DefaultExampleOptions, RamlExamplesParser}
+import amf.shapes.client.scala.domain.models.{AnyShape, Example}
+import amf.shapes.internal.spec.common.parser.{DefaultExampleOptions, RamlExamplesParser}
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YDocument, YMap}
 

@@ -1,20 +1,13 @@
 package amf.emit
 
 import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.environment.AsyncAPIConfiguration
-import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
-import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
-import amf.core.client.common.transform._
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
-import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
-import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
-import amf.io.FileAssertionTest
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.remod.JsonSchemaShapeSerializer.toJsonSchema
-import amf.remod.RamlShapeSerializer.toRamlDatatype
+import amf.core.client.scala.model.document.{BaseUnit, Document}
+import amf.core.internal.remote.Vendor
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.io.FileAssertionTest
+import amf.shapes.client.scala.domain.models.AnyShape
+import amf.shapes.client.scala.render.RamlShapeRenderer.toRamlDatatype
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -71,7 +64,6 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
       renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, amfConfig)): Future[Assertion] = {
     val client = amfConfig.createClient()
     val ramlDatatype: Future[String] = for {
-      _          <- Validation(platform)
       sourceUnit <- client.parse(basePath + sourceFile).map(_.bu)
     } yield {
       findShapeFunc(client.transformDefault(sourceUnit, Vendor.OAS20.mediaType).bu)

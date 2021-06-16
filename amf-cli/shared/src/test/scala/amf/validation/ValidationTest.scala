@@ -2,16 +2,12 @@ package amf.validation
 
 import _root_.org.scalatest.AsyncFunSuite
 import amf.apicontract.client.scala.config.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
-import amf.client.environment.WebAPIConfiguration
 import amf.core.client.common.validation._
 import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.common.transform._
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Raml10
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations
-import amf.facades.Validation
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -99,7 +95,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 // why the generation???? Move to MovelValidationReportTest?
   test("Security scheme and traits test") {
     for {
-      validation  <- Validation(platform)
+
       client      <- Future.successful(RAMLConfiguration.RAML10().createClient())
       parseResult <- client.parse(validationsPath + "/security-schemes/security1.raml")
       transformResult <- Future {
@@ -116,7 +112,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Custom validaton problems 1") {
     for {
-      validation  <- Validation(platform)
+
       client      <- Future.successful(RAMLConfiguration.RAML10().createClient())
       parseResult <- client.parse(validationsPath + "/missing-annotation-types/api.raml")
       transformResult <- Future {
@@ -131,7 +127,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Custom validation problems 2 (RAML)") {
     for {
-      validation  <- Validation(platform)
       client      <- Future.successful(RAMLConfiguration.RAML10().createClient())
       parseResult <- client.parse(validationsPath + "/enumeration-arrays/api.raml")
       transformResult <- Future {
@@ -145,7 +140,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Custom validation problems 2 (OAS)") {
     for {
-      validation  <- Validation(platform)
       client      <- Future.successful(WebAPIConfiguration.WebAPI().createClient())
       parseResult <- client.parse(validationsPath + "/enumeration-arrays/api.raml")
       transformResult <- Future {

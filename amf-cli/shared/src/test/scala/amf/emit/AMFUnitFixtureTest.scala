@@ -1,10 +1,11 @@
 package amf.emit
 
+import amf.apicontract.client.scala.model.domain.{License, Organization}
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.{Document, Module}
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.plugins.domain.apicontract.models.Organization
+import amf.shapes.client.scala.domain.models.{CreativeWork, ScalarShape}
 
 /**
   *

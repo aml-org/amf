@@ -1,6 +1,7 @@
 package amf.cycle
 
 import amf.core.internal.remote.{Async20YamlHint, Vendor}
+import amf.shapes.client.scala.domain.models.AnyShape
 
 class Async20ElementCycleTest extends DomainElementCycleTest {
 

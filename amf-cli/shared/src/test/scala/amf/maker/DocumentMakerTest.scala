@@ -9,6 +9,8 @@ import amf.core.internal.remote._
 import amf.facades.Validation
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.shapes.client.scala.domain.models.DomainExtensions.propertyShapeToPropertyShape
+import amf.shapes.client.scala.domain.models.{AnyShape, NodeShape}
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future
@@ -47,12 +49,10 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => IgnoreErrorHandler)
-    Validation(platform).flatMap { v =>
-      config.createClient().parse(basePath + file).map { unit =>
-        val actual = unit.bu.asInstanceOf[Document]
-        AmfObjectMatcher(expected).assert(actual)
-        Succeeded
-      }
+    config.createClient().parse(basePath + file).map { unit =>
+      val actual = unit.bu.asInstanceOf[Document]
+      AmfObjectMatcher(expected).assert(actual)
+      Succeeded
     }
   }
   object IgnoreErrorHandler extends AMFErrorHandler {

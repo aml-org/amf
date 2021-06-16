@@ -8,13 +8,14 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
-import amf.plugins.document.apicontract.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.apicontract.parser.spec.declaration.{
+import amf.shapes.internal.spec.common.parser.YMapEntryLike
+import amf.shapes.internal.spec.common.{
   JSONSchemaDraft201909SchemaVersion,
   JSONSchemaDraft4SchemaVersion,
   JSONSchemaDraft7SchemaVersion,
   JSONSchemaVersion
 }
+import amf.shapes.internal.spec.jsonschema.ref.{AstIndex, AstIndexBuilder}
 import org.scalatest.Matchers.convertToAnyShouldWrapper
 import org.scalatest.{Assertion, FunSuite, Matchers}
 import org.yaml.model.{YMap, YNode}

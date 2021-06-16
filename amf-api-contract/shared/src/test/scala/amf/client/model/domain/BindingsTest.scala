@@ -1,12 +1,7 @@
 package amf.client.model.domain
 
-import amf.apicontract.client.platform.model.domain.bindings.amqp.{
-  Amqp091ChannelBinding,
-  Amqp091ChannelExchange,
-  Amqp091MessageBinding,
-  Amqp091OperationBinding,
-  Amqp091Queue
-}
+import amf.apicontract.client.platform.model.domain.bindings.amqp._
+import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
 import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
 import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
   MqttMessageBinding,
@@ -15,30 +10,12 @@ import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
   MqttServerLastWill
 }
 import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
-import amf.apicontract.client.platform.model.domain.bindings.{
-  ChannelBindings,
-  EmptyBinding,
-  MessageBindings,
-  OperationBindings,
-  ServerBinding,
-  ServerBindings
-}
-import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
+import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.plugins.document.{WebApi => WebApiObject}
-import amf.plugins.domain.apicontract.models.{
-  amf,
-  apicontract,
-  client,
-  domain,
-  model,
-  scala,
-  bindings => InternalBindings
-}
+import amf.shapes.client.platform.model.domain.AnyShape
 import org.scalatest.{FunSuite, Matchers}
 
 class BindingsTest extends FunSuite with Matchers {
-  WebApiObject.register()
 
   val s                                    = "test string"
   val stringSeq                            = Seq(s)
