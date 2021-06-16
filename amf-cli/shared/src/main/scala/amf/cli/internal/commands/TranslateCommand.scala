@@ -1,12 +1,12 @@
 package amf.cli.internal.commands
 
+import amf.aml.client.scala.AMLConfiguration
+import amf.aml.client.scala.model.document.DialectInstance
+import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.apicontract.client.scala.config.AMFConfiguration
-import amf.client.environment.AMLConfiguration
-import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Platform
-import amf.plugins.document.vocabularies.model.document.DialectInstance
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}

@@ -1,8 +1,8 @@
 package amf.apicontract.client.platform
 
+import amf.aml.client.platform.BaseAMLClient
 import amf.apicontract.client.platform.config.AMFConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.client.exported.BaseAMLClient
 import amf.core.client.platform.AMFResult
 import amf.core.client.platform.model.document.BaseUnit
 import amf.apicontract.client.scala.{AMFClient => InternalAMFClient}

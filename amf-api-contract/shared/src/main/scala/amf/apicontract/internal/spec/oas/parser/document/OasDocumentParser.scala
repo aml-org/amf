@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.document
 
+import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.document.{Extension, Overlay}
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.security.{SecurityRequirement, SecurityScheme}
@@ -32,7 +33,6 @@ import amf.core.internal.parser.domain.{Annotations, ArrayNode, ScalarNode, Sear
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
-import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.shapes.client.scala.domain.models.CreativeWork
 import amf.shapes.client.scala.domain.models.ExampleTracking.tracking
 import amf.shapes.internal.spec.ShapeParserContext

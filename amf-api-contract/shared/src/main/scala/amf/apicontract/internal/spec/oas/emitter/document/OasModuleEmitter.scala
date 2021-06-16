@@ -15,7 +15,6 @@ import amf.core.internal.render.BaseEmitters.{ValueEmitter, _}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
-import amf.plugins.document.vocabularies.emitters.dialects.ReferencesEmitter
 import amf.shapes.internal.spec.common.emitter.{
   DataNodeEmitter,
   NamedExampleEmitter,

@@ -12,9 +12,9 @@ import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.RegexConverter
-import amf.plugins.features.validation.shacl.custom.CustomShaclValidator.CustomShaclFunctions
 import amf.shapes.client.scala.domain.models.{FileShape, IriTemplateMapping, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel._
+import amf.validation.internal.shacl.custom.CustomShaclValidator.CustomShaclFunctions
 
 import java.util.regex.Pattern
 

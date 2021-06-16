@@ -1,8 +1,8 @@
 package amf.apicontract.internal.spec.common.parser
 
+import amf.aml.internal.parse.common.DeclarationKeyCollector
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.PathTemplateUnbalancedParameters
 import amf.core.internal.parser.domain.BaseSpecParser
-import amf.plugins.document.vocabularies.parser.common.DeclarationKeyCollector
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import org.yaml.model._
 

@@ -1,5 +1,7 @@
 package amf.apicontract.client.scala.config
 
+import amf.aml.client.scala.AMLConfiguration
+import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.client.scala.AMFClient
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
@@ -16,7 +18,6 @@ import amf.apicontract.internal.spec.raml.{
   Raml10ParsePlugin,
   Raml10RenderPlugin
 }
-import amf.client.environment.AMLConfiguration
 import amf.core.client.platform.config.AMFLogger
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
@@ -54,7 +55,6 @@ import amf.apicontract.internal.transformation.compatibility.{
 import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.shacl.{CustomShaclModelValidationPlugin, FullShaclModelValidationPlugin}
-import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.shapes.client.scala.annotations.ShapeSerializableAnnotations
 import amf.shapes.client.scala.entities.ShapeEntities
 

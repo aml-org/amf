@@ -1,7 +1,7 @@
 package amf.apicontract.client.scala
 
+import amf.aml.client.scala.AMLClient
 import amf.apicontract.client.scala.config.AMFConfiguration
-import amf.client.environment.AMLClient
 import amf.core.client.common.transform._
 import amf.core.client.scala.AMFResult
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}

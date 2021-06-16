@@ -1,6 +1,6 @@
 package amf.cli.internal.convert
 
-import amf.client.convert.VocabulariesClientConverter.{ClientFuture, ClientList, ClientOption}
+import amf.aml.internal.convert.VocabulariesClientConverter.{ClientFuture, ClientList, ClientOption}
 
 import java.util
 import java.util.concurrent.CompletableFuture

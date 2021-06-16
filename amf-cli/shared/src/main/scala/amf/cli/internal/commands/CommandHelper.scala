@@ -1,8 +1,9 @@
 package amf.cli.internal.commands
 
+import amf.aml.client.scala.AMLConfiguration
+import amf.aml.internal.utils.VocabulariesRegister
 import amf.apicontract.client.scala.config.AMFConfiguration
 import amf.apicontract.internal.convert.ApiRegister
-import amf.client.environment.AMLConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
@@ -10,7 +11,6 @@ import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
 import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
 import amf.core.internal.remote.{Cache, Context, Platform, Vendor}
-import amf.plugins.domain.VocabulariesRegister
 
 import scala.concurrent.{ExecutionContext, Future}
 

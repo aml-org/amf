@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.common.parser
 
+import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.annotations.{DeclaredElement, ExternalFragmentRef}
@@ -7,7 +8,6 @@ import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
-import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   InvalidAbstractDeclarationType,

@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.aml.internal.utils.VocabulariesRegister
 import amf.apicontract.client.scala.config.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
@@ -7,7 +8,6 @@ import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote.{Platform, Vendor}
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.plugins.domain.VocabulariesRegister
 
 import scala.concurrent.{ExecutionContext, Future}
 

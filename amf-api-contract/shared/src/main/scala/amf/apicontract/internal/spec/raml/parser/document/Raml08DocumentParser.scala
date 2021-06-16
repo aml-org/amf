@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.raml.parser.document
 
+import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.internal.spec.common.parser.{AbstractDeclarationParser, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
@@ -13,7 +14,6 @@ import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AmfStrings, UriUtils}
-import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.shapes.internal.spec.RamlTypeDefMatcher
 import amf.shapes.internal.spec.raml.parser.{Raml08TypeParser, StringDefaultType}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidTypeDefinition

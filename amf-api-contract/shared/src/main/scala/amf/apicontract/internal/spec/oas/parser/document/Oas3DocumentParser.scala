@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.document
 
+import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
@@ -20,7 +21,6 @@ import amf.apicontract.internal.spec.oas.parser.domain.{
 }
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.internal.parser.{Root, YMapOps}
-import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.shapes.internal.spec.common.parser.Oas3NamedExamplesParser
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 

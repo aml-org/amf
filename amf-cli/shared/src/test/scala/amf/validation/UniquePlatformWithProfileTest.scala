@@ -3,7 +3,7 @@ package amf.validation
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.{Hint, Raml10YamlHint}
-import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
+import amf.validation.internal.emitters.ValidationReportJSONLDEmitter
 
 class UniquePlatformWithProfileTest extends UniquePlatformReportGenTest {
 

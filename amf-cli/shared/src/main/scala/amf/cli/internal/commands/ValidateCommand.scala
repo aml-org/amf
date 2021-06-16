@@ -1,15 +1,15 @@
 package amf.cli.internal.commands
 
+import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
+import amf.aml.client.scala.model.domain.DialectDomainElement
+import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
+import amf.aml.internal.validate.custom.ParsedValidationProfile
 import amf.apicontract.client.scala.config.AMFConfiguration
-import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Platform
-import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
-import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
-import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
+import amf.validation.internal.emitters.ValidationReportJSONLDEmitter
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}

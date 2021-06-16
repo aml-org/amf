@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.async.parser.document
 
+import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
 import amf.apicontract.client.scala.model.domain.bindings.{
   ChannelBindings,
@@ -39,7 +40,6 @@ import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.parser.{Root, YMapOps}
-import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
