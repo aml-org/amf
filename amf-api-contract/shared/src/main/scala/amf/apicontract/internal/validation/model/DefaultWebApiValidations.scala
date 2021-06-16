@@ -1,13 +1,24 @@
 package amf.apicontract.internal.validation.model
 
+import amf.apicontract.internal.validation.definitions.{ParserSideValidations, ResolutionSideValidations}
 import amf.apicontract.internal.validation.model.AMFRawValidations.{AMFValidation, ProfileValidations}
 import amf.core.client.common.validation.SeverityLevels.VIOLATION
 import amf.core.client.common.validation.{AmfProfile, ProfileName, ProfileNames, SeverityLevels}
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.validation.core.{SeverityMapping, ShaclSeverityUris, ValidationProfile, ValidationSpecification}
+import amf.core.internal.validation.core.{
+  SeverityMapping,
+  ShaclSeverityUris,
+  ValidationProfile,
+  ValidationSpecification
+}
 import amf.core.internal.validation.{CoreParserValidations, CorePayloadValidations}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations.ConstraintSeverityOverrides
+import amf.shapes.internal.validation.definitions.{
+  RenderSideValidations,
+  ShapeParserSideValidations,
+  ShapePayloadValidations
+}
 
 trait ImportUtils {
   protected def validationId(validation: AMFValidation): String =

@@ -5,6 +5,7 @@ import amf.core.client.scala.model.domain.{AmfElement, DataNode, ScalarNode, Sha
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.ValidationCandidate
+import amf.shapes.client.scala.domain.models.AnyShape
 
 object EnumInShapesCollector extends ValidationCandidateCollector {
 

@@ -1,6 +1,7 @@
 package amf.apicontract.internal.validation.shacl
 
 import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.DataNodeModel
 import amf.core.internal.validation.core.ShaclValidationOptions
 
 case class DefaultShaclOptions() extends ShaclValidationOptions {

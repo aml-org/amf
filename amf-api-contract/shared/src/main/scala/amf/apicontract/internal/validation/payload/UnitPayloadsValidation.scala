@@ -9,6 +9,8 @@ import amf.core.internal.benchmark.ExecutionLog
 import amf.core.internal.metamodel.document.PayloadFragmentModel
 import amf.core.internal.plugins.payload.ErrorFallbackValidationPlugin
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
+import amf.shapes.internal.validation.definitions.ShapePayloadValidations
+import amf.shapes.internal.validation.definitions.ShapePayloadValidations.SchemaException
 
 import scala.concurrent.{ExecutionContext, Future}
 

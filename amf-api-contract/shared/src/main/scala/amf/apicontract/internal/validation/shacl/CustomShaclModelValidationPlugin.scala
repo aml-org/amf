@@ -1,5 +1,6 @@
 package amf.apicontract.internal.validation.shacl
 
+import amf.apicontract.internal.validation.plugin.BaseApiValidationPlugin.standardApiProfiles
 import amf.core.internal.plugins.validation.ValidationInfo
 import amf.core.internal.validation.core.ShaclValidationOptions
 import amf.plugins.features.validation.shacl.ShaclValidator

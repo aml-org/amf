@@ -4,6 +4,7 @@ import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
 import org.mulesoft.common.core.CachedFunction
+import org.mulesoft.common.functional.MonadInstances.identityMonad
 
 import scala.concurrent.{ExecutionContext, Future}
 
