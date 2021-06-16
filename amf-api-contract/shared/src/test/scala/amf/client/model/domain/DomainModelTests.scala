@@ -33,6 +33,7 @@ import amf.apicontract.client.platform.model.domain.{
   Tag,
   TemplatedLink
 }
+import amf.apicontract.client.scala.config.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
 import amf.shapes.client.platform.model.domain.{
@@ -43,9 +44,9 @@ import amf.shapes.client.platform.model.domain.{
   PropertyDependencies,
   XMLSerializer
 }
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
 
-class DomainModelTests extends FunSuite with Matchers {
+class DomainModelTests extends FunSuite with Matchers with BeforeAndAfterAll {
 
   val s                                    = "test string"
   val clientStringList: ClientList[String] = Seq(s).asClient
@@ -53,6 +54,10 @@ class DomainModelTests extends FunSuite with Matchers {
   val parameters                           = Seq(new Parameter()._internal)
   val settings                             = new Settings()
   val creativeWork                         = new CreativeWork()
+
+  override protected def beforeAll(): Unit = {
+    APIConfiguration.API() // TODO: ARM remove after wrappers are deleted
+  }
 
   test("test CreativeWork") {
     val creativeWork: CreativeWork = new CreativeWork()

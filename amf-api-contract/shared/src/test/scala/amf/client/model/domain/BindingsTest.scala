@@ -11,16 +11,21 @@ import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
 }
 import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
 import amf.apicontract.client.platform.model.domain.bindings._
+import amf.apicontract.client.scala.config.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.shapes.client.platform.model.domain.AnyShape
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
 
-class BindingsTest extends FunSuite with Matchers {
+class BindingsTest extends FunSuite with Matchers with BeforeAndAfterAll {
 
   val s                                    = "test string"
   val stringSeq                            = Seq(s)
   val clientStringList: ClientList[String] = stringSeq.asClient
   val shape                                = new AnyShape()
+
+  override protected def beforeAll(): Unit = {
+    APIConfiguration.API() // TODO: ARM remove after wrappers are deleted
+  }
 
   test("test Amqp091ChannelExchange") {
     val exchange = new Amqp091ChannelExchange()
@@ -32,6 +37,7 @@ class BindingsTest extends FunSuite with Matchers {
     exchange.durable.value() shouldBe true
     exchange.autoDelete.value() shouldBe false
     exchange.vHost.value() shouldBe s
+
   }
 
   test("test Amqp091Queue") {

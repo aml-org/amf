@@ -7,6 +7,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.Una
 import amf.core.client.scala.model.domain.{AmfScalar, NamedDomainElement}
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.YScalarYRead
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}

@@ -12,7 +12,7 @@ import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, YMapEntryLik
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.oas.parser
 import amf.shapes.internal.spec.oas.parser.TypeDetector.LinkCriteria
-import org.yaml.model._
+import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YPart, YScalar}
 
 /**
   * OpenAPI Type Parser.
