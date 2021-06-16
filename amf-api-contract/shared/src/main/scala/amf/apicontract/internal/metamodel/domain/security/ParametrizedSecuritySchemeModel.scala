@@ -1,12 +1,12 @@
 package amf.apicontract.internal.metamodel.domain.security
 
+import amf.apicontract.client.scala.model.domain.security.ParametrizedSecurityScheme
 import amf.core.client.scala.vocabulary.Namespace.{Core, Security}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Str
-import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.domain.templates.KeyField
-import amf.apicontract.client.scala.model.domain.security.ParametrizedSecurityScheme
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
 object ParametrizedSecuritySchemeModel extends DomainElementModel with KeyField {
 

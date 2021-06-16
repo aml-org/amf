@@ -1,5 +1,13 @@
 package amf.apicontract.internal.metamodel.domain
 
+import amf.apicontract.client.scala.model.domain.Tag
+import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Core}
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.shapes.internal.domain.metamodel.CreativeWorkModel
+
 /**
   * Tag meta model
   */

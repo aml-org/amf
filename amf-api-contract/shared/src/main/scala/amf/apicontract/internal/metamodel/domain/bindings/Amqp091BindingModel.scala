@@ -1,11 +1,11 @@
 package amf.apicontract.internal.metamodel.domain.bindings
 
-import amf.core.client.scala.model.domain.AmfObject
-import amf.core.internal.metamodel.Type.{Array, Bool, Int, Str}
 import amf.apicontract.client.scala.model.domain.bindings.amqp._
+import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.ApiBinding
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Array, Bool, Int, Str}
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 

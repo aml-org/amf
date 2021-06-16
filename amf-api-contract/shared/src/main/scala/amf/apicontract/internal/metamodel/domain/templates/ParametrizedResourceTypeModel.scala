@@ -1,10 +1,10 @@
 package amf.apicontract.internal.metamodel.domain.templates
 
+import amf.apicontract.client.scala.model.domain.templates.ParametrizedResourceType
 import amf.core.client.scala.vocabulary.Namespace.ApiContract
 import amf.core.client.scala.vocabulary.ValueType
-import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.domain.templates.ParametrizedDeclarationModel
-import amf.apicontract.client.scala.model.domain.templates.ParametrizedResourceType
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 
 object ParametrizedResourceTypeModel extends ParametrizedDeclarationModel {
   override val `type`

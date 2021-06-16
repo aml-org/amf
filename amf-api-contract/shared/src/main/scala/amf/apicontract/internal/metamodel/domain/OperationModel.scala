@@ -1,6 +1,8 @@
 package amf.apicontract.internal.metamodel.domain
 
 import amf.apicontract.client.scala.model.domain.Operation
+import amf.apicontract.internal.metamodel.domain.bindings.OperationBindingsModel
+import amf.apicontract.internal.metamodel.domain.security.SecurityRequirementModel
 import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
@@ -8,6 +10,7 @@ import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.shapes.internal.domain.metamodel.common.DocumentationField
 
 /**
   * Operation meta model.

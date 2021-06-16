@@ -1,11 +1,11 @@
 package amf.apicontract.internal.metamodel.domain.security
 
+import amf.apicontract.client.scala.model.domain.security.Scope
+import amf.core.client.scala.vocabulary.Namespace.{Core, Security}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.apicontract.client.scala.model.domain.security.Scope
 import amf.core.internal.metamodel.Type.Str
-import amf.core.client.scala.vocabulary.Namespace.{Core, Security}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
 object ScopeModel extends DomainElementModel {
 

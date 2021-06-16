@@ -5,9 +5,10 @@ import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Core, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
+import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.internal.metamodel.domain._
+import amf.shapes.internal.domain.metamodel.common.ExamplesField
 
 /**
   * Payload metamodel.
