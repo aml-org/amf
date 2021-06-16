@@ -76,6 +76,10 @@ class Validation(platform: Platform) {
     validator.loadValidationProfile(validationProfilePath, errorHandler = errorHandler)
   }
 
+  def loadValidationProfileString(content: String, errorHandler: ErrorHandler): Future[ProfileName] = {
+    validator.loadValidationProfileString(content, errorHandler = errorHandler)
+  }
+
   def validate(model: BaseUnit,
                profileName: ProfileName,
                messageStyle: MessageStyle = RAMLStyle,
