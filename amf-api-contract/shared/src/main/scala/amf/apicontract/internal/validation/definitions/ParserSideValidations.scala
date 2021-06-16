@@ -256,6 +256,11 @@ object ParserSideValidations extends Validations {
     "Unable to parse shape"
   )
 
+  val InvalidAst = validation(
+    "invalid-ast",
+    "Failed semantic validation for parsed AST"
+  )
+
   val JsonSchemaFragmentNotFound = validation(
     "json-schema-fragment-not-found",
     "Json schema fragment not found"
