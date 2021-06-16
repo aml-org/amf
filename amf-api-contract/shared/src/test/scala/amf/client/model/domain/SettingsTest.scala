@@ -1,24 +1,11 @@
 package amf.client.model.domain
 
-import amf.apicontract.client.platform.model.domain.OpenIdConnectSettings
-import amf.apicontract.client.platform.model.domain.security.{
-  ApiKeySettings,
-  HttpApiKeySettings,
-  HttpSettings,
-  OAuth1Settings,
-  OAuth2Flow,
-  OAuth2Settings,
-  OpenIdConnectSettings,
-  Scope,
-  Settings
-}
+import amf.apicontract.client.platform.model.domain.security._
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
-import amf.plugins.document.{WebApi => WebApiObject}
 import org.scalatest.{FunSuite, Matchers}
 
 class SettingsTest extends FunSuite with Matchers {
-  WebApiObject.register()
 
   val s                                    = "test string"
   val clientStringList: ClientList[String] = Seq(s).asClient

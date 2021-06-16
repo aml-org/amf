@@ -1,36 +1,14 @@
 package amf.cli.internal.convert
 
-import _root_.org.scalatest.{Assertion, Matchers}
+import _root_.org.scalatest.Matchers
 import amf.apicontract.client.platform.config.{
   AMFConfiguration,
   AsyncAPIConfiguration,
   RAMLConfiguration,
   WebAPIConfiguration
 }
-import amf.cli.internal.convert.NativeOps
-import amf.client.exported._
-import amf.client.model.domain._
-import amf.core.client.common.remote.Content
-import amf.core.client.common.validation.Raml10Profile
-import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document}
-import amf.core.client.platform.parse.AMFParser
-import amf.core.client.platform.resource.{ClientResourceLoader, ResourceNotFound}
-import amf.core.client.scala.model.document.{Document => InternalDocument}
-import amf.core.client.platform.model.domain.Shape
-import amf.core.client.common.transform._
-import amf.core.client.platform.validation.AMFValidationReport
-import amf.core.internal.convert.CoreClientConverters.{ClientFuture, ClientLoader}
 import amf.core.internal.remote._
-import amf.core.internal.resource.{ClientResourceLoaderAdapter, ResourceLoader}
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
-import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import org.mulesoft.common.test.Diff
-import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.apicontract.internal.transformation.Raml10TransformationPipeline
-import amf.core.client.platform.model.domain.{ObjectNode, ScalarNode}
-import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.client.scala.vocabulary.Namespace
-import amf.core.client.scala.vocabulary.Namespace.Xsd
 import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}

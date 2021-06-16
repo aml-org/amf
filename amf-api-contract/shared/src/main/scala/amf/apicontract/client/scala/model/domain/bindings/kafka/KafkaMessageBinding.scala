@@ -6,7 +6,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.bindings.KafkaMessageBindingModel
 import amf.apicontract.internal.metamodel.domain.bindings.KafkaMessageBindingModel._
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, MessageBinding}
-import amf.apicontract.internal.transformation.stages.Key
+import amf.shapes.client.scala.domain.models.Key
 
 class KafkaMessageBinding(override val fields: Fields, override val annotations: Annotations)
     extends MessageBinding

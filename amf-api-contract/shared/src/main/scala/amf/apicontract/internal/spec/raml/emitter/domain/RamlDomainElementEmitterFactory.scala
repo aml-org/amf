@@ -43,12 +43,12 @@ case class Raml10EmitterFactory()(implicit val ctx: Raml10SpecEmitterContext) ex
     Some(Raml10OperationPartEmitter(o, SpecOrdering.Lexical, Nil))
 
   override def payloadEmitter(p: Payload): Option[PartEmitter] =
-    Some(emitter.EntryToPartEmitterAdapter(Raml10PayloadEmitter(p, SpecOrdering.Lexical, Nil)))
+    Some(EntryToPartEmitterAdapter(Raml10PayloadEmitter(p, SpecOrdering.Lexical, Nil)))
 
   override def endpointEmitter(e: EndPoint): Option[PartEmitter] = Some(Raml10EndPointEmitter(e, SpecOrdering.Lexical))
 
   override def customDomainPropertyEmitter(c: CustomDomainProperty): Option[PartEmitter] =
-    Some(new NamedPropertyTypeEmitter(c, Nil, SpecOrdering.Lexical))
+    Some(NamedPropertyTypeEmitter(c, Nil, SpecOrdering.Lexical))
 }
 
 object Raml10EmitterFactory {
@@ -85,7 +85,7 @@ object Raml08EmitterFactory {
 trait RamlEmitterFactory extends DomainElementEmitterFactory {
 
   implicit val ctx: RamlSpecEmitterContext
-  protected implicit val shapeCtx: RamlShapeEmitterContextAdapter = emitter.RamlShapeEmitterContextAdapter(ctx)
+  protected implicit val shapeCtx: RamlShapeEmitterContextAdapter = RamlShapeEmitterContextAdapter(ctx)
 
   override def exampleEmitter(example: Example): Option[PartEmitter] =
     Some(RamlExampleValuesEmitter(example, SpecOrdering.Lexical))

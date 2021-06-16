@@ -11,7 +11,6 @@ import amf.apicontract.internal.spec.async.emitters.domain.{
 }
 import amf.apicontract.internal.spec.common.emitter
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SecurityRequirementsEmitter}
-import amf.apicontract.internal.spec.oas.emitter.TagsEmitter
 import amf.apicontract.internal.spec.oas.emitter.domain.{InfoEmitter, TagsEmitter}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.annotations.SourceVendor
@@ -21,6 +20,7 @@ import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter,
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.client.scala.domain.models.CreativeWork
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 

@@ -23,7 +23,9 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils._
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.shapes.client.scala.annotations.OrphanOasExtension
+import amf.shapes.client.scala.domain.models.AnyShape
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.raml.emitter.{Raml10TypePartEmitter, RamlNamedTypeEmitter, RamlTypePartEmitter}
 import org.yaml.model.YDocument.PartBuilder
 
 import scala.collection.mutable

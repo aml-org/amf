@@ -1,14 +1,13 @@
 package amf.maker
 
 import amf.apicontract.client.scala.config.WebAPIConfiguration
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.remote._
-import amf.facades.Validation
-import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.shapes.client.scala.domain.models.DomainExtensions.propertyShapeToPropertyShape
 import amf.shapes.client.scala.domain.models.{AnyShape, NodeShape}
 import org.scalatest.{Assertion, Succeeded}

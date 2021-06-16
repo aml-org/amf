@@ -1,14 +1,14 @@
 package amf.client.model.domain
 
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.platform.model.domain.{PropertyShape, ScalarNode}
+import amf.core.client.platform.model.domain._
 import amf.core.internal.convert.CoreRegister
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.plugins.document.{WebApi => WebApiObject}
+import amf.shapes.client.platform.model.domain._
 import org.scalatest.{FunSuite, Matchers}
 
 class ShapesTest extends FunSuite with Matchers with PlatformSecrets {
-  WebApiObject.register()
+
   CoreRegister.register(platform)
 
   val s                                                     = "test string"

@@ -18,7 +18,7 @@ class AMFClient private (private val _internal: InternalAMFClient) extends BaseA
 
   @JSExportTopLevel("AMFClient")
   def this(configuration: AMFConfiguration) = {
-    this(new AMFClient(configuration))
+    this(new InternalAMFClient(configuration))
   }
 
   override def getConfiguration(): AMFConfiguration = _internal.getConfiguration

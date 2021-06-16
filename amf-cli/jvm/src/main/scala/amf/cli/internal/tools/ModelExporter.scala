@@ -22,7 +22,10 @@ object ModelExporter {
   }
 
   def getModelsByReflection: List[Obj] = {
-    val reflections = List(new Reflections("amf.plugins"), new Reflections("amf.core"))
+    val reflections = List(new Reflections("amf.apicontract.internal"),
+                           new Reflections("amf.shapes.internal"),
+                           new Reflections("amf.core.internal"),
+                           new Reflections("amf.plugins"))
     ObjLoader.loadObjs(reflections)
   }
 

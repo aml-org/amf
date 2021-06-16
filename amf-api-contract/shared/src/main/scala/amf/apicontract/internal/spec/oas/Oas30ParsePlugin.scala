@@ -3,7 +3,6 @@ package amf.apicontract.internal.spec.oas
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.oas.OasHeader.Oas30Header
 import amf.apicontract.internal.spec.oas.parser.context.{Oas3WebApiContext, OasWebApiContext}
-import amf.apicontract.internal.spec.oas.parser.OasFragmentParser
 import amf.apicontract.internal.spec.oas.parser.document.{Oas3DocumentParser, OasFragmentParser}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.exception.InvalidDocumentHeaderException
@@ -11,9 +10,6 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{Oas30, Vendor}
-import amf.plugins.document.apicontract.parser.OasHeader.Oas30Header
-import amf.plugins.document.apicontract.parser.spec.oas.Oas3DocumentParser
-import amf.shapes.internal.spec.contexts.parser.oas.OasWebApiContext
 
 object Oas30ParsePlugin extends OasParsePlugin {
 

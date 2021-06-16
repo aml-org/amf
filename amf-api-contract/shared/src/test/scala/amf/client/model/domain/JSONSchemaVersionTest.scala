@@ -1,7 +1,6 @@
 package amf.client.model.domain
 
-import amf.plugins.document.apicontract.parser.spec.declaration._
-import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaDraft6SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaUnspecifiedVersion}
+import amf.shapes.internal.spec.common._
 import org.scalatest.{FunSuite, Matchers}
 
 class JSONSchemaVersionTest extends FunSuite with Matchers{

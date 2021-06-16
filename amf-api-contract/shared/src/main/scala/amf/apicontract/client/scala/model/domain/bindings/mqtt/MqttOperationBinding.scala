@@ -6,7 +6,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.bindings.MqttOperationBindingModel
 import amf.apicontract.internal.metamodel.domain.bindings.MqttOperationBindingModel._
 import amf.apicontract.client.scala.model.domain.bindings.{BindingVersion, OperationBinding}
-import amf.apicontract.internal.transformation.stages.Key
+import amf.shapes.client.scala.domain.models.Key
 
 class MqttOperationBinding(override val fields: Fields, override val annotations: Annotations)
     extends OperationBinding

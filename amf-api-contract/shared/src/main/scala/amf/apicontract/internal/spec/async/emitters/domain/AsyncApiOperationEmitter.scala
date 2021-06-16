@@ -4,7 +4,6 @@ import amf.apicontract.client.scala.model.domain.{Operation, Tag}
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.spec.async.AsyncHelper
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import amf.apicontract.internal.spec.oas.emitter.TagsEmitter
 import amf.apicontract.internal.spec.oas.emitter.domain.{
   OasLikeOperationEmitter,
   OasLikeOperationPartEmitter,

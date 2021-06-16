@@ -6,7 +6,6 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.facades.Validation
 import org.mulesoft.common.test.Tests.checkDiff
 import org.scalatest.AsyncFunSuite
 

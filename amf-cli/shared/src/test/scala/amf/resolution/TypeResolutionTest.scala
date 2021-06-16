@@ -13,8 +13,6 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.remote.{Raml10, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.apicontract.parser.spec.raml.expression.RamlExpressionParser
-import amf.plugins.document.apicontract.parser.ShapeParserContext
 import amf.shapes.client.scala.domain.models.{ArrayShape, MatrixShape, ScalarShape, UnionShape}
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser

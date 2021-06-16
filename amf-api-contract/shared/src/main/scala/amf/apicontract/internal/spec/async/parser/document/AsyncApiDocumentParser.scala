@@ -26,7 +26,6 @@ import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.parser.domain._
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.document.OasLikeDeclarationsHelper
-import amf.apicontract.internal.spec.oas.parser.OasLikeTagsParser
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser, OasLikeTagsParser}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   InvalidIdentifier,

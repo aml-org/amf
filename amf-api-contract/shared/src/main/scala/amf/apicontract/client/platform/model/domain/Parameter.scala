@@ -4,7 +4,7 @@ import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement,
 import amf.core.client.platform.model.{BoolField, StrField}
 import amf.apicontract.client.scala.model.domain.{Parameter => InternalParameter}
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.shapes.client.platform.model.domain.Example
+import amf.shapes.client.platform.model.domain.{Example, NodeShape, ScalarShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

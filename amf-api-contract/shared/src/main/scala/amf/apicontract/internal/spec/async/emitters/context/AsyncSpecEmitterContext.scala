@@ -21,10 +21,9 @@ import amf.core.internal.remote.{AsyncApi20, Vendor}
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
-import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
-import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, RefEmitter, TagToReferenceEmitter}
 import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
-import amf.shapes.internal.spec.contexts.emitter.OasLikeSpecEmitterFactory
+import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, RefEmitter, TagToReferenceEmitter}
+import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.oas.emitter.{OasRecursiveShapeEmitter, OasTypeEmitter}
 import org.yaml.model.YDocument.PartBuilder
 

@@ -1,4 +1,4 @@
-package amf.plugins.document.apicontract.parser.spec.jsonschema
+package amf.shapes.internal.spec.jsonschema.ref
 
 import amf.apicontract.client.scala.config.WebAPIConfiguration
 import amf.apicontract.internal.spec.async.parser.context.Async20WebApiContext
@@ -9,13 +9,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
-import amf.shapes.internal.spec.common.{
-  JSONSchemaDraft201909SchemaVersion,
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaDraft7SchemaVersion,
-  JSONSchemaVersion
-}
-import amf.shapes.internal.spec.jsonschema.ref.{AstIndex, AstIndexBuilder}
+import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
 import org.scalatest.Matchers.convertToAnyShouldWrapper
 import org.scalatest.{Assertion, FunSuite, Matchers}
 import org.yaml.model.{YMap, YNode}

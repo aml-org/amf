@@ -8,6 +8,11 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
+import amf.shapes.client.scala.domain.models.{Example, ScalarShape}
+import amf.shapes.internal.domain.metamodel.{ExampleModel, ScalarShapeModel}
+import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
+import amf.shapes.internal.spec.common.parser.NodeDataNodeParser
+import org.yaml.model.YDocument
 
 sealed trait PreMergeTransform {
   def transform(main: DomainElement, overlay: DomainElement): DomainElement

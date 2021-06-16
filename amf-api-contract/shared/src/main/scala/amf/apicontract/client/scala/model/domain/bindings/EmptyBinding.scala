@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.apicontract.internal.metamodel.domain.bindings.BindingType.Type
 import amf.apicontract.internal.metamodel.domain.bindings.EmptyBindingModel
-import amf.apicontract.internal.transformation.stages.Key
+import amf.shapes.client.scala.domain.models.Key
 import amf.core.internal.utils.AmfStrings
 
 class EmptyBinding(override val fields: Fields, override val annotations: Annotations)

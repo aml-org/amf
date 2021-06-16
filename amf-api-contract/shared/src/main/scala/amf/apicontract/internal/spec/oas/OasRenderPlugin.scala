@@ -1,12 +1,11 @@
 package amf.apicontract.internal.spec.oas
 
 import amf.apicontract.client.scala.model.document.{Extension, Overlay}
+import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.plugins.ApiRenderPlugin
 import amf.core.client.scala.model.document.{Document, Fragment, Module}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.plugins.render.RenderInfo
-import amf.plugins.document.apicontract.model.Overlay
-import amf.apicontract.client.scala.model.domain.api.Api
 
 trait OasRenderPlugin extends ApiRenderPlugin {
 

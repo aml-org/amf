@@ -1,15 +1,12 @@
 package amf.cli.internal.convert
 
 import amf.apicontract.client.scala.config.AMFConfiguration
-import amf.client.environment.AsyncAPIConfiguration
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.render.AMFSerializer
 import org.yaml.builder.JsOutputBuilder
 import org.yaml.model.YDocument
 import org.yaml.parser.JsonParser
 import org.yaml.render.JsonRender
 
-import scala.concurrent.Future
 import scala.scalajs.js
 
 class JsOutputBuilderTest extends DocBuilderTest {

@@ -8,7 +8,6 @@ import amf.apicontract.internal.spec.common.parser.{
   SettingsProducers,
   WebApiShapeParserContextAdapter
 }
-import amf.apicontract.internal.spec.oas.parser.OAuth2FlowValidations
 import amf.apicontract.internal.spec.oas.parser.domain.{OAuth2FlowValidations, OasLikeSecuritySettingsParser}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps

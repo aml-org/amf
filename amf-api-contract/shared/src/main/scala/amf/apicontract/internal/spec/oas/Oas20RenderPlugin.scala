@@ -1,7 +1,6 @@
 package amf.apicontract.internal.spec.oas
 
 import amf.apicontract.internal.spec.oas.emitter.context.{Oas2SpecEmitterContext, OasSpecEmitterContext}
-import amf.apicontract.internal.spec.oas.emitter.OasFragmentEmitter
 import amf.apicontract.internal.spec.oas.emitter.document.{Oas20ModuleEmitter, Oas2DocumentEmitter, OasFragmentEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
@@ -9,8 +8,6 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment, Fragment, Module}
 import amf.core.internal.plugins.render.AMFRenderPlugin.APPLICATION_JSON
 import amf.core.internal.remote.Vendor
-import amf.plugins.document.apicontract.parser.spec.oas.OasFragmentEmitter
-import amf.shapes.internal.spec.contexts.emitter.oas.Oas2SpecEmitterContext
 import org.yaml.model.{YDocument, YNode}
 
 object Oas20RenderPlugin extends OasRenderPlugin {

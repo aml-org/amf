@@ -2,13 +2,11 @@ package amf.apicontract.internal.spec.oas
 
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.apicontract.internal.spec.oas.parser.OasModuleParser
 import amf.apicontract.internal.spec.oas.parser.document.{OasFragmentParser, OasModuleParser}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
-import amf.plugins.document.apicontract.parser.spec.oas.OasModuleParser
 
 trait OasParsePlugin extends OasLikeParsePlugin {
 

@@ -1,11 +1,9 @@
 package amf.cli.internal.convert
 
-import amf.cli.internal.convert.NativeOps
-
-import scala.language.implicitConversions
 import amf.client.convert.VocabulariesClientConverter.{ClientFuture, ClientList, ClientOption}
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 import scala.scalajs.js
 
 class JsWrapperTests extends WrapperTests with NativeOpsFromJs {
@@ -15,6 +13,7 @@ class JsWrapperTests extends WrapperTests with NativeOpsFromJs {
 //    if (path.startsWith("/")) "file:/" + path
 //    else "file://" + path
 //  }
+
 }
 
 private[amf] trait NativeOpsFromJs extends NativeOps {

@@ -14,6 +14,7 @@ import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, Sh
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.shapes.internal.domain.metamodel.{ExampleModel, ScalarShapeModel}
 
 class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                   domainElemdomainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
