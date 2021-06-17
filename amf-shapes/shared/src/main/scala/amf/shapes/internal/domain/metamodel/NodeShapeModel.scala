@@ -34,6 +34,11 @@ object NodeShapeModel extends AnyShapeModel {
     Shacl + "additionalPropertiesSchema",
     ModelDoc(ExternalModelVocabularies.Shacl, "additionalPropertiesSchema", "Additional properties schema"))
 
+  val AdditionalPropertiesKeySchema: Field = Field(
+    ShapeModel,
+    Shacl + "additionalPropertiesKeySchema",
+    ModelDoc(ExternalModelVocabularies.Shacl, "additionalPropertiesKeySchema", "Additional properties key schema"))
+
   val Discriminator: Field =
     Field(Str, Shapes + "discriminator", ModelDoc(ModelVocabularies.Shapes, "discriminator", "Discriminator property"))
 
@@ -99,6 +104,7 @@ object NodeShapeModel extends AnyShapeModel {
     MinProperties,
     MaxProperties,
     Closed,
+    AdditionalPropertiesKeySchema,
     AdditionalPropertiesSchema,
     Discriminator,
     DiscriminatorValue,

@@ -4,8 +4,9 @@ import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
+import amf.plugins.domain.shapes.models.SerializableShape
+import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel._
-import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ScalarShapeModel}
 import org.yaml.model.YPart
 
 /**
@@ -13,7 +14,8 @@ import org.yaml.model.YPart
   */
 case class ScalarShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations)
-    with CommonShapeFields {
+    with CommonShapeFields
+    with SerializableShape {
 
   def dataType: StrField  = fields.field(DataType)
   def encoding: StrField  = fields.field(Encoding)

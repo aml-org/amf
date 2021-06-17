@@ -1,0 +1,1531 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
+        "http://a.ml/vocabularies/document#RootDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "google.protobuf",
+      "http://a.ml/vocabularies/apiContract#endpoint": [],
+      "http://a.ml/vocabularies/data#null": {
+        "@id": "null/extensionnull/data-node"
+      },
+      "http://a.ml/vocabularies/data#null": {
+        "@id": "null/extensionnull/data-node"
+      },
+      "http://a.ml/vocabularies/data#null": {
+        "@id": "null/extensionnull/data-node"
+      },
+      "http://a.ml/vocabularies/data#null": {
+        "@id": "null/extensionnull/data-node"
+      },
+      "http://a.ml/vocabularies/data#null": {
+        "@id": "null/extensionnull/data-node"
+      },
+      "http://a.ml/vocabularies/data#null": {
+        "@id": "null/extensionnull/data-node"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "http://a.ml/vocabularies/data#null"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/data#null"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/data#null"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/data#null"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/data#null"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/data#null"
+        }
+      ]
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": ,
+      "@id": "null/extensionnull/data-node",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "\"Google.Protobuf.WellKnownTypes\"",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "null/extensionnull/data-node/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "null/extensionnull/data-node/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "null/extensionnull/data-node/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "null/extensionnull/data-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "null/extensionnull/data-node",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(38,26)-(38,26)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto",
+      "http://a.ml/vocabularies/document#declares": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin"
+        }
+      ],
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api"
+      },
+      "http://a.ml/vocabularies/document#version": "3.1.0",
+      "http://a.ml/vocabularies/document#root": true
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/methods"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/mixins"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": ".google.protobuf.Api",
+      "http://a.ml/vocabularies/core#name": "Api",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": ".google.protobuf.Method",
+      "http://a.ml/vocabularies/core#name": "Method",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": ".google.protobuf.Mixin",
+      "http://a.ml/vocabularies/core#name": "Mixin",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 1,
+      "http://www.w3.org/ns/shacl#name": "name",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/methods",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 2,
+      "http://www.w3.org/ns/shacl#name": "methods",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/methods/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/Option"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 3,
+      "http://www.w3.org/ns/shacl#name": "options",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 4,
+      "http://www.w3.org/ns/shacl#name": "version",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/SourceContext"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 5,
+      "http://www.w3.org/ns/shacl#name": "source_context",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/mixins",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 6,
+      "http://www.w3.org/ns/shacl#name": "mixins",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/mixins/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/scalar/Syntax"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 7,
+      "http://www.w3.org/ns/shacl#name": "syntax",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/source-map/declared-element/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 1,
+      "http://www.w3.org/ns/shacl#name": "name",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 2,
+      "http://www.w3.org/ns/shacl#name": "request_type_url",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 3,
+      "http://www.w3.org/ns/shacl#name": "request_streaming",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 4,
+      "http://www.w3.org/ns/shacl#name": "response_type_url",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 5,
+      "http://www.w3.org/ns/shacl#name": "response_streaming",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/Option"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 6,
+      "http://www.w3.org/ns/shacl#name": "options",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/scalar/Syntax"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 7,
+      "http://www.w3.org/ns/shacl#name": "syntax",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/source-map/declared-element/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 1,
+      "http://www.w3.org/ns/shacl#name": "name",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root",
+      "@type": [
+        "http://www.w3.org/ns/shacl#PropertyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/shapes#range": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/scalar/default-scalar"
+      },
+      "http://a.ml/vocabularies/shapes#serializationOrder": 2,
+      "http://www.w3.org/ns/shacl#name": "root",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/source-map/declared-element/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#link-target": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method"
+        }
+      ],
+      "http://a.ml/vocabularies/document#link-label": ".google.protobuf.Api.Method",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/methods/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/methods/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/Option",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#link-target": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/web-api/types/.google.protobuf.Option"
+        }
+      ],
+      "http://a.ml/vocabularies/document#link-label": "Option",
+      "http://www.w3.org/ns/shacl#name": "Option",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/Option/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/SourceContext",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#link-target": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/source_context.proto#/web-api/types/.google.protobuf.SourceContext"
+        }
+      ],
+      "http://a.ml/vocabularies/document#link-label": "SourceContext",
+      "http://www.w3.org/ns/shacl#name": "SourceContext",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/SourceContext/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#link-target": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin"
+        }
+      ],
+      "http://a.ml/vocabularies/document#link-label": ".google.protobuf.Api.Mixin",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/mixins/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/mixins/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/scalar/Syntax",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#link-target": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/web-api/types/scalar/.google.protobuf.Syntax"
+        }
+      ],
+      "http://a.ml/vocabularies/document#link-label": "Syntax",
+      "http://www.w3.org/ns/shacl#name": "Syntax",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/scalar/Syntax/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(54,0)-(97,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/Option",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#link-target": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/web-api/types/.google.protobuf.Option"
+        }
+      ],
+      "http://a.ml/vocabularies/document#link-label": "Option",
+      "http://www.w3.org/ns/shacl#name": "Option",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/Option/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/scalar/Syntax",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#link-target": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/web-api/types/scalar/.google.protobuf.Syntax"
+        }
+      ],
+      "http://a.ml/vocabularies/document#link-label": "Syntax",
+      "http://www.w3.org/ns/shacl#name": "Syntax",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/scalar/Syntax/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(100,0)-(121,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/scalar/default-scalar",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/scalar/default-scalar/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(201,0)-(208,0)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(57,2)-(57,17)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/methods/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/methods",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(60,2)-(60,29)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/Option/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/Option/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/Option/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(63,2)-(63,29)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(86,2)-(86,20)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/SourceContext/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/SourceContext/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/SourceContext/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(90,2)-(90,34)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/mixins/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/mixins",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(93,2)-(93,27)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/scalar/Syntax/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/scalar/Syntax/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/scalar/Syntax/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(96,2)-(96,19)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(102,2)-(102,17)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(105,2)-(105,29)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(108,2)-(108,28)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(111,2)-(111,30)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(114,2)-(114,29)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/Option/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/Option/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/Option/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(117,2)-(117,29)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/scalar/Syntax/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/scalar/Syntax/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/scalar/Syntax/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(120,2)-(120,19)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(203,2)-(203,17)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/scalar/default-scalar/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/scalar/default-scalar/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(207,2)-(207,17)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/name/scalar/default-scalar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(57,2)-(57,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/link--540822156",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(60,11)-(60,11)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/Option/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/Option/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/options/Option",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(63,11)-(63,11)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/version/scalar/default-scalar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(86,2)-(86,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/SourceContext/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/SourceContext/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/source_context/SourceContext",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(90,2)-(90,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/link-1045913012",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(93,11)-(93,11)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/scalar/Syntax/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/scalar/Syntax/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Api/property/syntax/scalar/Syntax",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(96,2)-(96,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/name/scalar/default-scalar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(102,2)-(102,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_type_url/scalar/default-scalar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(105,2)-(105,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/request_streaming/scalar/default-scalar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(108,2)-(108,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_type_url/scalar/default-scalar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(111,2)-(111,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/response_streaming/scalar/default-scalar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(114,2)-(114,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/Option/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/Option/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/options/Option",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(117,11)-(117,11)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/scalar/Syntax/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/scalar/Syntax/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Method/property/syntax/scalar/Syntax",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(120,2)-(120,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/name/scalar/default-scalar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(203,2)-(203,2)]"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/web-api/types/.google.protobuf.Mixin/property/root/scalar/default-scalar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(207,2)-(207,2)]"
+    }
+  ]
+}
