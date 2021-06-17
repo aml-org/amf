@@ -1,13 +1,12 @@
 package amf.client.validation
 
-import amf.apicontract.client.platform.WebAPIConfiguration
+import amf.apicontract.client.platform.{AMFConfiguration, WebAPIConfiguration}
 import amf.cli.internal.convert.NativeOps
-import amf.shapes.internal.convert.ShapeClientConverters._
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode}
 import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.model.DataTypes
 import amf.core.client.platform.model.domain.{PropertyShape, RecursiveShape, Shape}
-import amf.core.client.platform.validation.AMFShapePayloadValidator
+import amf.core.client.platform.validation.payload.AMFShapePayloadValidator
 import amf.core.client.scala.model.domain.{RecursiveShape => InternalRecursiveShape}
 import amf.shapes.client.platform.model.domain._
 import amf.shapes.client.scala.model.domain.{ScalarShape => InternalScalarShape}
@@ -16,7 +15,7 @@ import org.scalatest.{AsyncFunSuite, Matchers}
 import scala.concurrent.ExecutionContext
 
 trait PayloadValidationUtils {
-  protected def defaultConfig = WebAPIConfiguration.WebAPI()
+  protected def defaultConfig: AMFConfiguration = WebAPIConfiguration.WebAPI()
 
   protected def parameterValidator(s: Shape,
                                    mediaType: String,
@@ -30,6 +29,8 @@ trait PayloadValidationUtils {
 }
 
 trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers with PayloadValidationUtils {
+
+  import amf.shapes.internal.convert.ShapeClientConverters._
 
   protected val APPLICATION_YAML = "application/yaml"
   protected val APPLICATION_JSON = "application/json"

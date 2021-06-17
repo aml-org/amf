@@ -4,9 +4,9 @@ import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.common.remote.Content
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.resource.ResourceLoader
 import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
 import amf.core.internal.remote.{Cache, Context, FileNotFound}
-import amf.core.internal.resource.ResourceLoader
 import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.Matchers
