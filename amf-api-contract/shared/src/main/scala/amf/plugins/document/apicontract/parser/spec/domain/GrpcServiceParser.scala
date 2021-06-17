@@ -1,32 +1,38 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.apicontract.client.scala.model.domain.EndPoint
-import amf.core.client.scala.parse.document.ParserContext
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
+import amf.plugins.document.apicontract.contexts.parser.grpc.GrpcWebApiContext
 import amf.plugins.document.apicontract.parser.spec.grpc.AntlrASTParserHelper
 import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes._
-import org.mulesoft.antlrast.ast.ASTElement
+import org.mulesoft.antlrast.ast.Node
 
-class GrpcServiceParser(ast: ASTElement)(implicit val ctx: ParserContext) extends AntlrASTParserHelper  {
+case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper  {
   val endpoint: EndPoint = EndPoint(toAnnotations(ast))
 
-  def parse(idx: Int): EndPoint = {
-    parseName(idx)
+  def parse(adopt: EndPoint => Unit): EndPoint = {
+    parseName(adopt)
+    parseRPCs()
     endpoint
   }
 
-    def parseName(idx: Int): Unit = {
-      path(ast, Seq(SERVICE_NAME, IDENTIFIER)) map { node =>
-        withOptTerminal(node) {
-          case Some(serviceName) =>
-            endpoint.withId(ctx.rootContextDocument + s"/services/${serviceName}").withName(serviceName.value, toAnnotations(node))
-          case None              =>
-            endpoint.withId(ctx.rootContextDocument + s"/services/${idx}")
-            astError(endpoint.id, "missing Protobuf3 service name", endpoint.annotations)
-        }
+  def parseRPCs(): Unit = {
+    collect(ast, Seq(SERVICE_ELEMENT)) foreach { case node: Node =>
+      GrpcRPCParser(node).parse({ operation: Operation =>
+        operation.adopted(endpoint.id)
+        endpoint.withOperations(endpoint.operations ++ Seq(operation))
+      })
+    }
+  }
+
+  def parseName(adopt: EndPoint => Unit): Unit = {
+    path(ast, Seq(SERVICE_NAME, IDENTIFIER)) foreach { node =>
+      withOptTerminal(node) {
+        case Some(serviceName) =>
+          endpoint.withName(serviceName.value)
+          adopt(endpoint)
+        case None              =>
+          astError(endpoint.id, "missing Protobuf3 service name", endpoint.annotations)
       }
     }
-}
-
-object GrpcServiceParser {
-  def apply(ast: ASTElement)(implicit ctx: ParserContext) = new GrpcServiceParser(ast)
+  }
 }

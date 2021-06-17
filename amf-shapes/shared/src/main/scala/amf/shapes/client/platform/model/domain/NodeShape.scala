@@ -23,6 +23,7 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def discriminatorValueMapping: ClientList[DiscriminatorValueMapping] = _internal.discriminatorValueMapping.asClient
   def properties: ClientList[PropertyShape]                            = _internal.properties.asClient
   def additionalPropertiesSchema: Shape                                = _internal.additionalPropertiesSchema
+  def additionalPropertiesKeySchema: Shape                             = _internal.additionalPropertiesKeySchema
   def dependencies: ClientList[PropertyDependencies]                   = _internal.dependencies.asClient
   def schemaDependencies: ClientList[SchemaDependencies]               = _internal.schemaDependencies.asClient
   def propertyNames: Shape                                             = _internal.propertyNames
@@ -59,6 +60,10 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   }
   def withAdditionalPropertiesSchema(additionalPropertiesSchema: Shape): this.type = {
     _internal.withAdditionalPropertiesSchema(additionalPropertiesSchema)
+    this
+  }
+  def withAdditionalPropertiesKeySchema(additionalPropertiesKeySchema: Shape): this.type = {
+    _internal.withAdditionalPropertiesKeySchema(additionalPropertiesKeySchema)
     this
   }
   def withDependencies(dependencies: ClientList[PropertyDependencies]): this.type = {

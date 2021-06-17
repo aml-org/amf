@@ -61,7 +61,7 @@
       "http://a.ml/vocabularies/apiContract#path": "{queue}",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult"
         }
       ],
       "http://a.ml/vocabularies/apiContract#parameter": [
@@ -87,7 +87,7 @@
       "http://a.ml/vocabularies/apiContract#path": "rpc_queue",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum"
         }
       ],
       "http://a.ml/vocabularies/apiBinding#binding": {
@@ -157,7 +157,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -174,7 +174,7 @@
       "http://a.ml/vocabularies/apiContract#operationId": "sendSumResult",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map"
         }
       ]
     },
@@ -233,7 +233,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -247,7 +247,7 @@
       "http://a.ml/vocabularies/apiContract#operationId": "sum",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum/source-map"
         }
       ]
     },
@@ -389,22 +389,22 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map/lexical/element_2"
         }
       ]
     },
@@ -530,19 +530,19 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum/source-map/lexical/element_1"
         }
       ]
     },
@@ -667,23 +667,23 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#binding",
       "http://a.ml/vocabularies/document-source-maps#value": "[(29,6)-(32,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
       "http://a.ml/vocabularies/document-source-maps#value": "[(32,6)-(43,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#operationId",
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,6)-(29,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/subscribe",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/%7Bqueue%7D/sendSumResult",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,4)-(43,0)]"
     },
     {
@@ -840,18 +840,18 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
       "http://a.ml/vocabularies/document-source-maps#value": "[(51,6)-(65,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#operationId",
       "http://a.ml/vocabularies/document-source-maps#value": "[(50,6)-(51,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/publish",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/rpc-server.yaml#/async-api/end-points/rpc_queue/sum",
       "http://a.ml/vocabularies/document-source-maps#value": "[(49,4)-(65,23)]"
     },
     {

@@ -40,7 +40,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#/async-api/end-points/someChannel/publish",
+                "@id": "#/async-api/end-points/someChannel/baseId",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -68,7 +68,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:operationId": "[(8,6)-(9,0)]",
-                    "#/async-api/end-points/someChannel/publish": "[(7,4)-(14,0)]"
+                    "#/async-api/end-points/someChannel/baseId": "[(7,4)-(14,0)]"
                   }
                 }
               }

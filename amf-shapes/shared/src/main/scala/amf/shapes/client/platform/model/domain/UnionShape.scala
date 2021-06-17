@@ -14,9 +14,16 @@ case class UnionShape(override private[amf] val _internal: InternalUnionShape) e
   def this() = this(InternalUnionShape())
 
   def anyOf: ClientList[Shape] = _internal.anyOf.asClient
+  def serializationSchema: Shape   = _internal.serializationSchema
 
   def withAnyOf(anyOf: ClientList[Shape]): UnionShape = {
     _internal.withAnyOf(anyOf.asInternal)
     this
   }
+
+  def withSerializationSchema(schema: Shape): this.type = {
+    _internal.withSerializationSchema(schema)
+    this
+  }
+
 }
