@@ -13,7 +13,7 @@ case class HttpMessageBinding(override private[amf] val _internal: InternalHttpM
     extends MessageBinding
     with BindingVersion {
 
-  @JSExportTopLevel("model.domain.HttpMessageBinding")
+  @JSExportTopLevel("HttpMessageBinding")
   def this() = this(InternalHttpMessageBinding())
   override protected def bindingVersion: StrField = _internal.bindingVersion
   override def withBindingVersion(bindingVersion: String): this.type = {

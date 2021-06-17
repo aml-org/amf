@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class ResourceType(override private[amf] val _internal: InternalResourceType)
     extends AbstractDeclaration(_internal) {
 
-  @JSExportTopLevel("model.domain.ResourceType")
+  @JSExportTopLevel("ResourceType")
   def this() = this(InternalResourceType())
 
   override def linkTarget: ClientOption[DomainElement] = _internal.linkTarget.asClient

@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Trait(override private[amf] val _internal: InternalTrait) extends AbstractDeclaration(_internal) {
 
-  @JSExportTopLevel("model.domain.Trait")
+  @JSExportTopLevel("Trait")
   def this() = this(InternalTrait())
 
   override def linkTarget: ClientOption[DomainElement] = _internal.linkTarget.asClient

@@ -11,7 +11,7 @@ import amf.shapes.client.scala.model.domain.{SchemaShape => InternalSchemaShape}
 @JSExportAll
 case class SchemaShape(override private[amf] val _internal: domain.SchemaShape) extends AnyShape(_internal) {
 
-  @JSExportTopLevel("model.domain.SchemaShape")
+  @JSExportTopLevel("SchemaShape")
   def this() = this(InternalSchemaShape())
 
   def mediaType: StrField            = _internal.mediaType

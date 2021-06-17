@@ -16,7 +16,7 @@ case class Parameter(override private[amf] val _internal: InternalParameter)
     extends DomainElement
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.Parameter")
+  @JSExportTopLevel("Parameter")
   def this() = this(InternalParameter())
 
   def name: StrField                = _internal.name

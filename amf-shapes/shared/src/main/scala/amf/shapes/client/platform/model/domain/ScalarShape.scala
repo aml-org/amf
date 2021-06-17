@@ -11,7 +11,7 @@ import amf.shapes.client.scala.model.domain.{ScalarShape => InternalScalarShape}
 @JSExportAll
 case class ScalarShape(override private[amf] val _internal: InternalScalarShape) extends AnyShape(_internal) {
 
-  @JSExportTopLevel("model.domain.ScalarShape")
+  @JSExportTopLevel("ScalarShape")
   def this() = this(InternalScalarShape())
 
   def dataType: StrField          = _internal.dataType

@@ -15,7 +15,7 @@ case class Callback(override private[amf] val _internal: InternalCallback)
     extends DomainElement
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.Callback")
+  @JSExportTopLevel("Callback")
   def this() = this(InternalCallback())
 
   def name: StrField       = _internal.name

@@ -12,7 +12,7 @@ import amf.shapes.client.scala.model.domain.{TupleShape => InternalTupleShape}
 @JSExportAll
 case class TupleShape(private[amf] override val _internal: InternalTupleShape) extends DataArrangeShape(_internal) {
 
-  @JSExportTopLevel("model.domain.TupleShape")
+  @JSExportTopLevel("TupleShape")
   def this() = this(InternalTupleShape())
 
   def items: ClientList[Shape] = _internal.items.asClient

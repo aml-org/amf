@@ -17,7 +17,7 @@ case class Example(override private[amf] val _internal: InternalExample)
     with Linkable
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.Example")
+  @JSExportTopLevel("Example")
   def this() = this(InternalExample())
 
   def name: StrField                 = _internal.name

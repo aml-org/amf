@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class OAuth2Flow(override private[amf] val _internal: InternalOAuth2Flow) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.OAuth2Flow")
+  @JSExportTopLevel("OAuth2Flow")
   def this() = this(InternalOAuth2Flow())
 
   def authorizationUri: StrField = _internal.authorizationUri

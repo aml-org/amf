@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Response(override private[amf] val _internal: InternalResponse) extends Message(_internal) {
 
-  @JSExportTopLevel("model.domain.Response")
+  @JSExportTopLevel("Response")
   def this() = this(InternalResponse())
 
   def statusCode: StrField             = _internal.statusCode

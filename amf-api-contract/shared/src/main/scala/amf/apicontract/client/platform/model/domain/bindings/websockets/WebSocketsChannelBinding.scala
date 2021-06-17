@@ -3,7 +3,9 @@ package amf.apicontract.client.platform.model.domain.bindings.websockets
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, ChannelBinding}
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.Shape
-import amf.apicontract.client.scala.model.domain.bindings.websockets.{WebSocketsChannelBinding => InternalWebSocketsChannelBinding}
+import amf.apicontract.client.scala.model.domain.bindings.websockets.{
+  WebSocketsChannelBinding => InternalWebSocketsChannelBinding
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -12,7 +14,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class WebSocketsChannelBinding(override private[amf] val _internal: InternalWebSocketsChannelBinding)
     extends ChannelBinding
     with BindingVersion {
-  @JSExportTopLevel("model.domain.WebSocketsChannelBinding")
+  @JSExportTopLevel("WebSocketsChannelBinding")
   def this() = this(InternalWebSocketsChannelBinding())
 
   override protected def bindingVersion: StrField = _internal.bindingVersion

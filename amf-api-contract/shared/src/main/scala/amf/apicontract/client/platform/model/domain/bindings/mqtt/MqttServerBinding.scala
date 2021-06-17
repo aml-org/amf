@@ -1,7 +1,10 @@
 package amf.apicontract.client.platform.model.domain.bindings.mqtt
 
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, ServerBinding}
-import amf.apicontract.client.scala.model.domain.bindings.mqtt.{MqttServerBinding => InternalMqttServerBinding, MqttServerLastWill => InternalMqttServerLastWill}
+import amf.apicontract.client.scala.model.domain.bindings.mqtt.{
+  MqttServerBinding => InternalMqttServerBinding,
+  MqttServerLastWill => InternalMqttServerLastWill
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.DomainElement
 import amf.core.client.platform.model.{BoolField, IntField, StrField}
@@ -12,7 +15,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class MqttServerBinding(override private[amf] val _internal: InternalMqttServerBinding)
     extends ServerBinding
     with BindingVersion {
-  @JSExportTopLevel("model.domain.MqttServerBinding")
+  @JSExportTopLevel("MqttServerBinding")
   def this() = this(InternalMqttServerBinding())
   override protected def bindingVersion: StrField = _internal.bindingVersion
   override def withBindingVersion(bindingVersion: String): this.type = {
@@ -47,7 +50,7 @@ case class MqttServerBinding(override private[amf] val _internal: InternalMqttSe
 
 @JSExportAll
 case class MqttServerLastWill(override private[amf] val _internal: InternalMqttServerLastWill) extends DomainElement {
-  @JSExportTopLevel("model.domain.MqttServerLastWill")
+  @JSExportTopLevel("MqttServerLastWill")
   def this() = this(InternalMqttServerLastWill())
 
   def topic: StrField   = _internal.topic

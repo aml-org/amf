@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class KafkaMessageBinding(override private[amf] val _internal: InternalKafkaMessageBinding)
     extends MessageBinding
     with BindingVersion {
-  @JSExportTopLevel("model.domain.KafkaMessageBinding")
+  @JSExportTopLevel("KafkaMessageBinding")
   def this() = this(InternalKafkaMessageBinding())
 
   def messageKey: Shape = _internal.messageKey

@@ -13,7 +13,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 @JSExportAll
 case class CreativeWork(private[amf] val _internal: InternalCreativeWork) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.CreativeWork")
+  @JSExportTopLevel("CreativeWork")
   def this() = this(InternalCreativeWork())
 
   def url: StrField         = _internal.url

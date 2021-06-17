@@ -1,7 +1,9 @@
 package amf.apicontract.client.platform.model.domain.bindings.amqp
 
 import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, OperationBinding}
-import amf.apicontract.client.scala.model.domain.bindings.amqp.{Amqp091OperationBinding => InternalAmqp091OperationBinding}
+import amf.apicontract.client.scala.model.domain.bindings.amqp.{
+  Amqp091OperationBinding => InternalAmqp091OperationBinding
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.{BoolField, IntField, StrField}
 
@@ -12,7 +14,7 @@ case class Amqp091OperationBinding(override private[amf] val _internal: Internal
     extends OperationBinding
     with BindingVersion {
 
-  @JSExportTopLevel("model.domain.Amqp091OperationBinding")
+  @JSExportTopLevel("Amqp091OperationBinding")
   def this() = this(InternalAmqp091OperationBinding())
   override protected def bindingVersion: StrField = _internal.bindingVersion
   override def withBindingVersion(bindingVersion: String): this.type = {

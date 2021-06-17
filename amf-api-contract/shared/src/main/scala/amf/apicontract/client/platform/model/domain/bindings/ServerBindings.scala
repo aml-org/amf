@@ -15,7 +15,7 @@ case class ServerBindings(override private[amf] val _internal: InternalServerBin
     with NamedDomainElement
     with Linkable {
 
-  @JSExportTopLevel("model.domain.ServerBindings")
+  @JSExportTopLevel("ServerBindings")
   def this() = this(InternalServerBindings())
 
   def name: StrField                      = _internal.name

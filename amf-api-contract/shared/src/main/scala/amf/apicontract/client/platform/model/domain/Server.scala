@@ -16,7 +16,7 @@ import amf.apicontract.internal.convert.ApiClientConverters._
 @JSExportAll
 case class Server(override private[amf] val _internal: InternalServer) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.Server")
+  @JSExportTopLevel("Server")
   def this() = this(InternalServer())
 
   def name: StrField                            = _internal.name

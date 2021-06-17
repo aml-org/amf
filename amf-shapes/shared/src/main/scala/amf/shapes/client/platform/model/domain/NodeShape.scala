@@ -11,7 +11,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 @JSExportAll
 case class NodeShape(override private[amf] val _internal: InternalNodeShape) extends AnyShape(_internal) {
 
-  @JSExportTopLevel("model.domain.NodeShape")
+  @JSExportTopLevel("NodeShape")
   def this() = this(InternalNodeShape())
 
   def minProperties: IntField                                          = _internal.minProperties

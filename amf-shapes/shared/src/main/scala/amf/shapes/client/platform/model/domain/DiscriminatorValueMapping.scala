@@ -11,7 +11,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 case class DiscriminatorValueMapping(override private[amf] val _internal: InternalDiscriminatorValueMapping)
     extends DomainElement {
 
-  @JSExportTopLevel("model.domain.DiscriminatorValueMapping")
+  @JSExportTopLevel("DiscriminatorValueMapping")
   def this() = this(InternalDiscriminatorValueMapping())
 
   def value: StrField    = _internal.value

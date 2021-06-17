@@ -16,7 +16,7 @@ case class Payload(override private[amf] val _internal: InternalPayload)
     extends DomainElement
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.Payload")
+  @JSExportTopLevel("Payload")
   def this() = this(InternalPayload())
   def name: StrField                  = _internal.name
   def mediaType: StrField             = _internal.mediaType

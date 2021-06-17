@@ -15,7 +15,7 @@ case class License(override private[amf] val _internal: InternalLicense)
     extends DomainElement
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.License")
+  @JSExportTopLevel("License")
   def this() = this(InternalLicense())
 
   def url: StrField  = _internal.url

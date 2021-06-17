@@ -14,7 +14,7 @@ case class TemplatedLink(override private[amf] val _internal: InternalTemplatedL
     extends DomainElement
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.TemplatedLink")
+  @JSExportTopLevel("TemplatedLink")
   def this() = this(InternalTemplatedLink())
 
   def name: StrField                          = _internal.name

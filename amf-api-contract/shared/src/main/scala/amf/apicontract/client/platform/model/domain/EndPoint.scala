@@ -17,7 +17,7 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
     extends DomainElement
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.EndPoint")
+  @JSExportTopLevel("EndPoint")
   def this() = this(InternalEndPoint())
 
   override def name: StrField                   = _internal.name

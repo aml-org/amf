@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class AsyncApi(override private[amf] val _internal: InternalAsyncApi) extends Api[AsyncApi](_internal) {
 
-  @JSExportTopLevel("model.domain.AsyncApi")
+  @JSExportTopLevel("AsyncApi")
   def this() = this(InternalAsyncApi())
 
   def withName(name: String): this.type = {

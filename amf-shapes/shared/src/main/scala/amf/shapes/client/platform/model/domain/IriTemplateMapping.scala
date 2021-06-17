@@ -10,7 +10,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 @JSExportAll
 case class IriTemplateMapping(override private[amf] val _internal: InternalIriTemplateMapping) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.IriTemplateMapping")
+  @JSExportTopLevel("IriTemplateMapping")
   def this() = this(InternalIriTemplateMapping())
 
   def templateVariable: StrField = _internal.templateVariable

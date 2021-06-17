@@ -8,6 +8,6 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Overlay(override private[amf] val _internal: InternalOverlay) extends Document(_internal) {
 
-  @JSExportTopLevel("model.domain.Overlay")
+  @JSExportTopLevel("Overlay")
   def this() = this(InternalOverlay())
 }

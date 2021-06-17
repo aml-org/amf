@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Encoding(override private[amf] val _internal: InternalEncoding) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.Encoding")
+  @JSExportTopLevel("Encoding")
   def this() = this(InternalEncoding())
 
   def propertyName: StrField         = _internal.propertyName

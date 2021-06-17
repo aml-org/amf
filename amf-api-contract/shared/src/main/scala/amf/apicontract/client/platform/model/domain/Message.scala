@@ -19,7 +19,7 @@ class Message(override private[amf] val _internal: InternalMessage)
     with DomainElement
     with Linkable {
 
-  @JSExportTopLevel("model.domain.Message")
+  @JSExportTopLevel("Message")
   def this() = this(InternalMessage())
 
   override def name: StrField             = _internal.name

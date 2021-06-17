@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class SchemaDependencies(override private[amf] val _internal: InternalSchemaDependencies) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.SchemaDependencies")
+  @JSExportTopLevel("SchemaDependencies")
   def this() = this(InternalSchemaDependencies())
 
   def source: StrField = _internal.propertySource

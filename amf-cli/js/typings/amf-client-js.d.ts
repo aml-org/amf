@@ -12,8 +12,6 @@ declare module 'amf-client-js' {
     }
   }
   namespace plugins {
-    export interface ValidationMode    {
-    }
     export class StrictValidationMode extends ValidationMode    {
     }
     export class ScalarRelaxedValidationMode extends ValidationMode    {
@@ -5206,7 +5204,7 @@ declare module 'amf-client-js' {
       }
     }
   }
-  export class WebApiDomainElementEmitter  {
+  export class ApiDomainElementEmitter  {
     emitToBuilder<T>(element: model.domain.DomainElement, emissionStructure: core.Vendor, eh: resolve.ClientErrorHandler, builder: org.yaml.builder.JsOutputBuilder): void
 
 
@@ -5559,10 +5557,10 @@ declare module 'amf-client-js' {
     static from(step: exported.transform.JsTransformationStep): exported.transform.TransformationStep
   }
 
-  export class TransformationPipeline      {
-    static readonly DEFAULT_PIPELINE: string
-    static readonly EDITING_PIPELINE: string
-    static readonly COMPATIBILITY_PIPELINE: string
-    static readonly CACHE_PIPELINE: string
+  export class PipelineId {
+    static Default: "default"
+    static Editing       : "editing"
+    static Compatibility : "compatibility"
+    static Cache         : "cache"
   }
 }

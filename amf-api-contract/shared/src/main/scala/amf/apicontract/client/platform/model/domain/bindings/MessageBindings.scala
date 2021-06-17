@@ -15,7 +15,7 @@ case class MessageBindings(override private[amf] val _internal: InternalMessageB
     with NamedDomainElement
     with Linkable {
 
-  @JSExportTopLevel("model.domain.MessageBindings")
+  @JSExportTopLevel("MessageBindings")
   def this() = this(InternalMessageBindings())
 
   def name: StrField                       = _internal.name
