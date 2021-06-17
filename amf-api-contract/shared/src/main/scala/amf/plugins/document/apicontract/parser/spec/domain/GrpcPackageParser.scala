@@ -10,11 +10,16 @@ class GrpcPackageParser(ast: Node)(implicit val ctx: ParserContext) extends Antl
   val webApi  = WebApi()
 
   def parse(): WebApi = {
-    parseName()
+    parseName() match {
+      case Some(pkg) => webApi.withName(pkg)
+      case _         =>
+        astError(webApi.id, "Missing protobuf3 package statement", toAnnotations(ast))
+        webApi.withName(ctx.rootContextDocument.split("/").last)
+    }
     webApi
   }
 
-  private def parseName(): Unit = {
+  def parseName(): Option[String] = {
     val ids: Seq[String] = collect(ast, Seq(PACKAGE_STATEMENT, FULL_IDENTIFIER, IDENTIFIER)).map { element: ASTElement =>
       withOptTerminal(element) {
         case Some(packageId) =>
@@ -24,9 +29,9 @@ class GrpcPackageParser(ast: Node)(implicit val ctx: ParserContext) extends Antl
       }
     }
     if (ids.nonEmpty) {
-      webApi.withName(ids.mkString("."))
+      Some(ids.mkString("."))
     } else {
-      webApi.withName(ctx.rootContextDocument.split("/").last)
+      None
     }
   }
 
