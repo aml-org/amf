@@ -13,7 +13,7 @@ case class EmptyBinding(override private[amf] val _internal: InternalEmptyBindin
     with ChannelBinding
     with MessageBinding {
 
-  @JSExportTopLevel("model.domain.EmptyBinding")
+  @JSExportTopLevel("EmptyBinding")
   def this() = this(InternalEmptyBinding())
 
   def `type`: StrField = _internal.`type`

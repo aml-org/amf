@@ -14,7 +14,7 @@ import amf.shapes.client.platform.model.domain.CreativeWork
 @JSExportAll
 case class Tag(override private[amf] val _internal: InternalTag) extends DomainElement with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.Tag")
+  @JSExportTopLevel("Tag")
   def this() = this(InternalTag())
 
   def name: StrField              = _internal.name

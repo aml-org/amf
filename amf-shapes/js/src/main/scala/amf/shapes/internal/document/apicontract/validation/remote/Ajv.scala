@@ -10,7 +10,7 @@ object Draft4MetaSchema {
 }
 
 @js.native
-trait ValidationResult extends js.Any {
+protected[amf] trait ValidationResult extends js.Any {
   val keyword: String    = js.native
   val dataPath: String   = js.native
   val schemaPath: String = js.native
@@ -20,14 +20,14 @@ trait ValidationResult extends js.Any {
 
 @JSGlobal
 @js.native
-class Ajv(options: js.Object) extends js.Object {
+protected[amf] class Ajv(options: js.Object) extends js.Object {
   def validate(schema: js.Object, data: js.Dynamic): Boolean = js.native
   def addMetaSchema(metaSchema: js.Object): Ajv              = js.native
   def addFormat(name: String, formatValidator: Any): Ajv     = js.native
   val errors: js.UndefOr[js.Array[ValidationResult]]         = js.native
 }
 
-object AjvValidator {
+protected[amf] object AjvValidator {
   private lazy val options = js.JSON
     .parse(
       "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6}")
@@ -77,7 +77,7 @@ object AjvValidator {
     }
 }
 
-object LazyAjv {
+protected[amf] object LazyAjv {
   lazy val default   = AjvValidator()
   lazy val fast: Ajv = AjvValidator.fast()
 }

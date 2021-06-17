@@ -12,7 +12,7 @@ case class Amqp091MessageBinding(override private[amf] val _internal: InternalAm
     extends MessageBinding
     with BindingVersion {
 
-  @JSExportTopLevel("model.domain.Amqp091MessageBinding")
+  @JSExportTopLevel("Amqp091MessageBinding")
   def this() = this(InternalAmqp091MessageBinding())
   override protected def bindingVersion: StrField = _internal.bindingVersion
 

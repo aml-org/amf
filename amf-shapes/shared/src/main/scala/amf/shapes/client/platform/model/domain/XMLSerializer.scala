@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class XMLSerializer(override private[amf] val _internal: InternalXMLSerializer) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.XMLSerializer")
+  @JSExportTopLevel("XMLSerializer")
   def this() = this(InternalXMLSerializer())
 
   def attribute: BoolField = _internal.attribute

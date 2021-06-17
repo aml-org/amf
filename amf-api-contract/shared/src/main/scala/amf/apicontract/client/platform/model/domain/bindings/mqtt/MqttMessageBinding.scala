@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class MqttMessageBinding(override private[amf] val _internal: InternalMqttMessageBinding)
     extends MessageBinding
     with BindingVersion {
-  @JSExportTopLevel("model.domain.MqttMessageBinding")
+  @JSExportTopLevel("MqttMessageBinding")
   def this() = this(InternalMqttMessageBinding())
 
   override protected def bindingVersion: StrField = _internal.bindingVersion

@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class HttpOperationBinding(override private[amf] val _internal: InternalHttpOperationBinding)
     extends OperationBinding
     with BindingVersion {
-  @JSExportTopLevel("model.domain.HttpOperationBinding")
+  @JSExportTopLevel("HttpOperationBinding")
   def this() = this(InternalHttpOperationBinding())
 
   def operationType: StrField = _internal.operationType

@@ -12,9 +12,10 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * ParametrizedSecurityScheme model class.
   */
 @JSExportAll
-case class SecurityRequirement(override private[amf] val _internal: InternalSecurityRequirement) extends DomainElement {
+case class SecurityRequirement(override private[amf] val _internal: InternalSecurityRequirement)
+    extends DomainElement {
 
-  @JSExportTopLevel("model.domain.SecurityRequirement")
+  @JSExportTopLevel("SecurityRequirement")
   def this() = this(InternalSecurityRequirement())
 
   def name: StrField                                  = _internal.name

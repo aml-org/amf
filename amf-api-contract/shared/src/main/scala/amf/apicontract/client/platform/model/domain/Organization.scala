@@ -15,7 +15,7 @@ case class Organization(override private[amf] val _internal: InternalOrganizatio
     extends DomainElement
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.Organization")
+  @JSExportTopLevel("Organization")
   def this() = this(InternalOrganization())
 
   def url: StrField   = _internal.url

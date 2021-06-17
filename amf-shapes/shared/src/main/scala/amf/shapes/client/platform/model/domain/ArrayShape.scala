@@ -9,7 +9,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 @JSExportAll
 case class ArrayShape(private[amf] override val _internal: InternalArrayShape) extends DataArrangeShape(_internal) {
 
-  @JSExportTopLevel("model.domain.ArrayShape")
+  @JSExportTopLevel("ArrayShape")
   def this() = this(InternalArrayShape())
 
   def items: Shape                  = _internal.items

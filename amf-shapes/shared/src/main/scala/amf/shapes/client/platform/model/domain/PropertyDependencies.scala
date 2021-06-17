@@ -15,7 +15,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 case class PropertyDependencies(override private[amf] val _internal: InternalPropertyDependencies)
     extends DomainElement {
 
-  @JSExportTopLevel("model.domain.PropertyDependencies")
+  @JSExportTopLevel("PropertyDependencies")
   def this() = this(InternalPropertyDependencies())
 
   def source: StrField             = _internal.propertySource

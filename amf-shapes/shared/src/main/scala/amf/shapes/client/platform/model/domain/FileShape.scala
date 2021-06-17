@@ -10,7 +10,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 @JSExportAll
 case class FileShape(override private[amf] val _internal: InternalFileShape) extends AnyShape(_internal) {
 
-  @JSExportTopLevel("model.domain.FileShape")
+  @JSExportTopLevel("FileShape")
   def this() = this(InternalFileShape())
 
   def fileTypes: ClientList[StrField] = _internal.fileTypes.asClient

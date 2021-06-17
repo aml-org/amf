@@ -1,6 +1,14 @@
 package amf.apicontract.client.platform.model.domain.security
 
-import amf.apicontract.client.scala.model.domain.security.{ApiKeySettings => InternalApiKeySettings, HttpApiKeySettings => InternalHttpApiKeySettings, HttpSettings => InternalHttpSettings, OAuth1Settings => InternalOAuth1Settings, OAuth2Settings => InternalOAuth2Settings, OpenIdConnectSettings => InternalOpenIdConnectSettings, Settings => InternalSettings}
+import amf.apicontract.client.scala.model.domain.security.{
+  ApiKeySettings => InternalApiKeySettings,
+  HttpApiKeySettings => InternalHttpApiKeySettings,
+  HttpSettings => InternalHttpSettings,
+  OAuth1Settings => InternalOAuth1Settings,
+  OAuth2Settings => InternalOAuth2Settings,
+  OpenIdConnectSettings => InternalOpenIdConnectSettings,
+  Settings => InternalSettings
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DataNode, DomainElement}
@@ -13,7 +21,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 class Settings(override private[amf] val _internal: InternalSettings) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.Settings")
+  @JSExportTopLevel("Settings")
   def this() = this(InternalSettings())
 
   def additionalProperties: DataNode = _internal.additionalProperties
@@ -28,7 +36,7 @@ class Settings(override private[amf] val _internal: InternalSettings) extends Do
 @JSExportAll
 case class OAuth1Settings(override private[amf] val _internal: InternalOAuth1Settings) extends Settings(_internal) {
 
-  @JSExportTopLevel("model.domain.OAuth1Settings")
+  @JSExportTopLevel("OAuth1Settings")
   def this() = this(InternalOAuth1Settings())
 
   def requestTokenUri: StrField        = _internal.requestTokenUri
@@ -64,7 +72,7 @@ case class OAuth1Settings(override private[amf] val _internal: InternalOAuth1Set
 @JSExportAll
 case class OAuth2Settings(override private[amf] val _internal: InternalOAuth2Settings) extends Settings(_internal) {
 
-  @JSExportTopLevel("model.domain.OAuth2Settings")
+  @JSExportTopLevel("OAuth2Settings")
   def this() = this(InternalOAuth2Settings())
 
   def flows: ClientList[OAuth2Flow]             = _internal.flows.asClient
@@ -86,7 +94,7 @@ case class OAuth2Settings(override private[amf] val _internal: InternalOAuth2Set
 @JSExportAll
 case class ApiKeySettings(override private[amf] val _internal: InternalApiKeySettings) extends Settings(_internal) {
 
-  @JSExportTopLevel("model.domain.ApiKeySettings")
+  @JSExportTopLevel("ApiKeySettings")
   def this() = this(InternalApiKeySettings())
 
   def name: StrField = _internal.name
@@ -109,7 +117,7 @@ case class ApiKeySettings(override private[amf] val _internal: InternalApiKeySet
 case class HttpApiKeySettings(override private[amf] val _internal: InternalHttpApiKeySettings)
     extends Settings(_internal) {
 
-  @JSExportTopLevel("model.domain.HttpApiKeySettings")
+  @JSExportTopLevel("HttpApiKeySettings")
   def this() = this(InternalHttpApiKeySettings())
 
   def name: StrField = _internal.name
@@ -131,7 +139,7 @@ case class HttpApiKeySettings(override private[amf] val _internal: InternalHttpA
 @JSExportAll
 case class HttpSettings(override private[amf] val _internal: InternalHttpSettings) extends Settings(_internal) {
 
-  @JSExportTopLevel("model.domain.HttpSettings")
+  @JSExportTopLevel("HttpSettings")
   def this() = this(InternalHttpSettings())
 
   def scheme: StrField       = _internal.scheme
@@ -154,7 +162,7 @@ case class HttpSettings(override private[amf] val _internal: InternalHttpSetting
 case class OpenIdConnectSettings(override private[amf] val _internal: InternalOpenIdConnectSettings)
     extends Settings(_internal) {
 
-  @JSExportTopLevel("model.domain.OpenIdConnectSettings")
+  @JSExportTopLevel("OpenIdConnectSettings")
   def this() = this(InternalOpenIdConnectSettings())
 
   def url: StrField             = _internal.url

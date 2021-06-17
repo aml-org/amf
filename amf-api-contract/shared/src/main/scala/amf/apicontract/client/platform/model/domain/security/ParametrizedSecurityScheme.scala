@@ -2,7 +2,9 @@ package amf.apicontract.client.platform.model.domain.security
 
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.DomainElement
-import amf.apicontract.client.scala.model.domain.security.{ParametrizedSecurityScheme => InternalParametrizedSecurityScheme}
+import amf.apicontract.client.scala.model.domain.security.{
+  ParametrizedSecurityScheme => InternalParametrizedSecurityScheme
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -14,7 +16,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class ParametrizedSecurityScheme(override private[amf] val _internal: InternalParametrizedSecurityScheme)
     extends DomainElement {
 
-  @JSExportTopLevel("model.domain.ParametrizedSecurityScheme")
+  @JSExportTopLevel("ParametrizedSecurityScheme")
   def this() = this(InternalParametrizedSecurityScheme())
 
   def name: StrField         = _internal.name

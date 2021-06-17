@@ -8,6 +8,6 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class ParametrizedTrait(override private[amf] val _internal: InternalParametrizedTrait)
     extends ParametrizedDeclaration {
 
-  @JSExportTopLevel("model.domain.ParametrizedTrait")
+  @JSExportTopLevel("ParametrizedTrait")
   def this() = this(InternalParametrizedTrait())
 }

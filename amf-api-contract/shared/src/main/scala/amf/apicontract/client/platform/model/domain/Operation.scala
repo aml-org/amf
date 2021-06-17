@@ -20,7 +20,7 @@ case class Operation(override private[amf] val _internal: InternalOperation)
     with NamedDomainElement
     with Linkable {
 
-  @JSExportTopLevel("model.domain.Operation")
+  @JSExportTopLevel("Operation")
   def this() = this(InternalOperation())
 
   def method: StrField                          = _internal.method

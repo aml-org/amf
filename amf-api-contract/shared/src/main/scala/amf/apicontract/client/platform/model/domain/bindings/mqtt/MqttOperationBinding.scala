@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class MqttOperationBinding(override private[amf] val _internal: InternalMqttOperationBinding)
     extends OperationBinding
     with BindingVersion {
-  @JSExportTopLevel("model.domain.MqttOperationBinding")
+  @JSExportTopLevel("MqttOperationBinding")
   def this() = this(InternalMqttOperationBinding())
 
   def qos: IntField     = _internal.qos

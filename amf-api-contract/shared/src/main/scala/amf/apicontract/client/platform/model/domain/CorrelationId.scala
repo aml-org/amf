@@ -16,7 +16,7 @@ case class CorrelationId(override private[amf] val _internal: InternalCorrelatio
     with Linkable
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.CorrelationId")
+  @JSExportTopLevel("CorrelationId")
   def this() = this(InternalCorrelationId())
 
   def description: StrField = _internal.description

@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Scope(override private[amf] val _internal: InternalScope) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.Scope")
+  @JSExportTopLevel("Scope")
   def this() = this(InternalScope())
 
   def name: StrField        = _internal.name

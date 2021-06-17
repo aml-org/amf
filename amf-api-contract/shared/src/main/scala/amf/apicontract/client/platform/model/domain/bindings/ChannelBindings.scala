@@ -16,7 +16,7 @@ case class ChannelBindings(override private[amf] val _internal: InternalChannelB
     with NamedDomainElement
     with Linkable {
 
-  @JSExportTopLevel("model.domain.ChannelBindings")
+  @JSExportTopLevel("ChannelBindings")
   def this() = this(InternalChannelBindings())
 
   def name: StrField                       = _internal.name

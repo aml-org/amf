@@ -11,7 +11,7 @@ import amf.shapes.client.scala.model.domain.{UnionShape => InternalUnionShape}
 @JSExportAll
 case class UnionShape(override private[amf] val _internal: InternalUnionShape) extends AnyShape(_internal) {
 
-  @JSExportTopLevel("model.domain.UnionShape")
+  @JSExportTopLevel("UnionShape")
   def this() = this(InternalUnionShape())
 
   def anyOf: ClientList[Shape] = _internal.anyOf.asClient

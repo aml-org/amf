@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Request(override private[amf] val _internal: InternalRequest) extends Message(_internal) {
 
-  @JSExportTopLevel("model.domain.Request")
+  @JSExportTopLevel("Request")
   def this() = this(InternalRequest())
 
   def required: BoolField                     = _internal.required

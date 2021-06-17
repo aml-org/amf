@@ -15,7 +15,7 @@ case class OperationBindings(override private[amf] val _internal: InternalOperat
     with NamedDomainElement
     with Linkable {
 
-  @JSExportTopLevel("model.domain.OperationBindings")
+  @JSExportTopLevel("OperationBindings")
   def this() = this(InternalOperationBindings())
 
   def name: StrField                         = _internal.name

@@ -13,7 +13,7 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 
 class AnyShape(override private[amf] val _internal: domain.AnyShape) extends Shape with PlatformSecrets {
 
-  @JSExportTopLevel("model.domain.AnyShape")
+  @JSExportTopLevel("AnyShape")
   def this() = this(InternalAnyShape())
 
   @JSExport

@@ -16,7 +16,7 @@ case class SecurityScheme(override private[amf] val _internal: InternalSecurityS
     extends DomainElement
     with Linkable {
 
-  @JSExportTopLevel("model.domain.SecurityScheme")
+  @JSExportTopLevel("SecurityScheme")
   def this() = this(InternalSecurityScheme())
 
   def name: StrField                         = _internal.name

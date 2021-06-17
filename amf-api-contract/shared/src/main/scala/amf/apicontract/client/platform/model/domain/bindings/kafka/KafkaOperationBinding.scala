@@ -4,7 +4,9 @@ import amf.apicontract.client.platform.model.domain.bindings.{BindingVersion, Op
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.Shape
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.apicontract.client.scala.model.domain.bindings.kafka.{KafkaOperationBinding => InternalKafkaOperationBinding}
+import amf.apicontract.client.scala.model.domain.bindings.kafka.{
+  KafkaOperationBinding => InternalKafkaOperationBinding
+}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -12,7 +14,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class KafkaOperationBinding(override private[amf] val _internal: InternalKafkaOperationBinding)
     extends OperationBinding
     with BindingVersion {
-  @JSExportTopLevel("model.domain.KafkaOperationBinding")
+  @JSExportTopLevel("KafkaOperationBinding")
   def this() = this(InternalKafkaOperationBinding())
   override protected def bindingVersion: StrField = _internal.bindingVersion
   override def withBindingVersion(bindingVersion: String): this.type = {

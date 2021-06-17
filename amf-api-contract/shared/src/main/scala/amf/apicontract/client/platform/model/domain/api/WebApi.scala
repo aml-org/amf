@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class WebApi(override private[amf] val _internal: InternalWebApi) extends Api[WebApi](_internal) {
 
-  @JSExportTopLevel("model.domain.WebApi")
+  @JSExportTopLevel("WebApi")
   def this() = this(InternalWebApi())
 
   /** Set name property of this WebApi. */
