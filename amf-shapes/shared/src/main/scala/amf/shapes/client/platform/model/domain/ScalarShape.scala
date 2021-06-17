@@ -26,6 +26,7 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
   def encoding: StrField          = _internal.encoding
   def mediaType: StrField         = _internal.mediaType
   def schema: Shape               = _internal.schema
+  def serializationOrder: Shape   = _internal.serializationOrder
 
   def withDataType(dataType: String): this.type = {
     _internal.withDataType(dataType)
@@ -77,6 +78,11 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
   }
   def withSchema(schema: Shape): this.type = {
     _internal.withSchema(schema)
+    this
+  }
+
+  def withSerializationSchema(schema: Shape): this.type = {
+    _internal.withSerializationSchema(schema)
     this
   }
 
