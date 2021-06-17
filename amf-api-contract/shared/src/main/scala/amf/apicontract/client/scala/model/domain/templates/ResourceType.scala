@@ -18,32 +18,6 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
 
   override def meta: ResourceTypeModel.type = ResourceTypeModel
 
-  def asEndpoint[T <: BaseUnit](unit: T,
-                                profile: ProfileName = Raml10Profile,
-                                errorHandler: AMFErrorHandler = UnhandledErrorHandler): EndPoint = {
-    linkTarget match {
-      case Some(_) =>
-        effectiveLinkTarget().asInstanceOf[ResourceType].asEndpoint(unit, profile, errorHandler)
-      case _ =>
-        Option(dataNode)
-          .map { dataNode =>
-            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
-            extendsHelper.asEndpoint(unit, dataNode, annotations, name.value(), id)
-          }
-          .getOrElse(EndPoint())
-    }
-  }
-
-  def entryAsEndpoint[T <: BaseUnit](unit: T,
-                                     node: DataNode,
-                                     entry: YMapEntry,
-                                     annotations: Annotations,
-                                     errorHandler: AMFErrorHandler = UnhandledErrorHandler,
-                                     profile: ProfileName = Raml10Profile): EndPoint = {
-    val helper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
-    helper.entryAsEndpoint(unit, node, name.option().getOrElse(""), id, entry)
-  }
-
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ResourceType.apply
 

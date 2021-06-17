@@ -238,13 +238,13 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
 
   /** Method for transforming parsed unit. Override if necessary. */
   def transformRdf(unit: BaseUnit, config: CycleConfig): RdfModel = {
-    unit.toNativeRdfModel()
+    RdfUnitConverter.toNativeRdfModel(unit)
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
   def transformThroughRdf(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    val rdfModel = unit.toNativeRdfModel(RenderOptions().withSourceMaps)
-    new RdfUnitConverter().fromNativeRdfModel(unit.id, rdfModel, AMFGraphConfiguration.predefined())
+    val rdfModel = RdfUnitConverter.toNativeRdfModel(unit, RenderOptions().withSourceMaps)
+    RdfUnitConverter.fromNativeRdfModel(unit.id, rdfModel, AMFGraphConfiguration.predefined())
   }
 
   /** Method to render parsed unit. Override if necessary. */

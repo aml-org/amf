@@ -19,38 +19,6 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
 
   override def meta: TraitModel.type = TraitModel
 
-  /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
-  def asOperation[T <: BaseUnit](unit: T,
-                                 profile: ProfileName = Raml10Profile,
-                                 errorHandler: AMFErrorHandler = UnhandledErrorHandler): Operation = {
-    linkTarget match {
-      case Some(_) =>
-        effectiveLinkTarget().asInstanceOf[Trait].asOperation(unit, profile, errorHandler)
-      case _ =>
-        Option(dataNode)
-          .map { dataNode =>
-            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
-            extendsHelper.asOperation(
-              dataNode,
-              unit,
-              name.option().getOrElse(""),
-              annotations,
-              id
-            )
-          }
-          .getOrElse(Operation())
-    }
-  }
-
-  def entryAsOperation[T <: BaseUnit](unit: T,
-                                      entry: YMapEntry,
-                                      annotations: Annotations,
-                                      profile: ProfileName = Raml10Profile,
-                                      errorHandler: AMFErrorHandler = UnhandledErrorHandler): Operation = {
-    val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
-    extendsHelper.entryAsOperation(unit, name.option().getOrElse(""), id, entry)
-  }
-
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Trait.apply
 
