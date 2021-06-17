@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.ResourceType
 import amf.apicontract.client.scala.model.domain.{Parameter, Response}
+import amf.apicontract.client.scala.transform.AbstractElementTransformer
 import amf.core.client.common.position.{Position, Range}
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.client.scala.model.document.Document
@@ -176,7 +177,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
                     Raml10YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
-      val point    = document.declares.head.asInstanceOf[ResourceType].asEndpoint(document)
+      val point    = AbstractElementTransformer.asEndpoint(document, document.declares.head.asInstanceOf[ResourceType])
       assertRange(point.annotations.find(classOf[LexicalInformation]).get.range, Range((6, 2), (9, 12)))
       assertRange(point.path.annotations().find(classOf[LexicalInformation]).get.range, Range((6, 2), (6, 5)))
       succeed

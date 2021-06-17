@@ -40,7 +40,7 @@ trait FromRdfCycleTest extends AsyncBeforeAndAfterEach with FileAssertionTest wi
     val content      = fs.syncFile(fullPath).read()
     val rdfFramework = platform.rdfFramework.get
     val modelDoc     = rdfFramework.syntaxToRdfModel("text/n3", content)
-    val result = new RdfUnitConverter().fromNativeRdfModel(
+    val result = RdfUnitConverter.fromNativeRdfModel(
       baseUnitId,
       modelDoc.model,
       WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler))
@@ -50,7 +50,7 @@ trait FromRdfCycleTest extends AsyncBeforeAndAfterEach with FileAssertionTest wi
   private def cycle(path: String, baseUnitId: String): Future[Assertion] = {
     val fullPath    = basePath + path
     val baseUnit    = build(path, baseUnitId).get
-    val generatedN3 = baseUnit.toNativeRdfModel().toN3().split("\n").sorted.mkString("\n")
+    val generatedN3 = RdfUnitConverter.toNativeRdfModel(baseUnit).toN3().split("\n").sorted.mkString("\n")
     writeTemporaryFile(fullPath)(generatedN3).flatMap(f => assertDifferences(f, fullPath))
   }
 }

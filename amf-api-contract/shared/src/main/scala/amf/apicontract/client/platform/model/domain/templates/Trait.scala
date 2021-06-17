@@ -19,7 +19,4 @@ case class Trait(override private[amf] val _internal: InternalTrait) extends Abs
   override def linkTarget: ClientOption[DomainElement] = _internal.linkTarget.asClient
 
   override def linkCopy(): Trait = _internal.linkCopy()
-
-  def asOperation[T <: BaseUnit](unit: T, profile: ProfileName = Raml10Profile): Operation =
-    Operation(_internal.asOperation(unit._internal, profile))
 }
