@@ -159,7 +159,7 @@ object OASConfiguration extends APIConfigurationBuilder {
 object GRPCConfiguration extends APIConfigurationBuilder {
   def PROTO3(): AMFConfiguration =
     common()
-      .withPlugins(List(GrpcParsePlugin, AntlrSyntaxParsePlugin))
+      .withPlugins(List(GrpcParsePlugin, AntlrSyntaxParsePlugin, GrpcRenderPlugin))
 }
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */

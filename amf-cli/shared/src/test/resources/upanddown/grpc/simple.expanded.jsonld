@@ -992,13 +992,13 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/data#null": {
+        "http://a.ml/vocabularies/data#java_multiple_files": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
-              "@value": 
+              "@value": "java_multiple_files"
             }
           ],
-          "@id": "null/extensionnull/data-node",
+          "@id": "null/extensionjava_multiple_files/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -1011,21 +1011,21 @@
           ],
           "http://www.w3.org/ns/shacl#datatype": [
             {
-              "@id": "http://www.w3.org/2001/XMLSchema#string"
+              "@id": "http://www.w3.org/2001/XMLSchema#boolean"
             }
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "null/extensionnull/data-node/source-map",
+              "@id": "null/extensionjava_multiple_files/data-node/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "null/extensionnull/data-node/source-map/lexical/element_0",
+                  "@id": "null/extensionjava_multiple_files/data-node/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "null/extensionnull/data-node"
+                      "@value": "null/extensionjava_multiple_files/data-node"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1038,13 +1038,13 @@
             }
           ]
         },
-        "http://a.ml/vocabularies/data#null": {
+        "http://a.ml/vocabularies/data#java_outer_classname": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
-              "@value": 
+              "@value": "java_outer_classname"
             }
           ],
-          "@id": "null/extensionnull/data-node",
+          "@id": "null/extensionjava_outer_classname/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -1052,7 +1052,7 @@
           ],
           "http://a.ml/vocabularies/data#value": [
             {
-              "@value": "\"io.grpc.examples.helloworld\""
+              "@value": "HelloWorldProto"
             }
           ],
           "http://www.w3.org/ns/shacl#datatype": [
@@ -1062,62 +1062,16 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "null/extensionnull/data-node/source-map",
+              "@id": "null/extensionjava_outer_classname/data-node/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "null/extensionnull/data-node/source-map/lexical/element_0",
+                  "@id": "null/extensionjava_outer_classname/data-node/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "null/extensionnull/data-node"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "[(4,22)-(4,22)]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "http://a.ml/vocabularies/data#null": {
-          "http://a.ml/vocabularies/core#extensionName": [
-            {
-              "@value": 
-            }
-          ],
-          "@id": "null/extensionnull/data-node",
-          "@type": [
-            "http://a.ml/vocabularies/data#Scalar",
-            "http://a.ml/vocabularies/data#Node",
-            "http://a.ml/vocabularies/document#DomainElement"
-          ],
-          "http://a.ml/vocabularies/data#value": [
-            {
-              "@value": "\"HelloWorldProto\""
-            }
-          ],
-          "http://www.w3.org/ns/shacl#datatype": [
-            {
-              "@id": "http://www.w3.org/2001/XMLSchema#string"
-            }
-          ],
-          "http://a.ml/vocabularies/document-source-maps#sources": [
-            {
-              "@id": "null/extensionnull/data-node/source-map",
-              "@type": [
-                "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#lexical": [
-                {
-                  "@id": "null/extensionnull/data-node/source-map/lexical/element_0",
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "null/extensionnull/data-node"
+                      "@value": "null/extensionjava_outer_classname/data-node"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1130,13 +1084,13 @@
             }
           ]
         },
-        "http://a.ml/vocabularies/data#null": {
+        "http://a.ml/vocabularies/data#java_package": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
-              "@value": 
+              "@value": "java_package"
             }
           ],
-          "@id": "null/extensionnull/data-node",
+          "@id": "null/extensionjava_package/data-node",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -1144,7 +1098,7 @@
           ],
           "http://a.ml/vocabularies/data#value": [
             {
-              "@value": "\"HLW\""
+              "@value": "io.grpc.examples.helloworld"
             }
           ],
           "http://www.w3.org/ns/shacl#datatype": [
@@ -1154,16 +1108,62 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "null/extensionnull/data-node/source-map",
+              "@id": "null/extensionjava_package/data-node/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "null/extensionnull/data-node/source-map/lexical/element_0",
+                  "@id": "null/extensionjava_package/data-node/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "null/extensionnull/data-node"
+                      "@value": "null/extensionjava_package/data-node"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "[(4,22)-(4,22)]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "http://a.ml/vocabularies/data#objc_class_prefix": {
+          "http://a.ml/vocabularies/core#extensionName": [
+            {
+              "@value": "objc_class_prefix"
+            }
+          ],
+          "@id": "null/extensionobjc_class_prefix/data-node",
+          "@type": [
+            "http://a.ml/vocabularies/data#Scalar",
+            "http://a.ml/vocabularies/data#Node",
+            "http://a.ml/vocabularies/document#DomainElement"
+          ],
+          "http://a.ml/vocabularies/data#value": [
+            {
+              "@value": "HLW"
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://a.ml/vocabularies/document-source-maps#sources": [
+            {
+              "@id": "null/extensionobjc_class_prefix/data-node/source-map",
+              "@type": [
+                "http://a.ml/vocabularies/document-source-maps#SourceMap"
+              ],
+              "http://a.ml/vocabularies/document-source-maps#lexical": [
+                {
+                  "@id": "null/extensionobjc_class_prefix/data-node/source-map/lexical/element_0",
+                  "http://a.ml/vocabularies/document-source-maps#element": [
+                    {
+                      "@value": "null/extensionobjc_class_prefix/data-node"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1178,16 +1178,16 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "http://a.ml/vocabularies/data#null"
+            "@id": "http://a.ml/vocabularies/data#java_multiple_files"
           },
           {
-            "@id": "http://a.ml/vocabularies/data#null"
+            "@id": "http://a.ml/vocabularies/data#java_outer_classname"
           },
           {
-            "@id": "http://a.ml/vocabularies/data#null"
+            "@id": "http://a.ml/vocabularies/data#java_package"
           },
           {
-            "@id": "http://a.ml/vocabularies/data#null"
+            "@id": "http://a.ml/vocabularies/data#objc_class_prefix"
           }
         ]
       }
@@ -1200,6 +1200,224 @@
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#references": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto",
+        "@type": [
+          "http://a.ml/vocabularies/document#Document",
+          "http://a.ml/vocabularies/document#Fragment",
+          "http://a.ml/vocabularies/document#Module",
+          "http://a.ml/vocabularies/document#Unit"
+        ],
+        "http://a.ml/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#WebAPI",
+              "http://a.ml/vocabularies/apiContract#API",
+              "http://a.ml/vocabularies/document#RootDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "library"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#endpoint": []
+          }
+        ],
+        "http://a.ml/vocabularies/document#declares": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/array/default-array",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ArrayShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#items": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/array/default-array/items/scalar/default-scalar",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/array/default-array/items/scalar/default-scalar/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/array/default-array/items/scalar/default-scalar/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/array/default-array/items/scalar/default-scalar"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(6,11)-(6,11)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/array/default-array/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/array/default-array/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/array/default-array"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(6,2)-(6,29)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#serializationOrder": [
+                  {
+                    "@value": 2
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "message"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(6,2)-(6,29)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": ".library.Wadus"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Wadus"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,0)-(7,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#references": [],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document#declares": [
@@ -1486,7 +1704,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link--947755611",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link-247434473",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1501,18 +1719,18 @@
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
                   {
-                    "@value": ".helloworld.SampleMessage.NestedMessage1.NestedMessage2"
+                    "@value": "NestedMessage2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link--947755611/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link-247434473/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link--947755611/source-map/synthesized-field/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link-247434473/source-map/synthesized-field/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/document#link-target"
@@ -1525,7 +1743,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link--947755611/source-map/synthesized-field/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link-247434473/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/document#link-label"
@@ -1540,10 +1758,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link--947755611/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link-247434473/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link--947755611"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SampleMessage/.helloworld.SampleMessage.NestedMessage1/.helloworld.SampleMessage.NestedMessage1.NestedMessage2/link-247434473"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1661,36 +1879,71 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/scalar/default-scalar",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/array/default-array",
                 "@type": [
-                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#ArrayShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/shacl#datatype": [
+                "http://a.ml/vocabularies/shapes#items": [
                   {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/array/default-array/items/scalar/default-scalar",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/array/default-array/items/scalar/default-scalar/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/array/default-array/items/scalar/default-scalar/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/array/default-array/items/scalar/default-scalar"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(23,11)-(23,11)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/scalar/default-scalar/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/array/default-array/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/scalar/default-scalar/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/array/default-array/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/scalar/default-scalar"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.HelloRequest/property/name/array/default-array"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(23,11)-(23,11)]"
+                            "@value": "[(23,2)-(23,26)]"
                           }
                         ]
                       }
@@ -2525,7 +2778,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#additionalPropertiesSchema": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link-760128967",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link--75310760",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2540,18 +2793,18 @@
                     ],
                     "http://a.ml/vocabularies/document#link-label": [
                       {
-                        "@value": ".helloworld.SampleMessage.SearchRequest"
+                        "@value": "SearchRequest"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link-760128967/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link--75310760/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link-760128967/source-map/synthesized-field/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link--75310760/source-map/synthesized-field/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/document#link-target"
@@ -2564,7 +2817,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link-760128967/source-map/synthesized-field/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link--75310760/source-map/synthesized-field/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/document#link-label"
@@ -2579,10 +2832,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link-760128967/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link--75310760/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link-760128967"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/.helloworld.SearchRequest/link--75310760"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [

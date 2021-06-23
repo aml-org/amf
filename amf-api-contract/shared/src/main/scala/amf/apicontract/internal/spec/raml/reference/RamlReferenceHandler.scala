@@ -43,7 +43,7 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
                 reference.unit.tagReference(unit.location().getOrElse(unit.id), r)
                 resolved.map(res => {
                   reference.unit.addReference(res.unit)
-                  r.refs.foreach { refContainer =>
+                  r.refs.foreach { case refContainer: SYamlRefContainer =>
                     refContainer.node match {
                       case mut: MutRef =>
                         res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
@@ -74,8 +74,12 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
 
   private def evaluateUnresolvedReference(compilerContext: CompilerContext, r: Reference, e: Throwable): Unit = {
     if (!r.isInferred) {
-      val nodes = r.refs.map(_.node)
-      nodes.foreach(compilerContext.violation(UnresolvedReference, r.url, e.getMessage, _))
+      r.refs.foreach {
+        case SYamlRefContainer(_,node,_) =>
+          compilerContext.violation(UnresolvedReference, r.url, e.getMessage, node)
+        case AntlrRefContainer(_,node,_) =>
+          compilerContext.violation(UnresolvedReference, r.url, e.getMessage, node)
+      }
     }
   }
 

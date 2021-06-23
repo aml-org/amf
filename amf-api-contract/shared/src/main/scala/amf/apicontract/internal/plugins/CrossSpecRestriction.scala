@@ -1,10 +1,11 @@
 package amf.apicontract.internal.plugins
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.parse.document.{ParserContext, Reference}
+import amf.core.client.scala.parse.document.{ParserContext, Reference, SYamlRefContainer}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.InvalidCrossSpec
+import org.yaml.model.YNode
 
 trait CrossSpecRestriction { this: ApiParsePlugin =>
 
@@ -26,5 +27,5 @@ trait CrossSpecRestriction { this: ApiParsePlugin =>
     }
   }
 
-  private def referenceNodes(reference: Reference) = reference.refs.map(_.node)
+  private def referenceNodes(reference: Reference): Seq[YNode] = reference.refs.collect { case ref: SYamlRefContainer => ref.node }
 }
