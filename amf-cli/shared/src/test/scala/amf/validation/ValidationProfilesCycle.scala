@@ -2,6 +2,7 @@ package amf.validation
 
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.internal.remote._
@@ -18,7 +19,10 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
   val basePath = "file://amf-cli/shared/src/test/resources/vocabularies2/production/validation/"
 
   private def cycle(exampleFile: String, hint: Hint, syntax: Syntax, target: Vendor): Future[String] = {
-    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    val config = WebAPIConfiguration
+      .WebAPI()
+      .withErrorHandlerProvider(() => UnhandledErrorHandler)
+      .withRenderOptions(RenderOptions().withoutFlattenedJsonLd)
     for {
 
       clientWithValidation <- config.withCustomValidationsEnabled().map(_.createClient())
