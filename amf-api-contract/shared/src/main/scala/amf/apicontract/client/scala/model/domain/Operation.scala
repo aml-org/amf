@@ -102,9 +102,15 @@ case class Operation(fields: Fields, annotations: Annotations)
   override def meta: OperationModel.type = OperationModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String =
-    "/" + method.option().getOrElse("default-operation").urlComponentEncoded
-  override def nameField: Field = Name
+  private[amf] override def componentId: String = {
+    val name = if (operationId.option().isDefined) {
+      operationId.value().urlComponentEncoded
+    } else {
+      method.option().getOrElse("default-operation").urlComponentEncoded
+    }
+    "/" + name
+  }
+  override def nameField: Field    = Name
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Operation.apply
 }
