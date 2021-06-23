@@ -10,60 +10,80 @@
       ],
       "http://a.ml/vocabularies/core#name": "google.protobuf",
       "http://a.ml/vocabularies/apiContract#endpoint": [],
-      "http://a.ml/vocabularies/data#null": {
-        "@id": "null/extensionnull/data-node"
+      "http://a.ml/vocabularies/data#cc_enable_arenas": {
+        "@id": "null/extensioncc_enable_arenas/data-node"
       },
-      "http://a.ml/vocabularies/data#null": {
-        "@id": "null/extensionnull/data-node"
+      "http://a.ml/vocabularies/data#csharp_namespace": {
+        "@id": "null/extensioncsharp_namespace/data-node"
       },
-      "http://a.ml/vocabularies/data#null": {
-        "@id": "null/extensionnull/data-node"
+      "http://a.ml/vocabularies/data#go_package": {
+        "@id": "null/extensiongo_package/data-node"
       },
-      "http://a.ml/vocabularies/data#null": {
-        "@id": "null/extensionnull/data-node"
+      "http://a.ml/vocabularies/data#java_multiple_files": {
+        "@id": "null/extensionjava_multiple_files/data-node"
       },
-      "http://a.ml/vocabularies/data#null": {
-        "@id": "null/extensionnull/data-node"
+      "http://a.ml/vocabularies/data#java_outer_classname": {
+        "@id": "null/extensionjava_outer_classname/data-node"
       },
-      "http://a.ml/vocabularies/data#null": {
-        "@id": "null/extensionnull/data-node"
+      "http://a.ml/vocabularies/data#java_package": {
+        "@id": "null/extensionjava_package/data-node"
       },
-      "http://a.ml/vocabularies/data#null": {
-        "@id": "null/extensionnull/data-node"
+      "http://a.ml/vocabularies/data#objc_class_prefix": {
+        "@id": "null/extensionobjc_class_prefix/data-node"
       },
       "http://a.ml/vocabularies/document#customDomainProperties": [
         {
-          "@id": "http://a.ml/vocabularies/data#null"
+          "@id": "http://a.ml/vocabularies/data#cc_enable_arenas"
         },
         {
-          "@id": "http://a.ml/vocabularies/data#null"
+          "@id": "http://a.ml/vocabularies/data#csharp_namespace"
         },
         {
-          "@id": "http://a.ml/vocabularies/data#null"
+          "@id": "http://a.ml/vocabularies/data#go_package"
         },
         {
-          "@id": "http://a.ml/vocabularies/data#null"
+          "@id": "http://a.ml/vocabularies/data#java_multiple_files"
         },
         {
-          "@id": "http://a.ml/vocabularies/data#null"
+          "@id": "http://a.ml/vocabularies/data#java_outer_classname"
         },
         {
-          "@id": "http://a.ml/vocabularies/data#null"
+          "@id": "http://a.ml/vocabularies/data#java_package"
         },
         {
-          "@id": "http://a.ml/vocabularies/data#null"
+          "@id": "http://a.ml/vocabularies/data#objc_class_prefix"
         }
       ]
     },
     {
-      "http://a.ml/vocabularies/core#extensionName": ,
-      "@id": "null/extensionnull/data-node",
+      "http://a.ml/vocabularies/core#extensionName": "cc_enable_arenas",
+      "@id": "null/extensioncc_enable_arenas/data-node",
       "@type": [
         "http://a.ml/vocabularies/data#Scalar",
         "http://a.ml/vocabularies/data#Node",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/data#value": "\"Google.Protobuf.WellKnownTypes\"",
+      "http://a.ml/vocabularies/data#value": "true",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "null/extensioncc_enable_arenas/data-node/source-map"
+        }
+      ]
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "csharp_namespace",
+      "@id": "null/extensioncsharp_namespace/data-node",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "Google.Protobuf.WellKnownTypes",
       "http://www.w3.org/ns/shacl#datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
@@ -71,25 +91,221 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "null/extensionnull/data-node/source-map"
+          "@id": "null/extensioncsharp_namespace/data-node/source-map"
         }
       ]
     },
     {
-      "@id": "null/extensionnull/data-node/source-map",
+      "http://a.ml/vocabularies/core#extensionName": "go_package",
+      "@id": "null/extensiongo_package/data-node",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "google.golang.org/protobuf/types/known/emptypb",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "null/extensiongo_package/data-node/source-map"
+        }
+      ]
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "java_multiple_files",
+      "@id": "null/extensionjava_multiple_files/data-node",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "true",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "null/extensionjava_multiple_files/data-node/source-map"
+        }
+      ]
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "java_outer_classname",
+      "@id": "null/extensionjava_outer_classname/data-node",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "EmptyProto",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "null/extensionjava_outer_classname/data-node/source-map"
+        }
+      ]
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "java_package",
+      "@id": "null/extensionjava_package/data-node",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "com.google.protobuf",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "null/extensionjava_package/data-node/source-map"
+        }
+      ]
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "objc_class_prefix",
+      "@id": "null/extensionobjc_class_prefix/data-node",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "GPB",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "null/extensionobjc_class_prefix/data-node/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "null/extensioncc_enable_arenas/data-node/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "null/extensionnull/data-node/source-map/lexical/element_0"
+          "@id": "null/extensioncc_enable_arenas/data-node/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "null/extensionnull/data-node/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "null/extensionnull/data-node",
+      "@id": "null/extensioncsharp_namespace/data-node/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "null/extensioncsharp_namespace/data-node/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "null/extensiongo_package/data-node/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "null/extensiongo_package/data-node/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "null/extensionjava_multiple_files/data-node/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "null/extensionjava_multiple_files/data-node/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "null/extensionjava_outer_classname/data-node/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "null/extensionjava_outer_classname/data-node/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "null/extensionjava_package/data-node/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "null/extensionjava_package/data-node/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "null/extensionobjc_class_prefix/data-node/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "null/extensionobjc_class_prefix/data-node/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "null/extensioncc_enable_arenas/data-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "null/extensioncc_enable_arenas/data-node",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(41,26)-(41,26)]"
+    },
+    {
+      "@id": "null/extensioncsharp_namespace/data-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "null/extensioncsharp_namespace/data-node",
       "http://a.ml/vocabularies/document-source-maps#value": "[(35,26)-(35,26)]"
+    },
+    {
+      "@id": "null/extensiongo_package/data-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "null/extensiongo_package/data-node",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(36,20)-(36,20)]"
+    },
+    {
+      "@id": "null/extensionjava_multiple_files/data-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "null/extensionjava_multiple_files/data-node",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(39,29)-(39,29)]"
+    },
+    {
+      "@id": "null/extensionjava_outer_classname/data-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "null/extensionjava_outer_classname/data-node",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(38,30)-(38,30)]"
+    },
+    {
+      "@id": "null/extensionjava_package/data-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "null/extensionjava_package/data-node",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(37,22)-(37,22)]"
+    },
+    {
+      "@id": "null/extensionobjc_class_prefix/data-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "null/extensionobjc_class_prefix/data-node",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(40,27)-(40,27)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/empty.proto",

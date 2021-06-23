@@ -1,9 +1,9 @@
 package amf.plugins.parse
 import amf.apicontract.internal.plugins.ApiParsePlugin
 import amf.apicontract.internal.spec.common.WebApiDeclarations
-import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.parse.document.{AntlrParsedDocument, ParserContext}
+import amf.core.client.scala.parse.document.{AntlrParsedDocument, ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{Proto3, Vendor}
 import amf.plugins.common.Proto3MediaTypes
@@ -21,6 +21,7 @@ object GrpcParsePlugin extends ApiParsePlugin with AntlrASTParserHelper {
     GrpcDocumentParser(document)(context(document, ctx)).parseDocument()
   }
 
+  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = new GrpcReferenceHandler()
   override def mediaTypes: Seq[String] = Proto3MediaTypes.mediaTypes
 
   override def applies(element: Root): Boolean = {
@@ -54,7 +55,7 @@ object GrpcParsePlugin extends ApiParsePlugin with AntlrASTParserHelper {
     )
     // setup the package path
     GrpcPackageParser(ast)(grpcCtx).parseName() match {
-      case Some(pkg) => grpcCtx.nestedMessage(pkg)
+      case Some((pkg, _)) => grpcCtx.nestedMessage(pkg)
       case _         => grpcCtx
     }
   }

@@ -1,13 +1,15 @@
 package amf.plugins.document.apicontract.parser.spec.grpc
 
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.client.scala.model.domain.{NamedDomainElement, Shape}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.{DeclaredElement, LexicalInformation}
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.plugins.document.apicontract.contexts.parser.grpc.GrpcWebApiContext
+import amf.plugins.document.apicontract.parser.spec.domain.GrpcOptionParser
 import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes._
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape, UnresolvedShape}
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common.TypeDef
 import amf.shapes.internal.spec.common.TypeDef._
@@ -85,13 +87,13 @@ trait AntlrASTParserHelper {
               case "int32"    => Some(parseScalarRange(n, IntType, Some("int32")))
               case "int64"    => Some(parseScalarRange(n, LongType, Some("int64")))
               case "uint32"   => Some(parseScalarRange(n, IntType, Some("uint32")))
-              case "uint64"   => Some(parseScalarRange(n, LongType, Some("uint32")))
-              case "sint32"   => Some(parseScalarRange(n, IntType, Some("uint32")))
-              case "sint64"   => Some(parseScalarRange(n, LongType, Some("uint32")))
-              case "fixed32"  => Some(parseScalarRange(n, IntType, Some("uint32")))
-              case "fixed64"  => Some(parseScalarRange(n, LongType, Some("uint32")))
-              case "sfixed32" => Some(parseScalarRange(n, IntType, Some("uint32")))
-              case "sfixed64" => Some(parseScalarRange(n, LongType, Some("uint32")))
+              case "uint64"   => Some(parseScalarRange(n, LongType, Some("uint64")))
+              case "sint32"   => Some(parseScalarRange(n, IntType, Some("sint32")))
+              case "sint64"   => Some(parseScalarRange(n, LongType, Some("sint64")))
+              case "fixed32"  => Some(parseScalarRange(n, IntType, Some("fixed32")))
+              case "fixed64"  => Some(parseScalarRange(n, LongType, Some("fixed64")))
+              case "sfixed32" => Some(parseScalarRange(n, IntType, Some("sfixed32")))
+              case "sfixed64" => Some(parseScalarRange(n, LongType, Some("sfixed64")))
               case "bool"     => Some(parseScalarRange(n, BoolType, None))
               case "string"   => Some(parseScalarRange(n, StrType, None))
               case "bytes"    => Some(parseScalarRange(n, ByteType, None))
@@ -118,7 +120,12 @@ trait AntlrASTParserHelper {
   protected def parseObjectRange(n: ASTElement, literalReference: String)(implicit ctx: GrpcWebApiContext): AnyShape = {
     val topLevelAlias = ctx.topLevelPackageRef(literalReference).map(alias => Seq(alias)).getOrElse(Nil)
     val qualifiedReference = ctx.fullMessagePath(literalReference)
-    ctx.declarations.findType(qualifiedReference, SearchScope.All).orElse(ctx.declarations.findType(topLevelAlias.head, SearchScope.All)) match {
+    val externalReference = s".${literalReference}" // absolute reference based on the assumption the reference is for an external package imported in the file
+    ctx.declarations.findType(qualifiedReference, SearchScope.All) // local reference inside a nested message, transformed into a top-level for possibly nested type
+      .orElse(ctx.declarations.findType(topLevelAlias.head, SearchScope.All)) // top-level reference for a reference, using just the name + plus package
+      .orElse(ctx.globalSpace.get(externalReference)) // fully qualified reference for an external package that might be in the global space
+      .orElse(ctx.globalSpace.get(topLevelAlias.head)) // fully qualified reference for this package that might have been defined in a different file, and thus might be registered in the global space
+    match {
       case Some(s: NodeShape) =>
         s.link(literalReference, toAnnotations(n)).asInstanceOf[NodeShape].withName(literalReference, toAnnotations(n))
       case Some(s: ScalarShape) =>
@@ -127,7 +134,7 @@ trait AntlrASTParserHelper {
         val shape = UnresolvedShape(literalReference, toAnnotations(n))
         shape.withContext(ctx)
 
-        shape.unresolvedAntlrAst(qualifiedReference, topLevelAlias, ctx.rootContextDocument, n)
+        shape.unresolvedAntlrAst(literalReference, Seq(qualifiedReference)++ topLevelAlias, ctx.rootContextDocument, n)
         shape
     }
   }
@@ -143,14 +150,15 @@ trait AntlrASTParserHelper {
   }
 
   private def parseIsRepeated(ast: ASTElement)(implicit grpcWebApiContext: GrpcWebApiContext): Boolean = {
-    path(ast, Seq(REPEATED)) match {
-      case Some(n: ASTElement) =>
-        withOptTerminal(n) {
-          case Some(t) => true
-          case _       => false
+    ast match {
+      case node: Node =>
+        find(node, REPEATED).headOption match {
+          case Some(n: Terminal) => true
+          case _                 => false
         }
-      case _                   => false
+      case _         => false
     }
+
   }
 
 
@@ -207,5 +215,11 @@ trait AntlrASTParserHelper {
 
   def astError(id: String, message: String, annotations: Annotations)(implicit ctx: ParserContext): Unit = {
     ctx.eh.violation(ParserSideValidations.InvalidAst, id, message, annotations)
+  }
+
+  def collectOptions(ast: Node, adopt: DomainExtension => Unit)(implicit ctx: GrpcWebApiContext): Unit = {
+    collect(ast, Seq(OPTION_STATEMENT)).map { case optNode: Node =>
+      GrpcOptionParser(optNode).parse(adopt)
+    }
   }
 }
