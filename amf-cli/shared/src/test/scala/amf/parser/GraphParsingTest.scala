@@ -31,12 +31,12 @@ class GraphParsingTest extends FunSuiteCycleTests {
   }
 
   test("Conserve id values when parsing to maintain consistency with recursive fixpoints - expanded") {
-    val ro = RenderOptions().withCompactUris.withPrettyPrint
+    val ro = RenderOptions().withCompactUris.withPrettyPrint.withoutFlattenedJsonLd
     cycle("recursive-api.expanded.jsonld", "recursive-api.expanded.jsonld", AmfJsonHint, Amf, renderOptions = Some(ro))
   }
 
   test("Parse compacted id fields correctly applying base - flattened source") {
-    val ro = RenderOptions().withPrettyPrint
+    val ro = RenderOptions().withPrettyPrint.withoutFlattenedJsonLd
     cycle("recursive-api.flattened.jsonld",
           "recursive-api-full-uris.expanded.jsonld",
           AmfJsonHint,
@@ -45,7 +45,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
   }
 
   test("Parse compacted id fields correctly applying base - expanded source") {
-    val ro = RenderOptions().withPrettyPrint
+    val ro = RenderOptions().withPrettyPrint.withoutFlattenedJsonLd
     cycle("recursive-api.expanded.jsonld",
           "recursive-api-full-uris.expanded.jsonld",
           AmfJsonHint,
@@ -54,7 +54,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
   }
 
   test("Parse expanded uri fields") {
-    val ro = RenderOptions().withPrettyPrint
+    val ro = RenderOptions().withPrettyPrint.withoutFlattenedJsonLd
     cycle("recursive-api-full-uris.expanded.jsonld",
           "recursive-api-full-uris.expanded.jsonld",
           AmfJsonHint,
