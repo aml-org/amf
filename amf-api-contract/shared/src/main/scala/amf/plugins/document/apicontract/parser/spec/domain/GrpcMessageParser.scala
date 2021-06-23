@@ -8,7 +8,7 @@ import amf.shapes.client.scala.model.domain.{NodeShape, UnionShape}
 import org.mulesoft.antlrast.ast.Node
 
 class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
-  val nodeShape = NodeShape(toAnnotations(ast))
+  val nodeShape: NodeShape = NodeShape(toAnnotations(ast))
 
   def parse(adopt: NodeShape => Unit): NodeShape = {
     parseName(adopt)
@@ -16,9 +16,9 @@ class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends 
     nodeShape
   }
 
-  def parseName(adopt: NodeShape => Unit) = withDeclaredShape(ast, MESSAGE_NAME, nodeShape, {_ => adopt(nodeShape)})
+  def parseName(adopt: NodeShape => Unit): Unit = withDeclaredShape(ast, MESSAGE_NAME, nodeShape, { _ => adopt(nodeShape)})
 
-  def parseMessageBody() = {
+  def parseMessageBody(): Unit = {
     collect(ast, Seq(MESSAGE_BODY, MESSAGE_ELEMENT)).foreach { case messageElement: Node =>
       val messageElementAst = messageElement.children.head.asInstanceOf[Node]
       messageElementAst.name match {

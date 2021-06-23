@@ -53,7 +53,7 @@ trait RamlParsePlugin extends ApiParsePlugin {
   private def validateJsonPointersToFragments(reference: ParsedReference, ctx: ParserContext): Unit = {
     reference.unit.sourceSpec match {
       case Some(v) if v.isRaml =>
-        reference.origin.refs.filter(_.uriFragment.isDefined).foreach { r =>
+        reference.origin.refs.filter(_.uriFragment.isDefined).foreach { case r: SYamlRefContainer =>
           ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.node)
         }
       case _ => // Nothing to do
@@ -63,8 +63,8 @@ trait RamlParsePlugin extends ApiParsePlugin {
   private def validateReferencesToLibraries(reference: ParsedReference, ctx: ParserContext): Unit = {
     val refs: Seq[RefContainer] = reference.origin.refs
     val allKinds                = refs.map(_.linkType)
-    val definedKind             = if (allKinds.distinct.size > 1) UnspecifiedReference else allKinds.head
-    val nodes                   = refs.map(_.node)
+    val definedKind             = if (allKinds.size > 1) UnspecifiedReference else allKinds.head
+    val nodes                   = refs.collect { case n: SYamlRefContainer => n.node }
     reference.unit match {
       case _: Module => // if is a library, kind should be LibraryReference
         if (allKinds.contains(LibraryReference) && allKinds.contains(LinkReference))
@@ -100,7 +100,7 @@ trait RamlParsePlugin extends ApiParsePlugin {
                              encodes: ExternalDomainElement,
                              elementRef: Seq[BaseUnit],
                              ctx: ParserContext): Unit = {
-    origins.foreach { refContainer =>
+    origins.foreach { case refContainer: SYamlRefContainer =>
       refContainer.node match {
         case mut: MutRef =>
           elementRef.foreach(u => ctx.addSonRef(u))

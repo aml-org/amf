@@ -10,55 +10,34 @@ import org.mulesoft.antlrast.ast.{Node, Terminal}
 case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper  {
   val rpc: Node = find(ast, RPC).headOption.getOrElse(ast).asInstanceOf[Node]
 
-  def parse(adopt: Operation => Unit): Seq[Operation] = {
+  def parse(adopt: Operation => Unit): Operation = {
     parseServiceMessages(adopt)
   }
 
-  def parseServiceMessages(adopt: Operation => Unit): Seq[Operation] = {
+  def parseServiceMessages(adopt: Operation => Unit): Operation = {
     val operationName = parseName()
     val messages: Seq[String] = collect(rpc, Seq(MESSAGE_TYPE, MESSAGE_NAME)).map { case n: Node => n.source }
     val request = messages.head
     val response = messages.last
     parseStreamingMetadata() match {
-      case (false, false) => Seq(buildSyncOperation(operationName, Some(request), Some(response), adopt))
-      case (true, false)  => Seq(buildSyncOperation(operationName,None, Some(response), adopt), buildAsyncOperation(operationName, "publish", request, adopt))
-      case (false, true)  => Seq(buildSyncOperation(operationName,Some(request), None, adopt), buildAsyncOperation(operationName, "subscribe", response, adopt))
-      case (true, true)   => Seq(buildAsyncOperation(operationName, "publish", request, adopt), buildAsyncOperation(operationName, "subscribe", response, adopt))
+      case (false, false) => buildOperation(operationName,"post", request, response, adopt)
+      case (true, false)  => buildOperation(operationName,"publish", request, response, adopt)
+      case (false, true)  => buildOperation(operationName,"subscribe", request, response, adopt)
+      case (true, true)   => buildOperation(operationName,"pubsub", request, response, adopt)
     }
   }
 
-  def buildSyncOperation(operationName: String, request: Option[String], response: Option[String], adopt: Operation => Unit): Operation = {
-    val operation = Operation(toAnnotations(rpc)).withName(operationName).withOperationId(operationName).withMethod("post")
+  def buildOperation(operationName: String, operationType: String, request: String, response: String, adopt: Operation => Unit): Operation = {
+    val operation = Operation(toAnnotations(rpc)).withName(operationName).withOperationId(operationName).withMethod(operationType)
     adopt(operation)
-    request match {
-      case Some(reference) =>
-        val requestBody = parseObjectRange(rpc, reference)
-        operation.withRequest()
-          .withPayload(Some(Mimes.`APPLICATION/PROTOBUF`))
-          .withSchema(requestBody)
-      case _               => // ignore
-    }
-    response match {
-      case Some(reference) =>
-        val responseBody = parseObjectRange(rpc, reference)
-        operation.withResponse("")
-          .withPayload(Some(Mimes.`APPLICATION/PROTOBUF`))
-          .withSchema(responseBody)
-      case _               => // ignore
-    }
-    operation
-  }
-
-  def buildAsyncOperation(operationName: String, operationType: String, reference: String, adopt: Operation => Unit): Operation = {
-    val operation = Operation(toAnnotations(rpc)).withName(operationName).withOperationId(operationName + operationType)
-    adopt(operation)
-    val body = parseObjectRange(rpc, reference)
-    operationType match {
-      case "publish" =>
-        operation.withMethod("publish").withRequest().withPayload(Some(Mimes.`APPLICATION/PROTOBUF`)).withSchema(body)
-      case "subscribe" =>
-        operation.withMethod("subscribe").withResponse("").withPayload(Some(Mimes.`APPLICATION/PROTOBUF`)).withSchema(body)
-    }
+    val requestBody = parseObjectRange(rpc, request)
+    operation.withRequest()
+      .withPayload(Some(Mimes.`APPLICATION/GRPC`))
+      .withSchema(requestBody)
+    val responseBody = parseObjectRange(rpc, response)
+    operation.withResponse("")
+      .withPayload(Some(Mimes.`APPLICATION/PROTOBUF`))
+      .withSchema(responseBody)
     operation
   }
 

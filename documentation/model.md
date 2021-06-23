@@ -276,6 +276,7 @@ Base class for all shapes stored in the graph model
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -339,6 +340,7 @@ Shape that contains a nested collection of data shapes
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -879,6 +881,7 @@ Shape describing data uploaded in an API request
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1036,6 +1039,7 @@ Data shape containing nested multi-dimensional collection shapes
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1185,6 +1189,7 @@ Data shape representing the null/nil value in the input schema
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1218,6 +1223,7 @@ Shape that validates a record of fields, like a JS object
  | minProperties | int | Minimum number of properties in the input node constraint | http://a.ml/vocabularies/shapes#minProperties |
  | maxProperties | int | Maximum number of properties in the input node constraint | http://a.ml/vocabularies/shapes#maxProperties |
  | closed | boolean | Additional properties in the input node accepted constraint | http://www.w3.org/ns/shacl#closed |
+ | additionalPropertiesKeySchema | [Shape](#shape) | Additional properties key schema | http://www.w3.org/ns/shacl#additionalPropertiesKeySchema |
  | additionalPropertiesSchema | [Shape](#shape) | Additional properties schema | http://www.w3.org/ns/shacl#additionalPropertiesSchema |
  | discriminator | string | Discriminator property | http://a.ml/vocabularies/shapes#discriminator |
  | discriminatorValue | string | Values for the discriminator property | http://a.ml/vocabularies/shapes#discriminatorValue |
@@ -1249,6 +1255,7 @@ Shape that validates a record of fields, like a JS object
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1538,6 +1545,7 @@ Constraint over a property in a data shape.
  | minCount | int | Minimum count property constraint | http://www.w3.org/ns/shacl#minCount |
  | maxCount | int | Maximum count property constraint | http://www.w3.org/ns/shacl#maxCount |
  | patternName | string | Patterned property constraint | http://a.ml/vocabularies/shapes#patternName |
+ | serializationOrder | int | position in the set of properties for a shape used to serialize this property on the wire | http://a.ml/vocabularies/shapes#serializationOrder |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1558,6 +1566,7 @@ Constraint over a property in a data shape.
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
@@ -1596,6 +1605,7 @@ Recursion on a Shape structure, used when expanding a shape and finding the cano
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
@@ -1730,6 +1740,7 @@ Data shape describing a scalar value in the input data model, reified as an scal
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1775,6 +1786,7 @@ Raw schema that cannot be parsed using AMF shapes model
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1912,6 +1924,7 @@ Shapes can be recursive and inherit from other shapes.
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
 
 ## ShapeExtension
@@ -2015,6 +2028,7 @@ Data shape containing a multi-valued collection of shapes
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -2065,6 +2079,7 @@ Shape representing the union of many alternative data shapes
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
