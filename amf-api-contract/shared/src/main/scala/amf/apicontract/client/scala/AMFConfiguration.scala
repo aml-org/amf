@@ -163,7 +163,7 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
         List(
           Async20TransformationPipeline(),
           Async20EditingPipeline(),
-          Async20EditingPipeline()
+          Async20CachePipeline()
         ))
 }
 
