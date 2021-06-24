@@ -32,6 +32,7 @@ import amf.apicontract.internal.validation.shacl.{CustomShaclModelValidationPlug
 import amf.core.client.platform.config.AMFLogger
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
+import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
@@ -248,6 +249,9 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def forInstance(url: String, mediaType: Option[String] = None): Future[AMFConfiguration] =
     super.forInstance(url, mediaType).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+
+  override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMFConfiguration =
+    super._withExecutionEnvironment(executionEnv)
 
   def merge(other: AMFConfiguration): AMFConfiguration = super._merge(other)
 
