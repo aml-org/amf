@@ -12,7 +12,9 @@ object CmdLineParser {
     Oas30Profile.profile == f ||
     Oas20Profile.profile == f ||
     AmfProfile.profile == f ||
-    Aml.id == f
+    GrpcProfile.profile == f ||
+    Proto3Profile.profile == f ||
+    Aml.name == f
 
   }
 
@@ -41,7 +43,7 @@ object CmdLineParser {
           success
         } else {
           failure(
-            s"Invalid value $f, values supported: '${Raml10.id}', '${Raml08.id}', '${Oas20.id}', '${Aml.id}', '${Amf.id}'")
+            s"Invalid value $f, values supported: '${Raml10.name}', '${Raml08.name}', '${Oas20.name}', '${Aml.name}', '${Amf.name}', '${Proto3.name}', ${Grpc.name}")
         }
       })
       .action((f, c) => c.copy(inputFormat = Some(f)))
@@ -59,7 +61,7 @@ object CmdLineParser {
           success
         } else {
           failure(
-            s"Invalid value $f, values supported: '${Raml10.id}', '${Raml08.id}', '${Oas20.id}', '${Aml.id}', '${Amf.id}'")
+            s"Invalid value $f, values supported: '${Raml10.name}', '${Raml08.name}', '${Oas20.name}', '${Aml.name}', '${Amf.name}', '${Proto3.name}', ${Grpc.name}")
         }
       })
       .action((f, c) => c.copy(validationProfile = f))
@@ -116,7 +118,7 @@ object CmdLineParser {
               success
             } else {
               failure(
-                s"Invalid value $f, values supported: '${Raml10.id}', '${Raml08.id}', '${Oas20.id}', '${Aml.id}', '${Amf.id}'")
+                s"Invalid value $f, values supported: '${Raml10.name}', '${Raml08.name}', '${Oas20.name}', '${Aml.name}', '${Amf.name}', '${Proto3.name}', ${Grpc.name}")
             }
           })
           .action((f, c) => c.copy(outputFormat = Some(f)))

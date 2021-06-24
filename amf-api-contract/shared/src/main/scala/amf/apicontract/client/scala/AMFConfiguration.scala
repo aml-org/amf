@@ -157,7 +157,7 @@ object OASConfiguration extends APIConfigurationBuilder {
 }
 
 object GRPCConfiguration extends APIConfigurationBuilder {
-  def PROTO3(): AMFConfiguration =
+  def GRPC(): AMFConfiguration =
     common()
       .withPlugins(List(GrpcParsePlugin, AntlrSyntaxParsePlugin, GrpcRenderPlugin))
 }

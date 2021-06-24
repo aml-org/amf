@@ -1,17 +1,13 @@
 package amf.apicontract.internal.transformation
 
-import amf.apicontract.internal.spec.common.transformation.stage.{
-  AnnotationRemovalStage,
-  MediaTypeResolutionStage,
-  PayloadAndParameterResolutionStage,
-  ResponseExamplesResolutionStage
-}
+import amf.apicontract.internal.spec.common.transformation.stage.{AnnotationRemovalStage, MediaTypeResolutionStage, PayloadAndParameterResolutionStage, ResponseExamplesResolutionStage}
 import amf.apicontract.internal.transformation.stages.ExtensionsResolutionStage
-import amf.core.client.common.validation.{Async20Profile, Oas30Profile, ProfileName}
+import amf.core.client.common.validation.{Async20Profile, GrpcProfile, Oas30Profile, ProfileName}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
 import amf.core.internal.transform.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage}
+import amf.plugins.document.apicontract.resolution.pipelines.GrpcTransformationPipeline
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 // Validation pipeline is not registered in AMF configuration, is it only called internally.
@@ -37,6 +33,7 @@ object ValidationTransformationPipeline {
     val pipeline = profile match {
       case Oas30Profile   => Oas30ValidationTransformationPipeline()
       case Async20Profile => Async20CachePipeline()
+      case GrpcProfile    => GrpcTransformationPipeline()
       case _              => new ValidationTransformationPipeline(profile)
     }
     val runner = TransformationPipelineRunner(eh)

@@ -121,10 +121,19 @@ trait AntlrASTParserHelper {
     val topLevelAlias = ctx.topLevelPackageRef(literalReference).map(alias => Seq(alias)).getOrElse(Nil)
     val qualifiedReference = ctx.fullMessagePath(literalReference)
     val externalReference = s".${literalReference}" // absolute reference based on the assumption the reference is for an external package imported in the file
-    ctx.declarations.findType(qualifiedReference, SearchScope.All) // local reference inside a nested message, transformed into a top-level for possibly nested type
-      .orElse(ctx.declarations.findType(topLevelAlias.head, SearchScope.All)) // top-level reference for a reference, using just the name + plus package
+    ctx.declarations
+      .findType(qualifiedReference, SearchScope.All) // local reference inside a nested message, transformed into a top-level for possibly nested type
+      .orElse {  // top-level reference for a reference, using just the name + plus package
+        topLevelAlias.headOption.flatMap { alias =>
+          ctx.declarations.findType(alias, SearchScope.All)
+        }
+      }
       .orElse(ctx.globalSpace.get(externalReference)) // fully qualified reference for an external package that might be in the global space
-      .orElse(ctx.globalSpace.get(topLevelAlias.head)) // fully qualified reference for this package that might have been defined in a different file, and thus might be registered in the global space
+      .orElse{ // fully qualified reference for this package that might have been defined in a different file, and thus might be registered in the global space
+        topLevelAlias.headOption.flatMap { alias =>
+          ctx.globalSpace.get(alias)
+        }
+      }
     match {
       case Some(s: NodeShape) =>
         s.link(literalReference, toAnnotations(n)).asInstanceOf[NodeShape].withName(literalReference, toAnnotations(n))
@@ -133,7 +142,6 @@ trait AntlrASTParserHelper {
       case _                 =>
         val shape = UnresolvedShape(literalReference, toAnnotations(n))
         shape.withContext(ctx)
-
         shape.unresolvedAntlrAst(literalReference, Seq(qualifiedReference)++ topLevelAlias, ctx.rootContextDocument, n)
         shape
     }

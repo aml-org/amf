@@ -35,7 +35,9 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
                      "-in",
                      Raml10.id,
                      "-mime-in",
-                     `application/yaml`,
+      `application/yaml`,
+                     "--validate",
+                     "false",
                      "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml")
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
@@ -66,6 +68,8 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       Oas20.id,
       "-mime-out",
       `application/json`,
+      "--validate",
+      "false",
       "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml"
     )
     val cfg = CmdLineParser.parse(args)
