@@ -6,7 +6,7 @@ import amf.shapes.client.scala.model.domain.NodeShape
 
 trait GrpcEmitter {
 
-  def emitOptions(domainElement: DomainElement, builder: StringDocBuilder, ctx: GrpcEmitterContext) =  {
+  def emitOptions(domainElement: DomainElement, builder: StringDocBuilder, ctx: GrpcEmitterContext): Unit =  {
     domainElement.customDomainProperties.foreach { extension =>
       GrpcOptionsEmitter(extension, builder, ctx).emit()
     }
@@ -19,7 +19,10 @@ trait GrpcEmitter {
       case a: ArrayShape if a.items.isInstanceOf[NodeShape]   => objectRange(a.items.asInstanceOf[NodeShape])
       case s: ScalarShape                                     => scalarRange(s)
       case o: NodeShape                                       => objectRange(o)
-      case _                                                  => "UnknownMessage"
+      case s                                                  =>
+        println("UNKNOWN MESSAGE:")
+        println(s)
+        "UnknownMessage"
     }
   }
 

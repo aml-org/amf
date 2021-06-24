@@ -74,8 +74,8 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
   def emit(): Unit = {
     builder.doc { doc =>
       doc += ("syntax = \"proto3\";\n")
+      emitReferences(doc)
       doc.list { l =>
-        emitReferences(l)
         emitPackage(l)
         emitMessages(l)
         emitEnums(l)
