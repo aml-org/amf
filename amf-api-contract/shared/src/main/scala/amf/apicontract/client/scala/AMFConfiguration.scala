@@ -131,7 +131,7 @@ object OASConfiguration extends APIConfigurationBuilder {
 }
 
 object GRPCConfiguration extends APIConfigurationBuilder {
-  def PROTO3(): AMFConfiguration =
+  def GRPC(): AMFConfiguration =
     common()
       .withPlugins(List(GrpcParsePlugin, AntlrSyntaxParsePlugin, GrpcRenderPlugin))
 }
@@ -140,7 +140,7 @@ object GRPCConfiguration extends APIConfigurationBuilder {
 object WebAPIConfiguration {
   def WebAPI(): AMFConfiguration = {
     val config = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
-    config.merge(GRPCConfiguration.PROTO3())
+    config.merge(GRPCConfiguration.GRPC())
   }
 }
 

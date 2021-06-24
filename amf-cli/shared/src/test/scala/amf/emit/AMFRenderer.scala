@@ -2,7 +2,6 @@ package amf.emit
 
 import amf.aml.internal.utils.VocabulariesRegister
 import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
-
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.Syntax
