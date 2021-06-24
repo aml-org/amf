@@ -1,11 +1,12 @@
 package amf.plugins.parse
+
 import amf.apicontract.internal.plugins.ApiParsePlugin
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{AntlrParsedDocument, ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{Proto3, Vendor}
+import amf.core.internal.remote.{Grpc, Vendor}
 import amf.plugins.common.Proto3MediaTypes
 import amf.plugins.document.apicontract.contexts.parser.grpc.GrpcWebApiContext
 import amf.plugins.document.apicontract.parser.spec.domain.GrpcPackageParser
@@ -15,7 +16,7 @@ import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 
 object GrpcParsePlugin extends ApiParsePlugin with AntlrASTParserHelper {
-  override protected def vendor: Vendor = Proto3
+  override protected def vendor: Vendor = Grpc
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
     GrpcDocumentParser(document)(context(document, ctx)).parseDocument()

@@ -9,7 +9,7 @@ import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
 case class GrpcEnumEmitter(shape: ScalarShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) {
 
   def emit(): Unit = {
-    builder.list { l =>
+    builder.fixed { l =>
       l += (s"enum ${enumName} {", enumPos)
       l.obj { o =>
         emitValues(o)
