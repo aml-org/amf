@@ -1,0 +1,19 @@
+{
+    "components": {
+        "responses": {
+          "okResponse": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "item.json#/components/schemas/item"
+                  }
+                }
+              }
+            }
+          }
+        }
+    }
+}
