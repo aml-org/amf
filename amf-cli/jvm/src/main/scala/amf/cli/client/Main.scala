@@ -16,10 +16,8 @@ import scala.language.postfixOps
   */
 object Main extends PlatformSecrets {
 
-  private val reportBuilder = AMFEventReportBuilder()
-  private var amfConfig: AMFConfiguration = Await.result(
-    WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withCustomValidationsEnabled(),
-    5 seconds)
+  private val reportBuilder               = AMFEventReportBuilder()
+  private var amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
 
   private def enableTracing(cfg: ParserConfig, config: AMFConfiguration) = {
     if (cfg.trace) {

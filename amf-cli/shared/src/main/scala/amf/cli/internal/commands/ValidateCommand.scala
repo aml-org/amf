@@ -3,7 +3,6 @@ package amf.cli.internal.commands
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
-import amf.aml.internal.validate.custom.ParsedValidationProfile
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
@@ -46,27 +45,17 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
 
   def report(model: BaseUnit, config: ParserConfig, configuration: AMFConfiguration): Future[AMFValidationReport] = {
     implicit val executionContext: ExecutionContext = configuration.getExecutionContext
-    val customProfileLoaded: Future[(ProfileName, AMFConfiguration)] = if (config.customProfile.isDefined) {
-      for {
-        confCustom    <- configuration.withCustomValidationsEnabled
-        customProfile <- confCustom.createClient().parseDialectInstance(config.customProfile.get)
-      } yield {
-        val profile = ParsedValidationProfile(customProfile.dialectInstance.encodes.asInstanceOf[DialectDomainElement])
-        (profile.name, confCustom.withValidationProfile(profile))
-      }
-    } else {
-      Future {
-        model match {
-          case dialectInstance: DialectInstance =>
-            findDialect(configuration, dialectInstance.definedBy().value()) match {
-              case Some(dialect) =>
-                (ProfileName(dialect.nameAndVersion()), configuration)
-              case _ =>
-                (config.profile, configuration)
-            }
-          case _ =>
-            (config.profile, configuration)
-        }
+    val customProfileLoaded: Future[(ProfileName, AMFConfiguration)] = Future {
+      model match {
+        case dialectInstance: DialectInstance =>
+          findDialect(configuration, dialectInstance.definedBy().value()) match {
+            case Some(dialect) =>
+              (ProfileName(dialect.nameAndVersion()), configuration)
+            case _ =>
+              (config.profile, configuration)
+          }
+        case _ =>
+          (config.profile, configuration)
       }
     }
     customProfileLoaded flatMap {
