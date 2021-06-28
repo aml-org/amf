@@ -87,11 +87,11 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     }
   }
 
-  val whiteListFields = List(DomainElementModel.CustomDomainProperties, OperationModel.Optional)
+  val allowedListFields = List(DomainElementModel.CustomDomainProperties, OperationModel.Optional)
 
   private def isValidToAdd(main: DomainElement, field: Field): Boolean =
     main match {
-      case ScalarShape(_, _) | NodeShape(_, _) => (whiteListFields ::: main.meta.fields).contains(field)
+      case ScalarShape(_, _) | NodeShape(_, _) => (allowedListFields ::: main.meta.fields).contains(field)
       case _                                   => true
     }
 
