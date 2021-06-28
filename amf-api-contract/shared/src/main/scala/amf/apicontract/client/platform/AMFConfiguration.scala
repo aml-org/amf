@@ -12,10 +12,16 @@ import amf.core.client.platform.resource.ResourceLoader
 import amf.core.client.platform.transform.TransformationPipeline
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.core.internal.convert.TransformationPipelineConverter._
-import amf.apicontract.client.scala.{WebAPIConfiguration => InternalWebAPIConfiguration, RAMLConfiguration => InternalRAMLConfiguration, OASConfiguration => InternalOASConfiguration, AsyncAPIConfiguration => InternalAsyncAPIConfiguration}
+import amf.apicontract.client.scala.{
+  AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
+  OASConfiguration => InternalOASConfiguration,
+  RAMLConfiguration => InternalRAMLConfiguration,
+  WebAPIConfiguration => InternalWebAPIConfiguration
+}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
+import amf.core.client.platform.execution.BaseExecutionEnvironment
 
 @JSExportAll
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
@@ -47,6 +53,9 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = _internal.withEventListener(listener)
 
   override def withLogger(logger: AMFLogger): AMFConfiguration = _internal.withLogger(logger)
+
+  override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMFConfiguration =
+    _internal.withExecutionEnvironment(executionEnv._internal)
 
   def merge(other: AMFConfiguration): AMFConfiguration = _internal.merge(other)
 
