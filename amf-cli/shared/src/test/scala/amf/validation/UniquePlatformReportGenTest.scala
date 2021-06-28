@@ -57,11 +57,8 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     val initialConfig = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
     val finalHint     = overridedHint.getOrElse(hint)
     for {
-      withProfile <- if (profileFile.isDefined)
-        initialConfig.withCustomValidationsEnabled().flatMap(_.withCustomProfile(directory + profileFile.get))
-      else Future.successful(initialConfig)
-      parseResult <- parse(directory + api, withProfile, finalHint)
-      report      <- withProfile.createClient().validate(parseResult.bu, profile)
+      parseResult <- parse(directory + api, initialConfig, finalHint)
+      report      <- initialConfig.createClient().validate(parseResult.bu, profile)
       r <- {
         val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val finalReport =

@@ -232,15 +232,6 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withLogger(logger: AMFLogger): AMFConfiguration = super._withLogger(logger)
 
-  override def withCustomProfile(instancePath: String): Future[AMFConfiguration] =
-    super.withCustomProfile(instancePath).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
-
-  override def withCustomProfile(profile: ValidationProfile): AMFConfiguration =
-    super.withCustomProfile(profile).asInstanceOf[AMFConfiguration]
-
-  override def withCustomValidationsEnabled(): Future[AMFConfiguration] =
-    super.withCustomValidationsEnabled().map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
-
   override def withDialect(path: String): Future[AMFConfiguration] =
     super.withDialect(path).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 

@@ -146,39 +146,6 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Custom validation command") {
-    val args = Array(
-      "validate",
-      "-in",
-      Raml10.name,
-      "-mime-in",
-      "application/yaml",
-      "-cp",
-      "file://amf-cli/shared/src/test/resources/validations/profiles/mercury.yaml",
-      "file://amf-cli/shared/src/test/resources/validations/mercury.raml"
-    )
-    val cfg = CmdLineParser.parse(args)
-    assert(cfg.isDefined)
-    assert(cfg.get.mode.get == ParserConfig.VALIDATE)
-    val stdout = new TestWriter()
-    val stderr = new TestWriter()
-    val proc   = new TestProc()
-
-    for {
-      config <- RAMLConfiguration.RAML10().withCustomValidationsEnabled
-      _ <- ValidateCommand(platform).run(cfg.get.copy(
-                                           stdout = stdout,
-                                           stderr = stderr,
-                                           proc = proc
-                                         ),
-                                         config)
-    } yield {
-      assert(stderr.acc == "")
-      assert(stdout.acc != "")
-      assert(!proc.successful)
-    }
-  }
-
   test("Dialects parsing command") {
     val args = Array(
       "parse",

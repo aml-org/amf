@@ -271,21 +271,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
-  test("Validation test") {
-    val config = RAMLConfiguration.RAML10().createClient()
-    for {
-      unit              <- config.parse(zencoder).asFuture
-      report            <- config.validate(unit.baseUnit, Raml10Profile).asFuture
-      enabled           <- config.getConfiguration().withCustomValidationsEnabled().asFuture
-      validationProfile <- enabled.createClient().parseValidationProfile(profile).asFuture
-      withCustomProfile <- Future.successful(enabled.withCustomProfile(validationProfile))
-      custom            <- withCustomProfile.createClient().validate(unit.baseUnit, validationProfile.profileName()).asFuture
-    } yield {
-      assert(report.conforms)
-      assert(!custom.conforms)
-    }
-  }
-
   test("Resolution test") {
     val client = RAMLConfiguration.RAML().createClient()
     for {
@@ -2030,24 +2015,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       resolved <- Future.successful(client.transformEditing(parsed.baseUnit, ProvidedMediaType.Raml10))
     } yield {
       assert(resolved.baseUnit.references().asSeq.forall(_.id != null))
-    }
-  }
-
-  test("Test custom validation to root document") {
-
-    val instance          = "file://amf-cli/shared/src/test/resources/custom/example.raml"
-    val validationProfile = "file://amf-cli/shared/src/test/resources/custom/profile.raml"
-
-    val config = RAMLConfiguration.RAML10().createClient()
-    for {
-      unit                   <- config.parse(instance).asFuture
-      report                 <- config.validate(unit.baseUnit, Raml10Profile).asFuture
-      enabled                <- config.getConfiguration().withCustomValidationsEnabled().asFuture
-      parseValidationProfile <- enabled.createClient().parseValidationProfile(validationProfile).asFuture
-      withCustomProfile      <- Future.successful(enabled.withCustomProfile(parseValidationProfile))
-      custom                 <- withCustomProfile.createClient().validate(unit.baseUnit, parseValidationProfile.profileName()).asFuture
-    } yield {
-      assert(report.conforms && custom.conforms)
     }
   }
 

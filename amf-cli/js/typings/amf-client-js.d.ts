@@ -5297,13 +5297,7 @@ declare module 'amf-client-js' {
 
     merge(other: AMLConfiguration): AMLConfiguration
 
-    withCustomValidationsEnabled(): Promise<AMLConfiguration>
-
     withDialect(path: string): Promise<AMLConfiguration>
-
-    withCustomProfile(instancePath: string): Promise<AMLConfiguration>
-
-    withCustomProfile(profile: ValidationProfile): AMLConfiguration
 
     forInstance(url: string): Promise<AMLConfiguration>
   }
@@ -5437,13 +5431,7 @@ declare module 'amf-client-js' {
 
     withDialect(dialect: Dialect): AMFConfiguration
 
-    withCustomValidationsEnabled(): Promise<AMFConfiguration>
-
     withDialect(path: string): Promise<AMFConfiguration>
-
-    withCustomProfile(instancePath: string): Promise<AMFConfiguration>
-
-    withCustomProfile(profile: ValidationProfile): AMFConfiguration
   }
 
   export class ShapePayloadValidatorFactory {
