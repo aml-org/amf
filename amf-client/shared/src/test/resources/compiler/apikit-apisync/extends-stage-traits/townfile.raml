@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: asfd
+description: asdf
+
+version: v1
+
+resourceTypes:
+  for-health-check-rt: !include some-modules/for-health-check.raml
+
+/health:
+  type:
+    for-health-check-rt
