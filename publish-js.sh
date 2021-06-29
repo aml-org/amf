@@ -35,9 +35,9 @@ echo "Running buildjs script"
 ./amf-client/js/build-scripts/buildjs.sh
 echo "Finished buildjs script"
 
-echo "Running build-typings script"
-./amf-client/js/build-scripts/build-typings.sh
-echo "Finished build-typings script"
+# echo "Running build-typings script"
+# ./amf-client/js/build-scripts/build-typings.sh
+# echo "Finished build-typings script"
 
 cd amf-client/js
 
