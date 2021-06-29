@@ -619,4 +619,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Raml10Profile)
   }
 
+  test("RAML union type with nil when applying extension") {
+    validate("valid-extension/extension.raml")
+  }
 }
