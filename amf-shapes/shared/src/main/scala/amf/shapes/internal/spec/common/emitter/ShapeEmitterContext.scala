@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.common.emitter
 
-import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
@@ -58,9 +58,7 @@ object JsonSchemaDeclarationsPath {
   * This implies having to use compact declaredTypesEmitter and recursiveShapeEmitter emitters to handle shapes that have RecursiveShapes,
   * emitting their fixpoint target to the schemas definitions facet dynamically.
   */
-class InlineJsonSchemaShapeEmitterContext(eh: AMFErrorHandler,
-                                          schemaVersion: SchemaVersion,
-                                          options: ShapeRenderOptions)
+class InlineJsonSchemaShapeEmitterContext(eh: AMFErrorHandler, schemaVersion: SchemaVersion, options: RenderOptions)
     extends JsonSchemaShapeEmitterContext(eh, schemaVersion, options) {
   override def recursiveShapeEmitter(shape: RecursiveShape,
                                      ordering: SpecOrdering,
@@ -74,13 +72,13 @@ class InlineJsonSchemaShapeEmitterContext(eh: AMFErrorHandler,
 }
 
 object JsonSchemaShapeEmitterContext {
-  def apply(eh: AMFErrorHandler, schemaVersion: SchemaVersion, options: ShapeRenderOptions) =
+  def apply(eh: AMFErrorHandler, schemaVersion: SchemaVersion, options: RenderOptions) =
     new JsonSchemaShapeEmitterContext(eh, schemaVersion, options)
 }
 
 class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
                                     val schemaVersion: SchemaVersion,
-                                    val options: ShapeRenderOptions)
+                                    val options: RenderOptions)
     extends OasLikeShapeEmitterContext {
 
   override def nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
@@ -165,5 +163,5 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissi
 
   def schemaVersion: SchemaVersion
 
-  def options: ShapeRenderOptions
+  def options: RenderOptions
 }

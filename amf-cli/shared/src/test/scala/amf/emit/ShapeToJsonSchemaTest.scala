@@ -3,7 +3,7 @@ package amf.emit
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
@@ -143,7 +143,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
                     hint: Hint = Raml10YamlHint): Future[Assertion] = {
     val config = WebAPIConfiguration
       .WebAPI()
-      .withRenderOptions(RenderOptions().withShapeRenderOptions(ShapeRenderOptions().withoutCompactedEmission))
+      .withRenderOptions(RenderOptions().withoutCompactedEmission)
     val jsonSchema: Future[String] = for {
       unit <- parse(file, config)
     } yield {

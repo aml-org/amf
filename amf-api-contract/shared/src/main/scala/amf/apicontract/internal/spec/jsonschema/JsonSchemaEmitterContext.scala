@@ -5,7 +5,7 @@ import amf.apicontract.internal.spec.oas.emitter.context.{
   Oas2SpecEmitterContext,
   OasSpecEmitterFactory
 }
-import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.internal.remote.Vendor
 import amf.shapes.internal.spec.common.emitter.JsonSchemaDeclarationsPath
@@ -14,7 +14,7 @@ import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition, Sche
 import scala.util.matching.Regex
 
 class JsonSchemaEmitterContext(override val eh: AMFErrorHandler,
-                               override val options: ShapeRenderOptions = ShapeRenderOptions(),
+                               override val options: RenderOptions = RenderOptions(),
                                override val schemaVersion: SchemaVersion)
     extends Oas2SpecEmitterContext(eh = eh, options = options) {
 
@@ -27,18 +27,18 @@ class JsonSchemaEmitterContext(override val eh: AMFErrorHandler,
 }
 
 object JsonSchemaEmitterContext {
-  def apply(eh: AMFErrorHandler, options: ShapeRenderOptions): JsonSchemaEmitterContext =
+  def apply(eh: AMFErrorHandler, options: RenderOptions): JsonSchemaEmitterContext =
     new JsonSchemaEmitterContext(eh, options, OAS20SchemaVersion(SchemaPosition.Schema))
 }
 
 final case class InlinedJsonSchemaEmitterContext(override val eh: AMFErrorHandler,
-                                                 override val options: ShapeRenderOptions = ShapeRenderOptions(),
+                                                 override val options: RenderOptions = RenderOptions(),
                                                  override val schemaVersion: SchemaVersion)
     extends JsonSchemaEmitterContext(eh = eh, options = options, schemaVersion) {
   override val factory: OasSpecEmitterFactory = InlinedJsonSchemaEmitterFactory()(this)
 }
 
 object InlinedJsonSchemaEmitterContext {
-  def apply(eh: AMFErrorHandler, options: ShapeRenderOptions): InlinedJsonSchemaEmitterContext =
+  def apply(eh: AMFErrorHandler, options: RenderOptions): InlinedJsonSchemaEmitterContext =
     InlinedJsonSchemaEmitterContext(eh, options, schemaVersion = OAS20SchemaVersion(SchemaPosition.Schema))
 }

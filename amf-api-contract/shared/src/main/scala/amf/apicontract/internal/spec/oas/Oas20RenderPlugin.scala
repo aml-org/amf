@@ -34,5 +34,5 @@ object Oas20RenderPlugin extends OasRenderPlugin {
   override def priority: PluginPriority = NormalPriority
 
   private def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): OasSpecEmitterContext =
-    new Oas2SpecEmitterContext(errorHandler, options = options.shapeRenderOptions)
+    new Oas2SpecEmitterContext(errorHandler, options = options)
 }

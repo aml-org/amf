@@ -4,7 +4,7 @@ import amf.apicontract.internal.spec.async.emitters.context.AsyncSpecEmitterFact
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterFactory, OasLikeSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
-import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
@@ -52,7 +52,7 @@ class AgnosticShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
     case _                                 => throw new Exception("Render - can only be called from OAS")
   }
 
-  override def options: ShapeRenderOptions = spec.options
+  override def options: RenderOptions = spec.options
 
   override def isOas3: Boolean = spec.factory.isInstanceOf[Oas3SpecEmitterFactory]
 

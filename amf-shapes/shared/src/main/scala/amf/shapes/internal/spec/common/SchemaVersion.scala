@@ -1,6 +1,9 @@
 package amf.shapes.internal.spec.common
 
-import amf.core.client.platform.config.{JSONSchemaVersion => ClientJSONSchemaVersion, JSONSchemaVersions => ClientJSONSchemaVersions}
+import amf.core.client.common.render.{
+  JSONSchemaVersion => ClientJSONSchemaVersion,
+  JSONSchemaVersions => ClientJSONSchemaVersions
+}
 import amf.shapes.internal.spec.common.SchemaPosition.Position
 
 abstract class SchemaVersion(val name: String) {
@@ -23,15 +26,15 @@ abstract class SchemaVersion(val name: String) {
 
 object SchemaVersion {
   def fromClientOptions(schema: ClientJSONSchemaVersion): JSONSchemaVersion = schema match {
-    case ClientJSONSchemaVersions.DRAFT_2019_09 => JSONSchemaDraft201909SchemaVersion
-    case ClientJSONSchemaVersions.DRAFT_07      => JSONSchemaDraft7SchemaVersion
-    case _                                      => JSONSchemaDraft4SchemaVersion
+    case ClientJSONSchemaVersions.Draft201909 => JSONSchemaDraft201909SchemaVersion
+    case ClientJSONSchemaVersions.Draft07     => JSONSchemaDraft7SchemaVersion
+    case _                                    => JSONSchemaDraft4SchemaVersion
   }
 
   def toClientOptions(schema: SchemaVersion): ClientJSONSchemaVersion = schema match {
-    case JSONSchemaDraft201909SchemaVersion => ClientJSONSchemaVersions.DRAFT_2019_09
-    case JSONSchemaDraft7SchemaVersion      => ClientJSONSchemaVersions.DRAFT_07
-    case _                                  => ClientJSONSchemaVersions.DRAFT_04
+    case JSONSchemaDraft201909SchemaVersion => ClientJSONSchemaVersions.Draft201909
+    case JSONSchemaDraft7SchemaVersion      => ClientJSONSchemaVersions.Draft07
+    case _                                  => ClientJSONSchemaVersions.Draft04
   }
 }
 
