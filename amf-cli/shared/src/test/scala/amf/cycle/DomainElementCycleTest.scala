@@ -59,7 +59,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
   def renderDomainElement(element: Option[DomainElement], amfConfig: AMFConfiguration): String = {
     val eh     = DefaultErrorHandler()
     val client = amfConfig.withErrorHandlerProvider(() => eh).elementClient()
-    val node   = element.map(client.renderElement(_, vendor)).getOrElse(YNode.Empty)
+    val node   = element.map(client.renderElement(_, vendor.mediaType)).getOrElse(YNode.Empty)
     val errors = eh.getResults
     if (errors.nonEmpty)
       errors.map(_.completeMessage).mkString("\n")

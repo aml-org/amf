@@ -16,10 +16,10 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 object ApiDomainElementEmitter {
 
   def emitToBuilder[T](element: DomainElement,
-                       emissionStructure: Vendor,
+                       mediaType: String,
                        eh: ClientErrorHandler,
                        builder: DocBuilder[T]): Unit = {
-    val node = InternalApiDomainElementEmitter.emit(element, emissionStructure, ErrorHandlerConverter.asInternal(eh))
+    val node = InternalApiDomainElementEmitter.emit(element, mediaType, ErrorHandlerConverter.asInternal(eh))
     YNodeDocBuilderPopulator.populate(node, builder)
   }
 }

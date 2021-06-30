@@ -66,7 +66,7 @@ trait ClientDomainElementCycleTest extends DomainElementCycleTest {
     element
       .map { interalElement =>
         val stringBuilder = YamlOutputBuilder()
-        platformConfig.elementClient().renderToBuilder(interalElement, vendor, stringBuilder)
+        platformConfig.elementClient().renderToBuilder(interalElement, vendor.mediaType, stringBuilder)
         stringBuilder.result.toString
       }
       .getOrElse("")

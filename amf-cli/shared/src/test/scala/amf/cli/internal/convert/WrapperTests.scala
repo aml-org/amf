@@ -2059,13 +2059,13 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Test domain element emitter with unknown vendor") {
     val eh = DefaultErrorHandler()
-    ApiDomainElementEmitter.emit(InternalArrayNode(), Vendor.PAYLOAD, eh)
+    ApiDomainElementEmitter.emit(InternalArrayNode(), Vendor.PAYLOAD.mediaType, eh)
     assert(eh.getResults.head.message == "Unknown vendor provided")
   }
 
   test("Test domain element emitter with unhandled domain element") {
     val eh = DefaultErrorHandler()
-    ApiDomainElementEmitter.emit(CorrelationId(), Vendor.RAML10, eh)
+    ApiDomainElementEmitter.emit(CorrelationId(), Vendor.RAML10.mediaType, eh)
     assert(eh.getResults.head.message == "Unhandled domain element for given vendor")
   }
 

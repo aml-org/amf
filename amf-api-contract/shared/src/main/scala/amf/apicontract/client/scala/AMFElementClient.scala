@@ -22,8 +22,8 @@ class AMFElementClient private[amf] (override protected val configuration: AMFCo
   def toJsonSchema(element: AnyShape): String    = JsonSchemaShapeRenderer.toJsonSchema(element, configuration)
   def buildJsonSchema(element: AnyShape): String = JsonSchemaShapeRenderer.buildJsonSchema(element, configuration)
 
-  def renderElement(element: DomainElement, emissionStructure: Vendor): YNode =
-    ApiDomainElementEmitter.emit(element, emissionStructure, configuration.errorHandlerProvider.errorHandler())
+  def renderElement(element: DomainElement, mediaType: String): YNode =
+    ApiDomainElementEmitter.emit(element, mediaType, configuration.errorHandlerProvider.errorHandler())
 
   /** Get this resource type as an endpoint. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
   def asEndpoint[T <: BaseUnit](unit: T, rt: ResourceType, profile: ProfileName = Raml10Profile): EndPoint =
