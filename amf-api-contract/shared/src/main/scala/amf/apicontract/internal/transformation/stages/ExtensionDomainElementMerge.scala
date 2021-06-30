@@ -16,6 +16,8 @@ import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.shapes.internal.domain.metamodel.{ExampleModel, ScalarShapeModel}
 
+import scala.language.postfixOps
+
 class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                   domainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
                                   extensionId: String,
