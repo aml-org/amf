@@ -60,7 +60,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     }
     customProfileLoaded flatMap {
       case (profileName, conf) =>
-        conf.createClient().validate(model, profileName)
+        conf.documentClient().validate(model, profileName)
     }
   }
 

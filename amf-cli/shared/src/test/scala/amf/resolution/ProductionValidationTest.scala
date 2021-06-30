@@ -12,7 +12,7 @@ class ProductionValidationTest extends RamlResolutionTest {
 
   override def build(config: CycleConfig, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
     amfConfig
-      .createClient()
+      .documentClient()
       .parse(s"file://${config.sourcePath}")
       .map(_.bu)
   }

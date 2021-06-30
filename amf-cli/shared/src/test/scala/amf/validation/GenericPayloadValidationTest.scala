@@ -69,7 +69,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "yaml" => PayloadYamlHint
       }
       val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-      val client = config.createClient()
+      val client = config.documentClient()
       val candidates: Future[Seq[ValidationCandidate]] = for {
         library <- client.parse(payloadsPath + libraryFile).map(_.bu)
         payload <- client.parse(payloadsPath + payloadFile, hint.vendor.mediaType).map(_.bu)

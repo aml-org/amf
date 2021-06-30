@@ -29,7 +29,7 @@ class AMFEventListenerTest extends AsyncBeforeAndAfterEach with PlatformSecrets 
     RAMLConfiguration
       .RAML10()
       .withEventListener(listener)
-      .createClient()
+      .documentClient()
       .parseDocument(url)
       .map { _ =>
         assertEventFrequencies(expectedFrequency, listener)

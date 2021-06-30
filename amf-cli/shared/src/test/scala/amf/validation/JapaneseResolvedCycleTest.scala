@@ -61,7 +61,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         amfConfig
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .createClient()
+          .documentClient()
           .transformEditing(unit, config.target.mediaType)
           .bu
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())

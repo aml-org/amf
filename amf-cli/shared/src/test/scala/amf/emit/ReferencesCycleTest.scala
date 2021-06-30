@@ -76,7 +76,7 @@ class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with Co
                               amfConfig: AMFConfiguration): Future[AsyncFile] = {
     val ref      = unit.references.head
     val actual   = fs.asyncFile(tmp(reference.replace("/", "--")))
-    val rendered = amfConfig.createClient().render(ref, vendor.mediaType)
+    val rendered = amfConfig.documentClient().render(ref, vendor.mediaType)
     actual.write(rendered).map(_ => actual)
   }
 

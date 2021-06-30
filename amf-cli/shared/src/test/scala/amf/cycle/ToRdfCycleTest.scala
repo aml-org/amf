@@ -36,7 +36,7 @@ class ToRdfCycleTest
 
   private def build(path: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
     val fullPath = basePath + path
-    config.createClient().parse(fullPath).map(_.bu)
+    config.documentClient().parse(fullPath).map(_.bu)
   }
 
   private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {

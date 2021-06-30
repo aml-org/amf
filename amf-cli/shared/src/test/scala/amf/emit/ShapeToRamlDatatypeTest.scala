@@ -63,7 +63,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
       goldenFile: String,
       findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
       renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, amfConfig)): Future[Assertion] = {
-    val client = amfConfig.createClient()
+    val client = amfConfig.documentClient()
     val ramlDatatype: Future[String] = for {
       sourceUnit <- client.parse(basePath + sourceFile).map(_.bu)
     } yield {
