@@ -5,6 +5,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.internal.plugins.document.graph.EmbeddedForm
 import amf.core.internal.remote._
 
 import scala.concurrent.Future
@@ -218,30 +219,55 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("Test example inheritance in type declaration with simple inheritance") {
-    cycle("api.raml", "api.raml.resolved", Raml10YamlHint, Raml10, basePath + "simple-inheritance-example/")
+    cycle("api.raml",
+          "api.raml.resolved",
+          Raml10YamlHint,
+          Raml10,
+          basePath + "simple-inheritance-example/",
+          renderOptions = Some(renderOptionsFor(EmbeddedForm)))
   }
 
   test("Test example inheritance in type declaration with simple chained inheritance") {
-    cycle("api.raml", "api.raml.resolved", Raml10YamlHint, Raml10, basePath + "simple-inheritance-chained-example/")
+    cycle(
+      "api.raml",
+      "api.raml.resolved",
+      Raml10YamlHint,
+      Raml10,
+      basePath + "simple-inheritance-chained-example/",
+      renderOptions = Some(renderOptionsFor(EmbeddedForm))
+    )
   }
 
   test("Test example inheritance in type declaration with link") {
-    cycle("api.raml", "api.raml.resolved", Raml10YamlHint, Raml10, basePath + "simple-inheritance-link-example/")
+    cycle("api.raml",
+          "api.raml.resolved",
+          Raml10YamlHint,
+          Raml10,
+          basePath + "simple-inheritance-link-example/",
+          renderOptions = Some(renderOptionsFor(EmbeddedForm)))
   }
 
   // TODO migrate to multiGoldenTest
   test("Test union type anyOf name values") {
-    cycle("api.raml", "api.raml.resolved", Raml10YamlHint, Amf, basePath + "union-type/")
+    cycle("api.raml",
+          "api.raml.resolved",
+          Raml10YamlHint,
+          Amf,
+          basePath + "union-type/",
+          renderOptions = Some(renderOptionsFor(EmbeddedForm)))
   }
 
   // TODO migrate to multiGoldenTest
   test("Test complex recursions in type inheritance 1") {
-    cycle("healthcare_reduced_v1.raml",
-          "healthcare_reduced_v1.raml.resolved",
-          Raml10YamlHint,
-          Amf,
-          validationPath,
-          transformWith = Some(Raml10))
+    cycle(
+      "healthcare_reduced_v1.raml",
+      "healthcare_reduced_v1.raml.resolved",
+      Raml10YamlHint,
+      Amf,
+      validationPath,
+      transformWith = Some(Raml10),
+      renderOptions = Some(renderOptionsFor(EmbeddedForm))
+    )
   }
 
   // TODO migrate to multiGoldenTest
@@ -252,18 +278,28 @@ class ProductionResolutionTest extends RamlResolutionTest {
       Raml10YamlHint,
       Amf,
       validationPath,
-      renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps)
+      renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
     )
   }
 
   // TODO migrate to multiGoldenTest
   test("Test resource type parameters ids") {
-    cycle("rt-parameters.raml", "rt-parameters.raml.resolved", Raml10YamlHint, Amf, validationPath)
+    cycle("rt-parameters.raml",
+          "rt-parameters.raml.resolved",
+          Raml10YamlHint,
+          Amf,
+          validationPath,
+          renderOptions = Some(renderOptionsFor(EmbeddedForm)))
   }
 
   // TODO migrate to multiGoldenTest
   test("Test nil type with additional facets") {
-    cycle("nil-type.raml", "nil-type.raml.resolved", Raml10YamlHint, Amf, validationPath)
+    cycle("nil-type.raml",
+          "nil-type.raml.resolved",
+          Raml10YamlHint,
+          Amf,
+          validationPath,
+          renderOptions = Some(renderOptionsFor(EmbeddedForm)))
   }
 
   multiGoldenTest("Test first enum value and default value witha applied trait have different ids",

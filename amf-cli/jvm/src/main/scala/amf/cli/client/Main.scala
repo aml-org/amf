@@ -2,10 +2,11 @@ package amf.cli.client
 
 import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.cli.internal.commands._
-import amf.core.internal.benchmark.ExecutionLog
-import amf.core.internal.benchmark.ExecutionLog.executionContext
+import amf.core.client.scala.config.event.{AMFEventReportBuilder, TimedEventListener}
 import amf.core.internal.unsafe.PlatformSecrets
 
+import java.time.Instant
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
@@ -15,17 +16,22 @@ import scala.language.postfixOps
   */
 object Main extends PlatformSecrets {
 
-  def enableTracing(cfg: ParserConfig) = {
+  private val reportBuilder               = AMFEventReportBuilder()
+  private var amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+
+  private def enableTracing(cfg: ParserConfig, config: AMFConfiguration) = {
     if (cfg.trace) {
       System.err.println("Tracing enabled")
-      ExecutionLog.start()
+      amfConfig = config.withEventListener(
+        TimedEventListener(() => Instant.now().toEpochMilli, event => reportBuilder.add(event)))
     }
   }
 
   def main(args: Array[String]): Unit = {
+
     CmdLineParser.parse(args) match {
       case Some(cfg) =>
-        enableTracing(cfg)
+        enableTracing(cfg, amfConfig)
         cfg.mode match {
           case Some(ParserConfig.TRANSLATE) => Await.result(runTranslate(cfg), 1 day)
           case Some(ParserConfig.VALIDATE)  => Await.result(runValidate(cfg), 1 day)
@@ -34,7 +40,8 @@ object Main extends PlatformSecrets {
             val ff = f.transform { r =>
               if (cfg.trace) {
                 println("\n\n\n\n")
-                ExecutionLog.finish().buildReport()
+                reportBuilder.build().print()
+                reportBuilder.reset()
               }
               r
             }
@@ -51,11 +58,8 @@ object Main extends PlatformSecrets {
     System.err.println("Wrong command")
     System.exit(ExitCodes.WrongInvocation)
   }
-  def runTranslate(config: ParserConfig): Future[Any] = amfConfig.map(TranslateCommand(platform).run(config, _))
-  def runValidate(config: ParserConfig): Future[Any]  = amfConfig.map(ValidateCommand(platform).run(config, _))
-  def runParse(config: ParserConfig): Future[Any]     = amfConfig.map(ParseCommand(platform).run(config, _))
-  def runPatch(config: ParserConfig): Future[Any]     = amfConfig.map(PatchCommand(platform).run(config, _))
-
-  private val amfConfig: Future[AMFConfiguration] =
-    WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withCustomValidationsEnabled()
+  def runTranslate(config: ParserConfig): Future[Any] = TranslateCommand(platform).run(config, amfConfig)
+  def runValidate(config: ParserConfig): Future[Any]  = ValidateCommand(platform).run(config, amfConfig)
+  def runParse(config: ParserConfig): Future[Any]     = ParseCommand(platform).run(config, amfConfig)
+  def runPatch(config: ParserConfig): Future[Any]     = PatchCommand(platform).run(config, amfConfig)
 }

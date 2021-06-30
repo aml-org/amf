@@ -138,7 +138,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     amfConfig.createClient().render(unit, config.targetMediaType)
   }
-  def renderOptions(): RenderOptions = RenderOptions()
+  def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd
 
   protected def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
     val amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())

@@ -11,13 +11,15 @@ import amf.core.internal.metamodel.domain.ShapeModel.Sources
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
-import amf.core.internal.metamodel.{Field, Type}
+import amf.core.internal.metamodel.{Field, Obj, Type}
 import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.shapes.internal.domain.metamodel.{ExampleModel, ScalarShapeModel}
 
+import scala.language.postfixOps
+
 class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
-                                  domainElemdomainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
+                                  domainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
                                   extensionId: String,
                                   extensionLocation: Option[String],
                                   preMergeTransform: PreMergeTransform)(implicit val errorHandler: AMFErrorHandler)
@@ -145,9 +147,9 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
   private def mergeArrays(target: DomainElement, field: Field, element: Type, main: AmfArray, other: AmfArray): Unit = {
     element match {
       case _: Type.Scalar => mergeScalarArrays(target, field, main, other)
-      case key: KeyField  => mergeByKeyValue(target, field, key, main, other)
+      case key: KeyField  => mergeArraysByKey(target, field, key, main, other)
       case _: DomainElementModel =>
-        domainElemdomainElementArrayMergeStrategy.merge(target, field, other, extensionId, extensionLocation)
+        domainElementArrayMergeStrategy.merge(target, field, other, extensionId, extensionLocation)
       case _ =>
         errorHandler.violation(ResolutionValidation,
                                extensionId,
@@ -167,15 +169,16 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
     }
   }
 
-  private def mergeByKeyValue(target: DomainElement,
-                              field: Field,
-                              key: KeyField,
-                              master: AmfArray,
-                              extension: AmfArray): Unit = {
+  private def mergeArraysByKey(target: DomainElement,
+                               field: Field,
+                               key: KeyField,
+                               master: AmfArray,
+                               extension: AmfArray): Unit = {
 
-    val asSimpleProperty                  = isSimpleProperty(key)
-    var existing: Map[Any, DomainElement] = buildElementByKeyMap(key, master)
-    var nullKey: Option[DomainElement]    = findElementWithNullKey(key, master)
+    val asSimpleProperty                          = isSimpleProperty(key)
+    var existingElements: Map[Any, DomainElement] = buildElementByKeyMap(key, master)
+    // if we have multiple elements with null key we merge by meta Obj
+    var existingNullKeyElements: Map[Obj, DomainElement] = findElementsWithNullKey(key, master)
 
     extension.values.foreach {
       case obj: DomainElement =>
@@ -183,31 +186,33 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
         obj.fields.entry(key.key) match {
           case Some(value) =>
             val keyValue = value.scalar.value
-            existing += keyValue -> mergeByKeyResult(target,
-                                                     asSimpleProperty,
-                                                     existing.get(keyValue),
-                                                     obj,
-                                                     field,
-                                                     tracker)
+            existingElements += keyValue -> mergeByKeyResult(target,
+                                                             asSimpleProperty,
+                                                             existingElements.get(keyValue),
+                                                             obj,
+                                                             field,
+                                                             tracker)
 
           case _ => // If key is null and nullKey exists, merge if it is not a simpleProperty. Else just override.
-            nullKey = Some(mergeByKeyResult(target, asSimpleProperty, nullKey, obj, field, tracker))
+            val element =
+              mergeByKeyResult(target, asSimpleProperty, existingNullKeyElements.get(obj.meta), obj, field, tracker)
+
+            existingNullKeyElements = existingNullKeyElements + (element.meta -> element)
         }
     }
 
-    target.setArray(field, existing.values.toSeq ++ nullKey)
+    target.setArray(field, existingElements.values.toSeq ++ existingNullKeyElements.values.toSeq)
   }
 
   private def isSimpleProperty(key: KeyField) = {
     key == ExampleModel || key == DomainExtensionModel || key == ParametrizedTraitModel || key == ParametrizedSecuritySchemeModel
   }
 
-  private def findElementWithNullKey(key: KeyField, master: AmfArray): Option[DomainElement] = {
-    master.values
-      .find {
-        case o: DomainElement => o.fields.entry(key.key).isEmpty
-      }
+  private def findElementsWithNullKey(key: KeyField, master: AmfArray): Map[Obj, DomainElement] = {
+    master.values.iterator
       .map(_.asInstanceOf[DomainElement])
+      .filter(_.fields.entry(key.key).isEmpty)
+      .map(e => e.meta -> e) toMap
   }
 
   private def buildElementByKeyMap(key: KeyField, master: AmfArray) =

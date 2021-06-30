@@ -23,5 +23,5 @@ class FullShaclModelValidationPlugin extends ShaclValidationPlugin {
     super.applies(element) && !standardApiProfiles.contains(element.profile)
 
   override protected def validator(options: ShaclValidationOptions): ShaclValidator =
-    new FullShaclValidator(PlatformValidator.instance(), options)
+    new FullShaclValidator(PlatformValidator.instance(options.listeners), options)
 }

@@ -258,7 +258,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
           "file-type.json",
           Raml10YamlHint,
           target = Amf,
-          renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps))
+          renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd))
   }
 
   multiTest("Types amf(raml) to amf test", "types.raml.%s", "types.raml.%s") { config =>
