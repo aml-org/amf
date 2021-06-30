@@ -3,8 +3,8 @@ package amf.apicontract.client.platform
 import amf.aml.client.platform.BaseAMLConfiguration
 import amf.aml.client.platform.model.document.Dialect
 import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
+import amf.apicontract.client.scala.{AsyncAPIConfiguration => InternalAsyncAPIConfiguration, OASConfiguration => InternalOASConfiguration, RAMLConfiguration => InternalRAMLConfiguration, WebAPIConfiguration => InternalWebAPIConfiguration}
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.common.validation.ValidationProfile
 import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
@@ -12,10 +12,10 @@ import amf.core.client.platform.resource.ResourceLoader
 import amf.core.client.platform.transform.TransformationPipeline
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.core.internal.convert.TransformationPipelineConverter._
-import amf.apicontract.client.scala.{WebAPIConfiguration => InternalWebAPIConfiguration, RAMLConfiguration => InternalRAMLConfiguration, OASConfiguration => InternalOASConfiguration, AsyncAPIConfiguration => InternalAsyncAPIConfiguration}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
+import amf.core.client.platform.execution.BaseExecutionEnvironment
 
 @JSExportAll
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
@@ -48,19 +48,14 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
 
   override def withLogger(logger: AMFLogger): AMFConfiguration = _internal.withLogger(logger)
 
+  override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMFConfiguration =
+    _internal.withExecutionEnvironment(executionEnv._internal)
+
   def merge(other: AMFConfiguration): AMFConfiguration = _internal.merge(other)
 
   override def withDialect(dialect: Dialect): AMFConfiguration = _internal.withDialect(asInternal(dialect))
 
-  def withCustomValidationsEnabled(): ClientFuture[AMFConfiguration] =
-    _internal.withCustomValidationsEnabled().asClient
-
   def withDialect(path: String): ClientFuture[AMFConfiguration] = _internal.withDialect(path).asClient
-
-  def withCustomProfile(instancePath: String): ClientFuture[AMFConfiguration] =
-    _internal.withCustomProfile(instancePath).asClient
-
-  def withCustomProfile(profile: ValidationProfile): AMFConfiguration = _internal.withCustomProfile(profile)
 }
 
 /**

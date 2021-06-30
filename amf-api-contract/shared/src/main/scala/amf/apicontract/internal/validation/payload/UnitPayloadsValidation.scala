@@ -5,7 +5,6 @@ import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{ArrayNode, DataNode, ObjectNode}
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
-import amf.core.internal.benchmark.ExecutionLog
 import amf.core.internal.metamodel.document.PayloadFragmentModel
 import amf.core.internal.plugins.payload.ErrorFallbackValidationPlugin
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
@@ -31,7 +30,6 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
 
   def validate(config: ValidationConfiguration)(
       implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {
-    ExecutionLog.log(s"UnitPayloadsValidation#validate: Validating all candidates ${candidates.size}")
     val nextConfig = config.amfConfig.withPlugin(ErrorFallbackValidationPlugin(SeverityLevels.WARNING))
     CandidateValidator.validateAll(candidates, config.copy(nextConfig)).map(groupResults)
   }

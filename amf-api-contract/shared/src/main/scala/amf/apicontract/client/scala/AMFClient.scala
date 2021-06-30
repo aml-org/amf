@@ -16,7 +16,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class AMFClient private[amf] (override protected val configuration: AMFConfiguration)
     extends AMLClient(configuration) {
 
-  override implicit val exec: ExecutionContext = configuration.resolvers.executionContext.executionContext
+  override implicit val exec: ExecutionContext = configuration.getExecutionContext
 
   override def getConfiguration: AMFConfiguration = configuration
 
