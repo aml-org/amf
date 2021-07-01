@@ -1,5 +1,7 @@
 package amf.cycle
+import amf.apicontract.client.platform.AMFConfiguration
 import amf.apicontract.client.platform.render.ApiDomainElementEmitter
+import amf.apicontract.client.scala.{AMFConfiguration => InternalAMFConfiguration}
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.convert.ClientErrorHandlerConverter.ErrorHandlerConverter
@@ -59,13 +61,14 @@ class ClientRaml10ElementCycleTest extends ClientDomainElementCycleTest {
 }
 
 trait ClientDomainElementCycleTest extends DomainElementCycleTest {
-  override def renderDomainElement(element: Option[DomainElement]): String =
+  override def renderDomainElement(element: Option[DomainElement], amfConfig: InternalAMFConfiguration): String = {
+    val platformConfig: AMFConfiguration = amfConfig
     element
       .map { interalElement =>
         val stringBuilder = YamlOutputBuilder()
-        val eh            = ErrorHandlerConverter.asClient(DefaultErrorHandler())
-        ApiDomainElementEmitter.emitToBuilder(interalElement, vendor, eh, stringBuilder)
+        platformConfig.elementClient().renderToBuilder(interalElement, vendor.mediaType, stringBuilder)
         stringBuilder.result.toString
       }
       .getOrElse("")
+  }
 }

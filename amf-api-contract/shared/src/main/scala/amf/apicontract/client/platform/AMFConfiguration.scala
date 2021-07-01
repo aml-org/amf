@@ -3,7 +3,12 @@ package amf.apicontract.client.platform
 import amf.aml.client.platform.BaseAMLConfiguration
 import amf.aml.client.platform.model.document.Dialect
 import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
-import amf.apicontract.client.scala.{AsyncAPIConfiguration => InternalAsyncAPIConfiguration, OASConfiguration => InternalOASConfiguration, RAMLConfiguration => InternalRAMLConfiguration, WebAPIConfiguration => InternalWebAPIConfiguration}
+import amf.apicontract.client.scala.{
+  AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
+  OASConfiguration => InternalOASConfiguration,
+  RAMLConfiguration => InternalRAMLConfiguration,
+  WebAPIConfiguration => InternalWebAPIConfiguration
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
@@ -21,7 +26,8 @@ import amf.core.client.platform.execution.BaseExecutionEnvironment
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
     extends BaseAMLConfiguration(_internal) {
 
-  override def createClient(): AMFClient = new AMFClient(this)
+  override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
+  def elementClient(): AMFElementClient            = new AMFElementClient(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =
     _internal.withParsingOptions(parsingOptions)

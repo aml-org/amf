@@ -22,7 +22,7 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
   protected def validateWithUnit(file: String,
                                  unitAssertion: BaseUnit => Unit,
                                  fixture: Seq[AMFValidationResult => Unit]): Future[Assertion] = {
-    val client = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).createClient()
+    val client = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).baseUnitClient()
     client
       .parse(basePath + file)
       .map { amfResult =>

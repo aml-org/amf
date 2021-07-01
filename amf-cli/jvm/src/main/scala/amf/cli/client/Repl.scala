@@ -29,12 +29,12 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
   }
 
   private def generate(unit: BaseUnit, mediaType: String): Unit = {
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     out.print(client.render(unit, mediaType))
   }
 
   private def remote(vendor: Vendor, url: String, callback: (Option[Document]) => Unit): Unit = {
-    val client = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).createClient()
+    val client = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).baseUnitClient()
 
     client
       .parse(url, vendor.mediaType)

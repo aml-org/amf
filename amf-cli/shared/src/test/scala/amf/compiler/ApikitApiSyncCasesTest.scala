@@ -58,7 +58,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     val url          = "resource::37fab092-be99-4538-b5ce-b004c5439f6d:refexample:1.0.1:oas:zip:example.json"
     val client = WebAPIConfiguration.WebAPI()
       .withResourceLoaders(List(new URNResourceLoader(mappings)))
-      .createClient()
+      .baseUnitClient()
     client.parse(url).map { parseResult =>
       parseResult.results should have size 0
     }
@@ -74,7 +74,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     val eh  = DefaultErrorHandler()
     val client = WebAPIConfiguration.WebAPI()
       .withResourceLoaders(List(new URNResourceLoader(mappings)))
-      .withErrorHandlerProvider(() => eh).createClient()
+      .withErrorHandlerProvider(() => eh).baseUnitClient()
     for {
       parseResult <- client.parse(url)
       _ <- Future.successful(client.transformEditing(parseResult.bu, ProvidedMediaType.Raml10))

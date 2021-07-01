@@ -58,7 +58,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     val finalHint     = overridedHint.getOrElse(hint)
     for {
       parseResult <- parse(directory + api, initialConfig, finalHint)
-      report      <- initialConfig.createClient().validate(parseResult.bu, profile)
+      report      <- initialConfig.baseUnitClient().validate(parseResult.bu, profile)
       r <- {
         val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val finalReport =
@@ -72,7 +72,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
   }
 
   protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint): Future[AMFResult] = {
-    val client = conf.createClient()
+    val client = conf.baseUnitClient()
     client.parse(path, finalHint.vendor.mediaType)
   }
 
@@ -96,7 +96,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
     val errorHandler = DefaultErrorHandler()
     val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => errorHandler)
     for {
-      model <- config.createClient().parse(basePath + api).map(_.bu)
+      model <- config.baseUnitClient().parse(basePath + api).map(_.bu)
       report <- {
         TransformationPipelineRunner(errorHandler).run(model, new ValidationTransformationPipeline(profile))
         val results = errorHandler.getResults

@@ -206,7 +206,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    amfConfig.createClient().transform(unit, Raml10TransformationPipeline.name).bu
+    amfConfig.baseUnitClient().transform(unit, Raml10TransformationPipeline.name).bu
   }
 
   val errorExamples = Seq(

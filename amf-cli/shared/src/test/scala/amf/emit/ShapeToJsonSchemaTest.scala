@@ -10,7 +10,6 @@ import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.client.scala.render.JsonSchemaShapeRenderer.toJsonSchema
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -118,7 +117,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
           u.declares.forall {
             case anyShape: AnyShape =>
               val originalId = anyShape.id
-              toJsonSchema(anyShape, config)
+              config.elementClient().toJsonSchema(anyShape)
               val newId = anyShape.id
               originalId == newId
           }
@@ -130,7 +129,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
   private val goldenPath: String = "amf-cli/shared/src/test/resources/tojson/tojsonschema/schemas/"
 
   private def parse(file: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
       unit <- client.parse(basePath + file).map(_.bu)
     } yield {
@@ -150,11 +149,11 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
     } yield {
       findShapeFunc(
         config
-          .createClient()
+          .baseUnitClient()
           .transformDefault(unit, Vendor.OAS20.mediaType)
           .bu
       ).map { element =>
-          toJsonSchema(element, config)
+          config.elementClient().toJsonSchema(element)
         }
         .getOrElse("")
     }

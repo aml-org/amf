@@ -1,10 +1,10 @@
 package amf.apicontract.client.platform
 
-import amf.aml.client.platform.BaseAMLClient
+import amf.aml.client.platform.BaseAMLBaseUnitClient
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.AMFResult
 import amf.core.client.platform.model.document.BaseUnit
-import amf.apicontract.client.scala.{AMFClient => InternalAMFClient}
+import amf.apicontract.client.scala.{AMFBaseUnitClient => InternalAMFBaseUnitClient}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -13,11 +13,11 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * For more complex uses see [[AMFParser]] or [[amf.client.remod.AMFRenderer]]
   */
 @JSExportAll
-class AMFClient private (private val _internal: InternalAMFClient) extends BaseAMLClient(_internal) {
+class AMFBaseUnitClient private[amf] (private val _internal: InternalAMFBaseUnitClient)
+    extends BaseAMLBaseUnitClient(_internal) {
 
-  @JSExportTopLevel("AMFClient")
-  def this(configuration: AMFConfiguration) = {
-    this(new InternalAMFClient(configuration))
+  private[amf] def this(configuration: AMFConfiguration) = {
+    this(new InternalAMFBaseUnitClient(configuration))
   }
 
   override def getConfiguration(): AMFConfiguration = _internal.getConfiguration

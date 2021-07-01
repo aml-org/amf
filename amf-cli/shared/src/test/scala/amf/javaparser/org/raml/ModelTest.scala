@@ -27,7 +27,7 @@ trait ModelValidationTest extends DirectoryTest {
   override def runDirectory(d: String): Future[(String, Boolean)] = {
     val configuration = WebAPIConfiguration.WebAPI()
     for {
-      client      <- Future.successful(configuration.createClient())
+      client      <- Future.successful(configuration.baseUnitClient())
       parseResult <- client.parse(s"file://${d + inputFileName}")
       report      <- client.validate(parseResult.bu, profileFromModel(parseResult.bu))
       unifiedReport <- {
@@ -104,7 +104,7 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.createClient().transformEditing(unit, config.target.mediaType).bu
+        amfConfig.baseUnitClient().transformEditing(unit, config.target.mediaType).bu
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit

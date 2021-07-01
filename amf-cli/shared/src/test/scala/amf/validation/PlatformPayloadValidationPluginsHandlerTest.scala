@@ -33,7 +33,7 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   test("Validation logic, standard shape") {
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
       library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future.successful {
@@ -50,7 +50,7 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   test("Validation logic, file shape always validate") {
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
       library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future.successful {
@@ -65,7 +65,7 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   test("Validation logic, polymorphic shapes") {
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
       library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future.successful {
@@ -81,7 +81,7 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   test("Exception if unsupported media type") {
     val config = RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
       library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future.successful {

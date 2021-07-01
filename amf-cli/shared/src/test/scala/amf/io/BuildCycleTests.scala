@@ -129,14 +129,14 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   def build(config: CycleConfig, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
     amfConfig
       .withParsingOptions(amfConfig.options.parsingOptions.withBaseUnitUrl("file://" + config.goldenPath))
-      .createClient()
+      .baseUnitClient()
       .parse(s"file://${config.sourcePath}")
       .map(_.bu)
   }
 
   /** Method to render parsed unit. Override if necessary. */
   def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
-    amfConfig.createClient().render(unit, config.targetMediaType)
+    amfConfig.baseUnitClient().render(unit, config.targetMediaType)
   }
   def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd
 
