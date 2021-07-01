@@ -5,9 +5,12 @@ import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel
-import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
+import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
+  DiscriminatorValue,
+  DiscriminatorValueTarget
+}
 
-case class DiscriminatorValueMapping(fields: Fields, annotations: Annotations) extends DomainElement {
+case class DiscriminatorValueMapping private[amf] (fields: Fields, annotations: Annotations) extends DomainElement {
 
   def value: StrField    = fields.field(DiscriminatorValue)
   def targetShape: Shape = fields.field(DiscriminatorValueTarget)

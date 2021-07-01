@@ -6,7 +6,7 @@ import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, NilShapeModel}
 import org.yaml.model.YPart
 
-case class NilShape(override val fields: Fields, override val annotations: Annotations)
+case class NilShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {
 
   override def linkCopy(): NilShape = NilShape().withId(id) // todo review with antonio

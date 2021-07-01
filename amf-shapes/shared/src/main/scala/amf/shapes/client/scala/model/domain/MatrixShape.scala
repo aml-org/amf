@@ -6,7 +6,7 @@ import amf.shapes.internal.domain.metamodel.ArrayShapeModel.Items
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, MatrixShapeModel}
 import org.yaml.model.YPart
 
-case class MatrixShape(override val fields: Fields, override val annotations: Annotations)
+case class MatrixShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
   def items: Shape = fields.field(Items)

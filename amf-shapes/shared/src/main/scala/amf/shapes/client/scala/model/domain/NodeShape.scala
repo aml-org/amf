@@ -12,7 +12,7 @@ import org.yaml.model.YPart
 /**
   * Node shape.
   */
-case class NodeShape(override val fields: Fields, override val annotations: Annotations)
+case class NodeShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {
 
   def minProperties: IntField                       = fields.field(MinProperties)

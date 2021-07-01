@@ -12,7 +12,7 @@ import org.yaml.model.YNode
 /**
   * Creative work internal model
   */
-class CreativeWork(override val fields: Fields, override val annotations: Annotations)
+class CreativeWork private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
     with Linkable {
 

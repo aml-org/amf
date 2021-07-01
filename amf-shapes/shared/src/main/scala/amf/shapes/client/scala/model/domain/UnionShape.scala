@@ -7,7 +7,7 @@ import amf.shapes.internal.domain.metamodel.UnionShapeModel._
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, UnionShapeModel}
 import org.yaml.model.YPart
 
-case class UnionShape(override val fields: Fields, override val annotations: Annotations)
+case class UnionShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {
 
   def anyOf: Seq[Shape] = fields.field(AnyOf)

@@ -9,7 +9,8 @@ import amf.shapes.internal.domain.metamodel.ArrayShapeModel._
 /**
   * Array shape
   */
-abstract class DataArrangementShape(fields: Fields, annotations: Annotations) extends AnyShape(fields, annotations) {
+abstract class DataArrangementShape private[amf] (fields: Fields, annotations: Annotations)
+    extends AnyShape(fields, annotations) {
   def minItems: IntField = fields.field(MinItems)
 
   def maxItems: IntField = fields.field(MaxItems)
