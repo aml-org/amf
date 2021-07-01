@@ -19,7 +19,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
           .baseUnitClient()
           .transform(unit, PipelineName.from(Raml10.mediaType, pipeline))
-          .bu
+          .baseUnit
       case None => unit
     }
     res

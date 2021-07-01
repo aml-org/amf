@@ -34,9 +34,10 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
     val listOfFutures = filesToCache.map { file =>
       client
         .parse(file)
-        .map(_.bu)
+        .map(_.baseUnit)
         .map { unit =>
-          if (shouldResolve) client.transform(unit, PipelineName.from(ProvidedMediaType.Raml10, PipelineId.Cache)).bu
+          if (shouldResolve)
+            client.transform(unit, PipelineName.from(ProvidedMediaType.Raml10, PipelineId.Cache)).baseUnit
           else unit
         }
         .map { unit =>

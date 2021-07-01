@@ -77,7 +77,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
       .withErrorHandlerProvider(() => eh).baseUnitClient()
     for {
       parseResult <- client.parse(url)
-      _ <- Future.successful(client.transformEditing(parseResult.bu, ProvidedMediaType.Raml10))
+      _ <- Future.successful(client.transformEditing(parseResult.baseUnit, ProvidedMediaType.Raml10))
     }yield {
       eh.getResults should have size 0
     }

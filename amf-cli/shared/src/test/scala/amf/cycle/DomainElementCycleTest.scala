@@ -53,7 +53,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
   }
 
   private def render(element: Option[DomainElement], amfConfig: AMFConfiguration): Future[String] = {
-    Future { renderDomainElement(element, amfConfig) }
+    Future.successful { renderDomainElement(element, amfConfig) }
   }
 
   def renderDomainElement(element: Option[DomainElement], amfConfig: AMFConfiguration): String = {

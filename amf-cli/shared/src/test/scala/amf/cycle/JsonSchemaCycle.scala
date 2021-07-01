@@ -162,7 +162,7 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     val fragment =
       parseSchema(platform, finalPath, mediatype, WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()))
     val expected = emitter
-      .emitSchema(fragment.bu.asInstanceOf[DataTypeFragment])
+      .emitSchema(fragment.baseUnit.asInstanceOf[DataTypeFragment])
     writeTemporaryFile(finalGolden)(expected).flatMap(s => assertDifferences(s, finalGolden))
   }
 }

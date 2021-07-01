@@ -63,9 +63,9 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
       case Some(Raml08) =>
-        client.transformDefault(unit, Raml08.mediaType).bu
+        client.transformDefault(unit, Raml08.mediaType).baseUnit
       case _ =>
-        client.transformDefault(unit, Raml10.mediaType).bu
+        client.transformDefault(unit, Raml10.mediaType).baseUnit
     }
   }
 }
@@ -99,7 +99,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
     for {
       model <- client
         .parse(api)
-        .map(_.bu)
+        .map(_.baseUnit)
         .map(transform(_, client))
       result <- {
         val shape = findShape(model.asInstanceOf[Document])

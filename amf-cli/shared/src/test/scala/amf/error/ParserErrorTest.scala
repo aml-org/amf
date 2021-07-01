@@ -26,7 +26,7 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
     client
       .parse(basePath + file)
       .map { amfResult =>
-        unitAssertion(amfResult.bu)
+        unitAssertion(amfResult.baseUnit)
         val results = amfResult.results
         if (results.size != fixture.size) {
           results.foreach(println)

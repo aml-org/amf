@@ -38,9 +38,9 @@ class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with Re
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
           .baseUnitClient()
           .parse(s"file://$basePath${data.path}")
-        _ <- Future(transform(parseResult.bu, PipelineId.Editing, data.hint.vendor, config))
+        _ <- Future(transform(parseResult.baseUnit, PipelineId.Editing, data.hint.vendor, config))
       } yield {
-        val elements                    = parseResult.bu.iterator(fieldsFilter = All).toList
+        val elements                    = parseResult.baseUnit.iterator(fieldsFilter = All).toList
         val fixpointValues: Seq[String] = elements.filterType[RecursiveShape].map(_.fixpoint.value())
         val allIds                      = elements.collect { case o: AmfObject => o.id }.toSet
         allIds should contain allElementsOf (fixpointValues)

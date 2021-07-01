@@ -131,7 +131,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
       .withParsingOptions(amfConfig.options.parsingOptions.withBaseUnitUrl("file://" + config.goldenPath))
       .baseUnitClient()
       .parse(s"file://${config.sourcePath}")
-      .map(_.bu)
+      .map(_.baseUnit)
   }
 
   /** Method to render parsed unit. Override if necessary. */

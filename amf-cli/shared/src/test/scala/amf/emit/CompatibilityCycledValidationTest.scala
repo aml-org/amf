@@ -88,7 +88,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .baseUnitClient()
       .transformCompatibility(unit, config.target.mediaType)
-      .bu
+      .baseUnit
   }
 
   private def profile(vendor: Vendor): ProfileName = vendor match {
