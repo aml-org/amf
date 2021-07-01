@@ -26,7 +26,7 @@ import amf.core.client.platform.execution.BaseExecutionEnvironment
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
     extends BaseAMLConfiguration(_internal) {
 
-  override def documentClient(): AMFDocumentClient = new AMFDocumentClient(this)
+  override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
   def elementClient(): AMFElementClient            = new AMFElementClient(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =

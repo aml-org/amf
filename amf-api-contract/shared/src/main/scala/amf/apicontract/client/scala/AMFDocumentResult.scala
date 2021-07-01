@@ -9,7 +9,7 @@ import amf.core.client.scala.validation.AMFValidationResult
   *
   * @param document the Document parsed
   * @param report The [[AMFValidationReport]] from parsing the Document
-  * @see [[AMFDocumentClient.parseDocument parseDocument]]
+  * @see [[AMFBaseUnitClient.parseDocument parseDocument]]
   */
 class AMFDocumentResult(val document: Document, results: Seq[AMFValidationResult]) extends AMFResult(document, results)
 
@@ -18,6 +18,6 @@ class AMFDocumentResult(val document: Document, results: Seq[AMFValidationResult
   *
   * @param library The library parsed
   * @param report The Seq [[AMFValidationReport]] from parsing the library
-  * @see [[AMFDocumentClient.parseLibrary parseLibrary]]
+  * @see [[AMFBaseUnitClient.parseLibrary parseLibrary]]
   */
 class AMFLibraryResult(val library: Module, results: Seq[AMFValidationResult]) extends AMFResult(library, results)

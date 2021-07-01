@@ -31,7 +31,7 @@ trait CommandHelper {
 
   protected def processDialects(config: ParserConfig, configuration: AMFConfiguration): Future[AMFConfiguration] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val dialectFutures                     = config.dialects.map(dialect => configuration.documentClient().parseDialect(dialect))
+    val dialectFutures                     = config.dialects.map(dialect => configuration.baseUnitClient().parseDialect(dialect))
     Future.sequence(dialectFutures) map (results =>
       results.foldLeft(configuration) {
         case (conf, result) => conf.withDialect(result.dialect)
@@ -41,7 +41,7 @@ trait CommandHelper {
   protected def parseInput(config: ParserConfig, configuration: AMLConfiguration): Future[BaseUnit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val inputFile                          = ensureUrl(config.input.get)
-    val configClient                       = configuration.documentClient()
+    val configClient                       = configuration.baseUnitClient()
     val parsed                             = configClient.parse(inputFile)
     val vendor                             = effectiveVendor(config.inputFormat)
     if (config.resolve)
@@ -55,7 +55,7 @@ trait CommandHelper {
 
   protected def resolve(config: ParserConfig, unit: BaseUnit, configuration: AMFGraphConfiguration): Future[BaseUnit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val configClient                       = configuration.documentClient()
+    val configClient                       = configuration.baseUnitClient()
     val vendor                             = effectiveVendor(config.inputFormat)
     val vendorMediaType                    = Vendor(vendor).mediaType
     if (config.resolve && config.validate) {
@@ -93,7 +93,7 @@ trait CommandHelper {
     val vendor    = effectiveVendor(config.outputFormat)
     val mediaType = effectiveMediaType(config.outputMediaType, config.outputFormat) // TODO: media type not taken into account!
     val result =
-      configuration.withRenderOptions(generateOptions).documentClient().render(unit, Vendor(vendor).mediaType)
+      configuration.withRenderOptions(generateOptions).baseUnitClient().render(unit, Vendor(vendor).mediaType)
     config.output match {
       case Some(f) =>
         platform.write(f, result)

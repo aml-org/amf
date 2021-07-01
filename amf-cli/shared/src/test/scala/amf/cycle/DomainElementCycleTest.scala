@@ -49,7 +49,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
   override protected def beforeAll(): Unit = ApiRegister.register(platform)
 
   private def build(config: EmissionConfig, amfConfig: AMFConfiguration): Future[BaseUnit] = {
-    amfConfig.documentClient().parse(s"file://${config.sourcePath}").map(_.bu)
+    amfConfig.baseUnitClient().parse(s"file://${config.sourcePath}").map(_.bu)
   }
 
   private def render(element: Option[DomainElement], amfConfig: AMFConfiguration): Future[String] = {

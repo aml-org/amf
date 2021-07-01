@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.apicontract.client.scala.AMFDocumentClient
+import amf.apicontract.client.scala.AMFBaseUnitClient
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Shape
@@ -38,7 +38,7 @@ class OasParamPayloadValidationTest extends ApiShapePayloadValidationTest {
       .head
       .schema
 
-  override def transform(unit: BaseUnit, client: AMFDocumentClient): BaseUnit = unit
+  override def transform(unit: BaseUnit, client: AMFBaseUnitClient): BaseUnit = unit
 
   override def validationMode: ValidationMode = ScalarRelaxedValidationMode
 }

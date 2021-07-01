@@ -79,14 +79,14 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     val handler   = DefaultErrorHandler()
     val amfConfig = buildConfig(None, Some(handler))
     build(config, amfConfig).flatMap { unit =>
-      amfConfig.documentClient().validate(unit, profileName)
+      amfConfig.baseUnitClient().validate(unit, profileName)
     }
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     amfConfig
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
-      .documentClient()
+      .baseUnitClient()
       .transformCompatibility(unit, config.target.mediaType)
       .bu
   }

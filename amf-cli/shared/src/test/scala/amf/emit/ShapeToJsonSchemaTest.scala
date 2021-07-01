@@ -129,7 +129,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
   private val goldenPath: String = "amf-cli/shared/src/test/resources/tojson/tojsonschema/schemas/"
 
   private def parse(file: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
-    val client = config.documentClient()
+    val client = config.baseUnitClient()
     for {
       unit <- client.parse(basePath + file).map(_.bu)
     } yield {
@@ -149,7 +149,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
     } yield {
       findShapeFunc(
         config
-          .documentClient()
+          .baseUnitClient()
           .transformDefault(unit, Vendor.OAS20.mediaType)
           .bu
       ).map { element =>

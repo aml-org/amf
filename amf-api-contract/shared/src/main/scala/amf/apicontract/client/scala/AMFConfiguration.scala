@@ -177,7 +177,7 @@ object APIConfiguration {
   * The AMFConfiguration lets you customize all AMF-specific configurations.
   * Its immutable and created through builders. An instance is needed to use AMF.
   *
-  * @see [[AMFDocumentClient]]
+  * @see [[AMFBaseUnitClient]]
   */
 class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
@@ -187,7 +187,7 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val options: AMFOptions)
     extends AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
 
-  override def documentClient(): AMFDocumentClient = new AMFDocumentClient(this)
+  override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
   override def elementClient(): AMFElementClient   = new AMFElementClient(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =

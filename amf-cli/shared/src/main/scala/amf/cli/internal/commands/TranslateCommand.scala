@@ -38,7 +38,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
   def checkValidation(parserConfig: ParserConfig, model: BaseUnit, configuration: AMLConfiguration): Future[Unit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val customProfileLoaded: Future[ProfileName] = if (parserConfig.customProfile.isDefined) {
-      configuration.documentClient().parseValidationProfile(parserConfig.customProfile.get) map (_.name)
+      configuration.baseUnitClient().parseValidationProfile(parserConfig.customProfile.get) map (_.name)
     } else {
       Future {
         model match {
@@ -56,7 +56,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       }
     }
     customProfileLoaded flatMap { profileName =>
-      configuration.documentClient().validate(model, profileName) map { report =>
+      configuration.baseUnitClient().validate(model, profileName) map { report =>
         if (!report.conforms) {
           parserConfig.stderr.print(report.toString)
           parserConfig.proc.exit(ExitCodes.FailingValidation)

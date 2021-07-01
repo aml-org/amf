@@ -26,7 +26,7 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     amfConfig
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
-      .documentClient()
+      .baseUnitClient()
       .transform(unit, Raml10EditingPipeline.name)
       .bu
   }
@@ -51,7 +51,7 @@ class YDocumentBuilderTest extends DocBuilderTest {
 
   override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     val builder: YDocumentBuilder = new YDocumentBuilder()
-    val result: YPart             = amfConfig.documentClient().renderGraphToBuilder(unit, builder)
+    val result: YPart             = amfConfig.baseUnitClient().renderGraphToBuilder(unit, builder)
     val document                  = result.asInstanceOf[YDocument]
     JsonRender.render(document)
   }

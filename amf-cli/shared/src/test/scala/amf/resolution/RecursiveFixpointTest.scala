@@ -36,7 +36,7 @@ class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with Re
 
         parseResult <- config
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .documentClient()
+          .baseUnitClient()
           .parse(s"file://$basePath${data.path}")
         _ <- Future(transform(parseResult.bu, PipelineId.Editing, data.hint.vendor, config))
       } yield {

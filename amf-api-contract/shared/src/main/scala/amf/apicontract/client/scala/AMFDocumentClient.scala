@@ -1,6 +1,6 @@
 package amf.apicontract.client.scala
 
-import amf.aml.client.scala.AMLDocumentClient
+import amf.aml.client.scala.AMLBaseUnitClient
 import amf.core.client.common.transform._
 import amf.core.client.scala.AMFResult
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
@@ -13,8 +13,8 @@ import scala.concurrent.{ExecutionContext, Future}
   * The AMF Client contains common AMF operations associated to base unit and documents.
   * For more complex uses see [[AMFParser]] or [[amf.core.client.scala.render.AMFRenderer]]
   */
-class AMFDocumentClient private[amf](override protected val configuration: AMFConfiguration)
-    extends AMLDocumentClient(configuration) {
+class AMFBaseUnitClient private[amf] (override protected val configuration: AMFConfiguration)
+    extends AMLBaseUnitClient(configuration) {
 
   override implicit val exec: ExecutionContext = configuration.getExecutionContext
 
