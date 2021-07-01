@@ -11,7 +11,7 @@ import amf.apicontract.client.scala.{
   WebAPIConfiguration => InternalWebAPIConfiguration
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
+import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
 import amf.core.client.platform.resource.ResourceLoader
@@ -41,7 +41,7 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
     _internal.withResourceLoaders(rl.asInternal.toList)
 
   override def withUnitCache(cache: UnitCache): AMFConfiguration =
-    _internal.withUnitCache(ReferenceResolverMatcher.asInternal(cache))
+    _internal.withUnitCache(UnitCacheMatcher.asInternal(cache))
 
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =
     _internal.withTransformationPipeline(pipeline)
@@ -53,8 +53,6 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
     _internal.withErrorHandlerProvider(() => provider.errorHandler())
 
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = _internal.withEventListener(listener)
-
-  override def withLogger(logger: AMFLogger): AMFConfiguration = _internal.withLogger(logger)
 
   override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMFConfiguration =
     _internal.withExecutionEnvironment(executionEnv._internal)
