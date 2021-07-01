@@ -7,7 +7,8 @@ import amf.apicontract.client.scala.{
   AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
   OASConfiguration => InternalOASConfiguration,
   RAMLConfiguration => InternalRAMLConfiguration,
-  WebAPIConfiguration => InternalWebAPIConfiguration
+  WebAPIConfiguration => InternalWebAPIConfiguration,
+  APIConfiguration => InternalAPIConfiguration
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
@@ -109,4 +110,10 @@ object WebAPIConfiguration {
 @JSExportTopLevel("AsyncAPIConfiguration")
 object AsyncAPIConfiguration {
   def Async20(): AMFConfiguration = InternalAsyncAPIConfiguration.Async20()
+}
+
+@JSExportAll
+@JSExportTopLevel("APIConfiguration")
+object APIConfiguration {
+  def API(): AMFConfiguration = InternalAPIConfiguration.API()
 }
