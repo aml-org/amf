@@ -18,8 +18,9 @@ import amf.apicontract.client.scala.model.domain.CorrelationId
 import amf.apicontract.client.scala.render.ApiDomainElementEmitter
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.common.remote.Content
+import amf.core.client.common.render.JSONSchemaVersions
 import amf.core.client.common.validation.{Oas30Profile, Raml10Profile, ValidationMode}
-import amf.core.client.platform.config.{JSONSchemaVersions, RenderOptions, ShapeRenderOptions}
+import amf.core.client.platform.config.RenderOptions
 import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.platform.model.domain.{ArrayNode, CustomDomainProperty, Linkable, ObjectNode, ScalarNode, Shape}
 import amf.core.client.scala.model.domain.{
@@ -1642,12 +1643,11 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                         |}
                         |""".stripMargin
       val shape  = resolved.baseUnit.asInstanceOf[Document].declares.asSeq(2).asInstanceOf[NodeShape]
-      val generated = JsonSchemaShapeRenderer.buildJsonSchema(
-        shape,
-        client
-          .getConfiguration()
-          .withRenderOptions(
-            new RenderOptions().withShapeRenderOptions(new ShapeRenderOptions().withoutCompactedEmission)))
+      val generated =
+        JsonSchemaShapeRenderer.buildJsonSchema(shape,
+                                                client
+                                                  .getConfiguration()
+                                                  .withRenderOptions(new RenderOptions().withoutCompactedEmission))
       assert(generated == golden)
     }
   }
@@ -1749,18 +1749,17 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           |  }
           |}
           |""".stripMargin
-      val options = new ShapeRenderOptions().withoutDocumentation
+      val options = new RenderOptions().withoutDocumentation
       val shape = resolved.baseUnit
         .asInstanceOf[Document]
         .declares
         .asSeq
         .head
         .asInstanceOf[AnyShape]
-      val schema = JsonSchemaShapeRenderer.buildJsonSchema(
-        shape,
-        client
-          .getConfiguration()
-          .withRenderOptions(new RenderOptions().withShapeRenderOptions(options)))
+      val schema = JsonSchemaShapeRenderer.buildJsonSchema(shape,
+                                                           client
+                                                             .getConfiguration()
+                                                             .withRenderOptions(options))
       assert(report.conforms)
       assert(schema == expectedSchema)
     }
@@ -1990,7 +1989,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                         |  }
                         |}
                         |""".stripMargin
-      val options = new ShapeRenderOptions().withoutCompactedEmission.withSchemaVersion(JSONSchemaVersions.DRAFT_07)
+      val options = new RenderOptions().withoutCompactedEmission.withSchemaVersion(JSONSchemaVersions.Draft07)
       val shape =
         resolved.baseUnit
           .asInstanceOf[Document]
@@ -1999,11 +1998,10 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           .find(_._internal.id == "file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/conditional-subschemas")
           .get
           .asInstanceOf[NodeShape]
-      val generated = JsonSchemaShapeRenderer.buildJsonSchema(
-        shape,
-        client
-          .getConfiguration()
-          .withRenderOptions(new RenderOptions().withShapeRenderOptions(options)))
+      val generated = JsonSchemaShapeRenderer.buildJsonSchema(shape,
+                                                              client
+                                                                .getConfiguration()
+                                                                .withRenderOptions(options))
       assert(generated == golden)
     }
   }

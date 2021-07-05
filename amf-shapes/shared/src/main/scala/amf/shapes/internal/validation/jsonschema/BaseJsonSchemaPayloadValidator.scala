@@ -1,8 +1,8 @@
 package amf.shapes.internal.validation.jsonschema
 
+import amf.core.client.common.render.JsonSchemaDraft7
 import amf.core.client.common.validation._
-import amf.core.client.platform.config.JsonSchemaDraft7
-import amf.core.client.scala.config.{ParsingOptions, ShapeRenderOptions}
+import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.PayloadFragment
@@ -139,7 +139,7 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape, mediaType: String, c
   }
 
   private def generateSchemaString(shape: Shape, validationProcessor: ValidationProcessor): Option[CharSequence] = {
-    val renderOptions = ShapeRenderOptions().withoutDocumentation
+    val renderOptions = RenderOptions().withoutDocumentation
       .withSchemaVersion(JsonSchemaDraft7)
       .withEmitWarningForUnsupportedValidationFacets(true)
     val declarations = List(shape)

@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.emitter.context
 
 import amf.apicontract.internal.spec.common.emitter.{SpecEmitterContext, SpecEmitterFactory}
 import amf.apicontract.internal.spec.oas.emitter
-import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.DomainExtension
@@ -40,7 +40,7 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
 
 abstract class OasLikeSpecEmitterContext(eh: AMFErrorHandler,
                                          refEmitter: RefEmitter = OasRefEmitter,
-                                         options: ShapeRenderOptions = ShapeRenderOptions())
+                                         options: RenderOptions = RenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {
   override def schemaVersion: SchemaVersion
   def schemasDeclarationsPath: String

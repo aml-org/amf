@@ -2,7 +2,7 @@ package amf.javaparser.org.raml.json_schema
 
 import amf.apicontract.client.scala.{AMFConfiguration, WebAPIConfiguration}
 
-import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.remote.{Hint, Oas20YamlHint, Oas30YamlHint, Vendor}
 import amf.javaparser.org.raml.ModelValidationTest
@@ -40,7 +40,7 @@ class RamlTypeToNormalJsonSchemaTest extends TypeToJsonSchemaTest {
   override def renderShape(shape: AnyShape): String = {
     val config = WebAPIConfiguration
       .WebAPI()
-      .withRenderOptions(RenderOptions().withShapeRenderOptions(ShapeRenderOptions().withoutCompactedEmission))
+      .withRenderOptions(RenderOptions().withoutCompactedEmission)
     config.elementClient().toJsonSchema(shape)
   }
 }

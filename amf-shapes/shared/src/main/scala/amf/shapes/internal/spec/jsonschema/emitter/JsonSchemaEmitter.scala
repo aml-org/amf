@@ -1,14 +1,23 @@
 package amf.shapes.internal.spec.jsonschema.emitter
 
 import amf.core.client.common.position.Position
-import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.shapes.internal.spec.common.emitter.{InlineJsonSchemaShapeEmitterContext, JsonSchemaShapeEmitterContext, OasLikeShapeEmitterContext}
-import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaVersion, SchemaVersion}
+import amf.shapes.internal.spec.common.emitter.{
+  InlineJsonSchemaShapeEmitterContext,
+  JsonSchemaShapeEmitterContext,
+  OasLikeShapeEmitterContext
+}
+import amf.shapes.internal.spec.common.{
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaUnspecifiedVersion,
+  JSONSchemaVersion,
+  SchemaVersion
+}
 import amf.shapes.internal.spec.oas.emitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
@@ -17,7 +26,7 @@ import org.yaml.model.YDocument.EntryBuilder
 case class JsonSchemaEmitter(root: Shape,
                              declarations: Seq[DomainElement],
                              ordering: SpecOrdering = SpecOrdering.Lexical,
-                             options: ShapeRenderOptions,
+                             options: RenderOptions,
                              errorHandler: AMFErrorHandler) {
 
   def emitDocument(): YDocument = {

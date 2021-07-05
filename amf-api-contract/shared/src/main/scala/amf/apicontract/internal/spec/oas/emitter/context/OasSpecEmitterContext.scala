@@ -10,7 +10,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.spec.common.emitter._
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.domain._
-import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
@@ -136,7 +136,7 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) exte
 
 abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
                                      refEmitter: RefEmitter = OasRefEmitter,
-                                     options: ShapeRenderOptions = ShapeRenderOptions())
+                                     options: RenderOptions = RenderOptions())
     extends OasLikeSpecEmitterContext(eh, refEmitter, options)
     with CompactableEmissionContext {
 
@@ -153,7 +153,7 @@ abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
 
 class Oas3SpecEmitterContext(eh: AMFErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
-                             options: ShapeRenderOptions = ShapeRenderOptions())
+                             options: RenderOptions = RenderOptions())
     extends OasSpecEmitterContext(eh, refEmitter, options) {
   override val anyOfKey: String                = "anyOf"
   val schemaVersion: SchemaVersion             = OAS30SchemaVersion(SchemaPosition.Schema)
@@ -164,7 +164,7 @@ class Oas3SpecEmitterContext(eh: AMFErrorHandler,
 
 class Oas2SpecEmitterContext(eh: AMFErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
-                             options: ShapeRenderOptions = ShapeRenderOptions())
+                             options: RenderOptions = RenderOptions())
     extends OasSpecEmitterContext(eh, refEmitter, options) {
   val schemaVersion: SchemaVersion             = OAS20SchemaVersion(SchemaPosition.Schema)
   override val factory: OasSpecEmitterFactory  = new Oas2SpecEmitterFactory(this)
