@@ -7,7 +7,7 @@ import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorH
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.SourceAST
-import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration}
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
@@ -83,7 +83,7 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
         case Some(a) =>
           val ast = a.ast.asInstanceOf[YDocument].as[YMap]
           val context =
-            new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(DefaultErrorHandler())))
+            new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(DefaultErrorHandler())))
           val anyShape = AnyShape()
           RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
             WebApiShapeParserContextAdapter(context)).parse()

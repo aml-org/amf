@@ -30,7 +30,7 @@ trait CompilerTestBuilder extends PlatformSecrets {
       url,
       Some(hint.vendor.mediaType + "+" + hint.syntax.extension),
       cache = cache.getOrElse(Cache()),
-      parserConfig = amfConfig.parseConfiguration,
+      parserConfig = amfConfig.compilerConfiguration,
       base = Context(platform)
     )
 

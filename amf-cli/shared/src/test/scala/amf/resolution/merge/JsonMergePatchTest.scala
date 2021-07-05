@@ -13,7 +13,7 @@ import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{DataNode, ScalarNode}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.convert.BaseUnitConverter
-import amf.core.internal.parser.{ParseConfiguration, _}
+import amf.core.internal.parser.{CompilerConfiguration, _}
 import amf.core.internal.remote.Vendor.AMF
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
@@ -129,7 +129,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     def getMerger: JsonMergePatch = AsyncJsonMergePatch()
 
     def getBogusParserCtx: AsyncWebApiContext =
-      new Async20WebApiContext("loc", Seq(), ParserContext(config = ParseConfiguration(DefaultErrorHandler())))
+      new Async20WebApiContext("loc", Seq(), ParserContext(config = LimitedParseConfig(DefaultErrorHandler())))
 
     def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): String =
       new AMFRenderer(document, AMF, renderOptions, None).renderToString

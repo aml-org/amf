@@ -7,7 +7,7 @@ import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.resource.ResourceLoader
-import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
+import amf.core.internal.parser.{AMFCompiler, CompilerConfiguration}
 import amf.core.internal.remote.{Cache, Context, FileNotFound}
 import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
@@ -35,7 +35,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
         None,
         base = Context(platform),
         cache = Cache(),
-        ParseConfiguration(
+        CompilerConfiguration(
           WebAPIConfiguration
             .WebAPI()
             .withResourceLoaders(List(new URNResourceLoader(mappings)))
