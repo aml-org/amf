@@ -5,10 +5,9 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.validation.payload.{
   AMFShapePayloadValidationPlugin,
   AMFShapePayloadValidator,
+  ShapeValidationConfiguration,
   ValidatePayloadRequest
 }
-import amf.core.internal.validation.ValidationConfiguration
-import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape}
 import amf.shapes.internal.domain.apicontract.unsafe.JsonSchemaValidatorBuilder
 
@@ -24,7 +23,7 @@ object JsonSchemaShapePayloadValidationPlugin extends AMFShapePayloadValidationP
 
   override def validator(shape: Shape,
                          mediaType: String,
-                         config: ValidationConfiguration,
+                         config: ShapeValidationConfiguration,
                          validationMode: ValidationMode): AMFShapePayloadValidator = {
     JsonSchemaValidatorBuilder.payloadValidator(shape, mediaType, validationMode, config)
   }
