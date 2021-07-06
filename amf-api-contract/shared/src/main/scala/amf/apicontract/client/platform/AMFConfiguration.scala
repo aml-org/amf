@@ -21,7 +21,10 @@ import amf.core.internal.convert.TransformationPipelineConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
+import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.execution.BaseExecutionEnvironment
+import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
+import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
 
 @JSExportAll
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
@@ -62,6 +65,9 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
   override def withDialect(dialect: Dialect): AMFConfiguration = _internal.withDialect(asInternal(dialect))
 
   def withDialect(path: String): ClientFuture[AMFConfiguration] = _internal.withDialect(path).asClient
+
+  override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMFConfiguration =
+    _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
 }
 
 /**
