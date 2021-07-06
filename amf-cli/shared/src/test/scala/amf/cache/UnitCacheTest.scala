@@ -30,7 +30,7 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
   }
 
   private def createClientWithCache(filesToCache: Seq[String], shouldResolve: Boolean): Future[AMFConfiguration] = {
-    val client = APIConfiguration.API().createClient()
+    val client = APIConfiguration.API().baseUnitClient()
     val listOfFutures = filesToCache.map { file =>
       client
         .parse(file)
@@ -50,7 +50,7 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
   private def runCacheTest(main: String, filesToCache: Seq[String], shouldResolve: Boolean)(
       assert: (BaseUnit, AMFValidationReport) => Assertion) = {
     for {
-      client <- createClientWithCache(filesToCache, shouldResolve).map(_.createClient())
+      client <- createClientWithCache(filesToCache, shouldResolve).map(_.baseUnitClient())
       root   <- client.parseDocument(main).map(_.document)
       report <- client.validate(root)
     } yield {
