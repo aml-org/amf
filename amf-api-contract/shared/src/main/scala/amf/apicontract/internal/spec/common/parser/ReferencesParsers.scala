@@ -63,7 +63,9 @@ case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YM
                 urlOption.foreach { url =>
                   target(url).foreach {
                     case module: DeclaresModel =>
-                      collectAlias(baseUnit, alias -> (module.id, url))
+                      module.location().foreach { fullUrl =>
+                        collectAlias(baseUnit, alias -> (fullUrl, url))
+                      }
                       result += (alias, module)
                     case other =>
                       ctx.eh.violation(ExpectedModule, id, s"Expected module but found: $other", e.location)

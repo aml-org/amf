@@ -67,7 +67,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
     if (otherField == EndPointModel.Operations) {
       otherValue.value.asInstanceOf[AmfArray].values.foreach {
-        case operation: Operation if !isOptional(OperationModel, operation) => ctx.mergeOperationContext(operation.id)
+        case operation: Operation if !isOptional(OperationModel, operation) => ctx.mergeOperationContext(operation)
         case _                                                              => // Nothing
       }
     }
@@ -362,7 +362,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
           val mainObjOption = existing.get(value.scalar.value)
           if (mainObjOption.isDefined) {
             if (field == EndPointModel.Operations) {
-              ctx.mergeOperationContext(otherObj.id)
+              ctx.mergeOperationContext(otherObj)
             }
             if (!areSameJsonSchema(mainObjOption.get, otherObj)) {
               val adopted = adoptInner(target.id, otherObj).asInstanceOf[DomainElement]
@@ -370,7 +370,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
             }
           } else if (!isOptional(element, otherObj)) { // Case (2) -> If node is undefined in 'main' but is optional in 'other'.
             if (field == EndPointModel.Operations) {
-              ctx.mergeOperationContext(otherObj.id)
+              ctx.mergeOperationContext(otherObj)
             }
             target.add(field, adoptInner(target.id, o))
           }

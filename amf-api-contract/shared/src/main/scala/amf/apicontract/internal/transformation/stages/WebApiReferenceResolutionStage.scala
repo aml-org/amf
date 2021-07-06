@@ -16,7 +16,7 @@ class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
           domain match {
             case domainResponse: Response if sourceResp.statusCode.option().isDefined =>
               val copy = domainResponse.copyElement().asInstanceOf[Response]
-              copy.withId(sourceResp.id).withStatusCode(sourceResp.statusCode.value())
+              copy.setId(sourceResp.id).withStatusCode(sourceResp.statusCode.value())
             case message: Message if message.meta == MessageModel =>
               copyMessage(message, sourceResp, (fields, annotations) => Response(fields, annotations))
             case _ => domain
@@ -33,7 +33,7 @@ class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
             case domainParam: Parameter =>
               if (sourceParam.name.option() != domainParam.name.option()) {
                 val copy = domainParam.copyElement().asInstanceOf[Parameter]
-                copy.withId(sourceParam.id).withName(sourceParam.name.value())
+                copy.setId(sourceParam.id).withName(sourceParam.name.value())
               } else
                 domain
             case _ => domain
@@ -50,7 +50,7 @@ class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
                           link: Message,
                           constructor: (Fields, Annotations) => Message): DomainElement = {
     val copy = constructor(message.fields.copy(), message.annotations.copy())
-    copy.withId(link.id)
+    copy.setId(link.id)
   }
 
 }

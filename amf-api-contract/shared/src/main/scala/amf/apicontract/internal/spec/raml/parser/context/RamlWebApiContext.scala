@@ -1,10 +1,11 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
+import amf.apicontract.client.scala.model.domain.Operation
 import amf.apicontract.internal.spec.common.RamlWebApiDeclarations
 import amf.apicontract.internal.spec.common.parser.{ParsingHelpers, WebApiContext}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.ClosedShapeSpecification
 import amf.core.client.scala.config.ParsingOptions
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Spec
@@ -26,10 +27,10 @@ abstract class RamlWebApiContext(override val loc: String,
     extends WebApiContext(loc, refs, options, wrapped, ds)
     with RamlSpecAwareContext {
 
-  var globalMediatype: Boolean                                  = false
-  val operationContexts: mutable.Map[String, RamlWebApiContext] = mutable.Map()
+  var globalMediatype: Boolean                                     = false
+  val operationContexts: mutable.Map[AmfObject, RamlWebApiContext] = mutable.Map()
 
-  def mergeOperationContext(operation: String): Unit = {
+  def mergeOperationContext(operation: AmfObject): Unit = {
     val contextOption = operationContexts.get(operation)
     contextOption.foreach(mergeContext)
     operationContexts.remove(operation)

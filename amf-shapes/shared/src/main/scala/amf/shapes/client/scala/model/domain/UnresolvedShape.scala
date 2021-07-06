@@ -53,7 +53,7 @@ case class UnresolvedShape private[amf] (override val fields: Fields,
   }
 
   // if is unresolved the effective target its himselft, because any real type has been found.
-  override def effectiveLinkTarget(links: Seq[String] = Seq()): UnresolvedShape = this
+  override def effectiveLinkTarget(links: Set[Linkable] = Set()): UnresolvedShape = this
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =

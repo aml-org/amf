@@ -115,7 +115,7 @@ case class ExtensionLikeParser(root: Root, spec: Spec)(implicit override val ctx
     exLikeOrDocument.foreach(collectAncestorsDeclarationsAndReferences(_, collector))
   }
 
-  private def parseExtension(document: Document, field: Field): Unit = {
+  private def parseExtension(document: ExtensionLike[_], field: Field): Unit = {
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
     UsageParser(map, document).parse()
@@ -125,9 +125,7 @@ case class ExtensionLikeParser(root: Root, spec: Spec)(implicit override val ctx
       .foreach(e => {
         root.references
           .find(_.origin.url == e.value.as[String])
-          .foreach(extend =>
-            document
-              .set(field, AmfScalar(extend.unit.id, Annotations(e.value)), Annotations(e)))
+          .foreach(extend => document.withExtend(extend.unit))
       })
   }
 }

@@ -14,6 +14,7 @@ import amf.core.client.scala.model.domain.{AmfElement, DataNode, DomainElement, 
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.transform.stages.helpers.ResolvedNamedEntity
+import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation}
 import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig}
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
@@ -72,9 +73,11 @@ case class ExtendsHelper(profile: ProfileName,
         }
         ctxForTrait.nodeRefIds ++= ctx.nodeRefIds
         ctxForTrait.contextType = RamlWebApiContextType.TRAIT
+        val id = extensionId + "/applied"
         val operation = ctxForTrait.factory
-          .operationParser(entry, extensionId + "/applied", true)
+          .operationParser(entry, id, true)
           .parse()
+        new IdAdopter(operation, extensionId + "/applied").adopt()
         operation
       }
     }
@@ -170,9 +173,11 @@ case class ExtendsHelper(profile: ProfileName,
       }
       ctxForResourceType.nodeRefIds ++= ctx.nodeRefIds
       ctxForResourceType.contextType = RamlWebApiContextType.RESOURCE_TYPE
+      val parsedEndpoint = EndPoint()
       ctxForResourceType.factory
-        .endPointParser(entry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)
+        .endPointParser(entry, _ => parsedEndpoint, None, collector, true)
         .parse()
+      new IdAdopter(parsedEndpoint, extensionId + "/applied")
       ctx.operationContexts ++= ctxForResourceType.operationContexts
     }
 
@@ -246,7 +251,7 @@ case class ExtendsHelper(profile: ProfileName,
         ctx.declarations += (f.location().getOrElse(f.id), f)
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
-          case (alias, (fullUrl, _)) if m.id == fullUrl =>
+          case (alias, (fullUrl, _)) if m.location().contains(fullUrl) =>
             val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(ctx.eh)))
             m.declares.foreach { declaration =>
               extractDeclarationToContextWithLocalAndRootName(declaration, m)(nestedCtx)
