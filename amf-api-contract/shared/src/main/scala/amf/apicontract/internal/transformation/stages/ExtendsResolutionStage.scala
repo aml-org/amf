@@ -287,7 +287,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
           case Some(potentialTrait: Trait) =>
             potentialTrait.effectiveLinkTarget() match {
               case err: ErrorTrait =>
-                Some(TraitBranch(key, Operation().withId(err.id + "_op"), Nil))
+                Some(TraitBranch(key, Operation().setId(err.id + "_op"), Nil))
               case t: Trait =>
                 val node: DataNode = t.dataNode.copyNode()
                 node.replaceVariables(local.variables, subTree)((message: String) => {
