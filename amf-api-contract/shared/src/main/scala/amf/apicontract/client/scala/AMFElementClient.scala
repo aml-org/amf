@@ -1,15 +1,13 @@
 package amf.apicontract.client.scala
 
 import amf.aml.client.scala.AMLElementClient
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.client.scala.render.ApiDomainElementEmitter
 import amf.apicontract.client.scala.transform.AbstractElementTransformer
 import amf.core.client.common.validation.{ProfileName, Raml10Profile}
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DataNode, DomainElement}
-import amf.core.internal.remote.Vendor
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.render.JsonSchemaShapeRenderer
 import org.yaml.model.{YMapEntry, YNode}

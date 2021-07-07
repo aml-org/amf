@@ -187,8 +187,9 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val options: AMFOptions)
     extends AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
 
-  override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
-  override def elementClient(): AMFElementClient   = new AMFElementClient(this)
+  override def baseUnitClient(): AMFBaseUnitClient         = new AMFBaseUnitClient(this)
+  override def elementClient(): AMFElementClient           = new AMFElementClient(this)
+  override def configurationState(): AMFConfigurationState = new AMFConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =
     super._withParsingOptions(parsingOptions)

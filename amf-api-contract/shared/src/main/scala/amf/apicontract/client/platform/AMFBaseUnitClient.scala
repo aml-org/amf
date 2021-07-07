@@ -1,16 +1,16 @@
 package amf.apicontract.client.platform
 
 import amf.aml.client.platform.BaseAMLBaseUnitClient
+import amf.apicontract.client.scala.{AMFBaseUnitClient => InternalAMFBaseUnitClient}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.AMFResult
 import amf.core.client.platform.model.document.BaseUnit
-import amf.apicontract.client.scala.{AMFBaseUnitClient => InternalAMFBaseUnitClient}
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.JSExportAll
 
 /**
   * The AMF Client contains common AMF operations.
-  * For more complex uses see [[AMFParser]] or [[amf.client.remod.AMFRenderer]]
+  * For more complex uses see [[AMFParser]] or [[AMFRenderer]]
   */
 @JSExportAll
 class AMFBaseUnitClient private[amf] (private val _internal: InternalAMFBaseUnitClient)
