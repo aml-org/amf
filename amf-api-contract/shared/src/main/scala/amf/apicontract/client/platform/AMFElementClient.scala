@@ -1,28 +1,33 @@
 package amf.apicontract.client.platform
-import amf.aml.client.platform.{AMLElementClient, BaseAMLElementClient}
-import amf.apicontract.client.platform.model.domain.{EndPoint, Operation}
+
+import amf.aml.client.platform.BaseAMLElementClient
 import amf.apicontract.client.platform.model.domain.templates.{ResourceType, Trait}
+import amf.apicontract.client.platform.model.domain.{EndPoint, Operation}
 import amf.apicontract.client.platform.render.ApiDomainElementEmitter
 import amf.apicontract.client.platform.transform.AbstractElementTransformer
-import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.apicontract.client.scala.{AMFElementClient => InternalAMFElementClient}
+import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.common.validation.{ProfileName, Raml10Profile}
 import amf.core.client.platform.errorhandling.ClientErrorHandler
 import amf.core.client.platform.model.document.BaseUnit
 import amf.core.client.platform.model.domain.DomainElement
+import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.shapes.client.platform.model.domain.AnyShape
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
-import amf.core.internal.convert.ClientErrorHandlerConverter._
-import amf.core.internal.remote.Vendor
 import org.yaml.builder.DocBuilder
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.JSExportAll
 
+/** Contains common AML operations not related to document. */
 @JSExportAll
-class AMFElementClient private[amf] (private val configuration: AMFConfiguration)
-    extends BaseAMLElementClient(configuration) {
+class AMFElementClient private[amf] (private val _internal: InternalAMFElementClient)
+    extends BaseAMLElementClient(_internal) {
 
-  def getConfiguration(): AMFConfiguration = configuration
+  private[amf] def this(configuration: AMFConfiguration) = {
+    this(new InternalAMFElementClient(configuration))
+  }
+
+  override def getConfiguration(): AMFConfiguration = _internal.getConfiguration
 
   private def obtainEH: ClientErrorHandler = getConfiguration()._internal.errorHandlerProvider.errorHandler()
 
