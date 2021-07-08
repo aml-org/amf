@@ -18,17 +18,7 @@ import amf.validations.PayloadValidations.{
   ExampleValidationErrorSpecification,
   SchemaException => InternalSchemaException
 }
-import org.everit.json.schema.internal.{
-  DateFormatValidator,
-  DateTimeFormatValidator,
-  EmailFormatValidator,
-  HostnameFormatValidator,
-  IPV4Validator,
-  IPV6Validator,
-  RegexFormatValidator,
-  URIFormatValidator,
-  URIV4FormatValidator
-}
+import org.everit.json.schema.internal._
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
@@ -36,7 +26,6 @@ import org.json.JSONException
 
 import java.util.regex.PatternSyntaxException
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
-import scala.collection.mutable.ArrayBuffer
 
 class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
     extends PlatformPayloadValidator(shape, env) {
@@ -60,7 +49,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
     } catch {
       case validationException: ValidationException =>
         validationProcessor.processException(validationException, fragment.map(_.encodes))
-      case exception: Error =>
+      case exception: Throwable =>
         validationProcessor.processException(exception, fragment.map(_.encodes))
     }
   }
@@ -174,6 +163,9 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName,
 
       case e: InvalidJsonValue =>
         Seq(invalidJsonValidation("Invalid json value was provided", element, e))
+
+      case e: ArithmeticException if e.getMessage == "Division undefined" || e.getMessage == "Division by zero" =>
+        Seq(invalidJsonValidation("Can't divide by 0", element, e))
 
       case other =>
         super.processCommonException(other, element)

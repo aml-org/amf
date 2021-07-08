@@ -1,14 +1,10 @@
 package amf.client.validation
 
 import amf.client.model.DataTypes
-import amf.client.model.domain.{NodeShape, ScalarShape}
+import amf.client.model.domain.ScalarShape
 import amf.convert.NativeOpsFromJvm
 import amf.core.AMF
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
-import org.json.JSONException
-import org.scalatest.Matchers.a
-import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.Matchers._
 
 class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFromJvm {
   test("Test unexpected type error") {
@@ -39,6 +35,18 @@ class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOp
       val report    = validator.syncValidate("application/json", """"irrelevant text"""")
       report.conforms shouldBe false
       report.results.asSeq.head.message shouldBe "Regex defined in schema could not be processed"
+    }
+  }
+
+  test("Validation against a number with multipleOf 0 should throw violation") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+      val shape                = new ScalarShape().withDataType(DataTypes.Number).withMultipleOf(0)
+      val validator            = shape.payloadValidator("application/json").asOption.get
+      val positiveNumberReport = validator.syncValidate("application/json", "5")
+      val zeroReport           = validator.syncValidate("application/json", "0")
+      positiveNumberReport.results.asSeq.head.message shouldBe "Can't divide by 0"
+      zeroReport.results.asSeq.head.message shouldBe "Can't divide by 0"
     }
   }
 }
