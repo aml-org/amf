@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.validation.remote
 import amf.ProfileName
-import amf.client.parse.DefaultParserErrorHandler
 import amf.core.model.domain.DomainElement
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
@@ -59,7 +58,18 @@ trait ReportValidationProcessor extends ValidationProcessor {
             location = element.flatMap(_.location()),
             source = e
           ))
-      case _ => Nil
+      case other =>
+        Seq(
+          AMFValidationResult(
+            message = "Unknown exception thrown in validation",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = ExampleValidationErrorSpecification.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = other
+          ))
     }
   }
 }
