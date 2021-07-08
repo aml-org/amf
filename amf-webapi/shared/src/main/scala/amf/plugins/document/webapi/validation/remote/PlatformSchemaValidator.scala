@@ -2,13 +2,13 @@ package amf.plugins.document.webapi.validation.remote
 
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.client.render.JsonSchemaDraft7
 import amf.core.client.ParsingOptions
-import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
-import amf.core.parser.errorhandler.{AmfParserErrorHandler, JsonErrorHandler}
+import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.parser.{JsonParserFactory, ParserContext, SyamlParsedDocument}
 import amf.core.validation._
 import amf.internal.environment.Environment
@@ -24,7 +24,7 @@ import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 import amf.{ProfileName, ProfileNames}
 import org.yaml.builder.YDocumentBuilder
 import org.yaml.model._
-import org.yaml.parser.{JsonParser, YamlParser}
+import org.yaml.parser.YamlParser
 
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
