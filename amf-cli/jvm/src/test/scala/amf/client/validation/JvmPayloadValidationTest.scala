@@ -7,9 +7,7 @@ import amf.shapes.client.platform.model.domain.ScalarShape
 class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFromJvm {
 
   test("Test unexpected type error") {
-
-    val test = new ScalarShape().withDataType(DataTypes.String)
-
+    val test   = new ScalarShape().withDataType(DataTypes.String)
     val report = payloadValidator(test, APPLICATION_JSON).syncValidate("1234")
     report.conforms shouldBe false
     report.results.asSeq.head.message shouldBe "expected type: String, found: Integer" // APIKit compatibility
@@ -25,5 +23,14 @@ class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOp
     val report    = validator.syncValidate(""""irrelevant text"""")
     report.conforms shouldBe false
     report.results.asSeq.head.message shouldBe "Regex defined in schema could not be processed"
+  }
+
+  test("Validation against a number with multipleOf 0 should throw violation") {
+    val shape                = new ScalarShape().withDataType(DataTypes.Number).withMultipleOf(0)
+    val validator            = payloadValidator(shape, APPLICATION_JSON)
+    val positiveNumberReport = validator.syncValidate("5")
+    val zeroReport           = validator.syncValidate("0")
+    positiveNumberReport.results.asSeq.head.message shouldBe "Can't divide by 0"
+    zeroReport.results.asSeq.head.message shouldBe "Can't divide by 0"
   }
 }
