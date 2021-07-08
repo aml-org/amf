@@ -4322,10 +4322,17 @@ declare module 'amf-client-js' {
 
   }
   export class TransformationStepFactory  {
-    from(step: JsTransformationStep): TransformationStep
-
-
+    static from(step: JsTransformationStep): TransformationStep
   }
+
+  export class AMFEventListenerFactory {
+    static from(listener: JsAMFEventListener): amf.core.client.platform.config.AMFEventListener
+  }
+
+  export interface JsAMFEventListener {
+    notifyEvent(event: amf.core.client.platform.config.AMFEvent): void
+  }
+
   export class ExecutionEnvironment  {
     constructor()
 
