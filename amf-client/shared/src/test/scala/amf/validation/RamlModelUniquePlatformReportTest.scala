@@ -594,4 +594,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("RAML union type with nil when applying extension") {
     validate("valid-extension/extension.raml")
   }
+
+  test("multiple uses objects pointing to the same library file") {
+    validate("multiple-uses/multiple-uses.raml")
+  }
 }

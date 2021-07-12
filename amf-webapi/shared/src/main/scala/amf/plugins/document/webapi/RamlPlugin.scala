@@ -1,9 +1,10 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
+import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -15,13 +16,11 @@ import amf.core.parser.{
   ParsedReference,
   ParserContext,
   RefContainer,
-  ReferenceKind,
   UnspecifiedReference
 }
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
-import amf.core.{CompilerContext, Root}
 import amf.plugins.document.webapi.contexts.emitter.raml.{
   Raml08SpecEmitterContext,
   Raml10SpecEmitterContext,
@@ -108,7 +107,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
   private def validateReferencesToLibraries(reference: ParsedReference, ctx: ParserContext): Unit = {
     val refs: Seq[RefContainer] = reference.origin.refs
     val allKinds                = refs.map(_.linkType)
-    val definedKind             = if (allKinds.size > 1) UnspecifiedReference else allKinds.head
+    val definedKind             = if (allKinds.distinct.size > 1) UnspecifiedReference else allKinds.head
     val nodes                   = refs.map(_.node)
     reference.unit match {
       case _: Module => // if is a library, kind should be LibraryReference

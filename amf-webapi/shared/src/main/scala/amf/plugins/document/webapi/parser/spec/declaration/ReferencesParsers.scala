@@ -95,7 +95,7 @@ case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YM
   }
 }
 
-case class AsycnReferencesParser(references: Seq[ParsedReference])(implicit ctx: WebApiContext)
+case class AsyncReferencesParser(references: Seq[ParsedReference])(implicit ctx: WebApiContext)
     extends CommonReferencesParser(references) {
   override protected def parseLibraries(declarations: ReferenceCollector[BaseUnit]): Unit = Unit
 }
