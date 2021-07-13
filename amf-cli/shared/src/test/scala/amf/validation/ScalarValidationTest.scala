@@ -44,16 +44,16 @@ class ScalarValidationTest extends AsyncFunSuite with Matchers with PayloadValid
                               platformDiscrepancies: List[String] = List())
 
   val shapes = Map(
-    String       -> new ScalarShape(Fields(), Annotations()).withDataType(String),
-    Integer      -> new ScalarShape(Fields(), Annotations()).withDataType(Integer),
-    Boolean      -> new ScalarShape(Fields(), Annotations()).withDataType(Boolean),
-    Nil          -> new ScalarShape(Fields(), Annotations()).withDataType(Nil),
-    Date         -> new ScalarShape(Fields(), Annotations()).withDataType(Date),
-    DateTime     -> new ScalarShape(Fields(), Annotations()).withDataType(DateTime),
-    DateTimeOnly -> new ScalarShape(Fields(), Annotations()).withDataType(DateTimeOnly),
-    Number       -> new ScalarShape(Fields(), Annotations()).withDataType(Number),
-    Node         -> new NodeShape(Fields(), Annotations()),
-    Array        -> new ArrayShape(Fields(), Annotations())
+    String       -> ScalarShape().withDataType(String),
+    Integer      -> ScalarShape().withDataType(Integer),
+    Boolean      -> ScalarShape().withDataType(Boolean),
+    Nil          -> ScalarShape().withDataType(Nil),
+    Date         -> ScalarShape().withDataType(Date),
+    DateTime     -> ScalarShape().withDataType(DateTime),
+    DateTimeOnly -> ScalarShape().withDataType(DateTimeOnly),
+    Number       -> ScalarShape().withDataType(Number),
+    Node         -> NodeShape(),
+    Array        -> ArrayShape()
   )
 
   makeFixtureRuns.foreach {

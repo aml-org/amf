@@ -11,7 +11,7 @@ import org.yaml.model.YPart
 /**
   * Scalar shape
   */
-case class ScalarShape(override val fields: Fields, override val annotations: Annotations)
+case class ScalarShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations)
     with CommonShapeFields {
 

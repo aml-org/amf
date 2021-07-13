@@ -47,10 +47,10 @@ trait CommandHelper {
     if (config.resolve)
       parsed map (result => {
         val transformed =
-          configClient.transform(result.bu, PipelineName.from(Vendor(vendor).mediaType, PipelineId.Default))
-        transformed.bu
+          configClient.transform(result.baseUnit, PipelineName.from(Vendor(vendor).mediaType, PipelineId.Default))
+        transformed.baseUnit
       })
-    else parsed.map(_.bu)
+    else parsed.map(_.baseUnit)
   }
 
   protected def resolve(config: ParserConfig, unit: BaseUnit, configuration: AMFGraphConfiguration): Future[BaseUnit] = {
@@ -68,11 +68,11 @@ trait CommandHelper {
         CompilerConfiguration(configuration)
       ).build()
       parsed map { parsed =>
-        configClient.transform(parsed, PipelineName.from(vendorMediaType, PipelineId.Default)).bu
+        configClient.transform(parsed, PipelineName.from(vendorMediaType, PipelineId.Default)).baseUnit
       }
     } else if (config.resolve) {
       Future {
-        configClient.transform(unit, PipelineName.from(vendorMediaType, PipelineId.Default)).bu
+        configClient.transform(unit, PipelineName.from(vendorMediaType, PipelineId.Default)).baseUnit
       }
     } else {
       Future { unit }

@@ -19,7 +19,7 @@ class OASProductionResolutionTest extends ResolutionTest {
         .withErrorHandlerProvider(() => UnhandledErrorHandler)
         .baseUnitClient()
         .transform(unit, Oas20TransformationPipeline.name)
-        .bu
+        .baseUnit
     } else super.transform(unit, config, amfConfig)
   }
 

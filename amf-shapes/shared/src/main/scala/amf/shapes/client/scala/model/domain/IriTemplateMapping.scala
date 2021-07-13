@@ -7,7 +7,7 @@ import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel._
 
-case class IriTemplateMapping(fields: Fields, annotations: Annotations) extends DomainElement {
+case class IriTemplateMapping private[amf] (fields: Fields, annotations: Annotations) extends DomainElement {
 
   def templateVariable: StrField = fields.field(TemplateVariable)
   def linkExpression: StrField   = fields.field(LinkExpression)

@@ -8,7 +8,7 @@ import amf.shapes.internal.domain.metamodel.FileShapeModel._
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, FileShapeModel}
 import org.yaml.model.YPart
 
-case class FileShape(override val fields: Fields, override val annotations: Annotations)
+case class FileShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations)
     with CommonShapeFields {
 

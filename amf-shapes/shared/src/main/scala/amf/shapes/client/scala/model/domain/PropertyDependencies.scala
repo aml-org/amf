@@ -20,7 +20,7 @@ trait Dependencies extends DomainElement {
   }
 }
 
-case class PropertyDependencies(fields: Fields, annotations: Annotations) extends Dependencies {
+case class PropertyDependencies private[amf] (fields: Fields, annotations: Annotations) extends Dependencies {
 
   def propertyTarget: Seq[StrField]                              = fields.field(PropertyTarget)
   def withPropertyTarget(propertyTarget: Seq[String]): this.type = set(PropertyTarget, propertyTarget)

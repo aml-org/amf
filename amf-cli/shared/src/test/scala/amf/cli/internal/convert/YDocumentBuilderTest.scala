@@ -28,7 +28,7 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .baseUnitClient()
       .transform(unit, Raml10EditingPipeline.name)
-      .bu
+      .baseUnit
   }
 
   private def run(source: String, golden: String, renderOptions: RenderOptions): Future[Assertion] =

@@ -67,7 +67,7 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
   private def cycle(source: String, golden: String, removeRaw: Boolean = false): Future[Assertion] = {
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
-      unit    <- config.baseUnitClient().parse(basePath + source).map(_.bu)
+      unit    <- config.baseUnitClient().parse(basePath + source).map(_.baseUnit)
       example <- findExample(unit, removeRaw)
       temp    <- writeTemporaryFile(golden)(example.toJson(config))
       r       <- assertDifferences(temp, goldenPath + golden)

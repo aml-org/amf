@@ -7,7 +7,7 @@ import amf.shapes.internal.domain.metamodel.TupleShapeModel.TupleItems
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, TupleShapeModel}
 import org.yaml.model.YPart
 
-case class TupleShape(override val fields: Fields, override val annotations: Annotations)
+case class TupleShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
   def items: Seq[Shape]                                = fields.field(TupleItems)

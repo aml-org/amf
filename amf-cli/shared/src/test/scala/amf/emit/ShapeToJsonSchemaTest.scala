@@ -131,7 +131,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
   private def parse(file: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
     val client = config.baseUnitClient()
     for {
-      unit <- client.parse(basePath + file).map(_.bu)
+      unit <- client.parse(basePath + file).map(_.baseUnit)
     } yield {
       unit
     }
@@ -151,7 +151,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
         config
           .baseUnitClient()
           .transformDefault(unit, Vendor.OAS20.mediaType)
-          .bu
+          .baseUnit
       ).map { element =>
           config.elementClient().toJsonSchema(element)
         }

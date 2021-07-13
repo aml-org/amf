@@ -100,7 +100,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(RAMLConfiguration.RAML10().baseUnitClient())
       parseResult <- client.parse(validationsPath + "/security-schemes/security1.raml")
       transformResult <- Future {
-        client.transformDefault(parseResult.bu, Raml10.mediaType)
+        client.transformDefault(parseResult.baseUnit, Raml10.mediaType)
       }
     } yield {
       assert(!transformResult.conforms)
@@ -117,9 +117,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(RAMLConfiguration.RAML10().baseUnitClient())
       parseResult <- client.parse(validationsPath + "/missing-annotation-types/api.raml")
       transformResult <- Future {
-        client.transformDefault(parseResult.bu, Raml10.mediaType)
+        client.transformDefault(parseResult.baseUnit, Raml10.mediaType)
       }
-      report <- client.validate(transformResult.bu, Raml10Profile)
+      report <- client.validate(transformResult.baseUnit, Raml10Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -131,9 +131,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(RAMLConfiguration.RAML10().baseUnitClient())
       parseResult <- client.parse(validationsPath + "/enumeration-arrays/api.raml")
       transformResult <- Future {
-        client.transformDefault(parseResult.bu, Raml10.mediaType)
+        client.transformDefault(parseResult.baseUnit, Raml10.mediaType)
       }
-      report <- client.validate(transformResult.bu, Raml10Profile)
+      report <- client.validate(transformResult.baseUnit, Raml10Profile)
     } yield {
       assert(report.conforms)
     }
@@ -144,9 +144,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(WebAPIConfiguration.WebAPI().baseUnitClient())
       parseResult <- client.parse(validationsPath + "/enumeration-arrays/api.raml")
       transformResult <- Future {
-        client.transformDefault(parseResult.bu, Raml10.mediaType)
+        client.transformDefault(parseResult.baseUnit, Raml10.mediaType)
       }
-      report <- client.validate(transformResult.bu, Oas20Profile)
+      report <- client.validate(transformResult.baseUnit, Oas20Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 2)
@@ -276,7 +276,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val client = config.baseUnitClient()
     for {
       parseResult <- client.parse(url)
-      report      <- client.validate(parseResult.bu, profileName)
+      report      <- client.validate(parseResult.baseUnit, profileName)
     } yield {
       val parseReport = AMFValidationReport.unknownProfile(parseResult)
       val unified =

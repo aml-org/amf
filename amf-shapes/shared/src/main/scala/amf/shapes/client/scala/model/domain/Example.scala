@@ -15,7 +15,7 @@ import org.yaml.model.YPart
 /**
   *
   */
-class Example(override val fields: Fields, override val annotations: Annotations)
+class Example private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
     with Linkable
     with ExternalSourceElement

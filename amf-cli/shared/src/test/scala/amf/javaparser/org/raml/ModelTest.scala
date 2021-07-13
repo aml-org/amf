@@ -29,7 +29,7 @@ trait ModelValidationTest extends DirectoryTest {
     for {
       client      <- Future.successful(configuration.baseUnitClient())
       parseResult <- client.parse(s"file://${d + inputFileName}")
-      report      <- client.validate(parseResult.bu, profileFromModel(parseResult.bu))
+      report      <- client.validate(parseResult.baseUnit, profileFromModel(parseResult.baseUnit))
       unifiedReport <- {
         val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val r =
@@ -38,7 +38,7 @@ trait ModelValidationTest extends DirectoryTest {
         Future.successful(r)
       }
     } yield {
-      val output = renderOutput(d, parseResult.bu, unifiedReport, configuration)
+      val output = renderOutput(d, parseResult.baseUnit, unifiedReport, configuration)
       // we only need to use the platform if there are errors in examples, this is what causes differences due to
       // the different JSON-Schema libraries used in JS and the JVM
       val usePlatform = !unifiedReport.conforms && unifiedReport.results.exists(result =>
@@ -104,7 +104,7 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.baseUnitClient().transformEditing(unit, config.target.mediaType).bu
+        amfConfig.baseUnitClient().transformEditing(unit, config.target.mediaType).baseUnit
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit

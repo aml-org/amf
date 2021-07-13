@@ -8,7 +8,7 @@ import amf.shapes.internal.domain.metamodel.SchemaShapeModel
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel._
 import org.yaml.model.YPart
 
-case class SchemaShape(override val fields: Fields, override val annotations: Annotations)
+case class SchemaShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations)
     with ExternalSourceElement {
 

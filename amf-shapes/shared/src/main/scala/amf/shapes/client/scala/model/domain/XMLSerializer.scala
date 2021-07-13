@@ -7,7 +7,7 @@ import amf.shapes.internal.domain.metamodel.XMLSerializerModel
 import amf.shapes.internal.domain.metamodel.XMLSerializerModel._
 import org.yaml.model.{YMap, YNode}
 
-case class XMLSerializer(fields: Fields, annotations: Annotations) extends DomainElement {
+case class XMLSerializer private[amf] (fields: Fields, annotations: Annotations) extends DomainElement {
 
   def attribute: BoolField = fields.field(Attribute)
   def wrapped: BoolField   = fields.field(Wrapped)

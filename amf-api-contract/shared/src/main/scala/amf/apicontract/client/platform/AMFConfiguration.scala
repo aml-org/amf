@@ -11,7 +11,7 @@ import amf.apicontract.client.scala.{
   WebAPIConfiguration => InternalWebAPIConfiguration
 }
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
+import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
 import amf.core.client.platform.resource.ResourceLoader
@@ -21,7 +21,10 @@ import amf.core.internal.convert.TransformationPipelineConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
+import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.execution.BaseExecutionEnvironment
+import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
+import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
 
 @JSExportAll
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
@@ -41,7 +44,7 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
     _internal.withResourceLoaders(rl.asInternal.toList)
 
   override def withUnitCache(cache: UnitCache): AMFConfiguration =
-    _internal.withUnitCache(ReferenceResolverMatcher.asInternal(cache))
+    _internal.withUnitCache(UnitCacheMatcher.asInternal(cache))
 
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =
     _internal.withTransformationPipeline(pipeline)
@@ -54,8 +57,6 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
 
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = _internal.withEventListener(listener)
 
-  override def withLogger(logger: AMFLogger): AMFConfiguration = _internal.withLogger(logger)
-
   override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMFConfiguration =
     _internal.withExecutionEnvironment(executionEnv._internal)
 
@@ -64,6 +65,9 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
   override def withDialect(dialect: Dialect): AMFConfiguration = _internal.withDialect(asInternal(dialect))
 
   def withDialect(path: String): ClientFuture[AMFConfiguration] = _internal.withDialect(path).asClient
+
+  override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMFConfiguration =
+    _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
 }
 
 /**

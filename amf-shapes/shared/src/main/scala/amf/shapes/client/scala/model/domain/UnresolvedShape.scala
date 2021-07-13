@@ -12,23 +12,17 @@ import org.yaml.model.{YNode, YPart}
 /**
   * Unresolved shape: intended to be resolved after parsing (exception is thrown if shape is not resolved).
   */
-case class UnresolvedShape(override val fields: Fields,
-                           override val annotations: Annotations,
-                           override val reference: String,
-                           fatherExtensionParser: Option[Option[String] => ShapeExtensionParser] = None,
-                           updateFatherLink: Option[String => Unit] = None,
-                           override val shouldLink: Boolean = true)
+case class UnresolvedShape private[amf] (override val fields: Fields,
+                                         override val annotations: Annotations,
+                                         override val reference: String,
+                                         fatherExtensionParser: Option[Option[String] => ShapeExtensionParser] = None,
+                                         updateFatherLink: Option[String => Unit] = None,
+                                         override val shouldLink: Boolean = true)
     extends AnyShape(fields, annotations)
     with UnresolvedReference {
 
   override def linkCopy(): AnyShape = this
 
-  /*
-  override def withId(newId: String): this.type = {
-    if (id == null) super.withId(newId)
-    this
-  }
-   */
   override private[amf] def link[T](label: AmfScalar, annotations: Annotations, fieldAnn: Annotations): T =
     this.asInstanceOf[T]
 

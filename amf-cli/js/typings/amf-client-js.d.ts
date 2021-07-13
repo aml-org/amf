@@ -80,8 +80,6 @@ declare module 'amf-client-js' {
 
             withEventListener(listener: core.client.platform.config.AMFEventListener): BaseAMLConfiguration
 
-            withLogger(logger: core.client.platform.config.AMFLogger): BaseAMLConfiguration
-
             withDialect(dialect: Dialect): BaseAMLConfiguration
 
 
@@ -205,15 +203,6 @@ declare module 'amf-client-js' {
         }
         namespace platform {
           namespace config {
-            export interface AMFLogger            {
-              log(message: string, severity: LogSeverity, source: string): void
-
-
-            }
-            export class LogSeverity            {
-              severity: string
-
-            }
             export interface AMFEventListener            {
               notifyEvent(event: AMFEvent): void
 
@@ -4166,8 +4155,6 @@ declare module 'amf-client-js' {
 
     withEventListener(listener: amf.core.client.platform.config.AMFEventListener): AMFGraphConfiguration
 
-    withLogger(logger: amf.core.client.platform.config.AMFLogger): AMFGraphConfiguration
-
     merge(other: AMFGraphConfiguration): AMFGraphConfiguration
   }
   export class AMFGraphClient  {
@@ -5298,8 +5285,6 @@ declare module 'amf-client-js' {
 
     withEventListener(listener: amf.core.client.platform.config.AMFEventListener): AMLConfiguration
 
-    withLogger(logger: amf.core.client.platform.config.AMFLogger): AMLConfiguration
-
     withDialect(dialect: Dialect): AMLConfiguration
 
     merge(other: AMLConfiguration): AMLConfiguration
@@ -5431,8 +5416,6 @@ declare module 'amf-client-js' {
     withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration
 
     withEventListener(listener: amf.core.client.platform.config.AMFEventListener): AMFConfiguration
-
-    withLogger(logger: amf.core.client.platform.config.AMFLogger): AMFConfiguration
 
     merge(other: AMFConfiguration): AMFConfiguration
 
