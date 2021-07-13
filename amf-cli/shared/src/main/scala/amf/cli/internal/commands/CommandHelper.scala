@@ -9,7 +9,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.common.transform._
 import amf.core.client.scala.transform.pipelines.TransformationPipeline
-import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
+import amf.core.internal.parser.{AMFCompiler, CompilerConfiguration}
 import amf.core.internal.remote.{Cache, Context, Platform, Vendor}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -65,7 +65,7 @@ trait CommandHelper {
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         Context(platform),
         cache = Cache(),
-        ParseConfiguration(configuration)
+        CompilerConfiguration(configuration)
       ).build()
       parsed map { parsed =>
         configClient.transform(parsed, PipelineName.from(vendorMediaType, PipelineId.Default)).bu

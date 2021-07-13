@@ -21,7 +21,7 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.client.scala.transform.stages.{ReferenceResolutionStage, TransformationStep}
 import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.internal.metamodel.domain.DomainElementModel
-import amf.core.internal.parser.{ParseConfiguration, YNodeLikeOps}
+import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration, YNodeLikeOps}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
@@ -54,8 +54,8 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
     /** Default to raml10 context. */
     def ctx(): RamlWebApiContext = profile match {
       case Raml08Profile =>
-        new Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
-      case _ => new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
+        new Raml08WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler)))
+      case _ => new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler)))
     }
 
     def resolve[T <: BaseUnit](model: T): T =
