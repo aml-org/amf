@@ -1,7 +1,8 @@
-package amf.shapes.client.scala.model.domain
+package amf.shapes.internal.domain.resolution
 
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.TrackedElement
+import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 
 // TODO tidy up code
 object ExampleTracking {

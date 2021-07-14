@@ -18,7 +18,7 @@ case class MessageBindings(fields: Fields, annotations: Annotations) extends Nam
   override def nameField: Field = Name
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String =
+  private[amf] override def componentId: String =
     "/" + name.option().getOrElse("message-bindings").urlComponentEncoded
 
   override def linkCopy(): MessageBindings = {

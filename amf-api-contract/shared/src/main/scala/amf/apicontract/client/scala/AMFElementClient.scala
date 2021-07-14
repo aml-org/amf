@@ -9,7 +9,7 @@ import amf.core.client.common.validation.{ProfileName, Raml10Profile}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DataNode, DomainElement}
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.client.scala.render.JsonSchemaShapeRenderer
+import amf.shapes.client.scala.render.{JsonSchemaShapeRenderer, RamlShapeRenderer}
 import org.yaml.model.{YMapEntry, YNode}
 
 class AMFElementClient private[amf] (override protected val configuration: AMFConfiguration)
@@ -19,6 +19,8 @@ class AMFElementClient private[amf] (override protected val configuration: AMFCo
 
   def toJsonSchema(element: AnyShape): String    = JsonSchemaShapeRenderer.toJsonSchema(element, configuration)
   def buildJsonSchema(element: AnyShape): String = JsonSchemaShapeRenderer.buildJsonSchema(element, configuration)
+
+  def toRamlDatatype(element: AnyShape): String = RamlShapeRenderer.toRamlDatatype(element, configuration)
 
   def renderElement(element: DomainElement, mediaType: String): YNode =
     ApiDomainElementEmitter.emit(element, mediaType, configuration.errorHandlerProvider.errorHandler())

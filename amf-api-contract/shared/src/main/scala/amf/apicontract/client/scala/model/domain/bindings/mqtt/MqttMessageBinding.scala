@@ -17,8 +17,8 @@ class MqttMessageBinding(override val fields: Fields, override val annotations: 
 
   override val key: StrField = fields.field(MqttMessageBindingModel.key)
 
-  override def componentId: String            = "/mqtt-message"
-  override def linkCopy(): MqttMessageBinding = MqttMessageBinding().withId(id)
+  private[amf] override def componentId: String = "/mqtt-message"
+  override def linkCopy(): MqttMessageBinding   = MqttMessageBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     MqttMessageBinding.apply

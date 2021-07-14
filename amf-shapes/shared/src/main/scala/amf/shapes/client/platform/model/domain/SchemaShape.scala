@@ -1,7 +1,6 @@
 package amf.shapes.client.platform.model.domain
 
-import amf.core.client.scala.model.StrField
-import amf.shapes.client.scala.model.domain
+import amf.core.client.platform.model.StrField
 import amf.shapes.internal.convert.ShapeClientConverters.ClientOption
 import amf.shapes.internal.convert.ShapeClientConverters._
 
@@ -9,7 +8,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.shapes.client.scala.model.domain.{SchemaShape => InternalSchemaShape}
 
 @JSExportAll
-case class SchemaShape(override private[amf] val _internal: domain.SchemaShape) extends AnyShape(_internal) {
+case class SchemaShape(override private[amf] val _internal: InternalSchemaShape) extends AnyShape(_internal) {
 
   @JSExportTopLevel("SchemaShape")
   def this() = this(InternalSchemaShape())

@@ -36,7 +36,7 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
   override def meta: AnyShapeModel = AnyShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded
+  private[amf] override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded
 
   protected[amf] def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)
@@ -50,7 +50,7 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
 
   protected[amf] def inlined: Boolean = annotations.find(classOf[InlineDefinition]).isDefined
 
-  override def ramlSyntaxKey: String = "anyShape"
+  private[amf] override def ramlSyntaxKey: String = "anyShape"
 
   protected[amf] def trackedExample(trackId: String): Option[Example] = examples.find(_.isTrackedBy(trackId))
 

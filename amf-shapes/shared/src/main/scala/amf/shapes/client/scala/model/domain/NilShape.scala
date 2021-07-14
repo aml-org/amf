@@ -14,9 +14,9 @@ case class NilShape private[amf] (override val fields: Fields, override val anno
   override val meta: AnyShapeModel = NilShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/nil/" + name.option().getOrElse("default-nil").urlComponentEncoded
+  private[amf] override def componentId: String = "/nil/" + name.option().getOrElse("default-nil").urlComponentEncoded
 
-  override def ramlSyntaxKey: String = "shape"
+  private[amf] override def ramlSyntaxKey: String = "shape"
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = NilShape.apply

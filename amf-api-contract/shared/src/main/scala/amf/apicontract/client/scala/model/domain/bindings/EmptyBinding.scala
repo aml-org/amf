@@ -23,8 +23,8 @@ class EmptyBinding(override val fields: Fields, override val annotations: Annota
 
   def withType(`type`: String): this.type = set(Type, `type`)
 
-  override def componentId: String      = "/" + `type`.option().getOrElse("empty-binding").urlComponentEncoded
-  override def linkCopy(): EmptyBinding = EmptyBinding().withId(id)
+  private[amf] override def componentId: String = "/" + `type`.option().getOrElse("empty-binding").urlComponentEncoded
+  override def linkCopy(): EmptyBinding         = EmptyBinding().withId(id)
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = EmptyBinding.apply

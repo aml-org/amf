@@ -18,7 +18,7 @@ class KafkaOperationBinding(override val fields: Fields, override val annotation
 
   override def meta: KafkaOperationBindingModel.type = KafkaOperationBindingModel
 
-  override def componentId: String = "/kafka-operation"
+  private[amf] override def componentId: String = "/kafka-operation"
 
   override val key: StrField = fields.field(KafkaOperationBindingModel.key)
 

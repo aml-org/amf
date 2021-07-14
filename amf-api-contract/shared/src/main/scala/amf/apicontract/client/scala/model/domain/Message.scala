@@ -57,7 +57,7 @@ class Message(override val fields: Fields, override val annotations: Annotations
 
   override def nameField: Field = MessageModel.Name
 
-  override def componentId: String = "/" + name.option().getOrElse("message").urlComponentEncoded
+  private[amf] override def componentId: String = "/" + name.option().getOrElse("message").urlComponentEncoded
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =

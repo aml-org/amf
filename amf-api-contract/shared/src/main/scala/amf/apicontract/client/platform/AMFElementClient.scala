@@ -13,7 +13,7 @@ import amf.core.client.platform.model.document.BaseUnit
 import amf.core.client.platform.model.domain.DomainElement
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.shapes.client.platform.model.domain.AnyShape
-import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
+import amf.shapes.client.platform.render.{JsonSchemaShapeRenderer, RamlShapeRenderer}
 import org.yaml.builder.DocBuilder
 
 import scala.scalajs.js.annotation.JSExportAll
@@ -33,6 +33,8 @@ class AMFElementClient private[amf] (private val _internal: InternalAMFElementCl
 
   def toJsonSchema(element: AnyShape): String    = JsonSchemaShapeRenderer.toJsonSchema(element, getConfiguration())
   def buildJsonSchema(element: AnyShape): String = JsonSchemaShapeRenderer.buildJsonSchema(element, getConfiguration())
+
+  def toRamlDatatype(element: AnyShape): String = RamlShapeRenderer.toRamlDatatype(element, getConfiguration())
 
   def renderToBuilder[T](element: DomainElement, mediaType: String, builder: DocBuilder[T]): Unit =
     ApiDomainElementEmitter.emitToBuilder(element, mediaType, obtainEH, builder)

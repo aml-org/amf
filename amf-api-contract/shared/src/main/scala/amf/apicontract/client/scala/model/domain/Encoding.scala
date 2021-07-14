@@ -36,7 +36,8 @@ case class Encoding(fields: Fields, annotations: Annotations) extends DomainElem
   override def meta: EncodingModel.type = EncodingModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + propertyName.option().getOrElse("default-encoding").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/" + propertyName.option().getOrElse("default-encoding").urlComponentEncoded
 }
 
 object Encoding {

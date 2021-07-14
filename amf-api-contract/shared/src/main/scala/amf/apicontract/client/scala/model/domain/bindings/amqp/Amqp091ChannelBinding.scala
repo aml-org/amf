@@ -20,7 +20,7 @@ class Amqp091ChannelBinding(override val fields: Fields, override val annotation
 
   override def meta: Amqp091ChannelBindingModel.type = Amqp091ChannelBindingModel
 
-  override def componentId: String = "/amqp091-channel"
+  private[amf] override def componentId: String = "/amqp091-channel"
 
   override def key: StrField = fields.field(Amqp091ChannelBindingModel.key)
 
@@ -65,7 +65,7 @@ class Amqp091ChannelExchange(override val fields: Fields, override val annotatio
   def withAutoDelete(autoDelete: Boolean): this.type = set(ChannelExchange.AutoDelete, autoDelete)
   def withVHost(vHost: String): this.type            = set(ChannelExchange.VHost, vHost)
 
-  override def componentId: String = "/amqp091-exchange"
+  private[amf] override def componentId: String = "/amqp091-exchange"
 }
 
 object Amqp091ChannelExchange {
@@ -95,7 +95,7 @@ class Amqp091Queue(override val fields: Fields, override val annotations: Annota
   def withAutoDelete(autoDelete: Boolean): this.type = set(QueueModel.AutoDelete, autoDelete)
   def withVHost(vHost: String): this.type            = set(QueueModel.VHost, vHost)
 
-  override def componentId: String = "/amqp091-queue"
+  private[amf] override def componentId: String = "/amqp091-queue"
 }
 
 object Amqp091Queue {
