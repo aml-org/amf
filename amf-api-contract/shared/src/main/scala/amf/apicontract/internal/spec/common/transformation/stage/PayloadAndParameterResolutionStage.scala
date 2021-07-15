@@ -6,7 +6,7 @@ import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfObject
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.domain.resolution.ExampleTracking

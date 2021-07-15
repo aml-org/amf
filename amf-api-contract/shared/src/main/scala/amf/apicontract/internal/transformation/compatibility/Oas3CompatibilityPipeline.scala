@@ -3,8 +3,7 @@ package amf.apicontract.internal.transformation.compatibility
 import amf.apicontract.internal.transformation.Oas30TransformationPipeline
 import amf.apicontract.internal.transformation.compatibility.oas3._
 import amf.core.client.common.transform._
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 import amf.core.internal.remote.Oas30
 
 class Oas3CompatibilityPipeline private (override val name: String) extends TransformationPipeline() {

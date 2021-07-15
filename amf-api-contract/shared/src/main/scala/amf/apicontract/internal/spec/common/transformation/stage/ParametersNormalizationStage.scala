@@ -8,7 +8,7 @@ import amf.core.client.common.validation.{AmfProfile, Oas20Profile, ProfileName}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfArray
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.annotations.SynthesizedField
 
 /**

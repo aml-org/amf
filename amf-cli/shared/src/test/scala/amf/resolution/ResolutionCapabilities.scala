@@ -5,7 +5,7 @@ import amf.apicontract.internal.transformation.{AmfEditingPipeline, AmfTransform
 import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.internal.remote._
 
 trait ResolutionCapabilities {

@@ -3,9 +3,9 @@ package amf.apicontract.internal.transformation.compatibility.common
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{AmfArray, DomainElement, Linkable}
-import amf.core.client.scala.transform.stages.TransformationStep
-import amf.core.client.scala.transform.stages.elements.resolution.ReferenceResolution
-import amf.core.client.scala.transform.stages.elements.resolution.ReferenceResolution.ASSERT_DIFFERENT
+import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.transform.stages.elements.resolution.ReferenceResolution
+import amf.core.internal.transform.stages.elements.resolution.ReferenceResolution.ASSERT_DIFFERENT
 
 abstract class AmfElementLinkResolutionStage() extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {

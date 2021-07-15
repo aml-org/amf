@@ -8,7 +8,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.CustomMerge
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DomainElement}
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.DomainElementModel
 

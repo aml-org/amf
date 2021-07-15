@@ -5,7 +5,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.Unk
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.remote._

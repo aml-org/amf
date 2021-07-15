@@ -13,7 +13,8 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document._
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext}
-import amf.core.client.scala.transform.stages.{ReferenceResolutionStage, TransformationStep}
+import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.annotations.Aliases
 import amf.core.internal.metamodel.Type.Scalar
 import amf.core.internal.metamodel.document.BaseUnitModel

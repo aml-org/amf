@@ -3,13 +3,9 @@ package amf.shapes.internal.domain.resolution
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.Shape
-import amf.core.client.scala.transform.stages.elements.resolution.ElementStageTransformer
+import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
 import amf.shapes.internal.domain.resolution.recursion.RecursionErrorRegister
-import amf.shapes.internal.domain.resolution.shape_normalization.{
-  NormalizationContext,
-  ShapeCanonizer,
-  ShapeExpander
-}
+import amf.shapes.internal.domain.resolution.shape_normalization.{NormalizationContext, ShapeCanonizer, ShapeExpander}
 
 class ShapeTransformer(context: NormalizationContext) extends ElementStageTransformer[Shape] {
 

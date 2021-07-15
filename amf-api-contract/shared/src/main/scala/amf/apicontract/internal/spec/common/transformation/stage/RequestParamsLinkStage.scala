@@ -4,9 +4,9 @@ import amf.apicontract.client.scala.model.domain.Request
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
-import amf.core.client.scala.transform.stages.TransformationStep
-import amf.core.client.scala.transform.stages.elements.resolution.ReferenceResolution
-import amf.core.client.scala.transform.stages.selectors.{LinkSelector, Selector}
+import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.transform.stages.elements.resolution.ReferenceResolution
+import amf.core.internal.transform.stages.selectors.{LinkSelector, Selector}
 
 object RequestParamsLinkStage extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =

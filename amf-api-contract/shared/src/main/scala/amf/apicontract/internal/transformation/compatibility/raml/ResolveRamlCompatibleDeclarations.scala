@@ -3,10 +3,10 @@ import amf.apicontract.client.scala.model.domain.Response
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
-import amf.core.client.scala.transform.stages.TransformationStep
-import amf.core.client.scala.transform.stages.elements.resolution.ReferenceResolution
-import amf.core.client.scala.transform.stages.elements.resolution.ReferenceResolution.ASSERT_DIFFERENT
-import amf.core.client.scala.transform.stages.selectors.{LinkSelector, MetaModelSelector, Selector}
+import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.transform.stages.elements.resolution.ReferenceResolution
+import amf.core.internal.transform.stages.elements.resolution.ReferenceResolution.ASSERT_DIFFERENT
+import amf.core.internal.transform.stages.selectors.{LinkSelector, MetaModelSelector, Selector}
 import amf.core.client.scala.vocabulary.Namespace.ApiContract
 
 object ResolveRamlCompatibleDeclarationsStage extends TransformationStep {

@@ -4,7 +4,7 @@ import amf.apicontract.internal.transformation.AmfEditingPipeline
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
-import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.internal.plugins.document.graph.EmbeddedForm
 import amf.core.internal.remote._
 
