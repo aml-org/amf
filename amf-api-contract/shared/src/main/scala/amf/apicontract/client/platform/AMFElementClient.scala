@@ -1,6 +1,8 @@
 package amf.apicontract.client.platform
 
 import amf.aml.client.platform.BaseAMLElementClient
+import amf.aml.client.platform.model.document.Dialect
+import amf.aml.client.platform.render.AmlDomainElementEmitter
 import amf.apicontract.client.platform.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.platform.model.domain.{EndPoint, Operation}
 import amf.apicontract.client.platform.render.ApiDomainElementEmitter
@@ -35,6 +37,10 @@ class AMFElementClient private[amf] (private val _internal: InternalAMFElementCl
   def buildJsonSchema(element: AnyShape): String = JsonSchemaShapeRenderer.buildJsonSchema(element, getConfiguration())
 
   def toRamlDatatype(element: AnyShape): String = RamlShapeRenderer.toRamlDatatype(element, getConfiguration())
+
+  // For Typescript compatibility
+  override def renderToBuilder[T](element: DomainElement, emissionStructure: Dialect, builder: DocBuilder[T]): Unit =
+    super.renderToBuilder(element, emissionStructure, builder)
 
   def renderToBuilder[T](element: DomainElement, mediaType: String, builder: DocBuilder[T]): Unit =
     ApiDomainElementEmitter.emitToBuilder(element, mediaType, obtainEH, builder)
