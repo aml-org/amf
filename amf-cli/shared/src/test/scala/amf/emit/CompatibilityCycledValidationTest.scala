@@ -5,7 +5,7 @@ import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.common.transform._
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote._
@@ -79,16 +79,16 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     val handler   = DefaultErrorHandler()
     val amfConfig = buildConfig(None, Some(handler))
     build(config, amfConfig).flatMap { unit =>
-      amfConfig.createClient().validate(unit, profileName)
+      amfConfig.baseUnitClient().validate(unit, profileName)
     }
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     amfConfig
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
-      .createClient()
+      .baseUnitClient()
       .transformCompatibility(unit, config.target.mediaType)
-      .bu
+      .baseUnit
   }
 
   private def profile(vendor: Vendor): ProfileName = vendor match {

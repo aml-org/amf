@@ -2,7 +2,7 @@ package amf.apicontract.internal.transformation.compatibility.oas
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel

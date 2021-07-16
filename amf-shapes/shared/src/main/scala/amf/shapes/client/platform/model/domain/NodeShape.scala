@@ -1,7 +1,7 @@
 package amf.shapes.client.platform.model.domain
 
+import amf.core.client.platform.model.{BoolField, IntField, StrField}
 import amf.core.client.platform.model.domain.{PropertyShape, Shape}
-import amf.core.client.scala.model.{BoolField, IntField, StrField}
 import amf.shapes.client.scala.model.domain.{NodeShape => InternalNodeShape}
 import amf.shapes.internal.convert.ShapeClientConverters.ClientList
 

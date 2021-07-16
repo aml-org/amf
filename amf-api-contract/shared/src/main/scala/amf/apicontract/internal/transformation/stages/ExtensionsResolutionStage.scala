@@ -13,14 +13,15 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document._
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext}
-import amf.core.client.scala.transform.stages.{ReferenceResolutionStage, TransformationStep}
+import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.annotations.Aliases
 import amf.core.internal.metamodel.Type.Scalar
 import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.metamodel.domain.common.{DescriptionField, DisplayNameField, NameFieldSchema, NameFieldShacl}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.{Field, Type}
-import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
@@ -89,8 +90,8 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
-    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
-    case _             => new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
+    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler)))
+    case _             => new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler)))
   }
 
   def removeExtends(document: Document): BaseUnit = {

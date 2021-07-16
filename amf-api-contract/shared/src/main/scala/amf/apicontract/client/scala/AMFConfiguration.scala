@@ -29,13 +29,12 @@ import amf.apicontract.internal.transformation.compatibility.{
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.validation.shacl.{CustomShaclModelValidationPlugin, FullShaclModelValidationPlugin}
-import amf.core.client.platform.config.AMFLogger
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.registries.AMFRegistry
@@ -60,7 +59,6 @@ sealed trait APIConfigurationBuilder {
         .withEntities(APIEntities.entities ++ FragmentEntities.entities ++ ShapeEntities.entities)
         .withAnnotations(
           APISerializableAnnotations.annotations ++ WebAPISerializableAnnotations.annotations ++ ShapeSerializableAnnotations.annotations),
-      configuration.logger,
       configuration.listeners,
       configuration.options
     ).withPlugins(List(
@@ -176,17 +174,19 @@ object APIConfiguration {
 /**
   * The AMFConfiguration lets you customize all AMF-specific configurations.
   * Its immutable and created through builders. An instance is needed to use AMF.
-  * @see [[AMFClient]]
+  *
+  * @see [[AMFBaseUnitClient]]
   */
 class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
                                      override private[amf] val registry: AMFRegistry,
-                                     override private[amf] val logger: AMFLogger,
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
-    extends AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
+    extends AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
-  override def createClient(): AMFClient = new AMFClient(this)
+  override def baseUnitClient(): AMFBaseUnitClient         = new AMFBaseUnitClient(this)
+  override def elementClient(): AMFElementClient           = new AMFElementClient(this)
+  override def configurationState(): AMFConfigurationState = new AMFConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =
     super._withParsingOptions(parsingOptions)
@@ -206,13 +206,13 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMFConfiguration =
     super._withPlugins(plugins)
 
-  override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMFConfiguration =
+  private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMFConfiguration =
     super._withEntities(entities)
 
-  override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMFConfiguration =
+  private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMFConfiguration =
     super._withAnnotations(annotations)
 
-  override def withValidationProfile(profile: ValidationProfile): AMFConfiguration =
+  private[amf] override def withValidationProfile(profile: ValidationProfile): AMFConfiguration =
     super._withValidationProfile(profile)
 
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =
@@ -229,8 +229,6 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     super._withErrorHandlerProvider(provider)
 
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = super._withEventListener(listener)
-
-  override def withLogger(logger: AMFLogger): AMFConfiguration = super._withLogger(logger)
 
   override def withDialect(path: String): Future[AMFConfiguration] =
     super.withDialect(path).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
@@ -249,8 +247,7 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
                               registry: AMFRegistry,
-                              logger: AMFLogger,
                               listeners: Set[AMFEventListener],
                               options: AMFOptions): AMFConfiguration =
-    new AMFConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options)
+    new AMFConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
 }

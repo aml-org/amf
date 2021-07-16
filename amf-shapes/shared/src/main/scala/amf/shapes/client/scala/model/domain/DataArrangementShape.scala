@@ -9,7 +9,8 @@ import amf.shapes.internal.domain.metamodel.ArrayShapeModel._
 /**
   * Array shape
   */
-abstract class DataArrangementShape(fields: Fields, annotations: Annotations) extends AnyShape(fields, annotations) {
+abstract class DataArrangementShape private[amf] (fields: Fields, annotations: Annotations)
+    extends AnyShape(fields, annotations) {
   def minItems: IntField = fields.field(MinItems)
 
   def maxItems: IntField = fields.field(MaxItems)
@@ -44,7 +45,8 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
     array
   }
 
-  override def componentId: String = "/array/" + name.option().getOrElse("default-array").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/array/" + name.option().getOrElse("default-array").urlComponentEncoded
 
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     val isCycle = cycle.contains(id)
@@ -66,5 +68,5 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
     this
   }
 
-  override def ramlSyntaxKey: String = "arrayShape"
+  private[amf] override def ramlSyntaxKey: String = "arrayShape"
 }

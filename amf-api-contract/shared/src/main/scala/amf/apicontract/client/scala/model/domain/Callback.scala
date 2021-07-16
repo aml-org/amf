@@ -30,7 +30,7 @@ case class Callback(fields: Fields, annotations: Annotations) extends NamedDomai
   override def meta: CallbackModel.type = CallbackModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String =
+  private[amf] override def componentId: String =
     "/" + name.option().getOrElse("default-callback").urlComponentEncoded +
       s"/${expression.option().getOrElse("default-expression").urlComponentEncoded}"
   override def nameField: Field = Name

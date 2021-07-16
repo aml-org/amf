@@ -3,9 +3,9 @@ package amf.apicontract.internal.transformation.compatibility.raml
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.client.scala.transform.stages.TransformationStep
-import amf.core.client.scala.transform.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
-import amf.core.client.scala.transform.stages.selectors.NodeShapeSelector
+import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.transform.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
+import amf.core.internal.transform.stages.selectors.NodeShapeSelector
 import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.metamodel.MetaModelTypeMapping
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel

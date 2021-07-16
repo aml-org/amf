@@ -3,7 +3,7 @@ package amf.cycle
 import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
 
 import amf.apicontract.client.scala.model.document.DataTypeFragment
-import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Vendor
 import amf.core.internal.unsafe.PlatformSecrets
@@ -162,7 +162,7 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     val fragment =
       parseSchema(platform, finalPath, mediatype, WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()))
     val expected = emitter
-      .emitSchema(fragment.bu.asInstanceOf[DataTypeFragment])
+      .emitSchema(fragment.baseUnit.asInstanceOf[DataTypeFragment])
     writeTemporaryFile(finalGolden)(expected).flatMap(s => assertDifferences(s, finalGolden))
   }
 }
@@ -190,7 +190,7 @@ object JsonSchemaTestEmitters {
 case class JsonSchemaTestEmitter(to: JSONSchemaVersion) extends SchemaEmitter {
 
   private val options =
-    ShapeRenderOptions().withSchemaVersion(SchemaVersion.toClientOptions(to))
+    RenderOptions().withSchemaVersion(SchemaVersion.toClientOptions(to))
 
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
     val shape     = fragment.encodes

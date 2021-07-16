@@ -2,7 +2,7 @@ package amf.apicontract.internal.transformation
 
 import amf.apicontract.internal.spec.common.transformation.stage.RequestParamsLinkStage
 import amf.core.client.common.validation.Oas30Profile
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 
 class Oas30ValidationTransformationPipeline private (override val name: String)
     extends ValidationTransformationPipeline(Oas30Profile, name) {

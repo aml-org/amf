@@ -8,8 +8,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
 import amf.apicontract.internal.transformation.compatibility.raml._
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{ProfileName, Raml08Profile, Raml10Profile}
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 import amf.core.internal.remote.{Raml08, Raml10}
 
 class RamlCompatibilityPipeline private[amf] (override val name: String, profile: ProfileName)

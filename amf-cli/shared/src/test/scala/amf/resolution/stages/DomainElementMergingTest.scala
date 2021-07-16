@@ -3,7 +3,7 @@ package amf.resolution.stages
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration}
 import amf.apicontract.client.scala.model.domain.templates.{ParametrizedTrait, Trait}
 import amf.apicontract.internal.spec.common.transformation.stage.DomainElementMerging
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
@@ -105,6 +105,6 @@ class DomainElementMergingTest extends FunSuite {
   }
 
   private def ctx: Raml10WebApiContext = {
-    new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(UnhandledErrorHandler)))
+    new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(UnhandledErrorHandler)))
   }
 }

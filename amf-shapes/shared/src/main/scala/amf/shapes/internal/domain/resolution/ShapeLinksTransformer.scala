@@ -1,7 +1,7 @@
 package amf.shapes.internal.domain.resolution
 
 import amf.core.client.scala.model.domain.{AmfArray, Shape}
-import amf.core.client.scala.transform.stages.elements.resolution.ElementStageTransformer
+import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.Value

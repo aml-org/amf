@@ -22,7 +22,7 @@ import amf.core.internal.utils.{AmfStrings, IdCounter, UriUtils}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.internal.annotations.ExternalReferenceUrl
-import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
+import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.{AnyShape, Example, FileShape, NodeShape}
 import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition}

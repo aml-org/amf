@@ -15,7 +15,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.annotations.ExternalReferenceUrl
-import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
+import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition}
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasExamplesParser, YMapEntryLike}

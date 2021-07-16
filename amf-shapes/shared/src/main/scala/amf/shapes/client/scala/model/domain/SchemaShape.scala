@@ -8,7 +8,7 @@ import amf.shapes.internal.domain.metamodel.SchemaShapeModel
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel._
 import org.yaml.model.YPart
 
-case class SchemaShape(override val fields: Fields, override val annotations: Annotations)
+case class SchemaShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations)
     with ExternalSourceElement {
 
@@ -20,9 +20,10 @@ case class SchemaShape(override val fields: Fields, override val annotations: An
   override def linkCopy(): SchemaShape = SchemaShape().withId(id)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/schema/" + name.option().getOrElse("default-schema").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/schema/" + name.option().getOrElse("default-schema").urlComponentEncoded
 
-  override def ramlSyntaxKey: String = "schemaShape" // same that any shape
+  private[amf] override def ramlSyntaxKey: String = "schemaShape" // same that any shape
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = SchemaShape.apply
 

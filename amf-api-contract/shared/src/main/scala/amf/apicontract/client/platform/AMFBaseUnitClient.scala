@@ -1,23 +1,23 @@
 package amf.apicontract.client.platform
 
-import amf.aml.client.platform.BaseAMLClient
+import amf.aml.client.platform.BaseAMLBaseUnitClient
+import amf.apicontract.client.scala.{AMFBaseUnitClient => InternalAMFBaseUnitClient}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.AMFResult
 import amf.core.client.platform.model.document.BaseUnit
-import amf.apicontract.client.scala.{AMFClient => InternalAMFClient}
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.JSExportAll
 
 /**
   * The AMF Client contains common AMF operations.
-  * For more complex uses see [[AMFParser]] or [[amf.client.remod.AMFRenderer]]
+  * For more complex uses see [[AMFParser]] or [[AMFRenderer]]
   */
 @JSExportAll
-class AMFClient private (private val _internal: InternalAMFClient) extends BaseAMLClient(_internal) {
+class AMFBaseUnitClient private[amf] (private val _internal: InternalAMFBaseUnitClient)
+    extends BaseAMLBaseUnitClient(_internal) {
 
-  @JSExportTopLevel("AMFClient")
-  def this(configuration: AMFConfiguration) = {
-    this(new InternalAMFClient(configuration))
+  private[amf] def this(configuration: AMFConfiguration) = {
+    this(new InternalAMFBaseUnitClient(configuration))
   }
 
   override def getConfiguration(): AMFConfiguration = _internal.getConfiguration
@@ -38,44 +38,45 @@ class AMFClient private (private val _internal: InternalAMFClient) extends BaseA
 
   /**
     * Transforms a [[BaseUnit]] with using pipeline with default id.
-    * @param bu [[BaseUnit]] to transform
+    * @param baseUnit [[BaseUnit]] to transform
     * @param targetMediaType Provide a specification for obtaining the correct pipeline.
     *                        Must be <code>"application/spec"</code> or <code>"application/spec+syntax"</code>.
     *                        Examples: <code>"application/raml10"</code> or <code>"application/raml10+yaml"</code>
     * @return An [[AMFResult]] with the transformed BaseUnit and it's validation results
     */
-  def transformDefault(bu: BaseUnit, targetMediaType: String): AMFResult =
-    _internal.transformDefault(bu, targetMediaType)
+  def transformDefault(baseUnit: BaseUnit, targetMediaType: String): AMFResult =
+    _internal.transformDefault(baseUnit, targetMediaType)
 
   /**
     * Transforms a [[BaseUnit]] with using pipeline with editing id.
-    * @param bu [[BaseUnit]] to transform
+    * @param baseUnit [[BaseUnit]] to transform
     * @param targetMediaType Provide a specification for obtaining the correct pipeline.
     *                        Must be <code>"application/spec"</code> or <code>"application/spec+syntax"</code>.
     *                        Examples: <code>"application/raml10"</code> or <code>"application/raml10+yaml"</code>
     * @return An [[AMFResult]] with the transformed BaseUnit and it's validation results
     */
-  def transformEditing(bu: BaseUnit, targetMediaType: String): AMFResult =
-    _internal.transformEditing(bu, targetMediaType)
+  def transformEditing(baseUnit: BaseUnit, targetMediaType: String): AMFResult =
+    _internal.transformEditing(baseUnit, targetMediaType)
 
   /**
     * Transforms a [[BaseUnit]] with using pipeline with compatibility id.
-    * @param bu [[BaseUnit]] to transform
+    * @param baseUnit [[BaseUnit]] to transform
     * @param targetMediaType Provide a specification for obtaining the correct pipeline.
     *                        Must be <code>"application/spec"</code> or <code>"application/spec+syntax"</code>.
     *                        Examples: <code>"application/raml10"</code> or <code>"application/raml10+yaml"</code>
     * @return An [[AMFResult]] with the transformed BaseUnit and it's validation results
     */
-  def transformCompatibility(bu: BaseUnit, targetMediaType: String): AMFResult =
-    _internal.transformCompatibility(bu, targetMediaType)
+  def transformCompatibility(baseUnit: BaseUnit, targetMediaType: String): AMFResult =
+    _internal.transformCompatibility(baseUnit, targetMediaType)
 
   /**
     * Transforms a [[BaseUnit]] with using pipeline with cache id.
-    * @param bu [[BaseUnit]] to transform
+    * @param baseUnit [[BaseUnit]] to transform
     * @param targetMediaType Provide a specification for obtaining the correct pipeline.
     *                        Must be <code>"application/spec"</code> or <code>"application/spec+syntax"</code>.
     *                        Examples: <code>"application/raml10"</code> or <code>"application/raml10+yaml"</code>
     * @return An [[AMFResult]] with the transformed BaseUnit and it's validation results
     */
-  def transformCache(bu: BaseUnit, targetMediaType: String): AMFResult = _internal.transformCache(bu, targetMediaType)
+  def transformCache(baseUnit: BaseUnit, targetMediaType: String): AMFResult =
+    _internal.transformCache(baseUnit, targetMediaType)
 }

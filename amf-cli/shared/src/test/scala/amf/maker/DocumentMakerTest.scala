@@ -49,8 +49,8 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => IgnoreErrorHandler)
-    config.createClient().parse(basePath + file).map { unit =>
-      val actual = unit.bu.asInstanceOf[Document]
+    config.baseUnitClient().parse(basePath + file).map { unit =>
+      val actual = unit.baseUnit.asInstanceOf[Document]
       AmfObjectMatcher(expected).assert(actual)
       Succeeded
     }

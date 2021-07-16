@@ -104,7 +104,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   override def meta: ParameterModel.type = ParameterModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String =
+  private[amf] override def componentId: String =
     s"/parameter/${encoded(binding, "default-binding")}/${encoded(name, "default-name")}"
 
   private def encoded(value: StrField, default: String) = value.option().map(_.urlComponentEncoded).getOrElse(default)

@@ -1,8 +1,8 @@
 package amf.shapes.client.platform.model.domain
 
-import amf.core.client.scala.model.{BoolField, IntField}
+import amf.core.client.platform.model.{BoolField, IntField}
 import amf.shapes.client.scala.model.domain.DataArrangementShape
-
+import amf.shapes.internal.convert.ShapeClientConverters._
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll

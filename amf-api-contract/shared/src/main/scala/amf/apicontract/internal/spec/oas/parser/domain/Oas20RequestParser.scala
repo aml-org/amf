@@ -16,7 +16,7 @@ import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.Lazy
-import amf.shapes.client.scala.model.domain.ExampleTracking.tracking
+import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.raml.parser.Raml10TypeParser
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
@@ -75,6 +75,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
       "baseUriParameters".asOasExtension,
       entry => {
         entry.value.as[YMap].entries.headOption.foreach { paramEntry =>
+          entries += paramEntry
           val parameter =
             Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), binding = "path")(
               spec.toRaml(ctx))

@@ -4,9 +4,9 @@ import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
-import amf.core.client.scala.transform.stages.TransformationStep
-import amf.core.client.scala.transform.stages.elements.resolution.ElementStageTransformer
-import amf.core.client.scala.transform.stages.selectors.ShapeSelector
+import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
+import amf.core.internal.transform.stages.selectors.ShapeSelector
 import amf.shapes.internal.domain.resolution.shape_normalization._
 
 /**

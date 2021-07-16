@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.internal.metamodel.domain.RequestModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 
 class PushSingleOperationPathParams() extends TransformationStep {
 

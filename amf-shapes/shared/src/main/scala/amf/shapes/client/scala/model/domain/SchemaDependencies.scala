@@ -9,7 +9,7 @@ import org.yaml.model.YMapEntry
 /**
   * Schema Dependency
   */
-case class SchemaDependencies(fields: Fields, annotations: Annotations) extends Dependencies {
+case class SchemaDependencies private[amf] (fields: Fields, annotations: Annotations) extends Dependencies {
 
   def schemaTarget: Shape                       = fields.field(SchemaTarget)
   def withSchemaTarget(shape: Shape): this.type = set(SchemaTarget, shape)
@@ -23,7 +23,7 @@ case class SchemaDependencies(fields: Fields, annotations: Annotations) extends 
     this
   }
 
-  override def componentId: String = {
+  private[amf] override def componentId: String = {
     val propertySourceName = propertySource.option().map(x => x).getOrElse("unknown").split("/").last
     s"/dependencySchema/$propertySourceName"
   }

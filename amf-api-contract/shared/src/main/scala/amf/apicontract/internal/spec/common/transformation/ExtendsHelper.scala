@@ -11,10 +11,10 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.client.scala.model.domain.{AmfElement, DataNode, DomainElement, NamedDomainElement}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.client.scala.transform.stages.ReferenceResolutionStage
-import amf.core.client.scala.transform.stages.helpers.ResolvedNamedEntity
+import amf.core.internal.transform.stages.ReferenceResolutionStage
+import amf.core.internal.transform.stages.helpers.ResolvedNamedEntity
 import amf.core.internal.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation}
-import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration}
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.validation.CoreValidations
@@ -241,7 +241,7 @@ case class ExtendsHelper(profile: ProfileName,
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
           case (alias, (fullUrl, _)) if m.id == fullUrl =>
-            val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(ctx.eh)))
+            val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(ctx.eh)))
             m.declares.foreach { declaration =>
               extractDeclarationToContextWithLocalAndRootName(declaration, m)(nestedCtx)
             }
@@ -298,6 +298,6 @@ object ExtendsHelper {
 }
 
 class CustomRaml08WebApiContext
-    extends Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(IgnoringErrorHandler)))
+    extends Raml08WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(IgnoringErrorHandler)))
 class CustomRaml10WebApiContext
-    extends Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(IgnoringErrorHandler)))
+    extends Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(IgnoringErrorHandler)))

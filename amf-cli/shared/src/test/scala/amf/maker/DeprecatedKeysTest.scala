@@ -40,10 +40,10 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
   fixture.foreach { f =>
     test("Test " + f.name) {
       val config = RAMLConfiguration.RAML()
-      val client = config.createClient()
+      val client = config.baseUnitClient()
       for {
         parseResult <- client.parse(basePath + f.file)
-        report      <- client.validate(parseResult.bu, f.profileName)
+        report      <- client.validate(parseResult.baseUnit, f.profileName)
         unifiedReport <- {
           val parseReport = AMFValidationReport.unknownProfile(parseResult)
           Future.successful(

@@ -10,7 +10,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration}
 import amf.core.internal.remote.{Raml10, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.shapes.client.scala.model.domain.UnionShape
@@ -24,7 +24,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
     val adopt: Shape => Unit = shape => { shape.adopted("/test") }
 
     val ramlCtx: Raml10WebApiContext =
-      new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(UnhandledErrorHandler)))
+      new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(UnhandledErrorHandler)))
 
     implicit val ctx: ShapeParserContext = WebApiShapeParserContextAdapter(ramlCtx)
 
@@ -206,7 +206,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    amfConfig.createClient().transform(unit, Raml10TransformationPipeline.name).bu
+    amfConfig.baseUnitClient().transform(unit, Raml10TransformationPipeline.name).baseUnit
   }
 
   val errorExamples = Seq(

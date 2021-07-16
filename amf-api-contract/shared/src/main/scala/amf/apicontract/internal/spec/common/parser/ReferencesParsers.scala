@@ -1,10 +1,8 @@
 package amf.apicontract.internal.spec.common.parser
 
-import amf.apicontract.internal.spec.raml.parser
 import amf.apicontract.internal.spec.raml.parser.document
-import amf.apicontract.internal.spec.raml.parser.document.LibraryLocationParser
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidModuleType
-import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, Fragment, Module}
+import amf.core.client.scala.model.document._
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.Aliases
 import amf.core.internal.parser.{Root, YMapOps}
@@ -90,7 +88,7 @@ case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YM
   }
 }
 
-case class AsycnReferencesParser(references: Seq[ParsedReference])(implicit ctx: WebApiContext)
+case class AsyncReferencesParser(references: Seq[ParsedReference])(implicit ctx: WebApiContext)
     extends CommonReferencesParser(references) {
   override protected def parseLibraries(declarations: ReferenceCollector[BaseUnit]): Unit = Unit
 }

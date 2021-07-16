@@ -15,7 +15,7 @@ import org.yaml.model.YPart
 /**
   *
   */
-class Example(override val fields: Fields, override val annotations: Annotations)
+class Example private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
     with Linkable
     with ExternalSourceElement
@@ -43,7 +43,8 @@ class Example(override val fields: Fields, override val annotations: Annotations
   override def key: StrField = fields.field(ExampleModel.key)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/example/" + name.option().getOrElse("default-example").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/example/" + name.option().getOrElse("default-example").urlComponentEncoded
 
   def toJson: String = toJson(this, AMFGraphConfiguration.predefined())
 

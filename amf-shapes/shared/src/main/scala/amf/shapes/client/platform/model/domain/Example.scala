@@ -1,5 +1,6 @@
 package amf.shapes.client.platform.model.domain
 
+import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
 import amf.core.client.platform.model.{BoolField, StrField}
 import amf.shapes.client.scala.model.domain.{Example => InternalExample}
@@ -66,6 +67,8 @@ case class Example(override private[amf] val _internal: InternalExample)
 
   override def linkCopy(): Example = _internal.linkCopy()
 
-  def toJson: String = _internal.toJson
-  def toYaml: String = _internal.toYaml
+  def toJson(): String                              = _internal.toJson
+  def toYaml(): String                              = _internal.toYaml
+  def toJson(config: AMFGraphConfiguration): String = _internal.toJson(config)
+  def toYaml(config: AMFGraphConfiguration): String = _internal.toYaml(config)
 }

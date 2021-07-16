@@ -109,7 +109,7 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
   }
 
   private def parse(url: String, vendor: String, hint: Hint, amfConfig: AMFGraphConfiguration): Future[BaseUnit] =
-    amfConfig.createClient().parse(url).map(_.bu)
+    amfConfig.baseUnitClient().parse(url).map(_.baseUnit)
 
   private def withBaseUnitPair(url: String, originalVendor: Vendor, otherVendor: Vendor)(
       assertion: List[BaseUnit] => Assertion) = {

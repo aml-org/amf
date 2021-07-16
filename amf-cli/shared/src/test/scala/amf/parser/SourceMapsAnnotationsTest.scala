@@ -45,7 +45,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
   private def build(file: String, hint: Hint): Future[BaseUnit] = {
     val url           = s"file://$directory$file"
     val configuration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
-    AMFParser.parse(url, configuration).map(_.bu)
+    AMFParser.parse(url, configuration).map(_.baseUnit)
   }
 
   private def runTest(file: String, hint: Hint): Future[Assertion] =

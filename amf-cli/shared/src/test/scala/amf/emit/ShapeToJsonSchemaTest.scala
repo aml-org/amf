@@ -3,14 +3,13 @@ package amf.emit
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.client.scala.render.JsonSchemaShapeRenderer.toJsonSchema
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -118,7 +117,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
           u.declares.forall {
             case anyShape: AnyShape =>
               val originalId = anyShape.id
-              toJsonSchema(anyShape, config)
+              config.elementClient().toJsonSchema(anyShape)
               val newId = anyShape.id
               originalId == newId
           }
@@ -130,9 +129,9 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
   private val goldenPath: String = "amf-cli/shared/src/test/resources/tojson/tojsonschema/schemas/"
 
   private def parse(file: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
-      unit <- client.parse(basePath + file).map(_.bu)
+      unit <- client.parse(basePath + file).map(_.baseUnit)
     } yield {
       unit
     }
@@ -144,17 +143,17 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
                     hint: Hint = Raml10YamlHint): Future[Assertion] = {
     val config = WebAPIConfiguration
       .WebAPI()
-      .withRenderOptions(RenderOptions().withShapeRenderOptions(ShapeRenderOptions().withoutCompactedEmission))
+      .withRenderOptions(RenderOptions().withoutCompactedEmission)
     val jsonSchema: Future[String] = for {
       unit <- parse(file, config)
     } yield {
       findShapeFunc(
         config
-          .createClient()
+          .baseUnitClient()
           .transformDefault(unit, Vendor.OAS20.mediaType)
-          .bu
+          .baseUnit
       ).map { element =>
-          toJsonSchema(element, config)
+          config.elementClient().toJsonSchema(element)
         }
         .getOrElse("")
     }

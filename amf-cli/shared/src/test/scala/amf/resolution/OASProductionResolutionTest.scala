@@ -17,9 +17,9 @@ class OASProductionResolutionTest extends ResolutionTest {
     if (config.target.equals(Amf) && config.transformWith.isEmpty) {
       amfConfig
         .withErrorHandlerProvider(() => UnhandledErrorHandler)
-        .createClient()
+        .baseUnitClient()
         .transform(unit, Oas20TransformationPipeline.name)
-        .bu
+        .baseUnit
     } else super.transform(unit, config, amfConfig)
   }
 

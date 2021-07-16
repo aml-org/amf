@@ -14,13 +14,13 @@ trait Dependencies extends DomainElement {
   def propertySource: StrField                              = fields.field(PropertySource)
   def withPropertySource(propertySource: String): this.type = set(PropertySource, propertySource)
 
-  override def componentId: String = {
+  private[amf] override def componentId: String = {
     val propertySourceName = propertySource.option().map(x => x).getOrElse("unknown").split("/").last
     s"/dependency/$propertySourceName"
   }
 }
 
-case class PropertyDependencies(fields: Fields, annotations: Annotations) extends Dependencies {
+case class PropertyDependencies private[amf] (fields: Fields, annotations: Annotations) extends Dependencies {
 
   def propertyTarget: Seq[StrField]                              = fields.field(PropertyTarget)
   def withPropertyTarget(propertyTarget: Seq[String]): this.type = set(PropertyTarget, propertyTarget)

@@ -9,16 +9,16 @@ import amf.core.internal.render.emitters.DomainElementEmitter
 import amf.shapes.internal.validation.definitions.RenderSideValidations
 import org.yaml.model.YNode
 
-object ApiDomainElementEmitter extends DomainElementEmitter[Vendor] {
+object ApiDomainElementEmitter extends DomainElementEmitter[String] {
 
   /**
     * @param references : optional parameter that is not used in webapi element emitter
     */
   override def emit(element: DomainElement,
-                    emissionStructure: Vendor,
+                    mediaType: String,
                     eh: AMFErrorHandler,
                     references: Seq[BaseUnit] = Nil): YNode = {
-    DomainElementEmitterFactory(emissionStructure, eh) match {
+    DomainElementEmitterFactory(mediaType, eh) match {
       case Some(factory) =>
         val emitter = factory.emitter(element)
         nodeOrError(emitter, element.id, eh)

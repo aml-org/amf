@@ -1,16 +1,17 @@
 package amf.parser
 
 import amf.core.client.scala.model.document.Document
-import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.client.scala.model.domain.{AmfObject, DomainElement, RecursiveShape}
 import amf.core.client.scala.parse.AMFParser
 import amf.shapes.client.scala.config.ShapesConfiguration
-import amf.shapes.client.scala.model.domain.ScalarShape
+import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class AMFGraphPartialParsingTest extends AsyncFunSuite with Matchers {
-  override implicit val executionContext = ExecutionContext.Implicits.global
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val basePath: String                   = "file://amf-cli/shared/src/test/resources/graphs/"
 
   test("test read declared shape from api") {
@@ -45,6 +46,20 @@ class AMFGraphPartialParsingTest extends AsyncFunSuite with Matchers {
       val dom = obj.asInstanceOf[DomainElement]
       dom.id should be("amf://error-domain-element")
     })
+  }
+
+  test("test read declared recursive shape from api") {
+    parse(
+      "recursive-api.flattened.jsonld",
+      "amf://id#1",
+      (obj: AmfObject) => {
+        obj.isInstanceOf[NodeShape] should be(true)
+        val shape                           = obj.asInstanceOf[NodeShape]
+        val property: Option[PropertyShape] = shape.properties.find(_.name.value() == "parent")
+        property.get.range.isInstanceOf[RecursiveShape] should be(true)
+        succeed
+      }
+    )
   }
 
   def parse(path: String, startingPoint: String, assertionFn: AmfObject => Assertion): Future[Assertion] = {

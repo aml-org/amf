@@ -36,7 +36,7 @@ object JsonSchemaRenderPlugin extends ApiRenderPlugin {
       root match {
         case Some(r: AnyShape) =>
           Some(
-            JsonSchemaEmitter(r, d.declares, options = renderOptions.shapeRenderOptions, errorHandler = errorHandler)
+            JsonSchemaEmitter(r, d.declares, options = renderOptions, errorHandler = errorHandler)
               .emitDocument())
         case _ => None
       }

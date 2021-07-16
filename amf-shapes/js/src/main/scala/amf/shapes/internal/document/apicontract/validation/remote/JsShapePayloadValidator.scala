@@ -4,9 +4,17 @@ import amf.core.client.common.validation.{ProfileName, SeverityLevels, Validatio
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.core.internal.validation.ValidationConfiguration
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.shapes.internal.validation.jsonschema.{BaseJsonSchemaPayloadValidator, BooleanValidationProcessor, ExampleUnknownException, InvalidJsonObject, ReportValidationProcessor, ValidationProcessor}
+import amf.shapes.internal.validation.jsonschema.{
+  BaseJsonSchemaPayloadValidator,
+  BooleanValidationProcessor,
+  ExampleUnknownException,
+  InvalidJsonObject,
+  ReportValidationProcessor,
+  ValidationProcessor
+}
 
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
@@ -14,7 +22,7 @@ import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
 class JsShapePayloadValidator(private val shape: Shape,
                               private val mediaType: String,
                               protected val validationMode: ValidationMode,
-                              private val configuration: ValidationConfiguration)
+                              private val configuration: ShapeValidationConfiguration)
     extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
 
   override type LoadedObj    = js.Dynamic

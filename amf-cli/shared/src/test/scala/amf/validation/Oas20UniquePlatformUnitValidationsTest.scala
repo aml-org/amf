@@ -105,4 +105,7 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
     validate("invalid-ref-key-operation.json", Some("invalid-ref-key-operation.report"), Oas20Profile)
   }
 
+  test("Validate oas20 with a baseUriParameters annotation") {
+    validate("base-uri-annotation.json", Some("base-uri-annotation.report"), Oas20Profile)
+  }
 }

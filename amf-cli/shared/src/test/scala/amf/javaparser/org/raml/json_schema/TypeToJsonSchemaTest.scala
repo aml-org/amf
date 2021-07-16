@@ -2,12 +2,11 @@ package amf.javaparser.org.raml.json_schema
 
 import amf.apicontract.client.scala.{AMFConfiguration, WebAPIConfiguration}
 
-import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.remote.{Hint, Oas20YamlHint, Oas30YamlHint, Vendor}
 import amf.javaparser.org.raml.ModelValidationTest
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.client.scala.render.JsonSchemaShapeRenderer.{buildJsonSchema, toJsonSchema}
 
 /* this test parse a raml only with declared types, resolve them and serialize a json schema.*/
 
@@ -38,19 +37,20 @@ class RamlTypeToNormalJsonSchemaTest extends TypeToJsonSchemaTest {
   override def path: String           = "amf-cli/shared/src/test/resources/org/raml/json_schema/"
   override def inputFileName: String  = "input.raml"
   override def outputFileName: String = "output.json"
-  override def renderShape(shape: AnyShape): String =
-    toJsonSchema(
-      shape,
-      WebAPIConfiguration
-        .WebAPI()
-        .withRenderOptions(RenderOptions().withShapeRenderOptions(ShapeRenderOptions().withoutCompactedEmission)))
+  override def renderShape(shape: AnyShape): String = {
+    val config = WebAPIConfiguration
+      .WebAPI()
+      .withRenderOptions(RenderOptions().withoutCompactedEmission)
+    config.elementClient().toJsonSchema(shape)
+  }
 }
 
 class RamlTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
-  override def path: String                         = "amf-cli/shared/src/test/resources/org/raml/json_schema/"
-  override def inputFileName: String                = "input.raml"
-  override def outputFileName: String               = "compact-output.json"
-  override def renderShape(shape: AnyShape): String = buildJsonSchema(shape, WebAPIConfiguration.WebAPI())
+  override def path: String           = "amf-cli/shared/src/test/resources/org/raml/json_schema/"
+  override def inputFileName: String  = "input.raml"
+  override def outputFileName: String = "compact-output.json"
+  override def renderShape(shape: AnyShape): String =
+    WebAPIConfiguration.WebAPI().elementClient().buildJsonSchema(shape)
 }
 
 // Uncomment to add suite
@@ -65,9 +65,10 @@ class RamlTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
 //
 
 trait OasTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
-  override def inputFileName: String                = "input.json"
-  override def outputFileName: String               = "compact-output.json"
-  override def renderShape(shape: AnyShape): String = buildJsonSchema(shape, WebAPIConfiguration.WebAPI())
+  override def inputFileName: String  = "input.json"
+  override def outputFileName: String = "compact-output.json"
+  override def renderShape(shape: AnyShape): String =
+    WebAPIConfiguration.WebAPI().elementClient().buildJsonSchema(shape)
 }
 
 case class Oas20TypeToCompactJsonSchemaTest() extends OasTypeToCompactJsonSchemaTest {

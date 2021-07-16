@@ -12,23 +12,17 @@ import org.yaml.model.{YNode, YPart}
 /**
   * Unresolved shape: intended to be resolved after parsing (exception is thrown if shape is not resolved).
   */
-case class UnresolvedShape(override val fields: Fields,
-                           override val annotations: Annotations,
-                           override val reference: String,
-                           fatherExtensionParser: Option[Option[String] => ShapeExtensionParser] = None,
-                           updateFatherLink: Option[String => Unit] = None,
-                           override val shouldLink: Boolean = true)
+case class UnresolvedShape private[amf] (override val fields: Fields,
+                                         override val annotations: Annotations,
+                                         override val reference: String,
+                                         fatherExtensionParser: Option[Option[String] => ShapeExtensionParser] = None,
+                                         updateFatherLink: Option[String => Unit] = None,
+                                         override val shouldLink: Boolean = true)
     extends AnyShape(fields, annotations)
     with UnresolvedReference {
 
   override def linkCopy(): AnyShape = this
 
-  /*
-  override def withId(newId: String): this.type = {
-    if (id == null) super.withId(newId)
-    this
-  }
-   */
   override private[amf] def link[T](label: AmfScalar, annotations: Annotations, fieldAnn: Annotations): T =
     this.asInstanceOf[T]
 
@@ -46,10 +40,10 @@ case class UnresolvedShape(override val fields: Fields,
     override def modelInstance: UnresolvedShape = UnresolvedShape(Fields(), Annotations(), reference = reference)
   }
 
-  override def ramlSyntaxKey: String = "unresolvedShape"
+  private[amf] override def ramlSyntaxKey: String = "unresolvedShape"
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/unresolved"
+  private[amf] override def componentId: String = "/unresolved"
 
   override def afterResolve(fatherSyntaxKey: Option[String], resolvedKey: String): Unit = {
     fatherExtensionParser.foreach { parser =>

@@ -24,7 +24,7 @@ case class OAuth2Flow(fields: Fields, annotations: Annotations) extends DomainEl
   override def meta: OAuth2FlowModel.type = OAuth2FlowModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + flow.option().getOrElse("default-flow").urlComponentEncoded
+  private[amf] override def componentId: String = "/" + flow.option().getOrElse("default-flow").urlComponentEncoded
 }
 
 object OAuth2Flow {

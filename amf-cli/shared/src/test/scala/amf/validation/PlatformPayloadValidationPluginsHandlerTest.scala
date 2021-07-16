@@ -6,7 +6,7 @@ import amf.client.validation.PayloadValidationUtils
 import amf.core.client.common.validation.StrictValidationMode
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Module}
-import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.AnyShape
 import org.scalatest.AsyncFunSuite
@@ -33,9 +33,9 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   test("Validation logic, standard shape") {
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
-      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
+      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.baseUnit)
       validator <- Future.successful {
         val shape = findShape(library, "A")
         config.payloadValidatorFactory().createFor(shape, APPLICATION_JSON, StrictValidationMode)
@@ -50,9 +50,9 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   test("Validation logic, file shape always validate") {
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
-      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
+      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.baseUnit)
       validator <- Future.successful {
         val shape = findShape(library, "B")
         config.payloadValidatorFactory().createFor(shape, APPLICATION_JSON, StrictValidationMode)
@@ -65,9 +65,9 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   test("Validation logic, polymorphic shapes") {
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
-      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
+      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.baseUnit)
       validator <- Future.successful {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")
@@ -81,9 +81,9 @@ class PlatformPayloadValidationPluginsHandlerTest
 
   test("Exception if unsupported media type") {
     val config = RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
-      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
+      library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.baseUnit)
       validator <- Future.successful {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")

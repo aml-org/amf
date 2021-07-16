@@ -8,7 +8,7 @@ import amf.core.client.scala.AMFResult
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
-import amf.core.internal.parser.{ParseConfiguration, Root}
+import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration, Root}
 import amf.core.internal.remote.Platform
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
@@ -49,7 +49,7 @@ trait JsonSchemaSuite {
   private def getBogusParserCtx(location: String, options: ParsingOptions, eh: AMFErrorHandler): ShapeParserContext = {
     val ctx = new JsonSchemaWebApiContext(location,
                                           Seq(),
-                                          ParserContext(config = ParseConfiguration(eh)),
+                                          ParserContext(config = LimitedParseConfig(eh)),
                                           None,
                                           options,
                                           JSONSchemaDraft7SchemaVersion)

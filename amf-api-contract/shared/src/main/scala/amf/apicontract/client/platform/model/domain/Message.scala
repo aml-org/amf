@@ -1,7 +1,6 @@
 package amf.apicontract.client.platform.model.domain
 
 import amf.apicontract.client.platform.model.domain.bindings.MessageBindings
-import amf.apicontract.client.scala.model.domain
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.client.platform.model.{BoolField, StrField}

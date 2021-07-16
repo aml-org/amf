@@ -26,7 +26,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, Shape,
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.{LexicalInformation, VirtualElement}
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.parser.{ParseConfiguration, YMapOps}
+import amf.core.internal.parser.{CompilerConfiguration, YMapOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.spec.RamlWebApiContextType
@@ -134,14 +134,14 @@ abstract class RamlEndpointParser(entry: YMapEntry,
             case _: Raml08WebApiContext =>
               new Raml08WebApiContext(ctx.loc,
                                       ctx.refs,
-                                      ParserContext(config = ParseConfiguration(ctx.eh)),
+                                      ParserContext(config = ctx.wrapped.config),
                                       Some(ctx.declarations),
                                       ctx.contextType,
                                       ctx.options)
             case _ =>
               new Raml10WebApiContext(ctx.loc,
                                       ctx.refs,
-                                      ParserContext(config = ParseConfiguration(ctx.eh)),
+                                      ParserContext(config = ctx.wrapped.config),
                                       Some(ctx.declarations),
                                       ctx.contextType,
                                       ctx.options)

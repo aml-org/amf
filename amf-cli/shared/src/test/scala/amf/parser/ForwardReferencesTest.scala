@@ -81,9 +81,9 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
     val eh     = DefaultErrorHandler()
     val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => eh)
     config
-      .createClient()
+      .baseUnitClient()
       .parse(file)
-      .map(_.bu)
+      .map(_.baseUnit)
       .map { _ =>
         val report = eh.getResults.distinct
         if (report.size == fixture.size) {

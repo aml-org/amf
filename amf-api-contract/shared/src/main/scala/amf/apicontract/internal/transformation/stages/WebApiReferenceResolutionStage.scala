@@ -3,7 +3,7 @@ package amf.apicontract.internal.transformation.stages
 import amf.apicontract.client.scala.model.domain.{Message, Parameter, Request, Response}
 import amf.apicontract.internal.metamodel.domain.MessageModel
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
-import amf.core.client.scala.transform.stages.ReferenceResolutionStage
+import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.parser.domain.{Annotations, Fields}
 
 class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)

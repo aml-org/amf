@@ -1,7 +1,6 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.render.ApiDomainElementEmitter
@@ -38,31 +37,29 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
                     hint: Hint,
                     directory: String = basePath): Future[Assertion] = {
 
-    val config = EmissionConfig(source, golden, hint, directory)
-    build(config, Some(DefaultErrorHandler()))
+    val config    = EmissionConfig(source, golden, hint, directory)
+    val amfConfig = APIConfiguration.API()
+    build(config, amfConfig)
       .map(b => extractor(b))
-      .flatMap(render)
+      .flatMap(render(_, amfConfig))
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }
 
   override protected def beforeAll(): Unit = ApiRegister.register(platform)
 
-  private def build(config: EmissionConfig, eh: Option[AMFErrorHandler]): Future[BaseUnit] = {
-    val amfConfig = WebAPIConfiguration
-      .WebAPI()
-      .merge(AsyncAPIConfiguration.Async20())
-      .withErrorHandlerProvider(() => eh.getOrElse(UnhandledErrorHandler))
-    amfConfig.createClient().parse(s"file://${config.sourcePath}").map(_.bu)
+  private def build(config: EmissionConfig, amfConfig: AMFConfiguration): Future[BaseUnit] = {
+    amfConfig.baseUnitClient().parse(s"file://${config.sourcePath}").map(_.baseUnit)
   }
 
-  private def render(element: Option[DomainElement]): Future[String] = {
-    Future { renderDomainElement(element) }
+  private def render(element: Option[DomainElement], amfConfig: AMFConfiguration): Future[String] = {
+    Future.successful { renderDomainElement(element, amfConfig) }
   }
 
-  def renderDomainElement(element: Option[DomainElement]): String = {
+  def renderDomainElement(element: Option[DomainElement], amfConfig: AMFConfiguration): String = {
     val eh     = DefaultErrorHandler()
-    val node   = element.map(ApiDomainElementEmitter.emit(_, vendor, eh)).getOrElse(YNode.Empty)
+    val client = amfConfig.withErrorHandlerProvider(() => eh).elementClient()
+    val node   = element.map(client.renderElement(_, vendor.mediaType)).getOrElse(YNode.Empty)
     val errors = eh.getResults
     if (errors.nonEmpty)
       errors.map(_.completeMessage).mkString("\n")

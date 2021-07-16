@@ -6,7 +6,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.ScalarNode
 import amf.core.client.scala.model.domain.extensions.DomainExtension
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.annotations.NullSecurity
 
 class CleanNullSecurity() extends TransformationStep {

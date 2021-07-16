@@ -27,7 +27,7 @@ class WebSocketsChannelBinding(override val fields: Fields, override val annotat
   def withHeaders(headers: Shape): this.type = set(Headers, headers)
   def withType(`type`: String): this.type    = set(Type, `type`)
 
-  override def componentId: String                  = "/web-socket-channel"
+  private[amf] override def componentId: String     = "/web-socket-channel"
   override def linkCopy(): WebSocketsChannelBinding = WebSocketsChannelBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =

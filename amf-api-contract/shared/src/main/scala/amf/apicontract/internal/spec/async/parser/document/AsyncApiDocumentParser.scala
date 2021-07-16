@@ -55,7 +55,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     ctx.setJsonSchemaAST(map)
 
-    val references = AsycnReferencesParser(root.references).parse()
+    val references = AsyncReferencesParser(root.references).parse()
     parseDeclarations(map)
 
     val api = parseApi(map).add(SourceVendor(ctx.vendor))

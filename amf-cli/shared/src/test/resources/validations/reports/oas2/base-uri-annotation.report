@@ -1,0 +1,14 @@
+Model: file://amf-cli/shared/src/test/resources/validations/oas2/base-uri-annotation.json
+Profile:
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'anyOf' not supported in a RAML 0.8 stringScalarShape node
+  Level: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/oas2/base-uri-annotation.json#/web-api/end-points/%2Fapi%2Frequests%2Fbatch%2F%7BbatchId%7D/get/request/parameter/path/batchId/scalar/batchId
+  Property:
+  Position: Some(LexicalInformation([(12,12)-(19,13)]))
+  Location: file://amf-cli/shared/src/test/resources/validations/oas2/base-uri-annotation.json

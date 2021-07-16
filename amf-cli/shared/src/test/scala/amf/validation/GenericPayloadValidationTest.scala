@@ -69,10 +69,10 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "yaml" => PayloadYamlHint
       }
       val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-      val client = config.createClient()
+      val client = config.baseUnitClient()
       val candidates: Future[Seq[ValidationCandidate]] = for {
-        library <- client.parse(payloadsPath + libraryFile).map(_.bu)
-        payload <- client.parse(payloadsPath + payloadFile, hint.vendor.mediaType).map(_.bu)
+        library <- client.parse(payloadsPath + libraryFile).map(_.baseUnit)
+        payload <- client.parse(payloadsPath + payloadFile, hint.vendor.mediaType).map(_.baseUnit)
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
         ValidationTransformationPipeline(AmfProfile, library, UnhandledErrorHandler)

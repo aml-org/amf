@@ -12,9 +12,9 @@ class ProductionValidationTest extends RamlResolutionTest {
 
   override def build(config: CycleConfig, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
     amfConfig
-      .createClient()
+      .baseUnitClient()
       .parse(s"file://${config.sourcePath}")
-      .map(_.bu)
+      .map(_.baseUnit)
   }
 
   multiGoldenTest("Recursive union raml to amf", "recursive-union.raml.%s") { config =>

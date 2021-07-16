@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.apicontract.client.scala.AMFConfiguration
-import amf.core.client.scala.config.{RenderOptions, ShapeRenderOptions}
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -935,7 +935,7 @@ class EditingResolutionTest extends ResolutionTest {
       Oas30JsonHint,
       Oas30,
       directory = cyclePath + "oas3/",
-      renderOptions = Some(RenderOptions().withShapeRenderOptions(ShapeRenderOptions().withoutCompactedEmission)),
+      renderOptions = Some(RenderOptions().withoutCompactedEmission),
       transformWith = Some(Oas30)
     )
   }
@@ -947,7 +947,7 @@ class EditingResolutionTest extends ResolutionTest {
       Oas20JsonHint,
       Oas20,
       directory = cyclePath + "cycle/oas20/json/",
-      renderOptions = Some(RenderOptions().withShapeRenderOptions(ShapeRenderOptions().withoutCompactedEmission)),
+      renderOptions = Some(RenderOptions().withoutCompactedEmission),
       transformWith = Some(Oas20)
     )
   }

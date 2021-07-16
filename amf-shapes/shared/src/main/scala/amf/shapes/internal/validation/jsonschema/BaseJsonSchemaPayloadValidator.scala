@@ -1,15 +1,19 @@
 package amf.shapes.internal.validation.jsonschema
 
+import amf.core.client.common.render.JsonSchemaDraft7
 import amf.core.client.common.validation._
-import amf.core.client.platform.config.JsonSchemaDraft7
-import amf.core.client.scala.config.{ParsingOptions, ShapeRenderOptions}
+import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference, SyamlParsedDocument}
-import amf.core.client.scala.validation.payload.{AMFShapePayloadValidator, PayloadParsingResult}
+import amf.core.client.scala.validation.payload.{
+  AMFShapePayloadValidator,
+  PayloadParsingResult,
+  ShapeValidationConfiguration
+}
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
 import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
@@ -38,23 +42,23 @@ object BaseJsonSchemaPayloadValidator {
   val supportedMediaTypes: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 }
 
-abstract class BaseJsonSchemaPayloadValidator(shape: Shape, mediaType: String, configuration: ValidationConfiguration)
+abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
+                                              mediaType: String,
+                                              configuration: ShapeValidationConfiguration)
     extends AMFShapePayloadValidator {
 
   private val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
+  protected implicit val executionContext: ExecutionContext = configuration.executionContext
 
-  override def validate(payload: String)(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+  override def validate(payload: String): Future[AMFValidationReport] = {
     Future.successful(
-      validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
-    )
+      validateForPayload(payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
   }
 
-  override def validate(fragment: PayloadFragment)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+  override def validate(fragment: PayloadFragment): Future[AMFValidationReport] = {
     Future.successful(
-      validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
-    )
+      validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
   }
 
   override def syncValidate(payload: String): AMFValidationReport = {
@@ -139,7 +143,7 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape, mediaType: String, c
   }
 
   private def generateSchemaString(shape: Shape, validationProcessor: ValidationProcessor): Option[CharSequence] = {
-    val renderOptions = ShapeRenderOptions().withoutDocumentation
+    val renderOptions = RenderOptions().withoutDocumentation
       .withSchemaVersion(JsonSchemaDraft7)
       .withEmitWarningForUnsupportedValidationFacets(true)
     val declarations = List(shape)

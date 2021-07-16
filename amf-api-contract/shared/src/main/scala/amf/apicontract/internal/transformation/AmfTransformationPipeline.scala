@@ -4,13 +4,8 @@ import amf.apicontract.internal.spec.common.transformation.stage._
 import amf.apicontract.internal.transformation.stages.{ExtensionsResolutionStage, WebApiReferenceResolutionStage}
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{AmfProfile, ProfileName}
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
-import amf.core.client.scala.transform.stages.{
-  CleanReferencesStage,
-  DeclarationsRemovalStage,
-  ExternalSourceRemovalStage,
-  TransformationStep
-}
+import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
+import amf.core.internal.transform.stages.{CleanReferencesStage, DeclarationsRemovalStage, ExternalSourceRemovalStage}
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 class AmfTransformationPipeline private[amf] (override val name: String) extends TransformationPipeline() {

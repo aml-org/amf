@@ -2,12 +2,11 @@ package amf.validation
 
 import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import org.scalatest.{Assertion, AsyncFunSuite}
-
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation._
 import amf.core.client.scala.AMFResult
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
@@ -58,7 +57,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     val finalHint     = overridedHint.getOrElse(hint)
     for {
       parseResult <- parse(directory + api, initialConfig, finalHint)
-      report      <- initialConfig.createClient().validate(parseResult.bu, profile)
+      report      <- initialConfig.baseUnitClient().validate(parseResult.baseUnit, profile)
       r <- {
         val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val finalReport =
@@ -72,7 +71,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
   }
 
   protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint): Future[AMFResult] = {
-    val client = conf.createClient()
+    val client = conf.baseUnitClient()
     client.parse(path, finalHint.vendor.mediaType)
   }
 
@@ -96,7 +95,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
     val errorHandler = DefaultErrorHandler()
     val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => errorHandler)
     for {
-      model <- config.createClient().parse(basePath + api).map(_.bu)
+      model <- config.baseUnitClient().parse(basePath + api).map(_.baseUnit)
       report <- {
         TransformationPipelineRunner(errorHandler).run(model, new ValidationTransformationPipeline(profile))
         val results = errorHandler.getResults

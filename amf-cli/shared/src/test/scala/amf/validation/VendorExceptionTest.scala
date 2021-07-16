@@ -42,8 +42,8 @@ class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   def parse(url: String, mediaType: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
-    val client = config.createClient()
-    client.parse(url, mediaType).map(_.bu)
+    val client = config.baseUnitClient()
+    client.parse(url, mediaType).map(_.baseUnit)
   }
 
 }

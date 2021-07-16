@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.apicontract.client.scala.{AMFClient, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFBaseUnitClient, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.common.validation.{StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -59,13 +59,13 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override protected val basePath: String = "file://amf-cli/shared/src/test/resources/validations/body-payload/"
 
-  override def transform(unit: BaseUnit, client: AMFClient): BaseUnit = {
+  override def transform(unit: BaseUnit, client: AMFBaseUnitClient): BaseUnit = {
 
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
       case Some(Raml08) =>
-        client.transformDefault(unit, Raml08.mediaType).bu
+        client.transformDefault(unit, Raml08.mediaType).baseUnit
       case _ =>
-        client.transformDefault(unit, Raml10.mediaType).bu
+        client.transformDefault(unit, Raml10.mediaType).baseUnit
     }
   }
 }
@@ -86,7 +86,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
 
   protected def findShape(d: Document): Shape
 
-  def transform(unit: BaseUnit, config: AMFClient): BaseUnit
+  def transform(unit: BaseUnit, config: AMFBaseUnitClient): BaseUnit
 
   protected def fixtureList: Seq[Fixture]
 
@@ -95,11 +95,11 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                          mediaType: Option[String],
                          givenHint: Hint): Future[AMFValidationReport] = {
     val config = WebAPIConfiguration.WebAPI()
-    val client = config.createClient()
+    val client = config.baseUnitClient()
     for {
       model <- client
         .parse(api)
-        .map(_.bu)
+        .map(_.baseUnit)
         .map(transform(_, client))
       result <- {
         val shape = findShape(model.asInstanceOf[Document])

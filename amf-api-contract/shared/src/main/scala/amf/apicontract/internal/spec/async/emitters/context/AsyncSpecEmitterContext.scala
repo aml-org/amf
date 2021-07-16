@@ -10,7 +10,7 @@ import amf.apicontract.internal.spec.common.emitter.{
 }
 import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.apicontract.internal.spec.oas.emitter.domain.OasSecurityRequirementEmitter
-import amf.core.client.scala.config.ShapeRenderOptions
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
@@ -71,7 +71,7 @@ case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
 
 abstract class AsyncSpecEmitterContext(eh: AMFErrorHandler,
                                        refEmitter: RefEmitter = AsyncRefEmitter,
-                                       options: ShapeRenderOptions = ShapeRenderOptions())
+                                       options: RenderOptions = RenderOptions())
     extends OasLikeSpecEmitterContext(eh, refEmitter, options) {
 
   def schemasDeclarationsPath: String
@@ -84,7 +84,7 @@ abstract class AsyncSpecEmitterContext(eh: AMFErrorHandler,
 
 class Async20SpecEmitterContext(eh: AMFErrorHandler,
                                 refEmitter: RefEmitter = AsyncRefEmitter,
-                                options: ShapeRenderOptions = ShapeRenderOptions(),
+                                options: RenderOptions = RenderOptions(),
                                 val schemaVersion: SchemaVersion = JSONSchemaDraft7SchemaVersion)
     extends AsyncSpecEmitterContext(eh, refEmitter, options) {
 

@@ -3,9 +3,15 @@ package amf.apicontract.client.platform
 import amf.aml.client.platform.BaseAMLConfiguration
 import amf.aml.client.platform.model.document.Dialect
 import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
-import amf.apicontract.client.scala.{AsyncAPIConfiguration => InternalAsyncAPIConfiguration, OASConfiguration => InternalOASConfiguration, RAMLConfiguration => InternalRAMLConfiguration, WebAPIConfiguration => InternalWebAPIConfiguration}
+import amf.apicontract.client.scala.{
+  APIConfiguration => InternalAPIConfiguration,
+  AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
+  OASConfiguration => InternalOASConfiguration,
+  RAMLConfiguration => InternalRAMLConfiguration,
+  WebAPIConfiguration => InternalWebAPIConfiguration
+}
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
+import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
 import amf.core.client.platform.resource.ResourceLoader
@@ -15,13 +21,18 @@ import amf.core.internal.convert.TransformationPipelineConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
+import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.execution.BaseExecutionEnvironment
+import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
+import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
 
 @JSExportAll
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
     extends BaseAMLConfiguration(_internal) {
 
-  override def createClient(): AMFClient = new AMFClient(this)
+  override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
+  def elementClient(): AMFElementClient            = new AMFElementClient(this)
+  def configurationState(): AMFConfigurationState  = new AMFConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =
     _internal.withParsingOptions(parsingOptions)
@@ -33,7 +44,7 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
     _internal.withResourceLoaders(rl.asInternal.toList)
 
   override def withUnitCache(cache: UnitCache): AMFConfiguration =
-    _internal.withUnitCache(ReferenceResolverMatcher.asInternal(cache))
+    _internal.withUnitCache(UnitCacheMatcher.asInternal(cache))
 
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =
     _internal.withTransformationPipeline(pipeline)
@@ -46,8 +57,6 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
 
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = _internal.withEventListener(listener)
 
-  override def withLogger(logger: AMFLogger): AMFConfiguration = _internal.withLogger(logger)
-
   override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMFConfiguration =
     _internal.withExecutionEnvironment(executionEnv._internal)
 
@@ -56,6 +65,14 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
   override def withDialect(dialect: Dialect): AMFConfiguration = _internal.withDialect(asInternal(dialect))
 
   def withDialect(path: String): ClientFuture[AMFConfiguration] = _internal.withDialect(path).asClient
+
+  def forInstance(url: String): ClientFuture[AMFConfiguration] = _internal.forInstance(url).asClient
+
+  def forInstance(url: String, mediaType: String): ClientFuture[AMFConfiguration] =
+    _internal.forInstance(url, Some(mediaType)).asClient
+
+  override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMFConfiguration =
+    _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
 }
 
 /**
@@ -103,4 +120,10 @@ object WebAPIConfiguration {
 @JSExportTopLevel("AsyncAPIConfiguration")
 object AsyncAPIConfiguration {
   def Async20(): AMFConfiguration = InternalAsyncAPIConfiguration.Async20()
+}
+
+@JSExportAll
+@JSExportTopLevel("APIConfiguration")
+object APIConfiguration {
+  def API(): AMFConfiguration = InternalAPIConfiguration.API()
 }

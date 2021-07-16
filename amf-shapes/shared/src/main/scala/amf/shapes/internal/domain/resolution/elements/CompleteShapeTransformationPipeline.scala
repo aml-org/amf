@@ -3,8 +3,8 @@ package amf.shapes.internal.domain.resolution.elements
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.Shape
-import amf.core.client.scala.transform.pipelines.elements.ElementTransformationPipeline
-import amf.core.client.scala.transform.stages.elements.resolution.ElementStageTransformer
+import amf.core.internal.transform.pipelines.elements.ElementTransformationPipeline
+import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
 import amf.shapes.internal.domain.resolution.{ShapeChainLinksTransformer, ShapeTransformer}
 
 class CompleteShapeTransformationPipeline(shape: Shape, errorHandler: AMFErrorHandler, profileName: ProfileName)

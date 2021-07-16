@@ -7,7 +7,10 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel
-import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel.{Settings => SettingsField, _}
+import amf.apicontract.internal.metamodel.domain.security.ParametrizedSecuritySchemeModel.{
+  Settings => SettingsField,
+  _
+}
 import org.yaml.model.YPart
 
 case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
@@ -70,7 +73,8 @@ case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
   override def meta: ParametrizedSecuritySchemeModel.type = ParametrizedSecuritySchemeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + name.option().getOrElse("default-parametrized").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/" + name.option().getOrElse("default-parametrized").urlComponentEncoded
 }
 
 object ParametrizedSecurityScheme {

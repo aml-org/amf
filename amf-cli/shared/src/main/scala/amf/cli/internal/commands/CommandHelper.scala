@@ -8,8 +8,8 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.common.transform._
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
-import amf.core.internal.parser.{AMFCompiler, ParseConfiguration}
+import amf.core.client.scala.transform.TransformationPipeline
+import amf.core.internal.parser.{AMFCompiler, CompilerConfiguration}
 import amf.core.internal.remote.{Cache, Context, Platform, Vendor}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -31,7 +31,7 @@ trait CommandHelper {
 
   protected def processDialects(config: ParserConfig, configuration: AMFConfiguration): Future[AMFConfiguration] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val dialectFutures                     = config.dialects.map(dialect => configuration.createClient().parseDialect(dialect))
+    val dialectFutures                     = config.dialects.map(dialect => configuration.baseUnitClient().parseDialect(dialect))
     Future.sequence(dialectFutures) map (results =>
       results.foldLeft(configuration) {
         case (conf, result) => conf.withDialect(result.dialect)
@@ -41,21 +41,21 @@ trait CommandHelper {
   protected def parseInput(config: ParserConfig, configuration: AMLConfiguration): Future[BaseUnit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val inputFile                          = ensureUrl(config.input.get)
-    val configClient                       = configuration.createClient()
+    val configClient                       = configuration.baseUnitClient()
     val parsed                             = configClient.parse(inputFile)
     val vendor                             = effectiveVendor(config.inputFormat)
     if (config.resolve)
       parsed map (result => {
         val transformed =
-          configClient.transform(result.bu, PipelineName.from(Vendor(vendor).mediaType, PipelineId.Default))
-        transformed.bu
+          configClient.transform(result.baseUnit, PipelineName.from(Vendor(vendor).mediaType, PipelineId.Default))
+        transformed.baseUnit
       })
-    else parsed.map(_.bu)
+    else parsed.map(_.baseUnit)
   }
 
   protected def resolve(config: ParserConfig, unit: BaseUnit, configuration: AMFGraphConfiguration): Future[BaseUnit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val configClient                       = configuration.createClient()
+    val configClient                       = configuration.baseUnitClient()
     val vendor                             = effectiveVendor(config.inputFormat)
     val vendorMediaType                    = Vendor(vendor).mediaType
     if (config.resolve && config.validate) {
@@ -65,14 +65,14 @@ trait CommandHelper {
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         Context(platform),
         cache = Cache(),
-        ParseConfiguration(configuration)
+        CompilerConfiguration(configuration)
       ).build()
       parsed map { parsed =>
-        configClient.transform(parsed, PipelineName.from(vendorMediaType, PipelineId.Default)).bu
+        configClient.transform(parsed, PipelineName.from(vendorMediaType, PipelineId.Default)).baseUnit
       }
     } else if (config.resolve) {
       Future {
-        configClient.transform(unit, PipelineName.from(vendorMediaType, PipelineId.Default)).bu
+        configClient.transform(unit, PipelineName.from(vendorMediaType, PipelineId.Default)).baseUnit
       }
     } else {
       Future { unit }
@@ -92,7 +92,8 @@ trait CommandHelper {
     }
     val vendor    = effectiveVendor(config.outputFormat)
     val mediaType = effectiveMediaType(config.outputMediaType, config.outputFormat) // TODO: media type not taken into account!
-    val result    = configuration.withRenderOptions(generateOptions).createClient().render(unit, Vendor(vendor).mediaType)
+    val result =
+      configuration.withRenderOptions(generateOptions).baseUnitClient().render(unit, Vendor(vendor).mediaType)
     config.output match {
       case Some(f) =>
         platform.write(f, result)

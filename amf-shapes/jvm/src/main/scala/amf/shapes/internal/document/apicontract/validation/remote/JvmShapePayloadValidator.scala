@@ -4,6 +4,7 @@ import amf.core.client.common.validation.{ProfileName, SeverityLevels, Validatio
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.AMFValidationResult
+import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
 import amf.core.internal.utils.RegexConverter
 import amf.core.internal.validation.ValidationConfiguration
 import amf.shapes.client.scala.model.domain.ScalarShape
@@ -15,15 +16,7 @@ import amf.shapes.internal.document.apicontract.validation.json.{
 }
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.shapes.internal.validation.jsonschema.{
-  BaseJsonSchemaPayloadValidator,
-  BooleanValidationProcessor,
-  ExampleUnknownException,
-  InvalidJsonObject,
-  InvalidJsonValue,
-  ReportValidationProcessor,
-  ValidationProcessor
-}
+import amf.shapes.internal.validation.jsonschema._
 import org.everit.json.schema.internal._
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
@@ -36,7 +29,7 @@ import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 class JvmShapePayloadValidator(private val shape: Shape,
                                private val mediaType: String,
                                protected val validationMode: ValidationMode,
-                               private val configuration: ValidationConfiguration)
+                               private val configuration: ShapeValidationConfiguration)
     extends BaseJsonSchemaPayloadValidator(shape, mediaType, configuration) {
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
@@ -58,7 +51,7 @@ class JvmShapePayloadValidator(private val shape: Shape,
     } catch {
       case validationException: ValidationException =>
         validationProcessor.processException(validationException, fragment.map(_.encodes))
-      case exception: Error =>
+      case exception: Throwable =>
         validationProcessor.processException(exception, fragment.map(_.encodes))
     }
   }
@@ -172,6 +165,9 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName,
 
       case e: InvalidJsonValue =>
         Seq(invalidJsonValidation("Invalid json value was provided", element, e))
+
+      case e: ArithmeticException if e.getMessage == "Division undefined" || e.getMessage == "Division by zero" =>
+        Seq(invalidJsonValidation("Can't divide by 0", element, e))
 
       case other =>
         super.processCommonException(other, element)
