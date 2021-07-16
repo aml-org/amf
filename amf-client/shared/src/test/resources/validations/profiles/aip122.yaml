@@ -1,0 +1,30 @@
+#%Validation Profile 1.0
+
+profile: AIP-122
+
+violation:
+  - aip-122-fields-representing-resource-names
+
+validations:
+
+  aip-122-fields-representing-resource-names:
+    targetClass: apiContract.Payload
+    message: |
+      When defining a resource, the first field should be the resource name, which must be of
+      type string and must be called name for the resource name. The message should include a
+      google.api.resource annotation declaring the type (see AIP-123 for more on this).
+    propertyConstraints:
+      shapes.schema/doc.link-target*:
+        minCount: 1
+        nested:
+          propertyConstraints:
+            rdf.type:
+              in: ["http://www.w3.org/ns/shacl#NodeShape"]
+            shacl.property:
+              atLeast:
+                count: 1
+                validation:
+                  propertyConstraints:
+                    shacl.name:
+                      minCount: 1
+                      in: [ name ]

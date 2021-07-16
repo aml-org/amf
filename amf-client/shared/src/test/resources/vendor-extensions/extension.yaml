@@ -1,0 +1,62 @@
+#%Dialect 1.0
+dialect: Business Semantics
+version: "1.0.0"
+
+external:
+  apiContract: http://a.ml/vocabularies/apiContract#
+  shapes: http://a.ml/vocabularies/shapes#
+
+documents:
+  library:
+    declares:
+      anypoint-business-term: BusinessTerm
+      anypoint-business-context: BusinessContext
+      test-nested: NestedExtension
+
+annotationMappings:
+
+  NestedExtension:
+    target: shapes.Shape
+    propertyTerm: apiContract.testNested
+    range: Other
+
+  BusinessContext:
+    target: apiContract.WebAPI
+    propertyTerm: apiContract.businessContext
+    range: BusinessVocabulary
+    allowMultiple: true
+    mapKey: alias
+    mapValue: prefix
+
+  BusinessTerm:
+    target: shapes.Shape
+    propertyTerm: apiContract.businessTerm
+    range: link
+
+nodeMappings:
+
+  BusinessVocabulary:
+    classTerm: apiContract.BusinessContext
+    mapping:
+      alias:
+        propertyTerm: apiContract.contextAlias
+        range: string
+        mandatory: true
+      prefix:
+        propertyTerm: apiContract.contextPrefix
+        range: string
+        mandatory: true
+
+  Other:
+    classTerm: apiContract.Other
+    mapping:
+      a:
+        range: string
+      b:
+        range: Another
+
+  Another:
+    classTerm: apiContract.Another
+    mapping:
+      c:
+        range: string

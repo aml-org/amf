@@ -10,7 +10,7 @@ import amf.core.model.domain.DomainElement
 import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.validation.core.ValidationProfile
+import amf.core.validation.core.{ValidationProfile, ValidationSpecification}
 import amf.plugins.document.webapi.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
 import amf.plugins.document.webapi.parser.AsyncHeader
@@ -138,4 +138,6 @@ object Async20Plugin extends AsyncPlugin {
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     super.domainValidationProfiles(platform).filterKeys(k => k == Async20Profile.p || k == AsyncProfile.p)
+
+  override def vendorExtensionsValidations(): Seq[ValidationSpecification] = Nil
 }

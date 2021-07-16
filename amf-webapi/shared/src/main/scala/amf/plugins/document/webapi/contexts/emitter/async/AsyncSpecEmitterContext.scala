@@ -64,6 +64,8 @@ case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter = ???
 
   override def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = ???
+
+  override def annotationKeyDecorator(key: String): String = s"x-${key}"
 }
 
 abstract class AsyncSpecEmitterContext(eh: ErrorHandler,

@@ -7,7 +7,13 @@ import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement, NamedDomainEle
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter, UriUtils}
 import amf.core.validation.core.ValidationSpecification
-import amf.plugins.document.webapi.annotations._
+import amf.plugins.document.webapi.annotations.{
+  BodyParameter,
+  ExternalReferenceUrl,
+  FormBodyParameter,
+  ParameterNameForPayload,
+  RequiredParamPayload
+}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext

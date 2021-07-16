@@ -1,0 +1,316 @@
+basePath: "/api"
+definitions:
+  defs_channel:
+    pattern: "^[CGD][A-Z0-9]{8,}$"
+    title: Channel-like conversation ID
+    type: string
+  defs_channel_id:
+    pattern: "^[C][A-Z0-9]{2,}$"
+    title: Channel ID
+    type: string
+  defs_channel_name:
+    title: Name of a channel
+    type: string
+
+externalDocs:
+  description: Learn more about the Slack Web API
+  url: https://api.slack.com/web
+host: slack.com
+info:
+  contact:
+    name: Slack developer relations
+    url: https://api.slack.com/support
+  description: One way to interact with the Slack platform is its HTTP RPC-based Web
+    API, a collection of methods requiring OAuth 2.0-based user, bot, or workspace
+    tokens blessed with related OAuth scopes.
+  title: Slack Web API
+  version: 1.7.0
+paths:
+
+  "/chat.postMessage":
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+        - application/json
+      description: Sends a message to a channel.
+      externalDocs:
+        description: API method documentation
+        url: https://api.slack.com/methods/chat.postMessage
+      operationId: chat_postMessage
+      parameters:
+        - description: 'Authentication token. Requires scope: `chat:write`'
+          in: header
+          name: token
+          required: true
+          type: string
+        - description: Pass true to post the message as the authed user, instead of
+            as a bot. Defaults to false. See [authorship](#authorship) below.
+          in: formData
+          name: as_user
+          type: string
+        - description: A JSON-based array of structured attachments, presented as a
+            URL-encoded string.
+          in: formData
+          name: attachments
+          type: string
+        - description: A JSON-based array of structured blocks, presented as a URL-encoded
+            string.
+          in: formData
+          name: blocks
+          type: string
+        - description: Channel, private group, or IM channel to send message to. Can
+            be an encoded ID, or a name. See [below](#channels) for more details.
+          in: query
+          name: channel
+          required: true
+          type: string
+          x-value-provider:
+            name: channel list
+            path: /conversations.list
+            method: get
+            parameters:
+              channelType:
+                type: string
+              binding:
+                queryParams:
+                  channelType:
+                    value:
+                      expression: “#[if(parameters.channelType != null) parameters.channelType else ‘all’]”
+              items:
+                extraction:
+                  expression: “#[payload.channels]”
+                displayName:
+                  expression: “#[item.name]”
+                value:
+                  expression: “[item.id]”
+        - description: Emoji to use as the icon for this message. Overrides `icon_url`.
+            Must be used in conjunction with `as_user` set to `false`, otherwise ignored.
+            See [authorship](#authorship) below.
+          in: formData
+          name: icon_emoji
+          type: string
+        - description: URL to an image to use as the icon for this message. Must be
+            used in conjunction with `as_user` set to false, otherwise ignored. See
+            [authorship](#authorship) below.
+          in: formData
+          name: icon_url
+          type: string
+        - description: Find and link channel names and usernames.
+          in: formData
+          name: link_names
+          type: boolean
+        - description: Disable Slack markup parsing by setting to `false`. Enabled by
+            default.
+          in: formData
+          name: mrkdwn
+          type: boolean
+        - description: Change how messages are treated. Defaults to `none`. See [below](#formatting).
+          in: formData
+          name: parse
+          type: string
+        - description: Used in conjunction with `thread_ts` and indicates whether reply
+            should be made visible to everyone in the channel or conversation. Defaults
+            to `false`.
+          in: formData
+          name: reply_broadcast
+          type: boolean
+        - description: How this field works and whether it is required depends on other
+            fields you use in your API call. [See below](#text_usage) for more detail.
+          in: formData
+          name: text
+          type: string
+        - description: Provide another message's `ts` value to make this message a reply.
+            Avoid using a reply's `ts` value; use its parent instead.
+          in: formData
+          name: thread_ts
+          type: string
+        - description: Pass true to enable unfurling of primarily text-based content.
+          in: formData
+          name: unfurl_links
+          type: boolean
+        - description: Pass false to disable unfurling of media content.
+          in: formData
+          name: unfurl_media
+          type: boolean
+        - description: Set your bot's user name. Must be used in conjunction with `as_user`
+            set to false, otherwise ignored. See [authorship](#authorship) below.
+          in: formData
+          name: username
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Typical success response
+          schema:
+            additionalProperties: false
+            description: Schema for successful response of chat.postMessage method
+            properties:
+              channel:
+                "$ref": "#/definitions/defs_channel"
+            required:
+              - channel
+            title: chat.postMessage success schema
+            type: object
+        default:
+          description: Typical error response if too many attachments are included
+          schema:
+            additionalProperties: false
+            description: Schema for error response chat.postMessage method
+            properties:
+              callstack:
+                description: 'Note: PHP callstack is only visible in dev/qa'
+                type: string
+              error:
+                enum:
+                  - channel_not_found
+                  - not_in_channel
+                  - is_archived
+                  - msg_too_long
+                  - no_text
+                  - too_many_attachments
+                  - rate_limited
+                  - not_authed
+                  - invalid_auth
+                  - account_inactive
+                  - invalid_arg_name
+                  - invalid_array_arg
+                  - invalid_charset
+                  - invalid_form_data
+                  - invalid_post_type
+                  - missing_post_type
+                type: string
+            required:
+              - ok
+              - error
+            title: chat.postMessage error schema
+            type: object
+      security:
+        - slackAuth:
+            - chat:write:user
+            - chat:write:bot
+      tags:
+        - chat
+
+
+  "/conversations.list":
+    get:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: Lists all channels in a Slack team.
+      externalDocs:
+        description: API method documentation
+        url: https://api.slack.com/methods/conversations.list
+      operationId: conversations_list
+      parameters:
+        - description: 'Authentication token. Requires scope: `conversations:read`'
+          in: query
+          name: token
+          type: string
+        - description: Set to `true` to exclude archived channels from the list
+          in: query
+          name: exclude_archived
+          type: boolean
+        - description: Mix and match channel types by providing a comma-separated list
+            of any combination of `public_channel`, `private_channel`, `mpim`, `im`
+          in: query
+          name: types
+          type: string
+        - description: The maximum number of items to return. Fewer than the requested
+            number of items may be returned, even if the end of the list hasn't been
+            reached. Must be an integer no larger than 1000.
+          in: query
+          name: limit
+          type: integer
+        - description: Paginate through collections of data by setting the `cursor`
+            parameter to a `next_cursor` attribute returned by a previous request's
+            `response_metadata`. Default value fetches the first "page" of the collection.
+            See [pagination](/docs/pagination) for more detail.
+          in: query
+          name: cursor
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Typical success response with only public channels
+          schema:
+            additionalProperties: false
+            description: Schema for successful response from conversations.list method
+            properties:
+              channels:
+                items:
+                  "$ref": "#/definitions/defs_channel"
+                type: array
+                uniqueItems: true
+              response_metadata:
+                additionalProperties: false
+                properties:
+                  next_cursor:
+                    type: string
+                required:
+                  - next_cursor
+                type: object
+            required:
+              - ok
+              - channels
+            title: conversations.list success schema
+            type: object
+        default:
+          description: Typical error response
+          schema:
+            additionalProperties: false
+            description: Schema for error response from conversations.list method
+            properties:
+              callstack:
+                description: 'Note: PHP callstack is only visible in dev/qa'
+                type: string
+              error:
+                enum:
+                  - missing_scope
+                  - not_authed
+                  - invalid_auth
+                  - account_inactive
+                  - invalid_arg_name
+                  - invalid_array_arg
+                  - invalid_charset
+                  - invalid_form_data
+                  - invalid_post_type
+                  - missing_post_type
+                  - invalid_json
+                  - json_not_object
+                  - request_timeout
+                  - upgrade_required
+                type: string
+              needed:
+                type: string
+              provided:
+                type: string
+            required:
+              - ok
+              - error
+            title: conversations.list error schema
+            type: object
+      security:
+        - slackAuth:
+            - channels:read
+            - groups:read
+            - im:read
+            - mpim:read
+      tags:
+        - conversations
+schemes:
+  - https
+securityDefinitions:
+  slackAuth:
+    authorizationUrl: https://slack.com/oauth/authorize
+    flow: accessCode
+    scopes:
+      admin: admin
+      admin.apps:read: admin.apps:read
+      admin.apps:write: admin.apps:write
+      admin.conversations:read: admin.conversations:read
+    tokenUrl: https://slack.com/api/oauth.access
+    type: oauth2
+swagger: '2.0'
+tags: []

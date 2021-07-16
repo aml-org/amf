@@ -2,11 +2,12 @@ package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.annotations.{DomainExtensionAnnotation, ExplicitField, SingleValueArray}
 import amf.core.metamodel.Type.ArrayLike
+import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.model.document.DeclaresModel
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{ArrayNode => _, ScalarNode => _, _}
 import amf.core.parser._
-import amf.plugins.document.vocabularies.parser.common.DeclarationKeyCollector
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.validations.ParserSideValidations.{
@@ -15,7 +16,7 @@ import amf.validations.ParserSideValidations.{
   UnexpectedRamlScalarKey
 }
 import org.yaml.model._
-
+import amf.plugins.document.vocabularies.parser.common._
 import scala.collection.mutable.ListBuffer
 
 trait WebApiBaseSpecParser extends BaseSpecParser with SpecParserOps with DeclarationKeyCollector
@@ -153,17 +154,17 @@ trait SpecParserOps {
       val result = RamlScalarNode(node)
       target match {
         case SingleTarget(element) =>
-          custom ++= collectDomainExtensions(element.id + s"/${field.value.name}", result)
+          custom ++= collectDomainExtensions(Some(element.id + s"/${field.value.name}"), result)
             .map(DomainExtensionAnnotation)
-        case EmptyTarget => custom ++= collectDomainExtensions(null, result).map(DomainExtensionAnnotation)
+        case EmptyTarget => custom ++= collectDomainExtensions(None, result).map(DomainExtensionAnnotation)
       }
       result
     }
 
-    private def collectDomainExtensions(parent: String, n: ScalarNode): Seq[DomainExtension] = {
+    private def collectDomainExtensions(id: Option[String], n: ScalarNode): Seq[DomainExtension] = {
       n match {
         case n: RamlScalarValuedNode =>
-          AnnotationParser.parseExtensions(parent, n.obj)
+          AnnotationParser.parseExtensions(None, id, n.obj)
         case _: DefaultScalarNode =>
           Nil
       }

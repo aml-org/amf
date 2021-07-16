@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: Orders API
+
+version: 1.0.0
+mediaType: application/json
+baseUri: http://api.mythical.com/order
+
+types:
+  LineItem:
+    properties:
+      modelNumber: string
+
+  Order:
+    properties:
+      activatedDate: datetime
+      canBillNow: boolean
+      lineItem: LineItem[]
+
+/orders:
+  get:
+    responses:
+      200:
+        body: Order
+  post:
+    body: Order
+    responses:
+      201:
+        headers:
+          location: string
