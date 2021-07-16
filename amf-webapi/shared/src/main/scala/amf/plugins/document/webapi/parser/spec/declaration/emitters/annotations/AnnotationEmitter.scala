@@ -19,9 +19,13 @@ case class AnnotationsEmitter(element: CustomizableElement, ordering: SpecOrderi
       .filter(!isOrphanOasExtension(_))
       .map(spec.factory.annotationEmitter(_, ordering))
 
-    val extensionsAnnotations = VendorExtensionEmitter.emit(element, spec.factory.annotationKeyDecorator)
+    element match {
+      case d: DomainElement =>
+        val extensionsAnnotations = VendorExtensionEmitter.emit(d, spec.factory.annotationKeyDecorator)
 
-    ordering.sorted(regularAnnotations ++ extensionsAnnotations)
+        ordering.sorted(regularAnnotations ++ extensionsAnnotations)
+      case _ => Nil
+    }
   }
 
   private def isOrphanOasExtension(customProperty: DomainExtension) = {

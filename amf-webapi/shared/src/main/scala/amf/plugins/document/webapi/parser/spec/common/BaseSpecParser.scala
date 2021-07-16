@@ -2,11 +2,12 @@ package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.annotations.{DomainExtensionAnnotation, ExplicitField, SingleValueArray}
 import amf.core.metamodel.Type.ArrayLike
+import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.model.document.DeclaresModel
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{ArrayNode => _, ScalarNode => _, _}
 import amf.core.parser._
-import amf.plugins.document.vocabularies.parser.common.DeclarationKeyCollector
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.validations.ParserSideValidations.{
@@ -15,7 +16,7 @@ import amf.validations.ParserSideValidations.{
   UnexpectedRamlScalarKey
 }
 import org.yaml.model._
-
+import amf.plugins.document.vocabularies.parser.common._
 import scala.collection.mutable.ListBuffer
 
 trait WebApiBaseSpecParser extends BaseSpecParser with SpecParserOps with DeclarationKeyCollector

@@ -4,7 +4,7 @@ import amf.core.VendorExtensionCompiler
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.model.domain.{AmfArray, AmfObject}
+import amf.core.model.domain.{AmfArray, AmfObject, CustomizableElement, DomainElement}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -15,9 +15,10 @@ import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.validations.ParserSideValidations.InvalidAnnotationTarget
 import org.yaml.model._
 
-case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(implicit val ctx: WebApiContext) {
+case class AnnotationParser(element: DomainElement, map: YMap, target: List[String] = Nil)(
+    implicit val ctx: WebApiContext) {
   def parse(): Unit = {
-    val extensions    = parseExtensions(Some(element),None, map, target)
+    val extensions    = parseExtensions(Some(element), None, map, target)
     val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
     if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
   }
@@ -48,8 +49,10 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
 }
 
 object AnnotationParser {
-  def parseExtensions(element: Option[DomainElement], elementId: Option[String], map: YMap, target: List[String] = Nil)(
-      implicit ctx: WebApiContext): Seq[DomainExtension] = {
+  def parseExtensions(element: Option[DomainElement],
+                      elementId: Option[String],
+                      map: YMap,
+                      target: List[String] = Nil)(implicit ctx: WebApiContext): Seq[DomainExtension] = {
     val parent: String = element.map(_.id).orElse(elementId).orNull
     map.entries.flatMap { entry =>
       val key = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
@@ -60,7 +63,7 @@ object AnnotationParser {
           } else {
             Seq(ExtensionParser(annotation, parent, entry, target).parse().add(Annotations(entry)))
           }
-        case _                => Seq() // ignore, not an annotation
+        case _ => Seq() // ignore, not an annotation
       }
     }
   }
