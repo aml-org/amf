@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# cd ./amf-cli/js
+cd ./amf-cli/js || exit
 
-echo 'globalThis.SHACLValidator = require("amf-shacl-node")' > amf.js
-echo 'globalThis.Ajv = require("ajv")' >> amf.js
-cat ./target/artifact/amf-client-module.js >> amf.js
+echo 'globalThis.SHACLValidator = require("amf-shacl-node")' > amf.js || exit
+echo 'globalThis.Ajv = require("ajv")' >> amf.js || exit
+cat ./target/artifact/amf-client-module.js >> amf.js || exit
 chmod a+x amf.js
 
 cd ../..

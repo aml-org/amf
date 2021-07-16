@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROPERTY_FILE=amf-webapi.versions
+PROPERTY_FILE=amf-apicontract.versions
 
 function getProperty {
    PROP_KEY=$1
@@ -101,9 +101,9 @@ else
         npm publish
 
         echo "Finished latest publish"
-        echo "Add 'release' tag to latest"
+        echo "Add 'beta' tag to latest"
 
-        npm dist-tag add amf-client-js@${PROJECT_VERSION} release
+        npm dist-tag add amf-client-js@${PROJECT_VERSION} beta
     fi
 fi
 
