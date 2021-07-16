@@ -35,13 +35,13 @@ echo "Running buildjs script"
 ./amf-cli/js/build-scripts/buildjs.sh
 echo "Finished buildjs script"
 
-echo "Generating typings"
-sbt -Dsbt.sourcemode=true cliJS/generateTypings
-echo "Finished generating typings"
+# echo "Generating typings"
+# sbt -Dsbt.sourcemode=true cliJS/generateTypings
+# echo "Finished generating typings"
 
-echo "Running build-typings script"
-./amf-cli/js/build-scripts/build-typings.sh
-echo "Finished build-typings script"
+# echo "Running build-typings script"
+# ./amf-cli/js/build-scripts/build-typings.sh
+# echo "Finished build-typings script"
 
 cd amf-cli/js
 
