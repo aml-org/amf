@@ -10,10 +10,11 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 import amf.shapes.client.scala.model.domain.NodeShape
-import amf.shapes.client.scala.model.domain.{ExampleTracking, FileShape, NodeShape}
+import amf.shapes.client.scala.model.domain.{FileShape, NodeShape}
+import amf.shapes.internal.domain.resolution.ExampleTracking
 
 /** Apply root and operation mime types to payloads.
   *

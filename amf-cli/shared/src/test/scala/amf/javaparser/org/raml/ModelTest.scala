@@ -1,13 +1,12 @@
 package amf.javaparser.org.raml
 
 import amf.apicontract.client.scala.{AMFConfiguration, WebAPIConfiguration}
-
 import amf.apicontract.internal.transformation.AmfEditingPipeline
 import amf.core.client.common.validation._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, EncodesModel, Module}
-import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.remote.{Raml10YamlHint, _}

@@ -5,7 +5,7 @@ import amf.apicontract.client.scala.model.domain.{Server, ServerContainer}
 import amf.core.client.common.validation.{Oas30Profile, ProfileName}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 
 /**
   * Place server models in the right locations according to OAS 3.0 and our own criterium for AMF

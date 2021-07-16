@@ -2,7 +2,7 @@ package amf.resolution.stages
 
 import amf.core.client.scala.model.domain.ScalarNode
 import amf.core.client.scala.model.domain.templates.Variable
-import amf.core.client.scala.transform.VariableReplacer
+import amf.core.internal.transform.VariableReplacer
 import org.scalatest.{FunSuite, Inspectors, Matchers}
 
 import scala.collection.mutable.ListBuffer

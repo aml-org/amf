@@ -8,7 +8,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.common.transform._
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.parser.{AMFCompiler, CompilerConfiguration}
 import amf.core.internal.remote.{Cache, Context, Platform, Vendor}
 

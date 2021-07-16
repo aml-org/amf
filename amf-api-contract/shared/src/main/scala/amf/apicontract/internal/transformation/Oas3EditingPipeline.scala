@@ -4,7 +4,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.{OpenApiParamet
 import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{Oas30Profile, ProfileName}
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.remote.Oas30
 
 class Oas3EditingPipeline private (urlShortening: Boolean, override val name: String)

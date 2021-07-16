@@ -40,10 +40,10 @@ case class UnresolvedShape private[amf] (override val fields: Fields,
     override def modelInstance: UnresolvedShape = UnresolvedShape(Fields(), Annotations(), reference = reference)
   }
 
-  override def ramlSyntaxKey: String = "unresolvedShape"
+  private[amf] override def ramlSyntaxKey: String = "unresolvedShape"
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/unresolved"
+  private[amf] override def componentId: String = "/unresolved"
 
   override def afterResolve(fatherSyntaxKey: Option[String], resolvedKey: String): Unit = {
     fatherExtensionParser.foreach { parser =>

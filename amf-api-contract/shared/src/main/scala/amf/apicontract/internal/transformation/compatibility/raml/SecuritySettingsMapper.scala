@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.model.domain.security.{ApiKeySettings, OAuth
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.shapes.client.scala.model.domain.AnyShape
 
 class SecuritySettingsMapper() extends TransformationStep {

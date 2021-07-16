@@ -38,7 +38,7 @@ case class TemplatedLink(fields: Fields, annotations: Annotations) extends Named
   }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String =
+  private[amf] override def componentId: String =
     s"/templatedLink/${name.option().getOrElse("UnknownTemplatedLink").urlComponentEncoded}"
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */

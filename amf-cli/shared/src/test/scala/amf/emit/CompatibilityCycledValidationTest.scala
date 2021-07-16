@@ -5,7 +5,7 @@ import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.common.transform._
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote._

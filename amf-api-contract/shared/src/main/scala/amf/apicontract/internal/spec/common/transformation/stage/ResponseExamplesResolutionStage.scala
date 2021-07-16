@@ -9,9 +9,9 @@ import amf.apicontract.internal.validation.definitions.ResolutionSideValidations
 }
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.client.scala.transform.stages.TransformationStep
-import amf.shapes.client.scala.model.domain.ExampleTracking
-import amf.shapes.client.scala.model.domain.{AnyShape, Example, ExampleTracking}
+import amf.core.client.scala.transform.TransformationStep
+import amf.shapes.client.scala.model.domain.{AnyShape, Example}
+import amf.shapes.internal.domain.resolution.ExampleTracking
 
 /** Apply response examples to payloads schemas matching by media type
   *

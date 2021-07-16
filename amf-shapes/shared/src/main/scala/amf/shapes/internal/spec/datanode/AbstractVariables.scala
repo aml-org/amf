@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.datanode
 
 import amf.core.client.scala.model.domain.AmfScalar
-import amf.core.client.scala.transform.VariableReplacer.VariableRegex
+import amf.core.internal.transform.VariableReplacer.VariableRegex
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import org.yaml.model.YNode
 

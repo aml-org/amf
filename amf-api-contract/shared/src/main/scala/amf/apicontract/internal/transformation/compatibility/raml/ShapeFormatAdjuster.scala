@@ -2,7 +2,7 @@ package amf.apicontract.internal.transformation.compatibility.raml
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.shapes.internal.spec.common.TypeDef.{DateOnlyType, DateTimeOnlyType, DateTimeType, TimeOnlyType}
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel

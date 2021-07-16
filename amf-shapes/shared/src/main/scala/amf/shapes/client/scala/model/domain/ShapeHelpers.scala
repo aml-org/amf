@@ -9,19 +9,20 @@ import amf.shapes.internal.annotations.ParsedFromTypeExpression
 
 trait ShapeHelpers { this: Shape =>
 
-  def fromExternalSource: Boolean = this match {
+  private[amf] def fromExternalSource: Boolean = this match {
     case any: AnyShape => any.referenceId.option().isDefined
     case _             => false
   }
 
-  def typeExpression: Option[String] = this.annotations.find(classOf[ParsedFromTypeExpression]).map(_.value)
+  private[amf] def typeExpression: Option[String] =
+    this.annotations.find(classOf[ParsedFromTypeExpression]).map(_.value)
 
-  def externalSourceID: Option[String] = this match {
+  private[amf] def externalSourceID: Option[String] = this match {
     case any: AnyShape => any.referenceId.option()
     case _             => None
   }
 
-  def cloneAllExamples(cloned: Shape, s: Shape): Unit = (cloned, s) match {
+  private def cloneAllExamples(cloned: Shape, s: Shape): Unit = (cloned, s) match {
     case (cloned: AnyShape, s: AnyShape) =>
       cloned.withExamples(s.examples.map { e =>
         e.copyElement().asInstanceOf[Example]

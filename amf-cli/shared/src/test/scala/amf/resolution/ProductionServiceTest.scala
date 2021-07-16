@@ -5,7 +5,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.stages.ReferenceResolutionStage
+import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.remote._
 import org.scalatest.Assertion

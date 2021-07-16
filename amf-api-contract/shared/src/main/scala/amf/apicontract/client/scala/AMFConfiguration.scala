@@ -34,7 +34,7 @@ import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.registries.AMFRegistry
@@ -206,13 +206,13 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMFConfiguration =
     super._withPlugins(plugins)
 
-  override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMFConfiguration =
+  private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMFConfiguration =
     super._withEntities(entities)
 
-  override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMFConfiguration =
+  private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMFConfiguration =
     super._withAnnotations(annotations)
 
-  override def withValidationProfile(profile: ValidationProfile): AMFConfiguration =
+  private[amf] override def withValidationProfile(profile: ValidationProfile): AMFConfiguration =
     super._withValidationProfile(profile)
 
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =

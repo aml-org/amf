@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.common.transformation.stage
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, FieldsFilter}
 import amf.core.client.scala.model.domain.Annotation
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.core.client.scala.traversal.iterator.InstanceCollector
 import amf.shapes.internal.annotations.{ExternalJsonSchemaShape, ExternalReferenceUrl}
 

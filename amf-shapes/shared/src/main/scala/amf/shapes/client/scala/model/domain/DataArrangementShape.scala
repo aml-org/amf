@@ -45,7 +45,8 @@ abstract class DataArrangementShape private[amf] (fields: Fields, annotations: A
     array
   }
 
-  override def componentId: String = "/array/" + name.option().getOrElse("default-array").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/array/" + name.option().getOrElse("default-array").urlComponentEncoded
 
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     val isCycle = cycle.contains(id)
@@ -67,5 +68,5 @@ abstract class DataArrangementShape private[amf] (fields: Fields, annotations: A
     this
   }
 
-  override def ramlSyntaxKey: String = "arrayShape"
+  private[amf] override def ramlSyntaxKey: String = "arrayShape"
 }

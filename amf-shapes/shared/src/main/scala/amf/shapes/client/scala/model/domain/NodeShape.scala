@@ -101,9 +101,9 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   override val meta: AnyShapeModel = NodeShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + name.option().getOrElse("default-node").urlComponentEncoded
+  private[amf] override def componentId: String = "/" + name.option().getOrElse("default-node").urlComponentEncoded
 
-  override val ramlSyntaxKey: String = "nodeShape"
+  private[amf] override val ramlSyntaxKey: String = "nodeShape"
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = NodeShape.apply

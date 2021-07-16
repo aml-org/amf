@@ -7,7 +7,7 @@ import amf.core.client.common.validation.{Async20Profile, Oas30Profile, ProfileN
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfScalar
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 
 /**

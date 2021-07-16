@@ -17,8 +17,8 @@ class CorrelationId(override val fields: Fields, override val annotations: Annot
   def withDescription(description: String): this.type = set(CorrelationIdModel.Description, description)
   def withIdLocation(idLocation: String): this.type   = set(CorrelationIdModel.Location, idLocation)
 
-  override def meta: CorrelationIdModel.type = CorrelationIdModel
-  override def componentId: String           = "/" + name.option().getOrElse("default-id")
+  override def meta: CorrelationIdModel.type    = CorrelationIdModel
+  private[amf] override def componentId: String = "/" + name.option().getOrElse("default-id")
 
   override def nameField: Field = CorrelationIdModel.Name
 

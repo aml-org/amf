@@ -3,7 +3,7 @@ package amf.apicontract.internal.transformation.compatibility.oas
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.client.scala.transform.TransformationStep
 
 class MandatoryDocumentationUrl() extends TransformationStep {
 

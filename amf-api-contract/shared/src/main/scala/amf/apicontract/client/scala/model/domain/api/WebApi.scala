@@ -8,7 +8,7 @@ case class WebApi(fields: Fields, annotations: Annotations) extends Api(fields: 
   override def meta: WebApiModel.type = WebApiModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "#/web-api"
+  private[amf] override def componentId: String = "#/web-api"
 }
 
 object WebApi {

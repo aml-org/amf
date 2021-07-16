@@ -13,13 +13,8 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
 import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.Async20Profile
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
-import amf.core.client.scala.transform.stages.{
-  CleanReferencesStage,
-  DeclarationsRemovalStage,
-  ExternalSourceRemovalStage,
-  TransformationStep
-}
+import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
+import amf.core.internal.transform.stages.{CleanReferencesStage, DeclarationsRemovalStage, ExternalSourceRemovalStage}
 import amf.core.internal.remote.AsyncApi20
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 

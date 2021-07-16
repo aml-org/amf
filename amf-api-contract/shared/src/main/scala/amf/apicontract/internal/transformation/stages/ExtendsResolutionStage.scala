@@ -18,10 +18,11 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DataNode, DomainElement, ElementTree}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.client.scala.transform.stages.{ReferenceResolutionStage, TransformationStep}
+import amf.core.client.scala.transform.TransformationStep
+import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.internal.metamodel.domain.DomainElementModel
-import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration, YNodeLikeOps}
+import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig, YNodeLikeOps}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter

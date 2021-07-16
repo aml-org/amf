@@ -1,17 +1,14 @@
 package amf.shapes.client.platform.model.domain
 
 import amf.core.client.platform.model.domain.Shape
-import amf.core.client.scala.model.StrField
+import amf.core.client.platform.model.StrField
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.scala.model.domain
-import amf.shapes.internal.convert.ShapeClientConverters._
 
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import amf.shapes.client.scala.model.domain.{AnyShape => InternalAnyShape}
-import amf.shapes.client.scala.model.domain
 import amf.shapes.internal.convert.ShapeClientConverters._
 
-class AnyShape(override private[amf] val _internal: domain.AnyShape) extends Shape with PlatformSecrets {
+class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Shape with PlatformSecrets {
 
   @JSExportTopLevel("AnyShape")
   def this() = this(InternalAnyShape())

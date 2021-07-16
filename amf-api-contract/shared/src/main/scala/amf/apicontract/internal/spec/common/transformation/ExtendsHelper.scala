@@ -11,8 +11,8 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.client.scala.model.domain.{AmfElement, DataNode, DomainElement, NamedDomainElement}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.client.scala.transform.stages.ReferenceResolutionStage
-import amf.core.client.scala.transform.stages.helpers.ResolvedNamedEntity
+import amf.core.internal.transform.stages.ReferenceResolutionStage
+import amf.core.internal.transform.stages.helpers.ResolvedNamedEntity
 import amf.core.internal.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation}
 import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration}
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
