@@ -326,6 +326,27 @@ object CustomShaclFunctions {
         }
       }
     },
+    new CustomShaclFunction {
+      override val name: String = "duplicatePropertyNames"
+      override def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit = {
+        for {
+          propertiesArray <- element.fields.?[AmfArray](NodeShapeModel.Properties)
+        } yield {
+          val properties = propertiesArray.values
+          if (properties.distinct.size != properties.size) {
+            val duplicatedProperties = properties
+              .map(_.asInstanceOf[PropertyShape])
+              .groupBy(_.name)
+              .filter(_._2.size > 1)
+              .map(_._2.head.name)
+              .mkString(", ")
+            val message = s"Duplicated property names: $duplicatedProperties"
+            val info = ValidationInfo(NodeShapeModel.Properties, Some(message))
+            validate(Some(info))
+          }
+        }
+      }
+    },
   )
 
   val functions: CustomShaclFunctions = listOfFunctions.map(f => f.name -> f).toMap
