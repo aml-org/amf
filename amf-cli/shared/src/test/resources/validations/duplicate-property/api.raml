@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: test-duplicated-properties-raml10
+
+types:
+  test-duplicated-properties:
+    type: object
+    properties:
+      a: string
+      a?: string
+      b: string
+      b?: string
+      c: string
+      d: string
