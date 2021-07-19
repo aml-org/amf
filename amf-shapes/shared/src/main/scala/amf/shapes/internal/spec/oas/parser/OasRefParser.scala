@@ -57,7 +57,6 @@ class OasRefParser(map: YMap,
           case Some(_) => searchLocalJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, e)
           case _       => searchRemoteJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, e)
         }
-        referencedShape.foreach(safeAdoption)
         referencedShape
     }
   }
@@ -142,16 +141,6 @@ class OasRefParser(map: YMap,
     tmpShape.withContext(ctx)
     adopt(tmpShape)
     tmpShape
-  }
-
-  def safeAdoption(s: AnyShape): Unit = {
-    val oldId = Option(s.id)
-    adopt(s)
-    s match {
-      case l: Linkable if l.isLink && s.id == l.effectiveLinkTarget().id =>
-        oldId.foreach(s.id = _)
-      case _ =>
-    }
   }
 
   private def isOasLikeContext = ctx.isOasLikeContext

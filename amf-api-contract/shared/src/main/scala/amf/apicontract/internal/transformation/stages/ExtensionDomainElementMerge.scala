@@ -230,7 +230,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                field: Field,
                                idTracker: IdTracker) = {
     existing match {
-      case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), idTracker)
+      case Some(e) if !asSimpleProperty => merge(e, obj.adoptWithParentId(target.id), idTracker)
       case None if !(restrictions allowsNodeInsertionIn field) =>
         errorHandler.violation(
           ResolutionValidation,

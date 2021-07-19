@@ -168,16 +168,15 @@ case class ExtendsHelper(profile: ProfileName,
       }
       ctxForResourceType.nodeRefIds ++= ctx.nodeRefIds
       ctxForResourceType.contextType = RamlWebApiContextType.RESOURCE_TYPE
-      val parsedEndpoint = EndPoint()
       ctxForResourceType.factory
-        .endPointParser(entry, _ => parsedEndpoint, None, collector, true)
+        .endPointParser(entry, _ => EndPoint(), None, collector, true)
         .parse()
-      new IdAdopter(parsedEndpoint, extensionId + "/applied")
       ctx.operationContexts ++= ctxForResourceType.operationContexts
     }
 
     collector.toList match {
       case element :: _ =>
+        new IdAdopter(element, extensionId + "/applied").adopt()
         new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(element, errorHandler)
       case Nil =>
         errorHandler.violation(

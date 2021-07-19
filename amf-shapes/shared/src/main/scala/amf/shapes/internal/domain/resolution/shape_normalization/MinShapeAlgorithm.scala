@@ -543,7 +543,7 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
     if (accExamples.nonEmpty)
       superUnion.fields.setWithoutId(AnyShapeModel.Examples, AmfArray(accExamples.distinct))
 
-    superUnion.withId(baseShape.id)
+    superUnion.setId(baseShape.id)
   }
 
   private def setValuesOfUnionElement(newShape: Shape, superUnionElement: Shape): Unit = {
