@@ -277,7 +277,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     */
   private def adoptElementByType(target: DomainElement, parentId: String) = {
     target match {
-      case simple: Shape     => simple.simpleAdoption(parentId) // only shapes have recursive simple adoption?
+      case simple: Shape     => simple.adoptWithParentId(parentId) // only shapes have recursive simple adoption?
       case dynamic: DataNode => DataNodeOps.adoptTree(parentId, dynamic)
       case _                 => target.adopted(parentId)
     }

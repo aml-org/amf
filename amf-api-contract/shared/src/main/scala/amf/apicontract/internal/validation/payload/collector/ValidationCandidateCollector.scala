@@ -2,7 +2,7 @@ package amf.apicontract.internal.validation.payload.collector
 
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.AmfElement
-import amf.core.client.scala.traversal.iterator.AmfElementStrategy
+import amf.core.client.scala.traversal.iterator.{AmfElementStrategy, InstanceCollector}
 import amf.core.internal.validation.ValidationCandidate
 
 trait ValidationCandidateCollector {

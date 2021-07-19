@@ -76,7 +76,7 @@ case class RamlExamplesParser(map: YMap,
                               exemplified: ExemplifiedDomainElement,
                               options: ExampleOptions)(implicit ctx: ShapeParserContext) {
   def parse(): Unit = {
-    if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && exemplified.id.nonEmpty) {
+    if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined) {
       ctx.eh.violation(
         ExclusivePropertiesSpecification,
         exemplified.id,

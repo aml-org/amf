@@ -110,7 +110,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
         result = result :+ {
           val parsedPayload = Payload(payload.annotations)
             .withMediaType(mediaType)
-            .adopted(parent)
+            .adoptWithParentId(parent)
           // TODO: Evaluate using a custom copy function in Payload
           payload.name.option().foreach(name => parsedPayload.withName(name))
           if (Option(payload.schema).isDefined)

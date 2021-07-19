@@ -113,13 +113,13 @@ object ShapeFacetsCollector extends ValidationCandidateCollector {
   // This can be a single node or a union depending on if we have a single map or multiple facet maps.
   protected def toFacetsDefinitionShape(shape: Shape, facetDefinitions: Seq[Shape#FacetsMap]): Shape = {
     if (facetDefinitions.length == 1) {
-      val facetsShape = NodeShape().withId(shape.id + "Shape")
+      val facetsShape = NodeShape().setId(shape.id + "Shape")
       facetsShape.withProperties(facetDefinitions.head.values.toSeq)
     } else {
-      val facetsShape = UnionShape().withId(shape.id + "Shape")
+      val facetsShape = UnionShape().setId(shape.id + "Shape")
       var counter     = 0
       val anyOfShapes = facetDefinitions.map { facetsMap =>
-        val facetsUnionShape = NodeShape().withId(shape.id + "Shape" + counter)
+        val facetsUnionShape = NodeShape().setId(shape.id + "Shape" + counter)
         counter += 1
         facetsUnionShape.withProperties(facetsMap.values.toSeq)
       }
