@@ -336,9 +336,10 @@ object CustomShaclFunctions {
           if (properties.distinct.size != properties.size) {
             val duplicatedProperties = properties
               .map(_.asInstanceOf[PropertyShape])
-              .groupBy(_.name)
+              .flatMap(_.name.option())
+              .groupBy(identity)
               .filter(_._2.size > 1)
-              .map(_._2.head.name)
+              .keys.toSeq.sorted
               .mkString(", ")
             val message = s"Duplicated property names: $duplicatedProperties"
             val info = ValidationInfo(NodeShapeModel.Properties, Some(message))
