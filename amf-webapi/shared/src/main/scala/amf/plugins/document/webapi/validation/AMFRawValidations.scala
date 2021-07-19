@@ -4,7 +4,6 @@ import amf._
 import amf.core.validation.{SeverityLevels => Severity}
 import amf.core.vocabulary.Namespace.XsdTypes
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 import amf.plugins.domain.webapi.metamodel._
 
 object AMFRawValidations {
@@ -936,7 +935,12 @@ object AMFRawValidations {
 
   object Raml10Validations extends RamlValidations {
     private lazy val result = super.validations() ++ Seq(
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("properties"),
+        constraint = shape("duplicatePropertyNames")
       )
+    )
 
     override def validations(): Seq[AMFValidation] = result
   }
