@@ -1,9 +1,9 @@
-package amf.plugins.parser.dialect
+package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
 
-import amf.core.model.domain.DomainElement
-import amf.plugins.document.vocabularies.metamodel.domain.NodeMappableModel
-import amf.plugins.document.vocabularies.model.domain.NodeMappable
-import amf.plugins.domain.shapes.models.SemanticContext
+import amf.aml.client.scala.model.domain.NodeMappable
+import amf.aml.internal.metamodel.domain.NodeMappableModel
+import amf.core.client.scala.model.domain.DomainElement
+import amf.shapes.client.scala.model.domain.SemanticContext
 
 import java.util.concurrent.atomic.AtomicReference
 import scala.collection.mutable
