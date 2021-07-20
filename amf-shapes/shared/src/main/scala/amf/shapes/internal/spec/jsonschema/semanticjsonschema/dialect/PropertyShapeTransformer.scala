@@ -1,9 +1,9 @@
-package amf.plugins.parser.dialect
+package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
 
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.{Annotations, Fields, ScalarNode}
-import amf.plugins.document.vocabularies.model.domain.PropertyMapping
-import amf.plugins.domain.shapes.models.{ArrayShape, NodeShape, ScalarShape}
+import amf.aml.client.scala.model.domain.PropertyMapping
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, ScalarShape}
 
 case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext) {
 
@@ -66,7 +66,7 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
 
   private def sanitizeScalarRange(xsd: String): String = {
     if (xsd.endsWith("#long")) {
-      xsd.replace("#long", "#float");
+      xsd.replace("#long", "#float")
     } else {
       xsd;
     }
