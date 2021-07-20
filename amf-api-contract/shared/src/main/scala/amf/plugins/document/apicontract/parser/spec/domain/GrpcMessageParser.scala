@@ -23,7 +23,7 @@ class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends 
       val messageElementAst = messageElement.children.head.asInstanceOf[Node]
       messageElementAst.name match {
         case FIELD =>
-          GrpcFieldParser(messageElementAst)(ctx.nestedMessage(nodeShape.displayName.value())).parse((property) => {
+          GrpcFieldParser(messageElementAst)(ctx.nestedMessage(nodeShape.displayName.value())).parse(property => {
             property.adopted(nodeShape.id)
             nodeShape.withProperties(nodeShape.properties ++ Seq(property))
           })
@@ -44,6 +44,11 @@ class GrpcMessageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends 
         case MESSAGE_DEF =>
           GrpcMessageParser(messageElementAst)(ctx.nestedMessage(nodeShape.displayName.value())).parse({nestedNodeShape: NodeShape =>
             nestedNodeShape.adopted(nodeShape.id)
+          })
+        case OPTION_STATEMENT =>
+          GrpcOptionParser(messageElementAst).parse({ extension =>
+            extension.adopted(nodeShape.id)
+            nodeShape.withCustomDomainProperty(extension)
           })
         case _        =>
           astError(nodeShape.id, s"unexpected Proto3 message element ${messageElement.children.head.name}", toAnnotations(messageElement.children.head))

@@ -1,15 +1,28 @@
 syntax = "proto3";
 
 import "library.proto";
+import "google/protobuf/descriptor.proto";
 
 
+package helloworld;
+message MyOption {
+  string a = 1;
+  string b = 2;
+}
+extend google.protobuf.FieldOptions {
+  MyOption mystruct = 5124;
+}
 option java_multiple_files = true;
 option java_package = "io.grpc.examples.helloworld";
 option java_outer_classname = "HelloWorldProto";
 option objc_class_prefix = "HLW";
-package helloworld;
+
+
 service Greeter {
-  rpc SayHello1(HelloRequest) returns (HelloReply) {}
+  option deprecated = true;
+  rpc SayHello1(HelloRequest) returns (HelloReply) {
+    option deprecated = true;
+  }
   rpc SayHello2(stream HelloRequest) returns (HelloReply) {}
   rpc SayHello3(HelloRequest) returns (stream HelloReply) {}
   rpc SayHello4(stream HelloRequest) returns (stream HelloReply) {}
@@ -17,11 +30,16 @@ service Greeter {
 
 
 
-message HelloRequest {
-  repeated string name = 1;
-  library.Wadus wadus = 2;
-}
 
+message HelloRequest {
+  option deprecated = true;
+  repeated string name = 1 [
+    deprecated = true,
+    packed = true
+  ];
+  library.Wadus wadus = 2 [(mystruct) = {  a:  "hello"}];
+  string other = 3 [deprecated = true];
+}
 message SampleMessage {
   map<string,SearchRequest> searches = 3;
   message NestedMessage1 {
@@ -38,11 +56,9 @@ message SampleMessage {
     HelloRequest sub_message = 9;
   }
 }
-
 enum Corpus {
   UNIVERSAL = 0;
 }
-
 message SearchRequest {
   string query = 1;
   int32 page_number = 2;

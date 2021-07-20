@@ -3,7 +3,7 @@ package amf.plugins.parse
 import amf.apicontract.internal.plugins.ApiParsePlugin
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.parse.document.{AntlrParsedDocument, ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{Grpc, Vendor}
@@ -55,7 +55,7 @@ object GrpcParsePlugin extends ApiParsePlugin with AntlrASTParserHelper {
       Some(WebApiDeclarations(Nil, UnhandledErrorHandler,ctx.futureDeclarations))
     )
     // setup the package path
-    GrpcPackageParser(ast)(grpcCtx).parseName() match {
+    GrpcPackageParser(ast, Document())(grpcCtx).parseName() match {
       case Some((pkg, _)) => grpcCtx.nestedMessage(pkg)
       case _         => grpcCtx
     }

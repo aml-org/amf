@@ -24,7 +24,7 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
 
   def parseName(adopt: DomainExtension => Unit): Unit = {
     path(ast, Seq(OPTION_NAME)) foreach { case node: Node =>
-      extension.withName(node.source)
+      extension.withName(node.children.filter(n => n.isInstanceOf[Node]).head.asInstanceOf[Node].source)
     }
     adopt(extension)
     extension.id = extension.id + extension.name.value().urlEncoded
@@ -91,13 +91,16 @@ case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends 
   def blockPairs(nodes: Seq[ASTElement], adopt: DataNode => Unit): Seq[(String, DataNode)] = {
     val acc: mutable.Buffer[(String, DataNode)] = mutable.Buffer()
     var nextKey: Option[String] = None
-    nodes.foreach { case n: Node =>
-       n.name match {
-         case IDENTIFIER => nextKey = Some(n.source)
-         case CONSTANT =>
-           val nextValue = parseConstant(n, adopt)
-           acc.append((nextKey.get, nextValue))
-       }
+    nodes.foreach {
+      case n: Node =>
+        n.name match {
+          case IDENTIFIER =>
+            nextKey = Some(n.source)
+          case CONSTANT =>
+            val nextValue = parseConstant(n, adopt)
+            acc.append((nextKey.get, nextValue))
+        }
+      case _        => // ignore
     }
     acc
   }

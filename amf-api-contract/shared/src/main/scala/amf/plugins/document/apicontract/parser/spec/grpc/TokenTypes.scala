@@ -3,6 +3,8 @@ package amf.plugins.document.apicontract.parser.spec.grpc
 object TokenTypes {
   val PROTO = "proto"
   val SYNTAX = "syntax"
+  val EXTENDS_STATEMENT = "extendsStatement"
+  val EXTEND_IDENTIFIER = "extendedIdentifier"
   val IMPORT_STATEMENT = "importStatement"
   val TOP_LEVEL_DEF = "topLevelDef"
   val PACKAGE_STATEMENT = "packageStatement"
@@ -21,6 +23,8 @@ object TokenTypes {
   val FIELD_NAME = "fieldName"
   val FIELD_NUMBER = "fieldNumber"
   val FIELD_TYPE = "type_"
+  val FIELD_OPTIONS_ELEMENTS = "fieldOptions"
+  val FIELD_OPTION = "fieldOption"
   val ENUM_DEF = "enumDef"
   val ENUM_NAME = "enumName"
   val ENUM_BODY = "enumBody"
@@ -44,4 +48,14 @@ object TokenTypes {
   val STRING_LITERAL = "strLit"
   val BOOL_LITERAL = "boolLit"
   val INT_LITERAL = "intLit"
+  val FIELD_OPTIONS = "google.protobuf.FieldOptions"
+  val ENUM_OPTIONS = "google.protobuf.EnumOptions"
+  val ENUM_VALUE_OPTIONS = "google.protobuf.EnumValueOptions"
+  val EXTENSION_RANGE_OPTIONS = "google.protobuf.ExtensionRangeOptions"
+  val MESSAGE_OPTIONS = "google.protobuf.MessageOptions"
+  val METHOD_OPTIONS = "google.protobuf.MethodOptions"
+  val SERVICE_OPTIONS = "google.protobuf.ServiceOptions"
+  val FILE_OPTIONS = "google.protobuf.FileOptions"
+  val ONEOF_OPTIONS = "google.protobuf.OneofOptions"
+
 }

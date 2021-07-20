@@ -5,7 +5,7 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.parser.Position
 import amf.plugins.domain.apicontract.models.EndPoint
 
-case class GrpcServiceEmitter(endPoint: EndPoint, builder: StringDocBuilder, ctx: GrpcEmitterContext) {
+case class GrpcServiceEmitter(endPoint: EndPoint, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {
 
   def emit(): Unit = {
     builder.fixed { f =>
@@ -13,7 +13,7 @@ case class GrpcServiceEmitter(endPoint: EndPoint, builder: StringDocBuilder, ctx
       f.obj { o =>
         emitOperations(o)
       }
-      f += ("}")
+      f += "}"
     }
   }
 
@@ -21,11 +21,12 @@ case class GrpcServiceEmitter(endPoint: EndPoint, builder: StringDocBuilder, ctx
     endPoint.path.value().split("/").mkString("")
   }
 
-  def emitOperations(builder: StringDocBuilder) = {
+  def emitOperations(builder: StringDocBuilder): StringDocBuilder = {
     builder.list { l =>
       endPoint.operations.foreach { op =>
         GrpcRPCEmitter(op, l, ctx).emit()
       }
+      emitOptions(endPoint, l, ctx)
     }
   }
 

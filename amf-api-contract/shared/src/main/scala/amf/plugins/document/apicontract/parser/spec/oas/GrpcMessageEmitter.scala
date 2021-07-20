@@ -5,14 +5,14 @@ import amf.plugins.domain.shapes.models.{NodeShape, UnionShape}
 import amf.core.emitter.BaseEmitters._
 import amf.core.parser.Position
 
-case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) {
+case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {
   def emit(): Unit = {
     builder.fixed { f =>
       f += (s"message ${messageName} {", messageNamePos)
       f.obj { o =>
         o.list {l =>
           emitProperties(l)
-
+          emitOptions(shape, l, ctx)
           ctx.nestedMessages(shape).foreach { nested =>
             GrpcMessageEmitter(nested, l, ctx).emit()
           }
