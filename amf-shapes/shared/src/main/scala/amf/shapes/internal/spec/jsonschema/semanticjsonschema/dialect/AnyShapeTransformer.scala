@@ -1,9 +1,8 @@
-package amf.plugins.parser.dialect
+package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
 
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.parser.Fields
-import amf.plugins.document.vocabularies.model.domain.{NodeMapping, UnionNodeMapping}
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.aml.client.scala.model.domain.{NodeMapping, UnionNodeMapping}
+import amf.core.internal.parser.domain.Fields
+import amf.shapes.client.scala.model.domain.AnyShape
 
 case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext) {
 
