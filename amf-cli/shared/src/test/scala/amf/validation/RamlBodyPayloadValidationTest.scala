@@ -2,6 +2,7 @@ package amf.validation
 
 import amf.apicontract.client.scala.{AMFBaseUnitClient, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.{StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Shape
@@ -63,9 +64,9 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
       case Some(Raml08) =>
-        client.transformDefault(unit, Raml08.mediaType).baseUnit
+        client.transform(unit, PipelineId.Default).baseUnit
       case _ =>
-        client.transformDefault(unit, Raml10.mediaType).baseUnit
+        client.transform(unit, PipelineId.Default).baseUnit
     }
   }
 }

@@ -13,13 +13,13 @@ class MutateModelCycleTest extends FunSuiteCycleTests {
 
   test("Test add empty variable to trait") {
 
-    val trasform = (bu: BaseUnit) => {
+    val transform = (bu: BaseUnit) => {
       val traitNode = bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.head.operations.head.extend.head
       val newParam  = VariableValue().withName("param1")
       traitNode.asInstanceOf[ParametrizedDeclaration].withVariables(Seq(newParam))
       bu
     }
-    transformCycle("add-empty-variable.raml", "add-empty-variable-mutated.raml", Raml10YamlHint, Raml10, trasform)
+    transformCycle("add-empty-variable.raml", "add-empty-variable-mutated.raml", Raml10YamlHint, Raml10, transform)
   }
 
   final def transformCycle(source: String,
@@ -29,7 +29,7 @@ class MutateModelCycleTest extends FunSuiteCycleTests {
                            transform: BaseUnit => BaseUnit,
                            directory: String = basePath): Future[Assertion] = {
     val config    = CycleConfig(source, golden, hint, target, directory, None, None)
-    val amfConfig = buildConfig(None, None)
+    val amfConfig = buildConfig(configFor(target), None, None)
     build(config, amfConfig)
       .map(transform(_))
       .map(render(_, config, amfConfig))

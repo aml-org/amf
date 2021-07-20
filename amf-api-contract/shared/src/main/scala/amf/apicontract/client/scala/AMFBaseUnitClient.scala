@@ -41,48 +41,4 @@ class AMFBaseUnitClient private[amf] (override protected val configuration: AMFC
     case other =>
       throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, ModuleModel)
   }
-
-  /**
-    * Transforms a [[BaseUnit]] with using pipeline with default id.
-    * @param baseUnit [[BaseUnit]] to transform
-    * @param targetMediaType Provide a specification for obtaining the correct pipeline.
-    *                        Must be <code>"application/spec"</code> or <code>"application/spec+syntax"</code>.
-    *                        Examples: <code>"application/raml10"</code> or <code>"application/raml10+yaml"</code>
-    * @return An [[AMFResult]] with the transformed BaseUnit and it's validation results
-    */
-  def transformDefault(baseUnit: BaseUnit, targetMediaType: String): AMFResult =
-    this.transform(baseUnit, PipelineName.from(targetMediaType, PipelineId.Default))
-
-  /**
-    * Transforms a [[BaseUnit]] with using pipeline with editing id.
-    * @param baseUnit [[BaseUnit]] to transform
-    * @param targetMediaType Provide a specification for obtaining the correct pipeline.
-    *                        Must be <code>"application/spec"</code> or <code>"application/spec+syntax"</code>.
-    *                        Examples: <code>"application/raml10"</code> or <code>"application/raml10+yaml"</code>
-    * @return An [[AMFResult]] with the transformed BaseUnit and it's validation results
-    */
-  def transformEditing(baseUnit: BaseUnit, targetMediaType: String): AMFResult =
-    this.transform(baseUnit, PipelineName.from(targetMediaType, PipelineId.Editing))
-
-  /**
-    * Transforms a [[BaseUnit]] with using pipeline with compatibility id.
-    * @param baseUnit [[BaseUnit]] to transform
-    * @param targetMediaType Provide a specification for obtaining the correct pipeline.
-    *                        Must be <code>"application/spec"</code> or <code>"application/spec+syntax"</code>.
-    *                        Examples: <code>"application/raml10"</code> or <code>"application/raml10+yaml"</code>
-    * @return An [[AMFResult]] with the transformed BaseUnit and it's validation results
-    */
-  def transformCompatibility(baseUnit: BaseUnit, targetMediaType: String): AMFResult =
-    this.transform(baseUnit, PipelineName.from(targetMediaType, PipelineId.Compatibility))
-
-  /**
-    * Transforms a [[BaseUnit]] with using pipeline with cache id.
-    * @param baseUnit [[BaseUnit]] to transform
-    * @param targetMediaType Provide a specification for obtaining the correct pipeline.
-    *                        Must be <code>"application/spec"</code> or <code>"application/spec+syntax"</code>.
-    *                        Examples: <code>"application/raml10"</code> or <code>"application/raml10+yaml"</code>
-    * @return An [[AMFResult]] with the transformed BaseUnit and it's validation results
-    */
-  def transformCache(baseUnit: BaseUnit, targetMediaType: String): AMFResult =
-    this.transform(baseUnit, PipelineName.from(targetMediaType, PipelineId.Cache))
 }

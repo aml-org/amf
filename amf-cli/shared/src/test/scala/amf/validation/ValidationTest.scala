@@ -2,7 +2,7 @@ package amf.validation
 
 import _root_.org.scalatest.AsyncFunSuite
 import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
-
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation._
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.validation.AMFValidationReport
@@ -100,7 +100,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(RAMLConfiguration.RAML10().baseUnitClient())
       parseResult <- client.parse(validationsPath + "/security-schemes/security1.raml")
       transformResult <- Future {
-        client.transformDefault(parseResult.baseUnit, Raml10.mediaType)
+        client.transform(parseResult.baseUnit, PipelineId.Default)
       }
     } yield {
       assert(!transformResult.conforms)
@@ -117,7 +117,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(RAMLConfiguration.RAML10().baseUnitClient())
       parseResult <- client.parse(validationsPath + "/missing-annotation-types/api.raml")
       transformResult <- Future {
-        client.transformDefault(parseResult.baseUnit, Raml10.mediaType)
+        client.transform(parseResult.baseUnit, PipelineId.Default)
       }
       report <- client.validate(transformResult.baseUnit, Raml10Profile)
     } yield {
@@ -131,7 +131,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(RAMLConfiguration.RAML10().baseUnitClient())
       parseResult <- client.parse(validationsPath + "/enumeration-arrays/api.raml")
       transformResult <- Future {
-        client.transformDefault(parseResult.baseUnit, Raml10.mediaType)
+        client.transform(parseResult.baseUnit, PipelineId.Default)
       }
       report <- client.validate(transformResult.baseUnit, Raml10Profile)
     } yield {
@@ -144,7 +144,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       client      <- Future.successful(WebAPIConfiguration.WebAPI().baseUnitClient())
       parseResult <- client.parse(validationsPath + "/enumeration-arrays/api.raml")
       transformResult <- Future {
-        client.transformDefault(parseResult.baseUnit, Raml10.mediaType)
+        client.transform(parseResult.baseUnit, PipelineId.Default)
       }
       report <- client.validate(transformResult.baseUnit, Oas20Profile)
     } yield {

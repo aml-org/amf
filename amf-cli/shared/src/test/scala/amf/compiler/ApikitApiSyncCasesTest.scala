@@ -3,6 +3,7 @@ package amf.compiler
 import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.common.remote.Content
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
@@ -77,7 +78,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
       .withErrorHandlerProvider(() => eh).baseUnitClient()
     for {
       parseResult <- client.parse(url)
-      _ <- Future.successful(client.transformEditing(parseResult.baseUnit, ProvidedMediaType.Raml10))
+      _ <- Future.successful(client.transform(parseResult.baseUnit, PipelineId.Editing))
     }yield {
       eh.getResults should have size 0
     }

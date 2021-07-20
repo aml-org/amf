@@ -1,7 +1,15 @@
 package amf.io
 
-import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{
+  AMFConfiguration,
+  APIConfiguration,
+  AsyncAPIConfiguration,
+  BaseApiConfiguration,
+  OASConfiguration,
+  RAMLConfiguration,
+  WebAPIConfiguration
+}
+import amf.apicontract.internal.spec.raml.RamlHeader.Raml10
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
@@ -104,7 +112,7 @@ abstract class FunSuiteRdfCycleTests extends MultiJsonldAsyncFunSuite with Build
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 }
 
-trait BuildCycleTestCommon extends FileAssertionTest {
+trait BuildCycleTestCommon extends FileAssertionTest with AMFConfigProvider {
 
   protected implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -141,9 +149,19 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd
 
   protected def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
-    val amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    val amfConfig: AMFConfiguration = APIConfiguration.API()
     val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {
       amfConfig.withRenderOptions(r)
+    })
+    eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
+      renderedConfig.withErrorHandlerProvider(() => e))
+  }
+
+  protected def buildConfig(from: AMFConfiguration,
+                            options: Option[RenderOptions],
+                            eh: Option[AMFErrorHandler]): AMFConfiguration = {
+    val renderedConfig: AMFConfiguration = options.fold(from.withRenderOptions(renderOptions()))(r => {
+      from.withRenderOptions(r)
     })
     eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
       renderedConfig.withErrorHandlerProvider(() => e))
@@ -180,13 +198,15 @@ trait BuildCycleTests extends BuildCycleTestCommon {
                   transformWith: Option[Vendor] = None,
                   eh: Option[AMFErrorHandler] = None): Future[Assertion] = {
 
-    val config    = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
-    val amfConfig = buildConfig(renderOptions, eh)
+    val config          = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
+    val amfConfig       = buildConfig(renderOptions, eh)
+    val transformConfig = buildConfig(configFor(transformWith.getOrElse(target)), renderOptions, eh)
+    val renderConfig    = buildConfig(configFor(target), renderOptions, eh)
 
     for {
       parsed       <- build(config, amfConfig)
-      resolved     <- Future.successful(transform(parsed, config, amfConfig))
-      actualString <- Future.successful(render(resolved, config, amfConfig))
+      resolved     <- Future.successful(transform(parsed, config, transformConfig))
+      actualString <- Future.successful(render(resolved, config, renderConfig))
       actualFile   <- writeTemporaryFile(golden)(actualString)
       assertion    <- assertDifferences(actualFile, config.goldenPath)
     } yield {

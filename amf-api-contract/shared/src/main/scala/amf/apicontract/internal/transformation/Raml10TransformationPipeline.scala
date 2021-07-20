@@ -20,5 +20,5 @@ class Raml10TransformationPipeline private (override val name: String) extends A
 
 object Raml10TransformationPipeline {
   def apply()      = new Raml10TransformationPipeline(name)
-  val name: String = PipelineName.from(Raml10.mediaType, PipelineId.Default)
+  val name: String = PipelineId.Default
 }

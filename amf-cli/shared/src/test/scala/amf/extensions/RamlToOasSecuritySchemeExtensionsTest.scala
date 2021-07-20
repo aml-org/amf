@@ -1,7 +1,6 @@
 package amf.extensions
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.ParsingOptions
@@ -13,7 +12,7 @@ import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest with Matchers {
+class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest with Matchers {
 
   val basePath = "file://amf-cli/shared/src/test/resources/extensions/security-schemes"
 
@@ -104,7 +103,7 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
   }
 
   private def renderToString(unit: BaseUnit, mediaType: String): String = {
-    val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    val config = OASConfiguration.OAS20()
     new AMFSerializer(unit, mediaType, config.renderConfiguration).renderToString
   }
 

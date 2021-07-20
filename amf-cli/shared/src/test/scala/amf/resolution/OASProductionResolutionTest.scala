@@ -2,9 +2,11 @@ package amf.resolution
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.Oas20TransformationPipeline
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.internal.remote._
 
 class OASProductionResolutionTest extends ResolutionTest {
@@ -15,11 +17,7 @@ class OASProductionResolutionTest extends ResolutionTest {
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     if (config.target.equals(Amf) && config.transformWith.isEmpty) {
-      amfConfig
-        .withErrorHandlerProvider(() => UnhandledErrorHandler)
-        .baseUnitClient()
-        .transform(unit, Oas20TransformationPipeline.name)
-        .baseUnit
+      TransformationPipelineRunner(UnhandledErrorHandler).run(unit, Oas20TransformationPipeline())
     } else super.transform(unit, config, amfConfig)
   }
 

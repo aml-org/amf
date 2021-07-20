@@ -1,7 +1,9 @@
 package amf.resolution
 
+import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.common.transform._
+import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Vendor.AMF
 import amf.core.internal.remote.{Async20YamlHint, AsyncApi20, Vendor}
 
@@ -177,6 +179,10 @@ class Async20ResolutionTest extends ResolutionTest {
       directory = validationsPath + "validations/external-reference/",
       renderOptions = Some(config.renderOptions)
     )
+  }
+
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
+    super.transform(unit, config, AsyncAPIConfiguration.Async20())
   }
 
   override val defaultVendor: Option[Vendor] = Some(AsyncApi20)

@@ -5,30 +5,18 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
-import amf.apicontract.internal.plugins.{
-  ExternalJsonYamlRefsParsePlugin,
-  JsonSchemaParsePlugin,
-  JsonSchemaRenderPlugin
-}
+import amf.apicontract.internal.plugins.{ExternalJsonYamlRefsParsePlugin, JsonSchemaParsePlugin, JsonSchemaRenderPlugin}
 import amf.apicontract.internal.spec.async.{Async20ParsePlugin, Async20RenderPlugin}
 import amf.apicontract.internal.spec.oas.{Oas20ParsePlugin, Oas20RenderPlugin, Oas30ParsePlugin, Oas30RenderPlugin}
 import amf.apicontract.internal.spec.payload.{PayloadParsePlugin, PayloadRenderPlugin}
-import amf.apicontract.internal.spec.raml.{
-  Raml08ParsePlugin,
-  Raml08RenderPlugin,
-  Raml10ParsePlugin,
-  Raml10RenderPlugin
-}
+import amf.apicontract.internal.spec.raml.{Raml08ParsePlugin, Raml08RenderPlugin, Raml10ParsePlugin, Raml10RenderPlugin}
+import amf.apicontract.internal.transformation.PipelineProvider.{getCachePipelines, getDefaultPipelines, getEditingPipelines}
 import amf.apicontract.internal.transformation._
-import amf.apicontract.internal.transformation.compatibility.{
-  Oas20CompatibilityPipeline,
-  Oas3CompatibilityPipeline,
-  Raml08CompatibilityPipeline,
-  Raml10CompatibilityPipeline
-}
+import amf.apicontract.internal.transformation.compatibility.{Oas20CompatibilityPipeline, Oas3CompatibilityPipeline, Raml08CompatibilityPipeline, Raml10CompatibilityPipeline}
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.validation.shacl.ShaclModelValidationPlugin
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -38,6 +26,8 @@ import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.registries.AMFRegistry
+import amf.core.internal.remote.Spec
+import amf.core.internal.remote.Spec._
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
@@ -75,6 +65,18 @@ sealed trait APIConfigurationBuilder {
   }
 }
 
+private[amf] object BaseApiConfiguration extends APIConfigurationBuilder {
+  def BASE(): AMFConfiguration =
+    common()
+      .withValidationProfile(AmfValidationProfile)
+      .withTransformationPipelines(
+        List(
+          AmfEditingPipeline(),
+          AmfTransformationPipeline()
+        )
+      )
+}
+
 /**
   * [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for RAML like:
   *   - Validation rules
@@ -106,7 +108,20 @@ object RAMLConfiguration extends APIConfigurationBuilder {
           Raml08CachePipeline()
         ))
 
-  def RAML(): AMFConfiguration = RAML08().merge(RAML10())
+  def RAML(): AMFConfiguration =
+    common()
+      .withPlugins(List(Raml08ParsePlugin, Raml10ParsePlugin))
+      .withValidationProfile(Raml10ValidationProfile)
+      .withValidationProfile(Raml08ValidationProfile)
+      .withTransformationPipelines(
+        List(
+          VendorChooserCompositePipeline(PipelineId.Editing)
+            .add(getEditingPipelines(Spec.RAML10, Spec.RAML08, AMF)),
+          VendorChooserCompositePipeline(PipelineId.Default)
+            .add(getDefaultPipelines(Spec.RAML10, Spec.RAML08, AMF)),
+          VendorChooserCompositePipeline(PipelineId.Cache).add(getCachePipelines(Vendor.RAML10, Vendor.RAML08, AMF))
+        )
+      )
 }
 
 /**
@@ -138,12 +153,40 @@ object OASConfiguration extends APIConfigurationBuilder {
           Oas3CompatibilityPipeline(),
           Oas3CachePipeline()
         ))
-  def OAS(): AMFConfiguration = OAS20().merge(OAS30())
+
+  def OAS(): AMFConfiguration =
+    common()
+      .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin))
+      .withValidationProfile(Oas30ValidationProfile)
+      .withValidationProfile(Oas20ValidationProfile)
+      .withTransformationPipelines(
+        List(
+          VendorChooserCompositePipeline(PipelineId.Editing).add(getEditingPipelines(Vendor.OAS20, Vendor.OAS30, AMF)),
+          VendorChooserCompositePipeline(PipelineId.Default).add(getDefaultPipelines(Vendor.OAS20, Vendor.OAS30, AMF)),
+          VendorChooserCompositePipeline(PipelineId.Cache).add(getCachePipelines(Vendor.OAS20, Vendor.OAS30, AMF))
+        )
+      )
 }
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
-object WebAPIConfiguration {
-  def WebAPI(): AMFConfiguration = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
+object WebAPIConfiguration extends APIConfigurationBuilder {
+
+  def WebAPI(): AMFConfiguration =
+    common()
+      .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin, Raml10ParsePlugin, Raml08ParsePlugin))
+      .withValidationProfile(Oas30ValidationProfile)
+      .withValidationProfile(Oas20ValidationProfile)
+      .withValidationProfile(Raml10ValidationProfile)
+      .withValidationProfile(Raml08ValidationProfile)
+      .withTransformationPipelines(
+        List(
+          VendorChooserCompositePipeline(PipelineId.Editing)
+            .add(getEditingPipelines(OAS20, OAS30, RAML08, RAML10, AMF)),
+          VendorChooserCompositePipeline(PipelineId.Default)
+            .add(getDefaultPipelines(OAS20, OAS30, RAML08, RAML10, AMF)),
+          VendorChooserCompositePipeline(PipelineId.Cache).add(getCachePipelines(OAS20, OAS30, RAML08, RAML10, AMF))
+        )
+      )
 }
 
 /**
@@ -166,8 +209,22 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
 }
 
 /** Merged [[WebAPIConfiguration]] and [[AsyncAPIConfiguration.Async20()]] configurations */
-object APIConfiguration {
-  def API(): AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+object APIConfiguration extends APIConfigurationBuilder {
+  def API(): AMFConfiguration =
+    WebAPIConfiguration
+      .WebAPI()
+      .withPlugin(Async20ParsePlugin)
+      .withValidationProfile(Async20ValidationProfile)
+      .withTransformationPipelines(
+        List(
+          VendorChooserCompositePipeline(PipelineId.Editing)
+            .add(getEditingPipelines(OAS20, OAS30, RAML08, RAML10, ASYNC20, AMF)),
+          VendorChooserCompositePipeline(PipelineId.Default)
+            .add(getDefaultPipelines(OAS20, OAS30, RAML08, RAML10, ASYNC20, AMF)),
+          VendorChooserCompositePipeline(PipelineId.Cache)
+            .add(getCachePipelines(OAS20, OAS30, RAML08, RAML10, ASYNC20, AMF))
+        )
+      )
 }
 
 /**

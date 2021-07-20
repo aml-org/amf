@@ -2,6 +2,7 @@ package amf.emit
 
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
@@ -150,7 +151,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
       findShapeFunc(
         config
           .baseUnitClient()
-          .transformDefault(unit, Vendor.OAS20.mediaType)
+          .transform(unit, PipelineId.Default)
           .baseUnit
       ).map { element =>
           config.elementClient().toJsonSchema(element)
