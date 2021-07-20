@@ -230,7 +230,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
             val nestedEndpointName = entry.key.toString()
             ctx.eh.violation(
               NestedEndpoint,
-              endpoint.id.stripSuffix("/applied"),
+              endpoint.id,
               None,
               s"Nested endpoint in resourceType: '$nestedEndpointName'",
               Some(LexicalInformation(Range(entry.key.range))),
