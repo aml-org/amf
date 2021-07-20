@@ -29,11 +29,11 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
-  * 1) Get a queue of resource types for this Endpoint.
-  * 2) Resolve each resource type and merge each one to the endpoint. Start with the closest to the endpoint.
-  * 3) Get the traits as branches, as described in the spec, to get the order of the traits to apply.
-  * 4) Resolve each trait and merge each one to the operation in the provided order..
-  * 5) Remove 'extends' property from the endpoint and from the operations.
+  *   1. Get a queue of resource types for this Endpoint.
+  *   1. Resolve each resource type and merge each one to the endpoint. Start with the closest to the endpoint.
+  *   1. Get the traits as branches, as described in the spec, to get the order of the traits to apply.
+  *   1. Resolve each trait and merge each one to the operation in the provided order..
+  *   1. Remove 'extends' property from the endpoint and from the operations.
   */
 class ExtendsResolutionStage(
     profile: ProfileName,
