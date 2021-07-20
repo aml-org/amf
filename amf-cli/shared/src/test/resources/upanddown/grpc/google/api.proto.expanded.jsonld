@@ -330,6 +330,34 @@
         "@value": true
       }
     ],
+    "http://a.ml/vocabularies/document#package": [
+      {
+        "@value": "google.protobuf"
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/api.proto#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/document#package"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(33,0)-(33,23)]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
     "http://a.ml/vocabularies/document#references": [
       {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/source_context.proto",
@@ -805,6 +833,34 @@
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#package": [
+          {
+            "@value": "google.protobuf"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/source_context.proto#/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/source_context.proto#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/document#package"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(33,0)-(33,23)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -7127,6 +7183,34 @@
               {
                 "@value": false
               }
+            ],
+            "http://a.ml/vocabularies/document#package": [
+              {
+                "@value": "google.protobuf"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/any.proto#/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/any.proto#/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#package"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(33,0)-(33,23)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           },
           {
@@ -7604,12 +7688,68 @@
               {
                 "@value": false
               }
+            ],
+            "http://a.ml/vocabularies/document#package": [
+              {
+                "@value": "google.protobuf"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/source_context.proto#/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/source_context.proto#/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#package"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(33,0)-(33,23)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#package": [
+          {
+            "@value": "google.protobuf"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/type.proto#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/document#package"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(33,0)-(33,23)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

@@ -1,23 +1,26 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.scala.model.document.Document
 import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.apicontract.contexts.parser.grpc.GrpcWebApiContext
 import amf.plugins.document.apicontract.parser.spec.grpc.AntlrASTParserHelper
 import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes._
 import org.mulesoft.antlrast.ast.{ASTElement, Node}
 
-class GrpcPackageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
+class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
   val webApi  = WebApi()
 
   def parse(): WebApi = {
     parseName() match {
-      case Some((pkg, annotations)) => webApi.withName(pkg, annotations)
+      case Some((pkg, annotations)) =>
+        doc.withPkg(pkg, annotations)
+        webApi.withName(pkg, annotations)
       case _         =>
         astError(webApi.id, "Missing protobuf3 package statement", toAnnotations(ast))
         webApi.withName(ctx.rootContextDocument.split("/").last)
     }
-    collectOptions(ast, { extension =>
+    collectOptions(ast, Seq(OPTION_STATEMENT), { extension =>
       extension.adopted(webApi.id)
       webApi.withCustomDomainProperty(extension)
     })
@@ -47,5 +50,5 @@ class GrpcPackageParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends 
 }
 
 object GrpcPackageParser {
-  def apply(ast: Node)(implicit ctx: GrpcWebApiContext): GrpcPackageParser = new GrpcPackageParser(ast)
+  def apply(ast: Node, doc: Document)(implicit ctx: GrpcWebApiContext): GrpcPackageParser = new GrpcPackageParser(ast, doc)
 }

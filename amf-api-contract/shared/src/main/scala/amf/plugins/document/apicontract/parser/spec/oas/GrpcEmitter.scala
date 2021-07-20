@@ -1,8 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
+import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.internal.plugins.syntax.StringDocBuilder
-import amf.shapes.client.scala.model.domain.NodeShape
+import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, ScalarShape}
 
 trait GrpcEmitter {
 
@@ -12,6 +13,8 @@ trait GrpcEmitter {
     }
   }
 
+  def mustEmitOptions(domainElement: DomainElement): Boolean = domainElement.customDomainProperties.nonEmpty
+
   def fieldRange(range: Shape): String = {
     range match {
       case m: NodeShape if Option(m.additionalPropertiesKeySchema).isDefined => mapRange(m)
@@ -19,10 +22,7 @@ trait GrpcEmitter {
       case a: ArrayShape if a.items.isInstanceOf[NodeShape]   => objectRange(a.items.asInstanceOf[NodeShape])
       case s: ScalarShape                                     => scalarRange(s)
       case o: NodeShape                                       => objectRange(o)
-      case s                                                  =>
-        println("UNKNOWN MESSAGE:")
-        println(s)
-        "UnknownMessage"
+      case s                                                  => "UnknownMessage"
     }
   }
 

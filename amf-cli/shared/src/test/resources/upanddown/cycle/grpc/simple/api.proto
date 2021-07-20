@@ -1,6 +1,15 @@
 syntax = "proto3";
 
 import "library.proto";
+import "google/protobuf/descriptor.proto";
+
+message MyOption {
+  string a = 1;
+  string b = 2;
+}
+extend google.protobuf.FieldOptions {
+  MyOption mystruct = 5124;
+}
 
 option java_multiple_files = true;
 option java_package = "io.grpc.examples.helloworld";
@@ -11,8 +20,11 @@ package helloworld;
 
 // The greeting service definition.
 service Greeter {
+  option deprecated = true;
   // Sends a greeting
-  rpc SayHello1 (HelloRequest) returns (HelloReply) {}
+  rpc SayHello1 (HelloRequest) returns (HelloReply) {
+    option deprecated = true;
+  }
   rpc SayHello2 (stream HelloRequest) returns (HelloReply) {}
   rpc SayHello3 (HelloRequest) returns (stream HelloReply) {}
   rpc SayHello4 (stream HelloRequest) returns (stream HelloReply) {}
@@ -20,8 +32,10 @@ service Greeter {
 
 // The request message containing the user's name.
 message HelloRequest {
-  repeated string name = 1;
-  library.Wadus wadus = 2;
+  option deprecated = true;
+  repeated string name = 1 [deprecated = true, packed = true];
+  library.Wadus wadus = 2 [(mystruct) = { a: "hello"}];
+  string other = 3 [deprecated = true];
 }
 
 message SampleMessage {

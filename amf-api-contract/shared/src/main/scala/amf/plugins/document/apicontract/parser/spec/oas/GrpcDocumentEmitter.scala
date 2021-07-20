@@ -4,6 +4,7 @@ import amf.client.remod.amfcore.plugins.render.{SourceCodeBlock, StringDocBuilde
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.plugins.domain.apicontract.models.api.WebApi
 import amf.core.emitter.BaseEmitters._
+import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.plugins.domain.apicontract.models.EndPoint
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
@@ -12,6 +13,11 @@ class GrpcEmitterContext(document: BaseUnit) {
   def topLevelMessages: Seq[NodeShape] = messages.filter { s =>
     val declarations = s.name.value().split("\\.").filter(w => w != "" && !w.matches("[a-z].+"))
     declarations.length == 1
+  }
+
+  def extensions: Seq[CustomDomainProperty] = document match {
+    case dec: DeclaresModel => dec.declares.collect { case cdp: CustomDomainProperty => cdp }
+    case _                  => Nil
   }
 
   def topLevelEnums: Seq[ScalarShape] = enums.filter { s =>
@@ -80,6 +86,7 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
         emitMessages(l)
         emitEnums(l)
         emitServices(l)
+        emitExtensions(l)
         emitOptions(webApi, l, ctx)
       }
     }
@@ -89,19 +96,39 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
   def endpoints: Seq[EndPoint] = webApi.endPoints
 
   def emitReferences(b: StringDocBuilder): Unit = {
+    var checkDefaultGoogleDescriptor = false
     // we make the location relative to the location of the unit if we can
     val rootLocation = document.location().getOrElse("").replace("file://", "").split("/").dropRight(1).mkString("/") + "/"
     document.references.collect{ case r if r.location().isDefined => r }.foreach { ref =>
       val refLocation = ref.location().get.replace("file://", "").replace(rootLocation, "")
+      if (refLocation.contains("google/protobuf/descriptor.proto\"")) {
+        checkDefaultGoogleDescriptor = true
+      }
       b += ("import \"" + refLocation + "\";")
     }
-    if (document.references.nonEmpty) {
+    if (!checkDefaultGoogleDescriptor && declaresOptions) {
+      b += ("import \"google/protobuf/descriptor.proto\";")
+    }
+    if (document.references.nonEmpty || declaresOptions) {
       b += "\n"
+    }
+
+  }
+
+  def declaresOptions: Boolean = {
+    document match {
+      case lib: DeclaresModel =>
+        lib.declares.exists(_.isInstanceOf[CustomDomainProperty])
+      case _                    => false
     }
   }
 
   def emitPackage(l: StringDocBuilder): SourceCodeBlock = {
-    val nameField = webApi.name
+    val nameField = if (document.pkg.option().isDefined) {
+      document.pkg
+    } else {
+      webApi.name
+    }
     val position = pos(nameField.annotations())
     val name = nameField.option().getOrElse("anonymous")
     val normalizedName = name.toLowerCase.replaceAll("-", "_").replaceAll( " ", "")
@@ -122,4 +149,9 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
     }
   }
 
+  private def emitExtensions(l: StringDocBuilder): Unit = {
+    ctx.extensions.groupBy(c => c.domain.head.value()).foreach { case (domain, extensions) =>
+      GrpcExtensionEmitter(extensions, l, domain, ctx).emit()
+    }
+  }
 }
