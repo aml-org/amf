@@ -1,8 +1,8 @@
-package amf.plugins.parser.dialect
+package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
 
-import amf.core.model.domain.DomainElement
-import amf.plugins.document.vocabularies.model.domain.{NodeMapping, UnionNodeMapping}
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.aml.client.scala.model.domain.{NodeMapping, UnionNodeMapping}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.shapes.client.scala.model.domain.AnyShape
 
 import scala.collection.mutable
 
