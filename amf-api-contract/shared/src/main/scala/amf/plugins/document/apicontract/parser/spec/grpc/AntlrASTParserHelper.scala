@@ -225,8 +225,8 @@ trait AntlrASTParserHelper {
     ctx.eh.violation(ParserSideValidations.InvalidAst, id, message, annotations)
   }
 
-  def collectOptions(ast: Node, adopt: DomainExtension => Unit)(implicit ctx: GrpcWebApiContext): Unit = {
-    collect(ast, Seq(OPTION_STATEMENT)).map { case optNode: Node =>
+  def collectOptions(ast: Node, path: Seq[String], adopt: DomainExtension => Unit)(implicit ctx: GrpcWebApiContext): Unit = {
+    collect(ast, path).map { case optNode: Node =>
       GrpcOptionParser(optNode).parse(adopt)
     }
   }

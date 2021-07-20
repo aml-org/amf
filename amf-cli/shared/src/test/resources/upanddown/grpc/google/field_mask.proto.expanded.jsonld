@@ -379,6 +379,34 @@
         "@value": true
       }
     ],
+    "http://a.ml/vocabularies/document#package": [
+      {
+        "@value": "google.protobuf"
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/field_mask.proto#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/field_mask.proto#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/document#package"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(33,0)-(33,23)]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
     "http://a.ml/vocabularies/document#declares": [
       {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/field_mask.proto#/web-api/types/.google.protobuf.FieldMask",

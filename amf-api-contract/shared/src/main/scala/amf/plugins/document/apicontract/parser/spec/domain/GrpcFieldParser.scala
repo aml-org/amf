@@ -3,7 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.domain
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.plugins.document.apicontract.contexts.parser.grpc.GrpcWebApiContext
 import amf.plugins.document.apicontract.parser.spec.grpc.AntlrASTParserHelper
-import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes.FIELD_NAME
+import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes.{FIELD_NAME, FIELD_OPTION, FIELD_OPTIONS_ELEMENTS}
 import org.mulesoft.antlrast.ast.Node
 
 case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
@@ -14,7 +14,17 @@ case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) exten
     adopt(propertyShape)
     parseFieldNumber()
     parseFieldRange()
+    parseOptions()
     propertyShape
+  }
+
+  def parseOptions() = {
+    collect(ast, Seq(FIELD_OPTIONS_ELEMENTS, FIELD_OPTION)).foreach { case n: Node =>
+      GrpcOptionParser(n).parse({ extension =>
+        extension.adopted(propertyShape.id)
+        propertyShape.withCustomDomainProperty(extension)
+      })
+    }
   }
 
   def parseFieldName(): Unit = {
