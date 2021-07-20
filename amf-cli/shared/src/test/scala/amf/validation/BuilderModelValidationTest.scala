@@ -63,7 +63,8 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
         | myType:
         |   type: number
         |   format: int""".stripMargin
-    val s     = new AMFSerializer(m, ProvidedMediaType.Raml10, RAMLConfiguration.RAML().renderConfiguration).renderToString
+    val s =
+      new AMFSerializer(m, ProvidedMediaType.Raml10, RAMLConfiguration.RAML10().renderConfiguration).renderToString
     val diffs = Diff.ignoreAllSpace.diff(s, e)
     if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")
     succeed

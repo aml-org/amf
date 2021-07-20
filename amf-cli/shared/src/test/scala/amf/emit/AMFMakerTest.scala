@@ -11,8 +11,14 @@ import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 import org.yaml.model.YMap
 import amf.core.internal.parser._
+import amf.io.AMFConfigProvider
 
-class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions with PlatformSecrets {
+class AMFMakerTest
+    extends FunSuite
+    with AMFUnitFixtureTest
+    with ListAssertions
+    with PlatformSecrets
+    with AMFConfigProvider {
 
   test("Test simple Raml generation") {
     val root = ast(`document/api/bare`, Raml10)
@@ -122,7 +128,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   private def ast(document: Document, vendor: Vendor): YMap = {
-    val config = APIConfiguration.API()
+    val config = configFor(vendor)
     config.baseUnitClient().renderAST(document, vendor.mediaType) match {
       case doc: SyamlParsedDocument => doc.document.node.as[YMap]
       case _                        => YMap.empty

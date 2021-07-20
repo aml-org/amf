@@ -1,6 +1,7 @@
 package amf.emit
 
-import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, RAMLConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, OASConfiguration}
 import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
@@ -43,14 +44,15 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
       val path = s"$filePath/$file"
 
       test(s"Test $path to $to") {
-        val config     = CycleConfig(path, path, from, to, basePath, syntax, pipeline)
-        val targetHint = hint(vendor = to)
-        val toProfile  = profile(to)
-        val amfConfig  = buildConfig(None, None)
+        val config       = CycleConfig(path, path, from, to, basePath, syntax, pipeline)
+        val targetHint   = hint(vendor = to)
+        val toProfile    = profile(to)
+        val amfConfig    = buildConfig(None, None)
+        val targetConfig = buildConfig(amfConfigFrom(to), None, None)
         for {
           origin   <- build(config, amfConfig)
-          resolved <- successful(transform(origin, config, amfConfig))
-          rendered <- successful(render(resolved, config, amfConfig))
+          resolved <- successful(transform(origin, config, targetConfig))
+          rendered <- successful(render(resolved, config, targetConfig))
           tmp      <- writeTemporaryFile(path)(rendered)
           report   <- validate(tmp, targetHint, toProfile, to)
         } yield {
@@ -58,6 +60,15 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
         }
       }
     }
+  }
+
+  private def amfConfigFrom(vendor: Vendor): AMFConfiguration = vendor match {
+    case Vendor.OAS30   => OASConfiguration.OAS30()
+    case Vendor.OAS20   => OASConfiguration.OAS20()
+    case Vendor.RAML10  => RAMLConfiguration.RAML10()
+    case Vendor.RAML08  => RAMLConfiguration.RAML08()
+    case Vendor.ASYNC20 => AsyncAPIConfiguration.Async20()
+    case _              => throw new IllegalArgumentException
   }
 
   private def hint(vendor: Vendor) = vendor match {
@@ -87,7 +98,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     amfConfig
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .baseUnitClient()
-      .transformCompatibility(unit, config.target.mediaType)
+      .transform(unit, PipelineId.Compatibility)
       .baseUnit
   }
 

@@ -2,6 +2,7 @@ package amf.validation
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.AmfEditingPipeline
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -62,7 +63,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
         amfConfig
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
           .baseUnitClient()
-          .transformEditing(unit, config.target.mediaType)
+          .transform(unit, PipelineId.Editing)
           .baseUnit
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")

@@ -2,6 +2,7 @@ package amf.resolution
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.AmfTransformationPipeline
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnknownSecuritySchemeErrorSpecification
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -90,7 +91,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.baseUnitClient().transformDefault(unit, config.target.mediaType).baseUnit
+        amfConfig.baseUnitClient().transform(unit, PipelineId.Default).baseUnit
       case Amf =>
         TransformationPipelineRunner(amfConfig.errorHandlerProvider.errorHandler())
           .run(unit, AmfTransformationPipeline())

@@ -21,10 +21,10 @@ class Raml10EditingPipeline private (urlShortening: Boolean, override val name: 
 object Raml10EditingPipeline {
   def apply()                      = new Raml10EditingPipeline(true, name)
   private[amf] def cachePipeline() = new Raml10EditingPipeline(false, Raml10CachePipeline.name)
-  val name: String                 = PipelineName.from(Raml10.mediaType, PipelineId.Editing)
+  val name: String                 = PipelineId.Editing
 }
 
 object Raml10CachePipeline {
   def apply(): Raml10EditingPipeline = Raml10EditingPipeline.cachePipeline()
-  val name: String                   = PipelineName.from(Raml10.mediaType, PipelineId.Cache)
+  val name: String                   = PipelineId.Cache
 }

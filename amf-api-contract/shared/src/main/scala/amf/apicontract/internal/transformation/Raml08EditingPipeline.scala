@@ -23,10 +23,10 @@ object Raml08EditingPipeline {
 
   def apply()                    = new Raml08EditingPipeline(true, name)
   private[amf] def cachePipeline = new Raml08EditingPipeline(false, Raml08CachePipeline.name)
-  val name: String               = PipelineName.from(Raml08.mediaType, PipelineId.Editing)
+  val name: String               = PipelineId.Editing
 }
 
 object Raml08CachePipeline {
   def apply(): Raml08EditingPipeline = Raml08EditingPipeline.cachePipeline
-  val name: String                   = PipelineName.from(Raml08.mediaType, PipelineId.Compatibility)
+  val name: String                   = PipelineId.Compatibility
 }

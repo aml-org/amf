@@ -110,11 +110,12 @@ class ProductionServiceTest extends RamlResolutionTest {
           tFn: (BaseUnit, CycleConfig, AMFConfiguration) => BaseUnit,
           renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
 
-    val config    = CycleConfig(source, golden, hint, target, basePath, None, None)
-    val amfConfig = buildConfig(renderOptions, None)
+    val config       = CycleConfig(source, golden, hint, target, basePath, None, None)
+    val amfConfig    = buildConfig(renderOptions, None)
+    val renderConfig = buildConfig(configFor(target), renderOptions, None)
     build(config, amfConfig)
       .map(tFn(_, config, amfConfig))
-      .map { render(_, config, amfConfig) }
+      .map { render(_, config, renderConfig) }
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }

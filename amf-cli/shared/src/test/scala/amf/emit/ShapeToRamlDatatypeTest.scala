@@ -1,8 +1,8 @@
 package amf.emit
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Vendor
 import amf.core.internal.unsafe.PlatformSecrets
@@ -42,7 +42,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
     cycle("json-expression.json",
           "json-expression-new.raml",
           generalFindShapeFunc,
-          (a: AnyShape) => toRamlDatatype(a, amfConfig))
+          (a: AnyShape) => toRamlDatatype(a, parseConfig))
   }
 
   // https://github.com/aml-org/amf/issues/441
@@ -56,19 +56,20 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
 
   private val basePath: String   = "file://amf-cli/shared/src/test/resources/toraml/toramldatatype/source/"
   private val goldenPath: String = "amf-cli/shared/src/test/resources/toraml/toramldatatype/datatypes/"
-  private val amfConfig          = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+  private val parseConfig        = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+  private val renderConfig       = RAMLConfiguration.RAML10()
 
   private def cycle(
       sourceFile: String,
       goldenFile: String,
       findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
-      renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, amfConfig)): Future[Assertion] = {
-    val client = amfConfig.baseUnitClient()
+      renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, parseConfig)): Future[Assertion] = {
+    val client = parseConfig.baseUnitClient()
     val ramlDatatype: Future[String] = for {
       sourceUnit <- client.parse(basePath + sourceFile).map(_.baseUnit)
     } yield {
-      findShapeFunc(client.transformDefault(sourceUnit, Vendor.OAS20.mediaType).baseUnit)
-        .map(toRamlDatatype(_, amfConfig))
+      findShapeFunc(client.transform(sourceUnit, PipelineId.Default).baseUnit)
+        .map(toRamlDatatype(_, renderConfig))
         .getOrElse("")
     }
     ramlDatatype.flatMap { writeTemporaryFile(goldenFile) }.flatMap(assertDifferences(_, goldenPath + goldenFile))
