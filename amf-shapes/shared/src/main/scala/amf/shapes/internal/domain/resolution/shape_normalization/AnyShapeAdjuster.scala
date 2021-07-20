@@ -25,27 +25,27 @@ private[shape_normalization] case class AnyShapeAdjuster(any: AnyShape) {
   sealed implicit class AnyShapeConverter(val any: AnyShape) {
 
     def toNodeShape: NodeShape = {
-      NodeShape(any.fields, any.annotations).withId(any.id)
+      NodeShape(any.fields, any.annotations).setId(any.id)
     }
 
     def toArrayShape: ArrayShape = {
-      ArrayShape(any.fields, any.annotations).withId(any.id)
+      ArrayShape(any.fields, any.annotations).setId(any.id)
     }
 
     def toFileShape: FileShape = {
-      FileShape(any.fields, any.annotations).withId(any.id)
+      FileShape(any.fields, any.annotations).setId(any.id)
     }
 
     def toScalarShape: ScalarShape = {
-      ScalarShape(any.fields, any.annotations).withId(any.id)
+      ScalarShape(any.fields, any.annotations).setId(any.id)
     }
 
     def toSchemaShape: SchemaShape = {
-      SchemaShape(any.fields, any.annotations).withId(any.id)
+      SchemaShape(any.fields, any.annotations).setId(any.id)
     }
 
     def toUnionShape: UnionShape = {
-      UnionShape(any.fields, any.annotations).withId(any.id)
+      UnionShape(any.fields, any.annotations).setId(any.id)
     }
   }
 

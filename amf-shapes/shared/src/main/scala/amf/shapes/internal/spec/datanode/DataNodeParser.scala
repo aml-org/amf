@@ -162,6 +162,7 @@ case class ScalarNodeParser(
   }
 
   protected def parseInclusion(node: YNode): DataNode = {
+    val nodeLocation = node.location.sourceName
     node.value match {
       case reference: YScalar =>
         ctx.refs.find(ref => ref.origin.url == reference.text) match {
@@ -169,17 +170,17 @@ case class ScalarNodeParser(
             val includedText = ref.unit.asInstanceOf[ExternalFragment].encodes.raw.value()
             parseIncludedAST(includedText, node)
           case Some(ref) if ref.unit.isInstanceOf[EncodesModel] =>
-            parseLink(reference.text).withLinkedDomainElement(ref.unit.asInstanceOf[EncodesModel].encodes)
+            parseLink(reference.text, nodeLocation).withLinkedDomainElement(ref.unit.asInstanceOf[EncodesModel].encodes)
           case _ =>
             ctx.fragments.get(reference.text).map(_.encoded) match {
               case Some(domainElement) =>
-                parseLink(reference.text).withLinkedDomainElement(domainElement)
+                parseLink(reference.text, nodeLocation).withLinkedDomainElement(domainElement)
               case _ =>
-                parseLink(reference.text)
+                parseLink(reference.text, nodeLocation)
             }
         }
       case _ =>
-        parseLink(node.value.toString)
+        parseLink(node.value.toString, nodeLocation)
     }
   }
 
@@ -195,13 +196,14 @@ case class ScalarNodeParser(
   /**
     * Generates a new LinkNode base on the text of a label and the fragments in the context
     * @param linkText local text pointing to fragment
+    * @param nodeUrl: location of the source node
     * @return the parsed LinkNode
     */
-  protected def parseLink(linkText: String): LinkNode = {
+  protected def parseLink(linkText: String, nodeUrl: String): LinkNode = {
     if (linkText.contains(":")) {
       LinkNode(linkText, linkText).withId(linkText.normalizeUrl)
     } else {
-      val localUrl  = parent.getOrElse("#").split("#").head
+      val localUrl  = nodeUrl
       val leftLink  = if (localUrl.endsWith("/")) localUrl else s"${baseUrl(localUrl)}/"
       val rightLink = if (linkText.startsWith("/")) linkText.drop(1) else linkText
       val finalLink = normalizeUrl(leftLink + rightLink)
