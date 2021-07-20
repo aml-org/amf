@@ -1,16 +1,17 @@
 package amf.cycle
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.environment.ShapesConfiguration
-import amf.client.remod.ParseConfiguration
-import amf.core.Root
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParserContext, SchemaReference, SyamlParsedDocument}
-import amf.core.remote.{JsonSchemaDialect, Platform, Vendor}
-import amf.core.unsafe.PlatformSecrets
+import amf.aml.client.scala.AMLDialectResult
+import amf.core.client.scala.AMFResult
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
+import amf.core.internal.parser.Root
+import amf.core.internal.remote.{JsonSchemaDialect, Platform, Vendor}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
-import amf.plugins.parser.JsonSchemaDialectParsePlugin
+import amf.shapes.client.scala.config.{SemanticJsonSchemaConfiguration, ShapesConfiguration}
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema.JsonSchemaDialectParsePlugin
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.parser.JsonParser
 
@@ -32,35 +33,28 @@ class JsonSchemaDialectCycleTest extends AsyncFunSuite with PlatformSecrets with
     cycle("oneOf.json", "oneOf.yaml")
   }
 
-
-  def parseSchema(platform: Platform, path: String, mediatype: String): BaseUnit = {
-    val content  = platform.fs.syncFile(path).read().toString
-    val document = JsonParser.withSource(content, path).document()
-    val root = Root(
-      SyamlParsedDocument(document),
-      path,
-      mediatype,
-      Seq(),
-      SchemaReference,
-      content
-    )
-    val eh      = ShapesConfiguration.predefined().errorHandlerProvider.errorHandler()
-    val ctx     = ParserContext(config = ParseConfiguration(eh))
-    JsonSchemaDialectParsePlugin.parse(root, ctx)
+  def parseSchema(path: String): Future[AMLDialectResult] = {
+    val config = SemanticJsonSchemaConfiguration.predefined()
+    config.baseUnitClient().parseDialect(path)
   }
 
-  private def cycle(path: String,
-                    golden: String): Future[Assertion] = {
-    val finalPath   = basePath + path
-    val finalGolden = basePath + golden
-    val dialect = parseSchema(platform, finalPath, JsonSchemaDialect.mediaType)
-    val expected = emit(dialect)
-    writeTemporaryFile(finalGolden)(expected).flatMap(s => assertDifferences(s, finalGolden))
-  }
+  private def cycle(path: String, golden: String): Future[Assertion] = {
+    val finalPath   = "file://" + basePath + path
+    val finalGolden = "file://" + basePath + golden
+    for {
 
+      dialect <- parseSchema(finalPath).map(_.dialect)
+      r <- {
+        val expected = emit(dialect)
+        writeTemporaryFile(finalGolden)(expected).flatMap(s => assertDifferences(s, finalGolden))
+      }
+    } yield r
+
+  }
 
   private def emit(unit: BaseUnit)(implicit executionContext: ExecutionContext): String = {
-    val options = RenderOptions().withCompactUris.withoutSourceMaps.withoutRawSourceMaps.withFlattenedJsonLd.withPrettyPrint
+    val options =
+      RenderOptions().withCompactUris.withoutSourceMaps.withoutRawSourceMaps.withFlattenedJsonLd.withPrettyPrint
     new AMFRenderer(unit, Vendor.AML, options, None).renderToString
   }
 }

@@ -1,7 +1,7 @@
-package amf.plugins.parser.dialect
+package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
 
-import amf.core.model.domain.DomainElement
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 
 case class ShapeTransformer(s: AnyShape, ctx: ShapeTransformationContext) {
   val shape: AnyShape = s.linkTarget.getOrElse(s).asInstanceOf[AnyShape]
