@@ -7,7 +7,7 @@ import amf.core.client.scala.parse.document.{AntlrParsedDocument, ParsedReferenc
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.Root
 import amf.plugins.document.apicontract.contexts.parser.grpc.GrpcWebApiContext
-import amf.plugins.document.apicontract.parser.spec.domain.{GrpcEnumParser, GrpcMessageParser, GrpcPackageParser, GrpcServiceParser}
+import amf.plugins.document.apicontract.parser.spec.domain.{GrpcEnumParser, GrpcExtendOptionParser, GrpcMessageParser, GrpcPackageParser, GrpcServiceParser}
 import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes._
 import amf.shapes.client.scala.model.domain.AnyShape
 import org.mulesoft.antlrast.ast.{ASTElement, Node}
@@ -38,13 +38,17 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext)ex
         parseMessages(node)
         parseEnums(node)
         parseServices(node)
+        parseExtensions(node)
     }
     ctx.declarations.futureDeclarations.resolve()
-    doc.withDeclares(ctx.declarations.shapes.values.toList)
+    doc.withDeclares(
+      ctx.declarations.shapes.values.toList ++
+      ctx.declarations.annotations.values.toList
+    )
   }
 
   def parseWebAPI(node: Node): Unit = {
-    val webApi = GrpcPackageParser(node).parse()
+    val webApi = GrpcPackageParser(node, doc).parse()
     doc.adopted(root.location).withLocation(root.location).withEncodes(webApi)
   }
 
@@ -80,9 +84,20 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext)ex
     }
   }
 
+  def parseExtensions(node: Node): Unit = {
+    collect(node, Seq(EXTENDS_STATEMENT)).foreach { element =>
+      withNode(element) { node =>
+        GrpcExtendOptionParser(node).parse(customDomainProperty => {
+          customDomainProperty.adopted(webapi.id + "/annotations")
+          ctx.declarations += customDomainProperty.add(DeclaredElement())
+        })
+      }
+    }
+  }
+
   def parseServices(node: Node): Unit = {
     val webApi = doc.encodes.asInstanceOf[WebApi]
-    val endPoints: Seq[EndPoint] = collect(node, Seq(TOP_LEVEL_DEF, SERVICE_DEF)).zipWithIndex.map { case (element: ASTElement, idx: Int) =>
+    val endPoints: Seq[EndPoint] = collect(node, Seq(TOP_LEVEL_DEF, SERVICE_DEF)).map { element =>
       withNode(element) { node =>
         GrpcServiceParser(node).parse(ep => webApi.withEndPoints(webApi.endPoints ++ Seq(ep)))
       }

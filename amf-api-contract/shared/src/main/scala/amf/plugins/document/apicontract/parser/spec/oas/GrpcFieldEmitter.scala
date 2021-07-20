@@ -8,7 +8,32 @@ import amf.shapes.client.scala.model.domain.ArrayShape
 class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {
 
   def emit(): Unit = {
-    builder += (s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber;", position)
+    if (mustEmitOptions(property)) {
+      emitWithOptions()
+    } else {
+      builder += (s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber;", position)
+    }
+  }
+
+  private def emitWithOptions(): Unit = {
+    if (property.customDomainProperties.length == 1) {
+      val inlinedOption = builder.inilined { b =>
+        GrpcOptionsEmitter(property.customDomainProperties.head, b, ctx).emitFieldExtension()
+      }
+      builder += (s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber [$inlinedOption];", position)
+    } else {
+      builder.fixed { f =>
+        f += (s"$repeated${fieldRange(property.range)} $fieldName = $fieldNumber [", position)
+        f.obj { o =>
+          o.listWithDelimiter(",\n")  { l =>
+            property.customDomainProperties.foreach { cdp =>
+              GrpcOptionsEmitter(cdp, l, ctx).emitFieldExtension()
+            }
+          }
+        }
+        f += "];"
+      }
+    }
   }
 
   def position: Position = pos(property.range.annotations)
