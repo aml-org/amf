@@ -3,6 +3,7 @@ package amf.plugins.document.apicontract.parser.spec.oas
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.plugins.syntax.StringDocBuilder
+import amf.core.internal.render.BaseEmitters.pos
 import amf.shapes.client.scala.model.domain.ArrayShape
 
 class GrpcFieldEmitter(property: PropertyShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {

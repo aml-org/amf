@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.client.remod.amfcore.plugins.render.StringDocBuilder
-import amf.core.emitter.BaseEmitters._
-import amf.core.parser.Position
-import amf.plugins.domain.apicontract.models.EndPoint
+import amf.apicontract.client.scala.model.domain.EndPoint
+import amf.core.client.common.position.Position
+import amf.core.internal.plugins.syntax.StringDocBuilder
+import amf.core.internal.render.BaseEmitters.pos
 
 case class GrpcServiceEmitter(endPoint: EndPoint, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {
 

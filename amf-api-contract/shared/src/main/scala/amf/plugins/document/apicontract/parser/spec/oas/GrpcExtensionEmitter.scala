@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.client.remod.amfcore.plugins.render.StringDocBuilder
-import amf.core.model.domain.extensions.{CustomDomainProperty, PropertyShape}
-import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes.{ENUM_OPTIONS, ENUM_VALUE_OPTIONS, EXTENSION_RANGE_OPTIONS, FIELD_OPTIONS, FILE_OPTIONS, MESSAGE_OPTIONS, METHOD_OPTIONS, ONEOF_OPTIONS, SERVICE_OPTIONS}
-import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
+import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, PropertyShape}
+import amf.core.internal.plugins.syntax.StringDocBuilder
+import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes._
+import amf.shapes.internal.vocabulary.VocabularyMappings
 
 case class GrpcExtensionEmitter(extensions: Seq[CustomDomainProperty], builder: StringDocBuilder, domain: String, ctx: GrpcEmitterContext) {
 

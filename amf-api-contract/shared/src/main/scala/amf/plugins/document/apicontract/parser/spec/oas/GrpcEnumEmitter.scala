@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.client.remod.amfcore.plugins.render.StringDocBuilder
-import amf.core.emitter.BaseEmitters._
-import amf.core.model.domain.ScalarNode
-import amf.core.parser.Position
-import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.model.domain.ScalarNode
+import amf.core.internal.plugins.syntax.StringDocBuilder
+import amf.core.internal.render.BaseEmitters.pos
+import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 
 case class GrpcEnumEmitter(shape: ScalarShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) {
 
