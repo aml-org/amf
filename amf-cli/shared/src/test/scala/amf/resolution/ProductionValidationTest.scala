@@ -34,4 +34,7 @@ class ProductionValidationTest extends RamlResolutionTest {
     cycle("api.raml", "api.raml.raml", Raml10YamlHint, Raml10, directory = basePath + "patch-method/")
   }
 
+  test("Override enum in extension raml to raml") {
+    cycle("extension.raml", "result.raml", Raml10YamlHint, Raml10, directory = basePath + "override-enum/")
+  }
 }
