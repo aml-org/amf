@@ -71,10 +71,8 @@ sealed trait APIConfigurationBuilder {
       configuration.options
     ).withPlugins(List(
       ExternalJsonYamlRefsParsePlugin,
-      PayloadRenderPlugin,
       PayloadParsePlugin,
       JsonSchemaParsePlugin,
-      JsonSchemaRenderPlugin,
       CustomShaclModelValidationPlugin(),
       FullShaclModelValidationPlugin(),
       PayloadValidationPlugin(),

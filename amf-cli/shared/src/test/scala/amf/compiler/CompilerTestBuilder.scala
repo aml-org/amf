@@ -28,7 +28,7 @@ trait CompilerTestBuilder extends PlatformSecrets {
   protected def compiler(url: String, hint: Hint, amfConfig: AMFConfiguration, cache: Option[Cache]): AMFCompiler =
     AMFCompiler(
       url,
-      Some(hint.vendor.mediaType + "+" + hint.syntax.extension),
+      None,
       cache = cache.getOrElse(Cache()),
       parserConfig = amfConfig.compilerConfiguration,
       base = Context(platform)

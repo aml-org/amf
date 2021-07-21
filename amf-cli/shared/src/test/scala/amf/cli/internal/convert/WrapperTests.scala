@@ -1109,7 +1109,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       unit <- client.parse(baseUrl).asFuture
     } yield {
       val res = client.transform(unit.baseUnit).baseUnit
-      val gen = client.render(res, ProvidedMediaType.Raml10)
+      val gen = client.render(res, Vendor.RAML10.mediaType)
       gen should not include ("!include")
       gen should include("type: string")
     }

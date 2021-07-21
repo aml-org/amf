@@ -6,7 +6,7 @@ import amf.core.internal.remote.Vendor
 object Raml08MediaTypes {
 
   val mediaTypes = Seq(
-    Vendor.RAML08.mediaType,
+    "application/raml08",
     ProvidedMediaType.Raml08 // defines yaml syntax explicitly
   )
 }

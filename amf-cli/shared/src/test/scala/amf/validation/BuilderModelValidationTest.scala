@@ -2,8 +2,9 @@ package amf.validation
 
 import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.internal.spec.payload.PayloadRenderPlugin
 import amf.core.client.common.validation.Raml10Profile
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.document.{Document, Module, PayloadFragment}
 import amf.core.client.scala.model.domain.ScalarNode
 import amf.core.client.scala.validation.AMFValidator
@@ -21,6 +22,8 @@ import scala.concurrent.ExecutionContext
 class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  private val payloadRenderConfig = AMFGraphConfiguration.predefined().withPlugin(PayloadRenderPlugin)
 
   test("Test node shape with https id for js validation functions") {
 
@@ -48,7 +51,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
     val fragment = PayloadFragment(scalar, "application/yaml")
 
     val s =
-      new AMFSerializer(fragment, ProvidedMediaType.PayloadYaml, WebAPIConfiguration.WebAPI().renderConfiguration).renderToString
+      new AMFSerializer(fragment, ProvidedMediaType.PayloadYaml, payloadRenderConfig.renderConfiguration).renderToString
     s should be("1\n") // without quotes
   }
 
@@ -64,7 +67,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
         |   type: number
         |   format: int""".stripMargin
     val s =
-      new AMFSerializer(m, ProvidedMediaType.Raml10, RAMLConfiguration.RAML10().renderConfiguration).renderToString
+      new AMFSerializer(m, "application/yaml", RAMLConfiguration.RAML10().renderConfiguration).renderToString
     val diffs = Diff.ignoreAllSpace.diff(s, e)
     if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")
     succeed
