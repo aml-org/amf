@@ -24,7 +24,11 @@ class ProductionValidationTest extends RamlResolutionTest {
   }
 
   multiGoldenTest("Recursive union raml to amf", "recursive-union.raml.%s") { config =>
-    cycle("recursive-union.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("recursive-union.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   test("Recursive union raml to raml") {
@@ -35,4 +39,7 @@ class ProductionValidationTest extends RamlResolutionTest {
     cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, directory = basePath + "patch-method/")
   }
 
+  test("Override enum in extension raml to raml") {
+    cycle("extension.raml", "result.raml", RamlYamlHint, Raml, directory = basePath + "override-enum/")
+  }
 }

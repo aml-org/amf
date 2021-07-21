@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: test API to be extended
+/test:
+  get:
+    responses:
+      "200":
+        body:
+          application/json:
+            type: object
+            example:
+              testObjectProperty: A
+            additionalProperties: true
+            properties:
+              testObjectProperty:
+                enum:
+                  - A
+                  - B
+                type: string
+                required: true

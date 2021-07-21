@@ -15,7 +15,6 @@ import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeMo
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
-import org.yaml.model.YDocument.obj
 
 import scala.language.postfixOps
 
