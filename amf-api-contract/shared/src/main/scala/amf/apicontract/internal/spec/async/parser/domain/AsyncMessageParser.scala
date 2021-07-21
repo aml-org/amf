@@ -150,7 +150,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
 
     val examples: MessageExamples = parseExamplesFacet(map, message.id)
     examples.all.foreach { ex =>
-      ex.annotations += TrackedElement(message.id)
+      ex.annotations += TrackedElement.fromInstance(message)
     }
     if (examples.payload.nonEmpty)
       message.set(MessageModel.Examples, AmfArray(examples.payload, Annotations.virtual()), Annotations.inferred())
@@ -287,7 +287,7 @@ case class AsyncConcreteMessagePopulator(parentId: String)(implicit ctx: AsyncWe
       val schemaVersion = AsyncSchemaFormats.getSchemaVersion(payload)(ctx.eh)
       AsyncApiTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), schemaVersion)
         .parse()
-        .foreach(s => payload.set(PayloadModel.Schema, tracking(s, payload.id), Annotations(entry)))
+        .foreach(s => payload.set(PayloadModel.Schema, tracking(s, payload), Annotations(entry)))
     }
   }
 }

@@ -553,7 +553,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                                StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
                 .parse() match {
                 case Some(schema) =>
-                  tracking(schema, domainProp.id)
+                  tracking(schema, domainProp)
                   domainProp.set(CustomDomainPropertyModel.Schema, schema, Annotations.inferred())
                 case _ =>
                   ctx.eh.violation(DeclarationNotFound,
@@ -632,7 +632,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                            StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
             .parse()
             .foreach({ shape =>
-              tracking(shape, custom.id)
+              tracking(shape, custom)
               custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(annotationType))
             })
 

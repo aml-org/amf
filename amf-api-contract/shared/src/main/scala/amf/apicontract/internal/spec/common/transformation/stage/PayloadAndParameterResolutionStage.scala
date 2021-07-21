@@ -76,7 +76,7 @@ class PayloadAndParameterResolutionStage(profile: ProfileName) extends Transform
       case shape: AnyShape =>
         container.examples.foreach { example =>
           if (!shape.examples.exists(_.id == example.id)) {
-            example.add(ExampleTracking.tracked(container.id, example, None))
+            example.add(ExampleTracking.tracked(container, example, None))
             addExampleToShape(shape, example)
             container.removeExamples()
           }

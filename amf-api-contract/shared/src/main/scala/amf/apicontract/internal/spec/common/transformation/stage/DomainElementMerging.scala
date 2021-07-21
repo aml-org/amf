@@ -259,7 +259,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         }
 
         element match {
-          case p: Payload => tracking(p.schema, element.id, if (element.id != previousId) Some(previousId) else None)
+          case p: Payload => tracking(p.schema, element, if (element.id != previousId) Some(previousId) else None)
           case _          =>
         }
 

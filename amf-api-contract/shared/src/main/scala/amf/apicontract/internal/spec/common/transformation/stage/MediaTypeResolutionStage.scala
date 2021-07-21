@@ -112,7 +112,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
           payload.name.option().foreach(name => parsedPayload.withName(name))
           if (Option(payload.schema).isDefined)
             parsedPayload.fields
-              .setWithoutId(PayloadModel.Schema, replaceTrackedAnnotation(payload, parsedPayload.id))
+              .setWithoutId(PayloadModel.Schema, replaceTrackedAnnotation(payload, parsedPayload))
           parsedPayload
         }
       }
@@ -130,7 +130,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
     ExampleTracking.removeTracking(p.schema, idToRemove)
 
   /** Add tracked annotation only to examples that tracked the old payload with no media type. */
-  private def replaceTrackedAnnotation(payload: Payload, newPayloadId: String): Shape =
+  private def replaceTrackedAnnotation(payload: Payload, newPayloadId: AmfObject): Shape =
     ExampleTracking.replaceTracking(payload.schema, newPayloadId, payload.id)
 
   def overrideWith(root: Option[Seq[String]], overrider: Option[Seq[String]]): Option[Seq[String]] =

@@ -93,7 +93,7 @@ case class Raml10ParameterParser(entry: YMapEntry,
                          shape => shape.withName("schema").adopted(parameter.id),
                          TypeInfo(isPropertyOrParameter = true))(WebApiShapeParserContextAdapter(ctx))
           .parse()
-          .foreach(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
+          .foreach(s => parameter.set(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
 
         AnnotationParser(parameter, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
@@ -109,7 +109,7 @@ case class Raml10ParameterParser(entry: YMapEntry,
               entry,
               shape => shape.withName("schema").adopted(parameter.id)
             )(WebApiShapeParserContextAdapter(ctx)).parse().foreach { schema =>
-              tracking(schema, parameter.id).annotations += SynthesizedField()
+              tracking(schema, parameter).annotations += SynthesizedField()
               parameter.set(ParameterModel.Schema, schema, Annotations(entry))
             }
             parameter
@@ -130,7 +130,7 @@ case class Raml10ParameterParser(entry: YMapEntry,
                   StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
                   .parse() match {
                   case Some(schema) =>
-                    parameter.set(ParameterModel.Schema, tracking(schema, parameter.id), Annotations(entry))
+                    parameter.set(ParameterModel.Schema, tracking(schema, parameter), Annotations(entry))
                   case None =>
                     ctx.eh.violation(UnresolvedReference,
                                      parameter.id,
@@ -187,7 +187,7 @@ case class Raml08ParameterParser(entry: YMapEntry,
           entry,
           shape => shape.withName("schema").adopted(parameter.id)
         )(WebApiShapeParserContextAdapter(ctx)).parse().foreach { schema =>
-          tracking(schema, parameter.id).annotations += SynthesizedField()
+          tracking(schema, parameter).annotations += SynthesizedField()
           parameter.set(ParameterModel.Schema, schema, Annotations(entry))
         }
       case _ =>
@@ -197,7 +197,7 @@ case class Raml08ParameterParser(entry: YMapEntry,
                          isAnnotation = false,
                          StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
           .parse()
-          .foreach(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
+          .foreach(s => parameter.set(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
     }
 
     entry.value.toOption[YMap] match {
@@ -432,7 +432,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
         )((WebApiShapeParserContextAdapter(ctx)).toOasNext)
           .parse()
           .map { schema =>
-            payload.set(PayloadModel.Schema, tracking(schema, payload.id), Annotations(map))
+            payload.set(PayloadModel.Schema, tracking(schema, payload), Annotations(map))
           }
           .orElse {
             ctx.eh.violation(
@@ -479,7 +479,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
           .parse()
           .map { schema =>
             checkNotFileInBody(schema)
-            payload.set(PayloadModel.Schema, tracking(schema, payload.id), Annotations(entry))
+            payload.set(PayloadModel.Schema, tracking(schema, payload), Annotations(entry))
             bindingRange.foreach { range =>
               schema.annotations += ParameterBindingInBodyLexicalInfo(range)
             }

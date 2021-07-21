@@ -458,7 +458,7 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
           OasTypeParser(entry, shape => shape.adopted(custom.id))
             .parse()
             .foreach({ shape =>
-              tracking(shape, custom.id)
+              tracking(shape, custom)
               custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(entry))
             })
         }

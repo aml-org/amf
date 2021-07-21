@@ -42,7 +42,7 @@ class ResponseExamplesResolutionStage() extends TransformationStep() {
               case Some(p) =>
                 p.schema match {
                   case shape: AnyShape =>
-                    example.add(ExampleTracking.tracked(p.id, example, Some(response.id)))
+                    example.add(ExampleTracking.tracked(p, example, Some(response.id)))
                     if (!shape.examples.exists(_.id == example.id)) {
                       example.withName(example.mediaType.value() + index)
                       shape.withExamples(shape.examples ++ Seq(example))
