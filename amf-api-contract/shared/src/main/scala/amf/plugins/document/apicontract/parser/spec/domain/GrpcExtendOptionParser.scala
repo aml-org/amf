@@ -1,10 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.domain
 
-import amf.core.model.domain.extensions.CustomDomainProperty
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.plugins.document.apicontract.contexts.parser.grpc.GrpcWebApiContext
 import amf.plugins.document.apicontract.parser.spec.grpc.AntlrASTParserHelper
-import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes.{ENUM_OPTIONS, ENUM_VALUE_OPTIONS, EXTEND_IDENTIFIER, EXTENSION_RANGE_OPTIONS, FIELD, FIELD_OPTIONS, FILE_OPTIONS, MESSAGE_OPTIONS, METHOD_OPTIONS, ONEOF_OPTIONS, SERVICE_OPTIONS}
-import amf.plugins.document.apicontract.vocabulary.VocabularyMappings
+import amf.plugins.document.apicontract.parser.spec.grpc.TokenTypes._
+import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 case class GrpcExtendOptionParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {

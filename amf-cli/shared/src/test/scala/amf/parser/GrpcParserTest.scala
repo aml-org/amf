@@ -1,7 +1,7 @@
 package amf.parser
 
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.remote.{Amf, GrpcProtoHint, Raml10YamlHint}
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.remote.{Amf, GrpcProtoHint}
 import amf.io.FunSuiteCycleTests
 
 class GrpcParserTest extends FunSuiteCycleTests {
