@@ -3,11 +3,7 @@ package amf.apicontract.internal.validation.shacl
 import amf.apicontract.client.scala.model.domain.security.{OAuth2Settings, OpenIdConnectSettings}
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
-import amf.apicontract.internal.metamodel.domain.security.{
-  OAuth2SettingsModel,
-  OpenIdConnectSettingsModel,
-  SecuritySchemeModel
-}
+import amf.apicontract.internal.metamodel.domain.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
 import amf.apicontract.internal.metamodel.domain.{CallbackModel, CorrelationIdModel, ParameterModel, TemplatedLinkModel}
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.core.client.scala.model.domain._
@@ -17,11 +13,8 @@ import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.utils.RegexConverter
 import amf.shapes.client.scala.model.domain.{FileShape, IriTemplateMapping, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel._
-import amf.validation.internal.shacl.custom.CustomShaclValidator.{
-  CustomShaclFunction,
-  CustomShaclFunctions,
-  ValidationInfo
-}
+import amf.validation.internal.shacl.custom.CustomShaclValidator
+import amf.validation.internal.shacl.custom.CustomShaclValidator.{CustomShaclFunction, CustomShaclFunctions, ValidationInfo}
 
 import java.util.regex.Pattern
 

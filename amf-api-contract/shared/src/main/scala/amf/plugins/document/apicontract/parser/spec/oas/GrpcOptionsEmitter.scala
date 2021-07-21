@@ -1,9 +1,10 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.core.client.scala.model.domain.{DataNode, ObjectNode}
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.{DataNode, ObjectNode, ScalarNode}
 import amf.core.client.scala.model.domain.extensions.DomainExtension
-import amf.core.internal.parser.domain.ScalarNode
 import amf.core.internal.plugins.syntax.StringDocBuilder
+import amf.core.internal.render.BaseEmitters.pos
 
 case class GrpcOptionsEmitter(domainExtension: DomainExtension, builder: StringDocBuilder, ctx: GrpcEmitterContext) {
   def emit(): Unit = {

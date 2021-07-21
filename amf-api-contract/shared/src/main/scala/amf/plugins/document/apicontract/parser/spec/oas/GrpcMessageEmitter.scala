@@ -1,9 +1,9 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.client.remod.amfcore.plugins.render.StringDocBuilder
-import amf.plugins.domain.shapes.models.{NodeShape, UnionShape}
-import amf.core.emitter.BaseEmitters._
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.internal.plugins.syntax.StringDocBuilder
+import amf.core.internal.render.BaseEmitters.pos
+import amf.shapes.client.scala.model.domain.{NodeShape, UnionShape}
 
 case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) extends GrpcEmitter {
   def emit(): Unit = {

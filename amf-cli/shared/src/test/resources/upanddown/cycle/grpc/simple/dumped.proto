@@ -4,11 +4,11 @@ import "library.proto";
 import "google/protobuf/descriptor.proto";
 
 
-package helloworld;
 message MyOption {
   string a = 1;
   string b = 2;
 }
+package helloworld;
 extend google.protobuf.FieldOptions {
   MyOption mystruct = 5124;
 }

@@ -1,11 +1,13 @@
 package amf.plugins.render
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.client.remod.amfcore.plugins.render.{RenderConfiguration, RenderInfo, StringDocBuilder}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote.{Proto3, Syntax, Vendor}
+import amf.apicontract.internal.plugins.ApiRenderPlugin
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.plugins.render.{RenderConfiguration, RenderInfo}
+import amf.core.internal.plugins.syntax.StringDocBuilder
+import amf.core.internal.remote.{Proto3, Syntax, Vendor}
 import amf.plugins.document.apicontract.parser.spec.oas.GrpcDocumentEmitter
 import org.yaml.model.YDocument
 
