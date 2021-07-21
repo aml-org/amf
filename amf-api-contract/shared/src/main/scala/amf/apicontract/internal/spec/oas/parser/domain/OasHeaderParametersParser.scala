@@ -104,7 +104,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
         OasTypeParser(YMapEntryLike(map), "schema", adoption, OAS20SchemaVersion(SchemaPosition.Schema))(
           WebApiShapeParserContextAdapter(ctx))
           .parse()
-          .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(map)))
+          .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter), Annotations(map)))
       }
     )
   }
@@ -119,7 +119,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
         OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))(
           WebApiShapeParserContextAdapter(ctx))
           .parse()
-          .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
+          .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
       }
     )
     map.key(

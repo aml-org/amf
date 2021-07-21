@@ -127,7 +127,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
         Raml10TypeParser(queryEntry, shape => shape.adopted(request.getOrCreate.id))(
           WebApiShapeParserContextAdapter(toRaml(ctx)))
           .parse()
-          .map(s => request.getOrCreate.withQueryString(tracking(s, request.getOrCreate.id)))
+          .map(s => request.getOrCreate.withQueryString(tracking(s, request.getOrCreate)))
       }
     )
 
