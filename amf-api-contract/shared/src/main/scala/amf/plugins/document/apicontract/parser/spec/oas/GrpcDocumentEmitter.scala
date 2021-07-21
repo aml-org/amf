@@ -1,13 +1,13 @@
 package amf.plugins.document.apicontract.parser.spec.oas
 
-import amf.client.remod.amfcore.plugins.render.{SourceCodeBlock, StringDocBuilder}
-import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
-import amf.plugins.domain.apicontract.models.api.WebApi
-import amf.core.emitter.BaseEmitters._
-import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DomainElement, Shape}
-import amf.plugins.domain.apicontract.models.EndPoint
-import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
+import amf.apicontract.client.scala.model.domain.EndPoint
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
+import amf.core.internal.plugins.syntax.{SourceCodeBlock, StringDocBuilder}
+import amf.core.internal.render.BaseEmitters.pos
+import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 
 class GrpcEmitterContext(document: BaseUnit) {
   def topLevelMessages: Seq[NodeShape] = messages.filter { s =>

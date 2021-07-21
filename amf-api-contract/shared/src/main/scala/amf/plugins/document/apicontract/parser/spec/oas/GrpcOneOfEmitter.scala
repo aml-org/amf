@@ -2,6 +2,7 @@ package amf.plugins.document.apicontract.parser.spec.oas
 
 import amf.core.client.common.position.Position
 import amf.core.internal.plugins.syntax.StringDocBuilder
+import amf.core.internal.render.BaseEmitters.pos
 import amf.shapes.client.scala.model.domain.{NodeShape, UnionShape}
 
 class GrpcOneOfEmitter(union: UnionShape, builder: StringDocBuilder, ctx: GrpcEmitterContext) {

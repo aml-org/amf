@@ -1,7 +1,7 @@
 package amf.cycle
 
-import amf.core.remote.GrpcProtoHint
-import amf.core.remote.Vendor.PROTO3
+import amf.core.internal.remote.GrpcProtoHint
+import amf.core.internal.remote.Vendor.PROTO3
 import amf.io.FunSuiteCycleTests
 
 class GrpcCycleTest extends FunSuiteCycleTests {

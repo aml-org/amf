@@ -62,7 +62,7 @@ trait RamlParsePlugin extends ApiParsePlugin {
 
   private def validateReferencesToLibraries(reference: ParsedReference, ctx: ParserContext): Unit = {
     val refs: Seq[RefContainer] = reference.origin.refs
-    val allKinds                = refs.map(_.linkType)
+    val allKinds                = refs.map(_.linkType).toSet
     val definedKind             = if (allKinds.size > 1) UnspecifiedReference else allKinds.head
     val nodes                   = refs.collect { case n: SYamlRefContainer => n.node }
     reference.unit match {
