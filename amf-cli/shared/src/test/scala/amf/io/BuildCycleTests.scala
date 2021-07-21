@@ -129,8 +129,7 @@ trait BuildCycleTestCommon extends FileAssertionTest with AMFConfigProvider {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
 
-    val sourceMediaType: String = hint.vendor.mediaType + "+" + hint.syntax.extension
-    val targetMediaType: String = target.mediaType + syntax.map(s => s"+${s.extension}").getOrElse("")
+    val targetMediaType: String = syntax.map(syn => syn.mediaType).getOrElse(target.mediaType)
   }
 
   /** Method to parse unit. Override if necessary. */

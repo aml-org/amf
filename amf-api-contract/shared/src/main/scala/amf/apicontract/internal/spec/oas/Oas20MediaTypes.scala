@@ -7,7 +7,7 @@ object Oas20MediaTypes {
   val mediaTypes = Seq(
     ProvidedMediaType.Oas20Json,
     ProvidedMediaType.Oas20Yaml,
-    ProvidedMediaType.Oas20,
+    "application/oas20",
     "application/swagger+json",
     "application/swagger20+json",
     "application/swagger+yaml",

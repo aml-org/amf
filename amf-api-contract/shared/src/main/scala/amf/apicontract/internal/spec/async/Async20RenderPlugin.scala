@@ -2,6 +2,7 @@ package amf.apicontract.internal.spec.async
 
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.plugins.ApiRenderPlugin
+import amf.apicontract.internal.spec.SyntaxMediaTypes.{`APPLICATION/JSON`, `APPLICATION/YAML`}
 import amf.apicontract.internal.spec.async.emitters.context.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
 import amf.apicontract.internal.spec.async.emitters.document.AsyncApi20DocumentEmitter
 import amf.core.client.common.{NormalPriority, PluginPriority}
@@ -21,7 +22,7 @@ object Async20RenderPlugin extends ApiRenderPlugin {
 
   override def defaultSyntax(): String = AMFRenderPlugin.APPLICATION_YAML
 
-  override def mediaTypes: Seq[String] = Async20MediaTypes.mediaTypes
+  override def mediaTypes: Seq[String] = Seq(`APPLICATION/JSON`, `APPLICATION/YAML`)
 
   override def applies(element: RenderInfo): Boolean = element.unit match {
     case document: Document => document.encodes.isInstanceOf[Api]

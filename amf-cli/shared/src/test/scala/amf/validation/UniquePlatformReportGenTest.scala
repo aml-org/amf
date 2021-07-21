@@ -72,7 +72,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
 
   protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint): Future[AMFResult] = {
     val client = conf.baseUnitClient()
-    client.parse(path, finalHint.vendor.mediaType)
+    client.parse(path)
   }
 
   protected def processGolden(g: String): String

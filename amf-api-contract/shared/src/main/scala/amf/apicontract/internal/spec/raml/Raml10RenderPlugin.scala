@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.raml
 import amf.apicontract.client.scala.model.document._
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.plugins.ApiRenderPlugin
+import amf.apicontract.internal.spec.SyntaxMediaTypes.{`APPLICATION/JSON`, `APPLICATION/YAML`}
 import amf.apicontract.internal.spec.raml.emitter.context.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter.document.{
   RamlDocumentEmitter,
@@ -39,7 +40,7 @@ object Raml10RenderPlugin extends ApiRenderPlugin {
 
   override def defaultSyntax(): String = APPLICATION_YAML
 
-  override def mediaTypes: Seq[String] = Raml10MediaTypes.mediaTypes
+  override def mediaTypes: Seq[String] = Seq(`APPLICATION/YAML`)
 
   override def applies(element: RenderInfo): Boolean = element.unit match {
     case _: Overlay                           => true

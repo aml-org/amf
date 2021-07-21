@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.oas
 
+import amf.apicontract.internal.spec.SyntaxMediaTypes._
 import amf.apicontract.internal.spec.oas.emitter.context.{Oas2SpecEmitterContext, OasSpecEmitterContext}
 import amf.apicontract.internal.spec.oas.emitter.document.{Oas20ModuleEmitter, Oas2DocumentEmitter, OasFragmentEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
@@ -16,7 +17,7 @@ object Oas20RenderPlugin extends OasRenderPlugin {
 
   override def defaultSyntax(): String = APPLICATION_JSON
 
-  override def mediaTypes: Seq[String] = Oas20MediaTypes.mediaTypes
+  override def mediaTypes: Seq[String] = Seq(`APPLICATION/JSON`, `APPLICATION/YAML`)
 
   override def unparseAsYDocument(unit: BaseUnit,
                                   renderOptions: RenderOptions,
