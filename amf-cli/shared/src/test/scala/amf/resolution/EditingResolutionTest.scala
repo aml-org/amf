@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext
 
 class EditingResolutionTest extends ResolutionTest {
 
-  override val defaultPipelineToUse: String = PipelineId.Editing
+  override val defaultPipeline: String = PipelineId.Editing
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

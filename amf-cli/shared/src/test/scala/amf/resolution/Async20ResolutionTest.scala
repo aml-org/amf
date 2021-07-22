@@ -1,10 +1,9 @@
 package amf.resolution
 
 import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration}
-import amf.core.client.scala.config.RenderOptions
 import amf.core.client.common.transform._
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.Vendor.AMF
 import amf.core.internal.remote.{Async20YamlHint, AsyncApi20, Vendor}
 import amf.testing.AmfJsonLd
 
@@ -187,7 +186,7 @@ class Async20ResolutionTest extends ResolutionTest {
   }
 
   override val defaultVendor: Option[Vendor] = Some(AsyncApi20)
-  override val defaultPipelineToUse: String  = PipelineId.Editing
+  override val defaultPipeline: String       = PipelineId.Editing
 
   override def defaultRenderOptions: RenderOptions =
     RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint

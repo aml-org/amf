@@ -18,7 +18,7 @@ import scala.concurrent.ExecutionContext
 
 class CompatibilityCycleGoldenTest extends ResolutionTest {
 
-  override val defaultPipelineToUse: String                = PipelineId.Compatibility
+  override val defaultPipeline: String                     = PipelineId.Compatibility
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def basePath: String = "amf-cli/shared/src/test/resources/compatibility/"
