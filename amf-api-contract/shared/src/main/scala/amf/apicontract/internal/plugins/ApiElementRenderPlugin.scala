@@ -1,0 +1,37 @@
+package amf.apicontract.internal.plugins
+
+import amf.apicontract.internal.spec.common.emitter.DomainElementEmitterFactory
+import amf.core.client.common.position.Position
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.parse.document.{ParsedDocument, SyamlParsedDocument}
+import amf.core.client.scala.render.AMFElementRenderPlugin
+import amf.core.internal.remote.Vendor
+import amf.core.internal.render.BaseEmitters.traverse
+import amf.core.internal.render.emitters.PartEmitter
+import org.yaml.model.YDocument
+import org.yaml.model.YDocument.PartBuilder
+
+trait ApiElementRenderPlugin extends AMFElementRenderPlugin {
+  override val id: String = s"${vendor.name} Element"
+
+  protected def vendor: Vendor
+  protected def emitterFactory: AMFErrorHandler => DomainElementEmitterFactory
+
+  override def applies(element: DomainElement): Boolean =
+    emitterFactory(IgnoringErrorHandler).emitter(element).isDefined
+
+  override def render(element: DomainElement, errorHandler: AMFErrorHandler): ParsedDocument = {
+    val emitter = emitterFactory(errorHandler).emitter(element).getOrElse(new EmptyEmitter())
+    val document = YDocument { b =>
+      traverse(Seq(emitter), b)
+    }
+    SyamlParsedDocument(document)
+  }
+}
+
+class EmptyEmitter extends PartEmitter {
+  override def emit(b: PartBuilder): Unit = b += ""
+
+  override def position(): Position = Position.ZERO
+}

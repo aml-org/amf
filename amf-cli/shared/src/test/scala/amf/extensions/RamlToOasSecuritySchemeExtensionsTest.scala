@@ -8,6 +8,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote._
 import amf.core.internal.render.AMFSerializer
 import amf.io.FileAssertionTest
+import amf.testing.ConfigProvider
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -19,7 +20,7 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Raml oauth 1.0 scheme should be emitted as OAS extension") {
-    withBaseUnitPair(s"$basePath/oauth1.raml", Vendor.RAML10, Vendor.OAS20) { x =>
+    withBaseUnitPair(s"$basePath/oauth1.raml", Oas20JsonHint) { x =>
       {
         x match {
           case List(ramlUnit, oasUnit) =>
@@ -33,7 +34,7 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
   }
 
   test("Raml oauth 2.0 scheme should be emitted as OAS security scheme in OAS 2") {
-    withBaseUnitPair(s"$basePath/oauth2.raml", Vendor.RAML10, Vendor.OAS20) { x =>
+    withBaseUnitPair(s"$basePath/oauth2.raml", Oas20JsonHint) { x =>
       {
         x match {
           case List(ramlUnit, oasUnit) =>
@@ -47,7 +48,7 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
   }
 
   test("Raml basic auth should be emitted as OAS security scheme in OAS 2") {
-    withBaseUnitPair(s"$basePath/basicAuth.raml", Vendor.RAML10, Vendor.OAS20) { x =>
+    withBaseUnitPair(s"$basePath/basicAuth.raml", Oas20JsonHint) { x =>
       {
         x match {
           case List(ramlUnit, oasUnit) =>
@@ -61,7 +62,7 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
   }
 
   test("Raml digest auth should be emitted as OAS extension") {
-    withBaseUnitPair(s"$basePath/digestAuth.raml", Vendor.RAML10, Vendor.OAS20) { x =>
+    withBaseUnitPair(s"$basePath/digestAuth.raml", Oas20JsonHint) { x =>
       {
         x match {
           case List(ramlUnit, oasUnit) =>
@@ -75,7 +76,7 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
   }
 
   test("Raml pass through should be emitted as OAS extension") {
-    withBaseUnitPair(s"$basePath/passThrough.raml", Vendor.RAML10, Vendor.OAS20) { x =>
+    withBaseUnitPair(s"$basePath/passThrough.raml", Oas20JsonHint) { x =>
       {
         x match {
           case List(ramlUnit, oasUnit) =>
@@ -89,7 +90,7 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
   }
 
   test("Raml security extension should be emitted as OAS extension") {
-    withBaseUnitPair(s"$basePath/customSecurity.raml", Vendor.RAML10, Vendor.OAS20) { x =>
+    withBaseUnitPair(s"$basePath/customSecurity.raml", Oas20JsonHint) { x =>
       {
         x match {
           case List(ramlUnit, oasUnit) =>
@@ -102,23 +103,22 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
     }
   }
 
-  private def renderToString(unit: BaseUnit, mediaType: String): String = {
-    val config = OASConfiguration.OAS20()
-    new AMFSerializer(unit, mediaType, config.renderConfiguration).renderToString
+  private def renderToString(unit: BaseUnit, target: Hint): String = {
+    val config = ConfigProvider.configFor(target.vendor)
+    new AMFSerializer(unit, target.syntax.mediaType, config.renderConfiguration).renderToString
   }
 
-  private def parse(url: String, vendor: String, hint: Hint, amfConfig: AMFGraphConfiguration): Future[BaseUnit] =
+  private def parse(url: String, amfConfig: AMFGraphConfiguration): Future[BaseUnit] =
     amfConfig.baseUnitClient().parse(url).map(_.baseUnit)
 
-  private def withBaseUnitPair(url: String, originalVendor: Vendor, otherVendor: Vendor)(
-      assertion: List[BaseUnit] => Assertion) = {
+  private def withBaseUnitPair(url: String, target: Hint)(assertion: List[BaseUnit] => Assertion) = {
     val fileName = url.split("/").last
     val config   = WebAPIConfiguration.WebAPI().withParsingOptions(ParsingOptions().withAmfJsonLdSerialization)
     for {
-      originalUnit  <- parse(url, originalVendor.mediaType, hint(originalVendor), config)
-      emittedApi    <- Future.successful(renderToString(originalUnit, otherVendor.mediaType))
+      originalUnit  <- parse(url, config)
+      emittedApi    <- Future.successful(renderToString(originalUnit, target))
       tmp           <- writeTemporaryFile(fileName)(emittedApi)
-      parsedApiUnit <- parse(s"file://${tmp.path}", otherVendor.name, hint(otherVendor), config)
+      parsedApiUnit <- parse(s"file://${tmp.path}", config)
     } yield {
       assertion(List(originalUnit, parsedApiUnit))
     }

@@ -3,7 +3,7 @@ import amf.apicontract.client.platform.AMFConfiguration
 import amf.apicontract.client.scala.{AMFConfiguration => InternalAMFConfiguration}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.internal.remote.{Oas30JsonHint, Raml10YamlHint, Vendor}
+import amf.core.internal.remote.{Oas30JsonHint, Oas30YamlHint, Raml10YamlHint, Vendor}
 import org.yaml.builder.YamlOutputBuilder
 
 class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
@@ -17,7 +17,7 @@ class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
       "type/composition-with-refs.json",
       CommonExtractors.declaresIndex(0),
       "type/login-response-emission.yaml",
-      Oas30JsonHint
+      Oas30YamlHint
     )
   }
 
@@ -26,7 +26,7 @@ class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(2),
       "parameter/cookie-param.yaml",
-      Oas30JsonHint
+      Oas30YamlHint
     )
   }
 
@@ -35,7 +35,7 @@ class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(5),
       "parameter/explicit-header.yaml",
-      Oas30JsonHint
+      Oas30YamlHint
     )
   }
 }
@@ -61,9 +61,9 @@ trait ClientDomainElementCycleTest extends DomainElementCycleTest {
   override def renderDomainElement(element: Option[DomainElement], amfConfig: InternalAMFConfiguration): String = {
     val platformConfig: AMFConfiguration = amfConfig
     element
-      .map { interalElement =>
+      .map { internalElement =>
         val stringBuilder = YamlOutputBuilder()
-        platformConfig.elementClient().renderToBuilder(interalElement, vendor.mediaType, stringBuilder)
+        platformConfig.elementClient().renderToBuilder(internalElement, vendor.mediaType, stringBuilder)
         stringBuilder.result.toString
       }
       .getOrElse("")

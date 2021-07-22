@@ -17,7 +17,7 @@ object Oas20RenderPlugin extends OasRenderPlugin {
 
   override def defaultSyntax(): String = APPLICATION_JSON
 
-  override def mediaTypes: Seq[String] = Seq(`APPLICATION/JSON`, `APPLICATION/YAML`)
+  override def mediaTypes: Seq[String] = Seq(`APPLICATION/JSON`, `APPLICATION/YAML`) ++ Oas20MediaTypes.mediaTypes
 
   override def unparseAsYDocument(unit: BaseUnit,
                                   renderOptions: RenderOptions,

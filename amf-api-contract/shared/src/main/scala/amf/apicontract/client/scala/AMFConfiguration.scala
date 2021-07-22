@@ -6,10 +6,10 @@ import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPIS
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
 import amf.apicontract.internal.plugins.{ExternalJsonYamlRefsParsePlugin, JsonSchemaParsePlugin, JsonSchemaRenderPlugin}
-import amf.apicontract.internal.spec.async.{Async20ParsePlugin, Async20RenderPlugin}
-import amf.apicontract.internal.spec.oas.{Oas20ParsePlugin, Oas20RenderPlugin, Oas30ParsePlugin, Oas30RenderPlugin}
+import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20ParsePlugin, Async20RenderPlugin}
+import amf.apicontract.internal.spec.oas.{Oas20ElementRenderPlugin, Oas20ParsePlugin, Oas20RenderPlugin, Oas30ElementRenderPlugin, Oas30ParsePlugin, Oas30RenderPlugin}
 import amf.apicontract.internal.spec.payload.{PayloadParsePlugin, PayloadRenderPlugin}
-import amf.apicontract.internal.spec.raml.{Raml08ParsePlugin, Raml08RenderPlugin, Raml10ParsePlugin, Raml10RenderPlugin}
+import amf.apicontract.internal.spec.raml.{Raml08ElementRenderPlugin, Raml08ParsePlugin, Raml08RenderPlugin, Raml10ElementRenderPlugin, Raml10ParsePlugin, Raml10RenderPlugin}
 import amf.apicontract.internal.transformation.PipelineProvider.{getCachePipelines, getDefaultPipelines, getEditingPipelines}
 import amf.apicontract.internal.transformation._
 import amf.apicontract.internal.transformation.compatibility.{Oas20CompatibilityPipeline, Oas3CompatibilityPipeline, Raml08CompatibilityPipeline, Raml10CompatibilityPipeline}
@@ -84,7 +84,7 @@ private[amf] object BaseApiConfiguration extends APIConfigurationBuilder {
 object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML10(): AMFConfiguration =
     common()
-      .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin))
+      .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin, Raml10ElementRenderPlugin))
       .withValidationProfile(Raml10ValidationProfile)
       .withValidationProfile(AmfValidationProfile)
       .withTransformationPipelines(
@@ -96,7 +96,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
         ))
   def RAML08(): AMFConfiguration =
     common()
-      .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin))
+      .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin, Raml08ElementRenderPlugin))
       .withValidationProfile(Raml08ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -117,7 +117,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
             .add(getEditingPipelines(Spec.RAML10, Spec.RAML08, AMF)),
           VendorChooserCompositePipeline(PipelineId.Default)
             .add(getDefaultPipelines(Spec.RAML10, Spec.RAML08, AMF)),
-          VendorChooserCompositePipeline(PipelineId.Cache).add(getCachePipelines(Vendor.RAML10, Vendor.RAML08, AMF))
+          VendorChooserCompositePipeline(PipelineId.Cache).add(getCachePipelines(Spec.RAML10, Vendor.RAML08, AMF))
         )
       )
 }
@@ -131,7 +131,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
 object OASConfiguration extends APIConfigurationBuilder {
   def OAS20(): AMFConfiguration =
     common()
-      .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin))
+      .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin, Oas20ElementRenderPlugin))
       .withValidationProfile(Oas20ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -142,7 +142,7 @@ object OASConfiguration extends APIConfigurationBuilder {
         ))
   def OAS30(): AMFConfiguration =
     common()
-      .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin))
+      .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin, Oas30ElementRenderPlugin))
       .withValidationProfile(Oas30ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -196,7 +196,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
 object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFConfiguration =
     common()
-      .withPlugins(List(Async20ParsePlugin, Async20RenderPlugin))
+      .withPlugins(List(Async20ParsePlugin, Async20RenderPlugin, Async20ElementRenderPlugin))
       .withValidationProfile(Async20ValidationProfile)
       .withTransformationPipelines(
         List(
