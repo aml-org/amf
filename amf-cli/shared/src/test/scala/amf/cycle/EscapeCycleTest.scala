@@ -2,7 +2,6 @@ package amf.cycle
 
 import amf.core.internal.remote.{Raml10, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.testing.Raml10Yaml
 
 class EscapeCycleTest extends FunSuiteCycleTests {
 
@@ -13,6 +12,6 @@ class EscapeCycleTest extends FunSuiteCycleTests {
   }
 
   test("Escape test with problematic characters in value") {
-    cycle("multiple-escapes.raml", "multiple-escapes.golden.raml", Raml10YamlHint, Raml10Yaml)
+    cycle("multiple-escapes.raml", "multiple-escapes.golden.raml", Raml10YamlHint, Raml10YamlHint)
   }
 }

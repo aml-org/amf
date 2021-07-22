@@ -19,7 +19,6 @@ import amf.core.internal.remote.{
   Raml10YamlHint
 }
 import amf.io.FunSuiteCycleTests
-import amf.testing.{AmfJsonLd, Raml10Yaml}
 
 class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
 
@@ -29,28 +28,32 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
     cycle("ramlapi.raml",
           config.golden,
           Raml10YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
   multiSourceTest("Flattened Json-LD resolves to Raml", "ramlapi.%s") { config =>
-    cycle(config.source, "resolved-ramlapi.raml", AmfJsonHint, Raml10Yaml)
+    cycle(config.source, "resolved-ramlapi.raml", AmfJsonHint, Raml10YamlHint)
   }
 
   multiGoldenTest("Oas20 to Json-LD resolves", "oasapi.%s") { config =>
-    cycle("oasapi.json", config.golden, Oas20YamlHint, target = AmfJsonLd, renderOptions = Some(config.renderOptions))
+    cycle("oasapi.json",
+          config.golden,
+          Oas20YamlHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Oas30 to JSON-LD resolves", "oas30api.%s") { config =>
     cycle("oas30api.json",
           config.golden,
           Oas30YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
   test("RAML emission applies singularize") {
-    cycle("singularize.raml", "resolved-singularize.raml", Raml10YamlHint, Raml10Yaml)
+    cycle("singularize.raml", "resolved-singularize.raml", Raml10YamlHint, Raml10YamlHint)
   }
 
 // TODO: JSON-LD to OAS doesnt decode Japanese characters. RAML does
@@ -67,7 +70,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit =
-    config.renderTarget.spec match {
+    config.renderTarget.vendor match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         amfConfig
           .withErrorHandlerProvider(() => UnhandledErrorHandler)

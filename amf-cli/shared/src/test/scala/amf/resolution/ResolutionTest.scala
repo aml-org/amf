@@ -13,7 +13,7 @@ abstract class ResolutionTest extends FunSuiteCycleTests with ResolutionCapabili
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val pipeline = config.pipeline.getOrElse(defaultPipeline)
-    val vendor   = config.transformWith.orElse(defaultVendor).getOrElse(config.renderTarget.spec)
+    val vendor   = config.transformWith.orElse(defaultVendor).getOrElse(config.renderTarget.vendor)
     transform(unit, pipeline, vendor, amfConfig)
   }
 }

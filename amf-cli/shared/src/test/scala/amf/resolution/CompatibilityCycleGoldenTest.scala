@@ -12,7 +12,7 @@ import amf.core.internal.remote.{
   Raml10,
   Raml10YamlHint
 }
-import amf.testing.{Oas20Json, Oas30Json, Raml10Yaml}
+import amf.testing.{Oas20Json, Oas30Json}
 
 import scala.concurrent.ExecutionContext
 
@@ -27,7 +27,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("raml10/inherited-examples.raml",
           "cycled-apis/oas20/inherited-examples.json",
           Raml10YamlHint,
-          Oas20Json,
+          Oas20JsonHint,
           transformWith = Some(Oas20))
   }
 
@@ -35,7 +35,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("raml10/reusing-declared-type.raml",
           "cycled-apis/oas20/reusing-declared-type.json",
           Raml10YamlHint,
-          Oas20Json,
+          Oas20JsonHint,
           transformWith = Some(Oas20))
   }
 
@@ -43,7 +43,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("raml10/no-operation-name.raml",
           "cycled-apis/oas30/no-operation-name.json",
           Raml10YamlHint,
-          Oas30Json,
+          Oas30JsonHint,
           transformWith = Some(Oas30))
   }
 
@@ -51,7 +51,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("raml10/no-operation-name.raml",
           "cycled-apis/oas20/no-operation-name.json",
           Raml10YamlHint,
-          Oas20Json,
+          Oas20JsonHint,
           transformWith = Some(Oas20))
   }
 
@@ -59,7 +59,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("oas30/documentation-in-operation.json",
           "cycled-apis/raml/documentation-in-operation.raml",
           Oas30JsonHint,
-          Raml10Yaml,
+          Raml10YamlHint,
           transformWith = Some(Raml10))
   }
 
@@ -68,7 +68,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
       "invalid-apis/documentation-tags-with-no-name.json",
       "cycled-apis/raml/documentation-tags-with-no-name.raml",
       Oas20JsonHint,
-      Raml10Yaml,
+      Raml10YamlHint,
       transformWith = Some(Raml10)
     )
   }
@@ -77,7 +77,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("oas30/component-callbacks.json",
           "cycled-apis/raml/oas3-callbacks.raml",
           Oas30YamlHint,
-          Raml10Yaml,
+          Raml10YamlHint,
           transformWith = Some(Raml10))
   }
 
@@ -85,7 +85,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("invalid-apis/library.raml",
           "cycled-apis/oas20/library.json",
           Raml10YamlHint,
-          Oas20Json,
+          Oas20JsonHint,
           transformWith = Some(Oas20))
   }
 
@@ -93,7 +93,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("invalid-apis/library.raml",
           "cycled-apis/oas30/library.json",
           Raml10YamlHint,
-          Oas30Json,
+          Oas30JsonHint,
           transformWith = Some(Oas30))
   }
 
@@ -101,23 +101,25 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("oas30/oas-unused-examples-deleted.json",
           "cycled-apis/raml/oas-unused-examples-deleted.raml",
           Oas30YamlHint,
-          Raml10Yaml,
+          Raml10YamlHint,
           transformWith = Some(Raml10))
   }
 
   test("OAS 3.0 examples are translated correctly to Raml example and examples") {
-    cycle("oas30/oas-anonymous-named-examples.json",
-          "cycled-apis/raml/oas-anonymous-named-examples.raml",
-          Oas30YamlHint,
-          Raml10Yaml,
-          transformWith = Some(Raml10))
+    cycle(
+      "oas30/oas-anonymous-named-examples.json",
+      "cycled-apis/raml/oas-anonymous-named-examples.raml",
+      Oas30YamlHint,
+      Raml10YamlHint,
+      transformWith = Some(Raml10)
+    )
   }
 
   test("OAS 2.0 security schemes translated to Raml") {
     cycle("oas20/security-definitions.json",
           "cycled-apis/raml/oas2-security-definitions.raml",
           Oas20YamlHint,
-          Raml10Yaml,
+          Raml10YamlHint,
           transformWith = Some(Raml10))
   }
 
@@ -125,7 +127,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("oas30/security-definitions.json",
           "cycled-apis/raml/oas3-security-definitions.raml",
           Oas30YamlHint,
-          Raml10Yaml,
+          Raml10YamlHint,
           transformWith = Some(Raml10))
   }
 
@@ -133,7 +135,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("raml10/apikey-settings.raml",
           "cycled-apis/oas20/raml-security-definitions.json",
           Raml10YamlHint,
-          Oas20Json,
+          Oas20JsonHint,
           transformWith = Some(Oas20))
   }
 
@@ -141,7 +143,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("raml10/apikey-settings.raml",
           "cycled-apis/oas30/raml-security-definitions.json",
           Raml10YamlHint,
-          Oas30Json,
+          Oas30JsonHint,
           transformWith = Some(Oas30))
   }
 
@@ -149,7 +151,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     cycle("oas30/nullable-fields.json",
           "cycled-apis/raml/oas-nullable-fields.raml",
           Oas30YamlHint,
-          Raml10Yaml,
+          Raml10YamlHint,
           transformWith = Some(Raml10))
   }
 
@@ -158,7 +160,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
       "oas30/nullable-fields-with-declared-types.json",
       "cycled-apis/raml/nullable-fields-with-declared-types.raml",
       Oas30YamlHint,
-      Raml10Yaml,
+      Raml10YamlHint,
       transformWith = Some(Raml10)
     )
   }
@@ -168,7 +170,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
       "oas20/propagate-base-produces-and-consumes.json",
       "cycled-apis/raml/propagate-base-produces-and-consumes.raml",
       Oas20YamlHint,
-      Raml10Yaml,
+      Raml10YamlHint,
       transformWith = Some(Raml10)
     )
   }
@@ -178,7 +180,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
       "oas20/propagate-produces-and-consumes-with-overrides.json",
       "cycled-apis/raml/propagate-produces-and-consumes-with-overrides.raml",
       Oas20YamlHint,
-      Raml10Yaml,
+      Raml10YamlHint,
       transformWith = Some(Raml10)
     )
   }
@@ -188,7 +190,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
       "oas20/consumes-global.json",
       "cycled-apis/raml/consumes-global.raml",
       Oas20JsonHint,
-      Raml10Yaml,
+      Raml10YamlHint,
       transformWith = Some(Raml10)
     )
   }

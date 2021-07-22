@@ -4,8 +4,7 @@ import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration}
 import amf.core.client.common.transform._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Async20YamlHint, AsyncApi20, Vendor}
-import amf.testing.AmfJsonLd
+import amf.core.internal.remote.{AmfJsonHint, Async20YamlHint, AsyncApi20, Vendor}
 
 class Async20ResolutionTest extends ResolutionTest {
   override def basePath: String       = "amf-cli/shared/src/test/resources/resolution/async20/"
@@ -16,7 +15,7 @@ class Async20ResolutionTest extends ResolutionTest {
       cycle("message-example-propagation.yaml",
             config.golden,
             Async20YamlHint,
-            target = AmfJsonLd,
+            target = AmfJsonHint,
             renderOptions = Some(config.renderOptions))
   }
 
@@ -24,7 +23,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle("content-type-override.yaml",
           config.golden,
           Async20YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -32,7 +31,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle("message-trait-merging.yaml",
           config.golden,
           Async20YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -40,7 +39,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle("operation-trait-merging.yaml",
           config.golden,
           Async20YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -50,7 +49,7 @@ class Async20ResolutionTest extends ResolutionTest {
       "message-trait-merging.yaml",
       config.golden,
       Async20YamlHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       renderOptions = Some(config.renderOptions),
       pipeline = Some(PipelineId.Default)
     )
@@ -62,7 +61,7 @@ class Async20ResolutionTest extends ResolutionTest {
       "operation-trait-merging.yaml",
       config.golden,
       Async20YamlHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       renderOptions = Some(config.renderOptions),
       pipeline = Some(PipelineId.Default)
     )
@@ -73,7 +72,7 @@ class Async20ResolutionTest extends ResolutionTest {
       cycle("named-parameter-with-ref.yaml",
             config.golden,
             Async20YamlHint,
-            target = AmfJsonLd,
+            target = AmfJsonHint,
             renderOptions = Some(config.renderOptions))
   }
 
@@ -83,7 +82,7 @@ class Async20ResolutionTest extends ResolutionTest {
       "include-data-type-at-root-of-payload.yaml",
       config.golden,
       Async20YamlHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       directory = validationsPath + "raml-data-type-references/",
       renderOptions = Some(config.renderOptions)
     )
@@ -95,7 +94,7 @@ class Async20ResolutionTest extends ResolutionTest {
         "include-data-type-with-chained-reference.yaml",
         config.golden,
         Async20YamlHint,
-        target = AmfJsonLd,
+        target = AmfJsonHint,
         directory = validationsPath + "raml-data-type-references/",
         renderOptions = Some(config.renderOptions)
       )
@@ -106,7 +105,7 @@ class Async20ResolutionTest extends ResolutionTest {
       "ref-data-type-fragment.yaml",
       config.golden,
       Async20YamlHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       directory = validationsPath + "raml-data-type-references/",
       renderOptions = Some(config.renderOptions)
     )
@@ -117,7 +116,7 @@ class Async20ResolutionTest extends ResolutionTest {
       "ref-type-in-library.yaml",
       config.golden,
       Async20YamlHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       directory = validationsPath + "raml-data-type-references/",
       renderOptions = Some(config.renderOptions)
     )
@@ -129,7 +128,7 @@ class Async20ResolutionTest extends ResolutionTest {
         "ref-external-yaml.yaml",
         config.golden,
         Async20YamlHint,
-        target = AmfJsonLd,
+        target = AmfJsonHint,
         directory = validationsPath + "raml-data-type-references/",
         renderOptions = Some(config.renderOptions)
       )
@@ -141,7 +140,7 @@ class Async20ResolutionTest extends ResolutionTest {
       "ref-data-type-fragment-invalid.yaml",
       config.golden,
       Async20YamlHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       directory = validationsPath + "raml-data-type-references/",
       renderOptions = Some(config.renderOptions)
     )
@@ -153,7 +152,7 @@ class Async20ResolutionTest extends ResolutionTest {
       "type-forward-referencing.yaml",
       config.golden,
       Async20YamlHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       renderOptions = Some(config.renderOptions)
     )
   }
@@ -164,7 +163,7 @@ class Async20ResolutionTest extends ResolutionTest {
         "valid-external-ref-message-trait.yaml",
         config.golden,
         Async20YamlHint,
-        target = AmfJsonLd,
+        target = AmfJsonHint,
         directory = validationsPath + "validations/external-reference/",
         renderOptions = Some(config.renderOptions)
       )
@@ -175,7 +174,7 @@ class Async20ResolutionTest extends ResolutionTest {
       "valid-external-ref-operation-trait.yaml",
       config.golden,
       Async20YamlHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       directory = validationsPath + "validations/external-reference/",
       renderOptions = Some(config.renderOptions)
     )

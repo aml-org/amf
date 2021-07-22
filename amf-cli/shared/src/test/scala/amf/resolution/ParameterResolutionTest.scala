@@ -2,7 +2,6 @@ package amf.resolution
 
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote._
-import amf.testing.AmfJsonLd
 
 class ParameterResolutionTest extends ResolutionTest {
 
@@ -12,7 +11,7 @@ class ParameterResolutionTest extends ResolutionTest {
     cycle("parameters.raml",
           config.golden,
           Raml10YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -20,7 +19,7 @@ class ParameterResolutionTest extends ResolutionTest {
     cycle("parameters.json",
           config.golden,
           Oas20JsonHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Oas20))
   }
@@ -29,7 +28,7 @@ class ParameterResolutionTest extends ResolutionTest {
     cycle("nested-parameters.raml",
           config.golden,
           Raml10YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -38,7 +37,7 @@ class ParameterResolutionTest extends ResolutionTest {
       cycle("overrided-baseUriParams.raml",
             config.golden,
             Raml08YamlHint,
-            target = AmfJsonLd,
+            target = AmfJsonHint,
             renderOptions = Some(config.renderOptions),
             transformWith = Some(Raml08))
   }

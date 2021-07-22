@@ -7,8 +7,8 @@ import amf.core.internal.plugins.document.graph._
 import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote.{AmfJsonHint, Async20YamlHint, Hint, Oas20YamlHint, Oas30YamlHint, Raml08YamlHint}
 import amf.io.{BuildCycleTests, JsonLdSerializationSuite}
-import amf.testing.{Async20Yaml, Raml08Yaml, Target, TargetProvider}
-import amf.testing.TargetProvider._
+import amf.testing.{Async20Yaml, Raml08Yaml, Target, HintProvider}
+import amf.testing.HintProvider._
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.{Assertion, AsyncFreeSpec}
 
@@ -196,15 +196,6 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
                        hint: Hint,
                        target: Hint,
                        renderOptions: Option[RenderOptions]): Future[Assertion] = {
-    cycle(source,
-          golden,
-          hint,
-          HintToTargetBridge.bridge(target),
-          eh = Some(DefaultErrorHandler()),
-          renderOptions = renderOptions)
-  }
-
-  object HintToTargetBridge {
-    def bridge(hint: Hint): Target = Target(hint.vendor, hint.syntax.mediaType)
+    cycle(source, golden, hint, target, eh = Some(DefaultErrorHandler()), renderOptions = renderOptions)
   }
 }

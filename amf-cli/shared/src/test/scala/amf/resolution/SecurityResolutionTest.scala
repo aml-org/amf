@@ -1,8 +1,7 @@
 package amf.resolution
 
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{Amf, Oas20, Oas20JsonHint, Raml10, Raml10YamlHint}
-import amf.testing.AmfJsonLd
+import amf.core.internal.remote.{Amf, AmfJsonHint, Oas20, Oas20JsonHint, Raml10, Raml10YamlHint}
 
 class SecurityResolutionTest extends ResolutionTest {
 
@@ -12,7 +11,7 @@ class SecurityResolutionTest extends ResolutionTest {
     cycle("security.raml",
           config.golden,
           Raml10YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -20,7 +19,7 @@ class SecurityResolutionTest extends ResolutionTest {
     cycle("security.json",
           config.golden,
           Oas20JsonHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 

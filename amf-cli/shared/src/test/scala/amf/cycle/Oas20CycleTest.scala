@@ -12,6 +12,6 @@ class Oas20CycleTest extends FunSuiteCycleTests {
     cycle("json/invalid-type-with-string-minimum.json",
           "json/invalid-type-with-string-minimum.cycled.json",
           Oas20JsonHint,
-          Oas20Json)
+          Oas20JsonHint)
   }
 }

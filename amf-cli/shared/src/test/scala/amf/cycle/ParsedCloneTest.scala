@@ -4,18 +4,17 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.DeclaresModel
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.annotations.ErrorDeclaration
-import amf.core.internal.remote.{Amf, Oas30JsonHint, Raml10YamlHint}
+import amf.core.internal.remote.{Amf, AmfJsonHint, Oas30JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.apicontract.client.scala.model.domain.security.{HttpSettings, SecurityScheme}
 import amf.apicontract.client.scala.model.domain.templates.Trait
-import amf.testing.AmfJsonLd
 import org.scalatest.Matchers._
 
 class ParsedCloneTest extends FunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/clone/"
 
   test("Test error trait clone") {
-    val config = CycleConfig("error-trait.raml", "", Raml10YamlHint, AmfJsonLd, basePath, None, None)
+    val config = CycleConfig("error-trait.raml", "", Raml10YamlHint, AmfJsonHint, basePath, None, None)
     for {
       model <- build(config, buildConfig(None, None))
     } yield {
@@ -26,7 +25,7 @@ class ParsedCloneTest extends FunSuiteCycleTests {
   }
 
   test("Test clone http settings of security scheme") {
-    val config    = CycleConfig("api-key-name.json", "", Oas30JsonHint, AmfJsonLd, basePath, None, None)
+    val config    = CycleConfig("api-key-name.json", "", Oas30JsonHint, AmfJsonHint, basePath, None, None)
     val amfConfig = buildConfig(None, Some(IgnoreError))
     for {
       model <- build(config, amfConfig)
