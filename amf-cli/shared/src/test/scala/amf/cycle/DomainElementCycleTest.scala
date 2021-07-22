@@ -14,6 +14,7 @@ import amf.core.internal.remote.{Hint, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
+import amf.testing.Target
 import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
 import org.yaml.model.{YDocument, YNode}
 
@@ -24,7 +25,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  case class EmissionConfig(source: String, golden: String, hint: Hint, directory: String) {
+  case class EmissionConfig(source: String, golden: String, hint: Target, directory: String) {
     def goldenPath: String = directory + golden
     def sourcePath: String = directory + source
   }
@@ -34,10 +35,10 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
   def renderElement(source: String,
                     extractor: BaseUnit => Option[DomainElement],
                     golden: String,
-                    hint: Hint,
+                    target: Target,
                     directory: String = basePath): Future[Assertion] = {
 
-    val config    = EmissionConfig(source, golden, hint, directory)
+    val config    = EmissionConfig(source, golden, target, directory)
     val amfConfig = APIConfiguration.API()
     build(config, amfConfig)
       .map(b => extractor(b))

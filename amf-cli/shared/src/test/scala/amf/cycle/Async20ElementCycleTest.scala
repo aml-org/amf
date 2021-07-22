@@ -2,6 +2,7 @@ package amf.cycle
 
 import amf.core.internal.remote.{Async20YamlHint, Vendor}
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.testing.Async20Yaml
 
 class Async20ElementCycleTest extends DomainElementCycleTest {
 
@@ -15,7 +16,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "type/draft-7-schemas.yaml",
       CommonExtractors.declaresIndex(0),
       "type/schema-emission.yaml",
-      Async20YamlHint
+      Async20Yaml
     )
   }
 
@@ -24,7 +25,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definition.yaml",
       CommonExtractors.declaresIndex(1),
       "parameter/param.yaml",
-      Async20YamlHint
+      Async20Yaml
     )
   }
 
@@ -33,7 +34,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "components/async-components.yaml",
       CommonExtractors.declaresIndex(16),
       "components/async-components-message-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = validationsPath
     )
   }
@@ -43,7 +44,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "message-obj.yaml",
       CommonExtractors.firstRequest,
       "message-obj-single-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = validationsPath
     )
   }
@@ -53,7 +54,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "api.yaml",
       CommonExtractors.firstRequest.andThen(_.map(_.correlationId)),
       "correlation-id-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = validationsPath + "validations/nested-libraries/nested-correlationIds/"
     )
   }
@@ -63,7 +64,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "/correlation-id/api.yaml",
       CommonExtractors.firstRequest.andThen(_.map(_.correlationId)),
       "correlation-id/correlation-id-emission.yaml",
-      Async20YamlHint
+      Async20Yaml
     )
   }
 
@@ -72,7 +73,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "ws-channel-binding.yaml",
       CommonExtractors.firstEndpoint.andThen(_.map(_.bindings)),
       "ws-channel-binding-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = validationsPath
     )
   }
@@ -82,7 +83,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "mqtt-server-binding.yaml",
       CommonExtractors.firstServer.andThen(_.map(_.bindings)),
       "mqtt-server-binding-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = validationsPath
     )
   }
@@ -92,7 +93,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "kafka-operation-binding.yaml",
       CommonExtractors.firstOperation.andThen(_.map(_.bindings)),
       "kafka-operation-binding-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = validationsPath
     )
   }
@@ -102,7 +103,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "http-message-binding.yaml",
       CommonExtractors.firstRequest.andThen(_.map(_.bindings)),
       "http-message-binding-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = validationsPath
     )
   }
@@ -112,7 +113,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "operation-traits.yaml",
       CommonExtractors.declaresIndex(0),
       "operation-traits-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = validationsPath + "components/"
     )
   }
@@ -122,7 +123,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "message-traits.yaml",
       CommonExtractors.declaresIndex(0),
       "message-traits-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = validationsPath + "components/"
     )
   }
@@ -132,7 +133,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "server.yaml",
       CommonExtractors.webapi.andThen(_.map(_.servers.head)),
       "server-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = upanddownPath
     )
   }
@@ -142,7 +143,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "security-schemes.yaml",
       CommonExtractors.declaresIndex(8),
       "scheme-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = upanddownPath
     )
   }
@@ -152,7 +153,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "type/draft-7-schemas.yaml",
       CommonExtractors.declaresIndex(0)(_).map(_.asInstanceOf[AnyShape].examples.head),
       "type/example-emission.yaml",
-      Async20YamlHint
+      Async20Yaml
     )
   }
 
@@ -161,7 +162,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "publish-subscribe.yaml",
       CommonExtractors.firstEndpoint,
       "publish-subscribe-emission.yaml",
-      Async20YamlHint,
+      Async20Yaml,
       directory = upanddownPath
     )
   }

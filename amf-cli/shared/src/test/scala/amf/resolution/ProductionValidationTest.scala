@@ -3,6 +3,7 @@ package amf.resolution
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Amf, Raml10, Raml10YamlHint}
+import amf.testing.{AmfJsonLd, Raml10Yaml}
 
 import scala.concurrent.Future
 
@@ -21,17 +22,17 @@ class ProductionValidationTest extends RamlResolutionTest {
     cycle("recursive-union.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
 
   test("Recursive union raml to raml") {
-    cycle("recursive-union.raml", "recursive-union.raml.raml", Raml10YamlHint, Raml10)
+    cycle("recursive-union.raml", "recursive-union.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   test("Patch method raml to raml") {
-    cycle("api.raml", "api.raml.raml", Raml10YamlHint, Raml10, directory = basePath + "patch-method/")
+    cycle("api.raml", "api.raml.raml", Raml10YamlHint, Raml10Yaml, directory = basePath + "patch-method/")
   }
 
   test("Override enum in extension raml to raml") {

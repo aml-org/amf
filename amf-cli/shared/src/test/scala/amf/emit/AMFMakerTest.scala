@@ -11,28 +11,23 @@ import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 import org.yaml.model.YMap
 import amf.core.internal.parser._
-import amf.io.AMFConfigProvider
+import amf.testing.{ConfigProvider, Oas20Json, Raml10Yaml, Target}
 
-class AMFMakerTest
-    extends FunSuite
-    with AMFUnitFixtureTest
-    with ListAssertions
-    with PlatformSecrets
-    with AMFConfigProvider {
+class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions with PlatformSecrets {
 
   test("Test simple Raml generation") {
-    val root = ast(`document/api/bare`, Raml10)
+    val root = ast(`document/api/bare`, Raml10Yaml)
     assertNode(root, ("title", "test"))
     assertNode(root, ("description", "test description"))
   }
 
   test("Test simple Oas generation") {
-    val root = ast(`document/api/bare`, Oas20)
+    val root = ast(`document/api/bare`, Oas20Json)
     assertNode(root, ("info", List(("title", "test"), ("description", "test description"))))
   }
 
   test("Test complete Oas generation") {
-    val root = ast(`document/api/basic`, Oas20)
+    val root = ast(`document/api/basic`, Oas20Json)
 
     assertNode(
       root,
@@ -62,7 +57,7 @@ class AMFMakerTest
   }
 
   test("Test complete Raml generation") {
-    val root = ast(`document/api/basic`, Raml10)
+    val root = ast(`document/api/basic`, Raml10Yaml)
     assertNode(root, ("title", "test"))
     assertNode(root, ("description", "test description"))
 
@@ -89,13 +84,13 @@ class AMFMakerTest
   }
 
   test("Test Raml generation with operations") {
-    val root = ast(`document/api/advanced`, Raml10)
+    val root = ast(`document/api/advanced`, Raml10Yaml)
     assertNode(root,
                ("/endpoint", List(("get", List(("description", "test operation get"), ("displayName", "test get"))))))
   }
 
   test("Test Oas generation with operations") {
-    val root = ast(`document/api/advanced`, Oas20)
+    val root = ast(`document/api/advanced`, Oas20Json)
     assertNode(
       root,
       ("paths",
@@ -127,8 +122,8 @@ class AMFMakerTest
     fail(s"Field $field not found in tree where was expected to be")
   }
 
-  private def ast(document: Document, vendor: Vendor): YMap = {
-    val config = configFor(vendor)
+  private def ast(document: Document, vendor: Target): YMap = {
+    val config = ConfigProvider.configFor(vendor.spec)
     config.baseUnitClient().renderAST(document, vendor.mediaType) match {
       case doc: SyamlParsedDocument => doc.document.node.as[YMap]
       case _                        => YMap.empty

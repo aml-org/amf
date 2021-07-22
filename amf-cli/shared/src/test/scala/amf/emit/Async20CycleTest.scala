@@ -4,6 +4,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote.{Amf, Async20YamlHint, AsyncApi20}
 import amf.io.FunSuiteCycleTests
+import amf.testing.{AmfJsonLd, Async20Yaml}
 
 class Async20CycleTest extends FunSuiteCycleTests {
   override val basePath: String = "amf-cli/shared/src/test/resources/validations/async20/"
@@ -13,13 +14,13 @@ class Async20CycleTest extends FunSuiteCycleTests {
 
   cyclesAsyncAmf.foreach { f =>
     multiGoldenTest(s"${f.name} - async to amf", f.apiTo) { config =>
-      cycle(f.apiFrom, config.golden, Async20YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+      cycle(f.apiFrom, config.golden, Async20YamlHint, target = AmfJsonLd, renderOptions = Some(config.renderOptions))
     }
   }
 
   cyclesAsyncAsync.foreach { f =>
     test(s"${f.name} - async to async") {
-      cycle(f.apiFrom, f.apiTo, Async20YamlHint, target = AsyncApi20, directory = upanddown, syntax = Some(Yaml))
+      cycle(f.apiFrom, f.apiTo, Async20YamlHint, target = Async20Yaml, directory = upanddown, syntax = Some(Yaml))
     }
   }
 

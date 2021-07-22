@@ -10,6 +10,7 @@ import amf.core.client.scala.validation.AMFValidator
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.core.internal.resource.StringResourceLoader
 import amf.io.FileAssertionTest
+import amf.testing.TargetProvider.defaultTargetFor
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -32,10 +33,11 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   private def compatibility(source: String, l: Hint, r: Hint): Future[Assertion] = {
     for {
-      input  <- fs.asyncFile(basePath + source).read()
-      left   <- parseBaseUnit(input.toString, l)
-      target <- Future.successful(new AMFRenderer(left, r.vendor, RenderOptions(), Some(r.syntax)).renderToString)
-      _      <- parseBaseUnit(target, r)
+      input <- fs.asyncFile(basePath + source).read()
+      left  <- parseBaseUnit(input.toString, l)
+      target <- Future.successful(
+        new AMFRenderer(left, defaultTargetFor(r.vendor), RenderOptions(), Some(r.syntax)).renderToString)
+      _ <- parseBaseUnit(target, r)
     } yield {
       succeed
     }

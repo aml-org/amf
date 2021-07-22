@@ -3,6 +3,7 @@ package amf.emit
 import amf.core.internal.remote.Syntax.Json
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
+import amf.testing.{AmfJsonLd, Oas30Json, Raml10Yaml}
 
 class Oas30CycleTest extends FunSuiteCycleTests {
   override val basePath: String = "amf-cli/shared/src/test/resources/upanddown/oas3/"
@@ -13,7 +14,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cycleOas3ToRaml10.foreach { f =>
     test(s"${f.name} - oas3 to raml10") {
-      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Raml10)
+      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Raml10Yaml)
     }
   }
 
@@ -23,7 +24,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cycleOas2ToOas3.foreach { f =>
     test(s"${f.name} - oas2 to oas3") {
-      cycle(f.apiFrom, f.apiTo, Oas20JsonHint, Oas30, syntax = Some(Json))
+      cycle(f.apiFrom, f.apiTo, Oas20JsonHint, Oas30Json, syntax = Some(Json))
     }
   }
 
@@ -64,7 +65,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cyclesOas3.foreach { f =>
     test(s"${f.name} - oas3 to oas3") {
-      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Oas30, syntax = Some(Json))
+      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Oas30Json, syntax = Some(Json))
     }
   }
 
@@ -72,7 +73,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cyclesRamlOas3.foreach { f =>
     test(s"${f.name} - raml to oas3") {
-      cycle(f.apiFrom, f.apiTo, Raml10YamlHint, Oas30, syntax = Some(Json))
+      cycle(f.apiFrom, f.apiTo, Raml10YamlHint, Oas30Json, syntax = Some(Json))
     }
   }
 
@@ -81,7 +82,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cyclesOas3Amf.foreach { f =>
     test(s"${f.name} - oas3 to amf") {
-      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Amf)
+      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, AmfJsonLd)
     }
   }
 }

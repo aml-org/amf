@@ -5,6 +5,8 @@ import amf.core.client.scala.model.domain.templates.{ParametrizedDeclaration, Va
 import amf.core.internal.remote.{Hint, Raml10, Raml10YamlHint, Vendor}
 import amf.io.FunSuiteCycleTests
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.testing.ConfigProvider.configFor
+import amf.testing.{Raml10Yaml, Target}
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
@@ -19,17 +21,17 @@ class MutateModelCycleTest extends FunSuiteCycleTests {
       traitNode.asInstanceOf[ParametrizedDeclaration].withVariables(Seq(newParam))
       bu
     }
-    transformCycle("add-empty-variable.raml", "add-empty-variable-mutated.raml", Raml10YamlHint, Raml10, transform)
+    transformCycle("add-empty-variable.raml", "add-empty-variable-mutated.raml", Raml10YamlHint, Raml10Yaml, transform)
   }
 
   final def transformCycle(source: String,
                            golden: String,
                            hint: Hint,
-                           target: Vendor,
+                           target: Target,
                            transform: BaseUnit => BaseUnit,
                            directory: String = basePath): Future[Assertion] = {
     val config    = CycleConfig(source, golden, hint, target, directory, None, None)
-    val amfConfig = buildConfig(configFor(target), None, None)
+    val amfConfig = buildConfig(configFor(target.spec), None, None)
     build(config, amfConfig)
       .map(transform(_))
       .map(render(_, config, amfConfig))

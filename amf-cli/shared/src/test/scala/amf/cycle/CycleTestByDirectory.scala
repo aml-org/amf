@@ -6,6 +6,8 @@ import amf.core.internal.plugins.document.graph._
 import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote.{AmfJsonHint, Hint}
 import amf.io.{BuildCycleTests, JsonLdSerializationSuite}
+import amf.testing.TargetProvider
+import amf.testing.TargetProvider._
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.{Assertion, AsyncFreeSpec}
 
@@ -205,7 +207,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
     cycle(source,
           golden,
           hint,
-          target.vendor,
+          defaultTargetFor(target.vendor),
           syntax = Some(target.syntax),
           eh = Some(DefaultErrorHandler()),
           renderOptions = renderOptions)

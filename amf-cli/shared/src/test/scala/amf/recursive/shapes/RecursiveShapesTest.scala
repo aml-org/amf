@@ -7,6 +7,7 @@ import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Hint, Oas20, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
+import amf.testing.Oas20Json
 import amf.validation.MultiPlatformReportGenTest
 import org.scalatest.Assertion
 
@@ -50,7 +51,7 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
       super.cycle(source,
                   "oas/" + golden,
                   Raml10YamlHint,
-                  Oas20,
+                  Oas20Json,
                   directory = basePath.replace("file://", ""))
   }
 

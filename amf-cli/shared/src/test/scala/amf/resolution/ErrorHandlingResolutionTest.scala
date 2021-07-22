@@ -12,6 +12,8 @@ import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.remote._
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.io.FunSuiteCycleTests
+import amf.testing.TargetProvider
+import amf.testing.TargetProvider.defaultTargetFor
 import org.scalatest.Assertion
 import org.scalatest.Matchers._
 
@@ -60,7 +62,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   }
 
   private def errorCycle(source: String, hint: Hint, errors: List[AMFValidationResult], path: String) = {
-    val config    = CycleConfig(source, source, hint, hint.vendor, path, Some(hint.syntax), None)
+    val config    = CycleConfig(source, source, hint, defaultTargetFor(hint.vendor), path, Some(hint.syntax), None)
     val eh        = DefaultErrorHandler()
     val amfConfig = buildConfig(None, None) // need to ignore parsing errors, apparently
     for {
@@ -89,7 +91,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    config.target match {
+    config.renderTarget.spec match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         amfConfig.baseUnitClient().transform(unit, PipelineId.Default).baseUnit
       case Amf =>

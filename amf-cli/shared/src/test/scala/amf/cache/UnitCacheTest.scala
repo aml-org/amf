@@ -17,47 +17,6 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  case class CustomUnitCache(references: Seq[CachedReference]) extends UnitCache {
-
-    /** If the resource not exists, you should return a future failed with an ResourceNotFound exception. */
-    override def fetch(url: String): Future[CachedReference] =
-      references.find(r => r.url == url) match {
-        case Some(value) =>
-          Future.successful { value }
-        case _ =>
-          Future.failed[CachedReference](new ResourceNotFound("Reference not found"))
-      }
-  }
-
-  private def createClientWithCache(filesToCache: Seq[String], shouldResolve: Boolean): Future[AMFConfiguration] = {
-    val client = APIConfiguration.API().baseUnitClient()
-    val listOfFutures = filesToCache.map { file =>
-      client
-        .parse(file)
-        .map(_.baseUnit)
-        .map { unit =>
-          if (shouldResolve)
-            client.transform(unit, PipelineName.from(ProvidedMediaType.Raml10, PipelineId.Cache)).baseUnit
-          else unit
-        }
-        .map { unit =>
-          CachedReference(file, unit)
-        }
-    }
-    Future.sequence(listOfFutures).map(references => APIConfiguration.API().withUnitCache(CustomUnitCache(references)))
-  }
-
-  private def runCacheTest(main: String, filesToCache: Seq[String], shouldResolve: Boolean)(
-      assert: (BaseUnit, AMFValidationReport) => Assertion) = {
-    for {
-      client <- createClientWithCache(filesToCache, shouldResolve).map(_.baseUnitClient())
-      root   <- client.parseDocument(main).map(_.document)
-      report <- client.validate(root)
-    } yield {
-      assert(root, report)
-    }
-  }
-
   test("Without resolve - Simple API") {
     val path        = "file://amf-cli/shared/src/test/resources/cache/api-library/"
     val libraryPath = path + "library.raml"
@@ -217,6 +176,47 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
 
     runCacheTest(mainPath, Seq(type1Path), shouldResolve = true) { (_, report) =>
       assert(report.conforms)
+    }
+  }
+
+  case class CustomUnitCache(references: Seq[CachedReference]) extends UnitCache {
+
+    /** If the resource not exists, you should return a future failed with an ResourceNotFound exception. */
+    override def fetch(url: String): Future[CachedReference] =
+      references.find(r => r.url == url) match {
+        case Some(value) =>
+          Future.successful { value }
+        case _ =>
+          Future.failed[CachedReference](new ResourceNotFound("Reference not found"))
+      }
+  }
+
+  private def createClientWithCache(filesToCache: Seq[String], shouldResolve: Boolean): Future[AMFConfiguration] = {
+    val client = APIConfiguration.API().baseUnitClient()
+    val listOfFutures = filesToCache.map { file =>
+      client
+        .parse(file)
+        .map(_.baseUnit)
+        .map { unit =>
+          if (shouldResolve)
+            client.transform(unit, PipelineName.from(ProvidedMediaType.Raml10, PipelineId.Cache)).baseUnit
+          else unit
+        }
+        .map { unit =>
+          CachedReference(file, unit)
+        }
+    }
+    Future.sequence(listOfFutures).map(references => APIConfiguration.API().withUnitCache(CustomUnitCache(references)))
+  }
+
+  private def runCacheTest(main: String, filesToCache: Seq[String], shouldResolve: Boolean)(
+      assert: (BaseUnit, AMFValidationReport) => Assertion) = {
+    for {
+      client <- createClientWithCache(filesToCache, shouldResolve).map(_.baseUnitClient())
+      root   <- client.parseDocument(main).map(_.document)
+      report <- client.validate(root)
+    } yield {
+      assert(root, report)
     }
   }
 }

@@ -2,6 +2,7 @@ package amf.resolution
 
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote._
+import amf.testing.AmfJsonLd
 
 /**
   *
@@ -14,7 +15,7 @@ class ExamplesResolutionTest extends ResolutionTest {
     cycle("response-examples.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -25,7 +26,7 @@ class ExamplesResolutionTest extends ResolutionTest {
       "response-declarations-with-multiple-media-types.yaml",
       config.golden,
       Oas20YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       renderOptions = Some(config.renderOptions),
       transformWith = Some(Raml10)
     )
@@ -35,7 +36,7 @@ class ExamplesResolutionTest extends ResolutionTest {
     cycle("response-examples.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -46,7 +47,7 @@ class ExamplesResolutionTest extends ResolutionTest {
         "examples/vocabulary-fragment/api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = validationPath,
         renderOptions = Some(config.renderOptions),
         transformWith = Some(Raml10)
@@ -59,7 +60,7 @@ class ExamplesResolutionTest extends ResolutionTest {
         "examples/dialect-fragment/api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = validationPath,
         renderOptions = Some(config.renderOptions),
         transformWith = Some(Raml10)

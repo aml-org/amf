@@ -8,6 +8,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Amf, Raml10YamlHint}
 import amf.core.internal.render.AMFSerializer
 import amf.io.FunSuiteCycleTests
+import amf.testing.AmfJsonLd
 import org.scalatest.Assertion
 import org.yaml.builder.YDocumentBuilder
 import org.yaml.model.{YDocument, YPart}
@@ -32,7 +33,7 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
   }
 
   private def run(source: String, golden: String, renderOptions: RenderOptions): Future[Assertion] =
-    cycle(source, golden, Raml10YamlHint, target = Amf, eh = None, renderOptions = Some(renderOptions))
+    cycle(source, golden, Raml10YamlHint, target = AmfJsonLd, eh = None, renderOptions = Some(renderOptions))
 
   multiGoldenTest("Test types with references", "types.%s") { config =>
     run("types.raml", config.golden, config.renderOptions)
