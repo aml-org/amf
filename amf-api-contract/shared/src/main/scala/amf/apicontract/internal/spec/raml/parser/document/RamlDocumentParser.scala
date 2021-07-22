@@ -125,7 +125,10 @@ case class ExtensionLikeParser(root: Root, spec: Spec)(implicit override val ctx
       .foreach(e => {
         root.references
           .find(_.origin.url == e.value.as[String])
-          .foreach(extend => document.withExtend(extend.unit))
+          .foreach{ extend =>
+            document.callAfterAdoption{() =>
+              document.set(field, AmfScalar(extend.unit.id, Annotations(e.value)), Annotations(e))}
+          }
       })
   }
 }
