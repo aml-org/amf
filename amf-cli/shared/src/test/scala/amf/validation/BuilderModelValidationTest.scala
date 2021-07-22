@@ -40,7 +40,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
     doc.withReferences(Seq(module))
 
     for {
-      report <- AMFValidator.validate(module, Raml10Profile, RAMLConfiguration.RAML10())
+      report <- AMFValidator.validate(module, RAMLConfiguration.RAML10())
     } yield {
       report.conforms should be(true)
     }

@@ -86,7 +86,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     val handler   = DefaultErrorHandler()
     val amfConfig = buildConfig(None, Some(handler))
     build(source.path, source.path, amfConfig).flatMap { unit =>
-      amfConfig.baseUnitClient().validate(unit, profileName)
+      amfConfig.baseUnitClient().validate(unit)
     }
   }
 

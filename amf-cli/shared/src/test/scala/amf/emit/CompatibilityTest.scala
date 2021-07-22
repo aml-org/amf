@@ -50,7 +50,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
       .withResourceLoader(StringResourceLoader("amf://id#", content))
     for {
       unit <- AMFParser.parse("amf://id#", conf)
-      _    <- AMFValidator.validate(unit.baseUnit, ProfileName(hint.vendor.name), conf)
+      _    <- AMFValidator.validate(unit.baseUnit, conf)
     } yield unit.baseUnit
   }
 }
