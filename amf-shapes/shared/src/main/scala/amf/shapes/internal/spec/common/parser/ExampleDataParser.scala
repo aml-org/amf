@@ -28,7 +28,7 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
           .get(refUrl)
           .foreach { e =>
             example.add(ExternalReferenceUrl(refUrl))
-            example.withReference(e.encoded.id)
+            example.callAfterAdoption{() => example.withReference(e.encoded.id)}
             example.set(ExternalSourceElementModel.Location, e.location.getOrElse(ctx.loc))
           }
         (mut.target.getOrElse(node), true)
