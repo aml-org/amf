@@ -15,7 +15,6 @@ trait ResolutionCapabilities {
         amfConfig.baseUnitClient().transform(unit, pipeline).baseUnit
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, UnhandledAmfPipeline(pipeline))
       case target => throw new Exception(s"Cannot resolve $target")
-      //    case _ => unit
     }
   }
 
