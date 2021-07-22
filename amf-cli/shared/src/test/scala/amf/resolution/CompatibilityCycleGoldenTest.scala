@@ -44,8 +44,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           "cycled-apis/oas30/no-operation-name.json",
           Raml10YamlHint,
           Oas30Json,
-          transformWith = Some(Oas30),
-          syntax = Some(Json))
+          transformWith = Some(Oas30))
   }
 
   test("RAML operations without names do not generate null_0 operationIds in OAS 2.0") {
@@ -95,8 +94,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           "cycled-apis/oas30/library.json",
           Raml10YamlHint,
           Oas30Json,
-          transformWith = Some(Oas30),
-          syntax = Some(Json))
+          transformWith = Some(Oas30))
   }
 
   test("Unused OAS 3.0 examples are deleted and used ones inlined") {
@@ -144,8 +142,7 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           "cycled-apis/oas30/raml-security-definitions.json",
           Raml10YamlHint,
           Oas30Json,
-          transformWith = Some(Oas30),
-          syntax = Some(Json))
+          transformWith = Some(Oas30))
   }
 
   test("OAS 3.0 nullable schemas are translated with union expression to raml") {

@@ -62,7 +62,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   }
 
   private def errorCycle(source: String, hint: Hint, errors: List[AMFValidationResult], path: String) = {
-    val config    = CycleConfig(source, source, hint, defaultTargetFor(hint.vendor), path, Some(hint.syntax), None)
+    val config    = CycleConfig(source, source, hint, defaultTargetFor(hint.vendor), path, None)
     val eh        = DefaultErrorHandler()
     val amfConfig = buildConfig(None, None) // need to ignore parsing errors, apparently
     for {

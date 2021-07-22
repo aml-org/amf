@@ -126,13 +126,12 @@ trait BuildCycleTestCommon extends FileAssertionTest {
                          hint: Hint,
                          renderTarget: Target,
                          directory: String,
-                         syntax: Option[Syntax],
                          pipeline: Option[String],
                          transformWith: Option[Vendor] = None) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
 
-    val targetMediaType: String = syntax.map(syn => syn.mediaType).getOrElse(renderTarget.mediaType)
+    val targetMediaType: String = renderTarget.mediaType
   }
 
   /** Method to parse unit. Override if necessary. */
@@ -178,15 +177,8 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 trait BuildCycleTests extends BuildCycleTestCommon {
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, hint: Hint, syntax: Option[Syntax]): Future[Assertion] =
-    cycle(source, hint, basePath, syntax)
-
-  /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, hint: Hint): Future[Assertion] = cycle(source, hint, basePath, None)
-
-  /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, hint: Hint, directory: String, syntax: Option[Syntax]): Future[Assertion] =
-    cycle(source, source, hint, defaultTargetFor(hint.vendor), directory, syntax = syntax, eh = None)
+  def cycle(source: String, hint: Hint): Future[Assertion] =
+    cycle(source, source, hint, defaultTargetFor(hint.vendor), basePath)
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String): Future[Assertion] =
@@ -199,12 +191,11 @@ trait BuildCycleTests extends BuildCycleTestCommon {
                   target: Target,
                   directory: String = basePath,
                   renderOptions: Option[RenderOptions] = None,
-                  syntax: Option[Syntax] = None,
                   pipeline: Option[String] = None,
                   transformWith: Option[Vendor] = None,
                   eh: Option[AMFErrorHandler] = None): Future[Assertion] = {
 
-    val config          = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
+    val config          = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
     val amfConfig       = buildConfig(renderOptions, eh)
     val transformConfig = buildConfig(configFor(transformWith.getOrElse(target.spec)), renderOptions, eh)
     val renderConfig    = buildConfig(configFor(target.spec), renderOptions, eh)
@@ -234,7 +225,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
                    syntax: Option[Syntax] = None,
                    pipeline: Option[String] = None): Future[Assertion] = {
 
-    val config    = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, None)
+    val config    = CycleConfig(source, golden, hint, target, directory, pipeline, None)
     val amfConfig = buildConfig(None, None)
     build(config, amfConfig)
       .map(transformThroughRdf(_, config))
@@ -249,11 +240,10 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
                hint: Hint,
                target: Target = AmfJsonLd,
                directory: String = basePath,
-               syntax: Option[Syntax] = None,
                pipeline: Option[String] = None,
                transformWith: Option[Vendor] = None): Future[Assertion] = {
 
-    val config    = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
+    val config    = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
     val amfConfig = buildConfig(None, None)
     build(config, amfConfig)
       .map(transformRdf(_, config))

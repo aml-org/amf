@@ -41,7 +41,7 @@ class JapaneseCycleTest extends FunSuiteCycleTests {
   }
 
   multiSourceTest("Json-LD resolves to OAS30", "oas30api.%s") { config =>
-    cycle(config.source, "cycled-oas30api.json", AmfJsonHint, Oas30Json, syntax = Some(Json))
+    cycle(config.source, "cycled-oas30api.json", AmfJsonHint, Oas30Json)
   }
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint

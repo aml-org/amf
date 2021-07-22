@@ -20,7 +20,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
 
   cyclesAsyncAsync.foreach { f =>
     test(s"${f.name} - async to async") {
-      cycle(f.apiFrom, f.apiTo, Async20YamlHint, target = Async20Yaml, directory = upanddown, syntax = Some(Yaml))
+      cycle(f.apiFrom, f.apiTo, Async20YamlHint, target = Async20Yaml, directory = upanddown)
     }
   }
 
