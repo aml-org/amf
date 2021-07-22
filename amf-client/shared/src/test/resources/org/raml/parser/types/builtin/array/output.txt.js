@@ -17,7 +17,7 @@ employees[2].name should be string
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
-  Message: should NOT have less than 2 items
+  Message: should NOT have fewer than 2 items
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-min
   Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-min
