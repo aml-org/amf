@@ -24,7 +24,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cycleOas2ToOas3.foreach { f =>
     test(s"${f.name} - oas2 to oas3") {
-      cycle(f.apiFrom, f.apiTo, Oas20JsonHint, Oas30Json, syntax = Some(Json))
+      cycle(f.apiFrom, f.apiTo, Oas20JsonHint, Oas30Json)
     }
   }
 
@@ -65,7 +65,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cyclesOas3.foreach { f =>
     test(s"${f.name} - oas3 to oas3") {
-      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Oas30Json, syntax = Some(Json))
+      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Oas30Json)
     }
   }
 
@@ -73,7 +73,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cyclesRamlOas3.foreach { f =>
     test(s"${f.name} - raml to oas3") {
-      cycle(f.apiFrom, f.apiTo, Raml10YamlHint, Oas30Json, syntax = Some(Json))
+      cycle(f.apiFrom, f.apiTo, Raml10YamlHint, Oas30Json)
     }
   }
 

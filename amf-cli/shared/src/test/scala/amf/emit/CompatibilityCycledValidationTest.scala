@@ -45,7 +45,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
       val path = s"$filePath/$file"
 
       test(s"Test $path to $to") {
-        val config       = CycleConfig(path, path, from, defaultTargetFor(to), basePath, syntax, pipeline)
+        val config       = CycleConfig(path, path, from, defaultTargetFor(to), basePath, pipeline)
         val targetHint   = hint(vendor = to)
         val toProfile    = profile(to)
         val amfConfig    = buildConfig(None, None)

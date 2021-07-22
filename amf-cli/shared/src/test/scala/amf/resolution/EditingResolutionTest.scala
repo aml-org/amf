@@ -848,7 +848,7 @@ class EditingResolutionTest extends ResolutionTest {
   }
 
   test("Example1 resolution to Raml") {
-    cycle("example1.yaml", "example1.resolved.yaml", Oas20YamlHint, Oas20Yaml, resolutionPath, syntax = Some(Yaml))
+    cycle("example1.yaml", "example1.resolved.yaml", Oas20YamlHint, Oas20Yaml, resolutionPath)
   }
 
   test("Test merge examples in local against declared type") {
