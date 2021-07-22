@@ -12,6 +12,7 @@ import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FunSuiteCycleTests
+import amf.testing.TargetProvider.defaultTargetFor
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 
@@ -44,7 +45,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
       val path = s"$filePath/$file"
 
       test(s"Test $path to $to") {
-        val config       = CycleConfig(path, path, from, to, basePath, syntax, pipeline)
+        val config       = CycleConfig(path, path, from, defaultTargetFor(to), basePath, syntax, pipeline)
         val targetHint   = hint(vendor = to)
         val toProfile    = profile(to)
         val amfConfig    = buildConfig(None, None)
@@ -54,7 +55,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
           resolved <- successful(transform(origin, config, targetConfig))
           rendered <- successful(render(resolved, config, targetConfig))
           tmp      <- writeTemporaryFile(path)(rendered)
-          report   <- validate(tmp, targetHint, toProfile, to)
+          report   <- validate(tmp, toProfile)
         } yield {
           outputReportErrors(report)
         }
@@ -81,15 +82,10 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
 
   private def outputReportErrors(report: AMFValidationReport) = report.toString should include(REPORT_CONFORMS)
 
-  private def validate(source: AsyncFile,
-                       hint: Hint,
-                       profileName: ProfileName,
-                       target: Vendor): Future[AMFValidationReport] = {
-
-    val config    = CycleConfig(source.path, source.path, hint, target, "", None, None)
+  private def validate(source: AsyncFile, profileName: ProfileName): Future[AMFValidationReport] = {
     val handler   = DefaultErrorHandler()
     val amfConfig = buildConfig(None, Some(handler))
-    build(config, amfConfig).flatMap { unit =>
+    build(source.path, source.path, amfConfig).flatMap { unit =>
       amfConfig.baseUnitClient().validate(unit, profileName)
     }
   }

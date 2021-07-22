@@ -1,12 +1,12 @@
 package amf.javaparser.org.raml.json_schema
 
 import amf.apicontract.client.scala.{AMFConfiguration, WebAPIConfiguration}
-
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.remote.{Hint, Oas20YamlHint, Oas30YamlHint, Vendor}
 import amf.javaparser.org.raml.ModelValidationTest
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.testing.Target
 
 /* this test parse a raml only with declared types, resolve them and serialize a json schema.*/
 
@@ -18,7 +18,7 @@ trait TypeToJsonSchemaTest extends ModelValidationTest {
 
   override val basePath: String = path
 
-  override def render(model: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): String = {
+  override def render(model: BaseUnit, d: String, vendor: Target, amfConfig: AMFConfiguration): String = {
     model match {
       case d: DeclaresModel =>
         d.declares.collectFirst { case s: AnyShape if s.name.is("root") => s } match {

@@ -3,6 +3,7 @@ package amf.cycle
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{Amf, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
+import amf.testing.AmfJsonLd
 
 class RamlArrayCycleTest extends FunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/parser/"
@@ -15,7 +16,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
     cycle(s"${arrayExpression}base-type-array.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -24,7 +25,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
       cycle(s"${arrayExpression}type-expression-with-inheritance.raml",
             config.golden,
             Raml10YamlHint,
-            target = Amf,
+            target = AmfJsonLd,
             renderOptions = Some(config.renderOptions))
   }
 
@@ -33,7 +34,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
     cycle(s"${arrayExpression}union-type-array.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -42,7 +43,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
     cycle(s"${arrayExpression}matrix-type-array.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -50,7 +51,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
     cycle(s"${unions}union-right-declaration.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -59,7 +60,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
       cycle(s"${unions}child-declaration-links.raml",
             config.golden,
             Raml10YamlHint,
-            target = Amf,
+            target = AmfJsonLd,
             renderOptions = Some(config.renderOptions))
   }
 
@@ -67,7 +68,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
     cycle(s"${unionsLib}api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions))
   }
 

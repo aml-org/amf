@@ -22,6 +22,7 @@ import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.datanode.DataNodeParser
+import amf.testing.AmfJsonLd
 import org.mulesoft.common.io.Fs
 import org.scalatest.{Assertion, Matchers}
 import org.yaml.model.{YDocument, YMap, YNode}
@@ -132,7 +133,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
       new Async20WebApiContext("loc", Seq(), ParserContext(config = LimitedParseConfig(DefaultErrorHandler())))
 
     def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): String =
-      new AMFRenderer(document, AMF, renderOptions, None).renderToString
+      new AMFRenderer(document, AmfJsonLd, renderOptions, None).renderToString
 
     def defaultRenderOptions: RenderOptions = new RenderOptions().withPrettyPrint
   }

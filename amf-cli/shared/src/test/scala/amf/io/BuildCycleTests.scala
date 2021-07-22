@@ -11,13 +11,16 @@ import amf.apicontract.client.scala.{
 }
 import amf.apicontract.internal.spec.raml.RamlHeader.Raml10
 import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.{RdfModel, RdfUnitConverter}
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote.{Amf, Hint, Vendor}
+import amf.testing.ConfigProvider.configFor
+import amf.testing.TargetProvider.defaultTargetFor
+import amf.testing.{AmfJsonLd, ConfigProvider, Target, TargetProvider}
 import org.scalactic.Fail
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -112,7 +115,7 @@ abstract class FunSuiteRdfCycleTests extends MultiJsonldAsyncFunSuite with Build
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 }
 
-trait BuildCycleTestCommon extends FileAssertionTest with AMFConfigProvider {
+trait BuildCycleTestCommon extends FileAssertionTest {
 
   protected implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -121,7 +124,7 @@ trait BuildCycleTestCommon extends FileAssertionTest with AMFConfigProvider {
   case class CycleConfig(source: String,
                          golden: String,
                          hint: Hint,
-                         target: Vendor,
+                         renderTarget: Target,
                          directory: String,
                          syntax: Option[Syntax],
                          pipeline: Option[String],
@@ -129,15 +132,19 @@ trait BuildCycleTestCommon extends FileAssertionTest with AMFConfigProvider {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
 
-    val targetMediaType: String = syntax.map(syn => syn.mediaType).getOrElse(target.mediaType)
+    val targetMediaType: String = syntax.map(syn => syn.mediaType).getOrElse(renderTarget.mediaType)
   }
 
   /** Method to parse unit. Override if necessary. */
   def build(config: CycleConfig, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
+    build(config.sourcePath, config.goldenPath, amfConfig)
+  }
+
+  def build(sourcePath: String, goldenPath: String, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
     amfConfig
-      .withParsingOptions(amfConfig.options.parsingOptions.withBaseUnitUrl("file://" + config.goldenPath))
+      .withParsingOptions(amfConfig.options.parsingOptions.withBaseUnitUrl("file://" + goldenPath))
       .baseUnitClient()
-      .parse(s"file://${config.sourcePath}")
+      .parse(s"file://$sourcePath")
       .map(_.baseUnit)
   }
 
@@ -179,17 +186,17 @@ trait BuildCycleTests extends BuildCycleTestCommon {
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String, syntax: Option[Syntax]): Future[Assertion] =
-    cycle(source, source, hint, hint.vendor, directory, syntax = syntax, eh = None)
+    cycle(source, source, hint, defaultTargetFor(hint.vendor), directory, syntax = syntax, eh = None)
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String): Future[Assertion] =
-    cycle(source, source, hint, hint.vendor, directory, eh = None)
+    cycle(source, source, hint, defaultTargetFor(hint.vendor), directory, eh = None)
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   final def cycle(source: String,
                   golden: String,
                   hint: Hint,
-                  target: Vendor,
+                  target: Target,
                   directory: String = basePath,
                   renderOptions: Option[RenderOptions] = None,
                   syntax: Option[Syntax] = None,
@@ -199,8 +206,8 @@ trait BuildCycleTests extends BuildCycleTestCommon {
 
     val config          = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
     val amfConfig       = buildConfig(renderOptions, eh)
-    val transformConfig = buildConfig(configFor(transformWith.getOrElse(target)), renderOptions, eh)
-    val renderConfig    = buildConfig(configFor(target), renderOptions, eh)
+    val transformConfig = buildConfig(configFor(transformWith.getOrElse(target.spec)), renderOptions, eh)
+    val renderConfig    = buildConfig(configFor(target.spec), renderOptions, eh)
 
     for {
       parsed       <- build(config, amfConfig)
@@ -222,7 +229,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   def cycleFullRdf(source: String,
                    golden: String,
                    hint: Hint,
-                   target: Vendor = Amf,
+                   target: Target = AmfJsonLd,
                    directory: String = basePath,
                    syntax: Option[Syntax] = None,
                    pipeline: Option[String] = None): Future[Assertion] = {
@@ -240,7 +247,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   def cycleRdf(source: String,
                golden: String,
                hint: Hint,
-               target: Vendor = Amf,
+               target: Target = AmfJsonLd,
                directory: String = basePath,
                syntax: Option[Syntax] = None,
                pipeline: Option[String] = None,

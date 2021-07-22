@@ -6,6 +6,7 @@ import amf.core.internal.remote.{Raml10YamlHint, Vendor}
 import amf.shapes.internal.annotations.ForceEntry
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
+import amf.testing.Raml10Yaml
 
 class Raml10ElementCycleTest extends DomainElementCycleTest {
 
@@ -20,7 +21,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "type/complex-inheritance-unions.raml",
       CommonExtractors.declaredWithName("root"),
       "type/complex-inheritance-unions.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -33,7 +34,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
         link
       },
       "type/link-force-entry-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -47,7 +48,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
         link
       },
       "type/link-force-entry-fragment-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -56,7 +57,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "multiple-refs/input.raml",
       CommonExtractors.declaredWithName("root"),
       "multiple-refs/type-cycle-emission.yaml",
-      Raml10YamlHint,
+      Raml10Yaml,
       directory = jsonSchemaPath
     )
   }
@@ -66,7 +67,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "type/refs-with-entry.raml",
       CommonExtractors.declaredWithName("root"),
       "type/refs-with-entry-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -75,7 +76,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "type/external-json-schema-refs.raml",
       CommonExtractors.declaresIndex(0),
       "type/json-schema-refs-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -84,7 +85,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "response/input.raml",
       CommonExtractors.firstResponse,
       "response/output.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -93,7 +94,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "abstract/rt-and-trait-definition.raml",
       CommonExtractors.declaresIndex(2),
       "abstract/trait-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -102,7 +103,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "abstract/rt-and-trait-definition.raml",
       CommonExtractors.declaresIndex(0),
       "abstract/rt-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -111,7 +112,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "abstract/rt-and-trait-definition.raml",
       CommonExtractors.declaresIndex(1),
       "abstract/rt-link-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -120,7 +121,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "abstract/rt-and-trait-definition.raml",
       CommonExtractors.declaresIndex(3),
       "abstract/trait-link-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -129,7 +130,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "raml10AuthorizationGrant.raml",
       CommonExtractors.declaresIndex(0),
       "raml10-scheme-emission.yaml",
-      Raml10YamlHint,
+      Raml10Yaml,
       directory = validationsPath + "security-schemes/"
     )
   }
@@ -139,7 +140,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "security-scheme/api.raml",
       CommonExtractors.declaresIndex(0),
       "security-scheme/security-scheme-link-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -151,7 +152,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
         original.map(_.link[SecurityScheme]("someName.raml").add(ExternalFragmentRef("someName.raml")))
       },
       "security-scheme/security-scheme-created-link-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -160,7 +161,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "input.raml",
       CommonExtractors.firstOperation.andThen(_.map(_.request.queryParameters.head)),
       "parameter-emission.yaml",
-      Raml10YamlHint,
+      Raml10Yaml,
       directory = parserPath + "examples/connect/"
     )
   }
@@ -170,7 +171,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "response/input.raml",
       CommonExtractors.firstOperation,
       "response/operation-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -179,7 +180,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "response/input.raml",
       CommonExtractors.firstEndpoint,
       "response/endpoint-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -188,7 +189,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "response/input.raml",
       CommonExtractors.firstResponse.andThen(_.map(r => r.payloads.head.schema.asInstanceOf[NodeShape].examples.head)),
       "response/example-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -197,7 +198,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "response/input.raml",
       CommonExtractors.firstResponse.andThen(_.map(r => r.payloads.head)),
       "response/payload-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -206,7 +207,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "security-schemes/oauth-2/secured-by.raml",
       CommonExtractors.firstOperation.andThen(_.map(_.security.head)),
       "security-schemes/oauth-2/requirement-emission.yaml",
-      Raml10YamlHint,
+      Raml10Yaml,
       validationsPath
     )
   }
@@ -216,7 +217,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "annotation-type/api.raml",
       CommonExtractors.declaresIndex(0),
       "annotation-type/annotation-type-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -225,7 +226,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "annotation-type/api.raml",
       CommonExtractors.declaresIndex(1),
       "annotation-type/annotation-type-link-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 
@@ -234,7 +235,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "annotation-type/api.raml",
       CommonExtractors.declaresIndex(2),
       "annotation-type/annotation-type-lib-link-emission.yaml",
-      Raml10YamlHint
+      Raml10Yaml
     )
   }
 

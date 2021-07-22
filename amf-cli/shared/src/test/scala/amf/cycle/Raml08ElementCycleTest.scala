@@ -1,8 +1,9 @@
 package amf.cycle
 
-import amf.core.internal.remote.{Raml08YamlHint, Raml10YamlHint, Vendor}
+import amf.core.internal.remote.Vendor
 import amf.shapes.internal.annotations.ForceEntry
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.testing.{Raml08Yaml, Raml10Yaml}
 
 class Raml08ElementCycleTest extends DomainElementCycleTest {
 
@@ -17,7 +18,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "schema-position/api.raml",
       CommonExtractors.declaresIndex(0),
       "schema-position/type-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = basePath + "cycle/raml08/"
     )
   }
@@ -31,7 +32,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
         link
       },
       "schema-position/link-force-entry-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = basePath + "cycle/raml08/"
     )
   }
@@ -41,7 +42,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "raml08/json_schema_array.raml",
       CommonExtractors.declaresIndex(0),
       "raml08/json_schema_array-type.yaml",
-      Raml08YamlHint
+      Raml08Yaml
     )
   }
 
@@ -50,7 +51,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "abstract/rt-and-trait-definition.raml",
       CommonExtractors.declaresIndex(1),
       "abstract/trait-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = cyclePath
     )
   }
@@ -60,7 +61,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "abstract/rt-and-trait-definition.raml",
       CommonExtractors.declaresIndex(0),
       "abstract/rt-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = cyclePath
     )
   }
@@ -70,7 +71,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "raml08AuthorizationGrant.raml",
       CommonExtractors.declaresIndex(0),
       "raml08-scheme-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = validationsPath + "security-schemes/"
     )
   }
@@ -80,7 +81,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "input.raml",
       CommonExtractors.firstOperation.andThen(_.map(_.request.queryParameters.head)),
       "param-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = resourcesPath + "org/raml/api/v08/full/"
     )
   }
@@ -90,7 +91,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "api.raml",
       CommonExtractors.firstOperation,
       "operation-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = basePath + "cycle/raml08/americanflightapi/"
     )
   }
@@ -100,7 +101,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "api.raml",
       CommonExtractors.firstEndpoint,
       "endpoint-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = basePath + "cycle/raml08/americanflightapi/"
     )
   }
@@ -110,7 +111,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "api.raml",
       CommonExtractors.firstResponse.andThen(_.map(r => r.payloads.head.schema.asInstanceOf[AnyShape].examples.head)),
       "example-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = basePath + "cycle/raml08/americanflightapi/"
     )
   }
@@ -120,7 +121,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "api.raml",
       CommonExtractors.firstResponse.andThen(_.map(r => r.payloads.head)),
       "payload-emission.yaml",
-      Raml08YamlHint,
+      Raml08Yaml,
       directory = basePath + "cycle/raml08/americanflightapi/"
     )
   }
@@ -130,7 +131,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "valid-raml08-oauth2.raml", // todo another one
       CommonExtractors.firstOperation.andThen(_.map(_.security(1))),
       "requirement-emission.yaml",
-      Raml10YamlHint,
+      Raml10Yaml,
       directory = validationsPath + "security-schemes/"
     )
   }
@@ -140,7 +141,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "valid-raml08-oauth2.raml", // TODO: raml 10 with raml 08 name at a 08 test suit? XD
       CommonExtractors.webapi.andThen(_.map(_.documentations.head)),
       "documentation-emission.yaml",
-      Raml10YamlHint,
+      Raml10Yaml,
       directory = validationsPath + "security-schemes/"
     )
   }

@@ -7,6 +7,7 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
+import amf.testing.{AmfJsonLd, Oas20Json, Oas20Yaml, Oas30Json, Raml08Yaml, Raml10Yaml}
 
 import scala.concurrent.ExecutionContext
 
@@ -27,7 +28,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("recursive3.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           productionPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -36,7 +37,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("simple-merge.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           extendsPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -45,7 +46,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("data.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           extendsPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -54,7 +55,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("simple_example_type.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           cyclePath,
           renderOptions = Some(config.renderOptions))
   }
@@ -63,7 +64,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("data-type-fragment.reference.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           referencesPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -72,7 +73,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("union_arrays.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           cyclePath,
           renderOptions = Some(config.renderOptions))
   }
@@ -81,7 +82,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           validationsPath + "examples/inline-named-examples/",
           renderOptions = Some(config.renderOptions))
   }
@@ -90,7 +91,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           productionPath + "lib-trait-location/",
           renderOptions = Some(config.renderOptions))
   }
@@ -100,7 +101,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       resolutionPath + "externalfragment/test-links-with-references/",
       renderOptions = Some(config.renderOptions)
     )
@@ -111,7 +112,7 @@ class EditingResolutionTest extends ResolutionTest {
       cycle("payloads-examples-resolution.raml",
             config.golden,
             Raml10YamlHint,
-            target = Amf,
+            target = AmfJsonLd,
             resolutionPath,
             renderOptions = Some(config.renderOptions))
   }
@@ -121,7 +122,7 @@ class EditingResolutionTest extends ResolutionTest {
       "input.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       "amf-cli/shared/src/test/resources/resolution/extension/traits/",
       renderOptions = Some(config.renderOptions)
     )
@@ -131,7 +132,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("unresolved-shape.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -140,7 +141,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath + "recursive-extension-provenance/",
           renderOptions = Some(config.renderOptions))
   }
@@ -149,7 +150,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("examples-shortener.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -158,7 +159,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath + "double-declare-type/",
           renderOptions = Some(config.renderOptions))
   }
@@ -167,7 +168,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath + "declared-from-library/",
           renderOptions = Some(config.renderOptions))
   }
@@ -176,7 +177,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath + "union-of-declarations/",
           renderOptions = Some(config.renderOptions))
   }
@@ -185,7 +186,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           productionPath + "event-api/",
           renderOptions = Some(config.renderOptions))
   }
@@ -194,7 +195,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("oas-multiple-example.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonLd,
           productionPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -203,7 +204,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath + "jsonld-example/",
           renderOptions = Some(config.renderOptions))
   }
@@ -214,7 +215,7 @@ class EditingResolutionTest extends ResolutionTest {
       "root-mediatype-propagation.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "root-mediatype-propagation/",
       renderOptions = Some(config.renderOptions)
     )
@@ -224,7 +225,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("tracked-to-linked.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           validationsPath + "tracked-to-linked/",
           renderOptions = Some(config.renderOptions))
   }
@@ -235,7 +236,7 @@ class EditingResolutionTest extends ResolutionTest {
         "tracked-from-resource-type.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         validationsPath + "tracked-from-resource-type/",
         renderOptions = Some(config.renderOptions)
       )
@@ -246,7 +247,7 @@ class EditingResolutionTest extends ResolutionTest {
       "auto-generated-schema-name.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "auto-generated-schema-name/",
       renderOptions = Some(config.renderOptions)
     )
@@ -257,7 +258,7 @@ class EditingResolutionTest extends ResolutionTest {
       "auto-generated-schema-name-oas.yaml",
       config.golden,
       Oas20YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "auto-generated-schema-name/",
       renderOptions = Some(config.renderOptions)
     )
@@ -269,7 +270,7 @@ class EditingResolutionTest extends ResolutionTest {
       "auto-generated-schema-name-with-default.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "auto-generated-schema-name/",
       renderOptions = Some(config.renderOptions)
     )
@@ -279,25 +280,27 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("union-type-array.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           validationsPath,
           renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Tracked oas examples", "tracked-oas-examples.%s") { config =>
-    cycle("tracked-oas-examples.json",
-          config.golden,
-          Oas20JsonHint,
-          target = Amf,
-          validationsPath + "tracked-oas-examples/",
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "tracked-oas-examples.json",
+      config.golden,
+      Oas20JsonHint,
+      target = AmfJsonLd,
+      validationsPath + "tracked-oas-examples/",
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("Keep schema name in body link schema", "body-link-name.%s") { config =>
     cycle("body-link-name.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           validationsPath + "body-link-name/",
           renderOptions = Some(config.renderOptions))
   }
@@ -308,7 +311,7 @@ class EditingResolutionTest extends ResolutionTest {
       "additional-prop-and-defined-after.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       productionPath + "union-type-with-composing-closed-type/",
       renderOptions = Some(config.renderOptions)
     )
@@ -320,7 +323,7 @@ class EditingResolutionTest extends ResolutionTest {
       "additional-prop-and-defined-before.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       productionPath + "union-type-with-composing-closed-type/",
       renderOptions = Some(config.renderOptions)
     )
@@ -331,7 +334,7 @@ class EditingResolutionTest extends ResolutionTest {
       "dup-name-example-tracking.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "dup-name-example-tracking/",
       renderOptions = Some(config.renderOptions)
     )
@@ -341,7 +344,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("lib.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           productionPath + "lib-types/",
           renderOptions = Some(config.renderOptions))
   }
@@ -350,7 +353,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath + "union-of-arrays/",
           renderOptions = Some(config.renderOptions))
   }
@@ -360,7 +363,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "inheritance-provenance/from-declaration/",
       renderOptions = Some(config.renderOptions)
     )
@@ -371,7 +374,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "inheritance-provenance/with-recursive-inheritance/",
       renderOptions = Some(config.renderOptions)
     )
@@ -381,7 +384,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           validationsPath + "resolved-link-annotation/",
           renderOptions = Some(config.renderOptions))
   }
@@ -391,19 +394,21 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "inheritance-provenance/with-regular-inheritance/",
       renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Inheritance provenance annotation with library", "api.%s") { config =>
-    cycle("api.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = Amf,
-          validationsPath + "inheritance-provenance/with-library/",
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonLd,
+      validationsPath + "inheritance-provenance/with-library/",
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("Recursion in inheritance with resource type - Properties", "recursion-inheritance-properties.%s") {
@@ -411,7 +416,7 @@ class EditingResolutionTest extends ResolutionTest {
       cycle("recursion-inheritance-properties.raml",
             config.golden,
             Raml10YamlHint,
-            target = Amf,
+            target = AmfJsonLd,
             validationsPath,
             renderOptions = Some(config.renderOptions))
   }
@@ -421,7 +426,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("payloads-examples-resolution.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -433,7 +438,7 @@ class EditingResolutionTest extends ResolutionTest {
       config.source,
       config.golden,
       AmfJsonHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "jsonld-compact-uris/",
       renderOptions = Some(config.renderOptions)
     )
@@ -445,7 +450,7 @@ class EditingResolutionTest extends ResolutionTest {
         "optional-scalar-value.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         validationsPath + "optional-scalar-value/",
         renderOptions = Some(config.renderOptions)
       )
@@ -456,7 +461,7 @@ class EditingResolutionTest extends ResolutionTest {
       "union-type-containg-array.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       validationsPath + "union-type-containg-array/",
       renderOptions = Some(config.renderOptions)
     )
@@ -467,7 +472,7 @@ class EditingResolutionTest extends ResolutionTest {
       "parameter-payload-examples.json",
       config.golden,
       Oas30JsonHint,
-      target = Amf,
+      target = AmfJsonLd,
       cyclePath + "oas3/parameter-payload-resolution/",
       renderOptions = Some(config.renderOptions)
     )
@@ -478,7 +483,7 @@ class EditingResolutionTest extends ResolutionTest {
       "parameter-without-type.json",
       config.golden,
       Oas20JsonHint,
-      target = Amf,
+      target = AmfJsonLd,
       resolutionPath + "parameter-without-type/",
       renderOptions = Some(config.renderOptions)
     )
@@ -490,7 +495,7 @@ class EditingResolutionTest extends ResolutionTest {
         "tracked-oas-param-body.yaml",
         config.golden,
         Oas20YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         validationsPath + "tracked-oas-param-body/",
         renderOptions = Some(config.renderOptions)
       )
@@ -500,18 +505,20 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           validationsPath + "links/",
           renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Security schemes with requirements", "security-requirements.%s") { config =>
-    cycle("security-requirements.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = Amf,
-          resolutionPath + "security-requirements/",
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "security-requirements.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonLd,
+      resolutionPath + "security-requirements/",
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("tracked element in example defined in resource type", "examples-defined-in-rt.%s") { config =>
@@ -519,7 +526,7 @@ class EditingResolutionTest extends ResolutionTest {
       "examples-defined-in-rt.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       resolutionPath + "example-in-resource-type/",
       renderOptions = Some(config.renderOptions)
     )
@@ -530,7 +537,7 @@ class EditingResolutionTest extends ResolutionTest {
       "recursive-additional-properties.yaml",
       config.golden,
       Oas20YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       s"${resolutionPath}recursive-additional-properties/",
       renderOptions = Some(config.renderOptions)
     )
@@ -541,7 +548,7 @@ class EditingResolutionTest extends ResolutionTest {
       "recursive-additional-properties-2.yaml",
       config.golden,
       Oas20YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       s"${resolutionPath}recursive-additional-properties/",
       renderOptions = Some(config.renderOptions)
     )
@@ -553,7 +560,7 @@ class EditingResolutionTest extends ResolutionTest {
         "avoid-extract-to-declares.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         resolutionPath + "links-to-declares-and-references/",
         renderOptions = Some(config.renderOptions)
       )
@@ -564,7 +571,7 @@ class EditingResolutionTest extends ResolutionTest {
       "link-to-declares-and-refs.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       resolutionPath + "links-to-declares-and-references/",
       renderOptions = Some(config.renderOptions)
     )
@@ -574,7 +581,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("message-references.yaml",
           config.golden,
           Async20YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           resolutionPath + "async20/",
           renderOptions = Some(config.renderOptions))
   }
@@ -584,7 +591,7 @@ class EditingResolutionTest extends ResolutionTest {
       "link-of-link/link-of-link.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath,
       transformWith = Some(Raml10),
       renderOptions = Some(config.renderOptions)
@@ -597,7 +604,7 @@ class EditingResolutionTest extends ResolutionTest {
         "link-of-link/link-of-link-of-link.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath,
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions)
@@ -610,7 +617,7 @@ class EditingResolutionTest extends ResolutionTest {
         "link-of-link/in-api/link-of-link-in-api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath,
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions)
@@ -623,7 +630,7 @@ class EditingResolutionTest extends ResolutionTest {
       "link-of-link/middle-link-in-api/link-of-link-in-api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath,
       transformWith = Some(Raml10),
       renderOptions = Some(config.renderOptions)
@@ -636,7 +643,7 @@ class EditingResolutionTest extends ResolutionTest {
         "oas-declared-link-of-scalar.json",
         config.golden,
         Oas30JsonHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath,
         transformWith = Some(Oas30),
         renderOptions = Some(config.renderOptions)
@@ -648,7 +655,7 @@ class EditingResolutionTest extends ResolutionTest {
       "shared-response-reference/oas20/api.yaml",
       config.golden,
       Oas20YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath,
       transformWith = Some(Oas20),
       renderOptions = Some(config.renderOptions)
@@ -660,7 +667,7 @@ class EditingResolutionTest extends ResolutionTest {
       "shared-response-reference/oas30/api.yaml",
       config.golden,
       Oas30YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath,
       transformWith = Some(Oas30),
       renderOptions = Some(config.renderOptions)
@@ -673,7 +680,7 @@ class EditingResolutionTest extends ResolutionTest {
         "shared-request-body-reference/oas30/api.yaml",
         config.golden,
         Oas30YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath,
         transformWith = Some(Oas30),
         renderOptions = Some(config.renderOptions)
@@ -685,7 +692,7 @@ class EditingResolutionTest extends ResolutionTest {
       "shared-oas-30-examples/api.yaml",
       config.golden,
       Oas30YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath,
       transformWith = Some(Oas30),
       renderOptions = Some(config.renderOptions)
@@ -696,7 +703,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("oas3-inlined-shapes.yaml",
           config.golden,
           Oas30YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           directory = resolutionPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -706,7 +713,7 @@ class EditingResolutionTest extends ResolutionTest {
       "request-link-parameters/api.yaml",
       config.golden,
       Oas30YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath,
       transformWith = Some(Oas30),
       renderOptions = Some(config.renderOptions)
@@ -718,7 +725,7 @@ class EditingResolutionTest extends ResolutionTest {
       "oas-recursion.json",
       config.golden,
       Oas20JsonHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath,
       transformWith = Some(Oas20),
       renderOptions = Some(config.renderOptions)
@@ -729,7 +736,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("trait-with-link.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           directory = resolutionPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -739,7 +746,7 @@ class EditingResolutionTest extends ResolutionTest {
       "oas-internal-json-schema-link/api.yaml",
       config.golden,
       Oas20YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath,
       renderOptions = Some(config.renderOptions),
       eh = Some(UnhandledErrorHandler)
@@ -751,7 +758,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath + "operation-path-parameters/",
       transformWith = Some(Raml10),
       renderOptions = Some(config.renderOptions)
@@ -763,7 +770,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = validationsPath + "json-schema-nested-refs/",
       transformWith = Some(Raml10),
       renderOptions = Some(config.renderOptions)
@@ -775,7 +782,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.json",
       config.golden,
       Oas30JsonHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = validationsPath + "ref-from-allof-facet/",
       transformWith = Some(Oas30),
       renderOptions = Some(config.renderOptions)
@@ -787,7 +794,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.json",
       config.golden,
       Oas20JsonHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath + "multiple-ref-to-external-schema/",
       transformWith = Some(Oas20),
       renderOptions = Some(config.renderOptions)
@@ -799,7 +806,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath + "binary-fragment/",
       renderOptions = Some(config.renderOptions),
       eh = Some(UnhandledErrorHandler)
@@ -814,7 +821,7 @@ class EditingResolutionTest extends ResolutionTest {
 
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
-    cycle("api.raml", "api.jsonld", Raml10YamlHint, target = Amf, resolutionPath + "stackoverflow-case/")
+    cycle("api.raml", "api.jsonld", Raml10YamlHint, target = AmfJsonLd, resolutionPath + "stackoverflow-case/")
   }
 
   // JSON-LD is serialized differently every time
@@ -823,7 +830,7 @@ class EditingResolutionTest extends ResolutionTest {
       "knowledge-graph-service-api-1.0.13-raml/kg.raml",
       "knowledge-graph-service-api-1.0.13-raml/kg.jsonld",
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = productionPath,
       transformWith = Some(Raml10)
     )
@@ -834,18 +841,22 @@ class EditingResolutionTest extends ResolutionTest {
       "knowledge-graph-reduced/api.raml",
       "knowledge-graph-reduced/api.jsonld",
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = productionPath,
       transformWith = Some(Raml10)
     )
   }
 
   test("Example1 resolution to Raml") {
-    cycle("example1.yaml", "example1.resolved.yaml", Oas20YamlHint, Oas20, resolutionPath, syntax = Some(Yaml))
+    cycle("example1.yaml", "example1.resolved.yaml", Oas20YamlHint, Oas20Yaml, resolutionPath, syntax = Some(Yaml))
   }
 
   test("Test merge examples in local against declared type") {
-    cycle("merge-examples.raml", "merge-examples.resolved.raml", Raml10YamlHint, Raml10, resolutionPath + "examples/")
+    cycle("merge-examples.raml",
+          "merge-examples.resolved.raml",
+          Raml10YamlHint,
+          Raml10Yaml,
+          resolutionPath + "examples/")
   }
 
   test("Response with reference to declaration") {
@@ -853,7 +864,7 @@ class EditingResolutionTest extends ResolutionTest {
       "reference-response-declaration.json",
       "reference-response-declaration-resolved.json",
       Oas30JsonHint,
-      Oas30,
+      Oas30Json,
       directory = cyclePath + "oas3/",
       transformWith = Some(Oas30)
     )
@@ -863,7 +874,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("overriding-server-object.json",
           "overriding-server-object-resolved.json",
           Oas30JsonHint,
-          Oas30,
+          Oas30Json,
           cyclePath + "oas3/")
   }
 
@@ -871,7 +882,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("overriding-parameters.json",
           "overriding-param-output.json",
           Oas30JsonHint,
-          Oas30,
+          Oas30Json,
           cyclePath + "oas3/basic-parameters/")
   }
 
@@ -880,7 +891,7 @@ class EditingResolutionTest extends ResolutionTest {
       "description-applied-to-operations.json",
       "description-applied-to-operations-editing.json",
       Oas30JsonHint,
-      Oas30,
+      Oas30Json,
       cyclePath + "oas3/summary-description-in-path/"
     )
   }
@@ -889,7 +900,7 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("recursion-inheritance-array.raml",
           "recursion-inheritance-array.resolved.raml",
           Raml08YamlHint,
-          Raml08,
+          Raml08Yaml,
           validationsPath)
   }
 
@@ -898,7 +909,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml08YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath + "recursive-tuple/",
       transformWith = Some(Raml08),
       renderOptions = Some(config.renderOptions),
@@ -911,7 +922,7 @@ class EditingResolutionTest extends ResolutionTest {
       "type-definitions-with-refs.json",
       "type-definitions-with-refs-with-compact.json",
       Oas30JsonHint,
-      Oas30,
+      Oas30Json,
       directory = cyclePath + "oas3/",
       transformWith = Some(Oas30)
     )
@@ -922,7 +933,7 @@ class EditingResolutionTest extends ResolutionTest {
       "type-definitions-with-refs.json",
       "type-definitions-with-refs-with-compact.json",
       Oas20JsonHint,
-      Oas20,
+      Oas20Json,
       directory = cyclePath + "cycle/oas20/json/",
       transformWith = Some(Oas20)
     )
@@ -933,7 +944,7 @@ class EditingResolutionTest extends ResolutionTest {
       "type-definitions-with-refs.json",
       "type-definitions-with-refs-no-compact.json",
       Oas30JsonHint,
-      Oas30,
+      Oas30Json,
       directory = cyclePath + "oas3/",
       renderOptions = Some(RenderOptions().withoutCompactedEmission),
       transformWith = Some(Oas30)
@@ -945,7 +956,7 @@ class EditingResolutionTest extends ResolutionTest {
       "type-definitions-with-refs.json",
       "type-definitions-with-refs-no-compact.json",
       Oas20JsonHint,
-      Oas20,
+      Oas20Json,
       directory = cyclePath + "cycle/oas20/json/",
       renderOptions = Some(RenderOptions().withoutCompactedEmission),
       transformWith = Some(Oas20)
@@ -957,7 +968,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath + "raml-query-and-header-params/",
       transformWith = Some(Raml10),
       renderOptions = Some(config.renderOptions),
@@ -970,7 +981,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      Amf,
+      AmfJsonLd,
       directory = resolutionPath + "encoded-uris-in-properties/",
       transformWith = Some(Raml10),
       eh = Some(UnhandledErrorHandler)
@@ -982,7 +993,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.yaml",
       "output.json",
       Oas30YamlHint,
-      Oas30,
+      Oas30Json,
       directory = s"$cyclePath/oas3/reffed-additional-properties/",
       transformWith = Some(Oas30),
       eh = Some(UnhandledErrorHandler)
@@ -994,7 +1005,7 @@ class EditingResolutionTest extends ResolutionTest {
       "extension.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = s"$extendsPath/to-jsonld-and-back/",
       transformWith = Some(Raml10),
       renderOptions = Option(config.renderOptions),
@@ -1007,7 +1018,7 @@ class EditingResolutionTest extends ResolutionTest {
       config.source,
       "cycled-api.raml",
       AmfJsonHint,
-      target = Raml10,
+      target = Raml10Yaml,
       directory = s"$extendsPath/to-jsonld-and-back/",
       transformWith = Some(Raml10),
       eh = Some(UnhandledErrorHandler)
@@ -1019,7 +1030,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath + "merge-recursive-json-schemas-raml10/",
       transformWith = Some(Raml10),
       renderOptions = Some(config.renderOptions),
@@ -1032,7 +1043,7 @@ class EditingResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml08YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = resolutionPath + "merge-recursive-json-schemas-raml08/",
       transformWith = Some(Raml08),
       renderOptions = Some(config.renderOptions),
@@ -1048,7 +1059,7 @@ class EditingResolutionTest extends ResolutionTest {
         "api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath + "merge-inlined-recursive-json-schemas/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
@@ -1070,7 +1081,7 @@ class EditingResolutionTest extends ResolutionTest {
         "api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath + "merge-recursive-json-schema-fragments/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
@@ -1083,7 +1094,7 @@ class EditingResolutionTest extends ResolutionTest {
         "api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath + "merge-inherits/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
@@ -1096,7 +1107,7 @@ class EditingResolutionTest extends ResolutionTest {
         "api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath + "merge-recursive-inherits/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
@@ -1109,7 +1120,7 @@ class EditingResolutionTest extends ResolutionTest {
         "api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath + "merge-inherits-json-schema-fragments/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
@@ -1122,7 +1133,7 @@ class EditingResolutionTest extends ResolutionTest {
         "api.yaml",
         config.golden,
         Oas30YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath + "oas30-discriminator/",
         transformWith = Some(Oas30),
         renderOptions = Some(config.renderOptions),
@@ -1135,7 +1146,7 @@ class EditingResolutionTest extends ResolutionTest {
         "api.source.flattened.jsonld",
         config.golden,
         AmfJsonHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath + "oas30-discriminator-json-ld/",
         transformWith = Some(Oas30),
         renderOptions = Some(config.renderOptions)
@@ -1147,7 +1158,7 @@ class EditingResolutionTest extends ResolutionTest {
         "api.yaml",
         config.golden,
         Oas30YamlHint,
-        target = Amf,
+        target = AmfJsonLd,
         directory = resolutionPath + "oas30-discriminator-invalid-mapping/",
         transformWith = Some(Oas30),
         renderOptions = Some(config.renderOptions)

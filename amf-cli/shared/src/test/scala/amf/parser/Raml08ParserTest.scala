@@ -2,6 +2,7 @@ package amf.parser
 
 import amf.core.internal.remote.{Amf, Raml08YamlHint}
 import amf.io.FunSuiteCycleTests
+import amf.testing.AmfJsonLd
 
 class Raml08ParserTest extends FunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/raml08/"
@@ -10,7 +11,7 @@ class Raml08ParserTest extends FunSuiteCycleTests {
     cycle("schemas-lexical-info.raml",
           config.golden,
           Raml08YamlHint,
-          Amf,
+          AmfJsonLd,
           renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint))
   }
 }

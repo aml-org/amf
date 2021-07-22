@@ -1,7 +1,6 @@
 package amf.cycle
 
 import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
-
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
@@ -12,6 +11,7 @@ import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
+import amf.testing.TargetProvider
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.render.JsonRender
 
@@ -178,7 +178,7 @@ object JsonLdEmitter extends SchemaEmitter {
   lazy private val vendor = Vendor.AMF
 
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
-    AMFRenderer(fragment, vendor, options).renderToString
+    AMFRenderer(fragment, TargetProvider.defaultTargetFor(vendor), options).renderToString
   }
 }
 

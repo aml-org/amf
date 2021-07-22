@@ -32,7 +32,7 @@ import amf.core.client.scala.model.domain.{
 }
 import amf.core.client.platform.parse.AMFParser
 import amf.core.internal.remote._
-import amf.io.{AMFConfigProvider, FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import org.yaml.builder.JsonOutputBuilder
 import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.scala.resource.ResourceLoader

@@ -1,6 +1,7 @@
 package amf.cycle
 
-import amf.core.internal.remote.{Oas30JsonHint, Vendor}
+import amf.core.internal.remote.Vendor
+import amf.testing.Oas30Json
 
 class Oas30ElementCycleTest extends DomainElementCycleTest {
 
@@ -13,7 +14,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "type/composition-with-refs.json",
       CommonExtractors.declaresIndex(0),
       "type/login-response-emission.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -22,7 +23,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(2),
       "parameter/cookie-param.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -31,7 +32,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(5),
       "parameter/explicit-header.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -40,7 +41,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-headers-response.json",
       CommonExtractors.firstResponse.andThen(_.map(_.headers.head)),
       "basic-headers-emission.yaml",
-      Oas30JsonHint,
+      Oas30Json,
       directory = upanddownPath
     )
   }
@@ -50,7 +51,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(3),
       "parameter/header-param.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -59,7 +60,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(4),
       "parameter/path-param.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -68,7 +69,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(1),
       "parameter/query-param.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -77,7 +78,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(0),
       "parameter/external-ref.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -86,7 +87,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-headers-response.json",
       CommonExtractors.firstResponse,
       "reponse-emission.yaml",
-      Oas30JsonHint,
+      Oas30Json,
       directory = upanddownPath
     )
   }
@@ -96,7 +97,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-content.json",
       CommonExtractors.firstExample,
       "basic-content-example-emission.yaml",
-      Oas30JsonHint,
+      Oas30Json,
       directory = upanddownPath
     )
   }
@@ -106,7 +107,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "example/reference-external-example.json",
       CommonExtractors.firstExample,
       "example/external-example-emission.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -115,7 +116,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-links.json",
       CommonExtractors.firstTemplatedLink,
       "basic-links-link-emission.yaml",
-      Oas30JsonHint,
+      Oas30Json,
       directory = upanddownPath
     )
   }
@@ -125,7 +126,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "link/external-reference-link.json",
       CommonExtractors.firstTemplatedLink,
       "link/external-link-emission.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -134,7 +135,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-callbacks.json",
       CommonExtractors.firstCallback,
       "basic-callbacks-single-emission.yaml",
-      Oas30JsonHint,
+      Oas30Json,
       directory = upanddownPath
     )
   }
@@ -144,7 +145,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "callback/callback-external-reference.json",
       CommonExtractors.firstCallback,
       "callback/external-reference-emission.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -153,7 +154,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-request-body.json",
       CommonExtractors.firstRequest,
       "basic-request-body-single-emission.yaml",
-      Oas30JsonHint,
+      Oas30Json,
       directory = upanddownPath
     )
   }
@@ -163,7 +164,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-servers.json",
       CommonExtractors.webapi.andThen(_.map(_.servers.head)),
       "basic-servers-emission.yaml",
-      Oas30JsonHint,
+      Oas30Json,
       directory = upanddownPath
     )
   }
@@ -173,7 +174,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-security-types.json",
       CommonExtractors.declaresIndex(0),
       "basic-security-scheme-emission.yaml",
-      Oas30JsonHint,
+      Oas30Json,
       directory = upanddownPath
     )
   }
@@ -183,7 +184,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "security-scheme/reference-external-scheme.json",
       CommonExtractors.declaresIndex(0),
       "security-scheme/external-reference-emission.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 
@@ -192,7 +193,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-encoding.json",
       CommonExtractors.firstResponse.andThen(_.map(_.payloads.head)),
       "basic-encoding-emission.yaml",
-      Oas30JsonHint,
+      Oas30Json,
       directory = upanddownPath
     )
   }
@@ -202,7 +203,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "response/reference-external-response.json",
       CommonExtractors.firstResponse,
       "response/external-response-link-emission.yaml",
-      Oas30JsonHint
+      Oas30Json
     )
   }
 

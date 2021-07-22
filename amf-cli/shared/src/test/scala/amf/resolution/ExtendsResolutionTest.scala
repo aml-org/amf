@@ -3,6 +3,7 @@ package amf.resolution
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.common.transform._
 import amf.core.internal.remote._
+import amf.testing.{AmfJsonLd, Raml08Yaml, Raml10Yaml}
 
 import scala.concurrent.ExecutionContext
 
@@ -13,113 +14,118 @@ trait ExtendsResolutionTest extends ResolutionTest {
   val basePath = "amf-cli/shared/src/test/resources/resolution/extends/"
 
   test("Simple extends resolution to Raml") {
-    cycle("simple-merge.raml", "simple-merge.raml.raml", Raml10YamlHint, Raml10)
+    cycle("simple-merge.raml", "simple-merge.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   multiGoldenTest("Simple extends resolution to Amf", "simple-merge.raml.%s") { config =>
     cycle("simple-merge.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
 
   test("Extends resolution with parameters resolution to Raml") {
-    cycle("parameters.raml", "parameters.raml.raml", Raml10YamlHint, Raml10)
+    cycle("parameters.raml", "parameters.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   multiGoldenTest("Extends resolution with parameters resolution to Amf", "parameters.raml.%s") { config =>
     cycle("parameters.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
 
   test("Extends resolution with parameter and transformation resolution to Raml") {
-    cycle("complex-parameters.raml", "complex-parameters.raml.raml", Raml10YamlHint, Raml10)
+    cycle("complex-parameters.raml", "complex-parameters.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   test("Extends resolution with parameter and multiple transformation resolution to Raml") {
     cycle("resource-type-multi-transformation.raml",
           "resource-type-multi-transformation.raml.raml",
           Raml10YamlHint,
-          Raml10)
+          Raml10Yaml)
   }
 
   test("Extends resolution with optional method to Raml") {
-    cycle("optional-method.raml", "optional-method.raml.raml", Raml10YamlHint, Raml10)
+    cycle("optional-method.raml", "optional-method.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   multiGoldenTest("Extends resolution with optional method to Amf", "optional-method.raml.%s") { config =>
     cycle("optional-method.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
 
   test("Extends resolution with scalar collection to Raml") {
-    cycle("with-collections.raml", "with-collections.raml.raml", Raml10YamlHint, Raml10)
+    cycle("with-collections.raml", "with-collections.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   test("Complex extends resolution to Raml") {
-    cycle("complex-traits-resource-types.raml", "complex-traits-resource-types.raml.raml", Raml10YamlHint, Raml10)
+    cycle("complex-traits-resource-types.raml", "complex-traits-resource-types.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   multiGoldenTest("Complex extends resolution to Amf", "complex-traits-resource-types.raml.%s") { config =>
-    cycle("complex-traits-resource-types.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = Amf,
-          renderOptions = Some(config.renderOptions),
-          transformWith = Some(Raml10))
+    cycle(
+      "complex-traits-resource-types.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonLd,
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
   }
 
   test("Traits and resourceTypes with complex variables raml to raml test") {
-    cycle("resource-type-complex-variables.raml", "resource-type-complex-variables.raml.raml", Raml10YamlHint, Raml10)
+    cycle("resource-type-complex-variables.raml",
+          "resource-type-complex-variables.raml.raml",
+          Raml10YamlHint,
+          Raml10Yaml)
   }
 
   test("Resolution using libraries to Raml") {
-    cycle("traits-using-library.raml", "traits-using-library.raml.raml", Raml10YamlHint, Raml10)
+    cycle("traits-using-library.raml", "traits-using-library.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   test("Resource level trait") {
-    cycle("resource_level.raml", "resource_level.raml.raml", Raml10YamlHint, Raml10)
+    cycle("resource_level.raml", "resource_level.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   test("Resolution null variable") {
-    cycle("null_variable.raml", "null_variable.raml.raml", Raml10YamlHint, Raml10)
+    cycle("null_variable.raml", "null_variable.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   test("08 Optional response resolution") {
-    cycle("optional-response.raml", "optional-response.raml.raml", Raml08YamlHint, Raml08, basePath + "08/")
+    cycle("optional-response.raml", "optional-response.raml.raml", Raml08YamlHint, Raml08Yaml, basePath + "08/")
   }
 
   test("08 Optional payload resolution") {
-    cycle("optional-payload.raml", "optional-payload.raml.raml", Raml08YamlHint, Raml08, basePath + "08/")
+    cycle("optional-payload.raml", "optional-payload.raml.raml", Raml08YamlHint, Raml08Yaml, basePath + "08/")
   }
 
   test("08 Optional parameters resolution") {
-    cycle("optional-parameter.raml", "optional-parameter.raml.raml", Raml08YamlHint, Raml08, basePath + "08/")
+    cycle("optional-parameter.raml", "optional-parameter.raml.raml", Raml08YamlHint, Raml08Yaml, basePath + "08/")
   }
 
   test("08 Optional not merge resolution") {
-    cycle("optional-not-merge.raml", "optional-not-merge.raml.raml", Raml08YamlHint, Raml08, basePath + "08/")
+    cycle("optional-not-merge.raml", "optional-not-merge.raml.raml", Raml08YamlHint, Raml08Yaml, basePath + "08/")
   }
 
   test("08 Usage in traits.") {
-    cycle("usage.raml", "usage.raml.raml", Raml08YamlHint, Raml08, basePath + "08/")
+    cycle("usage.raml", "usage.raml.raml", Raml08YamlHint, Raml08Yaml, basePath + "08/")
   }
 
   test("Trait application with quoted value") {
     cycle("trait-with-quoted-value.raml",
           "trait-with-quoted-value.resolved.raml",
           Raml08YamlHint,
-          Raml08,
+          Raml08Yaml,
           basePath + "08/",
           transformWith = Some(Raml10))
   }
@@ -129,7 +135,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
       "trait-with-quoted-value.raml",
       config.golden,
       Raml08YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       directory = basePath + "08/",
       renderOptions = Some(config.renderOptions),
       transformWith = Some(Raml10)
@@ -137,21 +143,21 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   test("Extension with library usage") {
-    cycle("extension-library/api.raml", "extension-library/api.raml.raml", Raml10YamlHint, Raml10)
+    cycle("extension-library/api.raml", "extension-library/api.raml.raml", Raml10YamlHint, Raml10Yaml)
   }
 
   test("Extension with library multilevel usage") {
     cycle("extension-library-multilevel/api.raml",
           "extension-library-multilevel/api.raml.raml",
           Raml10YamlHint,
-          Raml10)
+          Raml10Yaml)
   }
 
   test("Trait with main parameter without type and trait with array type") {
     cycle("trait-parameter-infered-type-array.raml",
           "trait-parameter-infered-type-array.raml.raml",
           Raml10YamlHint,
-          Raml10,
+          Raml10Yaml,
           basePath)
   }
 
@@ -159,7 +165,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
     cycle("trait-parameter-infered-type-string.raml",
           "trait-parameter-infered-type-string.raml.raml",
           Raml10YamlHint,
-          Raml10,
+          Raml10Yaml,
           basePath)
   }
 
@@ -167,7 +173,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
     cycle("trait-parameter-infered-type-obj.raml",
           "trait-parameter-infered-type-obj.raml.raml",
           Raml10YamlHint,
-          Raml10,
+          Raml10Yaml,
           basePath)
   }
 
@@ -175,7 +181,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
     cycle("trait-parameter-infered-type-integer.raml",
           "trait-parameter-infered-type-integer.raml.raml",
           Raml10YamlHint,
-          Raml10,
+          Raml10Yaml,
           basePath)
   }
 
@@ -183,7 +189,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
     cycle("trait-parameter-infered-type-any.raml",
           "trait-parameter-infered-type-any.raml.raml",
           Raml10YamlHint,
-          Raml10,
+          Raml10Yaml,
           basePath)
   }
 
@@ -191,7 +197,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
     cycle("resource-type-any-infered-type-string.raml",
           "resource-type-any-infered-type-string.raml.raml",
           Raml10YamlHint,
-          Raml10,
+          Raml10Yaml,
           basePath)
   }
 
@@ -199,7 +205,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
     cycle("resource-type-any-infered-type-array.raml",
           "resource-type-any-infered-type-array.raml.raml",
           Raml10YamlHint,
-          Raml10,
+          Raml10Yaml,
           basePath)
   }
 
@@ -207,7 +213,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
     cycle("resource-type-any-infered-type-obj.raml",
           "resource-type-any-infered-type-obj.raml.raml",
           Raml10YamlHint,
-          Raml10,
+          Raml10Yaml,
           basePath)
   }
 
@@ -215,7 +221,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
     cycle("resource-type-any-infered-type-any.raml",
           "resource-type-any-infered-type-any.raml.raml",
           Raml10YamlHint,
-          Raml10,
+          Raml10Yaml,
           basePath)
   }
 
@@ -224,7 +230,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       pipeline = Some(PipelineId.Default),
       renderOptions = Some(config.renderOptions.withoutSourceMaps),
       directory = basePath + "extends-with-references-to-declares/trait/",
@@ -237,7 +243,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       pipeline = Some(PipelineId.Default),
       renderOptions = Some(config.renderOptions.withoutSourceMaps),
       directory = basePath + "extends-with-references-to-declares/resource-type/",
@@ -250,7 +256,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonLd,
       pipeline = Some(PipelineId.Default),
       renderOptions = Some(config.renderOptions.withoutSourceMaps),
       directory = basePath + "extends-with-references-to-declares/merging/",
@@ -259,7 +265,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   test("Test complex trait with infered type") {
-    cycle("trait-infered-case.raml", "trait-infered-case.raml.raml", Raml10YamlHint, Raml10, basePath)
+    cycle("trait-infered-case.raml", "trait-infered-case.raml.raml", Raml10YamlHint, Raml10Yaml, basePath)
   }
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint

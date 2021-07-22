@@ -2,6 +2,7 @@ package amf.resolution
 
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{Amf, Oas20, Oas20JsonHint, Oas30, Raml10, Raml10YamlHint}
+import amf.testing.AmfJsonLd
 
 class MediaTypeResolutionTest extends ResolutionTest {
   override val basePath = "amf-cli/shared/src/test/resources/resolution/media-type/"
@@ -10,7 +11,7 @@ class MediaTypeResolutionTest extends ResolutionTest {
     cycle("media-type.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -19,7 +20,7 @@ class MediaTypeResolutionTest extends ResolutionTest {
     cycle("media-types.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -28,7 +29,7 @@ class MediaTypeResolutionTest extends ResolutionTest {
     cycle("media-type-override.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -37,7 +38,7 @@ class MediaTypeResolutionTest extends ResolutionTest {
     cycle("media-type.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -46,7 +47,7 @@ class MediaTypeResolutionTest extends ResolutionTest {
     cycle("media-types.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -55,7 +56,7 @@ class MediaTypeResolutionTest extends ResolutionTest {
     cycle("media-type-override.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -65,7 +66,7 @@ class MediaTypeResolutionTest extends ResolutionTest {
     cycle("media-type-override.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonLd,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Oas20))
   }
