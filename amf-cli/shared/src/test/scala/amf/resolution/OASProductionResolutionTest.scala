@@ -8,7 +8,6 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.internal.remote._
-import amf.testing.AmfJsonLd
 
 class OASProductionResolutionTest extends ResolutionTest {
   override val basePath = "amf-cli/shared/src/test/resources/production/"
@@ -17,7 +16,7 @@ class OASProductionResolutionTest extends ResolutionTest {
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    if (config.renderTarget.spec.equals(Amf) && config.transformWith.isEmpty) {
+    if (config.renderTarget.vendor.equals(Amf) && config.transformWith.isEmpty) {
       TransformationPipelineRunner(UnhandledErrorHandler).run(unit, Oas20TransformationPipeline())
     } else super.transform(unit, config, amfConfig)
   }
@@ -26,7 +25,7 @@ class OASProductionResolutionTest extends ResolutionTest {
     cycle("oas_response_declaration.yaml",
           config.golden,
           Oas20YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           directory = completeCyclePath)
   }
@@ -35,7 +34,7 @@ class OASProductionResolutionTest extends ResolutionTest {
     cycle("oas_foward_definitions.json",
           config.golden,
           Oas20JsonHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           directory = completeCyclePath)
   }
@@ -45,7 +44,7 @@ class OASProductionResolutionTest extends ResolutionTest {
       "master/master.json",
       config.golden,
       Oas20JsonHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       renderOptions = Some(config.renderOptions),
       directory = completeCyclePath + "oas-fragment-ref/"
     )
@@ -55,7 +54,7 @@ class OASProductionResolutionTest extends ResolutionTest {
     cycle("spec/swagger.json",
           config.golden,
           Oas20JsonHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           directory = basePath + "oas-complex-example/")
   }
@@ -64,7 +63,7 @@ class OASProductionResolutionTest extends ResolutionTest {
     cycle("oas-example.json",
           config.golden,
           Oas20JsonHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -72,7 +71,7 @@ class OASProductionResolutionTest extends ResolutionTest {
     cycle("oas-multiple-example.json",
           config.golden,
           Oas20JsonHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -80,7 +79,7 @@ class OASProductionResolutionTest extends ResolutionTest {
     cycle("oas20/xml-payload.json",
           config.golden,
           Oas20YamlHint,
-          target = AmfJsonLd,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -90,7 +89,7 @@ class OASProductionResolutionTest extends ResolutionTest {
       "description-applied-to-operations.json",
       config.golden,
       Oas30JsonHint,
-      target = AmfJsonLd,
+      target = AmfJsonHint,
       renderOptions = Some(config.renderOptions),
       directory = completeCyclePath + "oas3/summary-description-in-path/",
       transformWith = Some(Oas30)

@@ -14,7 +14,7 @@ import amf.core.internal.remote.{Raml10YamlHint, _}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.emit.AMFRenderer
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.testing.{Target, TargetProvider}
+import amf.testing.{Target, HintProvider}
 
 import scala.concurrent.Future
 
@@ -53,7 +53,7 @@ trait ModelValidationTest extends DirectoryTest {
                            report: AMFValidationReport,
                            amfConfig: AMFConfiguration): String = {
     if (report.conforms) {
-      val vendor = TargetProvider.defaultTargetFor(target(model))
+      val vendor = HintProvider.defaultHintFor(target(model))
       render(model, d, vendor, amfConfig)
     } else {
       val ordered = report.results.sorted
@@ -61,10 +61,10 @@ trait ModelValidationTest extends DirectoryTest {
     }
   }
 
-  def render(model: BaseUnit, d: String, vendor: Target, amfConfig: AMFConfiguration): String =
+  def render(model: BaseUnit, d: String, vendor: Hint, amfConfig: AMFConfiguration): String =
     AMFRenderer(transform(model, d, vendor, amfConfig), vendor, RenderOptions()).renderToString
 
-  def transform(unit: BaseUnit, d: String, vendor: Target, amfConfig: AMFConfiguration): BaseUnit =
+  def transform(unit: BaseUnit, d: String, vendor: Hint, amfConfig: AMFConfiguration): BaseUnit =
     unit
 
   private def profileFromModel(unit: BaseUnit): ProfileName = {
@@ -99,11 +99,11 @@ trait ModelValidationTest extends DirectoryTest {
 
 trait ModelResolutionTest extends ModelValidationTest {
 
-  override def transform(unit: BaseUnit, d: String, target: Target, amfConfig: AMFConfiguration): BaseUnit =
-    transform(unit, CycleConfig("", "", hintFromTarget(target.spec), target, d, None, None), amfConfig)
+  override def transform(unit: BaseUnit, d: String, target: Hint, amfConfig: AMFConfiguration): BaseUnit =
+    transform(unit, CycleConfig("", "", target, target, d, None, None), amfConfig)
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    val res = config.renderTarget.spec match {
+    val res = config.renderTarget.vendor match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         amfConfig.baseUnitClient().transform(unit, PipelineId.Editing).baseUnit
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())

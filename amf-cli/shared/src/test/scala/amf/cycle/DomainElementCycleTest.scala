@@ -25,7 +25,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  case class EmissionConfig(source: String, golden: String, hint: Target, directory: String) {
+  case class EmissionConfig(source: String, golden: String, hint: Hint, directory: String) {
     def goldenPath: String = directory + golden
     def sourcePath: String = directory + source
   }
@@ -35,7 +35,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
   def renderElement(source: String,
                     extractor: BaseUnit => Option[DomainElement],
                     golden: String,
-                    target: Target,
+                    target: Hint,
                     directory: String = basePath): Future[Assertion] = {
 
     val config    = EmissionConfig(source, golden, target, directory)

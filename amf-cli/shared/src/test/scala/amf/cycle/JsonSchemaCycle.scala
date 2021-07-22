@@ -11,7 +11,7 @@ import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
-import amf.testing.TargetProvider
+import amf.testing.HintProvider
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.render.JsonRender
 
@@ -178,7 +178,7 @@ object JsonLdEmitter extends SchemaEmitter {
   lazy private val vendor = Vendor.AMF
 
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
-    AMFRenderer(fragment, TargetProvider.defaultTargetFor(vendor), options).renderToString
+    AMFRenderer(fragment, HintProvider.defaultHintFor(vendor), options).renderToString
   }
 }
 

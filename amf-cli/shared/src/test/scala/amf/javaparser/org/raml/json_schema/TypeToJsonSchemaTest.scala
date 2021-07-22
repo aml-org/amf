@@ -18,7 +18,7 @@ trait TypeToJsonSchemaTest extends ModelValidationTest {
 
   override val basePath: String = path
 
-  override def render(model: BaseUnit, d: String, vendor: Target, amfConfig: AMFConfiguration): String = {
+  override def render(model: BaseUnit, d: String, vendor: Hint, amfConfig: AMFConfiguration): String = {
     model match {
       case d: DeclaresModel =>
         d.declares.collectFirst { case s: AnyShape if s.name.is("root") => s } match {

@@ -1,6 +1,6 @@
 package amf.testing
 
-import amf.core.internal.remote.{Amf, AsyncApi20, Oas20, Oas30, Raml08, Raml10, Vendor}
+import amf.core.internal.remote._
 import amf.testing.MediaType._
 
 case class Target(spec: Vendor, mediaType: String)
@@ -19,14 +19,14 @@ object Oas30Json extends Target(Oas30, `application/json`)
 object Async20Yaml extends Target(AsyncApi20, `application/yaml`)
 object Async20Json extends Target(AsyncApi20, `application/json`)
 
-object TargetProvider {
+object HintProvider {
 
-  def defaultTargetFor(vendor: Vendor): Target = vendor match {
-    case Amf        => AmfJsonLd
-    case Raml08     => Raml08Yaml
-    case Raml10     => Raml10Yaml
-    case Oas20      => Oas20Json
-    case Oas30      => Oas30Json
-    case AsyncApi20 => Async20Yaml
+  def defaultHintFor(vendor: Vendor): Hint = vendor match {
+    case Amf        => AmfJsonHint
+    case Raml08     => Raml08YamlHint
+    case Raml10     => Raml10YamlHint
+    case Oas20      => Oas20JsonHint
+    case Oas30      => Oas30JsonHint
+    case AsyncApi20 => Async20YamlHint
   }
 }

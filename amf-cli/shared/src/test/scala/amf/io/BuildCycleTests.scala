@@ -1,26 +1,14 @@
 package amf.io
 
-import amf.apicontract.client.scala.{
-  AMFConfiguration,
-  APIConfiguration,
-  AsyncAPIConfiguration,
-  BaseApiConfiguration,
-  OASConfiguration,
-  RAMLConfiguration,
-  WebAPIConfiguration
-}
-import amf.apicontract.internal.spec.raml.RamlHeader.Raml10
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
 import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.scala.config.{ParsingOptions, RenderOptions}
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.{RdfModel, RdfUnitConverter}
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
-import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Amf, Hint, Vendor}
+import amf.core.internal.remote.{AmfJsonHint, Hint, Vendor}
 import amf.testing.ConfigProvider.configFor
-import amf.testing.TargetProvider.defaultTargetFor
-import amf.testing.{AmfJsonLd, ConfigProvider, Target, TargetProvider}
 import org.scalactic.Fail
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -124,14 +112,14 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   case class CycleConfig(source: String,
                          golden: String,
                          hint: Hint,
-                         renderTarget: Target,
+                         renderTarget: Hint,
                          directory: String,
                          pipeline: Option[String],
                          transformWith: Option[Vendor] = None) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
 
-    val targetMediaType: String = renderTarget.mediaType
+    val targetMediaType: String = renderTarget.syntax.mediaType
   }
 
   /** Method to parse unit. Override if necessary. */
@@ -178,17 +166,17 @@ trait BuildCycleTests extends BuildCycleTestCommon {
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint): Future[Assertion] =
-    cycle(source, source, hint, defaultTargetFor(hint.vendor), basePath)
+    cycle(source, source, hint, hint, basePath)
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String): Future[Assertion] =
-    cycle(source, source, hint, defaultTargetFor(hint.vendor), directory, eh = None)
+    cycle(source, source, hint, hint, directory, eh = None)
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   final def cycle(source: String,
                   golden: String,
                   hint: Hint,
-                  target: Target,
+                  target: Hint,
                   directory: String = basePath,
                   renderOptions: Option[RenderOptions] = None,
                   pipeline: Option[String] = None,
@@ -197,8 +185,8 @@ trait BuildCycleTests extends BuildCycleTestCommon {
 
     val config          = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
     val amfConfig       = buildConfig(renderOptions, eh)
-    val transformConfig = buildConfig(configFor(transformWith.getOrElse(target.spec)), renderOptions, eh)
-    val renderConfig    = buildConfig(configFor(target.spec), renderOptions, eh)
+    val transformConfig = buildConfig(configFor(transformWith.getOrElse(target.vendor)), renderOptions, eh)
+    val renderConfig    = buildConfig(configFor(target.vendor), renderOptions, eh)
 
     for {
       parsed       <- build(config, amfConfig)
@@ -220,9 +208,8 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   def cycleFullRdf(source: String,
                    golden: String,
                    hint: Hint,
-                   target: Target = AmfJsonLd,
+                   target: Hint = AmfJsonHint,
                    directory: String = basePath,
-                   syntax: Option[Syntax] = None,
                    pipeline: Option[String] = None): Future[Assertion] = {
 
     val config    = CycleConfig(source, golden, hint, target, directory, pipeline, None)
@@ -238,7 +225,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   def cycleRdf(source: String,
                golden: String,
                hint: Hint,
-               target: Target = AmfJsonLd,
+               target: Hint = AmfJsonHint,
                directory: String = basePath,
                pipeline: Option[String] = None,
                transformWith: Option[Vendor] = None): Future[Assertion] = {

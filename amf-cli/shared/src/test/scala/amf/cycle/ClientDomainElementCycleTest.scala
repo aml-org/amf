@@ -1,14 +1,10 @@
 package amf.cycle
 import amf.apicontract.client.platform.AMFConfiguration
-import amf.apicontract.client.platform.render.ApiDomainElementEmitter
 import amf.apicontract.client.scala.{AMFConfiguration => InternalAMFConfiguration}
-import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.core.client.scala.model.domain.DomainElement
-import amf.core.internal.convert.ClientErrorHandlerConverter.ErrorHandlerConverter
-import amf.core.internal.remote.{Raml10YamlHint, Vendor}
-import org.yaml.builder.YamlOutputBuilder
 import amf.apicontract.internal.convert.ApiClientConverters._
-import amf.testing.{Oas30Json, Raml10Yaml}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.remote.{Oas30JsonHint, Raml10YamlHint, Vendor}
+import org.yaml.builder.YamlOutputBuilder
 
 class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
 
@@ -21,7 +17,7 @@ class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
       "type/composition-with-refs.json",
       CommonExtractors.declaresIndex(0),
       "type/login-response-emission.yaml",
-      Oas30Json
+      Oas30JsonHint
     )
   }
 
@@ -30,7 +26,7 @@ class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(2),
       "parameter/cookie-param.yaml",
-      Oas30Json
+      Oas30JsonHint
     )
   }
 
@@ -39,7 +35,7 @@ class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(5),
       "parameter/explicit-header.yaml",
-      Oas30Json
+      Oas30JsonHint
     )
   }
 }
@@ -55,7 +51,7 @@ class ClientRaml10ElementCycleTest extends ClientDomainElementCycleTest {
       "type/complex-inheritance-unions.raml",
       CommonExtractors.declaredWithName("root"),
       "type/complex-inheritance-unions.yaml",
-      Raml10Yaml
+      Raml10YamlHint
     )
   }
 
