@@ -280,7 +280,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       unit     <- client.parse(zencoder).asFuture
       resolved <- Future.successful(client.transform(unit.baseUnit))
-      report   <- client.validate(resolved.baseUnit, Raml10Profile).asFuture
+      report   <- client.validate(resolved.baseUnit).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -302,7 +302,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = config().baseUnitClient()
     for {
       parseResult    <- client.parse(music, Raml10.mediaType).asFuture
-      validateResult <- client.validate(parseResult.baseUnit, Raml10Profile).asFuture
+      validateResult <- client.validate(parseResult.baseUnit).asFuture
     } yield {
       val parseReport = AMFValidationReport.unknownProfile(parseResult._internal)
       val report      = parseReport.merge(validateResult._internal)
@@ -1295,7 +1295,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
       unit <- client.parse(scalarAnnotations).asFuture
-      v    <- client.validate(unit.baseUnit, Raml10Profile).asFuture
+      v    <- client.validate(unit.baseUnit).asFuture
     } yield {
       assert(v.conforms && unit.conforms)
     }
@@ -1459,7 +1459,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
     for {
       unit <- client.parseContent(input, ProvidedMediaType.Raml10).asFuture
-      v    <- client.validate(unit.baseUnit, Raml10Profile).asFuture
+      v    <- client.validate(unit.baseUnit).asFuture
     } yield {
       v.conforms should be(true)
       val declarations = unit.baseUnit.asInstanceOf[Document].declares.asSeq
@@ -1487,7 +1487,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client  = OASConfiguration.OAS20().baseUnitClient()
     for {
       unit   <- client.parse(absPath).asFuture
-      report <- client.validate(unit.baseUnit, Raml10Profile).asFuture
+      report <- client.validate(unit.baseUnit).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -1533,7 +1533,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client  = RAMLConfiguration.RAML10().baseUnitClient()
     for {
       unit   <- client.parse(absPath).asFuture
-      report <- client.validate(unit.baseUnit, Raml10Profile).asFuture
+      report <- client.validate(unit.baseUnit).asFuture
     } yield {
       assert(report.conforms && unit.conforms)
     }
@@ -1567,7 +1567,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       unit     <- client.parseContent(api).asFuture
       resolved <- Future(client.transform(unit.baseUnit, PipelineId.Editing))
-      report   <- client.validate(unit.baseUnit, Raml10Profile).asFuture
+      report   <- client.validate(unit.baseUnit).asFuture
       json <- Future {
         val shape = resolved.baseUnit.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape]
         JsonSchemaShapeRenderer.buildJsonSchema(shape,
@@ -1653,7 +1653,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         JsonSchemaShapeRenderer.buildJsonSchema(shape,
                                                 client
                                                   .getConfiguration()
-                                                  .withRenderOptions(new RenderOptions().withoutCompactedEmission))
+                                                  .withRenderOptions(new RenderOptions().withoutCompactedEmission()))
       assert(generated == golden)
     }
   }
@@ -1665,7 +1665,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       unit     <- client.parse(file).asFuture
       resolved <- Future.successful(client.transform(unit.baseUnit))
-      report   <- client.validate(resolved.baseUnit, Raml10Profile).asFuture
+      report   <- client.validate(resolved.baseUnit).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -1725,7 +1725,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       unit     <- client.parseContent(api).asFuture
       resolved <- Future.successful(client.transform(unit.baseUnit, PipelineId.Editing))
-      report   <- client.validate(resolved.baseUnit, Raml10Profile).asFuture
+      report   <- client.validate(resolved.baseUnit).asFuture
     } yield {
       val expectedSchema =
         """{
@@ -1787,7 +1787,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       unit     <- client.parse(file).asFuture
       resolved <- Future.successful(client.transform(unit.baseUnit, PipelineId.Editing))
-      report   <- client.validate(resolved.baseUnit, Raml10Profile).asFuture
+      report   <- client.validate(resolved.baseUnit).asFuture
     } yield {
       assert(report.conforms && unit.conforms && resolved.conforms)
     }
@@ -2054,7 +2054,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client                        = OASConfiguration.OAS30().withResourceLoaders(loaders.asClient).baseUnitClient()
     for {
       unit   <- client.parseContent(input, ProvidedMediaType.Oas30Yaml).asFuture
-      report <- client.validate(unit.baseUnit, Oas30Profile).asFuture
+      report <- client.validate(unit.baseUnit).asFuture
     } yield {
       unit.conforms should be(true)
       report.conforms should be(true)

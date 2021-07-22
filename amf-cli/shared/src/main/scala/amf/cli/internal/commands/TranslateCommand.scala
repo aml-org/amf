@@ -56,7 +56,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       }
     }
     customProfileLoaded flatMap { profileName =>
-      configuration.baseUnitClient().validate(model, profileName) map { report =>
+      configuration.baseUnitClient().validate(model) map { report =>
         if (!report.conforms) {
           parserConfig.stderr.print(report.toString)
           parserConfig.proc.exit(ExitCodes.FailingValidation)

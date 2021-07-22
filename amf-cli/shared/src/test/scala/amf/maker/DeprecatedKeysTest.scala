@@ -43,7 +43,7 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
       val client = config.baseUnitClient()
       for {
         parseResult <- client.parse(basePath + f.file)
-        report      <- client.validate(parseResult.baseUnit, f.profileName)
+        report      <- client.validate(parseResult.baseUnit)
         unifiedReport <- {
           val parseReport = AMFValidationReport.unknownProfile(parseResult)
           Future.successful(

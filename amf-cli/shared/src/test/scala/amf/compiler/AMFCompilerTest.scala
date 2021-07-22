@@ -108,7 +108,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withErrorHandlerProvider(() => eh)
     build("file://amf-cli/shared/src/test/resources/non-exists-include.raml", Raml10YamlHint, amfConfig, None)
       .flatMap(bu => {
-        AMFValidator.validate(bu, Raml10Profile, amfConfig)
+        AMFValidator.validate(bu, amfConfig)
       })
       .map(r => {
         assert(!r.conforms)

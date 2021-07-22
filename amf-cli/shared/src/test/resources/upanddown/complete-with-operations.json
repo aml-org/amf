@@ -29,7 +29,8 @@
   ],
   "externalDocs": {
     "url": "http://test.com/externalDocsUrl",
-    "description": "externalDocsDescription"
+    "description": "externalDocsDescription",
+    "x-amf-title": "some title"
   },
   "paths": {
     "/levelzero": {
@@ -40,7 +41,8 @@
         "summary": "This is a summary",
         "externalDocs": {
           "url": "http://test.com/urlExternalDocs",
-          "description": "descriptionExternalDocs"
+          "description": "descriptionExternalDocs",
+          "x-amf-title": "some title"
         },
         "deprecated": true,
         "schemes": [
@@ -60,7 +62,8 @@
         "description": "other some description",
         "externalDocs": {
           "url": "http://test.com/urlExternalDocs",
-          "description": "descriptionExternalDocs"
+          "description": "descriptionExternalDocs",
+          "x-amf-title": "some title"
         },
         "schemes": [
           "http",
@@ -78,7 +81,8 @@
         "summary": "This is a summary level one",
         "externalDocs": {
           "url": "http://test.com/urlExternalDocs",
-          "description": "descriptionExternalDocs level one"
+          "description": "descriptionExternalDocs level one",
+          "x-amf-title": "some title"
         },
         "deprecated": true,
         "schemes": [
@@ -98,7 +102,8 @@
         "description": "Some description another level 0",
         "externalDocs": {
           "url": "http://test.com/urlExternalDocs",
-          "description": "descriptionExternalDocs another level 0"
+          "description": "descriptionExternalDocs another level 0",
+          "x-amf-title": "some title"
         },
         "schemes": [
           "http",
