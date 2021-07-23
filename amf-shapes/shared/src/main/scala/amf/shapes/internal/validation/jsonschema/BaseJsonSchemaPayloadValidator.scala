@@ -17,6 +17,8 @@ import amf.core.client.scala.validation.payload.{
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
 import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.validation.ValidationConfiguration
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.UnionShape
@@ -39,7 +41,7 @@ class UnknownDiscriminator()                extends RuntimeException
 class UnsupportedMediaType(msg: String)     extends Exception(msg)
 
 object BaseJsonSchemaPayloadValidator {
-  val supportedMediaTypes: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
+  val supportedMediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`, `text/vnd.yaml`)
 }
 
 abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
@@ -152,7 +154,7 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
     val document = SyamlParsedDocument(document = emitter.emitDocument())
     validationProcessor.keepResults(configuration.eh.getResults)
     val writer = new StringWriter()
-    SyamlSyntaxRenderPlugin.emit("application/json", document, writer).map(_.toString)
+    SyamlSyntaxRenderPlugin.emit(`application/json`, document, writer).map(_.toString)
   }
 
   protected def literalRepresentation(payload: PayloadFragment): Option[String] = {
@@ -161,7 +163,7 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
       case _ =>
         val document = PayloadEmitter(payload.encodes)(UnhandledErrorHandler).emitDocument()
         val writer   = new StringWriter()
-        SyamlSyntaxRenderPlugin.emit("application/json", SyamlParsedDocument(document), writer).map(_.toString)
+        SyamlSyntaxRenderPlugin.emit(`application/json`, SyamlParsedDocument(document), writer).map(_.toString)
     }
 
     futureText map { text =>
@@ -195,7 +197,7 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
 
   protected def buildPayloadObj(mediaType: String,
                                 payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) = {
-    if (mediaType == "application/json" && validationMode != ScalarRelaxedValidationMode)
+    if (mediaType == `application/json` && validationMode != ScalarRelaxedValidationMode)
       (Some(loadJson(payload)), None)
     else {
       buildPayloadNode(mediaType, payload)
@@ -214,7 +216,7 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
     val ctx = dataNodeParsingCtx(errorHandler, options.getMaxYamlReferences)
 
     val parser = mediaType match {
-      case "application/json" => JsonParserFactory.fromChars(payload)(errorHandler)
+      case `application/json` => JsonParserFactory.fromChars(payload)(errorHandler)
       case _                  => YamlParser(payload)(errorHandler)
     }
     val node = parser.document().node

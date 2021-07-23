@@ -9,22 +9,23 @@ import amf.core.internal.render.{AMFSerializer, SpecOrdering}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.shapes.client.scala.model.domain.Example
+import amf.core.internal.remote.Mimes._
 import org.yaml.model.YDocument
 trait PayloadSerializer extends PlatformSecrets {
 
   protected def toJson(example: Example, config: AMFGraphConfiguration): String = {
 
     example.raw.option().map(_.guessMediaType(false)) match {
-      case Some("application/json") => example.raw.value()
-      case Some("application/xml")  => ""
+      case Some(`application/json`) => example.raw.value()
+      case Some(`application/xml`)  => ""
       case _                        => dump(example.structuredValue, config)
     }
   }
 
   protected def toYaml(example: Example, config: AMFGraphConfiguration): String = {
     example.raw.option().map(_.guessMediaType(false)) match {
-      case Some("application/json") => dump(example.structuredValue, config)
-      case Some("application/xml")  => ""
+      case Some(`application/json`) => dump(example.structuredValue, config)
+      case Some(`application/xml`)  => ""
       case Some(_)                  => example.raw.value()
       case _                        => dump(example.structuredValue, config)
     }
@@ -32,13 +33,13 @@ trait PayloadSerializer extends PlatformSecrets {
 
   protected def toXml(example: Example): String = {
     example.raw.option().map(_.guessMediaType(false)) match {
-      case Some("application/xml") => example.raw.value()
+      case Some(`application/xml`) => example.raw.value()
       case _                       => ""
     }
   }
 
   private def dump(dataNode: DataNode, config: AMFGraphConfiguration): String = {
-    new AMFSerializer(PayloadFragment(dataNode, "application/json"),
+    new AMFSerializer(PayloadFragment(dataNode, `application/json`),
                       Vendor.PAYLOAD.mediaType + "+json",
                       config.renderConfiguration).render()
   }

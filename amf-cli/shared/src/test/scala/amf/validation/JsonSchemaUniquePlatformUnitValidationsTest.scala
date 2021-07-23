@@ -3,7 +3,8 @@ package amf.validation
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.AMFResult
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
-import amf.core.internal.remote.{Hint, Oas20YamlHint}
+import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.{Hint, Mimes, Oas20YamlHint}
 import amf.cycle.JsonSchemaSuite
 
 import scala.concurrent.Future
@@ -29,6 +30,6 @@ class JsonSchemaUniquePlatformUnitValidationsTest extends UniquePlatformReportGe
   override protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint): Future[AMFResult] = {
     // uses IgnoringErrorHandler as this was the previous (possibly unintentional) behaviour, but now made explicit
     Future.successful(
-      parseSchema(platform, path, "application/json", conf.withErrorHandlerProvider(() => IgnoringErrorHandler)))
+      parseSchema(platform, path, `application/json`, conf.withErrorHandlerProvider(() => IgnoringErrorHandler)))
   }
 }

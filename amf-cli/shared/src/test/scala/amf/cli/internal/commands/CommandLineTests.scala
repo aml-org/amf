@@ -1,8 +1,8 @@
 package amf.cli.internal.commands
 
 import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
-
-import amf.core.internal.remote.{Aml, Oas20, Raml10}
+import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.{Aml, Mimes, Oas20, Raml10}
 import amf.core.internal.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
@@ -35,7 +35,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
                      "-in",
                      Raml10.name,
                      "-mime-in",
-                     "application/yaml",
+                     `application/yaml`,
                      "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml")
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
@@ -61,11 +61,11 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "-in",
       Raml10.name,
       "-mime-in",
-      "application/yaml",
+      `application/yaml`,
       "-out",
       Oas20.name,
       "-mime-out",
-      "application/json",
+      `application/json`,
       "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml"
     )
     val cfg = CmdLineParser.parse(args)
@@ -92,7 +92,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "-in",
       Raml10.name,
       "-mime-in",
-      "application/yaml",
+      `application/yaml`,
       "-p",
       Raml10.name,
       "file://amf-cli/shared/src/test/resources/validations/data/error1.raml"
@@ -122,7 +122,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "-in",
       Raml10.name,
       "-mime-in",
-      "application/yaml",
+      `application/yaml`,
       "-p",
       Raml10.name,
       "file://amf-cli/shared/src/test/resources/validations/data/references/invalid-included-rtype-broken-key.raml"
@@ -152,7 +152,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "-in",
       Aml.name,
       "-mime-in",
-      "application/yaml",
+      `application/yaml`,
       "-ds",
       "file://amf-cli/shared/src/test/resources/vocabularies2/production/k8/dialects/pod.yaml",
       "file://amf-cli/shared/src/test/resources/vocabularies2/production/k8/examples/pod.yaml"

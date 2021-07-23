@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.oas
 
-import amf.apicontract.internal.spec.SyntaxMediaTypes.{`APPLICATION/JSON`, `APPLICATION/YAML`}
+import amf.core.internal.remote.Mimes._
 import amf.apicontract.internal.spec.oas.emitter.context.Oas3SpecEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.document.{Oas30ModuleEmitter, Oas3DocumentEmitter, OasFragmentEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
@@ -15,9 +15,9 @@ object Oas30RenderPlugin extends OasRenderPlugin {
 
   override def vendor: Vendor = Vendor.OAS30
 
-  override def mediaTypes: Seq[String] = Seq(`APPLICATION/JSON`, `APPLICATION/YAML`)
+  override def mediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`)
 
-  override def defaultSyntax(): String = AMFRenderPlugin.APPLICATION_JSON
+  override def defaultSyntax(): String = `application/json`
 
   override def priority: PluginPriority = NormalPriority
 

@@ -8,7 +8,8 @@ import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.metamodel.Field
-import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
+import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.{AmfJsonHint, Hint, Mimes, Oas20JsonHint, Raml10YamlHint}
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
 import org.mulesoft.common.test.ListAssertions
@@ -28,8 +29,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("test")
       .withDescription("testDescription")
       .withSchemes(List("http", "https"))
-      .withContentType(List("application/yaml"))
-      .withAccepts(List("application/yaml"))
+      .withContentType(List(`application/yaml`))
+      .withAccepts(List(`application/json`))
       .withVersion("1.1")
       .withTermsOfService("terminos")
       .withProvider(Organization().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto"))
@@ -243,7 +244,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
         .withPayloads(
           List(Payload()
             .withName("paramName")
-            .withMediaType("application/json")
+            .withMediaType(`application/json`)
             .withSchema(ScalarShape().withName("paramName").withDataType("http://www.w3.org/2001/XMLSchema#integer"))))
         .withOperations(List(
           Operation()
@@ -275,7 +276,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                   .withName("otherParamName")
                   .withSchema(
                     ScalarShape().withName("otherParamName").withDataType("http://www.w3.org/2001/XMLSchema#string"))
-                  .withMediaType("application/xml")))
+                  .withMediaType(`application/xml`)))
             ),
           Operation()
             .withMethod("post")
@@ -321,7 +322,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
               .withName("Some title")
               .withRequest(Request()
                 .withPayloads(List(Payload()
-                  .withMediaType("application/json")
+                  .withMediaType(`application/json`)
                   .withSchema(ScalarShape().withName("schema")))))
               .withResponses(List(
                 Response()
@@ -344,11 +345,11 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                   .withDescription("Not found!")
                   .withPayloads(List(
                     Payload()
-                      .withMediaType("application/json")
+                      .withMediaType(`application/json`)
                       .withSchema(
                         ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")),
                     Payload()
-                      .withMediaType("application/xml")
+                      .withMediaType(`application/xml`)
                       .withSchema(
                         ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   ))
@@ -383,7 +384,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
               .withRequest(
                 Request()
                   .withPayloads(List(Payload()
-                    .withMediaType("application/json")
+                    .withMediaType(`application/json`)
                     .withSchema(
                       ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer")))))
               .withResponses(List(
@@ -406,11 +407,11 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                   .withDescription("Not found!")
                   .withPayloads(List(
                     Payload()
-                      .withMediaType("application/json")
+                      .withMediaType(`application/json`)
                       .withSchema(
                         ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string")),
                     Payload()
-                      .withMediaType("application/xml")
+                      .withMediaType(`application/xml`)
                       .withSchema(
                         ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   ))
@@ -430,8 +431,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val api = WebApi()
       .withName("test")
       .withSchemes(List("http", "https"))
-      .withContentType(List("application/yaml"))
-      .withAccepts(List("application/yaml"))
+      .withContentType(List(`application/json`))
+      .withAccepts(List(`application/json`))
       .withVersion("1.1")
       .withProvider(Organization().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto"))
 
@@ -448,8 +449,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("test")
       .withDescription("testDescription")
       .withSchemes(List("http", "https"))
-      .withContentType(List("application/json"))
-      .withAccepts(List("application/json"))
+      .withContentType(List(`application/json`))
+      .withAccepts(List(`application/json`))
       .withVersion("1.1")
       .withTermsOfService("terminos")
       .withProvider(Organization().withUrl("urlContact").withName("nameContact").withEmail("emailContact"))
@@ -477,8 +478,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("test title")
       .withDescription("test description")
       .withSchemes(List("http", "https"))
-      .withContentType(List("application/yaml"))
-      .withAccepts(List("application/yaml"))
+      .withContentType(List(`application/json`))
+      .withAccepts(List(`application/json`))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
 
@@ -576,12 +577,12 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //body operation payload
     request
-      .withPayload(Some("application/raml"))
+      .withPayload(Some(`application/raml`))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     //payload of body operation with object
     request
-      .withPayload(Some("application/json"))
+      .withPayload(Some(`application/json`))
       .withObjectSchema("schema")
       .withClosed(false)
       .withXMLSerialization(
@@ -604,7 +605,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withStatusCode("default")
 
     default
-      .withPayload(Some("application/xml"))
+      .withPayload(Some(`application/xml`))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
@@ -682,8 +683,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("test title")
       .withDescription("test description")
       .withSchemes(List("http", "https"))
-      .withContentType(List("application/yaml"))
-      .withAccepts(List("application/yaml"))
+      .withContentType(List(`application/json`))
+      .withAccepts(List(`application/json`))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
 
@@ -797,12 +798,12 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //body operation payload
     request
-      .withPayload(Some("application/raml"))
+      .withPayload(Some(`application/raml`))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     //payload of body operation with object
     request
-      .withPayload(Some("application/json"))
+      .withPayload(Some(`application/json`))
       .withObjectSchema("schema")
       .withClosed(false)
       .withProperty("howmuch")
@@ -817,7 +818,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withResponse("200")
 
     default
-      .withPayload(Some("application/json"))
+      .withPayload(Some(`application/json`))
       .withObjectSchema("schema")
       .withClosed(false)
       .withProperty("invented")
@@ -826,7 +827,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withScalarSchema("invented")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     default
-      .withPayload(Some("application/xml"))
+      .withPayload(Some(`application/xml`))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
@@ -843,7 +844,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withOperation("get")
       .withName("scalar_array")
       .withRequest()
-      .withPayload(Some("application/json"))
+      .withPayload(Some(`application/json`))
       .withArraySchema("schema")
       .withDisplayName("scalar_array")
       .withMinItems(3)
@@ -858,7 +859,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withOperation("get")
       .withName("object_array")
       .withRequest()
-      .withPayload(Some("application/json"))
+      .withPayload(Some(`application/json`))
       .withArraySchema("schema")
       .withDisplayName("object_array")
       .withNodeItems()
@@ -874,8 +875,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("test title")
       .withDescription("test description")
       .withSchemes(List("http", "https"))
-      .withContentType(List("application/yaml"))
-      .withAccepts(List("application/yaml"))
+      .withContentType(List(`application/json`))
+      .withAccepts(List(`application/json`))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
       .withId("amf-cli/shared/src/test/resources/maker/types-dependency.raml#/web-api")
@@ -954,7 +955,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //body operation payload
     val bodySchema = request
-      .withPayload(Some("application/raml"))
+      .withPayload(Some(`application/raml`))
       .withObjectSchema("schema")
       .withClosed(false)
     val credit_card = bodySchema
@@ -1011,7 +1012,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val default = operation
       .withResponse("200")
     default
-      .withPayload(Some("application/xml"))
+      .withPayload(Some(`application/xml`))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
@@ -1029,8 +1030,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("test title")
       .withDescription("test description")
       .withSchemes(List("http", "https"))
-      .withContentType(List("application/yaml"))
-      .withAccepts(List("application/yaml"))
+      .withContentType(List(`application/json`))
+      .withAccepts(List(`application/json`))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
       .withId("amf-cli/shared/src/test/resources/maker/types-dependency.json#/web-api")
@@ -1105,7 +1106,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //body operation payload
     val bodySchema = request
-      .withPayload(Some("application/raml"))
+      .withPayload(Some(`application/raml`))
       .withObjectSchema("schema")
       .withClosed(false)
     val credit_card = bodySchema

@@ -9,7 +9,7 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesMod
 import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
-import amf.core.internal.remote.{Hint, Vendor}
+import amf.core.internal.remote.{Hint, Mimes, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
@@ -64,7 +64,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with P
     else {
       val document = SyamlParsedDocument(document = YDocument(node))
       val writer   = new StringWriter()
-      SyamlSyntaxRenderPlugin.emit("application/yaml", document, writer).getOrElse("").toString
+      SyamlSyntaxRenderPlugin.emit(Mimes.`application/yaml`, document, writer).getOrElse("").toString
     }
   }
 

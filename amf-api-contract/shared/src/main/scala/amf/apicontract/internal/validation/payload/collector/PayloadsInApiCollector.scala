@@ -3,6 +3,7 @@ package amf.apicontract.internal.validation.payload.collector
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{AmfElement, DataNode, ScalarNode, Shape}
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.ValidationCandidate
 import amf.shapes.client.scala.model.domain.ScalarShape
@@ -80,7 +81,7 @@ object PayloadsInApiCollector extends ValidationCandidateCollector {
   private def buildFragment(shape: Shape, collectedElement: CollectedElement) = {
     val fragment = collectedElement match {
       case dn: DataNodeCollectedElement => // the example has been parsed, so i can use native validation like json or any default
-        PayloadFragment(dn.dataNode, "text/vnd.yaml")
+        PayloadFragment(dn.dataNode, `text/vnd.yaml`)
       case s: StringCollectedElement =>
         PayloadFragment(ScalarNode(s.raw, None, s.a), s.raw.guessMediaType(shape.isInstanceOf[ScalarShape])) // todo: review with antonio
     }

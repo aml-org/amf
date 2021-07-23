@@ -5,10 +5,11 @@ import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
-import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderInfo}
+import amf.core.internal.plugins.render.RenderInfo
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.Vendor
-import amf.shapes.internal.annotations.JSONSchemaRoot
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.annotations.JSONSchemaRoot
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import org.yaml.model.YDocument
 
@@ -23,7 +24,7 @@ object JsonSchemaRenderPlugin extends ApiRenderPlugin {
     case _                => None
   }
 
-  override def defaultSyntax(): String = AMFRenderPlugin.APPLICATION_JSON
+  override def defaultSyntax(): String = `application/json`
 
   override def mediaTypes: Seq[String] = Seq(ProvidedMediaType.JsonSchema)
 
