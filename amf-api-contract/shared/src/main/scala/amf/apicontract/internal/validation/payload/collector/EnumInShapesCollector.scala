@@ -3,6 +3,8 @@ package amf.apicontract.internal.validation.payload.collector
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{AmfElement, DataNode, ScalarNode, Shape}
 import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes.{`application/json`, `application/xml`}
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.ValidationCandidate
 import amf.shapes.client.scala.model.domain.AnyShape
@@ -24,8 +26,8 @@ object EnumInShapesCollector extends ValidationCandidateCollector {
   }
 
   private def defaultMediaTypeFor(dataNode: DataNode): String = dataNode match {
-    case s: ScalarNode if s.value.option().exists(_.isXml) => "application/xml"
-    case _                                                 => "application/json"
+    case s: ScalarNode if s.value.option().exists(_.isXml) => `application/xml`
+    case _                                                 => `application/json`
   }
 
 }

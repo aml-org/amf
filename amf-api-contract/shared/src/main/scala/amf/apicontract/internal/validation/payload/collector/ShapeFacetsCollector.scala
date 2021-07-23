@@ -9,6 +9,8 @@ import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes.`application/yaml`
 import amf.core.internal.validation.ValidationCandidate
 import amf.shapes.client.scala.model.domain.{NodeShape, UnionShape}
 
@@ -35,7 +37,7 @@ object ShapeFacetsCollector extends ValidationCandidateCollector {
         }
         val facetsPayload = toFacetsPayload(effectiveShape)
         val facetsShape   = toFacetsDefinitionShape(effectiveShape, facetDefinitions)
-        val fragment      = PayloadFragment(facetsPayload, "application/yaml")
+        val fragment      = PayloadFragment(facetsPayload, `application/yaml`)
         List(ValidationCandidate(facetsShape, fragment))
       case None => Nil
     }

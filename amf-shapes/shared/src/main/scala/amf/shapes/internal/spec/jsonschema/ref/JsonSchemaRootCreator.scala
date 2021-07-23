@@ -4,6 +4,8 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.client.scala.parse.document.{ParsedReference, Reference, SchemaReference, SyamlParsedDocument}
 import amf.core.internal.parser.Root
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes._
 import amf.shapes.internal.spec.common
 import amf.shapes.internal.spec.common.parser
 import amf.shapes.internal.spec.common.parser.JsonYamlParser
@@ -37,7 +39,7 @@ object JsonSchemaRootCreator {
     Root(
       SyamlParsedDocument(YDocument(encoded)),
       buildJsonReference(inputFragment, pointer),
-      "application/json",
+      `application/json`,
       toParsedReferences(inputFragment.references),
       SchemaReference,
       inputFragment.raw.getOrElse("")

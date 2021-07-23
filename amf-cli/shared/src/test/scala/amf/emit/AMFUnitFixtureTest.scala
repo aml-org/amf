@@ -4,6 +4,8 @@ import amf.apicontract.client.scala.model.domain.{License, Organization}
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.{Document, Module}
 import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.{CreativeWork, ScalarShape}
 
@@ -30,8 +32,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .withName("test")
       .withDescription("test description")
       .withSchemes(List("http", "https"))
-      .withAccepts(List("application/json"))
-      .withContentType(List("application/json"))
+      .withAccepts(List(`application/json`))
+      .withContentType(List(`application/json`))
       .withVersion("1.1")
       .withTermsOfService("termsOfService")
       .adopted("file:///tmp/test")
@@ -100,8 +102,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
     val webApi   = WebApi().withName("test examples")
     val endpoint = webApi.withEndPoint("/endpoint")
     val response = endpoint.withOperation("get").withResponse("200")
-    response.withExample("application/json").withValue("name: Cristian\nlastName: Pavon\n")
-    val payload       = response.withPayload(Some("application/json"))
+    response.withExample(`application/json`).withValue("name: Cristian\nlastName: Pavon\n")
+    val payload       = response.withPayload(Some(`application/json`))
     val shape         = payload.withObjectSchema("person")
     val nameShape     = ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#string")
     val lastNameShape = ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#string")

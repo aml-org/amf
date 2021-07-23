@@ -10,6 +10,7 @@ import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.utils.MediaTypeMatcher
 
 object ExternalJsonYamlRefsParsePlugin extends AMFParsePlugin {
@@ -22,10 +23,10 @@ object ExternalJsonYamlRefsParsePlugin extends AMFParsePlugin {
     * media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Seq(
-    "application/json",
-    "application/refs+json",
-    "application/yaml",
-    "application/refs+yaml"
+    `application/json`,
+    `application/refs+json`,
+    `application/yaml`,
+    `application/refs+yaml`
   )
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
@@ -49,7 +50,7 @@ object ExternalJsonYamlRefsParsePlugin extends AMFParsePlugin {
     }
   }
 
-  private def docMediaType(doc: Root) = if (doc.raw.isJson) "application/json" else "application/yaml"
+  private def docMediaType(doc: Root) = if (doc.raw.isJson) `application/json` else `application/yaml`
 
   override def applies(document: Root): Boolean = !document.raw.isXml // for JSON or YAML
 

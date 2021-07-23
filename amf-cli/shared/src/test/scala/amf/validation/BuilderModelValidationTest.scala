@@ -10,6 +10,8 @@ import amf.core.client.scala.model.domain.ScalarNode
 import amf.core.client.scala.validation.AMFValidator
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.render.AMFSerializer
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
@@ -48,7 +50,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
 
   test("Build scalar node and render") {
     val scalar   = ScalarNode("1", Some("http://a.ml/vocabularies/shapes#number")).withName("prop")
-    val fragment = PayloadFragment(scalar, "application/yaml")
+    val fragment = PayloadFragment(scalar, `application/yaml`)
 
     val s =
       new AMFSerializer(fragment, ProvidedMediaType.PayloadYaml, payloadRenderConfig.renderConfiguration).renderToString
@@ -67,7 +69,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
         |   type: number
         |   format: int""".stripMargin
     val s =
-      new AMFSerializer(m, "application/yaml", RAMLConfiguration.RAML10().renderConfiguration).renderToString
+      new AMFSerializer(m, `application/yaml`, RAMLConfiguration.RAML10().renderConfiguration).renderToString
     val diffs = Diff.ignoreAllSpace.diff(s, e)
     if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")
     succeed

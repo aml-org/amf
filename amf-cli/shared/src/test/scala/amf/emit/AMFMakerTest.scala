@@ -3,6 +3,7 @@ package amf.emit
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser._
+import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.ConfigProvider
@@ -42,8 +43,8 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     assertNode(root, ("schemes", Array("http", "https")))
     assertNode(root, ("basePath", "/api"))
     assertNode(root, ("host", "localhost.com"))
-    assertNode(root, ("consumes", Array("application/json")))
-    assertNode(root, ("produces", Array("application/json")))
+    assertNode(root, ("consumes", Array(`application/json`)))
+    assertNode(root, ("produces", Array(`application/json`)))
 
     assertNode(root,
                ("externalDocs",
@@ -66,7 +67,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     assertNode(root, ("protocols", Array("http", "https")))
     assertNode(root, ("baseUri", "localhost.com/api"))
 
-    assertNode(root, ("mediaType", Array("application/json")))
+    assertNode(root, ("mediaType", Array(`application/json`)))
 
     assertNode(
       root,

@@ -5,6 +5,8 @@ import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, Extension, ShapeExtension}
 import amf.core.client.scala.model.domain.{AmfElement, AmfScalar}
 import amf.core.internal.annotations.DomainExtensionAnnotation
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes.`application/yaml`
 import amf.core.internal.validation.ValidationCandidate
 
 object ExtensionsCollector extends ValidationCandidateCollector {
@@ -13,7 +15,7 @@ object ExtensionsCollector extends ValidationCandidateCollector {
     domainExtensionsWithTypes.map { extension =>
       val extensionPayload = extension.extension
       val extensionShape   = extension.obtainSchema
-      val fragment         = PayloadFragment(extensionPayload, "application/yaml")
+      val fragment         = PayloadFragment(extensionPayload, `application/yaml`)
       ValidationCandidate(extensionShape, fragment)
     }
   }

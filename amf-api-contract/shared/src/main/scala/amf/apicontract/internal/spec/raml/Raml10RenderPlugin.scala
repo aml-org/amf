@@ -3,7 +3,6 @@ package amf.apicontract.internal.spec.raml
 import amf.apicontract.client.scala.model.document._
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.plugins.ApiRenderPlugin
-import amf.apicontract.internal.spec.SyntaxMediaTypes.{`APPLICATION/JSON`, `APPLICATION/YAML`}
 import amf.apicontract.internal.spec.raml.emitter.context.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter.document.{
   RamlDocumentEmitter,
@@ -14,8 +13,8 @@ import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document._
-import amf.core.internal.plugins.render.AMFRenderPlugin.APPLICATION_YAML
 import amf.core.internal.plugins.render.RenderInfo
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.Vendor
 import org.yaml.model.{YDocument, YNode}
 
@@ -38,9 +37,9 @@ object Raml10RenderPlugin extends ApiRenderPlugin {
   private def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext =
     new Raml10SpecEmitterContext(errorHandler)
 
-  override def defaultSyntax(): String = APPLICATION_YAML
+  override def defaultSyntax(): String = `application/yaml`
 
-  override def mediaTypes: Seq[String] = Seq(`APPLICATION/YAML`)
+  override def mediaTypes: Seq[String] = Seq(`application/yaml`)
 
   override def applies(element: RenderInfo): Boolean = element.unit match {
     case _: Overlay                           => true
