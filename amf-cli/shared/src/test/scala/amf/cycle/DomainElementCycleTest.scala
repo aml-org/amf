@@ -1,10 +1,9 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.apicontract.client.scala.model.domain.api.Api
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.client.scala.render.ApiDomainElementEmitter
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, DefaultErrorHandler, UnhandledErrorHandler}
+import amf.apicontract.client.scala.model.domain.api.Api
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
@@ -13,8 +12,8 @@ import amf.core.internal.remote.{Hint, Mimes, Vendor}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
-import amf.testing.{ConfigProvider, Target}
-import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
+import amf.testing.ConfigProvider
+import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YDocument, YNode}
 
 import java.io.StringWriter

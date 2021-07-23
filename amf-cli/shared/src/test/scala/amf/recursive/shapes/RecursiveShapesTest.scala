@@ -7,7 +7,6 @@ import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Hint, Oas20, Oas20JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.testing.Oas20Json
 import amf.validation.MultiPlatformReportGenTest
 import org.scalatest.Assertion
 

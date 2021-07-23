@@ -1468,7 +1468,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
-  test("Test yaml swagger 2.0 api with json parser") {
+  // TODO: Doesn't make sense in 5.0.0-beta.3
+  ignore("Test yaml swagger 2.0 api with json parser") {
 
     recoverToSucceededIf[UnsupportedVendorException] {
       val client = OASConfiguration.OAS20().baseUnitClient()

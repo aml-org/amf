@@ -12,7 +12,6 @@ import amf.core.internal.remote.{
   Raml10,
   Raml10YamlHint
 }
-import amf.testing.{Oas20Json, Oas30Json}
 
 import scala.concurrent.ExecutionContext
 

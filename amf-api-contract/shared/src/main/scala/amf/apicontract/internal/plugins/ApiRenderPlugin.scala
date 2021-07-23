@@ -1,6 +1,6 @@
 package amf.apicontract.internal.plugins
 
-import amf.apicontract.internal.spec.SyntaxMediaTypes.{`APPLICATION/JSON`, `APPLICATION/YAML`}
+import amf.core.internal.remote.Mimes._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -15,7 +15,7 @@ trait ApiRenderPlugin extends AMFRenderPlugin {
 
   override val id: String = vendor.name
 
-  override def mediaTypes: Seq[String] = Seq(`APPLICATION/JSON`, `APPLICATION/YAML`)
+  override def mediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`)
 
   protected def unparseAsYDocument(unit: BaseUnit,
                                    renderOptions: RenderOptions,
