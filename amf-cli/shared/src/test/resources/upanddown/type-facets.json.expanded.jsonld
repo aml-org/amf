@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -29,16 +29,16 @@
         "http://a.ml/vocabularies/apiContract#endpoint": [],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/#/web-api/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -50,7 +50,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/web-api/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/#/web-api/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#version"
@@ -63,7 +63,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"
@@ -76,7 +76,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/apiContract#endpoint"
@@ -89,10 +89,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/web-api/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/#/web-api/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -131,7 +131,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -156,7 +156,7 @@
         ],
         "http://a.ml/vocabularies/shapes#customShapePropertyDefinitions": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -170,7 +170,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates/scalar/onlyFutureDates",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -190,16 +190,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates/scalar/onlyFutureDates#/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates/source-map/type-property-lexical-info/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates/scalar/onlyFutureDates#/source-map/type-property-lexical-info/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates/scalar/onlyFutureDates"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -211,10 +211,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates/scalar/onlyFutureDates#/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates/scalar/onlyFutureDates"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -224,7 +224,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates/scalar/onlyFutureDates#/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -253,13 +253,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates#/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates#/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -274,10 +274,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates#/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/onlyFutureDates"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -291,7 +291,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -305,7 +305,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays/scalar/noHolidays",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -325,16 +325,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays/scalar/noHolidays#/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays/source-map/type-property-lexical-info/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays/scalar/noHolidays#/source-map/type-property-lexical-info/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays/scalar/noHolidays"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -346,10 +346,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays/scalar/noHolidays#/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays/scalar/noHolidays"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -359,7 +359,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays/scalar/noHolidays#/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -388,13 +388,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays#/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays#/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -409,10 +409,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays#/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate/customShapePropertyDefinitions/property/noHolidays"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -428,16 +428,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate#/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -449,7 +449,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate#/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/shapes#format"
@@ -462,7 +462,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -475,7 +475,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -488,10 +488,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate#/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -503,10 +503,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate#/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/CustomDate"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -520,7 +520,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -543,13 +543,13 @@
             "@value": "PossibleMeetingDate"
           }
         ],
-        "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays": {
+        "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate/customDomainProperties/extension/amf-facet-noHolidays": {
           "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "amf-facet-noHolidays"
             }
           ],
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1",
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate/customDomainProperties/extension/scalar_1",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -572,13 +572,13 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1/source-map",
+              "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate/customDomainProperties/extension/scalar_1#/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                 {
-                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1/source-map/synthesized-field/element_1",
+                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate/customDomainProperties/extension/scalar_1#/source-map/synthesized-field/element_1",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
                       "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -591,7 +591,7 @@
                   ]
                 },
                 {
-                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1/source-map/synthesized-field/element_0",
+                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate/customDomainProperties/extension/scalar_1#/source-map/synthesized-field/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
                       "@value": "http://a.ml/vocabularies/core#name"
@@ -606,10 +606,10 @@
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1/source-map/lexical/element_0",
+                  "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate/customDomainProperties/extension/scalar_1#/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1"
+                      "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate/customDomainProperties/extension/scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -624,21 +624,21 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate/customDomainProperties/extension/amf-facet-noHolidays"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate#/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -650,7 +650,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate#/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/shapes#format"
@@ -663,7 +663,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -676,7 +676,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -689,10 +689,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate#/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -704,10 +704,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate#/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/type-facets.json/declares/scalar/PossibleMeetingDate"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

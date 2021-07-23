@@ -18,12 +18,12 @@
       "shacl:name": "schema",
       "shacl:and": [
         {
-          "@id": "#/main"
+          "@id": "/any/schema/and/main"
         }
       ]
     },
     {
-      "@id": "#/main",
+      "@id": "/any/schema/and/main",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -34,16 +34,16 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/main/property/durationFormat"
+          "@id": "/any/schema/and/main/property/property/durationFormat"
         },
         {
-          "@id": "#/main/property/uuidFormat"
+          "@id": "/any/schema/and/main/property/property/uuidFormat"
         }
       ],
       "shacl:name": "main"
     },
     {
-      "@id": "#/main/property/durationFormat",
+      "@id": "/any/schema/and/main/property/property/durationFormat",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -56,13 +56,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/main/property/durationFormat/scalar/durationFormat"
+        "@id": "/any/schema/and/main/property/property/durationFormat/scalar/durationFormat"
       },
       "shacl:minCount": 0,
       "shacl:name": "durationFormat"
     },
     {
-      "@id": "#/main/property/uuidFormat",
+      "@id": "/any/schema/and/main/property/property/uuidFormat",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -75,13 +75,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/main/property/uuidFormat/scalar/uuidFormat"
+        "@id": "/any/schema/and/main/property/property/uuidFormat/scalar/uuidFormat"
       },
       "shacl:minCount": 0,
       "shacl:name": "uuidFormat"
     },
     {
-      "@id": "#/main/property/durationFormat/scalar/durationFormat",
+      "@id": "/any/schema/and/main/property/property/durationFormat/scalar/durationFormat",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -98,7 +98,7 @@
       "shacl:name": "durationFormat"
     },
     {
-      "@id": "#/main/property/uuidFormat/scalar/uuidFormat",
+      "@id": "/any/schema/and/main/property/property/uuidFormat/scalar/uuidFormat",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -131,7 +131,7 @@
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/duration-uuid-format.json",
+    "@base": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/duration-uuid-format.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#"

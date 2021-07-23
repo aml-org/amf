@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -28,7 +28,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#server": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/api.example.com%2Fpath",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/server/api.example.com%2Fpath",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,13 +40,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/api.example.com%2Fpath/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/server/api.example.com%2Fpath/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/api.example.com%2Fpath/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/server/api.example.com%2Fpath/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#urlTemplate"
@@ -61,10 +61,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/api.example.com%2Fpath/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/server/api.example.com%2Fpath/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/api.example.com%2Fpath"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/server/api.example.com%2Fpath"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -108,7 +108,7 @@
         ],
         "http://a.ml/vocabularies/core#provider": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/organization",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/organization",
             "@type": [
               "http://a.ml/vocabularies/core#Organization",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -130,13 +130,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/organization/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/organization/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/organization/source-map/lexical/element_3",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/organization/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -149,7 +149,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/organization/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/organization/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#url"
@@ -162,7 +162,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/organization/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/organization/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#email"
@@ -175,10 +175,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/organization/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/organization/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/organization"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/organization"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -194,7 +194,7 @@
         ],
         "http://a.ml/vocabularies/core#license": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/license",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/license",
             "@type": [
               "http://a.ml/vocabularies/core#License",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -211,13 +211,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/license/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/license/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/license/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/license/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#url"
@@ -230,7 +230,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/license/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/license/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -243,10 +243,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/license/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/license/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/license"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/license"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -262,7 +262,7 @@
         ],
         "http://a.ml/vocabularies/core#documentation": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/documentation/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl",
             "@type": [
               "http://a.ml/vocabularies/core#CreativeWork",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -279,13 +279,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/documentation/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/documentation/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#url"
@@ -298,7 +298,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/documentation/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#description"
@@ -311,10 +311,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/documentation/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/documentation/creative-work/http%3A%2F%2Ftest.com%2FexternalDocsUrl"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -330,7 +330,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -347,7 +347,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -379,7 +379,7 @@
                 ],
                 "http://a.ml/vocabularies/core#documentation": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs",
                     "@type": [
                       "http://a.ml/vocabularies/core#CreativeWork",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -396,13 +396,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_2",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#url"
@@ -415,7 +415,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#description"
@@ -428,10 +428,10 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -465,13 +465,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_8",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map/lexical/element_8",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#accepts"
@@ -484,7 +484,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_6",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map/lexical/element_6",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#deprecated"
@@ -497,10 +497,10 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_4",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map/lexical/element_4",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -510,7 +510,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_2",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#guiSummary"
@@ -523,7 +523,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#mediaType"
@@ -536,7 +536,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#scheme"
@@ -549,7 +549,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_3",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map/lexical/element_3",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#description"
@@ -562,7 +562,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_5",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map/lexical/element_5",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -575,7 +575,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_7",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/get/source-map/lexical/element_7",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#documentation"
@@ -592,7 +592,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -614,7 +614,7 @@
                 ],
                 "http://a.ml/vocabularies/core#documentation": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs",
                     "@type": [
                       "http://a.ml/vocabularies/core#CreativeWork",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -631,13 +631,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_2",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#url"
@@ -650,7 +650,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#description"
@@ -663,10 +663,10 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -690,13 +690,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/source-map/lexical/element_4",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/source-map/lexical/element_4",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#documentation"
@@ -709,10 +709,10 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/source-map/lexical/element_2",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -722,7 +722,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#scheme"
@@ -735,7 +735,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#description"
@@ -748,7 +748,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/post/source-map/lexical/element_3",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/supportedOperation/post/source-map/lexical/element_3",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -767,13 +767,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -786,7 +786,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -799,10 +799,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -816,7 +816,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -838,7 +838,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -870,7 +870,7 @@
                 ],
                 "http://a.ml/vocabularies/core#documentation": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs",
                     "@type": [
                       "http://a.ml/vocabularies/core#CreativeWork",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -887,13 +887,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_2",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#url"
@@ -906,7 +906,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#description"
@@ -919,10 +919,10 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -946,13 +946,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map/lexical/element_6",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_6",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#documentation"
@@ -965,7 +965,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map/lexical/element_4",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_4",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -978,7 +978,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map/lexical/element_2",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#description"
@@ -991,7 +991,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#scheme"
@@ -1004,7 +1004,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#guiSummary"
@@ -1017,10 +1017,10 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map/lexical/element_3",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_3",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1030,7 +1030,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/get/source-map/lexical/element_5",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_5",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#deprecated"
@@ -1049,16 +1049,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/source-map/parent-end-point/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/source-map/parent-end-point/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1070,7 +1070,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/source-map/lexical/element_3",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -1083,7 +1083,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -1096,7 +1096,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#description"
@@ -1109,10 +1109,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Flevel-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1126,7 +1126,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Fanother-level-one",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Fanother-level-one",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1143,16 +1143,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Fanother-level-one/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Fanother-level-one/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Fanother-level-one/source-map/parent-end-point/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Fanother-level-one/source-map/parent-end-point/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Fanother-level-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Fanother-level-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1164,7 +1164,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Fanother-level-one/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Fanother-level-one/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -1177,7 +1177,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Fanother-level-one/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Fanother-level-one/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -1190,10 +1190,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Fanother-level-one/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Fanother-level-one/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Flevelzero%2Fanother-level-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Flevelzero%2Fanother-level-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1207,7 +1207,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1224,7 +1224,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -1246,7 +1246,7 @@
                 ],
                 "http://a.ml/vocabularies/core#documentation": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs",
                     "@type": [
                       "http://a.ml/vocabularies/core#CreativeWork",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -1263,13 +1263,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_2",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#url"
@@ -1282,7 +1282,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#description"
@@ -1295,10 +1295,10 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/creative-work/http%3A%2F%2Ftest.com%2FurlExternalDocs"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1322,13 +1322,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/source-map/lexical/element_4",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/source-map/lexical/element_4",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#documentation"
@@ -1341,10 +1341,10 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/source-map/lexical/element_2",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1354,7 +1354,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#scheme"
@@ -1367,7 +1367,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#description"
@@ -1380,7 +1380,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/post/source-map/lexical/element_3",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/supportedOperation/post/source-map/lexical/element_3",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -1399,13 +1399,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -1418,7 +1418,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -1431,10 +1431,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/end-points/%2Fanother-levelzero"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/endpoint/end-points/%2Fanother-levelzero"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1450,16 +1450,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1471,7 +1471,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_11",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_11",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#license"
@@ -1484,7 +1484,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_9",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_9",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/apiContract#scheme"
@@ -1497,7 +1497,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_7",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_7",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#description"
@@ -1510,7 +1510,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_5",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_5",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"
@@ -1523,7 +1523,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/apiContract#contentType"
@@ -1536,7 +1536,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#provider"
@@ -1549,7 +1549,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#documentation"
@@ -1562,7 +1562,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#version"
@@ -1575,7 +1575,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_4",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_4",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/apiContract#server"
@@ -1588,10 +1588,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_6",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_6",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1601,7 +1601,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_8",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_8",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/apiContract#accepts"
@@ -1614,7 +1614,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml#/web-api/source-map/lexical/element_10",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/complete-with-operations/api.raml/#/web-api/source-map/lexical/element_10",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#termsOfService"

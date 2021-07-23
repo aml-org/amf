@@ -24,11 +24,11 @@ private[shape_normalization] trait RestrictionComputation {
     if (baseOr.nonEmpty && superOr.nonEmpty)
       and ++= Seq(
         AnyShape()
-          .setId(baseShape.id + s"/andOr")
+          .withId(baseShape.id + s"/andOr")
           .withAnd(
             Seq(
-              AnyShape().setId(baseShape.id + "/andOrBase").withOr(baseOr),
-              AnyShape().setId(baseShape.id + "/andOrSuper").withOr(superOr)
+              AnyShape().withId(baseShape.id + "/andOrBase").withOr(baseOr),
+              AnyShape().withId(baseShape.id + "/andOrSuper").withOr(superOr)
             ))) // both constraints must match => AND
     if (baseOr.nonEmpty || superOr.nonEmpty) or ++= (baseOr ++ superOr)
 
@@ -42,11 +42,11 @@ private[shape_normalization] trait RestrictionComputation {
     if (baseXone.nonEmpty && superXone.nonEmpty)
       and ++= Seq(
         AnyShape()
-          .setId(baseShape.id + s"/andXone")
+          .withId(baseShape.id + s"/andXone")
           .withAnd(
             Seq(
-              AnyShape().setId(baseShape.id + "/andXoneBase").withXone(baseXone),
-              AnyShape().setId(baseShape.id + "/andXoneSuper").withXone(superXone)
+              AnyShape().withId(baseShape.id + "/andXoneBase").withXone(baseXone),
+              AnyShape().withId(baseShape.id + "/andXoneSuper").withXone(superXone)
             ))) // both constraints must match => AND
     if (baseXone.nonEmpty || superXone.nonEmpty) or ++= (baseOr ++ superOr)
 
@@ -55,11 +55,11 @@ private[shape_normalization] trait RestrictionComputation {
     if (baseNot.isDefined && superNot.isDefined)
       and ++= Seq(
         AnyShape()
-          .setId(baseShape.id + s"/andNot")
+          .withId(baseShape.id + s"/andNot")
           .withAnd(
             Seq(
-              AnyShape().setId(baseShape.id + "/andNotBase").withNot(baseNot.get),
-              AnyShape().setId(baseShape.id + "/andNotSuper").withNot(superNot.get)
+              AnyShape().withId(baseShape.id + "/andNotBase").withNot(baseNot.get),
+              AnyShape().withId(baseShape.id + "/andNotSuper").withNot(superNot.get)
             ))) // both constraints must match => AND
     if (baseNot.isDefined || superNot.isDefined) not = baseNot.orElse(superNot)
 

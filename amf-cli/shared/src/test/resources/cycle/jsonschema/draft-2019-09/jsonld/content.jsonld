@@ -18,12 +18,12 @@
       "shacl:name": "schema",
       "shacl:and": [
         {
-          "@id": "#/scalar/main"
+          "@id": "/any/schema/and/scalar/main"
         }
       ]
     },
     {
-      "@id": "#/scalar/main",
+      "@id": "/any/schema/and/scalar/main",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -39,12 +39,12 @@
       "raml-shapes:encoding": "base64",
       "raml-shapes:mediaType": "application/jwt",
       "raml-shapes:contentSchema": {
-        "@id": "#/array/contentSchema"
+        "@id": "/any/schema/and/scalar/main/array/contentSchema"
       },
       "shacl:name": "main"
     },
     {
-      "@id": "#/array/contentSchema",
+      "@id": "/any/schema/and/scalar/main/array/contentSchema",
       "@type": [
         "raml-shapes:ArrayShape",
         "raml-shapes:AnyShape",
@@ -53,14 +53,14 @@
         "doc:DomainElement"
       ],
       "raml-shapes:items": {
-        "@id": "#/array/contentSchema/items/any/items"
+        "@id": "/any/schema/and/scalar/main/array/contentSchema/any/items"
       },
       "shacl:minCount": 2,
       "raml-shapes:unevaluatedItems": false,
       "shacl:name": "contentSchema"
     },
     {
-      "@id": "#/array/contentSchema/items/any/items",
+      "@id": "/any/schema/and/scalar/main/array/contentSchema/any/items",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -86,7 +86,7 @@
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/content.json",
+    "@base": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/content.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#"

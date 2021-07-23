@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#/async-api",
+        "@id": "/#/async-api",
         "@type": [
           "apiContract:AsyncAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#/async-api/end-points/aChannel",
+            "@id": "/#/async-api/endpoint/end-points/aChannel",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -40,7 +40,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#/async-api/end-points/aChannel/publish",
+                "@id": "/#/async-api/endpoint/end-points/aChannel/supportedOperation/publish",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -52,7 +52,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#/async-api/end-points/aChannel/publish/request",
+                    "@id": "/#/async-api/endpoint/end-points/aChannel/supportedOperation/publish/expects/request",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -60,7 +60,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#/async-api/end-points/aChannel/publish/request/baseContentType",
+                        "@id": "/#/async-api/endpoint/end-points/aChannel/supportedOperation/publish/expects/request/payload/baseContentType",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -73,7 +73,7 @@
                         "smaps": {
                           "lexical": {
                             "core:mediaType": "[(11,8)-(12,0)]",
-                            "#/async-api/end-points/aChannel/publish/request/baseContentType": "[(9,0)-(15,0)]"
+                            "/#/async-api/endpoint/end-points/aChannel/supportedOperation/publish/expects/request/payload/baseContentType": "[(9,0)-(15,0)]"
                           }
                         }
                       }
@@ -95,7 +95,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#/async-api/end-points/aChannel/publish/request": "[(9,0)-(15,0)]"
+                        "/#/async-api/endpoint/end-points/aChannel/supportedOperation/publish/expects/request": "[(9,0)-(15,0)]"
                       }
                     }
                   }
@@ -103,7 +103,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:expects": "[(8,6)-(15,0)]",
-                    "#/async-api/end-points/aChannel/publish": "[(7,4)-(15,0)]"
+                    "/#/async-api/endpoint/end-points/aChannel/supportedOperation/publish": "[(7,4)-(15,0)]"
                   }
                 }
               }
@@ -111,19 +111,19 @@
             "smaps": {
               "lexical": {
                 "apiContract:supportedOperation": "[(7,0)-(15,0)]",
-                "#/async-api/end-points/aChannel": "[(6,2)-(15,0)]"
+                "/#/async-api/endpoint/end-points/aChannel": "[(6,2)-(15,0)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#/async-api": "ASYNC 2.0"
+            "/#/async-api": "ASYNC 2.0"
           },
           "lexical": {
             "apiContract:endpoint": "[(5,0)-(15,0)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#/async-api": "[(1,0)-(22,24)]",
+            "/#/async-api": "[(1,0)-(22,24)]",
             "core:version": "[(4,2)-(5,0)]"
           }
         }

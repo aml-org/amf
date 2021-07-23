@@ -25,7 +25,7 @@ class MandatoryAnnotationType() extends TransformationStep {
                 case None =>
                   annotationCounter += 1
                   val customDomainProperty = CustomDomainProperty()
-                    .setId(model.location() + s"#genAnnotation$annotationCounter")
+                    .withId(model.location() + s"#genAnnotation$annotationCounter")
                     .withName(domainExtension.name.value())
                     .withSchema(AnyShape())
                   domainExtension.withDefinedBy(customDomainProperty)
