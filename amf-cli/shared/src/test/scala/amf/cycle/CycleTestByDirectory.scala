@@ -1,14 +1,10 @@
 package amf.cycle
 
-import amf.apicontract.client.common.ProvidedMediaType.{Oas20Yaml, Oas30Yaml}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.internal.plugins.document.graph._
-import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{AmfJsonHint, Async20YamlHint, Hint, Oas20YamlHint, Oas30YamlHint, Raml08YamlHint}
+import amf.core.internal.remote.{AmfJsonHint, Hint}
 import amf.io.{BuildCycleTests, JsonLdSerializationSuite}
-import amf.testing.{Async20Yaml, Raml08Yaml, Target, HintProvider}
-import amf.testing.HintProvider._
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.{Assertion, AsyncFreeSpec}
 

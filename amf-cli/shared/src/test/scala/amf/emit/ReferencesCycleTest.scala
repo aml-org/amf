@@ -7,7 +7,6 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 import amf.testing.ConfigProvider.configFor
-import amf.testing.{AmfJsonLd, Target}
 import org.mulesoft.common.io.AsyncFile
 import org.mulesoft.common.test.ListAssertions
 import org.mulesoft.common.test.Tests.checkDiff

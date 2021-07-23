@@ -8,7 +8,6 @@ import amf.core.internal.remote.{Hint, Platform, Vendor}
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.ConfigProvider.configFor
-import amf.testing.Target
 
 import scala.concurrent.{ExecutionContext, Future}
 

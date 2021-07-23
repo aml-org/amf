@@ -14,7 +14,7 @@ import amf.core.internal.remote.{Raml10YamlHint, _}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.emit.AMFRenderer
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.testing.{Target, HintProvider}
+import amf.testing.HintProvider
 
 import scala.concurrent.Future
 

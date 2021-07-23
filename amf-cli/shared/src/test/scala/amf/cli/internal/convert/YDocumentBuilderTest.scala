@@ -8,7 +8,6 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Amf, AmfJsonHint, Raml10YamlHint}
 import amf.core.internal.render.AMFSerializer
 import amf.io.FunSuiteCycleTests
-import amf.testing.AmfJsonLd
 import org.scalatest.Assertion
 import org.yaml.builder.YDocumentBuilder
 import org.yaml.model.{YDocument, YPart}
