@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#MqttServerLastWill-qos-pattern
   Message: 'qos' for mqtt server last will binding object must be one 0, 1 or 2
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/last-will-qos.yaml#/async-api/something/server-bindings/mqtt-server/mqtt-last-will
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/last-will-qos.yaml/#/async-api/server/something/server-bindings/bindings/mqtt-server/mqtt-last-will
   Property: http://a.ml/vocabularies/apiBinding#qos
   Position: Some(LexicalInformation([(34,15)-(34,16)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/last-will-qos.yaml

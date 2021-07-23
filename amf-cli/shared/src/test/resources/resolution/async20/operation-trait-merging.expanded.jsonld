@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#4",
+        "@id": "#5",
         "@type": [
           "apiContract:AsyncAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#5",
+            "@id": "#6",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -40,7 +40,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#6",
+                "@id": "#7",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -149,7 +149,7 @@
                         "apiContract:isAbstract": "true"
                       },
                       "resolved-link": {
-                        "#3": "amf://id#2"
+                        "#3": "amf://id#4"
                       },
                       "lexical": {
                         "core:description": "[(20,6)-(20,36)]",
@@ -168,7 +168,7 @@
                 "smaps": {
                   "lexical": {
                     "doc:extends": "[(11,6)-(14,0)]",
-                    "#6": "[(7,4)-(14,0)]",
+                    "#7": "[(7,4)-(14,0)]",
                     "apiContract:operationId": "[(8,6)-(9,0)]"
                   }
                 }
@@ -177,19 +177,19 @@
             "smaps": {
               "lexical": {
                 "apiContract:supportedOperation": "[(7,0)-(14,0)]",
-                "#5": "[(6,2)-(14,0)]"
+                "#6": "[(6,2)-(14,0)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#4": "ASYNC 2.0"
+            "#5": "ASYNC 2.0"
           },
           "lexical": {
             "apiContract:endpoint": "[(5,0)-(14,0)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#4": "[(1,0)-(20,36)]",
+            "#5": "[(1,0)-(20,36)]",
             "core:version": "[(4,2)-(5,0)]"
           }
         }
@@ -289,7 +289,7 @@
             "apiContract:isAbstract": "true"
           },
           "resolved-link": {
-            "#3": "amf://id#2"
+            "#3": "amf://id#4"
           },
           "lexical": {
             "core:description": "[(20,6)-(20,36)]",

@@ -162,7 +162,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       if (context.keepEditingInfo) accShape.annotations += InheritedShapes(oldInheritsIds.map(_.id))
       if (!shape.id.equals(accShape.id)) {
         context.cache.registerMapping(shape.id, accShape.id)
-        accShape.setId(shape.id) // i need to override id, if not i will override the father catched shape
+        accShape.withId(shape.id) // i need to override id, if not i will override the father catched shape
       }
 
       // adjust inheritance chain if discriminator is defined

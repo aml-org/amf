@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -11,41 +11,41 @@
       "http://a.ml/vocabularies/core#name": "api",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api/source-map/source-vendor/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(13,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
     },
@@ -53,13 +53,13 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames"
         }
       ],
       "@type": [
@@ -69,13 +69,13 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/web-api"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/#/web-api"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -91,12 +91,12 @@
       "http://www.w3.org/ns/shacl#name": "myType1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -112,12 +112,12 @@
       "http://www.w3.org/ns/shacl#name": "myType2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -128,65 +128,65 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "crossedNames",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -199,18 +199,18 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "myType1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -223,85 +223,85 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "myType2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/declared-element/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,11)-(4,17)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(4,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,11)-(5,17)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(6,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -311,41 +311,41 @@
       ],
       "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType2"
         }
       ],
       "http://a.ml/vocabularies/document#link-label": "myType2",
       "http://www.w3.org/ns/shacl#name": "myType1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -355,170 +355,170 @@
       ],
       "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/scalar/myType1"
         }
       ],
       "http://a.ml/vocabularies/document#link-label": "myType1",
       "http://www.w3.org/ns/shacl#name": "myType2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,15)-(13,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(6,14)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(13,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames#/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1#/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,6)-(9,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,15)-(8,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2#/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(13,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,15)-(9,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1#/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType1/scalar/myType1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,15)-(8,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2#/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml/declares/crossedNames/property/property/myType2/scalar/myType2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,15)-(9,22)]"
     }
   ]

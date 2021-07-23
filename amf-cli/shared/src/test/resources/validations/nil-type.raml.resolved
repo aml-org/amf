@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint",
+            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -55,7 +55,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get/request/application%2Fjson",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -67,7 +67,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType/link--680733493",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType/link--680733493",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#NilShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -76,7 +76,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType"
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType"
                               }
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
@@ -88,16 +88,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get/request/application%2Fjson/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get/expects/request/payload/application%2Fjson/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get/request/application%2Fjson/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get/expects/request/payload/application%2Fjson/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get/request/application%2Fjson"
+                                    "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get/expects/request/payload/application%2Fjson"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -113,13 +113,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get/expects/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get/request/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get/expects/request/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#payload"
@@ -138,16 +138,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -163,16 +163,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint"
+                        "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -182,7 +182,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/web-api/end-points/%2FsomeEndpoint/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/#/web-api/endpoint/end-points/%2FsomeEndpoint/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -264,7 +264,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType",
+        "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType",
         "@type": [
           "http://a.ml/vocabularies/shapes#NilShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -283,16 +283,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType#/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType"
+                    "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -304,7 +304,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType#/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -317,7 +317,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#description"
@@ -330,10 +330,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType"
+                    "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -345,10 +345,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType#/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml#/declarations/types/nil/NilType"
+                    "@value": "file://amf-cli/shared/src/test/resources/validations/nil-type.raml/declares/nil/NilType"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

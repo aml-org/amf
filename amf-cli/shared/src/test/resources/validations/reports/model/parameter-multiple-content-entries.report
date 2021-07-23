@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Parameter-payload-maxCount
   Message: Parameters 'content' field must only have one entry
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-multiple-content-entries.json#/declarations/parameters/parameter/default-binding/query-with-content
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-multiple-content-entries.json/declares/parameter/query/query-with-content
   Property: http://a.ml/vocabularies/apiContract#payload
   Position: Some(LexicalInformation([(19,19)-(54,9)]))
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-multiple-content-entries.json

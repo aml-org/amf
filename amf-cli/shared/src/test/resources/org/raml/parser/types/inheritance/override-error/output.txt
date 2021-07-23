@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://a.ml/vocabularies/shapes#number < http://www.w3.org/2001/XMLSchema#string 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override-error/input.raml#/declarations/types/Employee/property/name/scalar/name
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override-error/input.raml/declares/Employee/property/property/name/scalar/name
   Property: http://a.ml/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(12,8)-(13,21)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inheritance/override-error/input.raml

@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#/main",
+      "@id": "/main",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -12,24 +12,24 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/main/property/credit_card"
+          "@id": "/main/property/property/credit_card"
         },
         {
-          "@id": "#/main/property/billing_address"
+          "@id": "/main/property/property/billing_address"
         }
       ],
       "raml-shapes:dependencies": [
         {
-          "@id": "#/main/dependency/credit_card"
+          "@id": "/main/dependencies/dependency/credit_card"
         },
         {
-          "@id": "#/main/dependency/billing_address"
+          "@id": "/main/dependencies/dependency/billing_address"
         }
       ],
       "shacl:name": "main"
     },
     {
-      "@id": "#/main/property/credit_card",
+      "@id": "/main/property/property/credit_card",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -42,13 +42,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/main/property/credit_card/scalar/credit_card"
+        "@id": "/main/property/property/credit_card/scalar/credit_card"
       },
       "shacl:minCount": 0,
       "shacl:name": "credit_card"
     },
     {
-      "@id": "#/main/property/billing_address",
+      "@id": "/main/property/property/billing_address",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -61,13 +61,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/main/property/billing_address/scalar/billing_address"
+        "@id": "/main/property/property/billing_address/scalar/billing_address"
       },
       "shacl:minCount": 0,
       "shacl:name": "billing_address"
     },
     {
-      "@id": "#/main/dependency/credit_card",
+      "@id": "/main/dependencies/dependency/credit_card",
       "@type": [
         "raml-shapes:PropertyDependencies",
         "doc:DomainElement"
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "@id": "#/main/dependency/billing_address",
+      "@id": "/main/dependencies/dependency/billing_address",
       "@type": [
         "raml-shapes:PropertyDependencies",
         "doc:DomainElement"
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "@id": "#/main/property/credit_card/scalar/credit_card",
+      "@id": "/main/property/property/credit_card/scalar/credit_card",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -105,7 +105,7 @@
       "shacl:name": "credit_card"
     },
     {
-      "@id": "#/main/property/billing_address/scalar/billing_address",
+      "@id": "/main/property/property/billing_address/scalar/billing_address",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -128,14 +128,14 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#/main"
+        "@id": "/main"
       },
       "doc:version": "3.1.0",
       "doc:root": false
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/cycle/jsonschema/draft-7/required-dependencies.json",
+    "@base": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-7/required-dependencies.json",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#"

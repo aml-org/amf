@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#AsyncAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -12,62 +12,62 @@
       "http://a.ml/vocabularies/core#version": "1.0.0",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/source-vendor/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api",
       "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(13,59)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml",
       "http://a.ml/vocabularies/document#references": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0"
         }
       ],
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema"
         }
       ],
       "@type": [
@@ -77,31 +77,31 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/#/async-api"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0",
       "@type": [
         "http://a.ml/vocabularies/document#ExternalFragment",
         "http://a.ml/vocabularies/document#Fragment",
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/external"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/#/external"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/references/0"
         }
       ],
       "http://a.ml/vocabularies/document#root": false
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -112,21 +112,21 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "MySchema",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/external",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/#/external",
       "@type": [
         "http://a.ml/vocabularies/document#ExternalDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -135,25 +135,25 @@
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/external/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/#/external/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/references/0",
       "@type": [
         "http://a.ml/vocabularies/document#ExternalFragment",
         "http://a.ml/vocabularies/document#Fragment",
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/external"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/references/0/#/external"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -166,18 +166,18 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "name",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -190,56 +190,56 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "age",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/declared-element/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/external/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/#/external/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/external/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/#/external/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/external",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/references/0/#/external",
       "@type": [
         "http://a.ml/vocabularies/document#ExternalDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -248,12 +248,12 @@
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/external/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/references/0/#/external/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -269,28 +269,28 @@
       "http://www.w3.org/ns/shacl#name": "name",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -301,107 +301,107 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "main",
       "http://www.w3.org/ns/shacl#if": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(13,59)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(8,12)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(13,59)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema#/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/external/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/external",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/#/external/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/#/external",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(16,1)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/external/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/references/0/#/external/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/external/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/references/0/#/external/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name#/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name#/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(12,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -414,18 +414,18 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "name",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -436,78 +436,78 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "anotherMain",
       "http://www.w3.org/ns/shacl#if": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(13,59)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/external/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/external",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/references/0/#/external/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/references/0/references/0/#/external",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(20,1)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name#/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,10)-(11,14)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(12,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/name/scalar/name#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,10)-(12,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -523,28 +523,28 @@
       "http://www.w3.org/ns/shacl#name": "name",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -557,18 +557,18 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "anotherName",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -579,99 +579,99 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "if",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,6)-(10,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#if",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,12)-(13,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(14,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main#/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,6)-(5,12)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name#/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name#/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,8)-(9,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -687,28 +687,28 @@
       "http://www.w3.org/ns/shacl#name": "anotherName",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -721,106 +721,106 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "anotherCountry",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if#/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,6)-(10,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#if",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,12)-(17,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(18,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain#/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,6)-(5,12)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name#/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,10)-(8,16)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,8)-(9,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/age/main/property/name/scalar/name/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/property/property/name/scalar/name#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,10)-(8,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName#/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName#/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,8)-(9,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry",
       "@type": [
         "http://a.ml/vocabularies/shapes#AnyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -829,93 +829,93 @@
       ],
       "http://www.w3.org/ns/shacl#name": "anotherCountry",
       "http://www.w3.org/ns/shacl#in": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry/list"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/list"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,6)-(17,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(16,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName#/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,10)-(8,16)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,8)-(9,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/definitions/main/anotherMain/property/anotherName/scalar/anotherName/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/property/property/anotherName/scalar/anotherName#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,10)-(8,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry/list",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/list",
       "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
       "http://www.w3.org/2000/01/rdf-schema#_1": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1"
       }
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry#/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,10)-(15,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1",
       "@type": [
         "http://a.ml/vocabularies/data#Scalar",
         "http://a.ml/vocabularies/data#Node",
@@ -930,52 +930,52 @@
       "http://a.ml/vocabularies/core#name": "scalar_1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,10)-(15,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/property/anotherCountry/any/anotherCountry/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#in",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,12)-(14,38)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1#/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1#/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/definitions/anotherMain/if/if/property/anotherCountry/any/anotherCountry/scalar_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/draft-7/references.yaml/declares/MySchema/property/property/age/main/anotherMain/if/property/property/anotherCountry/any/anotherCountry/in/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,21)-(14,38)]"
     }
   ]

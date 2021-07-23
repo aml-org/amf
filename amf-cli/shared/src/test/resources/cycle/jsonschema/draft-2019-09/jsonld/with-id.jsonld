@@ -11,24 +11,24 @@
       "shacl:name": "schema",
       "shacl:xone": [
         {
-          "@id": "#/xone/0/any/A"
+          "@id": "/any/schema/exclusiveOr/any/A"
         },
         {
-          "@id": "#/xone/1/any/B"
+          "@id": "/any/schema/exclusiveOr/any/B"
         },
         {
-          "@id": "#/xone/2/any/X"
+          "@id": "/any/schema/exclusiveOr/any/X"
         },
         {
-          "@id": "#/xone/3/any/Y"
+          "@id": "/any/schema/exclusiveOr/any/Y"
         },
         {
-          "@id": "#/xone/4/any/C"
+          "@id": "/any/schema/exclusiveOr/any/C"
         }
       ]
     },
     {
-      "@id": "#/xone/0/any/A",
+      "@id": "/any/schema/exclusiveOr/any/A",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -38,7 +38,7 @@
       "shacl:name": "A"
     },
     {
-      "@id": "#/xone/1/any/B",
+      "@id": "/any/schema/exclusiveOr/any/B",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -48,7 +48,7 @@
       "shacl:name": "B"
     },
     {
-      "@id": "#/xone/2/any/X",
+      "@id": "/any/schema/exclusiveOr/any/X",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -58,7 +58,7 @@
       "shacl:name": "X"
     },
     {
-      "@id": "#/xone/3/any/Y",
+      "@id": "/any/schema/exclusiveOr/any/Y",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -68,7 +68,7 @@
       "shacl:name": "Y"
     },
     {
-      "@id": "#/xone/4/any/C",
+      "@id": "/any/schema/exclusiveOr/any/C",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -92,7 +92,7 @@
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/with-id.json",
+    "@base": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-2019-09/with-id.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#"

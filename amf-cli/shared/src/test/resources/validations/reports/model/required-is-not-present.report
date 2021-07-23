@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#path-parameter-required
   Message: Path parameters must have the required property set to true
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/path-parameter-required/required-is-not-present.json#/web-api/end-points/%2F%7Busername%7D/get/request/parameter/path/username
+  Target: file://amf-cli/shared/src/test/resources/validations/path-parameter-required/required-is-not-present.json/#/web-api/endpoint/end-points/%2F%7Busername%7D/supportedOperation/get/expects/request/uri parameter/parameter/path/username
   Property: 
   Position: Some(LexicalInformation([(11,10)-(15,11)]))
   Location: file://amf-cli/shared/src/test/resources/validations/path-parameter-required/required-is-not-present.json

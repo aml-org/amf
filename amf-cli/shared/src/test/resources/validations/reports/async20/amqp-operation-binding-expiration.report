@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Amqp091OperationBinding-expiration-pattern
   Message: 'expiration' for amqp 0.9.1 operation binding object must greather than or equal to 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-operation-binding-expiration.yaml#/async-api/end-points/%2Femployees/subscribe/operation-bindings/amqp091-operation
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-operation-binding-expiration.yaml/#/async-api/endpoint/end-points/%2Femployees/supportedOperation/subscribe/operation-bindings/bindings/amqp091-operation
   Property: http://a.ml/vocabularies/apiBinding#expiration
   Position: Some(LexicalInformation([(10,22)-(10,25)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-operation-binding-expiration.yaml

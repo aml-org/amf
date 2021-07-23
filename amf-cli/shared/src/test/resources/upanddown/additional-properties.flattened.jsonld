@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -13,65 +13,65 @@
       "http://a.ml/vocabularies/apiContract#endpoint": [],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/source-vendor/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(4,25)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(7,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(16,1)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType"
         }
       ],
       "@type": [
@@ -81,13 +81,13 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/web-api"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/#/web-api"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -97,17 +97,17 @@
       ],
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#additionalPropertiesSchema": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties"
       },
       "http://www.w3.org/ns/shacl#name": "ObjType",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -123,103 +123,103 @@
       "http://www.w3.org/ns/shacl#name": "additionalProperties",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties#/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/declared-element/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties#/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties#/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#additionalPropertiesSchema",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(10,12)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(14,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(9,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType#/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties#/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(12,14)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,6)-(13,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/scalar/additionalProperties/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/additional-properties.json/declares/ObjType/scalar/additionalProperties#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(12,24)]"
     }

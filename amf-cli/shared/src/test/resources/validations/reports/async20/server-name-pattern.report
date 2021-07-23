@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Server-name-pattern
   Message: Server name must comply with regex '^[A-Za-z0-9_\-]+$'
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/server-name-pattern.yaml#/async-api/development.gigantic-server.com
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/server-name-pattern.yaml/#/async-api/server/development.gigantic-server.com
   Property: http://a.ml/vocabularies/core#name
   Position: Some(LexicalInformation([(7,2)-(7,7)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/server-name-pattern.yaml

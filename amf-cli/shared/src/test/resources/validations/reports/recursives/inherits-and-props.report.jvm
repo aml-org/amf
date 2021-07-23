@@ -8,23 +8,23 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /r/c expected type: String, found: Integer
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml#/declarations/types/A/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml#/declarations/types/A/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml/declares/A/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml/declares/A/examples/example/invalid
   Position: Some(LexicalInformation([(18,0)-(25,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /r/c expected type: String, found: Integer
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml#/declarations/types/B/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml#/declarations/types/B/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml/declares/A/inherits/default-node/B/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml/declares/A/inherits/default-node/B/examples/example/invalid
   Position: Some(LexicalInformation([(38,0)-(44,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /r/c expected type: String, found: Integer
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml#/declarations/types/C/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml#/declarations/types/C/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml/declares/A/inherits/default-node/B/inherits/default-node/C/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml/declares/A/inherits/default-node/B/inherits/default-node/C/examples/example/invalid
   Position: Some(LexicalInformation([(56,0)-(60,14)]))
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/inherits-and-props.raml

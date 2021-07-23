@@ -85,7 +85,7 @@ object PayloadsInApiCollector extends ValidationCandidateCollector {
       case s: StringCollectedElement =>
         PayloadFragment(ScalarNode(s.raw, None, s.a), s.raw.guessMediaType(shape.isInstanceOf[ScalarShape])) // todo: review with antonio
     }
-    fragment.encodes.setId(collectedElement.id)
+    fragment.encodes.withId(collectedElement.id)
     fragment
   }
 }
