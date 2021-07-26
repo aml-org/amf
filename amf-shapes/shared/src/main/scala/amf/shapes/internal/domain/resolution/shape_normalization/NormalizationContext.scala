@@ -7,7 +7,7 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
 
-private[resolution] class NormalizationContext(final val errorHandler: AMFErrorHandler,
+class NormalizationContext(final val errorHandler: AMFErrorHandler,
                                             final val keepEditingInfo: Boolean,
                                             final val profile: ProfileName,
                                             val cache: NormalizationCache = NormalizationCache()) {
