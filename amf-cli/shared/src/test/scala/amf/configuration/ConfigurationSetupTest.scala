@@ -10,17 +10,14 @@ import amf.apicontract.client.scala.RAMLConfiguration.{
   RAML10 => RAML10Config
 }
 import amf.apicontract.client.scala.WebAPIConfiguration.WebAPI
-import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment}
+import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Vendor
-import amf.core.internal.remote.Vendor.{ASYNC20, OAS20, OAS30, RAML08, RAML10}
+import amf.core.internal.remote.Vendor._
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
-import scala.concurrent.Future
 import scala.language.postfixOps
 
 trait ConfigurationSetupTest extends AsyncFunSuite with Matchers {
-
-  type Expectation = BaseUnit => Assertion
 
   protected val basePath                        = "file://amf-cli/shared/src/test/resources/configuration/"
   protected val apiConfig: AMFConfiguration     = API()
@@ -54,11 +51,4 @@ trait ConfigurationSetupTest extends AsyncFunSuite with Matchers {
     oasConfig     -> "OAS",
     async20Config -> "ASYNC 2.0"
   )
-
-  protected def documentExpectation: Vendor => Expectation =
-    vendor =>
-      document => {
-        document shouldBe a[Document]
-        document.sourceVendor shouldEqual Some(vendor)
-    }
 }

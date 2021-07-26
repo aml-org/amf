@@ -729,7 +729,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |       description: a descrip""".stripMargin
     val client    = OASConfiguration.OAS20().baseUnitClient()
     val doc       = buildBasicApi()
-    val generated = client.render(doc, Oas20.mediaType + "+yaml")
+    val generated = client.render(doc, `application/yaml`)
     val deltas    = Diff.ignoreAllSpace.diff(expected, generated)
     if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
     else succeed
@@ -762,7 +762,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
          |        type: string""".stripMargin
     val client    = OASConfiguration.OAS20().baseUnitClient()
     val doc       = buildApiWithTypeTarget()
-    val generated = client.render(doc, Oas20.mediaType + "+yaml")
+    val generated = client.render(doc, `application/yaml`)
     val deltas    = Diff.ignoreAllSpace.diff(expected, generated)
     if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
     else succeed

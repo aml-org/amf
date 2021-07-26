@@ -7,8 +7,8 @@ import amf.core.internal.remote.Vendor._
 
 class ConstraintsConfigurationSetupTest extends ConfigurationSetupTest {
 
-  case class ConstraintExistenceFixture(config: AMFConfiguration, vendors: Seq[Vendor])
-  case class ErrorConstraintExistenceFixture(config: AMFConfiguration, vendors: Seq[Vendor])
+  case class ExpectedConstraintExistenceCase(config: AMFConfiguration, vendors: Seq[Vendor])
+  case class ErrorConstraintExistenceCase(config: AMFConfiguration, vendors: Seq[Vendor])
 
   val validateFixtures: Seq[Any] = Seq(
     generateConstraintExistenceFixtures(apiConfig, Seq(RAML10, RAML08, OAS20, OAS30, ASYNC20)),
@@ -23,12 +23,12 @@ class ConstraintsConfigurationSetupTest extends ConfigurationSetupTest {
   ).flatten
 
   validateFixtures.foreach {
-    case f: ConstraintExistenceFixture =>
+    case f: ExpectedConstraintExistenceCase =>
       test(s"Test - config ${configNames(f.config)} only has constraints ${f.vendors}") {
         val assertion = onlyHasConstraintsOf(f.config, f.vendors)
         assertion shouldBe true
       }
-    case e: ErrorConstraintExistenceFixture =>
+    case e: ErrorConstraintExistenceCase =>
       test(s"Test - config ${configNames(e.config)} doesn't have constraints of ${e.vendors}") {
         val assertion = onlyHasConstraintsOf(e.config, e.vendors)
         assertion shouldBe false
@@ -43,7 +43,7 @@ class ConstraintsConfigurationSetupTest extends ConfigurationSetupTest {
   private def generateConstraintExistenceFixtures(config: AMFConfiguration,
                                                   expectedConstraintOwners: Seq[Vendor]): Seq[Any] = {
     val errorConfigs = vendors.diff(expectedConstraintOwners)
-    Seq(ConstraintExistenceFixture(config, expectedConstraintOwners),
-        ErrorConstraintExistenceFixture(config, errorConfigs))
+    Seq(ExpectedConstraintExistenceCase(config, expectedConstraintOwners),
+        ErrorConstraintExistenceCase(config, errorConfigs))
   }
 }

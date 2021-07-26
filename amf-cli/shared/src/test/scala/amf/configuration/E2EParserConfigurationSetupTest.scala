@@ -1,15 +1,18 @@
 package amf.configuration
 
 import amf.apicontract.client.scala.AMFConfiguration
-import amf.core.client.scala.model.document.{Document, ExternalFragment}
+import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment}
 import amf.core.internal.remote.Vendor
+import org.scalatest.Assertion
 
 import scala.concurrent.Future
 
 class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
 
-  case class ParseFixture(config: AMFConfiguration, apiPath: String, expectation: Expectation)
-  case class ErrorParseFixture(config: AMFConfiguration, apiPath: String)
+  type Expectation = BaseUnit => Assertion
+
+  case class ExpectedParseCase(config: AMFConfiguration, apiPath: String, expectation: Expectation)
+  case class ExpectedErrorCase(config: AMFConfiguration, apiPath: String)
 
   val onlyParseFixtures: Seq[Any] = Seq(
     generateExpectedDocumentParseFixtures("raml10-api.raml",
@@ -35,7 +38,7 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
   ).flatten
 
   onlyParseFixtures.foreach {
-    case f: ParseFixture =>
+    case f: ExpectedParseCase =>
       test(s"Test - config ${configNames(f.config)} for ${f.apiPath} generates document") {
         val client = f.config.baseUnitClient()
         for {
@@ -46,7 +49,7 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
           f.expectation(document)
         }
       }
-    case e: ErrorParseFixture =>
+    case e: ExpectedErrorCase =>
       test(s"Test - config ${configNames(e.config)} for ${e.apiPath} doesn't generates document") {
         val client = e.config.baseUnitClient()
         for {
@@ -63,7 +66,14 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
                                                     validConfigs: List[AMFConfiguration]): Seq[Any] = {
     val finalPath    = basePath + apiPath
     val errorConfigs = configs.diff(validConfigs)
-    validConfigs.map(conf => ParseFixture(conf, finalPath, documentExpectation(vendor))) ++
-      errorConfigs.map(conf => ErrorParseFixture(conf, finalPath))
+    validConfigs.map(conf => ExpectedParseCase(conf, finalPath, documentExpectation(vendor))) ++
+      errorConfigs.map(conf => ExpectedErrorCase(conf, finalPath))
   }
+
+  protected def documentExpectation: Vendor => Expectation =
+    vendor =>
+      document => {
+        document shouldBe a[Document]
+        document.sourceVendor shouldEqual Some(vendor)
+    }
 }
