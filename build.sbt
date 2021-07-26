@@ -146,7 +146,6 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"      % scalaJSVersion % "provided",
     libraryDependencies += "org.reflections"        % "reflections"         % "0.9.12",
     libraryDependencies += "org.scala-lang.modules" %% "scala-java8-compat" % "0.8.0",
-    libraryDependencies += "org.apache.commons"     % "commons-compress"    % "1.18",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
     mappings in (Compile, packageBin) += file("amf-apicontract.versions") -> "amf-apicontract.versions",
