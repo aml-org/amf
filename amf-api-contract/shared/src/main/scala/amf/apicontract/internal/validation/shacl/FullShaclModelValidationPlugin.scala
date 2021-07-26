@@ -7,6 +7,7 @@ import amf.validation.internal.PlatformValidator
 import amf.validation.internal.shacl.{FullShaclValidator, ShaclValidator}
 import amf.validation.internal.shacl.custom.CustomShaclValidator.CustomShaclFunctions
 
+// TODO ARM: Erase, we don't need it anymore
 object FullShaclModelValidationPlugin {
 
   protected val id: String                      = this.getClass.getSimpleName
@@ -15,12 +16,12 @@ object FullShaclModelValidationPlugin {
   def apply() = new FullShaclModelValidationPlugin()
 }
 
+// TODO ARM: Erase, we don't need it anymore
 class FullShaclModelValidationPlugin extends ShaclValidationPlugin {
 
   override val id: String = FullShaclModelValidationPlugin.id
 
-  override def applies(element: ValidationInfo): Boolean =
-    super.applies(element) && !standardApiProfiles.contains(element.profile)
+  override def applies(element: ValidationInfo): Boolean = super.applies(element)
 
   override protected def validator(options: ShaclValidationOptions): ShaclValidator =
     new FullShaclValidator(PlatformValidator.instance(options.listeners), options)

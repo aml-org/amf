@@ -83,7 +83,6 @@ sealed trait APIConfigurationBuilder {
       PayloadParsePlugin,
       JsonSchemaParsePlugin,
       CustomShaclModelValidationPlugin(),
-      FullShaclModelValidationPlugin(),
       PayloadValidationPlugin(),
       JsonSchemaShapePayloadValidationPlugin
     ))
@@ -114,7 +113,6 @@ object RAMLConfiguration extends APIConfigurationBuilder {
     common()
       .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin, Raml10ElementRenderPlugin))
       .withValidationProfile(Raml10ValidationProfile)
-      .withValidationProfile(AmfValidationProfile)
       .withTransformationPipelines(
         List(
           Raml10TransformationPipeline(),
