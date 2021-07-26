@@ -4,7 +4,7 @@ import amf.apicontract.internal.spec.raml.parser.document
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidModuleType
 import amf.core.client.scala.model.document._
 import amf.core.client.scala.parse.document._
-import amf.core.internal.annotations.Aliases
+import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.validation.CoreValidations.ExpectedModule
 import org.yaml.model.{YMap, YScalar, YType}
@@ -64,7 +64,7 @@ case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YM
                   target(url).foreach {
                     case module: DeclaresModel =>
                       module.location().foreach { fullUrl =>
-                        collectAlias(baseUnit, alias -> (fullUrl, url))
+                        collectAlias(baseUnit, alias -> ReferencedInfo(module, fullUrl, url))
                       }
                       result += (alias, module)
                     case other =>
@@ -80,7 +80,7 @@ case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YM
   }
 
   private def collectAlias(module: BaseUnit,
-                           alias: (Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl))): BaseUnit = {
+                           alias: (Aliases.Alias, ReferencedInfo)): BaseUnit = {
     module.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         module.annotations.reject(_.isInstanceOf[Aliases])

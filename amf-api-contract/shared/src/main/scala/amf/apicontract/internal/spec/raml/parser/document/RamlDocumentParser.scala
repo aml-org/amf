@@ -103,7 +103,7 @@ case class ExtensionLikeParser(root: Root, spec: Spec)(implicit override val ctx
     reference.annotations
       .find(classOf[Aliases])
       .foreach(_.aliases.foreach { alias =>
-        val fullUrl = alias._2._1
+        val fullUrl = alias._2.fullUrl
         otherReferences.find(_.location().exists(_.equals(fullUrl))) match {
           case Some(library: Module) =>
             val libraryDeclarations = collector.getOrCreateLibrary(alias._1)
