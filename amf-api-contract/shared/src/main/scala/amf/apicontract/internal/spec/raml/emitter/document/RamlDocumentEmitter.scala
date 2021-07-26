@@ -19,7 +19,7 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, 
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
-import amf.core.internal.annotations.{Aliases, ExplicitField, SourceAST, SourceSpec}
+import amf.core.internal.annotations.{Aliases, ExplicitField, ReferencedInfo, SourceAST, SourceSpec}
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.{Raml10, Spec}
@@ -184,7 +184,8 @@ case class ReferenceEmitter(reference: BaseUnit,
 
   override def emit(b: EntryBuilder): Unit = {
     val aliasesMap = aliases.getOrElse(Aliases(Set())).aliases
-    val effectiveAlias = aliasesMap.find { case (_, (f, _)) => f == reference.id } map { case (a, (_, r)) => (a, r) } getOrElse {
+    val effectiveAlias = aliasesMap
+      .find { case (_, refInfo) => refInfo.id == reference.id } map { case (a, refInfo) => (a, refInfo.relativeUrl) } getOrElse {
       (aliasGenerator(), name)
     }
     MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)
@@ -204,13 +205,13 @@ case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering) extends
       var modulesEmitted = Map[String, Module]()
       val idCounter      = new IdCounter()
       val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map {
-        case (alias, (fullUrl, localUrl)) =>
-          modules.find(_.id == fullUrl) match {
+        case (alias, refInfo) =>
+          modules.find(_.id == refInfo.id) match {
             case Some(module) =>
               modulesEmitted += (module.id -> module)
               Some(
                 ReferenceEmitter(module,
-                                 Some(Aliases(Set(alias -> (fullUrl, localUrl)))),
+                                 Some(Aliases(Set(alias -> refInfo))),
                                  ordering,
                                  () => idCounter.genId("uses")))
             case _ => None

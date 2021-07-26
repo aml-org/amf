@@ -131,8 +131,8 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     val documentAliases   = document.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases
 
     extensionsAliases.map(_._1).intersect(documentAliases.map(_._1)).foreach { alias =>
-      val extensionFullUrl = extensionsAliases.find(_._1 == alias).map(_._2._1).get
-      val docFullUrl       = documentAliases.find(_._1 == alias).map(_._2._1).get
+      val extensionFullUrl = extensionsAliases.find(_._1 == alias).map(_._2.fullUrl).get
+      val docFullUrl       = documentAliases.find(_._1 == alias).map(_._2.fullUrl).get
       if (extensionFullUrl != docFullUrl)
         errorHandler.violation(
           ResolutionValidation,

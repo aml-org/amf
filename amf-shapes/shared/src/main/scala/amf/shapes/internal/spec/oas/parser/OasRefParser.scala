@@ -57,6 +57,7 @@ class OasRefParser(map: YMap,
           case Some(_) => searchLocalJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, e)
           case _       => searchRemoteJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, e)
         }
+        referencedShape.foreach(adopt)
         referencedShape
     }
   }
