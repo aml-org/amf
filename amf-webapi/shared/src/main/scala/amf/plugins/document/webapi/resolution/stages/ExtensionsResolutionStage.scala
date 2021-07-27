@@ -317,9 +317,9 @@ class ExtensionResolutionStage(override val profile: ProfileName, override val k
                                           other: AmfArray,
                                           extensionId: String,
                                           extensionLocation: Option[String]): Unit = {
-    other.values.foreach { value =>
-      target.add(field, value)
-    }
+    val targetValues = target.fields.get(field).asInstanceOf[AmfArray].values
+    val mergedValues = (targetValues ++ other.values).distinct
+    target.set(field, AmfArray(mergedValues))
   }
 
   override val restrictions: MergingRestrictions = MergingRestrictions.unrestricted

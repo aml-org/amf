@@ -1,11 +1,9 @@
 package amf.resolution
 
-import amf.client.parse.DefaultParserErrorHandler
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Yaml
-import amf.core.remote.Vendor.{AMF, ASYNC20, OAS20, OAS30}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer

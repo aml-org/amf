@@ -5,11 +5,10 @@ import amf.client.convert.{NativeOps, WebApiRegister}
 import amf.client.model.DataTypes
 import amf.client.model.domain._
 import amf.core.AMF
-import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
-import org.scalatest.{AsyncFunSuite, Matchers}
 import amf.core.model.domain.{RecursiveShape => InternalRecursiveShape}
-import amf.core.parser.{Annotations, Fields}
+import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
+import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.ExecutionContext
 

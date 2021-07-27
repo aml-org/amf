@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: test API to be extended
+
+types:
+  TestObject:
+    type: object
+
+/test:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: TestObject

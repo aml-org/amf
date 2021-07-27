@@ -4,7 +4,6 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{StrictValidationMode, ValidationMode}
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
