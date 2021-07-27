@@ -293,7 +293,7 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMFConfiguration =
     super._withExecutionEnvironment(executionEnv)
 
-  def merge(other: AMFConfiguration): AMFConfiguration = super._merge(other)
+  protected[amf] def merge(other: AMFConfiguration): AMFConfiguration = super._merge(other)
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
