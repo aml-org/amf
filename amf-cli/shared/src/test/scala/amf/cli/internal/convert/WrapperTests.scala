@@ -35,6 +35,7 @@ import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
+import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.convert.CoreClientConverters.{ClientFuture, _}
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote._
@@ -1293,7 +1294,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         val doc: Document = new Document()
         doc.withId("http://location.com/myfile")
         val shape = new ScalarShape().withName("scalarDeclared").withDataType(ns)
-        doc.withDeclaredElement(shape)
         val wa = new WebApi().withName("test")
         doc.withEncodes(wa)
         val annotationType =
@@ -1302,11 +1302,13 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
             .withId("http://location.com/myfile#/declarations/annotations/forDescribedBy")
             .withSchema(new ScalarShape().withName("scalarName").withDataType(ns))
         doc.withDeclaredElement(annotationType)
+        doc.withDeclaredElement(shape)
         val annotation = InternalDomainExtension()
           .withExtension(new ScalarNode("extension", ns)._internal)
           .withDefinedBy(annotationType._internal)
           .withName(annotationType.name.value())
         shape.withCustomDomainProperties(Seq(annotation).asClient)
+        new IdAdopter(doc._internal, url).adopt() // TODO use client id adopter
         doc
       }
       s       <- Future.successful(client.render(doc, `application/yaml`))
@@ -1342,26 +1344,26 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       val operations =
         r.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]].endPoints.asSeq.head.operations.asSeq
       val getOp = operations.find(_.method.value().equals("get")).get
+      val getOpPayload = getOp.request.payloads.asSeq.head
       val option = getOp.request.payloads.asSeq.head.schema
         .asInstanceOf[AnyShape]
-        .trackedExample(
-          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
+        .trackedExample(getOpPayload.id)
         .asOption
       option.isDefined should be(true)
       option.get.annotations().isTracked should be(true)
 
-      val getPost = operations.find(_.method.value().equals("post")).get
-      val shape   = getPost.request.payloads.asSeq.head.schema.asInstanceOf[AnyShape]
+      val postOp = operations.find(_.method.value().equals("post")).get
+      val postOpPayload = postOp.request.payloads.asSeq.head
+      val shape   = postOp.request.payloads.asSeq.head.schema.asInstanceOf[AnyShape]
       val option2 = shape
-        .trackedExample(
-          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
+        .trackedExample(postOpPayload.id)
         .asOption
       option2.isDefined should be(true)
       option2.get.annotations().isTracked should be(true)
 
       shape.examples.asSeq
         .find(_.id.equals(
-          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/example/declared"))
+          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml/declares/A/examples/example/declared"))
         .head
         .annotations()
         .isTracked should be(false)
@@ -1956,7 +1958,10 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           .asInstanceOf[Document]
           .declares
           .asSeq
-          .find(_._internal.id == "file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/conditional-subschemas")
+          .find {
+            case n: NodeShape => n.name.value() == "conditional-subschemas"
+            case _ => false
+          }
           .get
           .asInstanceOf[NodeShape]
       val generated = JsonSchemaShapeRenderer.buildJsonSchema(shape,

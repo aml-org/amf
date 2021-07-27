@@ -1,13 +1,19 @@
 package amf.apicontract.internal.annotations
 
 import amf.apicontract.client.scala.model.domain.EndPoint
-import amf.core.client.scala.model.domain.{AmfElement, AnnotationGraphLoader, ResolvableAnnotation, SerializableAnnotation}
+import amf.core.client.scala.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, ResolvableAnnotation, SerializableAnnotation, UriAnnotation}
 
-case class ParentEndPoint(var parent: Option[EndPoint]) extends SerializableAnnotation with ResolvableAnnotation {
+case class ParentEndPoint(var parent: Option[EndPoint]) extends SerializableAnnotation with UriAnnotation with ResolvableAnnotation {
   override val name: String  = "parent-end-point"
   override def value: String = parent.map(_.id).getOrElse("default")
 
-  var parentId: Option[String] = None
+
+  override def uris: Seq[String] = List(value)
+
+  // annotation stores instance so id will be shortened.
+  override def shorten(fn: String => String): Annotation = this
+
+  private var parentId: Option[String] = None
 
   /** To allow deferred resolution on unordered graph parsing. */
   override def resolve(objects: Map[String, AmfElement]): Unit = {

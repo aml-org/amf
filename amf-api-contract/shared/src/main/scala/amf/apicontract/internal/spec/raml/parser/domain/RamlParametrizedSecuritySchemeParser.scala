@@ -69,7 +69,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
         case None =>
           ctx.eh.violation(
             UnknownSecuritySchemeErrorSpecification,
-            scheme.id,
+            "",
             s"Security scheme '$textName' not found in declarations.",
             node.location
           )
