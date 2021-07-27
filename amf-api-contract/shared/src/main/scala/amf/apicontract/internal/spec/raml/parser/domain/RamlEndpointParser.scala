@@ -77,10 +77,10 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)), Annotations(entry.key))
 
     if (!TemplateUri.isValid(path))
-      ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
+      ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value.location)
 
     if (collector.exists(e => e.path.is(path)))
-      ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
+      ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry.location)
     else {
       entry.value.tagType match {
         case YType.Null => collector += endpoint
@@ -262,7 +262,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       ctx.eh.violation(SlashInUriParameterValues,
                        node.id,
                        s"Value '${scalar.value.value()}' of uri parameter must not contain '/' character",
-                       entry.value)
+                       entry.value.location)
     case _ =>
   }
 

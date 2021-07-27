@@ -59,7 +59,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
         ctx.eh.violation(InvalidOperationType,
                          operation.id,
                          s"Invalid node ${entry.value} for method ${operation.method.value()}",
-                         entry.value)
+                         entry.value.location)
         operation
     }
   }

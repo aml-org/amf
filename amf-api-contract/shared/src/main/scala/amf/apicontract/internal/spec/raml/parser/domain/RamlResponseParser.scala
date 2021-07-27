@@ -168,7 +168,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                               UnsupportedExampleMediaTypeErrorSpecification,
                               res.id,
                               s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
-                              e))
+                              e.location))
                       }
                     }
                   case _ =>

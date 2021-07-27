@@ -33,7 +33,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
         checkBalancedParams(value, entry.value, server.id, ServerModel.Url.value.iri(), ctx)
         if (!TemplateUri.isValid(value))
-          ctx.eh.violation(InvalidServerPath, api.id, TemplateUri.invalidMsg(value), entry.value)
+          ctx.eh.violation(InvalidServerPath, api.id, TemplateUri.invalidMsg(value), entry.value.location)
 
         map.key("serverDescription".asRamlAnnotation, ServerModel.Description in server)
 
@@ -51,7 +51,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
             ctx.eh.violation(ParametersWithoutBaseUri,
                              api.id,
                              "'baseUri' not defined and 'baseUriParameters' defined.",
-                             entry)
+                             entry.location)
 
             val server = Server().adopted(api.id)
             parseBaseUriParameters(server, Nil)
@@ -113,7 +113,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
           .parse()
       case YType.Null => Nil
       case _ =>
-        ctx.eh.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
+        ctx.eh.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value.location)
         Nil
     }
   }
@@ -132,7 +132,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
       ctx.eh.warning(ImplicitVersionParameterWithoutApiVersion,
                      api.id,
                      "'baseUri' defines 'version' variable without the API defining one",
-                     entry)
+                     entry.location)
     }
   }
 
@@ -145,7 +145,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
       ctx.eh.warning(InvalidVersionBaseUriParameterDefinition,
                      api.id,
                      "'version' baseUriParameter can't be defined if present in baseUri as variable",
-                     entry)
+                     entry.location)
     }
   }
 
@@ -171,7 +171,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         basePath = entry.value.as[String]
 
         if (!basePath.startsWith("/")) {
-          ctx.eh.violation(InvalidBasePath, api.id, "'basePath' property must start with '/'", entry.value)
+          ctx.eh.violation(InvalidBasePath, api.id, "'basePath' property must start with '/'", entry.value.location)
           basePath = "/" + basePath
         }
       }

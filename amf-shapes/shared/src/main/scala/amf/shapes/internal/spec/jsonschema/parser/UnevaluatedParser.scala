@@ -43,7 +43,7 @@ class UnevaluatedParser(version: SchemaVersion, info: UnevaluatedInfo)(implicit 
             shape.set(schemaField, s, Annotations(entry))
           }
         case _ =>
-          ctx.eh.violation(error, shape.id, message, entry)
+          ctx.eh.violation(error, shape.id, message, entry.location)
       }
     }
   }

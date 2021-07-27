@@ -34,7 +34,7 @@ case class ShapeExtensionParser(shape: Shape,
           ctx.eh.violation(UnableToParseShapeExtensions,
                            shape.id,
                            s"Cannot parse shape extension for spec ${ctx.spec}",
-                           map)
+                           map.location)
           shapeExtensionDefinition.name.value()
       }
       map.key(extensionKey) match {
@@ -47,7 +47,7 @@ case class ShapeExtensionParser(shape: Shape,
           shape.add(ShapeModel.CustomShapeProperties, extension)
         case None if directlyInherited.contains(shapeExtensionDefinition) =>
           if (shapeExtensionDefinition.minCount.option().exists(_ > 0)) {
-            ctx.eh.violation(MissingRequiredUserDefinedFacet, shape.id, s"Missing required facet '$extensionKey'", map)
+            ctx.eh.violation(MissingRequiredUserDefinedFacet, shape.id, s"Missing required facet '$extensionKey'", map.location)
           }
         case _ =>
       }
@@ -81,7 +81,7 @@ case class ShapeExtensionParser(shape: Shape,
               ctx.eh.violation(UserDefinedFacetMatchesBuiltInFacets,
                                shape.id,
                                s"Custom defined facet '$name' matches built-in type facets",
-                               map))
+                               map.location))
         definedCustomFacets
           .intersect(inheritedCustomFacets)
           .foreach(
@@ -89,7 +89,7 @@ case class ShapeExtensionParser(shape: Shape,
               ctx.eh.violation(UserDefinedFacetMatchesAncestorsTypeFacets,
                                shape.id,
                                s"Custom defined facet '$name' matches custom facet from inherited type",
-                               map))
+                               map.location))
       })
   }
 

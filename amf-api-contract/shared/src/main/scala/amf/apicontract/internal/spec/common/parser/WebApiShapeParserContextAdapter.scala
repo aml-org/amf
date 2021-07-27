@@ -3,13 +3,7 @@ package amf.apicontract.internal.spec.common.parser
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
-import amf.apicontract.internal.spec.oas.parser.context.{
-  Oas2Syntax,
-  Oas2WebApiContext,
-  Oas3Syntax,
-  Oas3WebApiContext,
-  OasLikeWebApiContext
-}
+import amf.apicontract.internal.spec.oas.parser.context.{Oas2Syntax, Oas2WebApiContext, Oas3Syntax, Oas3WebApiContext, OasLikeWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.external.DefaultRamlExternalSchemaExpressionFactory
 import amf.apicontract.internal.spec.spec.{toOas, toOasDeclarations}

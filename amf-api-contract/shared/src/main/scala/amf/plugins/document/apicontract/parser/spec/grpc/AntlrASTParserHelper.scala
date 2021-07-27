@@ -14,6 +14,7 @@ import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common.TypeDef
 import amf.shapes.internal.spec.common.TypeDef._
 import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
+import org.mulesoft.lexer.SourceLocation
 
 trait AntlrASTParserHelper {
   def find(node: Node, name: String): Seq[ASTElement] = node.children.filter(_.name == name)
@@ -142,7 +143,7 @@ trait AntlrASTParserHelper {
       case _                 =>
         val shape = UnresolvedShape(literalReference, toAnnotations(n))
         shape.withContext(ctx)
-        shape.unresolvedAntlrAst(literalReference, Seq(qualifiedReference)++ topLevelAlias, ctx.rootContextDocument, n)
+        shape.unresolved(literalReference, Seq(qualifiedReference)++ topLevelAlias, Some(new SourceLocation(n.file, 0, 0, n.start.line, n.start.column, n.end.line, n.end.column)))
         shape
     }
   }

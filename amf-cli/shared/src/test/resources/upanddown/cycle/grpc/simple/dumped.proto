@@ -8,7 +8,6 @@ message MyOption {
   string a = 1;
   string b = 2;
 }
-package helloworld;
 extend google.protobuf.FieldOptions {
   MyOption mystruct = 5124;
 }
@@ -16,6 +15,7 @@ option java_multiple_files = true;
 option java_package = "io.grpc.examples.helloworld";
 option java_outer_classname = "HelloWorldProto";
 option objc_class_prefix = "HLW";
+package helloworld;
 
 
 service Greeter {

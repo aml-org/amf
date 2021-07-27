@@ -1020,12 +1020,7 @@
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
-      "http://a.ml/vocabularies/document#package": "helloworld",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/document#package": "helloworld"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto",
@@ -1046,12 +1041,7 @@
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [],
       "http://a.ml/vocabularies/document#root": false,
-      "http://a.ml/vocabularies/document#package": "library",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/document#package": "library"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/scalar/.helloworld.Corpus",
@@ -1261,17 +1251,6 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -1301,17 +1280,6 @@
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/source-map/lexical/element_0"
         }
       ]
     },
@@ -1824,11 +1792,6 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#package",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,0)-(10,18)]"
-    },
-    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/property/message",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
@@ -1862,11 +1825,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#package",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(3,15)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/scalar/.helloworld.Corpus/default-node/data-node",

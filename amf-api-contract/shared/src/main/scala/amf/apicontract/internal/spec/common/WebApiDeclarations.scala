@@ -224,7 +224,7 @@ class WebApiDeclarations(val alias: Option[String],
     findParameter(key, scope) match {
       case Some(result) => result
       case _ =>
-        error(s"Parameter '$key' not found", ast)
+        error(s"Parameter '$key' not found", ast.location)
         ErrorParameter(key, ast)
     }
 
@@ -309,7 +309,7 @@ class WebApiDeclarations(val alias: Option[String],
     findResourceType(key, scope) match {
       case Some(result) => result
       case _ =>
-        error(s"ResourceType $key not found", ast)
+        error(s"ResourceType $key not found", ast.location)
         ErrorResourceType(key, ast)
     }
 
@@ -340,7 +340,7 @@ class WebApiDeclarations(val alias: Option[String],
   def findTraitOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Trait = findTrait(key, scope) match {
     case Some(result) => result
     case _ =>
-      error(s"Trait $key not found", ast)
+      error(s"Trait $key not found", ast.location)
       ErrorTrait(key, ast)
   }
 
@@ -368,7 +368,7 @@ class WebApiDeclarations(val alias: Option[String],
     findSecurityScheme(key, scope) match {
       case Some(result) => result
       case _ =>
-        error(s"SecurityScheme '$key' not found", ast)
+        error(s"SecurityScheme '$key' not found", ast.location)
         ErrorSecurityScheme(key, ast)
     }
 
@@ -388,14 +388,14 @@ class WebApiDeclarations(val alias: Option[String],
     findResponse(key, searchScope) match {
       case Some(result) => result
       case _ =>
-        error(s"Response '$key' not found", ast)
+        error(s"Response '$key' not found", ast.location)
         ErrorResponse(key, ast)
     }
 
   def findNamedExampleOrError(ast: YPart)(key: String): Example = findNamedExample(key) match {
     case Some(result) => result
     case _ =>
-      error(s"NamedExample '$key' not found", ast)
+      error(s"NamedExample '$key' not found", ast.location)
       ErrorNamedExample(key, ast)
   }
 

@@ -46,7 +46,7 @@ case class AbstractDeclarationsParser(key: String,
             ctx.eh.violation(InvalidAbstractDeclarationType,
                              customProperties,
                              s"Invalid type $t for '$key' node.",
-                             e.value)
+                             e.value.location)
         }
       }
     )
@@ -71,7 +71,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
       ctx.eh.warning(NullAbstractDeclaration,
                      parent,
                      "Generating abstract declaration (resource type / trait)  with null value",
-                     entryValue)
+                     entryValue.location)
 
     ctx.link(entryValue) match {
       case Left(link) => parseReferenced(declaration, link, entryValue, map.annotations).adopted(parent)
