@@ -10,8 +10,8 @@ Level: Violation
 name should be string
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/declarations/types/User/example/bad
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/declarations/types/User/example/bad
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml/declares/User/examples/example/bad
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml/declares/User/examples/example/bad
   Position: Some(LexicalInformation([(13,10)-(16,11)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml
 
@@ -20,7 +20,7 @@ name should be string
 name should be string
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/web-api/end-points/%2Fsend/post/request/application%2Fjson/schema/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/web-api/end-points/%2Fsend/post/request/application%2Fjson/schema/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml/#/web-api/endpoint/end-points/%2Fsend/supportedOperation/post/expects/request/payload/application%2Fjson/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml/#/web-api/endpoint/end-points/%2Fsend/supportedOperation/post/expects/request/payload/application%2Fjson/schema/examples/example/default-example
   Position: Some(LexicalInformation([(23,16)-(26,17)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml

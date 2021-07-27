@@ -40,6 +40,7 @@ class ResolvedModelDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest 
 
   val apiPaths = Seq(
     "file://amf-cli/shared/src/test/resources/validations/discriminator/discriminator-array-items.raml",
+    "file://amf-cli/shared/src/test/resources/production/enum-id-with-applied-trait/api.raml"
   )
 
   apiPaths.foreach { path =>
@@ -71,7 +72,8 @@ trait DuplicateIdsTest {
   private def validateDuplicateIds(objs: Seq[AmfObject]): Unit = {
     val groupedById = objs.groupBy(_.id)
     groupedById.foreach { case (id, elems) =>
-      if (elems.size > 1) fail(s"Duplicate id: $id")
+      if (elems.size > 1)
+        fail(s"Duplicate id: $id")
     }
   }
 

@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be string
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml#/declarations/types/scalar/tigerName/example/new
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml#/declarations/types/scalar/tigerName/example/new
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml/declares/scalar/tigerName/examples/example/new
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml/declares/scalar/tigerName/examples/example/new
   Position: Some(LexicalInformation([(14,10)-(14,11)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml

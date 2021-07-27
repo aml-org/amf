@@ -257,7 +257,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
       assert(targets.size == 1)
       assert(unit.references.size == 1)
-      assert(targets.head._1 == unit.references.head.id)
+      assert(unit.references.head.location().contains(targets.head._1))
 
       succeed
     }

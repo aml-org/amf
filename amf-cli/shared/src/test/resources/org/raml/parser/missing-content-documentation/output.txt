@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#CreativeWork-description-minCount
   Message: API documentation content is mandatory
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/missing-content-documentation/input.raml#/web-api/creative-work/foo
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/missing-content-documentation/input.raml/#/web-api/documentation/creative-work/foo
   Property: http://a.ml/vocabularies/core#description
   Position: Some(LexicalInformation([(4,6)-(6,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/missing-content-documentation/input.raml

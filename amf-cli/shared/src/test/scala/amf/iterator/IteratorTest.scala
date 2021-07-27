@@ -73,7 +73,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
         baseUnit => {
           val iterator = AmfElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), IdCollector())
           val elements = iterator.toList
-          assert(elements.size == 338)
+          assert(elements.size == 350)
         }
     )
   }
@@ -109,7 +109,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
         baseUnit => {
           val iterator = DomainElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), IdCollector())
           val elements = iterator.toList
-          assert(elements.size == 98)
+          assert(elements.size == 102)
         }
     )
   }

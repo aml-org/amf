@@ -8,15 +8,15 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be number
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml#/web-api/end-points/%2Fe-mediaType/get/200/application%2Fjson/any/schema/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml#/web-api/end-points/%2Fe-mediaType/get/200/application%2Fjson/any/schema/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml/#/web-api/endpoint/end-points/%2Fe-mediaType/supportedOperation/get/returns/200/payload/application%2Fjson/any/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml/#/web-api/endpoint/end-points/%2Fe-mediaType/supportedOperation/get/returns/200/payload/application%2Fjson/any/schema/examples/example/default-example
   Position: Some(LexicalInformation([(25,21)-(25,22)]))
   Location: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be number
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml#/web-api/end-points/%2Fe-no-mediaType/get/200/default/any/default/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml#/web-api/end-points/%2Fe-no-mediaType/get/200/default/any/default/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml/#/web-api/endpoint/end-points/%2Fe-no-mediaType/supportedOperation/get/returns/200/payload/default/any/default/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml/#/web-api/endpoint/end-points/%2Fe-no-mediaType/supportedOperation/get/returns/200/payload/default/any/default/examples/example/default-example
   Position: Some(LexicalInformation([(32,19)-(32,20)]))
   Location: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml

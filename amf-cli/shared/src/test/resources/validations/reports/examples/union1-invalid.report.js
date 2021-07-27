@@ -11,7 +11,7 @@ should be null
 should match some schema in anyOf
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/examples/union1-invalid.raml#/web-api/end-points/%2Ftest/get/request/parameter/header/date/union/schema/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/examples/union1-invalid.raml#/web-api/end-points/%2Ftest/get/request/parameter/header/date/union/schema/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/union1-invalid.raml/#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/expects/request/header/parameter/header/date/union/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/union1-invalid.raml/#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/expects/request/header/parameter/header/date/union/schema/examples/example/default-example
   Position: Some(LexicalInformation([(10,17)-(10,21)]))
   Location: file://amf-cli/shared/src/test/resources/validations/examples/union1-invalid.raml

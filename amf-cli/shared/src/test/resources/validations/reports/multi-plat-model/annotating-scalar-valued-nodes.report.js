@@ -8,16 +8,16 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be string
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/stringAnnotation/scalar_1
-  Property: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/stringAnnotation/scalar_1
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml/#/web-api/customDomainProperties/extension/scalar_1
+  Property: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml/#/web-api/customDomainProperties/extension/scalar_1
   Position: Some(LexicalInformation([(6,20)-(6,21)]))
   Location: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be string
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/end-points/%2Fresource/stringAnnotation/scalar_1
-  Property: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/end-points/%2Fresource/stringAnnotation/scalar_1
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml/#/web-api/endpoint/end-points/%2Fresource/customDomainProperties/extension/scalar_1
+  Property: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml/#/web-api/endpoint/end-points/%2Fresource/customDomainProperties/extension/scalar_1
   Position: Some(LexicalInformation([(10,22)-(10,23)]))
   Location: file://amf-cli/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml
 
