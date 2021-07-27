@@ -40,7 +40,7 @@ case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String,
                 ctx.eh.violation(CoreValidations.UnresolvedReference,
                                  "",
                                  s"Cannot find callback reference $fullRef",
-                                 map)
+                                 map.location)
                 val callback: Callback = new ErrorCallback(label, map).link(name, Annotations(rootEntry))
 
                 adopt(callback)

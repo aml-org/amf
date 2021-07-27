@@ -37,7 +37,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       val requirement = SecurityRequirement(Annotations(node)).withName(ScalarNode(node))
       adopted(requirement)
 
-      ctx.eh.violation(InvalidSecurityRequirementObject, requirement.id, s"Invalid security requirement $node", node)
+      ctx.eh.violation(InvalidSecurityRequirementObject, requirement.id, s"Invalid security requirement $node", node.location)
       Some(requirement)
   }
 
@@ -106,7 +106,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
           case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
           case None             => "Scopes array must be empty for given security scheme"
         }
-        ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
+        ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node.location)
       }
     }
 
@@ -124,7 +124,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
           ctx.eh.violation(DeclarationNotFound,
                            securityScheme.id,
                            s"Security scheme '$name' not found in declarations.",
-                           part)
+                           part.location)
           securityScheme
       }
     }

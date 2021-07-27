@@ -5,6 +5,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Syntax
 import amf.core.internal.remote.Syntax.Yaml
 import org.yaml.model.{YMap, YNode, YType}
@@ -32,7 +33,7 @@ object YamlTagValidator {
         ctx.eh.reportConstraint(ParserSideValidations.UnknownYamlTag,
                                 "",
                                 s"Unknown tag '$tagText', must be allowed by json schema ruleset",
-                                node.tag,
+                                node.tag.location,
                                 severity)
       case _ => // valid tag
     }

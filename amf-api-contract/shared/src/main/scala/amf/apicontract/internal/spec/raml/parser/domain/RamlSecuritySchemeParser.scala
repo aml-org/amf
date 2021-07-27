@@ -135,7 +135,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                 ExclusivePropertiesSpecification,
                 scheme.id,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
-                value
+                value.location
               )
             }
 
@@ -188,7 +188,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
             ctx.eh.violation(InvalidSecuritySchemeDescribedByType,
                              scheme.id,
                              s"Invalid 'describedBy' type, map expected",
-                             entry.value)
+                             entry.value.location)
         }
       }
     )

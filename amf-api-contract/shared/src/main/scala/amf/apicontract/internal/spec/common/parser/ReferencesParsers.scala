@@ -66,13 +66,13 @@ case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YM
                       collectAlias(baseUnit, alias -> (module.id, url))
                       result += (alias, module)
                     case other =>
-                      ctx.eh.violation(ExpectedModule, id, s"Expected module but found: $other", e)
+                      ctx.eh.violation(ExpectedModule, id, s"Expected module but found: $other", e.location)
                   }
                 }
               })
           case YType.Null =>
           case _ =>
-            ctx.eh.violation(InvalidModuleType, id, s"Invalid ast type for uses: ${entry.value.tagType}", entry.value)
+            ctx.eh.violation(InvalidModuleType, id, s"Invalid ast type for uses: ${entry.value.tagType}", entry.value.location)
       }
     )
   }

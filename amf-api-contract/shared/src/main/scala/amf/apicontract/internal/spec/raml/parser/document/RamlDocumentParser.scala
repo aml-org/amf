@@ -279,7 +279,7 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
             }
           case YType.Null =>
           case t =>
-            ctx.eh.violation(InvalidSecuredByType, parent, s"Invalid type $t for 'securitySchemes' node.", e.value)
+            ctx.eh.violation(InvalidSecuredByType, parent, s"Invalid type $t for 'securitySchemes' node.", e.value.location)
         }
       }
     )
@@ -372,7 +372,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
             ctx.eh.violation(InvalidAnnotationType,
                              customProperties,
                              s"Invalid type $t for 'annotationTypes' node.",
-                             e.value)
+                             e.value.location)
         }
       }
     )
@@ -390,7 +390,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
                 InvalidTypeDefinition,
                 parent,
                 s"'$typeName' cannot be used to name a custom type",
-                entry.key
+                entry.key.location
               )
             }
             val parser = Raml10TypeParser(
@@ -404,12 +404,12 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
               case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
                 ctx.declarations += shape.add(DeclaredElement())
-              case None => ctx.eh.violation(UnableToParseShape, parent, s"Error parsing shape '$entry'", entry)
+              case None => ctx.eh.violation(UnableToParseShape, parent, s"Error parsing shape '$entry'", entry.location)
             }
 
           }
         case YType.Null =>
-        case t          => ctx.eh.violation(InvalidTypesType, parent, s"Invalid type $t for 'types' node.", e.value)
+        case t          => ctx.eh.violation(InvalidTypesType, parent, s"Invalid type $t for 'types' node.", e.value.location)
       }
     }
   }
@@ -423,7 +423,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       _ <- types
       s <- schemas
     } {
-      ctx.eh.violation(ExclusiveSchemasType, "", "'schemas' and 'types' properties are mutually exclusive", s.key)
+      ctx.eh.violation(ExclusiveSchemasType, "", "'schemas' and 'types' properties are mutually exclusive", s.key.location)
     }
 
     schemas.foreach(
@@ -431,7 +431,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
         ctx.eh.warning(SchemasDeprecated,
                        "",
                        "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead",
-                       s.key))
+                       s.key.location))
 
     types.orElse(schemas)
   }
@@ -458,7 +458,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
                 ctx.eh.violation(InvalidParameterType,
                                  parameter.domainElement.id,
                                  "Map needed to parse a parameter declaration",
-                                 e)
+                                 e.location)
                 parameter
             }
             ctx.declarations.registerOasParameter(oasParameter)
@@ -498,20 +498,20 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
             ctx.eh.violation(InvalidDocumentationType,
                              parent,
                              s"Unexpected sequence. Options are object or scalar ",
-                             n)
+                             n.location)
           case _ =>
             val scalar = n.as[YScalar]
             declarations.findDocumentations(
               scalar.text,
               SearchScope.Fragments,
-              Some((s: String) => ctx.eh.violation(InvalidFragmentType, "", s, scalar))) match {
+              Some((s: String) => ctx.eh.violation(InvalidFragmentType, "", s, scalar.location))) match {
               case Some(doc) =>
                 results += doc.link(ScalarNode(n), Annotations.inferred()).asInstanceOf[CreativeWork]
               case _ =>
                 ctx.eh.violation(DeclarationNotFound,
                                  parent,
                                  s"not supported scalar ${scalar.text} for documentation",
-                                 scalar)
+                                 scalar.location)
             }
       })
 
@@ -531,7 +531,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
           ctx.eh.violation(InvalidAnnotationType,
                            domainProp.id,
                            "Invalid value type for annotation types parser, expected map or scalar reference",
-                           ast.value)
+                           ast.value.location)
           domainProp
         case _ =>
           val key             = ast.key.as[YScalar].text
@@ -561,7 +561,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                   ctx.eh.violation(DeclarationNotFound,
                                    domainProp.id,
                                    "Could not find declared annotation link in references",
-                                   scalar)
+                                   scalar.location)
                   domainProp
               }
           }
@@ -604,7 +604,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
             InvalidAllowedTargets,
             nodeId,
             s"$target is not a valid target",
-            entry.value
+            entry.value.location
           )
       })
     }
@@ -651,7 +651,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                     InvalidAllowedTargetsType,
                     custom.id,
                     "Property 'allowedTargets' in a RAML annotation can only be a valid scalar or an array of valid scalars",
-                    entry.value
+                    entry.value.location
                   )
                   AmfArray(Seq())
                 case _ =>
@@ -685,7 +685,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
           ctx.eh.violation(InvalidAnnotationType,
                            custom.id,
                            "Cannot parse annotation type fragment, cannot find information map",
-                           ast)
+                           ast.location)
           custom
       }
 

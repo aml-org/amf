@@ -1,11 +1,6 @@
 package amf.apicontract.internal.transformation.stages
 
-import amf.apicontract.client.scala.model.domain.templates.{
-  ParametrizedResourceType,
-  ParametrizedTrait,
-  ResourceType,
-  Trait
-}
+import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
 import amf.apicontract.internal.spec.common.emitter.{Raml10EndPointEmitter, Raml10OperationEmitter}
@@ -23,6 +18,7 @@ import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig, YNodeLikeOps}
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
@@ -148,7 +144,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
         val branches = ListBuffer[BranchContainer]()
 
-        val operationTree = OperationTreeBuilder(operation)(IgnoringErrorHandler).build()
+        val operationTree = OperationTreeBuilder(operation)(new SYamlAMFParserErrorHandler(IgnoringErrorHandler)).build()
         val branchesObj   = Branches()(extendsContext)
 
         // Method branch

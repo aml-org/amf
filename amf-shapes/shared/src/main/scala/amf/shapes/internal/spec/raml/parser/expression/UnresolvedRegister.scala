@@ -16,6 +16,6 @@ private[expression] case class ContextRegister(context: ShapeParserContext, part
     extends UnresolvedRegister {
   override def register(shape: UnresolvedShape): Unit = {
     shape.withContext(context)
-    shape.unresolved(shape.name.value(), part.getOrElse(YNode.Null))(context)
+    shape.unresolved(shape.name.value(), Nil, Some(part.getOrElse(YNode.Null).location))(context)
   }
 }

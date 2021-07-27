@@ -128,7 +128,7 @@ class OasRefParser(map: YMap,
       None,
       Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
       shouldLink = false).withName(declarationNameOrResolvedRef, Annotations()).withSupportsRecursion(true)
-    tmpShape.unresolved(declarationNameOrResolvedRef, e)(ctx)
+    tmpShape.unresolved(declarationNameOrResolvedRef, Nil, Some(e.location))(ctx)
     tmpShape.withContext(ctx)
     adopt(tmpShape)
     shape.withLinkTarget(tmpShape).withLinkLabel(declarationNameOrResolvedRef)
@@ -138,7 +138,7 @@ class OasRefParser(map: YMap,
 
   private def createAndRegisterUnresolvedShape(e: YMapEntry, ref: String, text: String) = {
     val tmpShape = UnresolvedShape(ref, map).withName(text, Annotations()).withSupportsRecursion(true)
-    tmpShape.unresolved(text, e)(ctx)
+    tmpShape.unresolved(text, Nil, Some(e.location))(ctx)
     tmpShape.withContext(ctx)
     adopt(tmpShape)
     tmpShape
@@ -178,7 +178,7 @@ class OasRefParser(map: YMap,
           case None =>
             val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fullUrl)
             // it might still be resolvable at the RAML (not JSON Schema) level
-            tmpShape.unresolved(text, e).withSupportsRecursion(true)
+            tmpShape.unresolved(text, Nil, Some(e.location)).withSupportsRecursion(true)
             Some(tmpShape)
           case Some(jsonSchemaShape) =>
             jsonSchemaShape.annotations += ExternalJsonSchemaShape(e)
@@ -194,7 +194,7 @@ class OasRefParser(map: YMap,
   private def copyUnresolvedShape(ref: String, fullRef: String, entry: YMapEntry, unresolved: UnresolvedShape) = {
     val annots = Annotations(ast)
     val copied = unresolved.copyShape(annots ++= unresolved.annotations.copy()).withLinkLabel(ref)
-    copied.unresolved(fullRef, entry)(ctx)
+    copied.unresolved(fullRef, Nil, Some(entry.location))(ctx)
     adopt(copied)
     Some(copied)
   }

@@ -1207,29 +1207,6 @@
         "@value": "helloworld"
       }
     ],
-    "http://a.ml/vocabularies/document-source-maps#sources": [
-      {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map",
-        "@type": [
-          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-        ],
-        "http://a.ml/vocabularies/document-source-maps#lexical": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/source-map/lexical/element_0",
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "http://a.ml/vocabularies/document#package"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "[(10,0)-(10,18)]"
-              }
-            ]
-          }
-        ]
-      }
-    ],
     "http://a.ml/vocabularies/document#references": [
       {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto",
@@ -1449,29 +1426,6 @@
         "http://a.ml/vocabularies/document#package": [
           {
             "@value": "library"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/document#package"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(3,0)-(3,15)]"
-                  }
-                ]
-              }
-            ]
           }
         ]
       }

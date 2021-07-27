@@ -8,6 +8,7 @@ import amf.core.client.scala.parse.TaggedReferences.BuReferenceTagger
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.parser.CompilerContext
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.YNode.MutRef
@@ -51,7 +52,7 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
                       case other =>
                         compilerContext.violation(InvalidFragmentType,
                                                   "Cannot inline a fragment in a not mutable node",
-                                                  other)
+                                                  other.location)
                     }
                   // not meaning, only for collect all futures, not matter the type
                   }
@@ -74,11 +75,8 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
 
   private def evaluateUnresolvedReference(compilerContext: CompilerContext, r: Reference, e: Throwable): Unit = {
     if (!r.isInferred) {
-      r.refs.foreach {
-        case SYamlRefContainer(_,node,_) =>
-          compilerContext.violation(UnresolvedReference, r.url, e.getMessage, node)
-        case AntlrRefContainer(_,node,_) =>
-          compilerContext.violation(UnresolvedReference, r.url, e.getMessage, node)
+      r.refs.foreach { case ref: ASTRefContainer =>
+        compilerContext.violation(UnresolvedReference, r.url, e.getMessage, ref.pos)
       }
     }
   }
@@ -88,7 +86,7 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
 
       case e: ExternalFragment if isRamlOrYaml(e.encodes) =>
         Right(
-          YamlParser(e.encodes.raw.value(), e.location().getOrElse(""))(ctx.eh)
+          YamlParser(e.encodes.raw.value(), e.location().getOrElse(""))(new SYamlAMFParserErrorHandler(ctx.eh))
             .withIncludeTag("!include")
             .document())
       case e: ExternalFragment =>
