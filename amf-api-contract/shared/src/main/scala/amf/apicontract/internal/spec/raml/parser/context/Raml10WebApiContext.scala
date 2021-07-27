@@ -7,6 +7,8 @@ import amf.core.internal.remote.{Raml10, Spec}
 import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
+import org.mulesoft.lexer.SourceLocation
+import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, SyamlException, YError}
 
 class Raml10WebApiContext(loc: String,
                           refs: Seq[ParsedReference],
@@ -14,7 +16,8 @@ class Raml10WebApiContext(loc: String,
                           private val ds: Option[RamlWebApiDeclarations] = None,
                           contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
                           options: ParsingOptions = ParsingOptions())
-    extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType) {
+    extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType)
+{
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val spec: Spec                      = Raml10
   override val syntax: SpecSyntax              = Raml10Syntax

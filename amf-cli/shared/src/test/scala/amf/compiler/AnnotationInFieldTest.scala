@@ -192,7 +192,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference.json")
-      assert(targets.head._2 == List(Range(Position(6, 14), Position(6, 28))))
+      assert(targets.head._2 == List(Range(Position(6, 5), Position(6, 28))))
       succeed
     }
   }
@@ -205,7 +205,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference.raml")
-      assert(targets.head._2 == List(Range(Position(6, 14), Position(6, 28))))
+      assert(targets.head._2 == List(Range(Position(6, 5), Position(6, 28))))
       succeed
     }
   }
@@ -221,11 +221,11 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference-1.yaml")
-      assert(targets.head._2 == List(Range(Position(6, 14), Position(6, 30))))
+      assert(targets.head._2 == List(Range(Position(6, 5), Position(6, 30))))
 
       assert(reftargets.size == 1)
       assert(reftargets.head._1 == s"${uri}reference.json")
-      assert(reftargets.head._2 == List(Range(Position(1, 15), Position(1, 29))))
+      assert(reftargets.head._2 == List(Range(Position(1, 6), Position(1, 29))))
 
       succeed
     }
@@ -241,7 +241,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}example.json")
       assert(
-        targets.head._2 == List(Range(Position(9, 22), Position(9, 34)), Range(Position(21, 30), Position(21, 42))))
+        targets.head._2 == List(Range(Position(9, 13), Position(9, 34)), Range(Position(21, 21), Position(21, 42))))
 
       succeed
     }

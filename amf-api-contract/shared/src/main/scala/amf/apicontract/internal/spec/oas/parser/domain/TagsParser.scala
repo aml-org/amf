@@ -51,7 +51,7 @@ case class StringTagsParser(seq: YSequence, parentId: String)(implicit ctx: WebA
           tag.adopted(parentId)
           tags += tag
         case _ =>
-          ctx.eh.violation(ParserSideValidations.InvalidTagType, parentId, s"Tag value must be of type string", node)
+          ctx.eh.violation(ParserSideValidations.InvalidTagType, parentId, s"Tag value must be of type string", node.location)
       }
     }
     tags

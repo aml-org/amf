@@ -41,7 +41,7 @@ trait OasLikeDeclarationsHelper {
                 ctx.eh.violation(UnableToParseShape,
                                  NodeShape().adopted(typesPrefix).id,
                                  s"Error parsing shape at $typeName",
-                                 e)
+                                 e.location)
             }
           })
       }

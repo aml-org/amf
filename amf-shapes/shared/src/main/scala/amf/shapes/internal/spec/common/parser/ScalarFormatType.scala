@@ -37,7 +37,7 @@ case class ScalarFormatType(shape: Shape, typeDef: TypeDef)(implicit ctx: ShapeP
           ctx.eh.warning(InvalidShapeFormat,
                          shape.id,
                          s"Format $format is not valid for type ${XsdTypeDefMapping.xsd(typeDef)}",
-                         n)
+                         n.location)
 
         (ScalarShapeModel.Format in shape).allowingAnnotations(n)
         fromFormat(format)

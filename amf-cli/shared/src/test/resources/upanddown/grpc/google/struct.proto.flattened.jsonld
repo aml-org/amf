@@ -334,12 +334,7 @@
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
-      "http://a.ml/vocabularies/document#package": "google.protobuf",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/document#package": "google.protobuf"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/types/.google.protobuf.Struct",
@@ -427,17 +422,6 @@
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/types/scalar/.google.protobuf.NullValue/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/source-map/lexical/element_0"
         }
       ]
     },
@@ -605,11 +589,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/types/scalar/.google.protobuf.NullValue/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#package",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(33,0)-(33,23)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/struct.proto#/web-api/types/.google.protobuf.Struct/property/fields/default-node",

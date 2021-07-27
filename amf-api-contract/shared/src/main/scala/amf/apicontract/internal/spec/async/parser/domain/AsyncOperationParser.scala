@@ -142,12 +142,12 @@ case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operati
   }
 
   private def expectedRef(node: YNode, name: String): Operation = {
-    ctx.eh.violation(ParserSideValidations.ExpectedReference, "", s"Expected reference", node)
+    ctx.eh.violation(ParserSideValidations.ExpectedReference, "", s"Expected reference", node.location)
     new ErrorOperationTrait(name, node).link(name, Annotations(node)).asInstanceOf[Operation].withAbstract(true)
   }
 
   private def linkError(url: String, node: YNode): Operation = {
-    ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find operation trait reference $url", node)
+    ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find operation trait reference $url", node.location)
     val t: ErrorOperationTrait = new ErrorOperationTrait(url, node).link(url, Annotations(node))
     t
 
