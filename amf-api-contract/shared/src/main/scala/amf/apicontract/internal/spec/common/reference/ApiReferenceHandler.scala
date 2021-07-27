@@ -13,9 +13,25 @@ import org.yaml.model._
 
 import scala.util.matching.Regex
 
+class SYamlCompilerReferenceCollector() extends CompilerReferenceCollector {
+
+  def +=(key: String, kind: ReferenceKind, node: YPart): Unit = {
+    val (url, fragment) = ReferenceFragmentPartition(key)
+    collector.get(url) match {
+      case Some(reference: Reference) => collector += (url, reference + SYamlRefContainer(kind, node, fragment))
+      case None                       => collector += (url, new Reference(url, Seq(SYamlRefContainer(kind, node, fragment))))
+    }
+  }
+
+}
+
+object SYamlCompilerReferenceCollector {
+  def apply(): SYamlCompilerReferenceCollector = new SYamlCompilerReferenceCollector()
+}
+
 class ApiReferenceHandler(spec: String) extends ReferenceHandler {
 
-  private val references = CompilerReferenceCollector()
+  private val references = SYamlCompilerReferenceCollector()
 
   override def collect(parsed: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     collect(parsed)(ctx.eh)
@@ -57,7 +73,7 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
               entry.value.tagType match {
                 case YType.Map | YType.Seq | YType.Null =>
                   errorHandler
-                    .violation(InvalidExtensionsType, "", s"Expected scalar but found: ${entry.value}", entry.value)
+                    .violation(InvalidExtensionsType, "", s"Expected scalar but found: ${entry.value}", entry.value.location)
                 case _ => extension(entry) // assume scalar
             })
         }
@@ -95,7 +111,7 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
                 case YType.Map  => entry.value.as[YMap].entries.foreach(library(_))
                 case YType.Null =>
                 case _ =>
-                  errorHandler.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
+                  errorHandler.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value.location)
               }
             })
         })
@@ -106,7 +122,7 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
   private def library(entry: YMapEntry)(implicit errorHandler: AMFErrorHandler): Unit =
     LibraryLocationParser(entry) match {
       case Some(location) => references += (location, LibraryReference, entry.value)
-      case _              => errorHandler.violation(ModuleNotFound, "", "Missing library location", entry)
+      case _              => errorHandler.violation(ModuleNotFound, "", "Missing library location", entry.location)
     }
 
   private def oasLinks(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
@@ -122,7 +138,7 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
       case YType.Str =>
         references += (ref.value
           .as[String], LinkReference, ref.value) // this is not for all scalar, link must be a string
-      case _ => errorHandler.violation(UnexpectedReference, "", s"Unexpected $$ref with $ref", ref.value)
+      case _ => errorHandler.violation(UnexpectedReference, "", s"Unexpected $$ref with $ref", ref.value.location)
     }
   }
 
@@ -150,7 +166,7 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
         try {
           val link = m.split("\"").last.split("#").head
           if (!link.contains("<<") && !link.contains(">>")) // no trait variables inside path
-            references += (link, InferredLinkReference, YNode(scalar, YType.Str))
+            references += (link, InferredLinkReference, scalar)
         } catch {
           case _: Exception => // don't stop the parsing
         }
@@ -162,7 +178,7 @@ class ApiReferenceHandler(spec: String) extends ReferenceHandler {
     node.value match {
       case scalar: YScalar =>
         references += (scalar.text, LinkReference, node)
-      case _ => errorHandler.violation(UnexpectedReference, "", s"Unexpected !include with ${node.value}", node)
+      case _ => errorHandler.violation(UnexpectedReference, "", s"Unexpected !include with ${node.value}", node.location)
     }
   }
 }

@@ -70,7 +70,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
                   ctx.eh.violation(CoreValidations.UnresolvedReference,
                                    "",
                                    s"Cannot find header reference $fullRef",
-                                   map)
+                                   map.location)
                   val error = ErrorParameter(label, map)
                   adopt(error)
                   error

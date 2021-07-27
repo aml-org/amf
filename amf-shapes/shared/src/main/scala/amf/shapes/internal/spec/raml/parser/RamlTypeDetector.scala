@@ -96,7 +96,7 @@ case class RamlTypeDetector(parent: String,
           parent,
           Some(ShapeModel.Inherits.value.iri()),
           "Inheritance from JSON Schema",
-          node.value
+          node.value.location
         )
         typeExplicit
       case (Some(_), _)    => typeExplicit
@@ -120,7 +120,7 @@ case class RamlTypeDetector(parent: String,
     ctx.eh.violation(InvalidAbstractDeclarationParameterInType,
                      parent,
                      s"Resource Type/Trait parameter $t in type",
-                     node)
+                     node.location)
   }
 
   private def isRamlVariable(t: String) = t.startsWith("<<") && t.endsWith(">>")
@@ -171,7 +171,7 @@ case class RamlTypeDetector(parent: String,
       _ <- `type`
       s <- schema
     } {
-      ctx.eh.violation(ExclusiveSchemaType, parent, "'schema' and 'type' properties are mutually exclusive", s.key)
+      ctx.eh.violation(ExclusiveSchemaType, parent, "'schema' and 'type' properties are mutually exclusive", s.key.location)
     }
 
     schema.foreach(
@@ -179,7 +179,7 @@ case class RamlTypeDetector(parent: String,
         ctx.eh.warning(SchemaDeprecated,
                        parent,
                        "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead",
-                       s.key))
+                       s.key.location))
 
     `type`.orElse(schema)
   }
@@ -203,7 +203,7 @@ case class RamlTypeDetector(parent: String,
               ctx.eh.violation(InvalidTypeInheritanceErrorSpecification,
                                parent,
                                "Can't inherit from more than one class type",
-                               ast)
+                               ast.location)
               Some(UndefinedType)
             } else head
           }
@@ -230,7 +230,7 @@ case class RamlTypeDetector(parent: String,
               ctx.eh.violation(InvalidTypeDefinition,
                                shape.id,
                                "Found reference to domain element different of Shape when shape was expected",
-                               part)
+                               part.location)
               None
           }
         case _: NilShape => Some(NilType)

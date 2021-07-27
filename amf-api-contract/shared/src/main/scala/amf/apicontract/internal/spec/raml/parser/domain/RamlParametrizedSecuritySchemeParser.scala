@@ -44,7 +44,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
             UnknownSecuritySchemeErrorSpecification,
             scheme.id,
             s"Security scheme '$nameText' not found in declarations (and name cannot be 'null').",
-            node
+            node.location
           )
       }
 
@@ -54,7 +54,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
         UnknownSecuritySchemeErrorSpecification,
         "",
         "'securedBy' property doesn't accept !include tag, only references to security schemes.",
-        node
+        node.location
       )
       scheme.withSynthesizeName("invalid").adopted(parentId)
     case _ =>
@@ -71,7 +71,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
             UnknownSecuritySchemeErrorSpecification,
             scheme.id,
             s"Security scheme '$textName' not found in declarations.",
-            node
+            node.location
           )
           scheme
       }

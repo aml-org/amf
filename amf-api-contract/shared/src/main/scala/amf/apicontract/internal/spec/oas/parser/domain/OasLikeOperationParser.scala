@@ -45,7 +45,7 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
     map.key("operationId").foreach { entry =>
       val operationId = entry.value.toString()
       if (!ctx.registerOperationId(operationId))
-        ctx.eh.violation(DuplicatedOperationId, operation.id, s"Duplicated operation id '$operationId'", entry.value)
+        ctx.eh.violation(DuplicatedOperationId, operation.id, s"Duplicated operation id '$operationId'", entry.value.location)
     }
 
     parseOperationId(map, operation)
@@ -129,7 +129,7 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
                       ctx.eh.violation(InvalidStatusCode,
                                        r.id,
                                        "Status code for a Response object must be a string",
-                                       entry.key)
+                                       entry.key.location)
                 }
               ).parse()
           }

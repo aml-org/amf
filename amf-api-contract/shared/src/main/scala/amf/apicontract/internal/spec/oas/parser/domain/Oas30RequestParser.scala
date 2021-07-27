@@ -46,7 +46,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
             ctx.eh.violation(RequestBodyContentRequired,
                              request.id,
                              s"Request body must have a 'content' field defined",
-                             map)
+                             map.location)
         }
         request.set(ResponseModel.Payloads, AmfArray(payloads, Annotations.virtual()), Annotations.inferred())
 
@@ -71,7 +71,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
             ctx.eh.violation(CoreValidations.UnresolvedReference,
                              "",
                              s"Cannot find requestBody reference $fullRef",
-                             map)
+                             map.location)
             adopt(ErrorRequest(fullRef, map).link(name))
         }
       }
