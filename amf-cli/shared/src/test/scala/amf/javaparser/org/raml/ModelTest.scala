@@ -14,7 +14,8 @@ import amf.core.internal.remote.{Raml10YamlHint, _}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.emit.AMFRenderer
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.testing.HintProvider
+import amf.testing.ConfigProvider.configFor
+import amf.testing.{ConfigProvider, HintProvider}
 
 import scala.concurrent.Future
 
@@ -105,19 +106,10 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res = config.renderTarget.vendor match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.baseUnitClient().transform(unit, PipelineId.Editing).baseUnit
+        configFor(config.renderTarget.vendor).baseUnitClient().transform(unit, PipelineId.Editing).baseUnit
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
-      //    case _ => unit
     }
     res
-  }
-
-  private def hintFromTarget(t: Vendor) = t match {
-    case Raml10 => Raml10YamlHint
-    case Raml08 => Raml08YamlHint
-    case Oas20  => Oas20JsonHint
-    case Oas30  => Oas30JsonHint
-    case _      => AmfJsonHint
   }
 }

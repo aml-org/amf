@@ -97,7 +97,7 @@ trait CommandHelper {
         .getOrElse(configuration)
         .withRenderOptions(generateOptions)
         .baseUnitClient()
-        .render(unit, vendor.mediaType)
+        .render(unit)
     config.output match {
       case Some(f) =>
         platform.write(f, result)

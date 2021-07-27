@@ -6,8 +6,6 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Mimes._
 import amf.io.FileAssertionTest
 
-import java.time.Instant
-
 class E2ERenderConfigurationSetupTest extends ConfigurationSetupTest with FileAssertionTest {
 
   val usedMediaTypes = Seq(`application/ld+json`, `application/yaml`, `application/json`)
@@ -58,7 +56,7 @@ class E2ERenderConfigurationSetupTest extends ConfigurationSetupTest with FileAs
     expectedCases ++ errorCases
   }
 
-  def webApiModel: BaseUnit = {
+  private def webApiModel: BaseUnit = {
     val api = WebApi()
       .withName("Example API")
       .withVersion("1.0")
@@ -67,7 +65,7 @@ class E2ERenderConfigurationSetupTest extends ConfigurationSetupTest with FileAs
     Document().withId("root").withEncodes(api)
   }
 
-  def asyncModel: BaseUnit = {
+  private def asyncModel: BaseUnit = {
     val api = AsyncApi()
       .withName("Example API")
       .withVersion("1.0")
