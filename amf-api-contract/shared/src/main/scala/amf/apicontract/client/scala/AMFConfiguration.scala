@@ -37,6 +37,12 @@ import scala.concurrent.Future
 
 sealed trait APIConfigurationBuilder {
 
+  protected val amfPipelines = List(
+    AmfEditingPipeline(),
+    AmfEditingPipeline(urlShortening = false),
+    AmfTransformationPipeline()
+  )
+
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
     val configuration = AMLConfiguration.predefined()
@@ -64,15 +70,11 @@ sealed trait APIConfigurationBuilder {
 }
 
 private[amf] object BaseApiConfiguration extends APIConfigurationBuilder {
+
   def BASE(): AMFConfiguration =
     common()
       .withValidationProfile(AmfValidationProfile)
-      .withTransformationPipelines(
-        List(
-          AmfEditingPipeline(),
-          AmfTransformationPipeline()
-        )
-      )
+      .withTransformationPipelines(amfPipelines)
 }
 
 /**
@@ -110,15 +112,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Raml08ParsePlugin, Raml10ParsePlugin))
       .withValidationProfile(Raml10ValidationProfile)
       .withValidationProfile(Raml08ValidationProfile)
-      .withTransformationPipelines(
-        List(
-          VendorChooserCompositePipeline(PipelineId.Editing)
-            .add(getEditingPipelines(Spec.RAML10, Spec.RAML08, AMF)),
-          VendorChooserCompositePipeline(PipelineId.Default)
-            .add(getDefaultPipelines(Spec.RAML10, Spec.RAML08, AMF)),
-          VendorChooserCompositePipeline(PipelineId.Cache).add(getCachePipelines(Spec.RAML10, Vendor.RAML08, AMF))
-        )
-      )
+      .withTransformationPipelines(amfPipelines)
 }
 
 /**
@@ -156,13 +150,7 @@ object OASConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin))
       .withValidationProfile(Oas30ValidationProfile)
       .withValidationProfile(Oas20ValidationProfile)
-      .withTransformationPipelines(
-        List(
-          VendorChooserCompositePipeline(PipelineId.Editing).add(getEditingPipelines(Vendor.OAS20, Vendor.OAS30, AMF)),
-          VendorChooserCompositePipeline(PipelineId.Default).add(getDefaultPipelines(Vendor.OAS20, Vendor.OAS30, AMF)),
-          VendorChooserCompositePipeline(PipelineId.Cache).add(getCachePipelines(Vendor.OAS20, Vendor.OAS30, AMF))
-        )
-      )
+      .withTransformationPipelines(amfPipelines)
 }
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
@@ -175,15 +163,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
       .withValidationProfile(Oas20ValidationProfile)
       .withValidationProfile(Raml10ValidationProfile)
       .withValidationProfile(Raml08ValidationProfile)
-      .withTransformationPipelines(
-        List(
-          VendorChooserCompositePipeline(PipelineId.Editing)
-            .add(getEditingPipelines(OAS20, OAS30, RAML08, RAML10, AMF)),
-          VendorChooserCompositePipeline(PipelineId.Default)
-            .add(getDefaultPipelines(OAS20, OAS30, RAML08, RAML10, AMF)),
-          VendorChooserCompositePipeline(PipelineId.Cache).add(getCachePipelines(OAS20, OAS30, RAML08, RAML10, AMF))
-        )
-      )
+      .withTransformationPipelines(amfPipelines)
 }
 
 /**
@@ -212,16 +192,7 @@ object APIConfiguration extends APIConfigurationBuilder {
       .WebAPI()
       .withPlugin(Async20ParsePlugin)
       .withValidationProfile(Async20ValidationProfile)
-      .withTransformationPipelines(
-        List(
-          VendorChooserCompositePipeline(PipelineId.Editing)
-            .add(getEditingPipelines(OAS20, OAS30, RAML08, RAML10, ASYNC20, AMF)),
-          VendorChooserCompositePipeline(PipelineId.Default)
-            .add(getDefaultPipelines(OAS20, OAS30, RAML08, RAML10, ASYNC20, AMF)),
-          VendorChooserCompositePipeline(PipelineId.Cache)
-            .add(getCachePipelines(OAS20, OAS30, RAML08, RAML10, ASYNC20, AMF))
-        )
-      )
+      .withTransformationPipelines(amfPipelines)
 }
 
 /**
