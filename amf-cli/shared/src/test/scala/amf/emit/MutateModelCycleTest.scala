@@ -2,7 +2,7 @@ package amf.emit
 
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.templates.{ParametrizedDeclaration, VariableValue}
-import amf.core.internal.remote.{Hint, Raml10, Raml10YamlHint, Vendor}
+import amf.core.internal.remote.{Hint, Raml10, Raml10YamlHint, SpecId}
 import amf.io.FunSuiteCycleTests
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.testing.ConfigProvider.configFor

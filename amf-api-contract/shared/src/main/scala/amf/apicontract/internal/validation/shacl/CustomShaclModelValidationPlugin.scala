@@ -19,7 +19,8 @@ class CustomShaclModelValidationPlugin extends ShaclValidationPlugin {
 
   override val id: String = CustomShaclModelValidationPlugin.id
 
-  override def applies(element: ValidationInfo): Boolean = super.applies(element)
+  override def applies(element: ValidationInfo): Boolean =
+    super.applies(element) && standardApiProfiles.contains(element.profile)
 
   override protected def validator(options: ShaclValidationOptions): ShaclValidator =
     new CustomShaclValidator(CustomShaclModelValidationPlugin.functions, options)

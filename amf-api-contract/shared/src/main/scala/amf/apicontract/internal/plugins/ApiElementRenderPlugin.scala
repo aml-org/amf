@@ -6,7 +6,7 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.parse.document.{ParsedDocument, SyamlParsedDocument}
 import amf.core.client.scala.render.AMFElementRenderPlugin
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.emitters.PartEmitter
 import org.yaml.model.YDocument
@@ -15,7 +15,7 @@ import org.yaml.model.YDocument.PartBuilder
 trait ApiElementRenderPlugin extends AMFElementRenderPlugin {
   override val id: String = s"${vendor.name} Element"
 
-  protected def vendor: Vendor
+  protected def vendor: SpecId
   protected def emitterFactory: AMFErrorHandler => DomainElementEmitterFactory
 
   override def applies(element: DomainElement): Boolean =

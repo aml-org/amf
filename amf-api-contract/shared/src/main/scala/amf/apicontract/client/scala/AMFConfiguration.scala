@@ -53,8 +53,8 @@ import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.registries.AMFRegistry
-import amf.core.internal.remote.Vendor
-import amf.core.internal.remote.Vendor._
+import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.SpecId._
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations

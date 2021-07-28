@@ -62,7 +62,7 @@ class DocumentMakerTest extends WebApiMakerTest {
     override def getResults: List[AMFValidationResult] = Nil
   }
 
-  private def documentWithTypes(vendor: Vendor): Document = {
+  private def documentWithTypes(vendor: SpecId): Document = {
 
     val minCount = vendor match {
       case _: Oas => 0
@@ -127,7 +127,7 @@ class DocumentMakerTest extends WebApiMakerTest {
     document
   }
 
-  private def documentWithInheritsTypes(vendor: Vendor) = {
+  private def documentWithInheritsTypes(vendor: SpecId) = {
     val minCount = vendor match {
       case _: Oas => 0
       case _      => 1

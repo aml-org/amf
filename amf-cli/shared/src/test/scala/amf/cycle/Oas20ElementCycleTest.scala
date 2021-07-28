@@ -1,13 +1,13 @@
 package amf.cycle
 
-import amf.core.internal.remote.{Oas20YamlHint, Oas30JsonHint, Vendor}
+import amf.core.internal.remote.{Oas20YamlHint, Oas30JsonHint, SpecId}
 
 class Oas20ElementCycleTest extends DomainElementCycleTest {
 
   override def basePath: String = "amf-cli/shared/src/test/resources/cycle/oas20/"
   val validationsPath           = "amf-cli/shared/src/test/resources/validations/"
   val compatibilityPath         = "amf-cli/shared/src/test/resources/compatibility/"
-  val vendor: Vendor            = Vendor.OAS20
+  val vendor: SpecId            = SpecId.OAS20
 
   test("type - composition with refs and inlined") {
     renderElement(

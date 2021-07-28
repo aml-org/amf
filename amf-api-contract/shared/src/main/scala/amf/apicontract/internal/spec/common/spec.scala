@@ -9,7 +9,7 @@ import amf.apicontract.internal.spec.oas.parser.context.{Oas2WebApiContext, Oas3
 import amf.apicontract.internal.spec.raml.emitter.context.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
 import amf.apicontract.internal.spec.raml.parser.context.{Raml10WebApiContext, RamlWebApiContext}
 import amf.core.client.scala.parse.document.ParsedReference
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.shapes.internal.spec.common.emitter.SpecAwareEmitterContext
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
 
@@ -25,14 +25,14 @@ package object spec {
     val responsesDefinitionsPrefix = "#/responses/"
 
     def stripParameterDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
-      if (ctx.vendor == Vendor.OAS30)
+      if (ctx.vendor == SpecId.OAS30)
         stripOas3ComponentsPrefix(url, "parameters")
       else
         url.stripPrefix(parameterDefinitionsPrefix)
     }
 
     def stripResponsesDefinitionsPrefix(url: String)(implicit ctx: OasWebApiContext): String = {
-      if (ctx.vendor == Vendor.OAS30)
+      if (ctx.vendor == SpecId.OAS30)
         stripOas3ComponentsPrefix(url, "responses")
       else
         url.stripPrefix(responsesDefinitionsPrefix)
@@ -57,7 +57,7 @@ package object spec {
   // TODO oas2? raml10?
   def toOas(ctx: WebApiContext): OasWebApiContext = {
     val result = ctx.vendor match {
-      case Vendor.OAS30 =>
+      case SpecId.OAS30 =>
         new Oas3WebApiContext(ctx.rootContextDocument,
                               ctx.refs,
                               ctx,

@@ -23,7 +23,7 @@ import amf.core.internal.annotations.{ExplicitField, SynthesizedField, VirtualNo
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{FieldEntry, Fields, Value}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
@@ -273,7 +273,7 @@ case class OasParametersEmitter(key: String,
 
   private def isValidOasParam(p: Parameter): Boolean = {
     spec.vendor match {
-      case Vendor.OAS30 => p.isQuery || p.isHeader || p.isPath || p.isCookie
+      case SpecId.OAS30 => p.isQuery || p.isHeader || p.isPath || p.isCookie
       case _ =>
         Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
           .isInstanceOf[ArrayShape] || p.schema.isInstanceOf[FileShape]
@@ -408,7 +408,7 @@ case class ParameterEmitter(parameter: Parameter,
                 .entries()
             }
           }
-        if (spec.vendor == Vendor.OAS30) result ++= oas3Emitters(fs)
+        if (spec.vendor == SpecId.OAS30) result ++= oas3Emitters(fs)
         b.obj(traverse(ordering.sorted(result), _))
       }
     }

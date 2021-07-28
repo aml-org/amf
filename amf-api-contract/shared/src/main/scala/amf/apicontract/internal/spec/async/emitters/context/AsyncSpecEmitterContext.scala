@@ -17,7 +17,7 @@ import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, Shap
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{AsyncApi20, Vendor}
+import amf.core.internal.remote.{AsyncApi20, SpecId}
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
@@ -91,7 +91,7 @@ class Async20SpecEmitterContext(eh: AMFErrorHandler,
   override val nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
 
   override val factory: AsyncSpecEmitterFactory = Async20SpecEmitterFactory(this)
-  override val vendor: Vendor                   = AsyncApi20
+  override val vendor: SpecId                   = AsyncApi20
   override def schemasDeclarationsPath: String  = "/definitions/"
 }
 

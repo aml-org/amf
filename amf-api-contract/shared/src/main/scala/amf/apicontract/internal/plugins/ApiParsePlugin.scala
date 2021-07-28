@@ -6,11 +6,11 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.ReferenceHandler
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.remote.{Mimes, Vendor}
+import amf.core.internal.remote.{Mimes, SpecId}
 
 trait ApiParsePlugin extends AMFParsePlugin with CrossSpecRestriction {
 
-  protected def vendor: Vendor
+  protected def vendor: SpecId
 
   override val id: String                                              = vendor.name
   override def priority: PluginPriority                                = NormalPriority

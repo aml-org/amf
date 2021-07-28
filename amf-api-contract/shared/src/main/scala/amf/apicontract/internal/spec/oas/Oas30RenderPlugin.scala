@@ -8,12 +8,12 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment, Fragment, Module}
 import amf.core.internal.plugins.render.AMFRenderPlugin
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import org.yaml.model.{YDocument, YNode}
 
 object Oas30RenderPlugin extends OasRenderPlugin {
 
-  override def vendor: Vendor = Vendor.OAS30
+  override def vendor: SpecId = SpecId.OAS30
 
   override def mediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`)
 

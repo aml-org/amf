@@ -4,7 +4,7 @@ import amf.aml.internal.utils.VocabulariesRegister
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Hint, Platform, Vendor}
+import amf.core.internal.remote.{Hint, Platform, SpecId}
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.ConfigProvider.configFor

@@ -7,7 +7,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.plugins.render.RenderInfo
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.JSONSchemaRoot
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
@@ -15,7 +15,7 @@ import org.yaml.model.YDocument
 
 object JsonSchemaRenderPlugin extends ApiRenderPlugin {
 
-  override def vendor: Vendor = Vendor.JSONSCHEMA
+  override def vendor: SpecId = SpecId.JSONSCHEMA
 
   override def applies(element: RenderInfo): Boolean = firstAnyShape(element.unit).isDefined
 

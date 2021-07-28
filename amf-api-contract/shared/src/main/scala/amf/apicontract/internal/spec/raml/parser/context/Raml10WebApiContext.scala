@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.raml.parser.context
 import amf.apicontract.internal.spec.common.{ExtensionWebApiDeclarations, RamlWebApiDeclarations}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.remote.{Raml10, Vendor}
+import amf.core.internal.remote.{Raml10, SpecId}
 import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
@@ -16,7 +16,7 @@ class Raml10WebApiContext(loc: String,
                           options: ParsingOptions = ParsingOptions())
     extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
-  override val vendor: Vendor                  = Raml10
+  override val vendor: SpecId                  = Raml10
   override val syntax: SpecSyntax              = Raml10Syntax
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =

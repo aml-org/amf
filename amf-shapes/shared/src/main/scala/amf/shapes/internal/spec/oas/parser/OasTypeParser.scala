@@ -4,7 +4,7 @@ import amf.core.client.scala.model.domain._
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YScalarYRead
 import amf.core.internal.parser.domain.{Annotations, _}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaPosition.Schema
@@ -53,8 +53,8 @@ object OasTypeParser {
   private def key(entry: YMapEntry)(implicit errorHandler: IllegalTypeHandler) = entry.key.as[YScalar].text
 
   private def getSchemaVersion(ctx: ShapeParserContext) = {
-    if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion(Schema)
-    else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
+    if (ctx.vendor == SpecId.OAS30) OAS30SchemaVersion(Schema)
+    else if (ctx.vendor == SpecId.ASYNC20) JSONSchemaDraft7SchemaVersion
     else OAS20SchemaVersion(Schema)
   }
 }
