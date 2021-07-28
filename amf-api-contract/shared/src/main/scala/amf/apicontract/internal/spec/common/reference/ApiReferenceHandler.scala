@@ -44,8 +44,7 @@ class ApiReferenceHandler(vendor: String) extends ReferenceHandler {
         libraries(doc)
         links(doc)
         if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(doc)
-      case _: AntlrParsedDocument =>
-        // ignore @TODO: add proper reference collection here
+      case _ => // ignore @TODO: add proper reference collection here
     }
     references
   }

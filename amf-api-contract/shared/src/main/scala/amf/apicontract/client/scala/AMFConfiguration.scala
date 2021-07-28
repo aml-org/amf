@@ -23,18 +23,15 @@ import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
-import amf.core.internal.plugins.syntax.AntlrSyntaxParsePlugin
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
-import amf.plugins.parse._
-import amf.plugins.render.GrpcRenderPlugin
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
 
 import scala.concurrent.Future
 
-sealed trait APIConfigurationBuilder {
+trait APIConfigurationBuilder {
 
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
@@ -131,17 +128,12 @@ object OASConfiguration extends APIConfigurationBuilder {
   def OAS(): AMFConfiguration = OAS20().merge(OAS30())
 }
 
-object GRPCConfiguration extends APIConfigurationBuilder {
-  def GRPC(): AMFConfiguration =
-    common()
-      .withPlugins(List(GrpcParsePlugin, AntlrSyntaxParsePlugin, GrpcRenderPlugin))
-}
-
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
 object WebAPIConfiguration {
   def WebAPI(): AMFConfiguration = {
     val config = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
-    config.merge(GRPCConfiguration.GRPC())
+    //config.merge(GRPCConfiguration.GRPC())
+    config
   }
 }
 

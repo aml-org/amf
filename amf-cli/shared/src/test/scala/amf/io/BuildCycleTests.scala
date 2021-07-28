@@ -1,7 +1,6 @@
 package amf.io
 
 import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
@@ -10,6 +9,7 @@ import amf.core.client.scala.rdf.{RdfModel, RdfUnitConverter}
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote.{Amf, Hint, Vendor}
+import amf.grpc.client.scala.GRPCConfiguration
 import org.scalactic.Fail
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -141,7 +141,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd
 
   protected def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
-    val amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    val amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).merge(GRPCConfiguration.GRPC())
     val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {
       amfConfig.withRenderOptions(r)
     })
