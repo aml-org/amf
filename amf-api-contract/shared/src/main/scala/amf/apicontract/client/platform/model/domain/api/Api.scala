@@ -6,7 +6,7 @@ import amf.apicontract.client.scala.model.domain.api.{Api => InternalApi}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.domain.{DomainElement, NamedDomainElement}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.shapes.client.platform.model.domain.CreativeWork
 
 import scala.scalajs.js.annotation.JSExportAll
@@ -67,7 +67,7 @@ abstract class Api[A](override private[amf] val _internal: InternalApi)
     */
   def withDefaultServer(url: String): Server = _internal.withDefaultServer(url)
 
-  def sourceVendor: ClientOption[Vendor] = _internal.sourceVendor.asClient
+  def sourceVendor: ClientOption[SpecId] = _internal.sourceVendor.asClient
 
 }
 

@@ -1,6 +1,6 @@
 package amf.cli.client
 
-import amf.apicontract.client.platform.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.platform.{APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.cli.internal.convert.NativeOpsFromJvm
 import amf.core.client.platform.AMFResult
 import amf.core.client.platform.model.document.{BaseUnit, Document}
@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
 
   init()
-  private val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+  private val config = APIConfiguration.API()
   private def init(): Unit = {
     val scanner                = new Scanner(in)
     var unit: Option[Document] = None
@@ -33,8 +33,8 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
     out.print(client.render(unit, mediaType))
   }
 
-  private def remote(vendor: Vendor, url: String, callback: (Option[Document]) => Unit): Unit = {
-    val client = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).baseUnitClient()
+  private def remote(vendor: SpecId, url: String, callback: (Option[Document]) => Unit): Unit = {
+    val client = config.baseUnitClient()
 
     client
       .parse(url, vendor.mediaType)
@@ -46,7 +46,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
   }
 
   private object Parse {
-    def unapply(line: String): Option[(Vendor, String)] = {
+    def unapply(line: String): Option[(SpecId, String)] = {
       line match {
         case s if s.startsWith(":application/raml10 ") => Some((Raml10, s.stripPrefix(":application/raml10 ")))
         case s if s.startsWith(":application/raml08 ") => Some((Raml08, s.stripPrefix(":application/raml08 ")))

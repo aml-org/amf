@@ -10,11 +10,11 @@ import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{Oas20, Vendor}
+import amf.core.internal.remote.{Oas20, SpecId}
 
 object Oas20ParsePlugin extends OasParsePlugin {
 
-  override def vendor: Vendor = Oas20
+  override def vendor: SpecId = Oas20
 
   override def applies(element: Root): Boolean = OasHeader(element).exists(_ != Oas30Header)
 

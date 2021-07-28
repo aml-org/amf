@@ -3,7 +3,7 @@ package amf.apicontract.internal.transformation
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 
 case class VendorChooserCompositePipeline private[amf] (name: String, pipelines: Map[String, TransformationPipeline])
@@ -13,7 +13,7 @@ case class VendorChooserCompositePipeline private[amf] (name: String, pipelines:
     VendorChooserTransformationStep(name, pipelines)
   )
 
-  def add(vendor: Vendor, pipeline: TransformationPipeline) = copy(pipelines = pipelines + (vendor.name -> pipeline))
+  def add(vendor: SpecId, pipeline: TransformationPipeline) = copy(pipelines = pipelines + (vendor.name -> pipeline))
   def add(tuple: (String, TransformationPipeline))          = copy(pipelines = pipelines + tuple)
   def add(tuples: Seq[(String, TransformationPipeline)])    = copy(pipelines = pipelines ++ tuples.toMap)
 }

@@ -7,7 +7,7 @@ import amf.apicontract.internal.spec.oas.emitter.context.{
 }
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.shapes.internal.spec.common.emitter.JsonSchemaDeclarationsPath
 import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition, SchemaVersion}
 
@@ -21,7 +21,7 @@ class JsonSchemaEmitterContext(override val eh: AMFErrorHandler,
   override val anyOfKey: String = "anyOf"
   override def nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
 
-  override val vendor: Vendor = Vendor.JSONSCHEMA
+  override val vendor: SpecId = SpecId.JSONSCHEMA
 
   override def schemasDeclarationsPath: String = JsonSchemaDeclarationsPath(schemaVersion)
 }

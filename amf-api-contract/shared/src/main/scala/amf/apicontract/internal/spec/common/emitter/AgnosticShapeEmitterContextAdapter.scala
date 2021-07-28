@@ -10,7 +10,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.internal.spec.common.SchemaVersion
@@ -43,7 +43,7 @@ class AgnosticShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
 
   override def eh: AMFErrorHandler = spec.eh
 
-  override def vendor: Vendor = spec.vendor
+  override def vendor: SpecId = spec.vendor
 
   override def ref(b: YDocument.PartBuilder, url: String): Unit = spec.ref(b, url)
 

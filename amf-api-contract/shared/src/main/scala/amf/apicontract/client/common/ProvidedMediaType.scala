@@ -1,6 +1,6 @@
 package amf.apicontract.client.common
 
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -8,26 +8,26 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 object ProvidedMediaType {
 
-  val Raml08: String = Vendor.RAML08.mediaType + "+yaml"
-  val Raml10: String = Vendor.RAML10.mediaType + "+yaml"
+  val Raml08: String = SpecId.RAML08.mediaType + "+yaml"
+  val Raml10: String = SpecId.RAML10.mediaType + "+yaml"
 
-  val Oas20: String     = Vendor.OAS20.mediaType
-  val Oas20Yaml: String = Vendor.OAS20.mediaType + "+yaml"
-  val Oas20Json: String = Vendor.OAS20.mediaType + "+json"
+  val Oas20: String     = SpecId.OAS20.mediaType
+  val Oas20Yaml: String = SpecId.OAS20.mediaType + "+yaml"
+  val Oas20Json: String = SpecId.OAS20.mediaType + "+json"
 
-  val Oas30: String     = Vendor.OAS30.mediaType
-  val Oas30Yaml: String = Vendor.OAS30.mediaType + "+yaml"
-  val Oas30Json: String = Vendor.OAS30.mediaType + "+json"
+  val Oas30: String     = SpecId.OAS30.mediaType
+  val Oas30Yaml: String = SpecId.OAS30.mediaType + "+yaml"
+  val Oas30Json: String = SpecId.OAS30.mediaType + "+json"
 
-  val Async20: String     = Vendor.ASYNC20.mediaType
-  val Async20Yaml: String = Vendor.ASYNC20.mediaType + "+yaml"
-  val Async20Json: String = Vendor.ASYNC20.mediaType + "+json"
+  val Async20: String     = SpecId.ASYNC20.mediaType
+  val Async20Yaml: String = SpecId.ASYNC20.mediaType + "+yaml"
+  val Async20Json: String = SpecId.ASYNC20.mediaType + "+json"
 
-  val Payload: String     = Vendor.PAYLOAD.mediaType
-  val PayloadYaml: String = Vendor.PAYLOAD.mediaType + "+yaml"
-  val PayloadJson: String = Vendor.PAYLOAD.mediaType + "+json"
+  val Payload: String     = SpecId.PAYLOAD.mediaType
+  val PayloadYaml: String = SpecId.PAYLOAD.mediaType + "+yaml"
+  val PayloadJson: String = SpecId.PAYLOAD.mediaType + "+json"
 
-  val AMF: String        = Vendor.AMF.mediaType
-  val JsonSchema: String = Vendor.JSONSCHEMA.mediaType
+  val AMF: String        = SpecId.AMF.mediaType
+  val JsonSchema: String = SpecId.JSONSCHEMA.mediaType
 
 }

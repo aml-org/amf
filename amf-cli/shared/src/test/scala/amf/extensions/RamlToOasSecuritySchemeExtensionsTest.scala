@@ -124,11 +124,11 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
     }
   }
 
-  private def hint(vendor: Vendor): Hint = vendor match {
-    case Vendor.RAML10 => Raml10YamlHint
-    case Vendor.RAML08 => Raml08YamlHint
-    case Vendor.OAS20  => Oas20YamlHint
-    case Vendor.OAS30  => Oas30YamlHint
+  private def hint(vendor: SpecId): Hint = vendor match {
+    case SpecId.RAML10 => Raml10YamlHint
+    case SpecId.RAML08 => Raml08YamlHint
+    case SpecId.OAS20  => Oas20YamlHint
+    case SpecId.OAS30  => Oas30YamlHint
     case _             => throw new IllegalArgumentException("Vendor is not recognized")
   }
 }

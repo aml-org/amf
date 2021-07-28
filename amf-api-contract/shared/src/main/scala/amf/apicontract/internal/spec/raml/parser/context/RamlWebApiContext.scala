@@ -6,7 +6,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.Clo
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
@@ -182,5 +182,5 @@ class PayloadContext(loc: String,
   override val syntax: SpecSyntax = new SpecSyntax {
     override val nodes: Map[String, Set[String]] = Map()
   }
-  override val vendor: Vendor = Vendor.PAYLOAD
+  override val vendor: SpecId = SpecId.PAYLOAD
 }

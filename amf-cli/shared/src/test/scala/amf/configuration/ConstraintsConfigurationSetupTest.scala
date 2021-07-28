@@ -2,13 +2,13 @@ package amf.configuration
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.common.validation.ProfileName
-import amf.core.internal.remote.Vendor
-import amf.core.internal.remote.Vendor._
+import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.SpecId._
 
 class ConstraintsConfigurationSetupTest extends ConfigurationSetupTest {
 
-  case class ExpectedConstraintExistenceCase(config: AMFConfiguration, vendors: Seq[Vendor])
-  case class ErrorConstraintExistenceCase(config: AMFConfiguration, vendors: Seq[Vendor])
+  case class ExpectedConstraintExistenceCase(config: AMFConfiguration, vendors: Seq[SpecId])
+  case class ErrorConstraintExistenceCase(config: AMFConfiguration, vendors: Seq[SpecId])
 
   val validateFixtures: Seq[Any] = Seq(
     generateConstraintExistenceFixtures(apiConfig, Seq(RAML10, RAML08, OAS20, OAS30, ASYNC20)),
@@ -35,13 +35,13 @@ class ConstraintsConfigurationSetupTest extends ConfigurationSetupTest {
       }
   }
 
-  private def onlyHasConstraintsOf(config: AMFConfiguration, vendors: Seq[Vendor]): Boolean = {
+  private def onlyHasConstraintsOf(config: AMFConfiguration, vendors: Seq[SpecId]): Boolean = {
     val constraints = config.registry.constraintsRules
     constraints.size == vendors.length && vendors.forall(v => constraints.contains(ProfileName(v.name)))
   }
 
   private def generateConstraintExistenceFixtures(config: AMFConfiguration,
-                                                  expectedConstraintOwners: Seq[Vendor]): Seq[Any] = {
+                                                  expectedConstraintOwners: Seq[SpecId]): Seq[Any] = {
     val errorConfigs = vendors.diff(expectedConstraintOwners)
     Seq(ExpectedConstraintExistenceCase(config, expectedConstraintOwners),
         ErrorConstraintExistenceCase(config, errorConfigs))

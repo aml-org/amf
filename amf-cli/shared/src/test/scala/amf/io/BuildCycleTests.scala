@@ -7,7 +7,7 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.{RdfModel, RdfUnitConverter}
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
-import amf.core.internal.remote.{AmfJsonHint, Hint, Vendor}
+import amf.core.internal.remote.{AmfJsonHint, Hint, SpecId}
 import amf.testing.ConfigProvider.configFor
 import org.scalactic.Fail
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -115,7 +115,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
                          renderTarget: Hint,
                          directory: String,
                          pipeline: Option[String],
-                         transformWith: Option[Vendor] = None) {
+                         transformWith: Option[SpecId] = None) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
 
@@ -180,7 +180,7 @@ trait BuildCycleTests extends BuildCycleTestCommon {
                   directory: String = basePath,
                   renderOptions: Option[RenderOptions] = None,
                   pipeline: Option[String] = None,
-                  transformWith: Option[Vendor] = None,
+                  transformWith: Option[SpecId] = None,
                   eh: Option[AMFErrorHandler] = None): Future[Assertion] = {
 
     val config          = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
@@ -228,7 +228,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
                target: Hint = AmfJsonHint,
                directory: String = basePath,
                pipeline: Option[String] = None,
-               transformWith: Option[Vendor] = None): Future[Assertion] = {
+               transformWith: Option[SpecId] = None): Future[Assertion] = {
 
     val config    = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
     val amfConfig = buildConfig(None, None)

@@ -10,7 +10,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.common.transform._
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.parser.{AMFCompiler, CompilerConfiguration}
-import amf.core.internal.remote.{Cache, Context, Platform, Vendor}
+import amf.core.internal.remote.{Cache, Context, Platform, SpecId}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -118,15 +118,15 @@ trait CommandHelper {
     }
   }
 
-  private def configFor(vendor: Vendor): Option[AMFConfiguration] = vendor match {
-    case Vendor.RAML10  => Some(RAMLConfiguration.RAML10())
-    case Vendor.RAML08  => Some(RAMLConfiguration.RAML08())
-    case Vendor.OAS20   => Some(OASConfiguration.OAS20())
-    case Vendor.OAS30   => Some(OASConfiguration.OAS30())
-    case Vendor.ASYNC20 => Some(AsyncAPIConfiguration.Async20())
+  private def configFor(vendor: SpecId): Option[AMFConfiguration] = vendor match {
+    case SpecId.RAML10  => Some(RAMLConfiguration.RAML10())
+    case SpecId.RAML08  => Some(RAMLConfiguration.RAML08())
+    case SpecId.OAS20   => Some(OASConfiguration.OAS20())
+    case SpecId.OAS30   => Some(OASConfiguration.OAS30())
+    case SpecId.ASYNC20 => Some(AsyncAPIConfiguration.Async20())
     case _              => None
   }
 
-  def effectiveVendor(vendor: Option[String]): Vendor = vendor.flatMap(Vendor.unapply).getOrElse(Vendor("unknown"))
+  def effectiveVendor(vendor: Option[String]): SpecId = vendor.flatMap(SpecId.unapply).getOrElse(SpecId("unknown"))
 
 }

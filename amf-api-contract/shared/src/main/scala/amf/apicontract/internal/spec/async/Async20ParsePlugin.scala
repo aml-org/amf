@@ -11,11 +11,11 @@ import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{AsyncApi20, Vendor}
+import amf.core.internal.remote.{AsyncApi20, SpecId}
 
 object Async20ParsePlugin extends OasLikeParsePlugin {
 
-  override def vendor: Vendor = AsyncApi20
+  override def vendor: SpecId = AsyncApi20
 
   override def applies(element: Root): Boolean = AsyncHeader(element).contains(Async20Header)
 

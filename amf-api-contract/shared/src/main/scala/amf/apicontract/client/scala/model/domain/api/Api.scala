@@ -15,7 +15,7 @@ import amf.core.internal.annotations.{SourceVendor, SynthesizedField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel.Description
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel.{License => WebApiLicense, _}
 import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
 import amf.shapes.client.scala.model.domain.DocumentedElement
@@ -90,7 +90,7 @@ abstract class Api(fields: Fields, annotations: Annotations)
 
   // todo: should source vendor be in the base unit?
 
-  def sourceVendor: Option[Vendor] = annotations.find(classOf[SourceVendor]).map(a => a.vendor)
+  def sourceVendor: Option[SpecId] = annotations.find(classOf[SourceVendor]).map(a => a.vendor)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String = "#/api"

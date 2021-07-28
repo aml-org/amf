@@ -9,7 +9,7 @@ import amf.core.client.common.transform._
 abstract class ResolutionTest extends FunSuiteCycleTests with ResolutionCapabilities {
 
   val defaultPipeline: String       = PipelineId.Default
-  val defaultVendor: Option[Vendor] = None
+  val defaultVendor: Option[SpecId] = None
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val pipeline = config.pipeline.getOrElse(defaultPipeline)

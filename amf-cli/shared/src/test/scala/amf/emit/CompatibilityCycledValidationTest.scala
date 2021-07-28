@@ -35,7 +35,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
 
   def testCycleCompatibility(filePath: String,
                              from: Hint,
-                             to: Vendor,
+                             to: SpecId,
                              basePath: String,
                              syntax: Option[Syntax] = None,
                              pipeline: Option[String] = None): Unit = {
@@ -63,16 +63,16 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     }
   }
 
-  private def amfConfigFrom(vendor: Vendor): AMFConfiguration = vendor match {
-    case Vendor.OAS30   => OASConfiguration.OAS30()
-    case Vendor.OAS20   => OASConfiguration.OAS20()
-    case Vendor.RAML10  => RAMLConfiguration.RAML10()
-    case Vendor.RAML08  => RAMLConfiguration.RAML08()
-    case Vendor.ASYNC20 => AsyncAPIConfiguration.Async20()
+  private def amfConfigFrom(vendor: SpecId): AMFConfiguration = vendor match {
+    case SpecId.OAS30   => OASConfiguration.OAS30()
+    case SpecId.OAS20   => OASConfiguration.OAS20()
+    case SpecId.RAML10  => RAMLConfiguration.RAML10()
+    case SpecId.RAML08  => RAMLConfiguration.RAML08()
+    case SpecId.ASYNC20 => AsyncAPIConfiguration.Async20()
     case _              => throw new IllegalArgumentException
   }
 
-  private def hint(vendor: Vendor) = vendor match {
+  private def hint(vendor: SpecId) = vendor match {
     case Raml10 => Raml10YamlHint
     case Raml08 => Raml08YamlHint
     case Oas20  => Oas20YamlHint
@@ -98,7 +98,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
       .baseUnit
   }
 
-  private def profile(vendor: Vendor): ProfileName = vendor match {
+  private def profile(vendor: SpecId): ProfileName = vendor match {
     case Raml10 => Raml10Profile
     case Raml08 => Raml08Profile
     case Oas20  => Oas20Profile

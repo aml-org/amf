@@ -6,14 +6,19 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.exception.UnsupportedParsedDocumentException
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.parse.AMFParsePlugin
-import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SimpleReferenceHandler, SyamlParsedDocument}
+import amf.core.client.scala.parse.document.{
+  ParserContext,
+  ReferenceHandler,
+  SimpleReferenceHandler,
+  SyamlParsedDocument
+}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.SpecId
 import org.yaml.model.{YMap, YScalar}
 
 object PayloadParsePlugin extends AMFParsePlugin {
 
-  override val id: String = Vendor.PAYLOAD.name
+  override val id: String = SpecId.PAYLOAD.name
 
   override def applies(element: Root): Boolean =
     notRAML(element) && notOAS(element) && notAsync(element) // any document can be parsed as a Payload

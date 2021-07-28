@@ -29,7 +29,7 @@ import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{Oas20, Vendor}
+import amf.core.internal.remote.{Oas20, SpecId}
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
@@ -205,7 +205,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val spec: OasSpec
     api.emitters
   }
 
-  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering, vendor: Option[Vendor], references: Seq[BaseUnit]) {
+  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering, vendor: Option[SpecId], references: Seq[BaseUnit]) {
     val emitters: Seq[EntryEmitter] = {
       val fs     = api.fields
       val result = mutable.ListBuffer[EntryEmitter]()

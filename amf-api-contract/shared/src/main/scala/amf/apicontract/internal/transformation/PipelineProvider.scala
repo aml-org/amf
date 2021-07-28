@@ -1,12 +1,12 @@
 package amf.apicontract.internal.transformation
 
 import amf.core.client.scala.transform.TransformationPipeline
-import amf.core.internal.remote.Vendor
-import amf.core.internal.remote.Vendor._
+import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.SpecId._
 
 private[amf] object PipelineProvider {
 
-  private[amf] val editing: Map[Vendor, () => TransformationPipeline] = Map(
+  private[amf] val editing: Map[SpecId, () => TransformationPipeline] = Map(
     RAML08  -> (() => Raml08EditingPipeline()),
     RAML10  -> (() => Raml10EditingPipeline()),
     OAS20   -> (() => Oas20EditingPipeline()),
@@ -15,7 +15,7 @@ private[amf] object PipelineProvider {
     AMF     -> (() => AmfEditingPipeline())
   )
 
-  private[amf] val default: Map[Vendor, () => TransformationPipeline] = Map(
+  private[amf] val default: Map[SpecId, () => TransformationPipeline] = Map(
     RAML08  -> (() => Raml08TransformationPipeline()),
     RAML10  -> (() => Raml10TransformationPipeline()),
     OAS20   -> (() => Oas20TransformationPipeline()),
@@ -24,7 +24,7 @@ private[amf] object PipelineProvider {
     AMF     -> (() => AmfTransformationPipeline())
   )
 
-  private[amf] val cache: Map[Vendor, () => TransformationPipeline] = Map(
+  private[amf] val cache: Map[SpecId, () => TransformationPipeline] = Map(
     RAML08  -> (() => Raml08CachePipeline()),
     RAML10  -> (() => Raml10CachePipeline()),
     OAS20   -> (() => Oas20CachePipeline()),
@@ -33,19 +33,19 @@ private[amf] object PipelineProvider {
     AMF     -> (() => AmfEditingPipeline(urlShortening = true))
   )
 
-  def getEditingPipelines(vendors: Vendor*): Seq[(String, TransformationPipeline)] = {
+  def getEditingPipelines(vendors: SpecId*): Seq[(String, TransformationPipeline)] = {
     vendors.toSeq.map { vendor =>
       (vendor.name, editing(vendor)())
     }
   }
 
-  def getCachePipelines(vendors: Vendor*): Seq[(String, TransformationPipeline)] = {
+  def getCachePipelines(vendors: SpecId*): Seq[(String, TransformationPipeline)] = {
     vendors.toSeq.map { vendor =>
       (vendor.name, cache(vendor)())
     }
   }
 
-  def getDefaultPipelines(vendors: Vendor*): Seq[(String, TransformationPipeline)] = {
+  def getDefaultPipelines(vendors: SpecId*): Seq[(String, TransformationPipeline)] = {
     vendors.toSeq.map { vendor =>
       (vendor.name, default(vendor)())
     }

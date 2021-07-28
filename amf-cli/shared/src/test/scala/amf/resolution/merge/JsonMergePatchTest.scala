@@ -15,7 +15,7 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.convert.BaseUnitConverter
 import amf.core.internal.parser.{CompilerConfiguration, _}
 import amf.core.internal.remote.AmfJsonHint
-import amf.core.internal.remote.Vendor.AMF
+import amf.core.internal.remote.SpecId.AMF
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.emit.AMFRenderer

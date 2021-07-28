@@ -1,12 +1,12 @@
 package amf.cycle
 
-import amf.core.internal.remote.{Oas30JsonHint, Vendor}
+import amf.core.internal.remote.{Oas30JsonHint, SpecId}
 
 class Oas30ElementCycleTest extends DomainElementCycleTest {
 
   override def basePath: String = "amf-cli/shared/src/test/resources/cycle/oas30/"
   val upanddownPath: String     = "amf-cli/shared/src/test/resources/upanddown/oas3/"
-  val vendor: Vendor            = Vendor.OAS30
+  val vendor: SpecId            = SpecId.OAS30
 
   test("type - composition with refs and inlined") {
     renderElement(
