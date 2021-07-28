@@ -277,7 +277,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Resolution test") {
-    val client = RAMLConfiguration.RAML().baseUnitClient()
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
       unit     <- client.parse(zencoder).asFuture
       resolved <- Future.successful(client.transform(unit.baseUnit))
@@ -288,11 +288,12 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Raml to oas security scheme after resolution") {
-    val client       = WebAPIConfiguration.WebAPI().baseUnitClient()
-    val renderClient = OASConfiguration.OAS20().baseUnitClient()
+    val client          = WebAPIConfiguration.WebAPI().baseUnitClient()
+    val transformClient = RAMLConfiguration.RAML10().baseUnitClient()
+    val renderClient    = OASConfiguration.OAS20().baseUnitClient()
     for {
       unit     <- client.parse(security).asFuture
-      resolved <- Future.successful(client.transform(unit.baseUnit).baseUnit)
+      resolved <- Future.successful(transformClient.transform(unit.baseUnit).baseUnit)
       output   <- Future.successful(renderClient.render(resolved))
     } yield {
       assert(output.nonEmpty)
@@ -653,7 +654,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Missing converter error") {
-    val client = RAMLConfiguration.RAML().baseUnitClient()
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
       unit     <- client.parse(amflight).asFuture
       resolved <- Future.successful(client.transform(unit.baseUnit))
@@ -978,7 +979,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |  v2:
         |  v1:
         |    type: string""".stripMargin
-    val client = RAMLConfiguration.RAML().baseUnitClient()
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
       unit     <- client.parseContent(api, ProvidedMediaType.Raml10).asFuture
       resolved <- Future { client.transform(unit.baseUnit) }

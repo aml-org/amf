@@ -11,6 +11,8 @@ import amf.core.internal.remote.SpecId
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.resolution.ResolutionCapabilities
+import amf.testing.ConfigProvider
+import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.{AsyncFunSuite, Matchers}
 
@@ -40,7 +42,7 @@ class ToRdfCycleTest
   }
 
   private def rdfFromApi(path: String, vendor: SpecId): Future[String] = {
-    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    val config = configFor(vendor).withErrorHandlerProvider(() => UnhandledErrorHandler)
     build(path, config)
       .map(transform(_, PipelineId.Editing, vendor, config))
       .map(bu => RdfUnitConverter.toNativeRdfModel(bu, RenderOptions().withSourceMaps))

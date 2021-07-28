@@ -26,8 +26,6 @@ import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.registries.AMFRegistry
-import amf.core.internal.remote.Spec
-import amf.core.internal.remote.Spec._
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
@@ -37,10 +35,10 @@ import scala.concurrent.Future
 
 sealed trait APIConfigurationBuilder {
 
-  protected val amfPipelines = List(
-    AmfEditingPipeline(),
-    AmfEditingPipeline(urlShortening = false),
-    AmfTransformationPipeline()
+  protected def unsupportedTransformationsSet(configName: String) = List(
+    UnsupportedTransformationPipeline.editing(configName),
+    UnsupportedTransformationPipeline.default(configName),
+    UnsupportedTransformationPipeline.cache(configName)
   )
 
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
@@ -74,7 +72,7 @@ private[amf] object BaseApiConfiguration extends APIConfigurationBuilder {
   def BASE(): AMFConfiguration =
     common()
       .withValidationProfile(AmfValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("Base"))
 }
 
 /**
@@ -112,7 +110,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Raml08ParsePlugin, Raml10ParsePlugin))
       .withValidationProfile(Raml10ValidationProfile)
       .withValidationProfile(Raml08ValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("RAML"))
 }
 
 /**
@@ -150,7 +148,7 @@ object OASConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin))
       .withValidationProfile(Oas30ValidationProfile)
       .withValidationProfile(Oas20ValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("OAS"))
 }
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
@@ -163,7 +161,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
       .withValidationProfile(Oas20ValidationProfile)
       .withValidationProfile(Raml10ValidationProfile)
       .withValidationProfile(Raml08ValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("WebAPI"))
 }
 
 /**
@@ -192,7 +190,7 @@ object APIConfiguration extends APIConfigurationBuilder {
       .WebAPI()
       .withPlugin(Async20ParsePlugin)
       .withValidationProfile(Async20ValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("API"))
 }
 
 /**

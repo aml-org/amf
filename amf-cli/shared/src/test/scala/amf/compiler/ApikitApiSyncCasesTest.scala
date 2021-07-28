@@ -1,7 +1,7 @@
 package amf.compiler
 
 import amf.apicontract.client.common.ProvidedMediaType
-import amf.apicontract.client.scala.WebAPIConfiguration
+import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
 import amf.core.client.common.remote.Content
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.Raml10Profile
@@ -73,7 +73,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     )
     val url = "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml"
     val eh  = DefaultErrorHandler()
-    val client = WebAPIConfiguration.WebAPI()
+    val client = RAMLConfiguration.RAML10()
       .withResourceLoaders(List(new URNResourceLoader(mappings)))
       .withErrorHandlerProvider(() => eh).baseUnitClient()
     for {

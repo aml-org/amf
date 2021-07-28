@@ -6,7 +6,11 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Mimes._
 import amf.io.FileAssertionTest
 
+import scala.concurrent.ExecutionContext
+
 class E2ERenderConfigurationSetupTest extends ConfigurationSetupTest with FileAssertionTest {
+
+  implicit override val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val usedMediaTypes = Seq(`application/ld+json`, `application/yaml`, `application/json`)
   val someUnusedMediaTypes = Seq(`application/raml+yaml`, `application/asyncapi`, `application/swagger+json`)
