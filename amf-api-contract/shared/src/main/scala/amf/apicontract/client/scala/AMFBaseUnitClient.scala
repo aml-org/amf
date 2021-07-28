@@ -1,8 +1,9 @@
 package amf.apicontract.client.scala
 
-import amf.aml.client.scala.AMLBaseUnitClient
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.{AMLBaseUnitClient, AMLDialectResult}
 import amf.core.client.common.transform._
-import amf.core.client.scala.AMFResult
+import amf.core.client.scala.{AMFParseResult, AMFResult}
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
 import amf.core.client.scala.parse.{AMFParser, InvalidBaseUnitTypeException}
 import amf.core.internal.metamodel.document.{DocumentModel, ModuleModel}
@@ -26,7 +27,8 @@ class AMFBaseUnitClient private[amf] (override protected val configuration: AMFC
     * @return a Future [[AMFDocumentResult]]
     */
   def parseDocument(url: String): Future[AMFDocumentResult] = AMFParser.parse(url, configuration).map {
-    case AMFResult(d: Document, r) => new AMFDocumentResult(d, r)
+    case result: AMFParseResult if result.baseUnit.isInstanceOf[Document] =>
+      new AMFDocumentResult(result.baseUnit.asInstanceOf[Document], result.results)
     case other =>
       throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, DocumentModel)
   }
@@ -37,7 +39,8 @@ class AMFBaseUnitClient private[amf] (override protected val configuration: AMFC
     * @return a Future [[AMFLibraryResult]]
     */
   def parseLibrary(url: String): Future[AMFLibraryResult] = AMFParser.parse(url, configuration).map {
-    case AMFResult(m: Module, r) => new AMFLibraryResult(m, r)
+    case result: AMFParseResult if result.baseUnit.isInstanceOf[Module] =>
+      new AMFLibraryResult(result.baseUnit.asInstanceOf[Module], result.results)
     case other =>
       throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, ModuleModel)
   }
