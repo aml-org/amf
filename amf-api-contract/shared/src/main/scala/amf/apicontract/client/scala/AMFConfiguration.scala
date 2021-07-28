@@ -28,7 +28,6 @@ import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
-import amf.core.internal.plugins.syntax.AntlrSyntaxParsePlugin
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
@@ -38,7 +37,7 @@ import amf.shapes.internal.entities.ShapeEntities
 
 import scala.concurrent.Future
 
-sealed trait APIConfigurationBuilder {
+trait APIConfigurationBuilder {
 
   protected def unsupportedTransformationsSet(configName: String) = List(
     UnsupportedTransformationPipeline.editing(configName),
@@ -154,12 +153,6 @@ object OASConfiguration extends APIConfigurationBuilder {
     common()
       .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin, ViolationModelValidationPlugin(oas)))
       .withTransformationPipelines(unsupportedTransformationsSet(oas))
-}
-
-object GRPCConfiguration extends APIConfigurationBuilder {
-  def GRPC(): AMFConfiguration =
-    common()
-      .withPlugins(List(GrpcParsePlugin, AntlrSyntaxParsePlugin, GrpcRenderPlugin))
 }
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
