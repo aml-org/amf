@@ -1,0 +1,82 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
+        "http://a.ml/vocabularies/document#RootDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "test annotation cycle",
+      "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api/someAnnotation": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api/someAnnotation/object_1"
+      },
+      "http://a.ml/vocabularies/document#customDomainProperties": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api/someAnnotation"
+        }
+      ]
+    },
+    {
+      "http://a.ml/vocabularies/core#extensionName": "someAnnotation",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api/someAnnotation/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#a": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api/someAnnotation/object_1/scalar_2"
+      },
+      "http://a.ml/vocabularies/data#b": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api/someAnnotation/object_1/scalar_3"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api/someAnnotation/object_1/scalar_2",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "something",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "a"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api/someAnnotation/object_1/scalar_3",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "otherthing",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "b"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml",
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/raml/demo-api/simplest.raml#/web-api"
+      },
+      "http://a.ml/vocabularies/document#version": "3.1.0",
+      "http://a.ml/vocabularies/document#root": true
+    }
+  ]
+}
