@@ -5,9 +5,11 @@ import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragmen
 import amf.core.internal.remote.SpecId
 import org.scalatest.Assertion
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
+
+  implicit override val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   type Expectation = BaseUnit => Assertion
 

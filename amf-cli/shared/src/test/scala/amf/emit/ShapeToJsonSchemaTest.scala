@@ -11,6 +11,8 @@ import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, SpecId}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.testing.ConfigProvider
+import amf.testing.ConfigProvider.configFor
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -149,7 +151,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
       unit <- parse(file, config)
     } yield {
       findShapeFunc(
-        config
+        configFor(hint.vendor)
           .baseUnitClient()
           .transform(unit, PipelineId.Default)
           .baseUnit

@@ -11,6 +11,8 @@ import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
+import amf.testing.ConfigProvider
+import amf.testing.ConfigProvider.configFor
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -96,7 +98,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                          payload: String,
                          mediaType: Option[String],
                          givenHint: Hint): Future[AMFValidationReport] = {
-    val config = WebAPIConfiguration.WebAPI()
+    val config = configFor(givenHint.vendor)
     val client = config.baseUnitClient()
     for {
       model <- client

@@ -5,34 +5,12 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
-import amf.apicontract.internal.plugins.{
-  ExternalJsonYamlRefsParsePlugin,
-  JsonSchemaParsePlugin,
-  JsonSchemaRenderPlugin
-}
+import amf.apicontract.internal.plugins.{ExternalJsonYamlRefsParsePlugin, JsonSchemaParsePlugin}
 import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20ParsePlugin, Async20RenderPlugin}
-import amf.apicontract.internal.spec.oas.{
-  Oas20ElementRenderPlugin,
-  Oas20ParsePlugin,
-  Oas20RenderPlugin,
-  Oas30ElementRenderPlugin,
-  Oas30ParsePlugin,
-  Oas30RenderPlugin
-}
-import amf.apicontract.internal.spec.payload.{PayloadParsePlugin, PayloadRenderPlugin}
-import amf.apicontract.internal.spec.raml.{
-  Raml08ElementRenderPlugin,
-  Raml08ParsePlugin,
-  Raml08RenderPlugin,
-  Raml10ElementRenderPlugin,
-  Raml10ParsePlugin,
-  Raml10RenderPlugin
-}
-import amf.apicontract.internal.transformation.PipelineProvider.{
-  getCachePipelines,
-  getDefaultPipelines,
-  getEditingPipelines
-}
+import amf.apicontract.internal.spec.oas._
+import amf.apicontract.internal.spec.payload.PayloadParsePlugin
+import amf.apicontract.internal.validation.payload.JsonSchemaShapePayloadValidationPlugin
+import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
 import amf.apicontract.internal.transformation.compatibility.{
   Oas20CompatibilityPipeline,
@@ -41,9 +19,8 @@ import amf.apicontract.internal.transformation.compatibility.{
   Raml10CompatibilityPipeline
 }
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
-import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
-import amf.apicontract.internal.validation.shacl.{CustomShaclModelValidationPlugin, FullShaclModelValidationPlugin}
-import amf.core.client.common.transform.PipelineId
+import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
+import amf.apicontract.internal.validation.shacl.CustomShaclModelValidationPlugin
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -53,8 +30,6 @@ import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.registries.AMFRegistry
-import amf.core.internal.remote.SpecId
-import amf.core.internal.remote.SpecId._
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
@@ -64,10 +39,10 @@ import scala.concurrent.Future
 
 sealed trait APIConfigurationBuilder {
 
-  protected val amfPipelines = List(
-    AmfEditingPipeline(),
-    AmfEditingPipeline(urlShortening = false),
-    AmfTransformationPipeline()
+  protected def unsupportedTransformationsSet(configName: String) = List(
+    UnsupportedTransformationPipeline.editing(configName),
+    UnsupportedTransformationPipeline.default(configName),
+    UnsupportedTransformationPipeline.cache(configName)
   )
 
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
@@ -101,7 +76,7 @@ private[amf] object BaseApiConfiguration extends APIConfigurationBuilder {
   def BASE(): AMFConfiguration =
     common()
       .withValidationProfile(AmfValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("Base"))
 }
 
 /**
@@ -139,7 +114,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Raml08ParsePlugin, Raml10ParsePlugin))
       .withValidationProfile(Raml10ValidationProfile)
       .withValidationProfile(Raml08ValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("RAML"))
 }
 
 /**
@@ -177,7 +152,7 @@ object OASConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin))
       .withValidationProfile(Oas30ValidationProfile)
       .withValidationProfile(Oas20ValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("OAS"))
 }
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
@@ -190,7 +165,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
       .withValidationProfile(Oas20ValidationProfile)
       .withValidationProfile(Raml10ValidationProfile)
       .withValidationProfile(Raml08ValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("WebAPI"))
 }
 
 /**
@@ -219,7 +194,7 @@ object APIConfiguration extends APIConfigurationBuilder {
       .WebAPI()
       .withPlugin(Async20ParsePlugin)
       .withValidationProfile(Async20ValidationProfile)
-      .withTransformationPipelines(amfPipelines)
+      .withTransformationPipelines(unsupportedTransformationsSet("API"))
 }
 
 /**

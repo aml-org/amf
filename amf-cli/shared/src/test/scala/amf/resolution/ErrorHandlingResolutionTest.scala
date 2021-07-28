@@ -12,7 +12,8 @@ import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.remote._
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.io.FunSuiteCycleTests
-import amf.testing.HintProvider
+import amf.testing.ConfigProvider._
+import amf.testing.{ConfigProvider, HintProvider}
 import amf.testing.HintProvider.defaultHintFor
 import org.scalatest.Assertion
 import org.scalatest.Matchers._
@@ -68,7 +69,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
     for {
       u <- build(config, amfConfig)
       _ <- {
-        Future { transform(u, config, amfConfig.withErrorHandlerProvider(() => eh)) }
+        Future { transform(u, config, configFor(hint.vendor).withErrorHandlerProvider(() => eh)) }
       }
     } yield {
       assertErrors(errors, eh.getResults)
