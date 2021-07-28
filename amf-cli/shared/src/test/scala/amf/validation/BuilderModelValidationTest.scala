@@ -53,7 +53,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
     val fragment = PayloadFragment(scalar, `application/yaml`)
 
     val s =
-      new AMFSerializer(fragment, ProvidedMediaType.PayloadYaml, payloadRenderConfig.renderConfiguration).renderToString
+      new AMFSerializer(fragment, fragment.mediaType.value(), payloadRenderConfig.renderConfiguration).renderToString
     s should be("1\n") // without quotes
   }
 
