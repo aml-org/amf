@@ -1,14 +1,14 @@
 package amf.io
 
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
-import amf.core.internal.remote.{AmfJsonHint, Hint, Spec}
-import amf.rdf.client.scala.{RdfModel, RdfUnitConverter}
-import amf.testing.ConfigProvider.configFor
+import amf.core.internal.remote.Syntax.Syntax
+import amf.core.internal.remote.{Amf, Hint, Vendor}
+import amf.grpc.client.scala.GRPCConfiguration
 import org.scalactic.Fail
 import org.scalatest.{Assertion, AsyncFunSuite}
 

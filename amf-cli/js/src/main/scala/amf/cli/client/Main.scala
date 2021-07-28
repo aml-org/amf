@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAP
 import amf.cli.internal.commands._
 import amf.core.client.scala.config.event.{AMFEventReportBuilder, TimedEventListener}
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.grpc.client.scala.GRPCConfiguration
 
 import java.time.Instant
 import scala.concurrent.ExecutionContext.Implicits.global
