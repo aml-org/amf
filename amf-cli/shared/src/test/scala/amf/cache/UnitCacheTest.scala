@@ -2,10 +2,11 @@ package amf.cache
 
 import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.model.domain.api.Api
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform.{PipelineId, PipelineName}
 import amf.core.client.platform.resource.ResourceNotFound
 import amf.core.client.scala.config.{CachedReference, UnitCache}
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.shapes.client.scala.model.domain.NodeShape
@@ -192,21 +193,23 @@ class UnitCacheTest extends AsyncFunSuite with Matchers {
   }
 
   private def createClientWithCache(filesToCache: Seq[String], shouldResolve: Boolean): Future[AMFConfiguration] = {
-    val client = APIConfiguration.API().baseUnitClient()
+    val client = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler).baseUnitClient()
     val listOfFutures = filesToCache.map { file =>
       client
         .parse(file)
         .map(_.baseUnit)
         .map { unit =>
           if (shouldResolve)
-            client.transform(unit, PipelineName.from(ProvidedMediaType.Raml10, PipelineId.Cache)).baseUnit
+            client.transform(unit, PipelineId.Cache).baseUnit
           else unit
         }
         .map { unit =>
           CachedReference(file, unit)
         }
     }
-    Future.sequence(listOfFutures).map(references => APIConfiguration.API().withUnitCache(CustomUnitCache(references)))
+    Future
+      .sequence(listOfFutures)
+      .map(references => RAMLConfiguration.RAML10().withUnitCache(CustomUnitCache(references)))
   }
 
   private def runCacheTest(main: String, filesToCache: Seq[String], shouldResolve: Boolean)(

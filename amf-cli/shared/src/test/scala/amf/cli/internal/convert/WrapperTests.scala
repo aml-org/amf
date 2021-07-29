@@ -303,8 +303,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("world-music-test") {
     val client = config().baseUnitClient()
     for {
-      parseResult    <- client.parse(music, Raml10.mediaType).asFuture
-      validateResult <- client.validate(parseResult.baseUnit).asFuture
+      parseResult    <- client.parse(music).asFuture
+      validateResult <- configFor(parseResult.rootSpec).baseUnitClient().validate(parseResult.baseUnit).asFuture
     } yield {
       val parseReport = AMFValidationReport.unknownProfile(parseResult._internal)
       val report      = parseReport.merge(validateResult._internal)

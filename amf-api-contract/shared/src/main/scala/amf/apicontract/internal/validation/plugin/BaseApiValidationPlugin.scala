@@ -1,7 +1,7 @@
 package amf.apicontract.internal.validation.plugin
 
 import amf.core.client.common.validation._
-import amf.core.client.common.{HighPriority, PluginPriority}
+import amf.core.client.common.{HighPriority, NormalPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.plugins.validation.{AMFValidatePlugin, ValidationInfo, ValidationOptions, ValidationResult}
@@ -15,7 +15,7 @@ object BaseApiValidationPlugin {
 
 trait BaseApiValidationPlugin extends AMFValidatePlugin with ModelResolution with AmlAware {
 
-  override def priority: PluginPriority = HighPriority
+  override def priority: PluginPriority = NormalPriority
 
   override def applies(element: ValidationInfo): Boolean = !isAmlUnit(element.baseUnit)
 

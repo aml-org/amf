@@ -1,6 +1,7 @@
 package amf.apicontract.internal.validation.shacl
 
 import amf.apicontract.internal.validation.plugin.BaseApiValidationPlugin.standardApiProfiles
+import amf.core.client.common.{HighPriority, PluginPriority}
 import amf.core.internal.plugins.validation.ValidationInfo
 import amf.core.internal.validation.core.ShaclValidationOptions
 import amf.validation.internal.shacl.ShaclValidator
@@ -24,4 +25,6 @@ class CustomShaclModelValidationPlugin extends ShaclValidationPlugin {
 
   override protected def validator(options: ShaclValidationOptions): ShaclValidator =
     new CustomShaclValidator(CustomShaclModelValidationPlugin.functions, options)
+
+  override def priority: PluginPriority = HighPriority
 }
