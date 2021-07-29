@@ -38,26 +38,25 @@ trait CommandHelper {
       })
   }
 
-  protected def parseInput(config: ParserConfig, configuration: AMLConfiguration): Future[BaseUnit] = {
+  protected def parseInput(config: ParserConfig, configuration: AMLConfiguration): Future[(BaseUnit, SpecId)] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val inputFile                          = ensureUrl(config.input.get)
     val configClient                       = configuration.baseUnitClient()
-    val parsed                             = configClient.parse(inputFile)
-    val vendor                             = effectiveVendor(config.inputFormat)
+    val parseResult                        = configClient.parse(inputFile)
     if (config.resolve)
-      parsed map (result => {
-        val transformed =
-          configClient.transform(result.baseUnit, PipelineName.from(vendor.mediaType, PipelineId.Default))
-        transformed.baseUnit
+      parseResult map (result => {
+        val transformed = configClient.transform(result.baseUnit, PipelineId.Default)
+        (transformed.baseUnit, result.rootSpec)
       })
-    else parsed.map(_.baseUnit)
+    else parseResult.map(result => (result.baseUnit, result.rootSpec))
   }
 
-  protected def resolve(config: ParserConfig, unit: BaseUnit, configuration: AMFGraphConfiguration): Future[BaseUnit] = {
+  protected def resolve(config: ParserConfig,
+                        unit: BaseUnit,
+                        specId: SpecId,
+                        configuration: AMFGraphConfiguration): Future[BaseUnit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val configClient                       = configuration.baseUnitClient()
-    val vendor                             = effectiveVendor(config.inputFormat)
-    val vendorMediaType                    = vendor.mediaType
     if (config.resolve && config.validate) {
       val inputFile = ensureUrl(config.input.get)
       val parsed = AMFCompiler(
@@ -68,11 +67,11 @@ trait CommandHelper {
         CompilerConfiguration(configuration)
       ).build()
       parsed map { parsed =>
-        configClient.transform(parsed, PipelineName.from(vendorMediaType, PipelineId.Default)).baseUnit
+        configClient.transform(parsed, PipelineId.Default).baseUnit
       }
     } else if (config.resolve) {
       Future {
-        configClient.transform(unit, PipelineName.from(vendorMediaType, PipelineId.Default)).baseUnit
+        configClient.transform(unit, PipelineId.Default).baseUnit
       }
     } else {
       Future { unit }

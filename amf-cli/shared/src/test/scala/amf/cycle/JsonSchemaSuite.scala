@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
-import amf.core.client.scala.AMFResult
+import amf.core.client.scala.{AMFParseResult, AMFResult}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
@@ -22,7 +22,7 @@ trait JsonSchemaSuite {
   protected def parseSchema(platform: Platform,
                             path: String,
                             mediatype: String,
-                            amfConfig: AMFConfiguration): AMFResult = {
+                            amfConfig: AMFConfiguration): AMFParseResult = {
     val content  = platform.fs.syncFile(path).read().toString
     val document = JsonParser.withSource(content, path).document()
     val root = Root(
@@ -38,7 +38,7 @@ trait JsonSchemaSuite {
     val parsed  = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None)
     parsed.annotations += SourceVendor(SpecId.OAS20)
     val unit = wrapInDataTypeFragment(root, parsed)
-    AMFResult(unit, eh.getResults)
+    new AMFParseResult(unit, eh.getResults)
   }
 
   private def wrapInDataTypeFragment(document: Root, parsed: AnyShape): DataTypeFragment = {

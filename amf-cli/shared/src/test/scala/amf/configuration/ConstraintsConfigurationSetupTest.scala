@@ -11,13 +11,13 @@ class ConstraintsConfigurationSetupTest extends ConfigurationSetupTest {
   case class ErrorConstraintExistenceCase(config: AMFConfiguration, vendors: Seq[SpecId])
 
   val validateFixtures: Seq[Any] = Seq(
-    generateConstraintExistenceFixtures(apiConfig, Seq(RAML10, RAML08, OAS20, OAS30, ASYNC20)),
-    generateConstraintExistenceFixtures(webApiConfig, Seq(RAML10, RAML08, OAS20, OAS30)),
+    generateConstraintExistenceFixtures(apiConfig, Seq()),
+    generateConstraintExistenceFixtures(webApiConfig, Seq()),
     generateConstraintExistenceFixtures(async20Config, Seq(ASYNC20)),
-    generateConstraintExistenceFixtures(oasConfig, Seq(OAS20, OAS30)),
+    generateConstraintExistenceFixtures(oasConfig, Seq()),
     generateConstraintExistenceFixtures(oas20Config, Seq(OAS20)),
     generateConstraintExistenceFixtures(oas30Config, Seq(OAS30)),
-    generateConstraintExistenceFixtures(ramlConfig, Seq(RAML10, RAML08)),
+    generateConstraintExistenceFixtures(ramlConfig, Seq()),
     generateConstraintExistenceFixtures(raml10Config, Seq(RAML10)),
     generateConstraintExistenceFixtures(raml08Config, Seq(RAML08))
   ).flatten

@@ -12,6 +12,7 @@ import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FunSuiteCycleTests
+import amf.testing.ConfigProvider.configFor
 import amf.testing.HintProvider.defaultHintFor
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
@@ -55,7 +56,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
           resolved <- successful(transform(origin, config, targetConfig))
           rendered <- successful(render(resolved, config, targetConfig))
           tmp      <- writeTemporaryFile(path)(rendered)
-          report   <- validate(tmp, toProfile)
+          report   <- validate(tmp, to)
         } yield {
           outputReportErrors(report)
         }
@@ -82,9 +83,9 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
 
   private def outputReportErrors(report: AMFValidationReport) = report.toString should include(REPORT_CONFORMS)
 
-  private def validate(source: AsyncFile, profileName: ProfileName): Future[AMFValidationReport] = {
+  private def validate(source: AsyncFile, spec: SpecId): Future[AMFValidationReport] = {
     val handler   = DefaultErrorHandler()
-    val amfConfig = buildConfig(None, Some(handler))
+    val amfConfig = buildConfig(configFor(spec), None, Some(handler))
     build(source.path, source.path, amfConfig).flatMap { unit =>
       amfConfig.baseUnitClient().validate(unit)
     }

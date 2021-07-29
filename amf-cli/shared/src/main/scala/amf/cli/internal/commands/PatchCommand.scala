@@ -16,12 +16,12 @@ class PatchCommand(override val platform: Platform) extends TranslateCommand(pla
     val parsingConfig =
       parserConfig.copy(outputFormat = Some("AML 1.0"), outputMediaType = Some(`application/yaml`), resolve = true)
     val res = for {
-      newConfig <- processDialects(parsingConfig, configuration)
-      model     <- parseInput(parsingConfig, newConfig)
-      _         <- checkValidation(parsingConfig, model, configuration)
-      model     <- rewriteTarget(parsingConfig, model)
-      model     <- resolve(parsingConfig, model, configuration)
-      generated <- generateOutput(parsingConfig, model, configuration)
+      newConfig       <- processDialects(parsingConfig, configuration)
+      (model, specId) <- parseInput(parsingConfig, newConfig)
+      _               <- checkValidation(parsingConfig, model, specId, configuration)
+      model           <- rewriteTarget(parsingConfig, model)
+      model           <- resolve(parsingConfig, model, specId, configuration)
+      generated       <- generateOutput(parsingConfig, model, configuration)
     } yield {
       generated
     }

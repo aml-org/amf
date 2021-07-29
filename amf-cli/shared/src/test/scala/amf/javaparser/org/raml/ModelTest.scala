@@ -31,7 +31,7 @@ trait ModelValidationTest extends DirectoryTest {
     for {
       client      <- Future.successful(configuration.baseUnitClient())
       parseResult <- client.parse(s"file://${d + inputFileName}")
-      report      <- client.validate(parseResult.baseUnit)
+      report      <- configFor(parseResult.rootSpec).baseUnitClient().validate(parseResult.baseUnit)
       unifiedReport <- {
         val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val r =

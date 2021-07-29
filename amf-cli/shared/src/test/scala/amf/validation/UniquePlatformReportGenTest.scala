@@ -11,6 +11,8 @@ import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
 import amf.io.FileAssertionTest
+import amf.testing.ConfigProvider
+import amf.testing.ConfigProvider.configFor
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -57,7 +59,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     val finalHint     = overridedHint.getOrElse(hint)
     for {
       parseResult <- parse(directory + api, initialConfig, finalHint)
-      report      <- initialConfig.baseUnitClient().validate(parseResult.baseUnit)
+      report      <- configFor(parseResult.rootSpec).baseUnitClient().validate(parseResult.baseUnit)
       r <- {
         val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val finalReport =
@@ -70,7 +72,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     }
   }
 
-  protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint): Future[AMFResult] = {
+  protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint) = {
     val client = conf.baseUnitClient()
     client.parse(path)
   }

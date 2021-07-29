@@ -1,4 +1,4 @@
-package amf.testing
+package amf.cli.internal.commands
 
 import amf.apicontract.client.scala.{
   AMFConfiguration,
@@ -7,7 +7,7 @@ import amf.apicontract.client.scala.{
   OASConfiguration,
   RAMLConfiguration
 }
-import amf.core.internal.remote.{Amf, AsyncApi20, Oas20, Oas30, Raml08, Raml10, SpecId}
+import amf.core.internal.remote.{AsyncApi20, Oas20, Oas30, Raml08, Raml10, SpecId}
 
 object ConfigProvider {
 

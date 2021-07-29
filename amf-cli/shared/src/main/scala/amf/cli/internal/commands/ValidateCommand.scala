@@ -18,9 +18,9 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
   def run(parserConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val res = for {
-      newConfig <- processDialects(parserConfig, configuration)
-      model     <- parseInput(parserConfig, newConfig)
-      report    <- report(model, parserConfig, newConfig)
+      newConfig  <- processDialects(parserConfig, configuration)
+      (model, _) <- parseInput(parserConfig, newConfig)
+      report     <- report(model, parserConfig, newConfig)
     } yield {
       processOutput(report, parserConfig)
     }
