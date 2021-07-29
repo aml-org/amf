@@ -2,7 +2,7 @@ package amf.configuration
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment}
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -18,25 +18,25 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
 
   val onlyParseFixtures: Seq[Any] = Seq(
     generateExpectedDocumentParseFixtures("raml10-api.raml",
-                                          SpecId.RAML10,
+                                          Spec.RAML10,
                                           List(apiConfig, webApiConfig, ramlConfig, raml10Config)),
     generateExpectedDocumentParseFixtures("raml08-api.raml",
-                                          SpecId.RAML08,
+                                          Spec.RAML08,
                                           List(apiConfig, webApiConfig, ramlConfig, raml08Config)),
     generateExpectedDocumentParseFixtures("oas20-api.json",
-                                          SpecId.OAS20,
+                                          Spec.OAS20,
                                           List(apiConfig, webApiConfig, oasConfig, oas20Config)),
     generateExpectedDocumentParseFixtures("oas20-api.yaml",
-                                          SpecId.OAS20,
+                                          Spec.OAS20,
                                           List(apiConfig, webApiConfig, oasConfig, oas20Config)),
     generateExpectedDocumentParseFixtures("oas30-api.json",
-                                          SpecId.OAS30,
+                                          Spec.OAS30,
                                           List(apiConfig, webApiConfig, oasConfig, oas30Config)),
     generateExpectedDocumentParseFixtures("oas30-api.yaml",
-                                          SpecId.OAS30,
+                                          Spec.OAS30,
                                           List(apiConfig, webApiConfig, oasConfig, oas30Config)),
-    generateExpectedDocumentParseFixtures("async-api.yaml", SpecId.ASYNC20, List(apiConfig, async20Config)),
-    generateExpectedDocumentParseFixtures("async-api.json", SpecId.ASYNC20, List(apiConfig, async20Config))
+    generateExpectedDocumentParseFixtures("async-api.yaml", Spec.ASYNC20, List(apiConfig, async20Config)),
+    generateExpectedDocumentParseFixtures("async-api.json", Spec.ASYNC20, List(apiConfig, async20Config))
   ).flatten
 
   onlyParseFixtures.foreach {
@@ -64,7 +64,7 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
   }
 
   private def generateExpectedDocumentParseFixtures(apiPath: String,
-                                                    vendor: SpecId,
+                                                    vendor: Spec,
                                                     validConfigs: List[AMFConfiguration]): Seq[Any] = {
     val finalPath    = basePath + apiPath
     val errorConfigs = configs.diff(validConfigs)
@@ -72,7 +72,7 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
       errorConfigs.map(conf => ExpectedErrorCase(conf, finalPath))
   }
 
-  protected def documentExpectation: SpecId => Expectation =
+  protected def documentExpectation: Spec => Expectation =
     vendor =>
       document => {
         document shouldBe a[Document]

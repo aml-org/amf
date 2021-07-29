@@ -10,11 +10,11 @@ import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 
 object Raml10ParsePlugin extends RamlParsePlugin {
 
-  override def vendor: SpecId = SpecId.RAML10
+  override def vendor: Spec = Spec.RAML10
 
   override def applies(element: Root): Boolean = RamlHeader(element) exists {
     case Raml10 | Raml10Overlay | Raml10Extension | Raml10Library => true
@@ -44,7 +44,7 @@ object Raml10ParsePlugin extends RamlParsePlugin {
       case Raml10Extension => ExtensionLikeParser(root, ctx).parseExtension()
       case Raml10Library   => RamlModuleParser(root)(clean).parseModule()
       case _ => // unreachable as it is covered in canParse()
-        throw new InvalidDocumentHeaderException(vendor.name)
+        throw new InvalidDocumentHeaderException(vendor.id)
     }
   }
 

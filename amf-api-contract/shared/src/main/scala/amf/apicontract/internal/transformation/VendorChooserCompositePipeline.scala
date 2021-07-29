@@ -3,7 +3,7 @@ package amf.apicontract.internal.transformation
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.ResolutionValidation
 
 case class VendorChooserCompositePipeline private[amf] (name: String, pipelines: Map[String, TransformationPipeline])
@@ -13,9 +13,9 @@ case class VendorChooserCompositePipeline private[amf] (name: String, pipelines:
     VendorChooserTransformationStep(name, pipelines)
   )
 
-  def add(vendor: SpecId, pipeline: TransformationPipeline) = copy(pipelines = pipelines + (vendor.name -> pipeline))
-  def add(tuple: (String, TransformationPipeline))          = copy(pipelines = pipelines + tuple)
-  def add(tuples: Seq[(String, TransformationPipeline)])    = copy(pipelines = pipelines ++ tuples.toMap)
+  def add(vendor: Spec, pipeline: TransformationPipeline) = copy(pipelines = pipelines + (vendor.id -> pipeline))
+  def add(tuple: (String, TransformationPipeline))        = copy(pipelines = pipelines + tuple)
+  def add(tuples: Seq[(String, TransformationPipeline)])  = copy(pipelines = pipelines ++ tuples.toMap)
 }
 
 object VendorChooserCompositePipeline {
@@ -26,7 +26,7 @@ case class VendorChooserTransformationStep(name: String, pipelines: Map[String, 
     extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     model.sourceVendor
-      .flatMap(vendor => pipelines.get(vendor.name))
+      .flatMap(vendor => pipelines.get(vendor.id))
       .map(pipeline => TransformationPipelineRunner(errorHandler).run(model, pipeline)) match {
       case None =>
         errorHandler.violation(
@@ -44,7 +44,7 @@ case class VendorChooserTransformationStep(name: String, pipelines: Map[String, 
 
   private def getErrorMessage(model: BaseUnit): String = {
     model.sourceVendor
-      .map(vendor => s"Cannot find transformation pipeline with name $name and spec ${vendor.name}")
+      .map(vendor => s"Cannot find transformation pipeline with name $name and spec ${vendor.id}")
       .getOrElse(s"Cannot decide which pipeline to use when BaseUnit doesn't have the spec defined")
   }
 }

@@ -5,7 +5,7 @@ import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.remote.{Mimes, SpecId}
+import amf.core.internal.remote.{Mimes, Spec}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
 import amf.emit.AMFRenderer
@@ -193,7 +193,7 @@ object JsonLdEmitter extends SchemaEmitter {
 
   lazy private val options =
     RenderOptions().withCompactUris.withoutSourceMaps.withoutRawSourceMaps.withFlattenedJsonLd.withPrettyPrint
-  lazy private val vendor = SpecId.AMF
+  lazy private val vendor = Spec.AMF
 
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
     AMFRenderer(fragment, HintProvider.defaultHintFor(vendor), options).renderToString

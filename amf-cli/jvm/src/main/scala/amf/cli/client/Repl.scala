@@ -33,7 +33,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
     out.print(client.render(unit, mediaType))
   }
 
-  private def remote(vendor: SpecId, url: String, callback: (Option[Document]) => Unit): Unit = {
+  private def remote(vendor: Spec, url: String, callback: (Option[Document]) => Unit): Unit = {
     val client = config.baseUnitClient()
 
     client
@@ -46,7 +46,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
   }
 
   private object Parse {
-    def unapply(line: String): Option[(SpecId, String)] = {
+    def unapply(line: String): Option[(Spec, String)] = {
       line match {
         case s if s.startsWith(":application/raml10 ") => Some((Raml10, s.stripPrefix(":application/raml10 ")))
         case s if s.startsWith(":application/raml08 ") => Some((Raml08, s.stripPrefix(":application/raml08 ")))

@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.oas
 
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.ShapeParserContext
 
 object OasShapeDefinitions extends OasShapeDefinitions
@@ -13,7 +13,7 @@ trait OasShapeDefinitions {
   val oas3ComponentsPrefix = "#/components/"
 
   def stripDefinitionsPrefix(url: String)(implicit ctx: ShapeParserContext): String = {
-    if (ctx.vendor == SpecId.OAS30 || ctx.vendor == SpecId.ASYNC20) url.stripPrefix(oas3DefinitionsPrefix)
+    if (ctx.vendor == Spec.OAS30 || ctx.vendor == Spec.ASYNC20) url.stripPrefix(oas3DefinitionsPrefix)
     else url.stripPrefix(oas2DefinitionsPrefix)
   }
 
@@ -24,8 +24,8 @@ trait OasShapeDefinitions {
   def stripOas3ComponentsPrefix(url: String, fieldName: String): String =
     url.stripPrefix(oas3ComponentsPrefix + fieldName + "/")
 
-  def appendSchemasPrefix(url: String, vendor: Option[SpecId] = None): String = vendor match {
-    case Some(SpecId.OAS30) | Some(SpecId.ASYNC20) =>
+  def appendSchemasPrefix(url: String, vendor: Option[Spec] = None): String = vendor match {
+    case Some(Spec.OAS30) | Some(Spec.ASYNC20) =>
       if (!url.startsWith(oas3DefinitionsPrefix)) appendPrefix(oas3DefinitionsPrefix, url) else url
     case _ =>
       if (!url.startsWith(oas2DefinitionsPrefix)) appendPrefix(oas2DefinitionsPrefix, url) else url

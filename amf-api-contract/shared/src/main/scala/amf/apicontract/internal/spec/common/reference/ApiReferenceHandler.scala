@@ -34,8 +34,8 @@ class ApiReferenceHandler(vendor: String) extends ReferenceHandler {
     parsed.asInstanceOf[SyamlParsedDocument].comment match {
       case Some(c) =>
         RamlHeader.fromText(c) match {
-          case Some(Raml10Overlay | Raml10Extension) if vendor == Raml10.name => true
-          case _                                                              => false
+          case Some(Raml10Overlay | Raml10Extension) if vendor == Raml10.id => true
+          case _                                                            => false
         }
       case None => false
     }
@@ -45,8 +45,8 @@ class ApiReferenceHandler(vendor: String) extends ReferenceHandler {
     document.node.to[YMap] match {
       case Right(map) =>
         val ext = vendor match {
-          case Raml10.name             => Some("extends")
-          case Oas20.name | Oas30.name => Some("x-extends")
+          case Raml10.`id`             => Some("extends")
+          case Oas20.`id` | Oas30.`id` => Some("x-extends")
           case _                       => None
         }
 
@@ -71,9 +71,9 @@ class ApiReferenceHandler(vendor: String) extends ReferenceHandler {
 
   private def links(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     vendor match {
-      case Raml10.name | Raml08.name => ramlLinks(part)
-      case Oas20.name | Oas30.name   => oasLinks(part)
-      case AsyncApi20.name =>
+      case Raml10.`id` | Raml08.`id` => ramlLinks(part)
+      case Oas20.`id` | Oas30.`id`   => oasLinks(part)
+      case AsyncApi20.`id` =>
         oasLinks(part)
         ramlLinks(part)
     }
@@ -83,8 +83,8 @@ class ApiReferenceHandler(vendor: String) extends ReferenceHandler {
     document.to[YMap] match {
       case Right(map) =>
         val uses = vendor match {
-          case Raml10.name             => Some("uses")
-          case Oas20.name | Oas30.name => Some("x-amf-uses")
+          case Raml10.`id`             => Some("uses")
+          case Oas20.`id` | Oas30.`id` => Some("x-amf-uses")
           case _                       => None
         }
         uses.foreach(u => {

@@ -13,12 +13,12 @@ import amf.core.client.scala.parse.document.{
   SyamlParsedDocument
 }
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import org.yaml.model.{YMap, YScalar}
 
 object PayloadParsePlugin extends AMFParsePlugin {
 
-  override val id: String = SpecId.PAYLOAD.name
+  override val id: String = Spec.PAYLOAD.id
 
   override def applies(element: Root): Boolean =
     notRAML(element) && notOAS(element) && notAsync(element) // any document can be parsed as a Payload

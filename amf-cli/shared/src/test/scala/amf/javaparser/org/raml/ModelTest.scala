@@ -81,9 +81,9 @@ trait ModelValidationTest extends DirectoryTest {
     }
   }
 
-  val defaultTarget: SpecId = Raml10
+  val defaultTarget: Spec = Raml10
 
-  def target(model: BaseUnit): SpecId = model match {
+  def target(model: BaseUnit): Spec = model match {
     case d: EncodesModel =>
       d.encodes.annotations
         .find(classOf[SourceVendor])

@@ -53,7 +53,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
     e
   }
 
-  case class UnitsCreator(spec: SpecId) {
+  case class UnitsCreator(spec: Spec) {
 
     val (file, fragmentFile, minCount, recursive) = spec match {
       case Raml10 => ("data-type-fragment.reference.raml", "person.raml", 1, false)

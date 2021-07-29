@@ -5,7 +5,7 @@ import amf.apicontract.internal.spec.oas.OasLikeSecuritySchemeTypeMappings
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.{AmfElement, Linkable}
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.{pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
@@ -41,7 +41,7 @@ case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEnt
     )
   }
 
-  def allSchemesAreValidInOas(schemes: Seq[ParametrizedSecurityScheme], vendor: SpecId): Boolean = {
+  def allSchemesAreValidInOas(schemes: Seq[ParametrizedSecurityScheme], vendor: Spec): Boolean = {
     schemes.forall(s => {
       s.scheme match {
         case linkable: Linkable if linkable.isLink => return true

@@ -7,7 +7,7 @@ import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExte
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.MultipleValuesArrayEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
@@ -104,7 +104,7 @@ class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
     OasAnnotationEmitter(e, default)
 
-  override def vendor: SpecId = SpecId.JSONSCHEMA
+  override def vendor: Spec = Spec.JSONSCHEMA
 
   override def ref(b: YDocument.PartBuilder, url: String): Unit = OasRefEmitter.ref(url, b)
 
@@ -157,7 +157,7 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissi
 
   def eh: AMFErrorHandler
 
-  def vendor: SpecId
+  def vendor: Spec
 
   def ref(b: YDocument.PartBuilder, url: String): Unit
 
@@ -190,7 +190,7 @@ class Raml10ShapeEmitterContext(val eh: AMFErrorHandler, val options: RenderOpti
 
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter = ???
 
-  override def vendor: SpecId = ???
+  override def vendor: Spec = ???
 
   override def ref(b: YDocument.PartBuilder, url: String): Unit = ???
 

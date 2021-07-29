@@ -4,8 +4,8 @@ import amf.apicontract.client.scala.RAMLConfiguration
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.common.validation.{ProfileName, Raml08Profile, Raml10Profile, SeverityLevels}
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.remote.SpecId
-import amf.core.internal.remote.SpecId.{RAML08, RAML10}
+import amf.core.internal.remote.Spec
+import amf.core.internal.remote.Spec.{RAML08, RAML10}
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.AsyncFunSuite
 
@@ -17,7 +17,7 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
   private val basePath = "file://amf-cli/shared/src/test/resources/maker/deprecatedwarnings/"
 
   case class FixtureResult(level: String, message: String)
-  case class Fixture(name: String, file: String, spec: SpecId, results: Seq[FixtureResult])
+  case class Fixture(name: String, file: String, spec: Spec, results: Seq[FixtureResult])
 
   val fixture = List(
     Fixture(

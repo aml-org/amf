@@ -9,11 +9,11 @@ import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{Oas30, SpecId}
+import amf.core.internal.remote.{Oas30, Spec}
 
 object Oas30ParsePlugin extends OasParsePlugin {
 
-  override def vendor: SpecId = Oas30
+  override def vendor: Spec = Oas30
 
   override def applies(element: Root): Boolean = OasHeader(element).contains(Oas30Header)
 
@@ -24,7 +24,7 @@ object Oas30ParsePlugin extends OasParsePlugin {
       case Some(Oas30Header) => Oas3DocumentParser(root).parseDocument()
       case Some(f)           => OasFragmentParser(root, Some(f)).parseFragment()
       case _ => // unreachable as it is covered in canParse()
-        throw new InvalidDocumentHeaderException(vendor.name)
+        throw new InvalidDocumentHeaderException(vendor.id)
     }
 
   override protected def context(loc: String,

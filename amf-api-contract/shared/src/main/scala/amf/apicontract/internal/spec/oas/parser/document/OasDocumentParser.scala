@@ -178,7 +178,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           InvalidSecuritySchemeType,
           scheme.id,
           Some(SecuritySchemeModel.Type.value.iri()),
-          s"'$schemeType' is not a valid security scheme type in ${ctx.vendor.name}",
+          s"'$schemeType' is not a valid security scheme type in ${ctx.vendor.id}",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
           Some(ctx.rootContextDocument)
         )

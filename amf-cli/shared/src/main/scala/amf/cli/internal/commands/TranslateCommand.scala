@@ -7,7 +7,7 @@ import amf.apicontract.client.scala.AMFConfiguration
 import amf.cli.internal.commands.ConfigProvider.configFor
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Platform, SpecId}
+import amf.core.internal.remote.{Platform, Spec}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -38,7 +38,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
 
   def checkValidation(parserConfig: ParserConfig,
                       model: BaseUnit,
-                      specId: SpecId,
+                      specId: Spec,
                       configuration: AMLConfiguration): Future[Unit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
 

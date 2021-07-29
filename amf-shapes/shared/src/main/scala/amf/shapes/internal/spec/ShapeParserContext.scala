@@ -6,7 +6,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, UnresolvedComponents}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, Declarations, FutureDeclarations, SearchScope}
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
@@ -32,7 +32,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape]
   def link(node: YNode): Either[String, YNode]
   def loc: String
-  def vendor: SpecId
+  def vendor: Spec
   def syntax: SpecSyntax
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo)
   def shapes: Map[String, Shape]

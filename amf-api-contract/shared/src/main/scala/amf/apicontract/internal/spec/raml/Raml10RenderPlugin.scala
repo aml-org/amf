@@ -15,12 +15,12 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document._
 import amf.core.internal.plugins.render.RenderInfo
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import org.yaml.model.{YDocument, YNode}
 
 object Raml10RenderPlugin extends ApiRenderPlugin {
 
-  override def vendor: SpecId = SpecId.RAML10
+  override def vendor: Spec = Spec.RAML10
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
