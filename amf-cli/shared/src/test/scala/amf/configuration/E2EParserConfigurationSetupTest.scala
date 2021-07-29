@@ -11,7 +11,7 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
 
   implicit override val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  type Expectation = BaseUnit => Assertion
+  type Expectation = (BaseUnit, Spec) => Assertion
 
   case class ExpectedParseCase(config: AMFConfiguration, apiPath: String, expectation: Expectation)
   case class ExpectedErrorCase(config: AMFConfiguration, apiPath: String)
@@ -48,7 +48,7 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
           document <- Future.successful { result.baseUnit }
         } yield {
           result.results should have length 0
-          f.expectation(document)
+          f.expectation(document, result.rootSpec)
         }
       }
     case e: ExpectedErrorCase =>
@@ -74,8 +74,9 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
 
   protected def documentExpectation: Spec => Expectation =
     vendor =>
-      document => {
+      (document, parsedSpec) => {
         document shouldBe a[Document]
-        document.sourceVendor shouldEqual Some(vendor)
+        vendor shouldEqual parsedSpec
+        document.sourceVendor shouldEqual Some(parsedSpec)
     }
 }
