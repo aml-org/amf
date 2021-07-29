@@ -7,12 +7,12 @@ import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment, Fragment, Module}
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import org.yaml.model.{YDocument, YNode}
 
 object Oas20RenderPlugin extends OasRenderPlugin {
 
-  override def vendor: SpecId = SpecId.OAS20
+  override def vendor: Spec = Spec.OAS20
 
   override def defaultSyntax(): String = `application/json`
 

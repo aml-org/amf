@@ -3,13 +3,13 @@ package amf.apicontract.internal.plugins
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, Reference}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.InvalidCrossSpec
 
 trait CrossSpecRestriction { this: ApiParsePlugin =>
 
   // TODO: all documents should have a Vendor
-  protected def restrictCrossSpecReferences(optionalReferencedVendor: Option[SpecId], reference: Reference)(
+  protected def restrictCrossSpecReferences(optionalReferencedVendor: Option[Spec], reference: Reference)(
       implicit errorHandler: AMFErrorHandler): Unit = {
     val possibleReferencedVendors = mediaTypes ++ validMediaTypesToReference
     optionalReferencedVendor.foreach { referencedVendor =>

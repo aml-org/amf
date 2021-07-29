@@ -232,8 +232,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Render / parse test OAS 2.0") {
-    val raml10Conf = configFor(SpecId.RAML10)
-    val oas20Conf  = configFor(SpecId.OAS20)
+    val raml10Conf = configFor(Spec.RAML10)
+    val oas20Conf  = configFor(Spec.OAS20)
     val client     = raml10Conf.baseUnitClient()
     for {
       unit   <- client.parse(zencoder).asFuture
@@ -369,7 +369,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     vocab.withDeclaredElement(classTerm).withDeclaredElement(propertyTerm)
 
     val client = config().baseUnitClient()
-    val render = client.render(vocab, SpecId.AML.mediaType)
+    val render = client.render(vocab, Spec.AML.mediaType)
     render should be(
       """#%Vocabulary 1.0
         |base: http://test.com/vocab#
@@ -1104,7 +1104,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |      application/json:
         |        type: !include include1.json""".stripMargin
     val client =
-      configFor(SpecId.RAML10)
+      configFor(Spec.RAML10)
         .withResourceLoader(ClientResourceLoaderAdapter(resourceLoaderFor(baseUrl, spec)))
         .baseUnitClient()
     for {
@@ -2066,13 +2066,13 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Test domain element emitter with unknown vendor") {
     val eh = DefaultErrorHandler()
-    ApiDomainElementEmitter.emit(InternalArrayNode(), SpecId.PAYLOAD.mediaType, eh)
+    ApiDomainElementEmitter.emit(InternalArrayNode(), Spec.PAYLOAD.mediaType, eh)
     assert(eh.getResults.head.message == "Unknown vendor provided")
   }
 
   test("Test domain element emitter with unhandled domain element") {
     val eh = DefaultErrorHandler()
-    ApiDomainElementEmitter.emit(CorrelationId(), SpecId.RAML10.mediaType, eh)
+    ApiDomainElementEmitter.emit(CorrelationId(), Spec.RAML10.mediaType, eh)
     assert(eh.getResults.head.message == "Unhandled domain element for given vendor")
   }
 
@@ -2126,11 +2126,11 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 
-  protected def configFor(vendor: SpecId) = vendor match {
-    case SpecId.RAML10  => RAMLConfiguration.RAML10()
-    case SpecId.RAML08  => RAMLConfiguration.RAML08()
-    case SpecId.OAS20   => OASConfiguration.OAS20()
-    case SpecId.OAS30   => OASConfiguration.OAS30()
-    case SpecId.ASYNC20 => AsyncAPIConfiguration.Async20()
+  protected def configFor(vendor: Spec) = vendor match {
+    case Spec.RAML10  => RAMLConfiguration.RAML10()
+    case Spec.RAML08  => RAMLConfiguration.RAML08()
+    case Spec.OAS20   => OASConfiguration.OAS20()
+    case Spec.OAS30   => OASConfiguration.OAS30()
+    case Spec.ASYNC20 => AsyncAPIConfiguration.Async20()
   }
 }

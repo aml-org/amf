@@ -11,8 +11,8 @@ import amf.apicontract.client.scala.RAMLConfiguration.{
 }
 import amf.apicontract.client.scala.WebAPIConfiguration.WebAPI
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.internal.remote.SpecId
-import amf.core.internal.remote.SpecId._
+import amf.core.internal.remote.Spec
+import amf.core.internal.remote.Spec._
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.language.postfixOps
@@ -39,7 +39,7 @@ trait ConfigurationSetupTest extends AsyncFunSuite with Matchers {
                                                        oas30Config,
                                                        oasConfig,
                                                        async20Config)
-  protected val vendors: List[SpecId] = List(ASYNC20, RAML10, RAML08, OAS20, OAS30)
+  protected val vendors: List[Spec] = List(ASYNC20, RAML10, RAML08, OAS20, OAS30)
   protected val configNames = Map(
     apiConfig     -> "API",
     webApiConfig  -> "WebAPI",

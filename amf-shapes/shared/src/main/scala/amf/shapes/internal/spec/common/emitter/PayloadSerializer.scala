@@ -4,7 +4,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.DataNode
-import amf.core.internal.remote.{Mimes, SpecId}
+import amf.core.internal.remote.{Mimes, Spec}
 import amf.core.internal.render.{AMFSerializer, SpecOrdering}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher

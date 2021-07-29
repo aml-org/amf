@@ -4,7 +4,7 @@ import amf.apicontract.internal.spec.common.emitter.DomainElementEmitterFactory
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.emitters.DomainElementEmitter
 import amf.shapes.internal.validation.definitions.RenderSideValidations
 import org.yaml.model.YNode

@@ -15,7 +15,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser._
 import amf.core.internal.parser.domain.{Annotations, FragmentRef, SearchScope}
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AliasCounter, IdCounter}
 import amf.shapes.client.scala.model.domain.AnyShape
@@ -65,7 +65,7 @@ abstract class WebApiContext(loc: String,
   def validateRefFormatWithError(ref: String): Boolean = true
 
   val syntax: SpecSyntax
-  val vendor: SpecId
+  val vendor: Spec
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext

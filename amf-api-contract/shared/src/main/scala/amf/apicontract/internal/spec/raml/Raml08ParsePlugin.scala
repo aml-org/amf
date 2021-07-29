@@ -9,11 +9,11 @@ import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{LinkReference, ParserContext}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 
 object Raml08ParsePlugin extends RamlParsePlugin {
 
-  override def vendor: SpecId = SpecId.RAML08
+  override def vendor: Spec = Spec.RAML08
 
   override def applies(element: Root): Boolean = RamlHeader(element) exists {
     // Partial raml0.8 fragment with RAML header but linked through !include
@@ -39,7 +39,7 @@ object Raml08ParsePlugin extends RamlParsePlugin {
     header match {
       case Raml08 => document.Raml08DocumentParser(root)(ctx).parseDocument()
       case _ => // unreachable as it is covered in canParse()
-        throw new InvalidDocumentHeaderException(vendor.name)
+        throw new InvalidDocumentHeaderException(vendor.id)
     }
   }
 }

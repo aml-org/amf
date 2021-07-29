@@ -12,14 +12,14 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext, ReferenceHandler, SimpleReferenceHandler}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.JSONSchemaUnspecifiedVersion
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 
 object JsonSchemaParsePlugin extends AMFParsePlugin {
 
-  override val id: String = SpecId.JSONSCHEMA.name
+  override val id: String = Spec.JSONSCHEMA.id
 
   override def applies(element: Root): Boolean = false
 

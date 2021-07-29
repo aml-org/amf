@@ -33,7 +33,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
   test("Parse command") {
     val args = Array("parse",
                      "-in",
-                     Raml10.name,
+                     Raml10.id,
                      "-mime-in",
                      `application/yaml`,
                      "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml")
@@ -59,11 +59,11 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val args = Array(
       "translate",
       "-in",
-      Raml10.name,
+      Raml10.id,
       "-mime-in",
       `application/yaml`,
       "-out",
-      Oas20.name,
+      Oas20.id,
       "-mime-out",
       `application/json`,
       "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml"
@@ -90,11 +90,11 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val args = Array(
       "validate",
       "-in",
-      Raml10.name,
+      Raml10.id,
       "-mime-in",
       `application/yaml`,
       "-p",
-      Raml10.name,
+      Raml10.id,
       "file://amf-cli/shared/src/test/resources/validations/data/error1.raml"
     )
     val cfg = CmdLineParser.parse(args)
@@ -120,11 +120,11 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val args = Array(
       "validate",
       "-in",
-      Raml10.name,
+      Raml10.id,
       "-mime-in",
       `application/yaml`,
       "-p",
-      Raml10.name,
+      Raml10.id,
       "file://amf-cli/shared/src/test/resources/validations/data/references/invalid-included-rtype-broken-key.raml"
     )
     val cfg = CmdLineParser.parse(args)
@@ -150,7 +150,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val args = Array(
       "parse",
       "-in",
-      Aml.name,
+      Aml.id,
       "-mime-in",
       `application/yaml`,
       "-ds",

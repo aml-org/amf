@@ -10,7 +10,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
 import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig, Root}
-import amf.core.internal.remote.{Platform, SpecId}
+import amf.core.internal.remote.{Platform, Spec}
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
@@ -36,7 +36,7 @@ trait JsonSchemaSuite {
     val options = ParsingOptions()
     val eh      = amfConfig.errorHandlerProvider.errorHandler()
     val parsed  = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None)
-    parsed.annotations += SourceVendor(SpecId.OAS20)
+    parsed.annotations += SourceVendor(Spec.OAS20)
     val unit = wrapInDataTypeFragment(root, parsed)
     new AMFParseResult(unit, eh.getResults)
   }

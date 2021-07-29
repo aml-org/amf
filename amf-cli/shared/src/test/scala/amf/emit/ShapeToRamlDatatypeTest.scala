@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.{AsyncAPIConfiguration, RAMLConfiguration, W
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape

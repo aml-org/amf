@@ -7,11 +7,11 @@ import amf.apicontract.client.scala.{
   OASConfiguration,
   RAMLConfiguration
 }
-import amf.core.internal.remote.{AsyncApi20, Oas20, Oas30, Raml08, Raml10, SpecId}
+import amf.core.internal.remote.{AsyncApi20, Oas20, Oas30, Raml08, Raml10, Spec}
 
 object ConfigProvider {
 
-  def configFor(vendor: SpecId): AMFConfiguration = vendor match {
+  def configFor(vendor: Spec): AMFConfiguration = vendor match {
     case Raml08     => RAMLConfiguration.RAML08()
     case Raml10     => RAMLConfiguration.RAML10()
     case Oas20      => OASConfiguration.OAS20()

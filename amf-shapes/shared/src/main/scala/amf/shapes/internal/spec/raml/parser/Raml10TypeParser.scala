@@ -411,7 +411,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
               }
               Some(shape.withName(name, Annotations()))
             case _ =>
-              ctx.eh.violation(InvalidTypeDefinition, "", s"Invalid type def ${value.text} for ${Raml08.name}", value)
+              ctx.eh.violation(InvalidTypeDefinition, "", s"Invalid type def ${value.text} for ${Raml08.id}", value)
               None
           }
         }

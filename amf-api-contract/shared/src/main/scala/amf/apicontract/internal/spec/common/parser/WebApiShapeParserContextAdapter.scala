@@ -19,7 +19,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain._
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
@@ -34,7 +34,7 @@ import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 import scala.collection.mutable
 
 case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapeParserContext(ctx.eh) {
-  override def vendor: SpecId = ctx.vendor
+  override def vendor: Spec = ctx.vendor
 
   override def syntax: SpecSyntax = ctx.syntax
 

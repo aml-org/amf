@@ -1,12 +1,12 @@
 package amf.apicontract.internal.spec.raml
 
 import amf.apicontract.client.common.ProvidedMediaType
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 
 object Raml08MediaTypes {
 
   val mediaTypes = Seq(
-    SpecId.RAML08.mediaType,
+    Spec.RAML08.mediaType,
     ProvidedMediaType.Raml08 // defines yaml syntax explicitly
   )
 }

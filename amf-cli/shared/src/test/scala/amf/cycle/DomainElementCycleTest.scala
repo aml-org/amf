@@ -8,7 +8,7 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesMod
 import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
-import amf.core.internal.remote.{Hint, Mimes, SpecId}
+import amf.core.internal.remote.{Hint, Mimes, Spec}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
@@ -28,7 +28,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with P
     def sourcePath: String = directory + source
   }
   def basePath: String
-  def vendor: SpecId
+  def vendor: Spec
 
   def renderElement(source: String,
                     extractor: BaseUnit => Option[DomainElement],

@@ -36,7 +36,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
 
   def testCycleCompatibility(filePath: String,
                              from: Hint,
-                             to: SpecId,
+                             to: Spec,
                              basePath: String,
                              syntax: Option[Syntax] = None,
                              pipeline: Option[String] = None): Unit = {
@@ -64,16 +64,16 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     }
   }
 
-  private def amfConfigFrom(vendor: SpecId): AMFConfiguration = vendor match {
-    case SpecId.OAS30   => OASConfiguration.OAS30()
-    case SpecId.OAS20   => OASConfiguration.OAS20()
-    case SpecId.RAML10  => RAMLConfiguration.RAML10()
-    case SpecId.RAML08  => RAMLConfiguration.RAML08()
-    case SpecId.ASYNC20 => AsyncAPIConfiguration.Async20()
-    case _              => throw new IllegalArgumentException
+  private def amfConfigFrom(vendor: Spec): AMFConfiguration = vendor match {
+    case Spec.OAS30   => OASConfiguration.OAS30()
+    case Spec.OAS20   => OASConfiguration.OAS20()
+    case Spec.RAML10  => RAMLConfiguration.RAML10()
+    case Spec.RAML08  => RAMLConfiguration.RAML08()
+    case Spec.ASYNC20 => AsyncAPIConfiguration.Async20()
+    case _            => throw new IllegalArgumentException
   }
 
-  private def hint(vendor: SpecId) = vendor match {
+  private def hint(vendor: Spec) = vendor match {
     case Raml10 => Raml10YamlHint
     case Raml08 => Raml08YamlHint
     case Oas20  => Oas20YamlHint
@@ -83,7 +83,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
 
   private def outputReportErrors(report: AMFValidationReport) = report.toString should include(REPORT_CONFORMS)
 
-  private def validate(source: AsyncFile, spec: SpecId): Future[AMFValidationReport] = {
+  private def validate(source: AsyncFile, spec: Spec): Future[AMFValidationReport] = {
     val handler   = DefaultErrorHandler()
     val amfConfig = buildConfig(configFor(spec), None, Some(handler))
     build(source.path, source.path, amfConfig).flatMap { unit =>
@@ -99,7 +99,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
       .baseUnit
   }
 
-  private def profile(vendor: SpecId): ProfileName = vendor match {
+  private def profile(vendor: Spec): ProfileName = vendor match {
     case Raml10 => Raml10Profile
     case Raml08 => Raml08Profile
     case Oas20  => Oas20Profile

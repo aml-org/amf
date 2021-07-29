@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.context
 import amf.apicontract.internal.spec.common.parser.{CustomSyntax, SpecNode}
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.model.domain.Shape
-import amf.core.internal.remote.SpecId
+import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.yaml.model.{YMap, YNode, YPart}
 
@@ -17,7 +17,7 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
     ) {
 
   override val syntax: SpecSyntax = decorated.syntax
-  override val vendor: SpecId     = decorated.vendor
+  override val vendor: Spec       = decorated.vendor
 
   override def link(node: YNode): Either[String, YNode] = decorated.link(node)
 

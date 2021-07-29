@@ -32,7 +32,7 @@ trait RamlParsePlugin extends ApiParsePlugin {
       case Some(f: RamlFragment) => document.RamlFragmentParser(root, f)(updated).parseFragment()
       case Some(header)          => parseSpecificVersion(root, updated, header)
       case _ => // unreachable as it is covered in canParse()
-        throw new InvalidDocumentHeaderException(vendor.name)
+        throw new InvalidDocumentHeaderException(vendor.id)
     }
   }
 

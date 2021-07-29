@@ -22,7 +22,7 @@ import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.annotations.{Aliases, ExplicitField, SourceAST, SourceVendor}
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{Raml10, SpecId}
+import amf.core.internal.remote.{Raml10, Spec}
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
@@ -257,7 +257,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
   case class WebApiEmitter(api: WebApi,
                            ordering: SpecOrdering,
-                           vendor: Option[SpecId],
+                           vendor: Option[Spec],
                            references: Seq[BaseUnit] = Seq())(implicit val spec: RamlSpecEmitterContext) {
 
     protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
@@ -309,7 +309,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       ordering.sorted(result)
     }
 
-    private def endpoints(f: FieldEntry, ordering: SpecOrdering, vendor: Option[SpecId]): Seq[EntryEmitter] = {
+    private def endpoints(f: FieldEntry, ordering: SpecOrdering, vendor: Option[Spec]): Seq[EntryEmitter] = {
 
       def defaultOrder(emitters: Seq[RamlEndPointEmitter]): Seq[RamlEndPointEmitter] = {
         emitters.sorted((x: RamlEndPointEmitter, y: RamlEndPointEmitter) => {

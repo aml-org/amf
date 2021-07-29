@@ -39,7 +39,7 @@ import amf.core.client.scala.model.domain.extensions.{
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{Raml08, Raml10, SpecId}
+import amf.core.internal.remote.{Raml08, Raml10, Spec}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
@@ -279,7 +279,7 @@ class Raml10SpecEmitterContext(eh: AMFErrorHandler,
                                options: RenderOptions = RenderOptions())
     extends RamlSpecEmitterContext(eh, refEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
-  override val vendor: SpecId                     = Raml10
+  override val vendor: Spec                       = Raml10
 
   override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
@@ -300,7 +300,7 @@ class XRaml10SpecEmitterContext(eh: AMFErrorHandler,
 class Raml08SpecEmitterContext(eh: AMFErrorHandler, options: RenderOptions = RenderOptions())
     extends RamlSpecEmitterContext(eh, RamlRefEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
-  override val vendor: SpecId                     = Raml08
+  override val vendor: Spec                       = Raml08
 
   override def schemaVersion: SchemaVersion = RAML08SchemaVersion
 }

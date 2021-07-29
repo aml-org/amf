@@ -15,7 +15,7 @@ import amf.apicontract.internal.spec.oas.emitter.domain.{InfoEmitter, TagsEmitte
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.annotations.SourceVendor
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{AsyncApi20, SpecId}
+import amf.core.internal.remote.{AsyncApi20, Spec}
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter, ValueEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -77,7 +77,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
   def versionEntry(b: YDocument.EntryBuilder): Unit =
     b.asyncapi = YNode(YScalar("2.0.0"), YType.Str) // this should not be necessary but for use the same logic
 
-  case class WebApiEmitter(api: Api, ordering: SpecOrdering, vendor: Option[SpecId], references: Seq[BaseUnit]) {
+  case class WebApiEmitter(api: Api, ordering: SpecOrdering, vendor: Option[Spec], references: Seq[BaseUnit]) {
     val emitters: Seq[EntryEmitter] = {
       val fs     = api.fields
       val result = mutable.ListBuffer[EntryEmitter]()
