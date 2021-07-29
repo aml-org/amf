@@ -101,6 +101,15 @@ class GraphParsingTest extends FunSuiteCycleTests {
           Amf,
           renderOptions = Some(ro),
           directory = s"$basePath/annotations-expanded/")
+  }
 
+  test("Parse non scalar annotations") {
+    val ro = RenderOptions().withPrettyPrint.withFlattenedJsonLd
+    cycle("api.source.jsonld",
+          "api.target.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro),
+          directory = s"$basePath/annotations-non-scalar/")
   }
 }
