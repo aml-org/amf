@@ -22,8 +22,10 @@ object ShaclModelValidationPlugin extends BaseApiValidationPlugin with ShaclRepo
 
   private def validateWithShacl(unit: BaseUnit, profile: ProfileName, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+    val shaclOptions = DefaultShaclOptions(options.config.amfConfig.listeners.toSeq)
+      .withMessageStyle(profile.messageStyle)
 
-    val validator = new CustomShaclValidator(functions, profile.messageStyle)
+    val validator = new CustomShaclValidator(functions, shaclOptions)
 
     validator
       .validate(unit, options.effectiveValidations.effective.values.toSeq)
