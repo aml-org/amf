@@ -6,10 +6,10 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.rdf.RdfUnitConverter
 import amf.core.internal.remote.Vendor
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
+import amf.rdf.internal.RdfUnitConverter
 import amf.resolution.ResolutionCapabilities
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.{AsyncFunSuite, Matchers}

@@ -61,6 +61,11 @@ lazy val amlJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "amlJS")
 lazy val amlLibJVM = "com.github.amlorg" %% "amf-aml" % amlVersion
 lazy val amlLibJS  = "com.github.amlorg" %% "amf-aml_sjs0.6" % amlVersion
 
+lazy val rdfJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "rdfJVM")
+lazy val rdfLibJVM = "com.github.amlorg" %% "amf-rdf" % amlVersion
+lazy val rdfJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "rdfJS")
+lazy val rdfLibJS  = "com.github.amlorg" %% "amf-rdf.6" % amlVersion
+
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
   "Generates the validation dialect documents for the standard profiles")
@@ -111,6 +116,7 @@ lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-api-contract-javadoc.jar",
     mappings in (Compile, packageBin) += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
@@ -136,6 +142,7 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
   .dependsOn(apiContract)
+
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
@@ -204,8 +211,11 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .disablePlugins(SonarPlugin)
 
 lazy val cliJVM =
-  cli.jvm.in(file("./amf-cli/jvm"))
-lazy val cliJS = cli.js.in(file("./amf-cli/js"))
+  cli.jvm.in(file("./amf-cli/jvm")).sourceDependency(rdfJVMRef % "test", rdfLibJVM % "test")
+lazy val cliJS = cli
+  .js
+  .in(file("./amf-cli/js"))
+  .sourceDependency(rdfJSRef % "test", rdfLibJS % "test")
 
 // Tasks
 
