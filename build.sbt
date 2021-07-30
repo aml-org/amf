@@ -111,6 +111,7 @@ lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+    libraryDependencies += "org.reflections"                   % "reflections"            % "0.9.12" % Test,
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-api-contract-javadoc.jar",
     mappings in (Compile, packageBin) += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )

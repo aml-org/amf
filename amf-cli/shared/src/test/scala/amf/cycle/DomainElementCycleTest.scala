@@ -4,7 +4,6 @@ import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAP
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.render.ApiDomainElementEmitter
-import amf.apicontract.internal.convert.ApiRegister
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement}
@@ -20,7 +19,7 @@ import org.yaml.model.{YDocument, YNode}
 import java.io.StringWriter
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with BeforeAndAfterAll with PlatformSecrets {
+trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -45,8 +44,6 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }
-
-  override protected def beforeAll(): Unit = ApiRegister.register(platform)
 
   private def build(config: EmissionConfig, amfConfig: AMFConfiguration): Future[BaseUnit] = {
     amfConfig.baseUnitClient().parse(s"file://${config.sourcePath}").map(_.baseUnit)
