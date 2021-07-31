@@ -9,12 +9,12 @@ import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.Root
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.domain.{GrpcEnumParser, GrpcExtendOptionParser, GrpcMessageParser, GrpcPackageParser, GrpcServiceParser}
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.AnyShape
 import org.mulesoft.antlrast.ast.{ASTElement, Node}
 
-case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
+case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
 
   val doc: Document = Document()
 

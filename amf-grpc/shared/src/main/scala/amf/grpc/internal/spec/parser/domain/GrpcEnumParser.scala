@@ -3,14 +3,14 @@ package amf.grpc.internal.spec.parser.domain
 import amf.core.client.scala.model.domain.{DataNode, ScalarNode}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.mulesoft.antlrast.ast.Node
 
 import scala.collection.mutable
 
-case class GrpcEnumParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
+case class GrpcEnumParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val enum: ScalarShape = ScalarShape(toAnnotations(ast))
 
   def parse(adopt: ScalarShape => Unit): ScalarShape = {

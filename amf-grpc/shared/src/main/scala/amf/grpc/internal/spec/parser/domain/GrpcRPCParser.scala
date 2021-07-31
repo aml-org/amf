@@ -3,11 +3,11 @@ package amf.grpc.internal.spec.parser.domain
 import amf.apicontract.client.scala.model.domain.Operation
 import amf.core.internal.remote.Mimes
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
-case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper  {
+case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper  {
 
   def parse(adopt: Operation => Unit): Operation = {
     parseServiceMessages(adopt)
