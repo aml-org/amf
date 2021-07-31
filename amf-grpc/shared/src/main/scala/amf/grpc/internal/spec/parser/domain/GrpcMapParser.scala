@@ -3,12 +3,12 @@ package amf.grpc.internal.spec.parser.domain
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.vocabulary.Namespace.XsdTypes
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes.{IDENTIFIER, KEY_TYPE, MAP_NAME}
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.mulesoft.antlrast.ast.{ASTElement, Node}
 
-case class GrpcMapParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
+case class GrpcMapParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val propertyMap: PropertyShape = PropertyShape(toAnnotations(ast))
 
 

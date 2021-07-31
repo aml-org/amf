@@ -2,11 +2,11 @@ package amf.grpc.internal.spec.parser.domain
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.Node
 
-case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper  {
+case class GrpcServiceParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper  {
   val endpoint: EndPoint = EndPoint(toAnnotations(ast))
 
   def parse(adopt: EndPoint => Unit): EndPoint = {

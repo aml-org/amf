@@ -2,11 +2,11 @@ package amf.grpc.internal.spec.parser.domain
 
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes.{FIELD_NAME, FIELD_OPTION, FIELD_OPTIONS_ELEMENTS}
 import org.mulesoft.antlrast.ast.Node
 
-case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
+case class GrpcFieldParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val propertyShape: PropertyShape = PropertyShape(toAnnotations(ast))
 
   def parse(adopt:PropertyShape => Unit): PropertyShape = {

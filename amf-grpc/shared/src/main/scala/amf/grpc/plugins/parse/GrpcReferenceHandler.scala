@@ -2,12 +2,12 @@ package amf.grpc.plugins.parse
 
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.core.client.scala.parse.document._
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes.{IMPORT_STATEMENT, STRING_LITERAL}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 import org.mulesoft.lexer.SourceLocation
 
-class GrpcReferenceHandler() extends ReferenceHandler with AntlrASTParserHelper {
+class GrpcReferenceHandler() extends ReferenceHandler with GrpcASTParserHelper {
   val collector: CompilerReferenceCollector = CompilerReferenceCollector()
 
   override def collect(document: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
