@@ -2,12 +2,12 @@ package amf.grpc.internal.spec.parser.domain
 
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
-case class GrpcExtendOptionParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
+case class GrpcExtendOptionParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
 
   def parse(adopt: CustomDomainProperty => Unit): Unit = {
     val domain: String = parseDomain()

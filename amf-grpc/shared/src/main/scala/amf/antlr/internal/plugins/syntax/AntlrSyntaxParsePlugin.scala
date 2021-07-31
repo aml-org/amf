@@ -15,7 +15,7 @@ object AntlrSyntaxParsePlugin extends AMFSyntaxParsePlugin {
     AntlrParsedDocument(ast, None)
   }
 
-  override def mediaTypes: Seq[String] = Syntax.proto3Mimes.toSeq
+  override def mediaTypes: Seq[String] = Syntax.proto3Mimes.toSeq ++ Syntax.graphQLMimes.toSeq
 
   override val id: String = "antlr-ast"
 

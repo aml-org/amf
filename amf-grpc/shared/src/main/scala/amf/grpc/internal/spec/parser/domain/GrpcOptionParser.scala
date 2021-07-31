@@ -6,13 +6,13 @@ import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, Doma
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.utils.AmfStrings
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.{ASTElement, Node}
 
 import scala.collection.mutable
 
-case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
+case class GrpcOptionParser(ast: Node)(implicit ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val extension: DomainExtension = DomainExtension(toAnnotations(ast))
 
   def parse(adopt: DomainExtension => Unit): DomainExtension = {

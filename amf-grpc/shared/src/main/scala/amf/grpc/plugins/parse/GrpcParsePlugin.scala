@@ -1,22 +1,21 @@
 package amf.grpc.plugins.parse
 
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
-import amf.antlr.internal.plugins.syntax.AntlrSyntaxParsePlugin
 import amf.apicontract.internal.plugins.ApiParsePlugin
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{Grpc, Vendor}
+import amf.core.internal.remote.{Grpc, Syntax, Vendor}
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.document.GrpcDocumentParser
 import amf.grpc.internal.spec.parser.domain.GrpcPackageParser
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes.SYNTAX
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
-object GrpcParsePlugin extends ApiParsePlugin with AntlrASTParserHelper {
+object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
   override protected def vendor: Vendor = Grpc
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
@@ -25,7 +24,7 @@ object GrpcParsePlugin extends ApiParsePlugin with AntlrASTParserHelper {
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = new GrpcReferenceHandler()
 
-  override def mediaTypes: Seq[String] = AntlrSyntaxParsePlugin.mediaTypes
+  override def mediaTypes: Seq[String] = Syntax.proto3Mimes.toSeq
 
   override def applies(element: Root): Boolean = {
     element.parsed match {
@@ -36,7 +35,7 @@ object GrpcParsePlugin extends ApiParsePlugin with AntlrASTParserHelper {
     }
   }
 
-  def isProto3(doc: AntlrParsedDocument): Boolean = {
+  private def isProto3(doc: AntlrParsedDocument): Boolean = {
     path(doc.ast.root(), Seq(SYNTAX)) match {
       case Some(syntaxNode: Node) =>
         syntaxNode.children.exists {

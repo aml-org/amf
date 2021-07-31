@@ -4,11 +4,11 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.Document
 import amf.core.internal.parser.domain.Annotations
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
-import amf.grpc.internal.spec.parser.syntax.AntlrASTParserHelper
+import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.{ASTElement, Node}
 
-class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiContext) extends AntlrASTParserHelper {
+class GrpcPackageParser(ast: Node, doc: Document)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
   val webApi  = WebApi()
 
   def parse(): WebApi = {
