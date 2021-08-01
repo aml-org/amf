@@ -70,7 +70,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
         ctx.eh.violation(CoreValidations.UnresolvedReference,
                          "",
                          s"Cannot find link reference $fullRef",
-                         entryLike.asMap)
+                         entryLike.asMap.location)
         val errorBinding = errorBindings(fullRef, entryLike)
         nameAndAdopt(errorBinding.link(fullRef, errorBinding.annotations), entryLike.key)
     }
@@ -140,7 +140,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
       ctx.eh.violation(ParserSideValidations.NonEmptyBindingMap,
                        node,
                        s"Reserved name binding '${`type`}' must have an empty map",
-                       value)
+                       value.location)
     }
 
   protected def parseBindingVersion(binding: BindingVersion, field: Field, map: YMap)(

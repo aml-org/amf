@@ -37,7 +37,7 @@ object OAuth2FlowValidations {
       missingFields.foreach { flowField =>
         {
           val message = s"Missing ${flowField.name} for $flowName flow"
-          errorHandler.violation(MissingOAuthFlowField, flow.id, message, ast)
+          errorHandler.violation(MissingOAuthFlowField, flow.id, message, ast.location)
         }
       }
     }

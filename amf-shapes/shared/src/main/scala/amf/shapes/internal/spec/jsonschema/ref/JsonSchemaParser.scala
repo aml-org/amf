@@ -80,6 +80,6 @@ class JsonSchemaParser {
     jsonSchemaContext.eh.violation(UnableToParseJsonSchema,
                                    shapeId,
                                    s"Cannot parse JSON Schema at ${document.location}",
-                                   rootAst.value)
+                                   rootAst.value.location)
   }
 }

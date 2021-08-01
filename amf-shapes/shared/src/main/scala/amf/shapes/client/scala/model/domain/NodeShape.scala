@@ -27,6 +27,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def dependencies: Seq[PropertyDependencies]     = fields.field(Dependencies)
   def schemaDependencies: Seq[SchemaDependencies] = fields.field(NodeShapeModel.SchemaDependencies)
   def additionalPropertiesSchema: Shape           = fields.field(AdditionalPropertiesSchema)
+  def additionalPropertiesKeySchema: Shape        = fields.field(AdditionalPropertiesKeySchema)
   def propertyNames: Shape                        = fields.field(PropertyNames)
   def unevaluatedProperties: Boolean              = fields.field(UnevaluatedProperties)
   def unevaluatedPropertiesSchema: Shape          = fields.field(UnevaluatedPropertiesSchema)
@@ -47,6 +48,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
     setArray(NodeShapeModel.SchemaDependencies, dependencies)
   def withPropertyNames(shape: Shape): this.type              = set(PropertyNames, shape)
   def withAdditionalPropertiesSchema(shape: Shape): this.type = set(AdditionalPropertiesSchema, shape)
+  def withAdditionalPropertiesKeySchema(shape: Shape): this.type = set(AdditionalPropertiesKeySchema, shape)
 
   def withDependency(): PropertyDependencies = {
     val result = PropertyDependencies()

@@ -50,7 +50,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
                   .parse()
                   .add(ExternalReferenceUrl(url))
               case None =>
-                ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find response reference $url", map)
+                ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find response reference $url", map.location)
                 val errorRes: Response = ErrorResponse(url, map).link(name)
                 adopted(errorRes)
                 errorRes

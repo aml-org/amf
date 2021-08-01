@@ -231,7 +231,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                 ctx.eh.violation(InvalidParameterType,
                                  parameter.domainElement.id,
                                  "Map needed to parse a parameter declaration",
-                                 e)
+                                 e.location)
                 parameter
             }
             ctx.declarations.registerOasParameter(oasParameter)
@@ -376,7 +376,7 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
             InvalidAnnotationType,
             customDomainProperty.id,
             "Invalid value node type for annotation types parser, expected map or scalar reference",
-            ast.value
+            ast.value.location
           )
           customDomainProperty
         case _ =>
@@ -405,7 +405,7 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
           ctx.eh.violation(DeclarationNotFound,
                            customDomainProperty.id,
                            "Could not find declared annotation link in references",
-                           scalar)
+                           scalar.location)
           customDomainProperty
         }
     }
@@ -485,7 +485,7 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
                 ctx.eh.violation(DeclarationNotFound,
                                  documentation.id,
                                  s"not supported scalar $n.text for documentation item",
-                                 n)
+                                 n.location)
                 documentation
             }
       })

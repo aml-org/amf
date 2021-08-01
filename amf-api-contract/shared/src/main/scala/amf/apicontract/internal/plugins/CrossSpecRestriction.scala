@@ -1,10 +1,11 @@
 package amf.apicontract.internal.plugins
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.parse.document.{ParserContext, Reference}
+import amf.core.client.scala.parse.document.{ASTRefContainer, ParserContext, Reference}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Vendor
 import amf.core.internal.validation.CoreValidations.InvalidCrossSpec
+import org.mulesoft.lexer.SourceLocation
 
 trait CrossSpecRestriction { this: ApiParsePlugin =>
 
@@ -14,8 +15,8 @@ trait CrossSpecRestriction { this: ApiParsePlugin =>
     val possibleReferencedVendors = mediaTypes ++ validMediaTypesToReference
     optionalReferencedVendor.foreach { referencedVendor =>
       if (!possibleReferencedVendors.contains(referencedVendor.mediaType)) {
-        referenceNodes(reference).foreach(node =>
-          errorHandler.violation(InvalidCrossSpec, "", "Cannot reference fragments of another spec", node))
+        referenceNodes(reference).foreach(position =>
+          errorHandler.violation(InvalidCrossSpec, "", "Cannot reference fragments of another spec", position))
       }
     }
   }
@@ -26,5 +27,5 @@ trait CrossSpecRestriction { this: ApiParsePlugin =>
     }
   }
 
-  private def referenceNodes(reference: Reference) = reference.refs.map(_.node)
+  private def referenceNodes(reference: Reference): Seq[SourceLocation] = reference.refs.collect { case ref: ASTRefContainer => ref.pos }
 }

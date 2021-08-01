@@ -31,10 +31,10 @@
       "http://a.ml/vocabularies/core#description": "some channel",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -93,12 +93,12 @@
       "http://a.ml/vocabularies/apiContract#operationId": "some unique id",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -112,7 +112,7 @@
       "http://a.ml/vocabularies/apiContract#operationId": "subscribe operation",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation/source-map"
         }
       ]
     },
@@ -208,31 +208,31 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_6"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_6"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_4"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_5"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_5"
         }
       ]
     },
@@ -255,19 +255,19 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation/source-map/lexical/element_1"
         }
       ]
     },
@@ -344,37 +344,37 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_6",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_6",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#tag",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,6)-(17,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_4",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,6)-(14,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#guiSummary",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,6)-(13,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#operationId",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,6)-(12,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(25,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,4)-(25,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/source-map/lexical/element_5",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/some%20unique%20id/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#documentation",
       "http://a.ml/vocabularies/document-source-maps#value": "[(17,6)-(21,0)]"
     },
@@ -405,18 +405,18 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,6)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#operationId",
       "http://a.ml/vocabularies/document-source-maps#value": "[(26,6)-(27,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/publish-subscribe.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/subscribe%20operation",
       "http://a.ml/vocabularies/document-source-maps#value": "[(25,4)-(30,0)]"
     },
     {

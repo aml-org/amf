@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+import "library.proto";
+import "google/protobuf/descriptor.proto";
+
+message MyOption {
+  string a = 1;
+  string b = 2;
+}
+extend google.protobuf.FieldOptions {
+  MyOption mystruct = 5124;
+}
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.helloworld";
+option java_outer_classname = "HelloWorldProto";
+option objc_class_prefix = "HLW";
+
+package helloworld;
+
+// The greeting service definition.
+service Greeter {
+  option deprecated = true;
+  // Sends a greeting
+  rpc SayHello1 (HelloRequest) returns (HelloReply) {
+    option deprecated = true;
+  }
+  rpc SayHello2 (stream HelloRequest) returns (HelloReply) {}
+  rpc SayHello3 (HelloRequest) returns (stream HelloReply) {}
+  rpc SayHello4 (stream HelloRequest) returns (stream HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  option deprecated = true;
+  repeated string name = 1 [deprecated = true, packed = true];
+  library.Wadus wadus = 2 [(mystruct) = { a: "hello"}];
+  string other = 3 [deprecated = true];
+}
+
+message SampleMessage {
+  map<string, SearchRequest> searches = 3;
+  message NestedMessage1 {
+    string fa = 1;
+    NestedMessage2 fb = 2;
+    message NestedMessage2 {
+      string fa = 1;
+    }
+  }
+  NestedMessage1.NestedMessage2 fc = 10;
+  .helloworld.HelloRequest fd = 11;
+  oneof test_oneof {
+    string name = 4;
+    HelloRequest sub_message = 9;
+  }
+}
+
+enum Corpus {
+  UNIVERSAL = 0;
+}
+
+message SearchRequest {
+  string query = 1;
+  int32 page_number = 2;
+  int32 result_per_page = 3;
+  enum Corpus {
+    UNIVERSAL = 0;
+    WEB = 1;
+    IMAGES = 2;
+    LOCAL = 3;
+    NEWS = 4;
+    PRODUCTS = 5;
+    VIDEO = 6;
+  }
+  Corpus corpus = 4;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+  SearchRequest.Corpus other = 2;
+}

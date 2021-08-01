@@ -6,10 +6,10 @@ import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.OasTypeDefMatcher.matchType
 import amf.shapes.internal.spec.common.TypeDef
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidJsonSchemaType
-import org.yaml.model.{YMap, YScalar}
+import org.yaml.model.{IllegalTypeHandler, YMap, YScalar}
 
 object TypeDetector {
-  def detect(map: YMap)(implicit errorHandler: AMFErrorHandler): Option[TypeDef] = {
+  def detect(map: YMap)(implicit errorHandler: AMFErrorHandler with IllegalTypeHandler): Option[TypeDef] = {
 
     val detectionCriteria = ExplicitTypeCriteria()
       .chain(ObjectCriteria)
@@ -30,13 +30,13 @@ object TypeDetector {
     override def detect(map: YMap): Option[TypeDef] = first.detect(map).orElse(second.detect(map))
   }
 
-  case class ExplicitTypeCriteria()(implicit val errorHandler: AMFErrorHandler) extends TypeCriteria {
+  case class ExplicitTypeCriteria()(implicit val errorHandler: AMFErrorHandler with IllegalTypeHandler) extends TypeCriteria {
     override def detect(map: YMap): Option[TypeDef] = map.key("type").flatMap { e =>
       val typeText          = e.value.as[YScalar].text
       val formatTextOrEmpty = map.key("format").flatMap(e => e.value.toOption[YScalar].map(_.text)).getOrElse("")
       val result            = matchType(typeText, formatTextOrEmpty, UndefinedType)
       if (result == UndefinedType) {
-        errorHandler.violation(InvalidJsonSchemaType, "", s"Invalid type $typeText", e.value)
+        errorHandler.violation(InvalidJsonSchemaType, "", s"Invalid type $typeText", e.value.location)
         None
       } else Some(result)
     }

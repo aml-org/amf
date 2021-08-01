@@ -38,7 +38,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
                 ExclusivePropertiesSpecification,
                 finalRequest.id,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
-                map
+                map.location
               )
             }
             finalRequest.set(RequestModel.QueryString, tracking(q, finalRequest.id), Annotations(queryEntry))
@@ -197,7 +197,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                         ctx.eh.violation(UnsupportedExampleMediaTypeErrorSpecification,
                                          request.getOrCreate.id,
                                          s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
-                                         e))
+                                         e.location))
                   }
                 }
               case _ =>

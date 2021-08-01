@@ -8,6 +8,7 @@ import amf.core.internal.metamodel.Type.ArrayLike
 import amf.core.internal.metamodel.{Field, Obj, Type}
 import amf.core.internal.parser.domain.{ArrayNode, ScalarNode, _}
 import WellKnownAnnotation.isRamlAnnotation
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.shapes.internal.spec.datanode.DataNodeParserContext
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{DuplicatedPropertySpecification, UnexpectedRamlScalarKey}
 import org.yaml.model._
@@ -15,7 +16,7 @@ import org.yaml.model._
 import scala.collection.mutable.ListBuffer
 
 trait QuickFieldParserOps {
-  class ObjectField(target: Target, field: Field)(implicit iv: ErrorHandlingContext with DataNodeParserContext)
+  class ObjectField(target: Target, field: Field)(implicit iv: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler)
       extends (YMapEntry => Unit) {
 
     // Custom annotations
@@ -147,7 +148,7 @@ trait QuickFieldParserOps {
     }
   }
 
-  implicit class FieldOps(field: Field)(implicit iv: ErrorHandlingContext with DataNodeParserContext) {
+  implicit class FieldOps(field: Field)(implicit iv: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler) {
     def in(elem: DomainElement): ObjectField = in(SingleTarget(elem))
 
     def in(target: Target): ObjectField = new ObjectField(target, field)
@@ -167,7 +168,7 @@ trait QuickFieldParserOps {
 }
 
 /** Scalar valued raml node (based on obj node). */
-private case class RamlScalarValuedNode(obj: YMap, scalar: ScalarNode)(implicit iv: ErrorHandlingContext)
+private case class RamlScalarValuedNode(obj: YMap, scalar: ScalarNode)(implicit iv: ErrorHandlingContext with IllegalTypeHandler)
     extends ScalarNode {
 
   override def string(): AmfScalar = as(_.string())
@@ -185,7 +186,7 @@ private case class RamlScalarValuedNode(obj: YMap, scalar: ScalarNode)(implicit 
   private def as(fn: ScalarNode => AmfScalar) = fn(scalar)
 }
 
-private case class RamlSingleArrayNode(node: YNode)(implicit iv: ErrorHandlingContext) extends ArrayNode {
+private case class RamlSingleArrayNode(node: YNode)(implicit iv: ErrorHandlingContext with IllegalTypeHandler) extends ArrayNode {
 
   override def string(): AmfArray = as(ScalarNode(node).string())
 
@@ -206,7 +207,7 @@ private case class RamlSingleArrayNode(node: YNode)(implicit iv: ErrorHandlingCo
 }
 
 object SingleArrayNode {
-  def apply(node: YNode)(implicit iv: ErrorHandlingContext): ArrayNode = {
+  def apply(node: YNode)(implicit iv: ErrorHandlingContext with IllegalTypeHandler): ArrayNode = {
     node.value match {
       case _: YSequence => ArrayNode(node)
       case _            => RamlSingleArrayNode(node)
@@ -224,18 +225,18 @@ case class MapEntriesArrayNode(obj: YMap)(override implicit val iv: IllegalTypeH
 }
 
 object MapArrayNode {
-  def apply(node: YNode)(implicit iv: ErrorHandlingContext): ArrayNode = MapEntriesArrayNode(node.as[YMap])(iv.eh)
+  def apply(node: YNode)(implicit iv: ErrorHandlingContext with IllegalTypeHandler): ArrayNode = MapEntriesArrayNode(node.as[YMap])(new SYamlAMFParserErrorHandler(iv.eh))
 }
 
 object RamlScalarNode {
-  def apply(node: YNode)(implicit iv: ErrorHandlingContext): ScalarNode = {
+  def apply(node: YNode)(implicit iv: ErrorHandlingContext with IllegalTypeHandler): ScalarNode = {
     node.value match {
       case obj: YMap => createScalarValuedNode(obj)
       case _         => ScalarNode(node)
     }
   }
 
-  private def createScalarValuedNode(obj: YMap)(implicit iv: ErrorHandlingContext): RamlScalarValuedNode = {
+  private def createScalarValuedNode(obj: YMap)(implicit iv: ErrorHandlingContext with IllegalTypeHandler): RamlScalarValuedNode = {
     var values = ListBuffer[YMapEntry]()
 
     obj.entries.foreach { entry =>
@@ -251,17 +252,21 @@ object RamlScalarNode {
     }
 
     if (values.nonEmpty) {
-      values.tail.foreach(d => iv.eh.violation(DuplicatedPropertySpecification, "", s"Duplicated key 'value'.", d))
+      values.tail.foreach(d => iv.eh.violation(DuplicatedPropertySpecification, "", s"Duplicated key 'value'.", d.location))
     }
 
     // When an annotated scalar node has no value, the default is an empty node (null).
     RamlScalarValuedNode(obj,
-                         values.headOption.map(entry => ScalarNode(entry.value)).getOrElse(ScalarNode(YNode.Empty)))
+                         values.headOption.map { entry =>
+                           ScalarNode(entry.value)
+                         }.getOrElse {
+                           ScalarNode(YNode.Empty)
+                         })
   }
 
   private def unexpected(key: YNode)(implicit iv: ErrorHandlingContext): Unit =
     iv.eh.violation(UnexpectedRamlScalarKey,
                     "",
                     s"Unexpected key '$key'. Options are 'value' or annotations \\(.+\\)",
-                    key)
+                    key.location)
 }

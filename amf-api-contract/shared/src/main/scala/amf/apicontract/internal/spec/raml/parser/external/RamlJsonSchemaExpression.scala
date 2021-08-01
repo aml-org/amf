@@ -12,6 +12,7 @@ import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.domain.{Annotations, JsonParserFactory}
 import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.annotations._
@@ -140,7 +141,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         ctx.eh.violation(JsonSchemaFragmentNotFound,
                          empty.id,
                          s"could not find json schema fragment ${localPath.get} in file $basePath",
-                         origin.valueAST)
+                         origin.valueAST.location)
         empty
 
     }
@@ -164,7 +165,7 @@ case class RamlJsonSchemaExpression(key: YNode,
 
   case class RamlExternalOasLibParser(ctx: RamlWebApiContext, text: String, valueAST: YNode, path: String) {
 
-    private implicit val errorHandler: IllegalTypeHandler = ctx.eh
+    private implicit val errorHandler: IllegalTypeHandler = new SYamlAMFParserErrorHandler(ctx.eh)
 
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
@@ -273,7 +274,7 @@ case class RamlJsonSchemaExpression(key: YNode,
       case None =>
         val shape = SchemaShape()
         adopt(shape)
-        ctx.eh.violation(UnableToParseJsonSchema, shape.id, "Cannot parse JSON Schema", value)
+        ctx.eh.violation(UnableToParseJsonSchema, shape.id, "Cannot parse JSON Schema", value.location)
         shape
     }
   }

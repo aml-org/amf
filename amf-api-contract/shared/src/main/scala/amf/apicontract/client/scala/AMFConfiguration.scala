@@ -5,27 +5,13 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
-import amf.apicontract.internal.plugins.{
-  ExternalJsonYamlRefsParsePlugin,
-  JsonSchemaParsePlugin,
-  JsonSchemaRenderPlugin
-}
+import amf.apicontract.internal.plugins.{ExternalJsonYamlRefsParsePlugin, JsonSchemaParsePlugin, JsonSchemaRenderPlugin}
 import amf.apicontract.internal.spec.async.{Async20ParsePlugin, Async20RenderPlugin}
 import amf.apicontract.internal.spec.oas.{Oas20ParsePlugin, Oas20RenderPlugin, Oas30ParsePlugin, Oas30RenderPlugin}
 import amf.apicontract.internal.spec.payload.{PayloadParsePlugin, PayloadRenderPlugin}
-import amf.apicontract.internal.spec.raml.{
-  Raml08ParsePlugin,
-  Raml08RenderPlugin,
-  Raml10ParsePlugin,
-  Raml10RenderPlugin
-}
+import amf.apicontract.internal.spec.raml.{Raml08ParsePlugin, Raml08RenderPlugin, Raml10ParsePlugin, Raml10RenderPlugin}
 import amf.apicontract.internal.transformation._
-import amf.apicontract.internal.transformation.compatibility.{
-  Oas20CompatibilityPipeline,
-  Oas3CompatibilityPipeline,
-  Raml08CompatibilityPipeline,
-  Raml10CompatibilityPipeline
-}
+import amf.apicontract.internal.transformation.compatibility.{Oas20CompatibilityPipeline, Oas3CompatibilityPipeline, Raml08CompatibilityPipeline, Raml10CompatibilityPipeline}
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.validation.shacl.ShaclModelValidationPlugin
@@ -45,7 +31,7 @@ import amf.shapes.internal.entities.ShapeEntities
 
 import scala.concurrent.Future
 
-sealed trait APIConfigurationBuilder {
+trait APIConfigurationBuilder {
 
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
@@ -143,7 +129,11 @@ object OASConfiguration extends APIConfigurationBuilder {
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
 object WebAPIConfiguration {
-  def WebAPI(): AMFConfiguration = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
+  def WebAPI(): AMFConfiguration = {
+    val config = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
+    //config.merge(GRPCConfiguration.GRPC())
+    config
+  }
 }
 
 /**

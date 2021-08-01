@@ -14,8 +14,9 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.transform.stages.helpers.ResolvedNamedEntity
 import amf.core.internal.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation}
-import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration}
+import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig}
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.RamlWebApiContextType

@@ -6,6 +6,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.Clo
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Vendor
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
@@ -74,7 +75,7 @@ abstract class RamlWebApiContext(override val loc: String,
   }
 
   override def link(node: YNode): Either[String, YNode] = {
-    implicit val errorHandler: IllegalTypeHandler = eh
+    implicit val errorHandler: IllegalTypeHandler = new SYamlAMFParserErrorHandler(eh)
 
     node match {
       case _ if isInclude(node) => Left(node.as[YScalar].text)
@@ -118,7 +119,7 @@ abstract class RamlWebApiContext(override val loc: String,
     */
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo): Unit = {
 
-    implicit val errorHandler: IllegalTypeHandler = eh
+    implicit val errorHandler: IllegalTypeHandler = new SYamlAMFParserErrorHandler(eh)
 
     val node       = shape.id
     val facets     = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
@@ -151,7 +152,7 @@ abstract class RamlWebApiContext(override val loc: String,
               ClosedShapeSpecification,
               node,
               s"$subject ${errors.map(_.key.as[YScalar].text).map(e => s"'$e'").mkString(",")} not supported in a $vendor $shapeLabel node",
-              errors.head
+              errors.head.location
             ) // pointing only to the first failed error
         }
 

@@ -52,8 +52,8 @@ trait RamlParsePlugin extends ApiParsePlugin {
   private def validateJsonPointersToFragments(reference: ParsedReference, ctx: ParserContext): Unit = {
     reference.unit.sourceVendor match {
       case Some(v) if v.isRaml =>
-        reference.origin.refs.filter(_.uriFragment.isDefined).foreach { r =>
-          ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.node)
+        reference.origin.refs.filter(_.uriFragment.isDefined).foreach { case r: ASTRefContainer =>
+          ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.pos)
         }
       case _ => // Nothing to do
     }
@@ -61,25 +61,25 @@ trait RamlParsePlugin extends ApiParsePlugin {
 
   private def validateReferencesToLibraries(reference: ParsedReference, ctx: ParserContext): Unit = {
     val refs: Seq[RefContainer] = reference.origin.refs
-    val allKinds                = refs.map(_.linkType)
-    val definedKind             = if (allKinds.distinct.size > 1) UnspecifiedReference else allKinds.head
-    val nodes                   = refs.map(_.node)
+    val allKinds                = refs.map(_.linkType).toSet
+    val definedKind             = if (allKinds.size > 1) UnspecifiedReference else allKinds.head
+    val positions               = refs.collect { case n: ASTRefContainer => n.pos }
     reference.unit match {
       case _: Module => // if is a library, kind should be LibraryReference
         if (allKinds.contains(LibraryReference) && allKinds.contains(LinkReference))
-          nodes.foreach(
+          positions.foreach(
             ctx.eh
               .violation(ExpectedModule,
                          reference.unit.id,
                          "The !include tag must be avoided when referencing a library",
                          _))
         else if (!LibraryReference.eq(definedKind))
-          nodes.foreach(
+          positions.foreach(
             ctx.eh.violation(ExpectedModule, reference.unit.id, "Libraries must be applied by using 'uses'", _))
       case _ =>
         // if is not a library, kind should not be LibraryReference
         if (LibraryReference.eq(definedKind))
-          nodes.foreach(
+          positions.foreach(
             ctx.eh.violation(InvalidInclude, reference.unit.id, "Fragments must be imported by using '!include'", _))
     }
   }
@@ -99,7 +99,7 @@ trait RamlParsePlugin extends ApiParsePlugin {
                              encodes: ExternalDomainElement,
                              elementRef: Seq[BaseUnit],
                              ctx: ParserContext): Unit = {
-    origins.foreach { refContainer =>
+    origins.foreach { case refContainer: SYamlRefContainer =>
       refContainer.node match {
         case mut: MutRef =>
           elementRef.foreach(u => ctx.addSonRef(u))

@@ -59,7 +59,7 @@ case class ParametrizedDeclarationParser(
       case _ =>
         val declaration = producer("")
         declaration.add(Annotations(node))
-        ctx.eh.violation(InvalidAbstractDeclarationType, declaration.id, "Invalid model extension.", node)
+        ctx.eh.violation(InvalidAbstractDeclarationType, declaration.id, "Invalid model extension.", node.location)
         declaration
     }
   }

@@ -3,7 +3,9 @@ package amf.cli.client
 import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.cli.internal.commands._
 import amf.core.client.scala.config.event.{AMFEventReportBuilder, TimedEventListener}
+import amf.core.internal.remote.Grpc
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.grpc.client.scala.GRPCConfiguration
 
 import java.time.Instant
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -17,7 +19,7 @@ import scala.language.postfixOps
 object Main extends PlatformSecrets {
 
   private val reportBuilder               = AMFEventReportBuilder()
-  private var amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+  private var amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).merge(GRPCConfiguration.GRPC())
 
   private def enableTracing(cfg: ParserConfig, config: AMFConfiguration) = {
     if (cfg.trace) {

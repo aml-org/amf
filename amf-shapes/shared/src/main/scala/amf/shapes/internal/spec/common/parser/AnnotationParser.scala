@@ -2,7 +2,7 @@ package amf.shapes.internal.spec.common.parser
 
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
-import amf.core.client.scala.parse.document.ErrorHandlingContext
+import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParserContext}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
@@ -51,7 +51,7 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
 
 object AnnotationParser {
   def parseExtensions(parent: String, map: YMap, target: List[String] = Nil)(
-      implicit ctx: ErrorHandlingContext with DataNodeParserContext): Seq[DomainExtension] =
+      implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler): Seq[DomainExtension] =
     map.entries.flatMap { entry =>
       resolveAnnotation(entryKey(entry)).map(ExtensionParser(_, parent, entry, target).parse().add(Annotations(entry)))
     }
@@ -62,7 +62,7 @@ object AnnotationParser {
 }
 
 private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry, target: List[String] = Nil)(
-    implicit val ctx: ErrorHandlingContext with DataNodeParserContext) {
+    implicit val ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler) {
   def parse(): DomainExtension = {
     val id              = s"$parent/extension/$annotation"
     val propertyId      = s"$parent/$annotation"
@@ -94,7 +94,7 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
             parent,
             s"Annotation $annotation not allowed in target ${ramlTarget
               .getOrElse("")}, allowed targets: ${ramlAllowedTargets.mkString(", ")}",
-            entry
+            entry.location
           )
         }
       case _ =>

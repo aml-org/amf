@@ -6,6 +6,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, UnresolvedComponents}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, Declarations, FutureDeclarations, SearchScope}
+import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlAMFErrorHandler}
 import amf.core.internal.remote.Vendor
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
@@ -16,14 +17,21 @@ import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
 import amf.shapes.internal.spec.datanode.DataNodeParserContext
 import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
 import amf.shapes.internal.spec.raml.parser.{DefaultType, RamlTypeParser, TypeInfo}
-import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
+import org.mulesoft.lexer.SourceLocation
+import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, SyamlException, YError, YMap, YMapEntry, YNode, YPart}
 
 import scala.collection.mutable
 
 abstract class ShapeParserContext(eh: AMFErrorHandler)
     extends ErrorHandlingContext()(eh)
+    with ParseErrorHandler
+    with IllegalTypeHandler
     with DataNodeParserContext
     with UnresolvedComponents {
+
+  val syamleh = new SyamlAMFErrorHandler(eh)
+  override def handle[T](error: YError, defaultValue: T): T = syamleh.handle(error, defaultValue)
+  override def handle(location: SourceLocation, e: SyamlException): Unit = syamleh.handle(location, e)
 
   def toOasNext: ShapeParserContext
   def findExample(key: String, scope: SearchScope.Scope): Option[Example]

@@ -36,7 +36,7 @@ trait JsonSchemaInference {
   }
 
   private def thowUnexpectedVersionNodeType(node: YNode, errorHandler: AMFErrorHandler): Unit = {
-    errorHandler.violation(InvalidJsonSchemaVersion, "", "JSON Schema version value must be a string", node)
+    errorHandler.violation(InvalidJsonSchemaVersion, "", "JSON Schema version value must be a string", node.location)
   }
 
   private def adaptInput(schema: String): String = schema.lastOption match {

@@ -49,7 +49,7 @@ case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDom
           ExclusivePropertiesSpecification,
           exemplifiedDomainElement.id,
           s"Properties 'example' and 'examples' are exclusive and cannot be declared together",
-          map
+          map.location
         )
       case _ => // ignore
     }
@@ -81,7 +81,7 @@ case class RamlExamplesParser(map: YMap,
         ExclusivePropertiesSpecification,
         exemplified.id,
         s"Properties '$singleExampleKey' and '$multipleExamplesKey' are exclusive and cannot be declared together",
-        map
+        map.location
       )
     }
     val examples = RamlMultipleExampleParser(multipleExamplesKey, map, exemplified.withExample, options).parse() ++
@@ -126,7 +126,7 @@ case class RamlMultipleExampleParser(key: String,
                 ExamplesMustBeAMap,
                 "",
                 s"Property '$key' should be a map",
-                entry
+                entry.location
               )
           }
       }
@@ -169,7 +169,7 @@ case class RamlSingleExampleParser(key: String,
                                     InvalidFragmentType,
                                     s,
                                     errMsg,
-                                    entry.value
+                                    entry.value.location
                                 )))
             .map(e => e.link(ScalarNode(entry.value), Annotations(entry)).asInstanceOf[Example])
         case Right(node) =>
@@ -251,7 +251,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
               .parse()
               .add(ExternalReferenceUrl(fullRef))
           case None =>
-            ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
+            ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map.location)
             val errorExample =
               setName(
                 error.ErrorNamedExample(name, map).link(AmfScalar(name), Annotations(map), Annotations.synthesized()))

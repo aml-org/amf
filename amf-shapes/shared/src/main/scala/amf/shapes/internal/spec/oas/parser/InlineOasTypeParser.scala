@@ -16,10 +16,7 @@ import amf.core.internal.utils.IdCounter
 import amf.shapes.internal.annotations.{CollectionFormatFromItems, JSONSchemaId, TypePropertyLexicalInfo}
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
-  DiscriminatorValue,
-  DiscriminatorValueTarget
-}
+import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
@@ -27,30 +24,15 @@ import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.{TypeDef, _}
 import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.datanode.{DataNodeParser, ScalarNodeParser}
-import amf.shapes.internal.spec.jsonschema.parser.{
-  ContentParser,
-  Draft2019ShapeDependenciesParser,
-  Draft4ShapeDependenciesParser,
-  UnevaluatedParser
-}
+import amf.shapes.internal.spec.jsonschema.parser.{ContentParser, Draft2019ShapeDependenciesParser, Draft4ShapeDependenciesParser, UnevaluatedParser}
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
 import amf.shapes.internal.spec.raml.parser.XMLSerializerParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import org.yaml.model._
 import amf.core.internal.utils._
 import amf.core.internal.parser._
-import amf.shapes.client.scala.model.domain.{
-  AnyShape,
-  ArrayShape,
-  FileShape,
-  MatrixShape,
-  NodeShape,
-  ScalarShape,
-  SchemaShape,
-  TupleShape,
-  UnionShape,
-  UnresolvedShape
-}
+import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, FileShape, MatrixShape, NodeShape, ScalarShape, SchemaShape, TupleShape, UnionShape, UnresolvedShape}
 
 import scala.collection.mutable
 import scala.util.Try
@@ -97,7 +79,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       ctx.eh.violation(InvalidJsonSchemaType,
                        "",
                        s"Value of field 'type' must be a string, multiple types are not supported",
-                       map.key("type").get)
+                       map.key("type").get.location)
 
   protected def isOas: Boolean  = version.isInstanceOf[OASSchemaVersion]
   protected def isOas3: Boolean = version.isInstanceOf[OAS30SchemaVersion]
@@ -135,7 +117,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       case oasSchema: OASSchemaVersion if oasSchema.position.toString == "parameter" => UndefinedType
       case _                                                                         => AnyType
     }
-    TypeDetector.detect(map)(ctx.eh).getOrElse(defaultType)
+    TypeDetector.detect(map)(new SyamlAMFErrorHandler(ctx.eh)).getOrElse(defaultType)
   }
 
   private def parseDisjointUnionType(): UnionShape = {
@@ -182,7 +164,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
             ctx.eh.violation(InvalidDisjointUnionType,
                              union.id,
                              s"Invalid type for disjointUnion $other",
-                             map.key("type").get.value)
+                             map.key("type").get.value.location)
             None
         }
       } else if (node.tagType == YType.Map) {
@@ -192,7 +174,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         ctx.eh.violation(InvalidDisjointUnionType,
                          union.id,
                          s"Invalid type for disjointUnion ${node.tagType}",
-                         map.key("type").get.value)
+                         map.key("type").get.value.location)
         None
       }
     } collect { case Some(t: AmfElement) => t }
@@ -381,7 +363,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                 .map(_.get)
               shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(entry.value))
             case _ =>
-              ctx.eh.violation(InvalidUnionType, shape.id, "Unions are built from multiple shape nodes", entry.value)
+              ctx.eh.violation(InvalidUnionType, shape.id, "Unions are built from multiple shape nodes", entry.value.location)
 
           }
         }
@@ -415,7 +397,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
               ctx.eh.violation(InvalidOrType,
                                shape.id,
                                "Or constraints are built from multiple shape nodes",
-                               entry.value)
+                               entry.value.location)
 
           }
         }
@@ -444,7 +426,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
               ctx.eh.violation(InvalidXoneType,
                                shape.id,
                                "Xone constraints are built from multiple shape nodes",
-                               entry.value)
+                               entry.value.location)
 
           }
         }
@@ -482,7 +464,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     private def validateMissingItemsField(shape: Shape): Unit = {
       if (version.isInstanceOf[OAS30SchemaVersion]) {
-        ctx.eh.violation(ItemsFieldRequired, shape.id, "'items' field is required when schema type is array", map)
+        ctx.eh.violation(ItemsFieldRequired, shape.id, "'items' field is required when schema type is array", map.location)
       }
     }
   }
@@ -555,7 +537,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
 
     private def additionalItemViolation(entry: YMapEntry, msg: String): Unit = {
-      ctx.eh.violation(InvalidAdditionalItemsType, shape.id, msg, entry)
+      ctx.eh.violation(InvalidAdditionalItemsType, shape.id, msg, entry.location)
     }
   }
 
@@ -666,7 +648,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
             ctx.eh.violation(InvalidAdditionalPropertiesType,
                              shape.id,
                              "Invalid part type for additional properties node. Should be a boolean or a map",
-                             entry)
+                             entry.location)
         }
       }
 
@@ -774,7 +756,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
             ctx.eh.violation(InvalidRequiredArrayForSchemaVersion,
                              shape.id,
                              "Required arrays of properties not supported in JSON Schema below version draft-4",
-                             field.value)
+                             field.value.location)
             defaultValue
           case (_, JSONSchemaDraft3SchemaVersion)        => defaultValue
           case (YType.Seq, JSONSchemaUnspecifiedVersion) => parse(field)
@@ -792,7 +774,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           ctx.eh.violation(DuplicateRequiredItem,
                            shape.id,
                            s"'$name' is duplicated in 'required' property",
-                           nodes.last)
+                           nodes.last.location)
         case _ => // ignore
       }
 
@@ -803,7 +785,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         case Some(entry) =>
           (NodeShapeModel.Discriminator in shape)(entry)
         case None =>
-          ctx.eh.violation(DiscriminatorNameRequired, shape.id, s"Discriminator must have a propertyName defined", map)
+          ctx.eh.violation(DiscriminatorNameRequired, shape.id, s"Discriminator must have a propertyName defined", map.location)
       }
       map.key("mapping", parseMappings)
       ctx.closedShape(shape.id, map, "discriminator")
@@ -845,7 +827,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                                              shouldLink = false)
                 .withName(key, Annotations())
                 .withSupportsRecursion(true)
-              tmpShape.unresolved(definitionName, entry.value, "warning")(ctx)
+              tmpShape.unresolved(definitionName, Nil, Some(entry.value.location), "warning")(ctx)
               tmpShape.withContext(ctx)
               val encodedKey = key.toString.urlComponentEncoded
               tmpShape.withId(s"${shape.id}/discriminator/$encodedKey/unresolved")
@@ -912,7 +894,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                   ctx.eh.warning(InvalidRequiredBooleanForSchemaVersion,
                                  property.id,
                                  "Required property boolean value is only supported in JSON Schema draft-3",
-                                 entry)
+                                 entry.location)
                 }
                 val required =
                   amf.core.internal.parser.domain.ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
@@ -946,7 +928,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
               ctx.eh.warning(ReadOnlyPropertyMarkedRequired,
                              property.id,
                              "Read only property should not be marked as required by a schema",
-                             readOnlyEntry)
+                             readOnlyEntry.location)
             }
           }
         ))
@@ -1044,7 +1026,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           entry.value.to[String] match {
             case Right(str) => shape.withRaw(str)
             case _ =>
-              errorHandler.violation(InvalidSchemaType, shape.id, "Cannot parse non string schema shape", entry.value)
+              errorHandler.violation(InvalidSchemaType, shape.id, "Cannot parse non string schema shape", entry.value.location)
               shape.withRaw("")
           }
         }
@@ -1058,7 +1040,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
               errorHandler.violation(InvalidMediaTypeType,
                                      shape.id,
                                      "Cannot parse non string schema shape",
-                                     entry.value)
+                                     entry.value.location)
               shape.withMediaType("*/*")
           }
         }

@@ -118,7 +118,7 @@ case class RamlXmlSchemaExpression(key: YNode,
     ctx.eh.violation(InvalidXmlSchemaType,
                      shape.id,
                      "Cannot parse XML Schema expression out of a non string value",
-                     value)
+                     value.location)
   }
 
   private def emptySchemaShape = {

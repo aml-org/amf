@@ -16,10 +16,10 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
   def run(parserConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val res: Future[Any] = for {
-      _         <- AMFInit(configuration)
-      model     <- parseInput(parserConfig, configuration)
-      _         <- checkValidation(parserConfig, model, configuration)
-      model     <- resolve(parserConfig, model, configuration)
+      _ <- AMFInit(configuration)
+      model <- parseInput(parserConfig, configuration)
+      _ <- checkValidation(parserConfig, model, configuration)
+      model <- resolve(parserConfig, model, configuration)
       generated <- generateOutput(parserConfig, model, configuration)
     } yield {
       generated
