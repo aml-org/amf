@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#20",
+        "@id": "#19",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -33,7 +33,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#21",
+            "@id": "#20",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -45,7 +45,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#22",
+                "@id": "#21",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -57,7 +57,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#23",
+                    "@id": "#22",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -65,7 +65,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#14",
+                        "@id": "#9",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -99,7 +99,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#14": "[(14,6)-(22,0)]"
+                            "#9": "[(14,6)-(22,0)]"
                           }
                         }
                       }
@@ -108,7 +108,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#22": "[(12,2)-(22,0)]"
+                    "#21": "[(12,2)-(22,0)]"
                   }
                 }
               }
@@ -116,12 +116,12 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(11,0)-(11,4)]",
-                "#21": "[(11,0)-(22,0)]"
+                "#20": "[(11,0)-(22,0)]"
               }
             }
           },
           {
-            "@id": "#24",
+            "@id": "#23",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -133,7 +133,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#25",
+                "@id": "#24",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -145,7 +145,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#26",
+                    "@id": "#25",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -196,7 +196,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#25": "[(23,2)-(31,13)]"
+                    "#24": "[(23,2)-(31,13)]"
                   }
                 }
               }
@@ -204,7 +204,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(22,0)-(22,4)]",
-                "#24": "[(22,0)-(31,13)]"
+                "#23": "[(22,0)-(31,13)]"
               }
             }
           }
@@ -217,11 +217,11 @@
           "lexical": {
             "apiContract:contentType": "[(4,0)-(6,0)]",
             "core:name": "[(2,0)-(4,0)]",
-            "#20": "[(2,0)-(31,13)]",
+            "#19": "[(2,0)-(31,13)]",
             "apiContract:accepts": "[(4,0)-(6,0)]"
           },
           "source-vendor": {
-            "#20": "RAML 1.0"
+            "#19": "RAML 1.0"
           }
         }
       }
@@ -561,12 +561,12 @@
                 "#11": ""
               },
               "tracked-element": {
-                "#11": "amf://id#14"
+                "#11": "amf://id#9"
               }
             }
           },
           {
-            "@id": "#15",
+            "@id": "#14",
             "@type": [
               "apiContract:Example",
               "doc:DomainElement"
@@ -583,7 +583,7 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "#16",
+                "@id": "#15",
                 "@type": [
                   "data:Object",
                   "data:Node",
@@ -591,7 +591,7 @@
                 ],
                 "data:ok": [
                   {
-                    "@id": "#17",
+                    "@id": "#16",
                     "@type": [
                       "data:Scalar",
                       "data:Node",
@@ -618,7 +618,7 @@
                         "shacl:datatype": "true"
                       },
                       "lexical": {
-                        "#17": "[(30,32)-(30,36)]"
+                        "#16": "[(30,32)-(30,36)]"
                       }
                     }
                   }
@@ -634,10 +634,10 @@
                   },
                   "lexical": {
                     "data:ok": "[(30,25)-(30,36)]",
-                    "#16": "[(29,23)-(31,24)]"
+                    "#15": "[(29,23)-(31,24)]"
                   },
                   "parsed-json-example": {
-                    "#16": "{\n  \"ok\" : true\n}"
+                    "#15": "{\n  \"ok\" : true\n}"
                   }
                 }
               }
@@ -653,13 +653,13 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "#15": "[(28,10)-(31,13)]"
+                "#14": "[(28,10)-(31,13)]"
               },
               "local-element": {
-                "#15": ""
+                "#14": ""
               },
               "tracked-element": {
-                "#15": "amf://id#10"
+                "#14": "amf://id#10"
               }
             }
           }
@@ -669,7 +669,7 @@
             "shacl:closed": "true"
           },
           "resolved-link": {
-            "#3": "amf://id#19"
+            "#3": "amf://id#18"
           },
           "lexical": {
             "shacl:name": "[(7,2)-(7,10)]",

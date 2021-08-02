@@ -22,6 +22,7 @@ import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnusedBaseUriParameter
 import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.UnequalMediaTypeDefinitionsInExtendsPayloads
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
+import amf.shapes.internal.domain.resolution.ExampleTracking
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel.Examples
@@ -55,7 +56,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
             merged = handleExistingFieldEntries(main, mainFieldEntry, otherFieldEntry, ctx.eh)
         }
     }
-
+    fixPayloadTrackedElements(main, other)
     main
   }
 
@@ -214,6 +215,14 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     }
   }
 
+  /** after payloads are merged tracked elements present in 'other' are adjusted to track 'main' */
+  def fixPayloadTrackedElements[T <: DomainElement](main: T, other: T): Unit = {
+    (main, other) match {
+      case (main: Payload, other: Payload) => ExampleTracking.replaceTracking(main.schema, main, other.id)
+      case _ =>
+    }
+  }
+
   protected case class Adopted() {
     private val adopted: mutable.Set[String] = mutable.Set()
 
@@ -248,7 +257,6 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       case array: AmfArray =>
         AmfArray(array.values.map(adoptInner(parentId, _, adopted)), array.annotations)
       case element: DomainElement if notAdopted(element) && !isDeclaredShape(element) =>
-        val previousId = element.id
         adoptElementByType(element, parentId)
         adopted += element.id
         element.fields.foreach {
@@ -257,12 +265,6 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
               adoptInner(element.id, value.value, adopted)
             }
         }
-
-        element match {
-          case p: Payload => tracking(p.schema, element, if (element.id != previousId) Some(previousId) else None)
-          case _          =>
-        }
-
         element
       case _ => target
     }

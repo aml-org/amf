@@ -18,7 +18,7 @@ object ExampleTracking {
     case _ => // ignore
   }
 
-  def replaceTracking(shape: Shape, newId: AmfObject, mustExistId: String): Shape = {
+  def trackIfExists(shape: Shape, newId: AmfObject, mustExistId: String): Shape = {
     shape match {
       case a: AnyShape =>
         a.examples.foreach {
@@ -31,6 +31,21 @@ object ExampleTracking {
               .foreach { _ =>
                 example.annotations += tracked(newId, example, None)
               }
+        }
+      case _ => // ignore
+    }
+    shape
+  }
+
+  def replaceTracking(shape: Shape, newId: AmfObject, mustExistId: String): Shape = {
+    shape match {
+      case a: AnyShape =>
+        a.examples.foreach {
+          example =>
+            example.annotations
+              .find(classOf[TrackedElement])
+              .filter(_.parents.contains(mustExistId))
+              .foreach { _ => example.annotations += tracked(newId, example, Some(mustExistId)) }
         }
       case _ => // ignore
     }

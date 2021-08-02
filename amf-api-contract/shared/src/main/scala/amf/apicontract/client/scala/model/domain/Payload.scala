@@ -7,8 +7,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainE
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.model.domain.ScalarShape
-import amf.shapes.client.scala.model.domain.{ArrayShape, ExemplifiedDomainElement, NodeShape, ScalarShape}
+import amf.shapes.client.scala.model.domain.{ArrayShape, ExampleTracking, ExemplifiedDomainElement, NodeShape, ScalarShape}
 import org.yaml.model.YPart
 
 /**
@@ -75,6 +74,15 @@ case class Payload(fields: Fields, annotations: Annotations)
     }
 
     cloned.asInstanceOf[this.type]
+  }
+
+  /** Call after object has been adopted by specified parent. */
+  override def adopted(parent: String, cycle: Seq[String]): Payload.this.type = {
+    val oldId = this.id
+    super.adopted(parent, cycle)
+    if(this.id != oldId)
+      ExampleTracking.replaceTracking(this.schema, this, oldId)
+    this
   }
 
   override def meta: PayloadModel.type = PayloadModel
