@@ -134,7 +134,8 @@ class MediaTypeResolutionStage(profile: ProfileName,
 
   /** Add tracked annotation only to examples that tracked the old payload with no media type. */
   private def replaceTrackedAnnotation(payload: Payload, newPayloadId: AmfObject): Shape =
-    ExampleTracking.replaceTracking(payload.schema, newPayloadId, payload.id)
+  // originally was defined as replace but renamed method to actual behaviour
+    ExampleTracking.trackIfExists(payload.schema, newPayloadId, payload.id)
 
   def overrideWith(root: Option[Seq[String]], overrider: Option[Seq[String]]): Option[Seq[String]] =
     overrider.orElse(root).filter(_.nonEmpty)
