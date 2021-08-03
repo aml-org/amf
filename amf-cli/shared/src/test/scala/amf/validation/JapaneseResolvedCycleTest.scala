@@ -70,7 +70,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit =
-    config.renderTarget.vendor match {
+    config.renderTarget.spec match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         amfConfig
           .withErrorHandlerProvider(() => UnhandledErrorHandler)

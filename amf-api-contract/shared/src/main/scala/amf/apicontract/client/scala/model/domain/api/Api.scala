@@ -11,7 +11,7 @@ import amf.apicontract.client.scala.model.domain.{
 }
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.NamedDomainElement
-import amf.core.internal.annotations.{SourceVendor, SynthesizedField}
+import amf.core.internal.annotations.{SourceSpec, SynthesizedField}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel.Description
 import amf.core.internal.parser.domain.{Annotations, Fields}
@@ -90,7 +90,7 @@ abstract class Api(fields: Fields, annotations: Annotations)
 
   // todo: should source vendor be in the base unit?
 
-  def sourceVendor: Option[Spec] = annotations.find(classOf[SourceVendor]).map(a => a.vendor)
+  def sourceVendor: Option[Spec] = annotations.find(classOf[SourceSpec]).map(a => a.spec)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String = "#/api"

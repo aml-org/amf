@@ -75,7 +75,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
       val client        = config.baseUnitClient()
       val candidates: Future[Seq[ValidationCandidate]] = for {
         library <- client.parse(payloadsPath + libraryFile).map(_.baseUnit)
-        payload <- payloadClient.parse(payloadsPath + payloadFile, hint.vendor.mediaType).map(_.baseUnit)
+        payload <- payloadClient.parse(payloadsPath + payloadFile).map(_.baseUnit)
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
         ValidationTransformationPipeline(AmfProfile, library, UnhandledErrorHandler)

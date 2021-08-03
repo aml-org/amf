@@ -10,15 +10,15 @@ import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{Oas20, Spec}
+import amf.core.internal.remote.{Mimes, Oas20, Spec}
 
 object Oas20ParsePlugin extends OasParsePlugin {
 
-  override def vendor: Spec = Oas20
+  override def spec: Spec = Oas20
 
   override def applies(element: Root): Boolean = OasHeader(element).exists(_ != Oas30Header)
 
-  override def mediaTypes: Seq[String] = Oas20MediaTypes.mediaTypes
+  override def mediaTypes: Seq[String] = Seq(Mimes.`application/json`, Mimes.`application/yaml`)
 
   override protected def parseSpecificVersion(root: Root)(implicit ctx: OasWebApiContext): BaseUnit =
     OasHeader(root) match {
@@ -27,7 +27,7 @@ object Oas20ParsePlugin extends OasParsePlugin {
       case Some(Oas20Header)    => document.Oas2DocumentParser(root).parseDocument()
       case Some(f)              => OasFragmentParser(root, Some(f)).parseFragment()
       case _ => // unreachable as it is covered in canParse()
-        throw new InvalidDocumentHeaderException(vendor.id)
+        throw new InvalidDocumentHeaderException(spec.id)
     }
 
   override protected def context(loc: String,

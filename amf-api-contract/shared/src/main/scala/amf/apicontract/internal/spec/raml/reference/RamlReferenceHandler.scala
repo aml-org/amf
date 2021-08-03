@@ -32,11 +32,11 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
       case Right(document) =>
         val parsed = SyamlParsedDocument(document)
 
-        val refs              = new RamlReferenceHandler(plugin).collect(parsed, compilerContext.parserContext)
-        val updated           = compilerContext.forReference(reference.origin.url)
-        val allowedMediaTypes = plugin.validMediaTypesToReference ++ plugin.mediaTypes
+        val refs         = new RamlReferenceHandler(plugin).collect(parsed, compilerContext.parserContext)
+        val updated      = compilerContext.forReference(reference.origin.url)
+        val allowedSpecs = plugin.validSpecsToReference :+ plugin.spec
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, allowedMediaTypes, allowRecursiveRefs = true) // why would this always allow recursions?
+          r.resolve(updated, allowedSpecs, allowRecursiveRefs = true) // why would this always allow recursions?
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)

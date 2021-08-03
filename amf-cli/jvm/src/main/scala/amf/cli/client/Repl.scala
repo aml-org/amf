@@ -37,7 +37,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
     val client = config.baseUnitClient()
 
     client
-      .parse(url, vendor.mediaType)
+      .parse(url)
       .asFuture
       .map({
         case r: AMFResult if r.baseUnit.isInstanceOf[Document] => callback(Some(r.baseUnit.asInstanceOf[Document]))

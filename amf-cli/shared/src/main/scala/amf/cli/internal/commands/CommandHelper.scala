@@ -4,11 +4,10 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.aml.internal.utils.VocabulariesRegister
 import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, OASConfiguration, RAMLConfiguration}
 import amf.apicontract.internal.convert.ApiRegister
+import amf.core.client.common.transform._
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.common.transform._
-import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.parser.{AMFCompiler, CompilerConfiguration}
 import amf.core.internal.remote.{Cache, Context, Platform, Spec}
 
@@ -61,7 +60,6 @@ trait CommandHelper {
       val inputFile = ensureUrl(config.input.get)
       val parsed = AMFCompiler(
         inputFile,
-        Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         Context(platform),
         cache = Cache(),
         CompilerConfiguration(configuration)

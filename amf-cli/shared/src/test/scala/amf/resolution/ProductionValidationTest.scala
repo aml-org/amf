@@ -35,6 +35,6 @@ class ProductionValidationTest extends RamlResolutionTest {
   }
 
   test("Override enum in extension raml to raml") {
-    cycle("extension.raml", "result.raml", Raml10YamlHint, Raml10, directory = basePath + "override-enum/")
+    cycle("extension.raml", "result.raml", Raml10YamlHint, Raml10YamlHint, directory = basePath + "override-enum/")
   }
 }

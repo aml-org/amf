@@ -77,6 +77,6 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
       (document, parsedSpec) => {
         document shouldBe a[Document]
         vendor shouldEqual parsedSpec
-        document.sourceVendor shouldEqual Some(parsedSpec)
+        document.sourceSpec shouldEqual Some(parsedSpec)
     }
 }

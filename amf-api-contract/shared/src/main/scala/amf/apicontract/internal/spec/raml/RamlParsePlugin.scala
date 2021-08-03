@@ -12,6 +12,7 @@ import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment, Module}
 import amf.core.client.scala.model.domain.ExternalDomainElement
 import amf.core.client.scala.parse.document._
 import amf.core.internal.parser.Root
+import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
 import org.yaml.model.YNode
 import org.yaml.model.YNode.MutRef
@@ -32,7 +33,7 @@ trait RamlParsePlugin extends ApiParsePlugin {
       case Some(f: RamlFragment) => document.RamlFragmentParser(root, f)(updated).parseFragment()
       case Some(header)          => parseSpecificVersion(root, updated, header)
       case _ => // unreachable as it is covered in canParse()
-        throw new InvalidDocumentHeaderException(vendor.id)
+        throw new InvalidDocumentHeaderException(spec.id)
     }
   }
 
@@ -50,7 +51,7 @@ trait RamlParsePlugin extends ApiParsePlugin {
   }
 
   private def validateJsonPointersToFragments(reference: ParsedReference, ctx: ParserContext): Unit = {
-    reference.unit.sourceVendor match {
+    reference.unit.sourceSpec match {
       case Some(v) if v.isRaml =>
         reference.origin.refs.filter(_.uriFragment.isDefined).foreach { r =>
           ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.node)
@@ -111,4 +112,6 @@ trait RamlParsePlugin extends ApiParsePlugin {
       }
     }
   }
+
+  override def validSpecsToReference: Seq[Spec] = super.validSpecsToReference :+ spec
 }

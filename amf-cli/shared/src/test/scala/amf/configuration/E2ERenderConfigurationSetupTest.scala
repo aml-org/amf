@@ -13,7 +13,6 @@ class E2ERenderConfigurationSetupTest extends ConfigurationSetupTest with FileAs
   implicit override val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val usedMediaTypes = Seq(`application/ld+json`, `application/yaml`, `application/json`)
-  val someUnusedMediaTypes = Seq(`application/raml+yaml`, `application/asyncapi`, `application/swagger+json`)
 
   case class ExpectedRenderCase(config: AMFConfiguration, model: BaseUnit, mediaTypeAndGolden: (String, String))
   case class ErrorRenderCase(config: AMFConfiguration, model: BaseUnit, mediaType: String)
@@ -54,7 +53,7 @@ class E2ERenderConfigurationSetupTest extends ConfigurationSetupTest with FileAs
 
   def generateRenderCases(config: AMFConfiguration, model: BaseUnit, mediaTypeAndGoldens: Seq[(String, String)]): Seq[Any] = {
     val expectedCases = mediaTypeAndGoldens.map(tuple => ExpectedRenderCase(config, model, tuple))
-    val allMediaTypes = someUnusedMediaTypes ++ usedMediaTypes
+    val allMediaTypes = usedMediaTypes
     val errorMediaTypes = allMediaTypes.diff(mediaTypeAndGoldens.map(_._1))
     val errorCases = errorMediaTypes.map(media => ErrorRenderCase(config, model, media))
     expectedCases ++ errorCases

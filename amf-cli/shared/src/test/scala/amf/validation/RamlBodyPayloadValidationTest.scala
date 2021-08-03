@@ -98,7 +98,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                          payload: String,
                          mediaType: Option[String],
                          givenHint: Hint): Future[AMFValidationReport] = {
-    val config = configFor(givenHint.vendor)
+    val config = configFor(givenHint.spec)
     val client = config.baseUnitClient()
     for {
       model <- client

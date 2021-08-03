@@ -2,6 +2,7 @@ package amf.apicontract.client.platform
 
 import amf.aml.client.platform.BaseAMLElementClient
 import amf.aml.client.platform.model.document.Dialect
+import amf.aml.client.platform.render.AmlDomainElementEmitter
 import amf.apicontract.client.platform.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.platform.model.domain.{EndPoint, Operation}
 import amf.apicontract.client.platform.transform.AbstractElementTransformer
@@ -37,11 +38,7 @@ class AMFElementClient private[amf] (private val _internal: InternalAMFElementCl
 
   def toRamlDatatype(element: AnyShape): String = RamlShapeRenderer.toRamlDatatype(element, getConfiguration())
 
-  // For Typescript compatibility
-  override def renderToBuilder[T](element: DomainElement, emissionStructure: Dialect, builder: DocBuilder[T]): Unit =
-    super.renderToBuilder(element, emissionStructure, builder)
-
-  def renderToBuilder[T](element: DomainElement, mediaType: String, builder: DocBuilder[T]): Unit =
+  override def renderToBuilder[T](element: DomainElement, builder: DocBuilder[T]): Unit =
     AMFElementRenderer.renderToBuilder(element, builder, getConfiguration())
 
   /** Get this resource type as an endpoint. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */

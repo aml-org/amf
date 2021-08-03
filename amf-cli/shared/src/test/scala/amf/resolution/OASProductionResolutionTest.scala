@@ -16,7 +16,7 @@ class OASProductionResolutionTest extends ResolutionTest {
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    if (config.renderTarget.vendor.equals(Amf) && config.transformWith.isEmpty) {
+    if (config.renderTarget.spec.equals(Amf) && config.transformWith.isEmpty) {
       TransformationPipelineRunner(UnhandledErrorHandler).run(unit, Oas20TransformationPipeline())
     } else super.transform(unit, config, amfConfig)
   }

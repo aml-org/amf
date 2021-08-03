@@ -13,12 +13,12 @@ import amf.core.client.scala.parse.document.{
   SyamlParsedDocument
 }
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.Spec
+import amf.core.internal.remote.{Mimes, Spec}
 import org.yaml.model.{YMap, YScalar}
 
 object PayloadParsePlugin extends AMFParsePlugin {
 
-  override val id: String = Spec.PAYLOAD.id
+  override def spec: Spec = Spec.PAYLOAD
 
   override def applies(element: Root): Boolean =
     notRAML(element) && notOAS(element) && notAsync(element) // any document can be parsed as a Payload
@@ -33,9 +33,7 @@ object PayloadParsePlugin extends AMFParsePlugin {
     case _ => throw UnsupportedParsedDocumentException
   }
 
-  override def mediaTypes: Seq[String] = PayloadMediaTypes.mediaTypes
-
-  override def validMediaTypesToReference: Seq[String] = Nil
+  override def mediaTypes: Seq[String] = Seq(Mimes.`application/json`, Mimes.`application/yaml`)
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = SimpleReferenceHandler
 

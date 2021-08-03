@@ -5,12 +5,14 @@ import amf.core.internal.remote.{AmlDialectSpec, Spec}
 import amf.core.internal.remote.Spec.AML
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class E2EDialectParserConfigurationSetupTest extends AsyncFunSuite with Matchers {
 
   private val baseConfig = AMLConfiguration.predefined()
   private val base       = "file://amf-cli/shared/src/test/resources/configuration/"
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("AML Dialect Instance belongs to spec defined by Dialect name and version") {
     baseConfig.withDialect(s"${base}dialect.yaml").flatMap { config =>
@@ -39,7 +41,7 @@ class E2EDialectParserConfigurationSetupTest extends AsyncFunSuite with Matchers
                                         config: AMLConfiguration = baseConfig): Future[Assertion] = {
     config.baseUnitClient().parse(base + file).map { result =>
       result.results should have length 0
-      result.baseUnit.sourceVendor shouldEqual Some(spec)
+      result.baseUnit.sourceSpec shouldEqual Some(spec)
     }
   }
 }

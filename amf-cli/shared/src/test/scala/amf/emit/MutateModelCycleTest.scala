@@ -34,7 +34,7 @@ class MutateModelCycleTest extends FunSuiteCycleTests {
                            transform: BaseUnit => BaseUnit,
                            directory: String = basePath): Future[Assertion] = {
     val config    = CycleConfig(source, golden, hint, target, directory, None, None)
-    val amfConfig = buildConfig(configFor(target.vendor), None, None)
+    val amfConfig = buildConfig(configFor(target.spec), None, None)
     build(config, amfConfig)
       .map(transform(_))
       .map(render(_, config, amfConfig))

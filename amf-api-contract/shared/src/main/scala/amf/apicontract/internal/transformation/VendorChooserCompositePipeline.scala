@@ -25,7 +25,7 @@ object VendorChooserCompositePipeline {
 case class VendorChooserTransformationStep(name: String, pipelines: Map[String, TransformationPipeline])
     extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
-    model.sourceVendor
+    model.sourceSpec
       .flatMap(vendor => pipelines.get(vendor.id))
       .map(pipeline => TransformationPipelineRunner(errorHandler).run(model, pipeline)) match {
       case None =>
@@ -43,7 +43,7 @@ case class VendorChooserTransformationStep(name: String, pipelines: Map[String, 
   }
 
   private def getErrorMessage(model: BaseUnit): String = {
-    model.sourceVendor
+    model.sourceSpec
       .map(vendor => s"Cannot find transformation pipeline with name $name and spec ${vendor.id}")
       .getOrElse(s"Cannot decide which pipeline to use when BaseUnit doesn't have the spec defined")
   }

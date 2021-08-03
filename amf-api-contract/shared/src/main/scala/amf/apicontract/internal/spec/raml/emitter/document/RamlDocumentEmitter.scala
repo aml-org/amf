@@ -19,7 +19,7 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, 
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
-import amf.core.internal.annotations.{Aliases, ExplicitField, SourceAST, SourceVendor}
+import amf.core.internal.annotations.{Aliases, ExplicitField, SourceAST, SourceSpec}
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.{Raml10, Spec}
@@ -236,9 +236,9 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
     case _                  => throw new Exception("BaseUnit doesn't encode a WebApi.")
   }
   def apiEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
-    val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    WebApiEmitter(model, ordering, vendor, document.references).emitters
+    val model = retrieveWebApi()
+    val spec  = model.annotations.find(classOf[SourceSpec]).map(_.spec)
+    WebApiEmitter(model, ordering, spec, document.references).emitters
   }
 
   def emitDocument(): YDocument = {
@@ -258,7 +258,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
   case class WebApiEmitter(api: WebApi,
                            ordering: SpecOrdering,
                            vendor: Option[Spec],
-                           references: Seq[BaseUnit] = Seq())(implicit val spec: RamlSpecEmitterContext) {
+                           references: Seq[BaseUnit] = Seq()) {
 
     protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
     val emitters: Seq[EntryEmitter] = {

@@ -4,7 +4,7 @@ import amf.apicontract.internal.spec.common.parser.{ReferencesParser, WebApiShap
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.document.Module
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.parser.{Root, YNodeLikeOps}
 import amf.core.internal.parser.domain.Annotations
@@ -18,7 +18,7 @@ case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx)) {
 
   def parseModule(): Module = {
-    val sourceVendor = SourceVendor(ctx.vendor)
+    val sourceVendor = SourceSpec(ctx.vendor)
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
       .adopted(root.location)

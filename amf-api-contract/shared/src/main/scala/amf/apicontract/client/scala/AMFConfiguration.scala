@@ -5,11 +5,10 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
-import amf.apicontract.internal.plugins.{ExternalJsonYamlRefsParsePlugin, JsonSchemaParsePlugin}
+import amf.apicontract.internal.plugins.{ApiContractFallbackPlugin, JsonSchemaParsePlugin}
 import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20ParsePlugin, Async20RenderPlugin}
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.payload.PayloadParsePlugin
-import amf.apicontract.internal.validation.payload.JsonSchemaShapePayloadValidationPlugin
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
 import amf.apicontract.internal.transformation.compatibility.{
@@ -19,7 +18,7 @@ import amf.apicontract.internal.transformation.compatibility.{
   Raml10CompatibilityPipeline
 }
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
-import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
+import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.validation.shacl.{CustomShaclModelValidationPlugin, ViolationModelValidationPlugin}
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
@@ -29,6 +28,7 @@ import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
@@ -60,13 +60,11 @@ sealed trait APIConfigurationBuilder {
       configuration.listeners,
       configuration.options
     ).withPlugins(
-      List(
-        ExternalJsonYamlRefsParsePlugin,
-        PayloadParsePlugin,
-        JsonSchemaParsePlugin,
-        PayloadValidationPlugin(),
-        JsonSchemaShapePayloadValidationPlugin
-      ))
+        List(
+          PayloadValidationPlugin(),
+          JsonSchemaShapePayloadValidationPlugin
+        ))
+      .withFallback(ApiContractFallbackPlugin())
     result
   }
 }
@@ -168,6 +166,7 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
 
   def WebAPI(): AMFConfiguration =
     common()
+      .withFallback(ApiContractFallbackPlugin(false))
       .withPlugins(
         List(Oas30ParsePlugin,
              Oas20ParsePlugin,
@@ -238,6 +237,8 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withUnitCache(cache: UnitCache): AMFConfiguration =
     super._withUnitCache(cache)
 
+  override def withFallback(plugin: DomainParsingFallback): AMFConfiguration = super._withFallback(plugin)
+
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMFConfiguration =
     super._withPlugin(amfPlugin)
 
@@ -274,8 +275,8 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withDialect(dialect: Dialect): AMFConfiguration =
     super.withDialect(dialect).asInstanceOf[AMFConfiguration]
 
-  override def forInstance(url: String, mediaType: Option[String] = None): Future[AMFConfiguration] =
-    super.forInstance(url, mediaType).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+  override def forInstance(url: String): Future[AMFConfiguration] =
+    super.forInstance(url).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMFConfiguration =
     super._withExecutionEnvironment(executionEnv)

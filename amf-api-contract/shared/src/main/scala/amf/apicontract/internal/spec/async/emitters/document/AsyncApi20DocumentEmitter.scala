@@ -13,7 +13,7 @@ import amf.apicontract.internal.spec.common.emitter
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SecurityRequirementsEmitter}
 import amf.apicontract.internal.spec.oas.emitter.domain.{InfoEmitter, TagsEmitter}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.{AsyncApi20, Spec}
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter, ValueEmitter, traverse}
@@ -31,9 +31,9 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
   protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
 
   def emitWebApi(ordering: SpecOrdering): Seq[EntryEmitter] = {
-    val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    val api    = WebApiEmitter(model, ordering, vendor, Seq())
+    val model = retrieveWebApi()
+    val spec  = model.annotations.find(classOf[SourceSpec]).map(_.spec)
+    val api   = WebApiEmitter(model, ordering, spec, Seq())
     api.emitters
   }
 

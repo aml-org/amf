@@ -104,8 +104,8 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
   }
 
   private def renderToString(unit: BaseUnit, target: Hint): String = {
-    val config = ConfigProvider.configFor(target.vendor)
-    new AMFSerializer(unit, target.syntax.mediaType, config.renderConfiguration).renderToString
+    val config = ConfigProvider.configFor(target.spec)
+    new AMFSerializer(unit, config.renderConfiguration, Some(target.syntax.mediaType)).renderToString
   }
 
   private def parse(url: String, amfConfig: AMFGraphConfiguration): Future[BaseUnit] =

@@ -1410,11 +1410,6 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ApiDomainElementEmitter  {
-    emitToBuilder<T>(element: amf.core.client.platform.model.domain.DomainElement, emissionStructure: Vendor, eh: ClientErrorHandler, builder: org.yaml.builder.JsOutputBuilder): void
-
-
-  }
   export class Trait extends amf.core.client.platform.model.domain.AbstractDeclaration  {
     linkTarget: undefined | amf.core.client.platform.model.domain.DomainElement
 
