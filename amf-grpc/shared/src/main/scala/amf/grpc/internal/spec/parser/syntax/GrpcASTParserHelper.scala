@@ -1,12 +1,10 @@
 package amf.grpc.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
-import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.client.scala.model.domain.{NamedDomainElement, Shape}
-import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.annotations.{DeclaredElement, LexicalInformation}
-import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.core.internal.annotations.DeclaredElement
+import amf.core.internal.parser.domain.SearchScope
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.domain.GrpcOptionParser
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._

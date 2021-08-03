@@ -11,11 +11,11 @@ import amf.core.internal.parser.Root
 import amf.core.internal.remote.{GraphQL, Syntax, Vendor}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.document.GraphQLDocumentParser
+import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{DEFINITION, DOCUMENT, TYPE_SYSTEM_DEFINITION}
-import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import org.mulesoft.antlrast.ast.Node
 
-object GraphQLParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
+object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
   override protected def vendor: Vendor = GraphQL
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {

@@ -17,4 +17,8 @@ object TokenTypes {
   val NAMED_TYPE = "namedType"
   val FIELDS_DEFINITION = "fieldsDefinition"
   val FIELD_DEFINITION = "fieldDefinition"
+  val ARGUMENTS_DEFINITION = "argumentsDefinition"
+  val INPUT_VALUE_DEFINITION = "inputValueDefinition"
+  val TYPE_ = "type_"
+  val LIST_TYPE = "listType"
 }
