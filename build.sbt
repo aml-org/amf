@@ -137,7 +137,7 @@ lazy val apiContractJS =
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 /** **********************************************
-  * AMF-GRPC
+  * AMF-ANTLR-SYNTAX
   * ********************************************* */
 
 lazy val antlrv4JVMRef = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJVM")
@@ -146,6 +146,42 @@ val antlrv4Version = "0.3.0-SNAPSHOT"
 lazy val antlrv4LibJVM = "com.github.amlorg" %% "antlr-ast" % antlrv4Version
 lazy val antlrv4LibJS  = "com.github.amlorg" %% "antlr-ast_sjs0.6" % antlrv4Version
 
+lazy val antlr = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-antlr-syntax"
+    ))
+  .in(file("./amf-antlr-syntax"))
+  .settings(commonSettings)
+  .dependsOn(apiContract)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+    libraryDependencies += antlrv4LibJVM,
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-antlr-syntax-javadoc.jar",
+    mappings in (Compile, packageBin) += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    libraryDependencies += antlrv4LibJS,
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-antlr-syntax.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+  )
+  .disablePlugins(SonarPlugin)
+
+lazy val antlrJVM =
+  antlr.jvm
+    .in(file("./amf-antlr-syntax/jvm"))
+    .sourceDependency(antlrv4JVMRef, antlrv4LibJVM)
+lazy val antlrJS =
+  antlr.js
+    .in(file("./amf-antlr-syntax/js"))
+    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
+    .sourceDependency(antlrv4JSRef, antlrv4LibJS)
+
+/** **********************************************
+  * AMF-GRPC
+  * ********************************************* */
+
 lazy val grpc = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
@@ -153,15 +189,13 @@ lazy val grpc = crossProject(JSPlatform, JVMPlatform)
     ))
   .in(file("./amf-grpc"))
   .settings(commonSettings)
-  .dependsOn(apiContract)
+  .dependsOn(apiContract, antlr)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
-    libraryDependencies += antlrv4LibJVM,
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-grpc-javadoc.jar",
     mappings in (Compile, packageBin) += file("amf-apicontract.versions") -> "amf-apicontract.versions"
   )
   .jsSettings(
-    libraryDependencies += antlrv4LibJS,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-grpc.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations"
@@ -171,12 +205,42 @@ lazy val grpc = crossProject(JSPlatform, JVMPlatform)
 lazy val grpcJVM =
   grpc.jvm
     .in(file("./amf-grpc/jvm"))
-    .sourceDependency(antlrv4JVMRef, antlrv4LibJVM)
 lazy val grpcJS =
   grpc.js
     .in(file("./amf-grpc/js"))
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
-    .sourceDependency(antlrv4JSRef, antlrv4LibJS)
+
+/** **********************************************
+  * AMF-GRAPHQL
+  * ********************************************* */
+
+lazy val graphql = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-graphql"
+    ))
+  .in(file("./amf-graphql"))
+  .settings(commonSettings)
+  .dependsOn(apiContract, antlr)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-graphql-javadoc.jar",
+    mappings in (Compile, packageBin) += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-graphql.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+  )
+  .disablePlugins(SonarPlugin)
+
+lazy val graphqlJVM =
+  graphql.jvm
+    .in(file("./amf-graphql/jvm"))
+lazy val graphqlJS =
+  graphql.js
+    .in(file("./amf-graphql/js"))
+    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 /** **********************************************
   * AMF CLI
