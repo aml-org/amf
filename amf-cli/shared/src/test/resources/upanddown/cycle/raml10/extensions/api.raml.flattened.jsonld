@@ -141,6 +141,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#extends-reference": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/extensions/api.raml#/source-map/extends-reference/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/extensions/api.raml#/source-map/lexical/element_1"
@@ -193,6 +198,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/extensions/api.raml/references/0/#/web-api/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/extensions/api.raml#/source-map/extends-reference/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#extends",
+      "http://a.ml/vocabularies/document-source-maps#value": "../banking-api/api.raml"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/extensions/api.raml#/source-map/lexical/element_1",
