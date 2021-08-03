@@ -20,7 +20,7 @@ import org.yaml.model.{YDocument, YNode}
 
 object Raml10RenderPlugin extends ApiRenderPlugin {
 
-  override def vendor: Spec = Spec.RAML10
+  override def spec: Spec = Spec.RAML10
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,

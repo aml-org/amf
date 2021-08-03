@@ -124,7 +124,7 @@ class RamlToOasSecuritySchemeExtensionsTest extends AsyncFunSuite with FileAsser
     }
   }
 
-  private def hint(vendor: Spec): Hint = vendor match {
+  private def hint(spec: Spec): Hint = spec match {
     case Spec.RAML10 => Raml10YamlHint
     case Spec.RAML08 => Raml08YamlHint
     case Spec.OAS20  => Oas20YamlHint

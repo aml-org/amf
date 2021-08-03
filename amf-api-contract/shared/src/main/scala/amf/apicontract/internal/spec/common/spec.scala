@@ -25,14 +25,14 @@ package object spec {
     val responsesDefinitionsPrefix = "#/responses/"
 
     def stripParameterDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
-      if (ctx.vendor == Spec.OAS30)
+      if (ctx.spec == Spec.OAS30)
         stripOas3ComponentsPrefix(url, "parameters")
       else
         url.stripPrefix(parameterDefinitionsPrefix)
     }
 
     def stripResponsesDefinitionsPrefix(url: String)(implicit ctx: OasWebApiContext): String = {
-      if (ctx.vendor == Spec.OAS30)
+      if (ctx.spec == Spec.OAS30)
         stripOas3ComponentsPrefix(url, "responses")
       else
         url.stripPrefix(responsesDefinitionsPrefix)
@@ -56,7 +56,7 @@ package object spec {
 
   // TODO oas2? raml10?
   def toOas(ctx: WebApiContext): OasWebApiContext = {
-    val result = ctx.vendor match {
+    val result = ctx.spec match {
       case Spec.OAS30 =>
         new Oas3WebApiContext(ctx.rootContextDocument,
                               ctx.refs,

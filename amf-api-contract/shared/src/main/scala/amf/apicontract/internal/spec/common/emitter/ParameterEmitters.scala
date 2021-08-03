@@ -272,7 +272,7 @@ case class OasParametersEmitter(key: String,
   }
 
   private def isValidOasParam(p: Parameter): Boolean = {
-    spec.vendor match {
+    spec.spec match {
       case Spec.OAS30 => p.isQuery || p.isHeader || p.isPath || p.isCookie
       case _ =>
         Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
@@ -408,7 +408,7 @@ case class ParameterEmitter(parameter: Parameter,
                 .entries()
             }
           }
-        if (spec.vendor == Spec.OAS30) result ++= oas3Emitters(fs)
+        if (spec.spec == Spec.OAS30) result ++= oas3Emitters(fs)
         b.obj(traverse(ordering.sorted(result), _))
       }
     }

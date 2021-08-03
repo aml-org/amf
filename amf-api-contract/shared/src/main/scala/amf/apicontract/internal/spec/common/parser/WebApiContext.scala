@@ -65,7 +65,7 @@ abstract class WebApiContext(loc: String,
   def validateRefFormatWithError(ref: String): Boolean = true
 
   val syntax: SpecSyntax
-  val vendor: Spec
+  val spec: Spec
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
@@ -174,7 +174,7 @@ abstract class WebApiContext(loc: String,
         ast.entries.foreach { entry =>
           val key: String = getEntryKey(entry)
           if (!ignore(shape, key) && !properties(key)) {
-            throwClosedShapeError(node, s"Property '$key' not supported in a $vendor $shape node", entry)
+            throwClosedShapeError(node, s"Property '$key' not supported in a $spec $shape node", entry)
           }
         }
       case None => nextValidation(node, shape, ast)
@@ -185,7 +185,7 @@ abstract class WebApiContext(loc: String,
   }
 
   protected def nextValidation(node: String, shape: String, ast: YMap): Unit =
-    throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $vendor", ast)
+    throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $spec", ast)
 
   protected def throwClosedShapeError(node: String, message: String, entry: YPart, isWarning: Boolean = false): Unit =
     if (isWarning) eh.warning(ClosedShapeSpecificationWarning, node, message, entry)

@@ -15,7 +15,7 @@ object RamlScalarEmitter {
   def apply(key: String, f: FieldEntry, mediaType: Option[YType] = None)(
       implicit spec: ShapeEmitterContext): EntryEmitter = {
     val extensions = f.value.value.annotations.collect({ case e: DomainExtensionAnnotation => e })
-    if (extensions.nonEmpty && spec.vendor == Raml10) {
+    if (extensions.nonEmpty && spec.spec == Raml10) {
       RamlScalarValueEmitter(key, f, extensions.map(_.extension), mediaType)
     } else {
       ValueEmitter(key, f, mediaType)

@@ -8,7 +8,7 @@ import amf.core.internal.remote.Spec
 
 object Oas20ElementRenderPlugin extends ApiElementRenderPlugin {
 
-  override protected def vendor: Spec = Spec.OAS20
+  override protected def spec: Spec = Spec.OAS20
 
   override protected def emitterFactory: AMFErrorHandler => DomainElementEmitterFactory = eh => Oas20EmitterFactory(eh)
 }

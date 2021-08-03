@@ -17,7 +17,7 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
     ) {
 
   override val syntax: SpecSyntax = decorated.syntax
-  override val vendor: Spec       = decorated.vendor
+  override val spec: Spec         = decorated.spec
 
   override def link(node: YNode): Either[String, YNode] = decorated.link(node)
 
@@ -42,7 +42,7 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
       requiredFields.foreach { field =>
         if (!keys.contains(field.name)) {
           val isWarning = field.severity == SeverityLevels.WARNING
-          throwClosedShapeError(node, s"Property '${field.name}' is required in a $vendor $shape node", ast, isWarning)
+          throwClosedShapeError(node, s"Property '${field.name}' is required in a $spec $shape node", ast, isWarning)
         }
       }
 
@@ -51,7 +51,7 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
       keys.foreach(key => {
         if (!possible.contains(key) && !required.contains(key) && !ignore(shape, key)) {
           throwClosedShapeError(node,
-                                s"Property '$key' not supported in a $vendor $shape node",
+                                s"Property '$key' not supported in a $spec $shape node",
                                 getAstEntry(ast, key),
                                 isWarning = true)
         }

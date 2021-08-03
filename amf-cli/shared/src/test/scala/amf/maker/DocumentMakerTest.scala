@@ -62,9 +62,9 @@ class DocumentMakerTest extends WebApiMakerTest {
     override def getResults: List[AMFValidationResult] = Nil
   }
 
-  private def documentWithTypes(vendor: Spec): Document = {
+  private def documentWithTypes(spec: Spec): Document = {
 
-    val minCount = vendor match {
+    val minCount = spec match {
       case _: Oas => 0
       case _      => 1
     }
@@ -127,20 +127,20 @@ class DocumentMakerTest extends WebApiMakerTest {
     document
   }
 
-  private def documentWithInheritsTypes(vendor: Spec) = {
-    val minCount = vendor match {
+  private def documentWithInheritsTypes(spec: Spec) = {
+    val minCount = spec match {
       case _: Oas => 0
       case _      => 1
     }
 
-    val id = vendor match {
+    val id = spec match {
       case _: Oas =>
         "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.json#/declarations/types/Human"
       case _ =>
         "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.raml#/declarations/types/Human"
     }
 
-    val linkLabel = vendor match {
+    val linkLabel = spec match {
       case _: Oas => "#/definitions/Human"
       case _      => "Human"
     }

@@ -26,9 +26,9 @@ import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
 import scala.collection.mutable
 
-class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpecEmitterContext) {
+class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncSpecEmitterContext) {
 
-  protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(specCtx)
 
   def emitWebApi(ordering: SpecOrdering): Seq[EntryEmitter] = {
     val model = retrieveWebApi()
@@ -40,12 +40,12 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
   private def retrieveWebApi(): Api = document match {
     case document: Document => document.encodes.asInstanceOf[Api]
     case _ =>
-      spec.eh.violation(ResolutionValidation,
-                        document.id,
-                        None,
-                        "BaseUnit doesn't encode a WebApi.",
-                        document.position(),
-                        document.location())
+      specCtx.eh.violation(ResolutionValidation,
+                           document.id,
+                           None,
+                           "BaseUnit doesn't encode a WebApi.",
+                           document.position(),
+                           document.location())
       WebApi()
   }
 
@@ -77,7 +77,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
   def versionEntry(b: YDocument.EntryBuilder): Unit =
     b.asyncapi = YNode(YScalar("2.0.0"), YType.Str) // this should not be necessary but for use the same logic
 
-  case class WebApiEmitter(api: Api, ordering: SpecOrdering, vendor: Option[Spec], references: Seq[BaseUnit]) {
+  case class WebApiEmitter(api: Api, ordering: SpecOrdering, spec: Option[Spec], references: Seq[BaseUnit]) {
     val emitters: Seq[EntryEmitter] = {
       val fs     = api.fields
       val result = mutable.ListBuffer[EntryEmitter]()

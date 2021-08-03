@@ -13,7 +13,7 @@ class Oas3WebApiContext(loc: String,
                         options: ParsingOptions = ParsingOptions())
     extends OasWebApiContext(loc, refs, options, wrapped, ds) {
   override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
-  override val vendor: Spec                = Oas30
+  override val spec: Spec                  = Oas30
   override val syntax: SpecSyntax          = Oas3Syntax
 
   override def makeCopy(): Oas3WebApiContext =

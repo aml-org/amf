@@ -216,11 +216,11 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
-  test("Source vendor RAML 1.0") {
+  test("Source spec RAML 1.0") {
     for {
       unit <- RAMLConfiguration.RAML().baseUnitClient().parse(zencoder).asFuture
     } yield {
-      unit.baseUnit.sourceVendor.asOption should be(Some(Raml10))
+      unit.baseUnit.sourceSpec.asOption should be(Some(Raml10))
     }
   }
 
@@ -2059,7 +2059,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   // TODO check with @tomi and @agus
-  test("Test domain element emitter with unknown vendor") {
+  test("Test domain element emitter with unknown spec") {
     assertThrows[Throwable](
       amf.apicontract.client.scala.RAMLConfiguration.RAML10().elementClient().renderElement(InternalArrayNode()))
   }
@@ -2126,7 +2126,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //  // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 
-  protected def configFor(vendor: Spec) = vendor match {
+  protected def configFor(spec: Spec) = spec match {
     case Spec.RAML10  => RAMLConfiguration.RAML10()
     case Spec.RAML08  => RAMLConfiguration.RAML08()
     case Spec.OAS20   => OASConfiguration.OAS20()

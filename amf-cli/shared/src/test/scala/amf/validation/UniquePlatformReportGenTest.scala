@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
@@ -53,7 +53,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
                          profileFile: Option[String] = None,
                          overridedHint: Option[Hint] = None,
                          directory: String = basePath): Future[Assertion] = {
-    val initialConfig = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    val initialConfig = APIConfiguration.API()
     val finalHint     = overridedHint.getOrElse(hint)
     for {
       parseResult <- parse(directory + api, initialConfig, finalHint)

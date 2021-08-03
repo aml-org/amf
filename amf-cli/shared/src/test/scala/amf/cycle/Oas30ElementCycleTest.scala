@@ -6,7 +6,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
 
   override def basePath: String = "amf-cli/shared/src/test/resources/cycle/oas30/"
   val upanddownPath: String     = "amf-cli/shared/src/test/resources/upanddown/oas3/"
-  val vendor: Spec              = Spec.OAS30
+  val spec: Spec                = Spec.OAS30
 
   test("type - composition with refs and inlined") {
     renderElement(

@@ -33,7 +33,7 @@ case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEnt
     sourceOr(
       f.value, {
         val (validOas, invalidOas) =
-          collect(f.array.values).partition(r => allSchemesAreValidInOas(r.schemes, spec.vendor))
+          collect(f.array.values).partition(r => allSchemesAreValidInOas(r.schemes, spec.spec))
         if (validOas.nonEmpty) b.entry(key, _.list(traverse(ordering.sorted(validOas.map(emit)), _)))
         if (invalidOas.nonEmpty)
           b.entry(key.asOasExtension, _.list(traverse(ordering.sorted(invalidOas.map(emit)), _)))
@@ -41,7 +41,7 @@ case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEnt
     )
   }
 
-  def allSchemesAreValidInOas(schemes: Seq[ParametrizedSecurityScheme], vendor: Spec): Boolean = {
+  def allSchemesAreValidInOas(schemes: Seq[ParametrizedSecurityScheme], spec: Spec): Boolean = {
     schemes.forall(s => {
       s.scheme match {
         case linkable: Linkable if linkable.isLink => return true
@@ -50,7 +50,7 @@ case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEnt
       Option(s.scheme).exists { s =>
         {
           val schemeType = s.`type`.option().getOrElse("")
-          OasLikeSecuritySchemeTypeMappings.validTypesFor(vendor).contains(schemeType)
+          OasLikeSecuritySchemeTypeMappings.validTypesFor(spec).contains(schemeType)
         }
       }
     })

@@ -54,18 +54,18 @@ trait ModelValidationTest extends DirectoryTest {
                            report: AMFValidationReport,
                            amfConfig: AMFConfiguration): String = {
     if (report.conforms) {
-      val vendor = HintProvider.defaultHintFor(target(model))
-      render(model, d, vendor, amfConfig)
+      val spec = HintProvider.defaultHintFor(target(model))
+      render(model, d, spec, amfConfig)
     } else {
       val ordered = report.results.sorted
       report.copy(results = ordered).toString
     }
   }
 
-  def render(model: BaseUnit, d: String, vendor: Hint, amfConfig: AMFConfiguration): String =
-    AMFRenderer(transform(model, d, vendor, amfConfig), vendor, RenderOptions()).renderToString
+  def render(model: BaseUnit, d: String, spec: Hint, amfConfig: AMFConfiguration): String =
+    AMFRenderer(transform(model, d, spec, amfConfig), spec, RenderOptions()).renderToString
 
-  def transform(unit: BaseUnit, d: String, vendor: Hint, amfConfig: AMFConfiguration): BaseUnit =
+  def transform(unit: BaseUnit, d: String, spec: Hint, amfConfig: AMFConfiguration): BaseUnit =
     unit
 
   private def profileFromModel(unit: BaseUnit): ProfileName = {

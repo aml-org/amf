@@ -13,7 +13,7 @@ class Oas2WebApiContext(loc: String,
                         options: ParsingOptions = ParsingOptions())
     extends OasWebApiContext(loc, refs, options, wrapped, ds) {
   override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
-  override val vendor: Spec                = Oas20
+  override val spec: Spec                  = Oas20
   override val syntax: SpecSyntax          = Oas2Syntax
 
   override def makeCopy(): Oas2WebApiContext =

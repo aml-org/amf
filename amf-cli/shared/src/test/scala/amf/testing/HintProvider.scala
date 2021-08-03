@@ -4,7 +4,7 @@ import amf.core.internal.remote._
 
 object HintProvider {
 
-  def defaultHintFor(vendor: Spec): Hint = vendor match {
+  def defaultHintFor(spec: Spec): Hint = spec match {
     case Amf        => AmfJsonHint
     case Raml08     => Raml08YamlHint
     case Raml10     => Raml10YamlHint

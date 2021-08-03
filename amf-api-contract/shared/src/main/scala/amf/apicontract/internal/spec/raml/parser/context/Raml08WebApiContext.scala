@@ -16,7 +16,7 @@ class Raml08WebApiContext(loc: String,
                           options: ParsingOptions = ParsingOptions())
     extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml08VersionFactory()(this)
-  override val vendor: Spec                    = Raml08
+  override val spec: Spec                      = Raml08
   override val syntax: SpecSyntax              = Raml08Syntax
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =

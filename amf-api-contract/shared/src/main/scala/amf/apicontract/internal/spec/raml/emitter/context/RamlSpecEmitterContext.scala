@@ -194,7 +194,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
             RenderValidation,
             "",
             None,
-            s"Custom facets not supported for vendor ${spec.vendor}",
+            s"Custom facets not supported for spec ${spec.spec}",
             f.value.value.position(),
             f.value.value.location()
           )
@@ -211,7 +211,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
             RenderValidation,
             shapeExtension.id,
             None,
-            s"Custom facets not supported for vendor ${spec.vendor}",
+            s"Custom facets not supported for spec ${spec.spec}",
             shapeExtension.position(),
             shapeExtension.location()
           )
@@ -229,7 +229,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
             RenderValidation,
             domainExtension.id,
             None,
-            s"Custom facets not supported for vendor ${spec.vendor}",
+            s"Custom facets not supported for spec ${spec.spec}",
             domainExtension.position(),
             domainExtension.location()
           )
@@ -251,7 +251,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
             spec.eh.violation(RenderValidation,
                               property.id,
                               None,
-                              s"Custom facets not supported for vendor ${spec.vendor}",
+                              s"Custom facets not supported for spec ${spec.spec}",
                               property.position(),
                               property.location())
           }
@@ -279,7 +279,7 @@ class Raml10SpecEmitterContext(eh: AMFErrorHandler,
                                options: RenderOptions = RenderOptions())
     extends RamlSpecEmitterContext(eh, refEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
-  override val vendor: Spec                       = Raml10
+  override val spec: Spec                         = Raml10
 
   override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
@@ -300,7 +300,7 @@ class XRaml10SpecEmitterContext(eh: AMFErrorHandler,
 class Raml08SpecEmitterContext(eh: AMFErrorHandler, options: RenderOptions = RenderOptions())
     extends RamlSpecEmitterContext(eh, RamlRefEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
-  override val vendor: Spec                       = Raml08
+  override val spec: Spec                         = Raml08
 
   override def schemaVersion: SchemaVersion = RAML08SchemaVersion
 }

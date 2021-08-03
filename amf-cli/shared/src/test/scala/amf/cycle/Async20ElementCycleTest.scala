@@ -8,7 +8,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
   override val basePath: String = "amf-cli/shared/src/test/resources/cycle/async20/"
   val validationsPath: String   = "amf-cli/shared/src/test/resources/validations/async20/"
   val upanddownPath: String     = "amf-cli/shared/src/test/resources/upanddown/cycle/async20/"
-  val vendor: Spec              = Spec.ASYNC20
+  val spec: Spec                = Spec.ASYNC20
 
   test("type - composition with refs and inlined") {
     renderElement(

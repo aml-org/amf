@@ -16,7 +16,7 @@ import org.yaml.model.YDocument
 
 object Raml08RenderPlugin extends ApiRenderPlugin {
 
-  override def vendor: Spec = Spec.RAML08
+  override def spec: Spec = Spec.RAML08
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,

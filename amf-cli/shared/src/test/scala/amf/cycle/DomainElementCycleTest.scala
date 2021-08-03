@@ -28,7 +28,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with P
     def sourcePath: String = directory + source
   }
   def basePath: String
-  def vendor: Spec
+  def spec: Spec
 
   def renderElement(source: String,
                     extractor: BaseUnit => Option[DomainElement],

@@ -25,7 +25,7 @@ abstract class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], 
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val securityTypeMap: Seq[(SecuritySchemeType, SecurityScheme)] =
-      securitySchemes.map(s => (OasLikeSecuritySchemeTypeMappings.mapsTo(spec.vendor, s.`type`.value()), s))
+      securitySchemes.map(s => (OasLikeSecuritySchemeTypeMappings.mapsTo(spec.spec, s.`type`.value()), s))
 
     val (oasSecurityDefinitions, extensionDefinitions) = securityTypeMap.partition {
       case (OasSecuritySchemeType(_), _) => true

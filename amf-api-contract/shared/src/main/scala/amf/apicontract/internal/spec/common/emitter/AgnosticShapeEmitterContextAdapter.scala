@@ -19,48 +19,48 @@ import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
 import org.yaml.model.YDocument
 
 object AgnosticShapeEmitterContextAdapter {
-  def apply(spec: SpecEmitterContext) = new AgnosticShapeEmitterContextAdapter(spec)
+  def apply(specCtx: SpecEmitterContext) = new AgnosticShapeEmitterContextAdapter(specCtx)
 }
 
-class AgnosticShapeEmitterContextAdapter(spec: SpecEmitterContext) extends ShapeEmitterContext {
+class AgnosticShapeEmitterContextAdapter(private val specCtx: SpecEmitterContext) extends ShapeEmitterContext {
 
   override def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter =
-    spec.factory.tagToReferenceEmitter(l, refs)
+    specCtx.factory.tagToReferenceEmitter(l, refs)
 
   override def arrayEmitter(asOasExtension: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter =
-    spec.arrayEmitter(asOasExtension, f, ordering)
+    specCtx.arrayEmitter(asOasExtension, f, ordering)
 
   override def customFacetsEmitter(f: FieldEntry,
                                    ordering: SpecOrdering,
                                    references: Seq[BaseUnit]): CustomFacetsEmitter =
-    spec.factory.customFacetsEmitter(f, ordering, references)
+    specCtx.factory.customFacetsEmitter(f, ordering, references)
 
   override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter =
-    spec.factory.facetsInstanceEmitter(extension, ordering)
+    specCtx.factory.facetsInstanceEmitter(extension, ordering)
 
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
-    spec.factory.annotationEmitter(e, default)
+    specCtx.factory.annotationEmitter(e, default)
 
-  override def eh: AMFErrorHandler = spec.eh
+  override def eh: AMFErrorHandler = specCtx.eh
 
-  override def vendor: Spec = spec.vendor
+  override def spec: Spec = specCtx.spec
 
-  override def ref(b: YDocument.PartBuilder, url: String): Unit = spec.ref(b, url)
+  override def ref(b: YDocument.PartBuilder, url: String): Unit = specCtx.ref(b, url)
 
-  override def schemaVersion: SchemaVersion = spec match {
+  override def schemaVersion: SchemaVersion = specCtx match {
     case oasCtx: OasLikeSpecEmitterContext => oasCtx.schemaVersion
     case _                                 => throw new Exception("Render - can only be called from OAS")
   }
 
-  override def options: RenderOptions = spec.options
+  override def options: RenderOptions = specCtx.options
 
-  override def isOas3: Boolean = spec.factory.isInstanceOf[Oas3SpecEmitterFactory]
+  override def isOas3: Boolean = specCtx.factory.isInstanceOf[Oas3SpecEmitterFactory]
 
-  override def isOasLike: Boolean = spec.isInstanceOf[OasLikeSpecEmitterContext]
+  override def isOasLike: Boolean = specCtx.isInstanceOf[OasLikeSpecEmitterContext]
 
-  override def isRaml: Boolean = spec.isInstanceOf[RamlSpecEmitterContext]
+  override def isRaml: Boolean = specCtx.isInstanceOf[RamlSpecEmitterContext]
 
-  override def isJsonSchema: Boolean = spec.isInstanceOf[JsonSchemaEmitterContext]
+  override def isJsonSchema: Boolean = specCtx.isInstanceOf[JsonSchemaEmitterContext]
 
-  override def isAsync: Boolean = spec.factory.isInstanceOf[AsyncSpecEmitterFactory]
+  override def isAsync: Boolean = specCtx.factory.isInstanceOf[AsyncSpecEmitterFactory]
 }

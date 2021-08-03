@@ -13,9 +13,9 @@ import org.yaml.model.YDocument
 import org.yaml.model.YDocument.PartBuilder
 
 trait ApiElementRenderPlugin extends AMFElementRenderPlugin {
-  override val id: String = s"${vendor.id} Element"
+  override val id: String = s"${spec.id} Element"
 
-  protected def vendor: Spec
+  protected def spec: Spec
   protected def emitterFactory: AMFErrorHandler => DomainElementEmitterFactory
 
   override def applies(element: DomainElement): Boolean =

@@ -20,10 +20,10 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
 
     while (scanner.hasNextLine) {
       scanner.nextLine() match {
-        case Exit()               => return
-        case Parse((vendor, url)) => remote(vendor, url, unit = _)
-        case Generate(syntax)     => unit.foreach(doc => generate(doc, syntax))
-        case line                 => out.println(s"... $line")
+        case Exit()             => return
+        case Parse((spec, url)) => remote(spec, url, unit = _)
+        case Generate(syntax)   => unit.foreach(doc => generate(doc, syntax))
+        case line               => out.println(s"... $line")
       }
     }
   }
@@ -33,7 +33,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
     out.print(client.render(unit, mediaType))
   }
 
-  private def remote(vendor: Spec, url: String, callback: (Option[Document]) => Unit): Unit = {
+  private def remote(spec: Spec, url: String, callback: (Option[Document]) => Unit): Unit = {
     val client = config.baseUnitClient()
 
     client

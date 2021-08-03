@@ -12,7 +12,7 @@ import org.yaml.model.{YDocument, YNode}
 
 object Oas20RenderPlugin extends OasRenderPlugin {
 
-  override def vendor: Spec = Spec.OAS20
+  override def spec: Spec = Spec.OAS20
 
   override def defaultSyntax(): String = `application/json`
 

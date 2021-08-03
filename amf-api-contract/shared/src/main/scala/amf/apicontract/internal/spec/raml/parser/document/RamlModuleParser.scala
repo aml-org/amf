@@ -23,7 +23,7 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
       .adopted(root.location)
-      .add(SourceSpec(ctx.vendor))
+      .add(SourceSpec(ctx.spec))
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
       ctx.closedShape(module.id, rootMap, "module")

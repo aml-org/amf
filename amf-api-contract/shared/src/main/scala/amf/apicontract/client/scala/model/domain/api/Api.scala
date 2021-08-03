@@ -88,9 +88,9 @@ abstract class Api(fields: Fields, annotations: Annotations)
     result
   }
 
-  // todo: should source vendor be in the base unit?
+  // todo: should source spec be in the base unit?
 
-  def sourceVendor: Option[Spec] = annotations.find(classOf[SourceSpec]).map(a => a.spec)
+  def sourceSpec: Option[Spec] = annotations.find(classOf[SourceSpec]).map(a => a.spec)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String = "#/api"

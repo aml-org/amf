@@ -41,10 +41,10 @@ class ToRdfCycleTest
     config.baseUnitClient().parse(fullPath).map(_.baseUnit)
   }
 
-  private def rdfFromApi(path: String, vendor: Spec): Future[String] = {
-    val config = configFor(vendor).withErrorHandlerProvider(() => UnhandledErrorHandler)
+  private def rdfFromApi(path: String, spec: Spec): Future[String] = {
+    val config = configFor(spec).withErrorHandlerProvider(() => UnhandledErrorHandler)
     build(path, config)
-      .map(transform(_, PipelineId.Editing, vendor, config))
+      .map(transform(_, PipelineId.Editing, spec, config))
       .map(bu => RdfUnitConverter.toNativeRdfModel(bu, RenderOptions().withSourceMaps))
       .map(_.toN3())
   }

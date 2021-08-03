@@ -24,7 +24,7 @@ class JsonSchemaWebApiContext(loc: String,
 
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax
-  override val vendor: Spec                   = JsonSchema
+  override val spec: Spec                     = JsonSchema
   override val linkTypes: Boolean = wrapped match {
     case _: RamlWebApiContext => false
     case _: OasWebApiContext  => true // definitions tag

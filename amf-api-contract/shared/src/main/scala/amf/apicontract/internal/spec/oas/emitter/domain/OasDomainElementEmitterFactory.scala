@@ -49,7 +49,7 @@ case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) exten
   override def securitySchemeEmitter(s: SecurityScheme): Option[PartEmitter] =
     Some(
       new OasSecuritySchemeEmitter(s,
-                                   OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.vendor, s.`type`.value()),
+                                   OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.spec, s.`type`.value()),
                                    SpecOrdering.Lexical))
 
   override def exampleEmitter(example: Example): Option[PartEmitter] =
@@ -78,7 +78,7 @@ case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) exten
   override def securitySchemeEmitter(s: SecurityScheme): Option[PartEmitter] =
     Some(
       Oas3SecuritySchemeEmitter(s,
-                                OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.vendor, s.`type`.value()),
+                                OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.spec, s.`type`.value()),
                                 SpecOrdering.Lexical))
 
   override def payloadEmitter(p: Payload): Option[PartEmitter] =

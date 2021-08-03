@@ -70,16 +70,16 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
   }
 
   private def generateExpectedDocumentParseFixtures(apiPath: String,
-                                                    vendor: Spec,
+                                                    spec: Spec,
                                                     validConfigs: List[AMFConfiguration],
                                                     ignored: List[AMFConfiguration] = List()): Seq[Any] = {
     val finalPath    = basePath + apiPath
     val errorConfigs = configs.diff(validConfigs ++ ignored)
-    validConfigs.map(conf => ExpectedParseCase(conf, finalPath, documentExpectation(vendor))) ++
+    validConfigs.map(conf => ExpectedParseCase(conf, finalPath, documentExpectation(spec))) ++
       errorConfigs.map(conf => ExpectedErrorCase(conf, finalPath))
   }
 
-  private def expectExternalFragment(apiPath: String, vendor: Spec, validConfigs: List[AMFConfiguration]): Seq[Any] = {
+  private def expectExternalFragment(apiPath: String, spec: Spec, validConfigs: List[AMFConfiguration]): Seq[Any] = {
     val finalPath = basePath + apiPath
     validConfigs.map(conf => ExpectedParseCase(conf, finalPath, externalFragmentExpectation))
   }
@@ -87,10 +87,10 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
   protected def externalFragmentExpectation: Expectation = (document, _) => document shouldBe a[ExternalFragment]
 
   protected def documentExpectation: Spec => Expectation =
-    vendor =>
+    spec =>
       (document, parsedSpec) => {
         document shouldBe a[Document]
-        vendor shouldEqual parsedSpec
+        spec shouldEqual parsedSpec
         document.sourceSpec shouldEqual Some(parsedSpec)
     }
 }

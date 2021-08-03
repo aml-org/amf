@@ -11,7 +11,12 @@ import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
 import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
-import amf.apicontract.internal.transformation.compatibility.{Oas20CompatibilityPipeline, Oas3CompatibilityPipeline, Raml08CompatibilityPipeline, Raml10CompatibilityPipeline}
+import amf.apicontract.internal.transformation.compatibility.{
+  Oas20CompatibilityPipeline,
+  Oas3CompatibilityPipeline,
+  Raml08CompatibilityPipeline,
+  Raml10CompatibilityPipeline
+}
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
 import amf.apicontract.internal.validation.shacl.{ShaclModelValidationPlugin, ViolationModelValidationPlugin}
@@ -84,8 +89,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
 
   def RAML10(): AMFConfiguration =
     common()
-      .withPlugins(
-        List(Raml10ParsePlugin, Raml10RenderPlugin, Raml10ElementRenderPlugin, ShaclModelValidationPlugin))
+      .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin, Raml10ElementRenderPlugin, ShaclModelValidationPlugin))
       .withValidationProfile(Raml10ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -96,8 +100,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
         ))
   def RAML08(): AMFConfiguration =
     common()
-      .withPlugins(
-        List(Raml08ParsePlugin, Raml08RenderPlugin, Raml08ElementRenderPlugin, ShaclModelValidationPlugin))
+      .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin, Raml08ElementRenderPlugin, ShaclModelValidationPlugin))
       .withValidationProfile(Raml08ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -125,8 +128,7 @@ object OASConfiguration extends APIConfigurationBuilder {
 
   def OAS20(): AMFConfiguration =
     common()
-      .withPlugins(
-        List(Oas20ParsePlugin, Oas20RenderPlugin, Oas20ElementRenderPlugin, ShaclModelValidationPlugin))
+      .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin, Oas20ElementRenderPlugin, ShaclModelValidationPlugin))
       .withValidationProfile(Oas20ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -137,8 +139,7 @@ object OASConfiguration extends APIConfigurationBuilder {
         ))
   def OAS30(): AMFConfiguration =
     common()
-      .withPlugins(
-        List(Oas30ParsePlugin, Oas30RenderPlugin, Oas30ElementRenderPlugin, ShaclModelValidationPlugin))
+      .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin, Oas30ElementRenderPlugin, ShaclModelValidationPlugin))
       .withValidationProfile(Oas30ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -275,8 +276,6 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMFConfiguration =
     super._withExecutionEnvironment(executionEnv)
-
-  protected[amf] def merge(other: AMFConfiguration): AMFConfiguration = super._merge(other)
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,

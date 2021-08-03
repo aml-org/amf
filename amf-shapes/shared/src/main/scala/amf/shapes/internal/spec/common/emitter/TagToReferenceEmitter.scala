@@ -36,7 +36,7 @@ trait ShapeReferenceEmitter extends TagToReferenceEmitter {
   }
 
   protected def getRefUrlFor(element: DomainElement, default: String = referenceLabel) = element match {
-    case _: Shape => appendSchemasPrefix(referenceLabel, Some(shapeSpec.vendor))
+    case _: Shape => appendSchemasPrefix(referenceLabel, Some(shapeSpec.spec))
     case _        => default
   }
 

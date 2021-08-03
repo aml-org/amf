@@ -210,7 +210,7 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
 
           AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
-          if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
+          if (ctx.spec.isRaml) ctx.closedShape(example.id, map, "example")
         } else ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()
       case YType.Null => // ignore
       case _          => ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()

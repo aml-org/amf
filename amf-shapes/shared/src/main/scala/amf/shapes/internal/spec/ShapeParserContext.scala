@@ -32,7 +32,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape]
   def link(node: YNode): Either[String, YNode]
   def loc: String
-  def vendor: Spec
+  def spec: Spec
   def syntax: SpecSyntax
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo)
   def shapes: Map[String, Shape]

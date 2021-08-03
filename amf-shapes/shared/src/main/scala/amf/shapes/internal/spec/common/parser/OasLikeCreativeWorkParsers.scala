@@ -44,11 +44,11 @@ case class RamlCreativeWorkParser(node: YNode)(implicit val ctx: ShapeParserCont
     map.key("title", (CreativeWorkModel.Title in documentation).allowingAnnotations)
     map.key("content", (CreativeWorkModel.Description in documentation).allowingAnnotations)
 
-    val url = ctx.vendor match {
+    val url = ctx.spec match {
       case _: Oas  => "url"
       case _: Raml => "url".asRamlAnnotation
       case other =>
-        ctx.eh.violation(UnexpectedVendor, s"Unexpected vendor '$other'", node)
+        ctx.eh.violation(UnexpectedVendor, s"Unexpected spec '$other'", node)
         "url"
     }
 

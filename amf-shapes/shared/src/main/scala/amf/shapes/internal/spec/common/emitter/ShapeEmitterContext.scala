@@ -104,7 +104,7 @@ class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
     OasAnnotationEmitter(e, default)
 
-  override def vendor: Spec = Spec.JSONSCHEMA
+  override def spec: Spec = Spec.JSONSCHEMA
 
   override def ref(b: YDocument.PartBuilder, url: String): Unit = OasRefEmitter.ref(url, b)
 
@@ -157,7 +157,7 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissi
 
   def eh: AMFErrorHandler
 
-  def vendor: Spec
+  def spec: Spec
 
   def ref(b: YDocument.PartBuilder, url: String): Unit
 
@@ -190,7 +190,7 @@ class Raml10ShapeEmitterContext(val eh: AMFErrorHandler, val options: RenderOpti
 
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter = ???
 
-  override def vendor: Spec = ???
+  override def spec: Spec = ???
 
   override def ref(b: YDocument.PartBuilder, url: String): Unit = ???
 

@@ -11,9 +11,9 @@ import org.yaml.model.YDocument
 
 trait ApiRenderPlugin extends AMFRenderPlugin {
 
-  def vendor: Spec
+  def spec: Spec
 
-  override val id: String = vendor.id
+  override val id: String = spec.id
 
   override def mediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`)
 

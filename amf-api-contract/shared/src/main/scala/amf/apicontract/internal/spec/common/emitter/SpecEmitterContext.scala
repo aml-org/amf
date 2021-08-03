@@ -30,7 +30,7 @@ abstract class SpecEmitterContext(val eh: AMFErrorHandler,
 
   def localReference(reference: Linkable): PartEmitter
 
-  val vendor: Spec
+  val spec: Spec
 
   val factory: SpecEmitterFactory
 

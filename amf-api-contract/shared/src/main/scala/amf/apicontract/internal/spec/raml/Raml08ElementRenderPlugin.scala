@@ -8,7 +8,7 @@ import amf.core.internal.remote.Spec
 
 object Raml08ElementRenderPlugin extends ApiElementRenderPlugin {
 
-  override protected def vendor: Spec = Spec.RAML08
+  override protected def spec: Spec = Spec.RAML08
 
   override protected def emitterFactory: AMFErrorHandler => DomainElementEmitterFactory =
     eh => Raml08EmitterFactory(eh)

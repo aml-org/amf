@@ -1,6 +1,6 @@
 package amf.parser
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.AmfJsonHint
+import amf.core.internal.remote.{Amf, AmfJsonHint}
 import amf.io.FunSuiteCycleTests
 
 class GraphParsingTest extends FunSuiteCycleTests {
@@ -116,7 +116,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("api.source.jsonld",
           "api.target.jsonld",
           AmfJsonHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(ro),
           directory = s"$basePath/annotations-non-scalar/")
   }

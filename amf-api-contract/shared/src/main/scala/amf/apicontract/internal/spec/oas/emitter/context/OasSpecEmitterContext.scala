@@ -158,7 +158,7 @@ class Oas3SpecEmitterContext(eh: AMFErrorHandler,
   override val anyOfKey: String                = "anyOf"
   val schemaVersion: SchemaVersion             = OAS30SchemaVersion(SchemaPosition.Schema)
   override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory(this)
-  override val vendor: Spec                    = Oas30
+  override val spec: Spec                      = Oas30
   override def schemasDeclarationsPath: String = "/components/schemas/"
 }
 
@@ -168,6 +168,6 @@ class Oas2SpecEmitterContext(eh: AMFErrorHandler,
     extends OasSpecEmitterContext(eh, refEmitter, options) {
   val schemaVersion: SchemaVersion             = OAS20SchemaVersion(SchemaPosition.Schema)
   override val factory: OasSpecEmitterFactory  = new Oas2SpecEmitterFactory(this)
-  override val vendor: Spec                    = Oas20
+  override val spec: Spec                      = Oas20
   override def schemasDeclarationsPath: String = "/definitions/"
 }

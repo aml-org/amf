@@ -34,7 +34,7 @@ import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 import scala.collection.mutable
 
 case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapeParserContext(ctx.eh) {
-  override def vendor: Spec = ctx.vendor
+  override def spec: Spec = ctx.spec
 
   override def syntax: SpecSyntax = ctx.syntax
 

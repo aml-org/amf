@@ -8,7 +8,7 @@ import amf.core.internal.remote.Spec
 
 object Async20ElementRenderPlugin extends ApiElementRenderPlugin {
 
-  override protected def vendor: Spec = Spec.ASYNC20
+  override protected def spec: Spec = Spec.ASYNC20
 
   override protected def emitterFactory: AMFErrorHandler => DomainElementEmitterFactory =
     eh => AsyncDomainElementEmitterFactory(eh)

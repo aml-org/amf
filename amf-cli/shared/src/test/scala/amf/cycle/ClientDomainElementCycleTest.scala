@@ -10,7 +10,7 @@ class ClientOas30ElementCycleTest extends ClientDomainElementCycleTest {
 
   override def basePath: String = "amf-cli/shared/src/test/resources/cycle/oas30/"
   val upanddownPath: String     = "amf-cli/shared/src/test/resources/upanddown/oas3/"
-  val vendor: Spec              = Spec.OAS30
+  val spec: Spec                = Spec.OAS30
 
   test("type - composition with refs and inlined") {
     renderElement(
@@ -44,7 +44,7 @@ class ClientRaml10ElementCycleTest extends ClientDomainElementCycleTest {
 
   val basePath: String       = "amf-cli/shared/src/test/resources/cycle/raml10/"
   val jsonSchemaPath: String = "amf-cli/shared/src/test/resources/org/raml/json_schema/"
-  val vendor: Spec           = Spec.RAML10
+  val spec: Spec             = Spec.RAML10
 
   test("type - multiple inheritance with union and properties") {
     renderElement(

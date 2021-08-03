@@ -21,7 +21,7 @@ class JsonSchemaEmitterContext(override val eh: AMFErrorHandler,
   override val anyOfKey: String = "anyOf"
   override def nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
 
-  override val vendor: Spec = Spec.JSONSCHEMA
+  override val spec: Spec = Spec.JSONSCHEMA
 
   override def schemasDeclarationsPath: String = JsonSchemaDeclarationsPath(schemaVersion)
 }

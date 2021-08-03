@@ -16,7 +16,7 @@ import org.yaml.model.YDocument
 
 object Async20RenderPlugin extends ApiRenderPlugin {
 
-  override def vendor: Spec = Spec.ASYNC20
+  override def spec: Spec = Spec.ASYNC20
 
   override def priority: PluginPriority = NormalPriority
 

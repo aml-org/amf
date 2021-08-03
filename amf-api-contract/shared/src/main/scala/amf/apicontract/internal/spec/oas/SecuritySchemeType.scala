@@ -19,11 +19,11 @@ object OasLikeSecuritySchemeTypeMappings {
     Spec.OAS30 -> Oas3SchemeMappings
   )
 
-  def mapsTo(vendor: Spec, text: String): SecuritySchemeType = mappings(vendor).mapsTo(text)
-  def validTypesFor(vendor: Spec): Set[String]               = mappings(vendor).validTypes
+  def mapsTo(spec: Spec, text: String): SecuritySchemeType = mappings(spec).mapsTo(text)
+  def validTypesFor(spec: Spec): Set[String]               = mappings(spec).validTypes
 
-  abstract class SchemeMappings(val vendor: Spec) {
-    def applies(vendor: Spec): Boolean = this.vendor.id == vendor.id
+  abstract class SchemeMappings(val spec: Spec) {
+    def applies(spec: Spec): Boolean = this.spec.id == spec.id
     def mapsTo(text: String): SecuritySchemeType
     def validTypes: Set[String] = types.keys.toSet
     def types: Map[String, OasSecuritySchemeType]

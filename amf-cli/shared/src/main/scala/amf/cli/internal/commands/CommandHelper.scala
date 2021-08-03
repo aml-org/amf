@@ -87,8 +87,8 @@ trait CommandHelper {
     if (config.withCompactNamespaces) {
       generateOptions = generateOptions.withCompactUris
     }
-    val vendor       = effectiveVendor(config.outputFormat)
-    val renderConfig = configFor(vendor)
+    val spec         = effectiveVendor(config.outputFormat)
+    val renderConfig = configFor(spec)
     val result =
       renderConfig
         .getOrElse(configuration)
@@ -103,11 +103,11 @@ trait CommandHelper {
     }
   }
 
-  def effectiveMediaType(mediaType: Option[String], vendor: Option[String]): String = {
+  def effectiveMediaType(mediaType: Option[String], spec: Option[String]): String = {
     mediaType match {
       case Some(effectiveMediaType) => effectiveMediaType
       case None =>
-        vendor match {
+        spec match {
 //          case Some(effectiveVendor) if AMFPluginsRegistry.documentPluginForID(effectiveVendor).isDefined =>
 //            AMFPluginsRegistry.documentPluginForID(effectiveVendor).get.documentSyntaxes.head
           case _ => "*/*"
@@ -115,7 +115,7 @@ trait CommandHelper {
     }
   }
 
-  private def configFor(vendor: Spec): Option[AMFConfiguration] = vendor match {
+  private def configFor(spec: Spec): Option[AMFConfiguration] = spec match {
     case Spec.RAML10  => Some(RAMLConfiguration.RAML10())
     case Spec.RAML08  => Some(RAMLConfiguration.RAML08())
     case Spec.OAS20   => Some(OASConfiguration.OAS20())
@@ -124,6 +124,6 @@ trait CommandHelper {
     case _            => None
   }
 
-  def effectiveVendor(vendor: Option[String]): Spec = vendor.flatMap(Spec.unapply).getOrElse(Spec("unknown"))
+  def effectiveVendor(spec: Option[String]): Spec = spec.flatMap(Spec.unapply).getOrElse(Spec("unknown"))
 
 }

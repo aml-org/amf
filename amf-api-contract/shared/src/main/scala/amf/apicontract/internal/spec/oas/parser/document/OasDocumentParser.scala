@@ -102,7 +102,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     val references = ReferencesParser(document, root.location, "uses".asOasExtension, map, root.references).parse()
     parseDeclarations(root, map)
 
-    val api = parseWebApi(map).add(SourceSpec(ctx.vendor))
+    val api = parseWebApi(map).add(SourceSpec(ctx.spec))
     document.set(DocumentModel.Encodes, api, Annotations.inferred())
 
     addDeclarationsToModel(document)
@@ -172,13 +172,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     def validateSchemeType(scheme: SecurityScheme): Unit = {
       val schemeType = scheme.`type`
       if (schemeType.nonEmpty && !OasLikeSecuritySchemeTypeMappings
-            .validTypesFor(ctx.vendor)
+            .validTypesFor(ctx.spec)
             .contains(schemeType.value()))
         ctx.eh.violation(
           InvalidSecuritySchemeType,
           scheme.id,
           Some(SecuritySchemeModel.Type.value.iri()),
-          s"'$schemeType' is not a valid security scheme type in ${ctx.vendor.id}",
+          s"'$schemeType' is not a valid security scheme type in ${ctx.spec.id}",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
           Some(ctx.rootContextDocument)
         )

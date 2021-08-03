@@ -1,7 +1,6 @@
 package amf.error
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.unsafe.PlatformSecrets
@@ -22,7 +21,7 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
   protected def validateWithUnit(file: String,
                                  unitAssertion: BaseUnit => Unit,
                                  fixture: Seq[AMFValidationResult => Unit]): Future[Assertion] = {
-    val client = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).baseUnitClient()
+    val client = APIConfiguration.API().baseUnitClient()
     client
       .parse(basePath + file)
       .map { amfResult =>

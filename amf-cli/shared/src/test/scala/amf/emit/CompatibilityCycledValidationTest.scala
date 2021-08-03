@@ -47,7 +47,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
 
       test(s"Test $path to $to") {
         val config       = CycleConfig(path, path, from, defaultHintFor(to), basePath, pipeline)
-        val targetHint   = hint(vendor = to)
+        val targetHint   = hint(spec = to)
         val toProfile    = profile(to)
         val amfConfig    = buildConfig(None, None)
         val targetConfig = buildConfig(amfConfigFrom(to), None, None)
@@ -64,7 +64,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     }
   }
 
-  private def amfConfigFrom(vendor: Spec): AMFConfiguration = vendor match {
+  private def amfConfigFrom(spec: Spec): AMFConfiguration = spec match {
     case Spec.OAS30   => OASConfiguration.OAS30()
     case Spec.OAS20   => OASConfiguration.OAS20()
     case Spec.RAML10  => RAMLConfiguration.RAML10()
@@ -73,7 +73,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     case _            => throw new IllegalArgumentException
   }
 
-  private def hint(vendor: Spec) = vendor match {
+  private def hint(spec: Spec) = spec match {
     case Raml10 => Raml10YamlHint
     case Raml08 => Raml08YamlHint
     case Oas20  => Oas20YamlHint
@@ -99,7 +99,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
       .baseUnit
   }
 
-  private def profile(vendor: Spec): ProfileName = vendor match {
+  private def profile(spec: Spec): ProfileName = spec match {
     case Raml10 => Raml10Profile
     case Raml08 => Raml08Profile
     case Oas20  => Oas20Profile

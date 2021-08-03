@@ -12,7 +12,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
   val jsonSchemaPath: String  = "amf-cli/shared/src/test/resources/org/raml/json_schema/"
   val parserPath: String      = "amf-cli/shared/src/test/resources/org/raml/parser/"
   val validationsPath: String = "amf-cli/shared/src/test/resources/validations/"
-  val vendor: Spec            = Spec.RAML10
+  val spec: Spec              = Spec.RAML10
 
   test("type - multiple inheritance with union and properties") {
     renderElement(

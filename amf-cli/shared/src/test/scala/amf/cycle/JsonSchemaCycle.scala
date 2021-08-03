@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
@@ -178,7 +178,7 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     val finalPath   = basePath + path
     val finalGolden = basePath + golden
     val fragment =
-      parseSchema(platform, finalPath, mediatype, WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()))
+      parseSchema(platform, finalPath, mediatype, APIConfiguration.API())
     val expected = emitter
       .emitSchema(fragment.baseUnit.asInstanceOf[DataTypeFragment])
     writeTemporaryFile(finalGolden)(expected).flatMap(s => assertDifferences(s, finalGolden))
@@ -193,10 +193,10 @@ object JsonLdEmitter extends SchemaEmitter {
 
   lazy private val options =
     RenderOptions().withCompactUris.withoutSourceMaps.withoutRawSourceMaps.withFlattenedJsonLd.withPrettyPrint
-  lazy private val vendor = Spec.AMF
+  lazy private val spec = Spec.AMF
 
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
-    AMFRenderer(fragment, HintProvider.defaultHintFor(vendor), options).renderToString
+    AMFRenderer(fragment, HintProvider.defaultHintFor(spec), options).renderToString
   }
 }
 

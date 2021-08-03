@@ -91,7 +91,7 @@ class Async20SpecEmitterContext(eh: AMFErrorHandler,
   override val nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
 
   override val factory: AsyncSpecEmitterFactory = Async20SpecEmitterFactory(this)
-  override val vendor: Spec                     = AsyncApi20
+  override val spec: Spec                       = AsyncApi20
   override def schemasDeclarationsPath: String  = "/definitions/"
 }
 

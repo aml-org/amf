@@ -65,7 +65,7 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override def transform(unit: BaseUnit, client: AMFBaseUnitClient): BaseUnit = {
 
-    unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
+    unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceSpec match {
       case Some(Raml08) =>
         client.transform(unit, PipelineId.Default).baseUnit
       case _ =>

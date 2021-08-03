@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -56,7 +56,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
 
   private val basePath: String   = "file://amf-cli/shared/src/test/resources/toraml/toramldatatype/source/"
   private val goldenPath: String = "amf-cli/shared/src/test/resources/toraml/toramldatatype/datatypes/"
-  private val parseConfig        = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+  private val parseConfig        = APIConfiguration.API()
   private val renderConfig       = RAMLConfiguration.RAML10()
 
   private def cycle(
@@ -64,11 +64,12 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest with 
       goldenFile: String,
       findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
       renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, parseConfig)): Future[Assertion] = {
-    val client = parseConfig.baseUnitClient()
+    val client       = parseConfig.baseUnitClient()
+    val renderClient = renderConfig.baseUnitClient()
     val ramlDatatype: Future[String] = for {
       sourceUnit <- client.parse(basePath + sourceFile).map(_.baseUnit)
     } yield {
-      findShapeFunc(client.transform(sourceUnit, PipelineId.Default).baseUnit)
+      findShapeFunc(renderClient.transform(sourceUnit, PipelineId.Default).baseUnit)
         .map(toRamlDatatype(_, renderConfig))
         .getOrElse("")
     }

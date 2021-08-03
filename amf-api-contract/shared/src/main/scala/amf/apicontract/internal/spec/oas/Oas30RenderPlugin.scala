@@ -13,7 +13,7 @@ import org.yaml.model.{YDocument, YNode}
 
 object Oas30RenderPlugin extends OasRenderPlugin {
 
-  override def vendor: Spec = Spec.OAS30
+  override def spec: Spec = Spec.OAS30
 
   override def mediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`)
 

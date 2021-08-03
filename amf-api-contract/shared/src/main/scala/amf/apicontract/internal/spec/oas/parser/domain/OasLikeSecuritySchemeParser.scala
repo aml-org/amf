@@ -76,7 +76,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
           CrossSecurityWarningSpecification,
           scheme.id,
           Some(SecuritySchemeModel.Type.value.iri()),
-          s"RAML 1.0 extension security scheme type '$s' detected in ${ctx.vendor.id} spec",
+          s"RAML 1.0 extension security scheme type '$s' detected in ${ctx.spec.id} spec",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
           Some(ctx.rootContextDocument)
         )

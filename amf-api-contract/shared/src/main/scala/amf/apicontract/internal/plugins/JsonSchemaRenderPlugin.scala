@@ -15,7 +15,7 @@ import org.yaml.model.YDocument
 
 object JsonSchemaRenderPlugin extends ApiRenderPlugin {
 
-  override def vendor: Spec = Spec.JSONSCHEMA
+  override def spec: Spec = Spec.JSONSCHEMA
 
   override def applies(element: RenderInfo): Boolean = firstAnyShape(element.unit).isDefined
 

@@ -29,7 +29,7 @@ import org.yaml.model.{YDocument, YNode, YScalar, YType}
 /**
   *
   */
-abstract class OasModuleEmitter(module: Module)(implicit val spec: OasSpecEmitterContext) extends OasSpecEmitter {
+abstract class OasModuleEmitter(module: Module)(implicit val specCtx: OasSpecEmitterContext) extends OasSpecEmitter {
 
   def emitModule(): YDocument = {
 
@@ -50,17 +50,17 @@ abstract class OasModuleEmitter(module: Module)(implicit val spec: OasSpecEmitte
   protected def docVersion(builder: EntryBuilder): Unit
 }
 
-case class Oas30ModuleEmitter(module: Module)(implicit override val spec: OasSpecEmitterContext)
+case class Oas30ModuleEmitter(module: Module)(implicit override val specCtx: OasSpecEmitterContext)
     extends OasModuleEmitter(module) {
   override protected def docVersion(builder: EntryBuilder): Unit = builder.openapi = "3.0.0"
 }
 
-case class Oas20ModuleEmitter(module: Module)(implicit override val spec: OasSpecEmitterContext)
+case class Oas20ModuleEmitter(module: Module)(implicit override val specCtx: OasSpecEmitterContext)
     extends OasModuleEmitter(module) {
   override protected def docVersion(builder: EntryBuilder): Unit = builder.swagger = "2.0"
 }
 
-class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpecEmitterContext)
+class OasFragmentEmitter(fragment: Fragment)(implicit override val specCtx: OasSpecEmitterContext)
     extends OasDocumentEmitter(fragment) {
   override protected def versionEntry(b: YDocument.EntryBuilder): Unit = b.swagger = YNode(YScalar("2.0"), YType.Str)
 
@@ -71,8 +71,8 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     val typeEmitter: OasFragmentTypeEmitter = fragment match {
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)
       case dt: DataTypeFragment                  => DataTypeFragmentEmitter(dt, ordering)
-      case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)(spec.eh)
-      case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)(spec.eh)
+      case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)(specCtx.eh)
+      case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)(specCtx.eh)
       case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
       case sc: SecuritySchemeFragment            => SecuritySchemeFragmentEmitter(sc, ordering)
       case ne: NamedExampleFragment              => NamedExampleFragmentEmitter(ne, ordering)
@@ -100,7 +100,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class DocumentationItemFragmentEmitter(documentationItem: DocumentationItemFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
+    protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(specCtx)
     override val header: EntryEmitter                    = OasHeaderEmitter(OasHeader.Oas20DocumentationItem)
 
     val emitters: Seq[EntryEmitter] = OasCreativeWorkItemsEmitter(documentationItem.encodes, ordering).emitters()
@@ -109,7 +109,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    protected implicit val shapeCtx: OasLikeShapeEmitterContext = OasLikeShapeEmitterContextAdapter(spec)
+    protected implicit val shapeCtx: OasLikeShapeEmitterContext = OasLikeShapeEmitterContextAdapter(specCtx)
     override val header: OasHeaderEmitter                       = OasHeaderEmitter(OasHeader.Oas20DataType)
 
     val emitters: Seq[EntryEmitter] =
@@ -122,7 +122,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20AnnotationTypeDeclaration)
 
     val emitters: Seq[EntryEmitter] =
-      spec.factory.annotationTypeEmitter(annotation.encodes, ordering).emitters() match {
+      specCtx.factory.annotationTypeEmitter(annotation.encodes, ordering).emitters() match {
         case Left(list)  => list
         case Right(part) => Seq(EntryPartEmitter("type", part))
       }
@@ -163,14 +163,14 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     val emitters: Seq[EntryEmitter] =
       new OasSecuritySchemeEmitter(
         securityScheme.encodes,
-        OasLikeSecuritySchemeTypeMappings.mapsTo(spec.vendor, securityScheme.encodes.`type`.value()),
+        OasLikeSecuritySchemeTypeMappings.mapsTo(specCtx.spec, securityScheme.encodes.`type`.value()),
         ordering).emitters()
   }
 
   case class NamedExampleFragmentEmitter(namedExample: NamedExampleFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
+    protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(specCtx)
     override val header: EntryEmitter                    = OasHeaderEmitter(OasHeader.Oas20NamedExample)
 
     val emitters: Seq[EntryEmitter] = Seq(NamedExampleEmitter(namedExample.encodes, ordering))

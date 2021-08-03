@@ -48,7 +48,7 @@ abstract class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
   override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
 
   // TODO: THIS SHOULD BE PART OF A SpecSettings object or something of the sort that the context has and we could access.
-  val key: String = spec.vendor match {
+  val key: String = spec.spec match {
     case Spec.OAS30 | Spec.ASYNC20 => "schemas"
     case Spec.JSONSCHEMA if spec.isJsonSchema =>
       spec.asInstanceOf[OasLikeShapeEmitterContext].schemasDeclarationsPath.replace("/", "")

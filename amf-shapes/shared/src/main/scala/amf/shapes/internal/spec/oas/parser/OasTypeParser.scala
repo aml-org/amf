@@ -53,8 +53,8 @@ object OasTypeParser {
   private def key(entry: YMapEntry)(implicit errorHandler: IllegalTypeHandler) = entry.key.as[YScalar].text
 
   private def getSchemaVersion(ctx: ShapeParserContext) = {
-    if (ctx.vendor == Spec.OAS30) OAS30SchemaVersion(Schema)
-    else if (ctx.vendor == Spec.ASYNC20) JSONSchemaDraft7SchemaVersion
+    if (ctx.spec == Spec.OAS30) OAS30SchemaVersion(Schema)
+    else if (ctx.spec == Spec.ASYNC20) JSONSchemaDraft7SchemaVersion
     else OAS20SchemaVersion(Schema)
   }
 }

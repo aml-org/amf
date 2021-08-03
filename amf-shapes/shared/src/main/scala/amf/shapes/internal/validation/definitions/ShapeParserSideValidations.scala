@@ -263,8 +263,8 @@ object ShapeParserSideValidations extends Validations {
   )
 
   val UnexpectedVendor = validation(
-    "unexpected-vendor",
-    "Unexpected vendor"
+    "unexpected-spec",
+    "Unexpected spec"
   )
 
   val ReadOnlyPropertyMarkedRequired = validation(

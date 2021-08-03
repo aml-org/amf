@@ -1,7 +1,6 @@
 package amf.compiler
 
-import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.parser.AMFCompiler
@@ -14,9 +13,8 @@ import scala.concurrent.Future
 trait CompilerTestBuilder extends PlatformSecrets {
 
   protected def defaultConfig: AMFConfiguration =
-    WebAPIConfiguration
-      .WebAPI()
-      .merge(AsyncAPIConfiguration.Async20())
+    APIConfiguration
+      .API()
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
 
   protected def build(url: String, hint: Hint, amfConfig: AMFConfiguration, cache: Option[Cache]): Future[BaseUnit] =

@@ -27,12 +27,12 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
     val settings = f.value.value.asInstanceOf[Settings]
 
     settings match {
-      case o1: OAuth1Settings                              => OasOAuth1SettingsEmitters(o1, ordering).emitters()
-      case o2: OAuth2Settings if spec.vendor == Spec.OAS30 => Oas3OAuth2SettingsEmitters(o2, ordering).emitters()
-      case o2: OAuth2Settings                              => OasOAuth2SettingsEmitters(o2, ordering).emitters()
-      case apiKey: ApiKeySettings                          => OasApiKeySettingsEmitters(apiKey, ordering).emitters()
-      case http: HttpSettings                              => OasHttpSettingsEmitters(http, ordering).emitters()
-      case openId: OpenIdConnectSettings                   => OasOpenIdConnectSettingsEmitters(openId, ordering).emitters()
+      case o1: OAuth1Settings                            => OasOAuth1SettingsEmitters(o1, ordering).emitters()
+      case o2: OAuth2Settings if spec.spec == Spec.OAS30 => Oas3OAuth2SettingsEmitters(o2, ordering).emitters()
+      case o2: OAuth2Settings                            => OasOAuth2SettingsEmitters(o2, ordering).emitters()
+      case apiKey: ApiKeySettings                        => OasApiKeySettingsEmitters(apiKey, ordering).emitters()
+      case http: HttpSettings                            => OasHttpSettingsEmitters(http, ordering).emitters()
+      case openId: OpenIdConnectSettings                 => OasOpenIdConnectSettingsEmitters(openId, ordering).emitters()
       case _ =>
         val internals = ListBuffer[EntryEmitter]()
         settings.fields
