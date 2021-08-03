@@ -2,6 +2,7 @@ package amf.apicontract.internal.spec.raml.emitter.document
 
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.internal.annotations.ExtendsReference
 import amf.apicontract.internal.metamodel.domain.ParameterModel
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.spec.common.emitter.{SpecEmitterContext, _}
@@ -99,7 +100,10 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
   def extensionEmitter(): Option[EntryEmitter] =
     document.fields
       .entry(ExtensionLikeModel.Extends)
-      .map(f => MapEntryEmitter("extends", f.scalar.toString, position = pos(f.value.annotations)))
+      .flatMap(f => {
+        val extendsRef = f.value.annotations.find(classOf[ExtendsReference]).map(_.value)
+        extendsRef.map(MapEntryEmitter("extends", _, position = pos(f.value.annotations)))
+      })
 
   case class AnnotationsTypesEmitter(properties: Seq[CustomDomainProperty],
                                      references: Seq[BaseUnit],

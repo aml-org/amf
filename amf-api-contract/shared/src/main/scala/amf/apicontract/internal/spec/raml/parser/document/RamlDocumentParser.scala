@@ -5,17 +5,13 @@ import amf.apicontract.client.scala.model.document.{APIContractProcessingData, E
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Response, Tag}
+import amf.apicontract.internal.annotations.ExtendsReference
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, TraitModel}
 import amf.apicontract.internal.spec.common.parser.{WebApiShapeParserContextAdapter, _}
 import amf.apicontract.internal.spec.common.{OasParameter, RamlWebApiDeclarations, WebApiDeclarations}
-import amf.apicontract.internal.spec.oas.parser.domain.{
-  LicenseParser,
-  OasResponseParser,
-  OrganizationParser,
-  TagsParser
-}
+import amf.apicontract.internal.spec.oas.parser.domain.{LicenseParser, OasResponseParser, OrganizationParser, TagsParser}
 import amf.apicontract.internal.spec.raml.parser.context.{ExtensionLikeWebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.document.RamlAnnotationTargets.targetsFor
 import amf.apicontract.internal.spec.spec.toOas
@@ -39,11 +35,7 @@ import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, RamlCreativeWorkParser, RamlScalarNode, YMapEntryLike}
 import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, RamlTypeEntryParser, RamlTypeSyntax, StringDefaultType}
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
-  ExclusiveSchemasType,
-  InvalidFragmentType,
-  InvalidTypeDefinition
-}
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{ExclusiveSchemasType, InvalidFragmentType, InvalidTypeDefinition}
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 
@@ -127,7 +119,7 @@ case class ExtensionLikeParser(root: Root, spec: Spec)(implicit override val ctx
           .find(_.origin.url == e.value.as[String])
           .foreach{ extend =>
             document.callAfterAdoption{() =>
-              document.set(field, AmfScalar(extend.unit.id, Annotations(e.value)), Annotations(e))}
+              document.set(field, AmfScalar(extend.unit.id, Annotations(e.value)), Annotations(e) += ExtendsReference(extend.origin.url))}
           }
       })
   }
