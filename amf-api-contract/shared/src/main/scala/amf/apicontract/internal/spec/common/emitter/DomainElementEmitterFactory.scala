@@ -85,16 +85,3 @@ trait DomainElementEmitterFactory {
   def tagEmitter(t: Tag): Option[PartEmitter]                                               = None
   def customDomainPropertyEmitter(t: CustomDomainProperty): Option[PartEmitter]             = None
 }
-
-object DomainElementEmitterFactory {
-  def apply(spec: Spec, eh: AMFErrorHandler): Option[DomainElementEmitterFactory] = {
-    spec match {
-      case Spec.RAML08  => Some(Raml08EmitterFactory(eh))
-      case Spec.RAML10  => Some(Raml10EmitterFactory(eh))
-      case Spec.OAS20   => Some(Oas20EmitterFactory(eh))
-      case Spec.OAS30   => Some(Oas30EmitterFactory(eh))
-      case Spec.ASYNC20 => Some(AsyncDomainElementEmitterFactory(eh))
-      case _            => None
-    }
-  }
-}

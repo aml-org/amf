@@ -16,48 +16,44 @@ import amf.core.internal.remote.{JSONRefs, Spec}
 import amf.core.internal.utils.MediaTypeMatcher
 
 // TODO ARM: change this, refactor to have different options based on the configuration (Raml strict, WebApi Relaxed).
-// Export withFallback and this object to the user. User cannot create instance or implement interface? yes? no?
+// TODO ARM: Export withFallback and this object to the user. User cannot create instance or implement interface? yes? no?
 case class ApiContractFallbackPlugin(strict:Boolean = true) extends DomainParsingFallback {
 
   private def docMediaType(doc: Root) = if (doc.raw.isJson) `application/json` else `application/yaml`
 
   override def chooseFallback(root: Root, availablePlugins: Seq[AMFParsePlugin], isRoot: Boolean): AMFParsePlugin = {
+    if (strict && isRoot) throw UnsupportedDomainForDocumentException(root.location)
     root.parsed match {
-      case parsed: SyamlParsedDocument if !root.raw.isXml => plugin(parsed, isRoot)
+      case parsed: SyamlParsedDocument if !root.raw.isXml => ApiContractDomainFallbackPlugin(parsed)
       case _ => ExternalFragmentDomainFallback(strict).chooseFallback(root, availablePlugins, isRoot)
     }
   }
 
-  val plugin: (SyamlParsedDocument, Boolean)=> AMFParsePlugin = (parsed:SyamlParsedDocument, isRoot:Boolean) => new AMFParsePlugin {
+  def plugin(parsed: SyamlParsedDocument): ApiContractDomainFallbackPlugin = ApiContractDomainFallbackPlugin(parsed)
+
+  case class ApiContractDomainFallbackPlugin(parsed: SyamlParsedDocument) extends AMFParsePlugin {
     override def spec: Spec = JSONRefs
 
     override def validSpecsToReference: Seq[Spec] = Seq(JSONRefs)
     override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-      if (strict && isRoot) throw UnsupportedDomainForDocumentException(document.location)
-      else {
-        val result =
-          ExternalDomainElement(Annotations(parsed.document))
-            .withId(document.location + "#/")
-            .withRaw(document.raw)
-            .withMediaType(docMediaType(document))
-        result.parsed = Some(parsed.document.node)
-        val references = document.references.map(_.unit)
-        val fragment = ExternalFragment()
-          .withLocation(document.location)
-          .withId(document.location)
-          .withEncodes(result)
-          .withLocation(document.location)
-        if (references.nonEmpty) fragment.withReferences(references)
-        fragment
-      }
-
+      val result =
+        ExternalDomainElement(Annotations(parsed.document))
+          .withId(document.location + "#/")
+          .withRaw(document.raw)
+          .withMediaType(docMediaType(document))
+      result.parsed = Some(parsed.document.node)
+      val references = document.references.map(_.unit)
+      val fragment = ExternalFragment()
+        .withLocation(document.location)
+        .withId(document.location)
+        .withEncodes(result)
+        .withLocation(document.location)
+      if (references.nonEmpty) fragment.withReferences(references)
+      fragment
     }
 
     override val priority: PluginPriority = LowPriority
 
-    /**
-      * media types which specifies vendors that are parsed by this plugin.
-      */
     override def mediaTypes: Seq[String] = Seq(
       `application/json`,
       `application/yaml`,
@@ -68,7 +64,5 @@ case class ApiContractFallbackPlugin(strict:Boolean = true) extends DomainParsin
     override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = new JsonRefsReferenceHandler()
 
     override def allowRecursiveReferences: Boolean = true
-
   }
-
 }
