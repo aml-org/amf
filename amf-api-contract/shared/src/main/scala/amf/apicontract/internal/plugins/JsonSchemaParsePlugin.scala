@@ -19,7 +19,7 @@ import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 
 object JsonSchemaParsePlugin extends AMFParsePlugin {
 
-  override val id: String = Spec.JSONSCHEMA.id
+  override def spec: Spec = Spec.JSONSCHEMA
 
   override def applies(element: Root): Boolean = false
 
@@ -53,11 +53,6 @@ object JsonSchemaParsePlugin extends AMFParsePlugin {
     * media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Seq(ProvidedMediaType.JsonSchema)
-
-  /**
-    * media types which specifies vendors that may be referenced.
-    */
-  override def validMediaTypesToReference: Seq[String] = Nil
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = SimpleReferenceHandler
 

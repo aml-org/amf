@@ -27,7 +27,7 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
     RenderOptions().withSourceMaps.withPrettyPrint.withAmfJsonLdSerialization
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    configFor(config.hint.vendor)
+    configFor(config.hint.spec)
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .baseUnitClient()
       .transform(unit, PipelineId.Editing)

@@ -2,24 +2,14 @@ package amf.apicontract.internal.spec.oas.parser.document
 
 import amf.apicontract.client.scala.model.document._
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
-import amf.apicontract.internal.plugins.ExternalJsonYamlRefsParsePlugin
+import amf.apicontract.internal.plugins.ApiContractFallbackPlugin
 import amf.apicontract.internal.spec.common.parser.{
   AbstractDeclarationParser,
   ReferencesParser,
   WebApiShapeParserContextAdapter
 }
 import amf.apicontract.internal.spec.oas.OasHeader
-import amf.apicontract.internal.spec.oas.OasHeader.{
-  Oas20AnnotationTypeDeclaration,
-  Oas20DataType,
-  Oas20DocumentationItem,
-  Oas20Header,
-  Oas20NamedExample,
-  Oas20ResourceType,
-  Oas20SecurityScheme,
-  Oas20Trait,
-  Oas30Header
-}
+import amf.apicontract.internal.spec.oas.OasHeader._
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
@@ -28,18 +18,18 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition}
+import amf.core.internal.utils._
+import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.spec.common.parser.{
   ExampleOptions,
   OasLikeCreativeWorkParser,
   RamlNamedExampleParser,
   YMapEntryLike
 }
+import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}
-import amf.core.internal.utils._
-import amf.shapes.client.scala.model.domain.Example
 
 case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
@@ -47,7 +37,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
   def parseFragment(): BaseUnit = {
     // first i must identify the type of fragment
-    val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.to[YMap] match {
+    val parsed = root.parsed.asInstanceOf[SyamlParsedDocument]
+    val map: YMap = parsed.document.to[YMap] match {
       case Right(m) => m
       case _ =>
         ctx.eh.violation(InvalidFragmentType,
@@ -65,7 +56,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Oas20AnnotationTypeDeclaration => Some(AnnotationFragmentParser(map).parse())
       case Oas20SecurityScheme            => Some(SecuritySchemeFragmentParser(map).parse())
       case Oas20NamedExample              => Some(NamedExampleFragmentParser(map).parse())
-      case Oas20Header | Oas30Header      => Some(ExternalJsonYamlRefsParsePlugin.parse(root, ctx))
+      case Oas20Header | Oas30Header      => Some(ApiContractFallbackPlugin(false).plugin(parsed, false).parse(root, ctx))
       case _                              => None
     }).getOrElse {
       val fragment = ExternalFragment()

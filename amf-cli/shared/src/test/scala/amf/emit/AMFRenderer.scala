@@ -27,8 +27,8 @@ class AMFRenderer(unit: BaseUnit, target: Hint, options: RenderOptions) extends 
   }
 
   private def render()(implicit executionContext: ExecutionContext): String = {
-    val config = configFor(target.vendor).withRenderOptions(options)
-    new AMFSerializer(unit, target.syntax.mediaType, config.renderConfiguration).renderToString
+    val config = configFor(target.spec).withRenderOptions(options)
+    new AMFSerializer(unit, config.renderConfiguration, Some(target.syntax.mediaType)).renderToString
   }
 }
 

@@ -113,7 +113,7 @@ class ProductionServiceTest extends RamlResolutionTest {
 
     val config       = CycleConfig(source, golden, hint, target, basePath, None, None)
     val amfConfig    = buildConfig(renderOptions, None)
-    val renderConfig = buildConfig(configFor(target.vendor), renderOptions, None)
+    val renderConfig = buildConfig(configFor(target.spec), renderOptions, None)
     build(config, amfConfig)
       .map(tFn(_, config, renderConfig))
       .map { render(_, config, renderConfig) }

@@ -9,13 +9,13 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.remote.{Raml10YamlHint, _}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.emit.AMFRenderer
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.testing.ConfigProvider.configFor
-import amf.testing.{ConfigProvider, HintProvider}
+import amf.testing.HintProvider
 
 import scala.concurrent.Future
 
@@ -71,7 +71,7 @@ trait ModelValidationTest extends DirectoryTest {
   private def profileFromModel(unit: BaseUnit): ProfileName = {
     val maybeVendor = Option(unit)
       .collect({ case d: Document => d })
-      .flatMap(_.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor))
+      .flatMap(_.encodes.annotations.find(classOf[SourceSpec]).map(_.spec))
     maybeVendor match {
       case Some(Raml08)     => Raml08Profile
       case Some(Oas20)      => Oas20Profile
@@ -86,13 +86,13 @@ trait ModelValidationTest extends DirectoryTest {
   def target(model: BaseUnit): Spec = model match {
     case d: EncodesModel =>
       d.encodes.annotations
-        .find(classOf[SourceVendor])
-        .map(_.vendor)
+        .find(classOf[SourceSpec])
+        .map(_.spec)
         .getOrElse(Raml10)
     case m: Module =>
       m.annotations
-        .find(classOf[SourceVendor])
-        .map(_.vendor)
+        .find(classOf[SourceSpec])
+        .map(_.spec)
         .getOrElse(Raml10)
     case _ => Raml10
   }
@@ -104,9 +104,9 @@ trait ModelResolutionTest extends ModelValidationTest {
     transform(unit, CycleConfig("", "", target, target, d, None, None), amfConfig)
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    val res = config.renderTarget.vendor match {
+    val res = config.renderTarget.spec match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        configFor(config.renderTarget.vendor).baseUnitClient().transform(unit, PipelineId.Editing).baseUnit
+        configFor(config.renderTarget.spec).baseUnitClient().transform(unit, PipelineId.Editing).baseUnit
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
     }

@@ -3,53 +3,46 @@ package amf.cli.internal.convert
 import _root_.org.scalatest.{Assertion, Matchers}
 import amf.aml.client.platform.model.document.Vocabulary
 import amf.aml.client.platform.model.domain.{ClassTerm, DatatypePropertyTerm, PropertyTerm}
+import amf.aml.client.scala.AMLConfiguration
 import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.platform.model.document.TraitFragment
-import amf.apicontract.client.platform.model.domain.{Operation, Parameter}
 import amf.apicontract.client.platform.model.domain.api.{Api, WebApi}
-import amf.apicontract.client.platform.{
-  AMFConfiguration,
-  AsyncAPIConfiguration,
-  OASConfiguration,
-  RAMLConfiguration,
-  WebAPIConfiguration
-}
-import amf.apicontract.client.platform.APIConfiguration
+import amf.apicontract.client.platform.model.domain.{Operation, Parameter}
+import amf.apicontract.client.platform._
 import amf.apicontract.client.scala.model.domain.CorrelationId
-import amf.apicontract.client.scala.render.ApiDomainElementEmitter
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.common.remote.Content
 import amf.core.client.common.render.JSONSchemaVersions
 import amf.core.client.common.transform.PipelineId
-import amf.core.client.common.validation.{Oas30Profile, Raml10Profile, ValidationMode}
+import amf.core.client.common.validation.ValidationMode
 import amf.core.client.platform.config.RenderOptions
 import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document}
-import amf.core.client.platform.model.domain.{ArrayNode, CustomDomainProperty, Linkable, ObjectNode, ScalarNode, Shape}
+import amf.core.client.platform.model.domain._
+import amf.core.client.platform.parse.AMFParser
+import amf.core.client.platform.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.exception.UnsupportedVendorException
+import amf.core.client.scala.model.document.{Document => InternalDocument}
+import amf.core.client.scala.model.domain.extensions.{DomainExtension => InternalDomainExtension}
 import amf.core.client.scala.model.domain.{
   ArrayNode => InternalArrayNode,
   ObjectNode => InternalObjectNode,
   ScalarNode => InternalScalarNode
 }
-import amf.core.client.platform.parse.AMFParser
-import amf.core.internal.remote._
-import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
-import org.yaml.builder.JsonOutputBuilder
-import amf.core.client.scala.model.document.{Document => InternalDocument}
 import amf.core.client.scala.resource.ResourceLoader
-import amf.core.client.platform.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
-import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.core.client.scala.exception.UnsupportedVendorException
-import amf.core.client.scala.model.domain.extensions.{DomainExtension => InternalDomainExtension}
-import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
-import amf.core.internal.convert.CoreClientConverters.ClientFuture
-import amf.core.internal.convert.CoreClientConverters._
+import amf.core.internal.convert.CoreClientConverters.{ClientFuture, _}
 import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote._
 import amf.core.internal.resource.{ClientResourceLoaderAdapter, StringResourceLoader}
+import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
 import org.mulesoft.common.test.Diff
+import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -117,7 +110,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Parsing raml 1.0 test") {
     for {
-      unit <- config().baseUnitClient().parse(zencoder, Raml10.mediaType).asFuture
+      unit <- config().baseUnitClient().parse(zencoder).asFuture
     } yield {
       assertBaseUnit(unit.baseUnit, zencoder)
     }
@@ -125,7 +118,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Parsing raml 0.8 test") {
     for {
-      unit <- config().baseUnitClient().parse(zencoder08, Raml08.mediaType).asFuture
+      unit <- config().baseUnitClient().parse(zencoder08).asFuture
     } yield {
       assertBaseUnit(unit.baseUnit, zencoder08)
     }
@@ -173,7 +166,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         | paths: {}
         |""".stripMargin
     for {
-      unit <- AMFParser.parseContent(doc, ProvidedMediaType.Oas20Yaml, OASConfiguration.OAS20()).asFuture
+      unit <- AMFParser.parseContent(doc, Mimes.`application/yaml`, OASConfiguration.OAS20()).asFuture
     } yield {
       val webApi = unit.baseUnit._internal.asInstanceOf[InternalDocument].encodes
       webApi.fields.get(WebApiModel.Name).toString shouldBe expected
@@ -191,7 +184,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         | paths: {}
         |""".stripMargin
     for {
-      unit <- AMFParser.parseContent(doc, ProvidedMediaType.Oas20Yaml, OASConfiguration.OAS20()).asFuture
+      unit <- AMFParser.parseContent(doc, Mimes.`application/yaml`, OASConfiguration.OAS20()).asFuture
     } yield {
       val webApi = unit.baseUnit._internal.asInstanceOf[InternalDocument].encodes
       webApi.fields.get(WebApiModel.Name).toString shouldBe expected
@@ -316,7 +309,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("Scalar Annotations") {
     val client = config().baseUnitClient()
     for {
-      unit <- client.parse(scalarAnnotations, Raml10.mediaType + "+yaml").asFuture
+      unit <- client.parse(scalarAnnotations).asFuture
     } yield {
       val api         = unit.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
       val annotations = api.name.annotations().custom().asSeq
@@ -535,7 +528,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     case class BadIRIResourceLoader() extends ResourceLoader {
 
       override def fetch(resource: String): Future[Content] =
-        Future.successful(new Content(input, resource))
+        Future.successful(new Content(input, resource, Some(Mimes.`application/yaml`)))
 
       override def accepts(resource: String): Boolean = true
     }
@@ -547,8 +540,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = config.baseUnitClient()
 
     for {
-      parseResult  <- client.parse(name, ProvidedMediaType.Raml10).asFuture
-      parseResult2 <- client.parse(name2, ProvidedMediaType.Raml10).asFuture
+      parseResult  <- client.parse(name).asFuture
+      parseResult2 <- client.parse(name2).asFuture
     } yield {
       parseResult.baseUnit shouldBe a[Document]
       parseResult.baseUnit.id should be("file://api.raml")
@@ -1083,7 +1076,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val configuration                 = config().withResourceLoaders(loaders.asClient)
 
     for {
-      result <- configuration.baseUnitClient().parse(baseUrl, Raml10.mediaType).asFuture
+      result <- configuration.baseUnitClient().parse(baseUrl).asFuture
     } yield {
       val unit = result.baseUnit
       assert(unit.location.startsWith(baseUrl))
@@ -1181,7 +1174,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client  = RAMLConfiguration.RAML10().withRenderOptions(options).baseUnitClient()
     for {
       unit   <- client.parse(banking).asFuture // could be use a smaller api for this test?
-      jsonld <- Future.successful(client.render(unit.baseUnit))
+      jsonld <- Future.successful(client.render(unit.baseUnit, Mimes.`application/ld+json`))
     } yield {
       jsonld should include("[(1,0)-(252,0)]")
     }
@@ -1192,7 +1185,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client  = RAMLConfiguration.RAML10().withRenderOptions(options).baseUnitClient()
     for {
       unit   <- client.parse(banking).asFuture // could be use a smaller api for this test?
-      jsonld <- Future.successful(client.render(unit.baseUnit))
+      jsonld <- Future.successful(client.render(unit.baseUnit, Mimes.`application/ld+json`))
     } yield {
       jsonld should not include "[(3,0)-(252,0)]"
     }
@@ -1203,7 +1196,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client  = RAMLConfiguration.RAML10().withRenderOptions(options).baseUnitClient()
     for {
       unit   <- client.parse(banking).asFuture
-      jsonld <- Future.successful(client.render(unit.baseUnit))
+      jsonld <- Future.successful(client.render(unit.baseUnit, Mimes.`application/ld+json`))
     } yield {
       jsonld should include("@context")
     }
@@ -1358,7 +1351,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         doc
       }
       s       <- Future.successful(client.render(doc, `application/yaml`))
-      loaders <- Future.successful(List(StringResourceLoader(url, s)))
+      loaders <- Future.successful(List(StringResourceLoader(url, s, Some(Mimes.`application/yaml`))))
       withLoader <- Future.successful(
         client
           .getConfiguration()
@@ -1475,7 +1468,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     recoverToSucceededIf[UnsupportedVendorException] {
       val client = OASConfiguration.OAS20().baseUnitClient()
       client
-        .parse("file://amf-cli/shared/src/test/resources/clients/oas20-yaml.yaml", ProvidedMediaType.Oas20Json)
+        .parse("file://amf-cli/shared/src/test/resources/clients/oas20-yaml.yaml")
         .asFuture
         .map { _ =>
           succeed
@@ -1664,9 +1657,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   // This test is here because of I need to resolve with default and then validate
   test("Test json schema emittion of recursive union shape") {
     val file   = "file://amf-cli/shared/src/test/resources/validations/recursion-union.raml"
-    val client = RAMLConfiguration.RAML08().baseUnitClient()
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      unit     <- client.parse(file).asFuture
+      unit     <- client.parseDocument(file).asFuture
       resolved <- Future.successful(client.transform(unit.baseUnit))
       report   <- client.validate(resolved.baseUnit).asFuture
     } yield {
@@ -2051,7 +2044,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |    }
         |  }
         |}
-        """.stripMargin
+        """.stripMargin,
+      Some(Mimes.`application/ld+json`)
     )
     val loaders: List[ResourceLoader] = List(custom)
     val client                        = OASConfiguration.OAS30().withResourceLoaders(loaders.asClient).baseUnitClient()
@@ -2064,16 +2058,22 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+  // TODO check with @tomi and @agus
   test("Test domain element emitter with unknown vendor") {
-    val eh = DefaultErrorHandler()
-    ApiDomainElementEmitter.emit(InternalArrayNode(), Spec.PAYLOAD.mediaType, eh)
-    assert(eh.getResults.head.message == "Unknown vendor provided")
+    assertThrows[Throwable](
+      amf.apicontract.client.scala.RAMLConfiguration.RAML10().elementClient().renderElement(InternalArrayNode()))
   }
 
   test("Test domain element emitter with unhandled domain element") {
     val eh = DefaultErrorHandler()
-    ApiDomainElementEmitter.emit(CorrelationId(), Spec.RAML10.mediaType, eh)
-    assert(eh.getResults.head.message == "Unhandled domain element for given vendor")
+    val exception = intercept[Throwable](
+      RAMLConfiguration
+        .RAML10()
+        ._internal
+        .withErrorHandlerProvider(() => eh)
+        .elementClient()
+        .renderElement(CorrelationId()))
+    assert(exception.getMessage == "Cannot serialize domain element 'null' with plugins: List(RAML 1.0 Element)")
   }
 
   test("OAS 3.0 Response examples for a same type have different ids") {

@@ -3,7 +3,12 @@ package amf.validation
 import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.exception.UnsupportedMediaTypeException
+import amf.core.client.scala.exception.{
+  UnsupportedDocumentException,
+  UnsupportedDomainForDocumentException,
+  UnsupportedMediaTypeException,
+  UnsupportedSyntaxForDocumentException
+}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Oas20, Raml10}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -18,32 +23,35 @@ class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
   implicit override def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 
   test("Empty RAML master API file to test vendor exception") {
-    recoverToSucceededIf[UnsupportedMediaTypeException] {
+    recoverToSucceededIf[UnsupportedSyntaxForDocumentException] {
       parse(basePath + "/empty-raml.raml",
-            Raml10.mediaType,
-            RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler))
+            OASConfiguration.OAS().withErrorHandlerProvider(() => UnhandledErrorHandler))
     }
   }
 
   test("Empty OAS json master API file to test vendor exception") {
-    recoverToSucceededIf[UnsupportedMediaTypeException] {
+    recoverToSucceededIf[UnsupportedSyntaxForDocumentException] {
       parse(basePath + "/empty-oas.json",
-            Oas20.mediaType,
-            OASConfiguration.OAS().withErrorHandlerProvider(() => UnhandledErrorHandler))
+            RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler))
     }
   }
 
   test("Empty OAS yaml master API file to test vendor exception") {
-    recoverToSucceededIf[UnsupportedMediaTypeException] {
+    recoverToSucceededIf[UnsupportedSyntaxForDocumentException] {
       parse(basePath + "/empty-oas.yaml",
-            Oas20.mediaType,
-            OASConfiguration.OAS().withErrorHandlerProvider(() => UnhandledErrorHandler))
+            RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler))
     }
   }
 
-  def parse(url: String, mediaType: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
+  test("Parse RAML with oas config to test domain exception") {
+    recoverToSucceededIf[UnsupportedDomainForDocumentException] {
+      parse(basePath + "/empty-usage-uses.raml",
+            OASConfiguration.OAS().withErrorHandlerProvider(() => UnhandledErrorHandler))
+    }
+  }
+  def parse(url: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
     val client = config.baseUnitClient()
-    client.parse(url, mediaType).map(_.baseUnit)
+    client.parse(url).map(_.baseUnit)
   }
 
 }

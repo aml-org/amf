@@ -69,7 +69,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
     for {
       u <- build(config, amfConfig)
       _ <- {
-        Future { transform(u, config, configFor(hint.vendor).withErrorHandlerProvider(() => eh)) }
+        Future { transform(u, config, configFor(hint.spec).withErrorHandlerProvider(() => eh)) }
       }
     } yield {
       assertErrors(errors, eh.getResults)
@@ -92,7 +92,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    config.renderTarget.vendor match {
+    config.renderTarget.spec match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         amfConfig.baseUnitClient().transform(unit, PipelineId.Default).baseUnit
       case Amf =>

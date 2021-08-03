@@ -25,7 +25,7 @@ import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.model.domain.extensions.DomainExtension
-import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.FieldEntry
@@ -199,9 +199,9 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val spec: OasSpec
   protected def versionEntry(b: EntryBuilder): Unit
 
   def emitWebApi(ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
-    val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    val api    = WebApiEmitter(model, ordering, vendor, references)
+    val model = retrieveWebApi()
+    val spec  = model.annotations.find(classOf[SourceSpec]).map(_.spec)
+    val api   = WebApiEmitter(model, ordering, spec, references)
     api.emitters
   }
 

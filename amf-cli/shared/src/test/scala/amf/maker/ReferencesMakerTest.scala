@@ -32,7 +32,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
 
   private def assertFixture(rootFile: String, hint: Hint): Future[Assertion] = {
 
-    val rootExpected = UnitsCreator(hint.vendor).usesDataType
+    val rootExpected = UnitsCreator(hint.spec).usesDataType
     val amfConfig    = WebAPIConfiguration.WebAPI()
     build(rootFile, hint, amfConfig, None)
       .map({

@@ -37,7 +37,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with P
                     directory: String = basePath): Future[Assertion] = {
 
     val config    = EmissionConfig(source, golden, target, directory)
-    val amfConfig = ConfigProvider.configFor(target.vendor)
+    val amfConfig = ConfigProvider.configFor(target.spec)
     build(config, amfConfig)
       .map(b => extractor(b))
       .flatMap(render(_, amfConfig))
@@ -56,7 +56,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with P
   def renderDomainElement(element: Option[DomainElement], amfConfig: AMFConfiguration): String = {
     val eh     = DefaultErrorHandler()
     val client = amfConfig.withErrorHandlerProvider(() => eh).elementClient()
-    val node   = element.map(client.renderElement).getOrElse(YNode.Empty)
+    val node   = element.map(e => client.renderElement(e)).getOrElse(YNode.Empty)
     val errors = eh.getResults
     if (errors.nonEmpty)
       errors.map(_.completeMessage).mkString("\n")

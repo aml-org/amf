@@ -185,8 +185,8 @@ trait BuildCycleTests extends BuildCycleTestCommon {
 
     val config          = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
     val amfConfig       = buildConfig(renderOptions, eh)
-    val transformConfig = buildConfig(configFor(transformWith.getOrElse(target.vendor)), renderOptions, eh)
-    val renderConfig    = buildConfig(configFor(target.vendor), renderOptions, eh)
+    val transformConfig = buildConfig(configFor(transformWith.getOrElse(target.spec)), renderOptions, eh)
+    val renderConfig    = buildConfig(configFor(target.spec), renderOptions, eh)
 
     for {
       parsed       <- build(config, amfConfig)

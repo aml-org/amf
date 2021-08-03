@@ -33,7 +33,6 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     val eh  = DefaultErrorHandler()
     AMFCompiler(
         url,
-        None,
         base = Context(platform),
         cache = Cache(),
         CompilerConfiguration(

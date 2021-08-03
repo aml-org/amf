@@ -4,12 +4,11 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.DataNode
-import amf.core.internal.remote.{Mimes, Spec}
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.render.{AMFSerializer, SpecOrdering}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.shapes.client.scala.model.domain.Example
-import amf.core.internal.remote.Mimes._
 import org.yaml.model.YDocument
 trait PayloadSerializer extends PlatformSecrets {
 
@@ -39,7 +38,9 @@ trait PayloadSerializer extends PlatformSecrets {
   }
 
   private def dump(dataNode: DataNode, config: AMFGraphConfiguration): String = {
-    new AMFSerializer(PayloadFragment(dataNode, `application/json`), `application/json`, config.renderConfiguration)
+    new AMFSerializer(PayloadFragment(dataNode, `application/json`),
+                      config.renderConfiguration,
+                      Some(`application/json`))
       .render()
   }
 }

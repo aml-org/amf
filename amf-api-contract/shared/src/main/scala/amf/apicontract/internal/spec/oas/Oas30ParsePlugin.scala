@@ -13,18 +13,18 @@ import amf.core.internal.remote.{Oas30, Spec}
 
 object Oas30ParsePlugin extends OasParsePlugin {
 
-  override def vendor: Spec = Oas30
+  override def spec: Spec = Oas30
 
   override def applies(element: Root): Boolean = OasHeader(element).contains(Oas30Header)
 
-  override def mediaTypes: Seq[String] = Oas30MediaTypes.mediaTypes
+  override def mediaTypes: Seq[String] = Seq()
 
   override protected def parseSpecificVersion(root: Root)(implicit ctx: OasWebApiContext): BaseUnit =
     OasHeader(root) match {
       case Some(Oas30Header) => Oas3DocumentParser(root).parseDocument()
       case Some(f)           => OasFragmentParser(root, Some(f)).parseFragment()
       case _ => // unreachable as it is covered in canParse()
-        throw new InvalidDocumentHeaderException(vendor.id)
+        throw new InvalidDocumentHeaderException(spec.id)
     }
 
   override protected def context(loc: String,

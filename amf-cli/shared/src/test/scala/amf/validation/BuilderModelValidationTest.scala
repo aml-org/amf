@@ -53,7 +53,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
     val fragment = PayloadFragment(scalar, `application/yaml`)
 
     val s =
-      new AMFSerializer(fragment, fragment.mediaType.value(), payloadRenderConfig.renderConfiguration).renderToString
+      new AMFSerializer(fragment, payloadRenderConfig.renderConfiguration, Some(`application/yaml`)).renderToString
     s should be("1\n") // without quotes
   }
 
@@ -69,7 +69,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
         |   type: number
         |   format: int""".stripMargin
     val s =
-      new AMFSerializer(m, `application/yaml`, RAMLConfiguration.RAML10().renderConfiguration).renderToString
+      new AMFSerializer(m, RAMLConfiguration.RAML10().renderConfiguration, None).renderToString
     val diffs = Diff.ignoreAllSpace.diff(s, e)
     if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")
     succeed

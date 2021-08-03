@@ -122,7 +122,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   private def ast(document: Document, target: Hint): YMap = {
-    val config = ConfigProvider.configFor(target.vendor)
+    val config = ConfigProvider.configFor(target.spec)
     config.baseUnitClient().renderAST(document, target.syntax.mediaType) match {
       case doc: SyamlParsedDocument => doc.document.node.as[YMap]
       case _                        => YMap.empty

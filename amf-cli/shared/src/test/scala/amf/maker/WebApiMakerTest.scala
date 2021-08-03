@@ -577,7 +577,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //body operation payload
     request
-      .withPayload(Some(`application/raml`))
+      .withPayload(Some("application/raml"))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     //payload of body operation with object
@@ -798,7 +798,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //body operation payload
     request
-      .withPayload(Some(`application/raml`))
+      .withPayload(Some("application/raml"))
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
     //payload of body operation with object
@@ -955,7 +955,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //body operation payload
     val bodySchema = request
-      .withPayload(Some(`application/raml`))
+      .withPayload(Some(`application/yaml`))
       .withObjectSchema("schema")
       .withClosed(false)
     val credit_card = bodySchema
@@ -1106,7 +1106,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //body operation payload
     val bodySchema = request
-      .withPayload(Some(`application/raml`))
+      .withPayload(Some(`application/yaml`))
       .withObjectSchema("schema")
       .withClosed(false)
     val credit_card = bodySchema

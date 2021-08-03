@@ -49,22 +49,22 @@ class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with Co
   fixture.foreach {
     case ((title, (document, hint)), (reference, AmfJsonHint)) =>
       multiGoldenTest(title, reference) { config =>
-        val amfConfig = buildConfig(configFor(hint.vendor), None, None)
+        val amfConfig = buildConfig(configFor(hint.spec), None, None)
         build(s"file://$basePath$document", hint, amfConfig, None)
           .flatMap(renderReference(config.golden, AmfJsonHint, _, amfConfig.withRenderOptions(config.renderOptions)))
           .flatMap(checkDiff(_, fs.asyncFile(s"$basePath${config.golden}")))
       }
     case ((title, (document, AmfJsonHint)), (reference, hint)) =>
       multiSourceTest(title, document) { config =>
-        val amfConfig = buildConfig(configFor(hint.vendor), None, None)
+        val amfConfig = buildConfig(configFor(hint.spec), None, None)
         build(s"file://$basePath${config.source}", AmfJsonHint, amfConfig, None)
           .flatMap(renderReference(reference, hint, _, amfConfig.withRenderOptions(defaultRenderOptions)))
           .flatMap(checkDiff(_, fs.asyncFile(s"$basePath$reference")))
       }
     case ((title, (document, hint)), (reference, targetHint)) =>
       test(title) {
-        val parseConfig  = buildConfig(configFor(hint.vendor), None, None)
-        val renderConfig = buildConfig(configFor(targetHint.vendor), None, None)
+        val parseConfig  = buildConfig(configFor(hint.spec), None, None)
+        val renderConfig = buildConfig(configFor(targetHint.spec), None, None)
         build(s"file://$basePath$document", hint, parseConfig, None)
           .flatMap(renderReference(reference, targetHint, _, renderConfig.withRenderOptions(defaultRenderOptions)))
           .flatMap(checkDiff(_, fs.asyncFile(basePath + reference)))

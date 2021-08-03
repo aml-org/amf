@@ -15,7 +15,7 @@ import amf.core.client.scala.model.document.{ExternalFragment, Fragment}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfScalar, ExternalDomainElement, Shape}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.metamodel.document.FragmentModel
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.parser.domain.Annotations
@@ -74,7 +74,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     UsageParser(rootMap, fragment).parse()
     fragment.add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
     if (aliases.isDefined) fragment.annotations += aliases.get
-    fragment.encodes.add(SourceVendor(Raml10))
+    fragment.encodes.add(SourceSpec(Raml10))
     if (references.nonEmpty) fragment.withReferences(references.baseUnitReferences())
     fragment
   }

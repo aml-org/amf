@@ -47,7 +47,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
     val conf = WebAPIConfiguration
       .WebAPI()
       .withErrorHandlerProvider(() => eh)
-      .withResourceLoader(StringResourceLoader("amf://id#", content))
+      .withResourceLoader(StringResourceLoader("amf://id#", content, Some(hint.spec.mediaType)))
     for {
       unit <- AMFParser.parse("amf://id#", conf)
       _    <- AMFValidator.validate(unit.baseUnit, conf)

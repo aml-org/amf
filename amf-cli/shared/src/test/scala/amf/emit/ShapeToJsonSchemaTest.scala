@@ -151,7 +151,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
       unit <- parse(file, config)
     } yield {
       findShapeFunc(
-        configFor(hint.vendor)
+        configFor(hint.spec)
           .baseUnitClient()
           .transform(unit, PipelineId.Default)
           .baseUnit

@@ -99,7 +99,7 @@ class YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with Payload
                           |""".stripMargin
     val client = oasConfig.baseUnitClient()
     for {
-      parseResult    <- client.parseContent(api, Mimes.`application/openapi+yaml`)
+      parseResult    <- client.parseContent(api, Mimes.`application/yaml`)
       unit           <- Future.successful { parseResult.baseUnit }
       validateReport <- client.validate(unit)
       _              <- Future(client.transform(unit, PipelineId.Editing))

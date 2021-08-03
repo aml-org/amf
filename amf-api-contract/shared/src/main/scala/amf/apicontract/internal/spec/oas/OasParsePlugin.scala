@@ -7,6 +7,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.document.{LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
+import amf.core.internal.remote.Spec
 
 trait OasParsePlugin extends OasLikeParsePlugin {
 
@@ -28,4 +29,7 @@ trait OasParsePlugin extends OasLikeParsePlugin {
                         options: ParsingOptions,
                         wrapped: ParserContext,
                         ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
+
+  // TODO ARM: Tomi sape
+  override def validSpecsToReference: Seq[Spec] = super.validSpecsToReference :+ spec
 }
