@@ -1,6 +1,5 @@
 package amf.apicontract.internal.plugins
 
-import amf.apicontract.client.common.ProvidedMediaType
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -26,7 +25,7 @@ object JsonSchemaRenderPlugin extends ApiRenderPlugin {
 
   override def defaultSyntax(): String = `application/json`
 
-  override def mediaTypes: Seq[String] = Seq(ProvidedMediaType.JsonSchema)
+  override def mediaTypes: Seq[String] = Seq(`application/json`)
 
   override def unparseAsYDocument(unit: BaseUnit,
                                   renderOptions: RenderOptions,

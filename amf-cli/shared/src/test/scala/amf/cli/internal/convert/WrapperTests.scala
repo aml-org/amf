@@ -4,7 +4,6 @@ import _root_.org.scalatest.{Assertion, Matchers}
 import amf.aml.client.platform.model.document.Vocabulary
 import amf.aml.client.platform.model.domain.{ClassTerm, DatatypePropertyTerm, PropertyTerm}
 import amf.aml.client.scala.AMLConfiguration
-import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.platform.model.document.TraitFragment
 import amf.apicontract.client.platform.model.domain.api.{Api, WebApi}
 import amf.apicontract.client.platform.model.domain.{Operation, Parameter}
@@ -148,7 +147,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         | version: 1.0
         |""".stripMargin
     for {
-      unit <- AMFParser.parseContent(doc, ProvidedMediaType.Raml10, RAMLConfiguration.RAML()).asFuture
+      unit <- AMFParser.parseContent(doc, Mimes.`application/yaml`, RAMLConfiguration.RAML()).asFuture
     } yield {
       val webApi = unit.baseUnit._internal.asInstanceOf[InternalDocument].encodes
       webApi.fields.get(WebApiModel.Name).toString shouldBe expected
@@ -902,7 +901,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       """.stripMargin
 
     for {
-      parseResult <- RAMLConfiguration.RAML10().baseUnitClient().parseContent(api, ProvidedMediaType.Raml10).asFuture
+      parseResult <- RAMLConfiguration.RAML10().baseUnitClient().parseContent(api, `application/yaml`).asFuture
     } yield {
       val nodeShape = parseResult.baseUnit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[NodeShape]
       nodeShape.properties.asSeq.head.name.value() should be("name")
@@ -937,7 +936,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       """.stripMargin
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      parseResult     <- client.parseContent(api, ProvidedMediaType.Raml10).asFuture
+      parseResult     <- client.parseContent(api, `application/yaml`).asFuture
       transformResult <- Future { client.transform(parseResult.baseUnit) }
     } yield {
       val pathParamters: List[Parameter] = transformResult.baseUnit
@@ -974,7 +973,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |    type: string""".stripMargin
     val client = RAMLConfiguration.RAML10().baseUnitClient()
     for {
-      unit     <- client.parseContent(api, ProvidedMediaType.Raml10).asFuture
+      unit     <- client.parseContent(api, `application/yaml`).asFuture
       resolved <- Future { client.transform(unit.baseUnit) }
     } yield {
       val baseParameters: Seq[Parameter] =
@@ -1453,7 +1452,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = RAMLConfiguration.RAML10().withResourceLoaders(loaders.asClient).baseUnitClient()
 
     for {
-      unit <- client.parseContent(input, ProvidedMediaType.Raml10).asFuture
+      unit <- client.parseContent(input, `application/yaml`).asFuture
       v    <- client.validate(unit.baseUnit).asFuture
     } yield {
       v.conforms should be(true)
@@ -1895,7 +1894,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |""".stripMargin
     val client = OASConfiguration.OAS20().baseUnitClient()
     for {
-      parsed   <- client.parseContent(api, ProvidedMediaType.Oas20Json).asFuture
+      parsed   <- client.parseContent(api, `application/json`).asFuture
       resolved <- Future(client.transform(parsed.baseUnit, PipelineId.Editing))
       shape <- {
         Future.successful {
@@ -2050,7 +2049,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val loaders: List[ResourceLoader] = List(custom)
     val client                        = OASConfiguration.OAS30().withResourceLoaders(loaders.asClient).baseUnitClient()
     for {
-      unit   <- client.parseContent(input, ProvidedMediaType.Oas30Yaml).asFuture
+      unit   <- client.parseContent(input, `application/yaml`).asFuture
       report <- client.validate(unit.baseUnit).asFuture
     } yield {
       unit.conforms should be(true)

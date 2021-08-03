@@ -1,6 +1,5 @@
 package amf.cache
 
-import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform.{PipelineId, PipelineName}

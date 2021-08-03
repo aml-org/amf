@@ -1,6 +1,5 @@
 package amf.apicontract.internal.plugins
 
-import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
@@ -12,6 +11,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext, ReferenceHandler, SimpleReferenceHandler}
 import amf.core.internal.parser.Root
+import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.remote.Spec
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.JSONSchemaUnspecifiedVersion
@@ -52,7 +52,7 @@ object JsonSchemaParsePlugin extends AMFParsePlugin {
   /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-  override def mediaTypes: Seq[String] = Seq(ProvidedMediaType.JsonSchema)
+  override def mediaTypes: Seq[String] = Seq(`application/json`)
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = SimpleReferenceHandler
 

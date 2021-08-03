@@ -1,10 +1,8 @@
 package amf.compiler
 
-import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
 import amf.core.client.common.remote.Content
 import amf.core.client.common.transform.PipelineId
-import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.resource.ResourceLoader
