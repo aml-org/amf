@@ -1,6 +1,7 @@
 package amf.configuration
 
 import amf.apicontract.client.scala.AMFConfiguration
+import amf.core.client.scala.exception.UnsupportedDomainForDocumentException
 import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment}
 import amf.core.internal.remote.Spec
 import org.scalatest.Assertion
@@ -35,8 +36,16 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
     generateExpectedDocumentParseFixtures("oas30-api.yaml",
                                           Spec.OAS30,
                                           List(apiConfig, webApiConfig, oasConfig, oas30Config)),
-    generateExpectedDocumentParseFixtures("async-api.yaml", Spec.ASYNC20, List(apiConfig, async20Config)),
-    generateExpectedDocumentParseFixtures("async-api.json", Spec.ASYNC20, List(apiConfig, async20Config))
+    generateExpectedDocumentParseFixtures("async-api.yaml",
+                                          Spec.ASYNC20,
+                                          List(apiConfig, async20Config),
+                                          List(webApiConfig)),
+    generateExpectedDocumentParseFixtures("async-api.json",
+                                          Spec.ASYNC20,
+                                          List(apiConfig, async20Config),
+                                          List(webApiConfig)),
+    expectExternalFragment("async-api.yaml", Spec.ASYNC20, List(webApiConfig)),
+    expectExternalFragment("async-api.json", Spec.ASYNC20, List(webApiConfig))
   ).flatten
 
   onlyParseFixtures.foreach {
@@ -54,23 +63,28 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
     case e: ExpectedErrorCase =>
       test(s"Test - config ${configNames(e.config)} for ${e.apiPath} doesn't generates document") {
         val client = e.config.baseUnitClient()
-        for {
-          result   <- client.parse(e.apiPath)
-          document <- Future.successful { result.baseUnit }
-        } yield {
-          document shouldBe a[ExternalFragment]
+        recoverToSucceededIf[UnsupportedDomainForDocumentException] {
+          client.parse(e.apiPath)
         }
       }
   }
 
   private def generateExpectedDocumentParseFixtures(apiPath: String,
                                                     vendor: Spec,
-                                                    validConfigs: List[AMFConfiguration]): Seq[Any] = {
+                                                    validConfigs: List[AMFConfiguration],
+                                                    ignored: List[AMFConfiguration] = List()): Seq[Any] = {
     val finalPath    = basePath + apiPath
-    val errorConfigs = configs.diff(validConfigs)
+    val errorConfigs = configs.diff(validConfigs ++ ignored)
     validConfigs.map(conf => ExpectedParseCase(conf, finalPath, documentExpectation(vendor))) ++
       errorConfigs.map(conf => ExpectedErrorCase(conf, finalPath))
   }
+
+  private def expectExternalFragment(apiPath: String, vendor: Spec, validConfigs: List[AMFConfiguration]): Seq[Any] = {
+    val finalPath = basePath + apiPath
+    validConfigs.map(conf => ExpectedParseCase(conf, finalPath, externalFragmentExpectation))
+  }
+
+  protected def externalFragmentExpectation: Expectation = (document, _) => document shouldBe a[ExternalFragment]
 
   protected def documentExpectation: Spec => Expectation =
     vendor =>
