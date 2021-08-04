@@ -96,7 +96,7 @@ declare module 'amf-client' {
 
   }
   export class AMFParseResult extends AMFResult  {
-    rootSpec: Spec
+    sourceSpec: Spec
 
   }
   export class ValidationProfile  {

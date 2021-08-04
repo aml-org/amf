@@ -59,7 +59,7 @@ class ParseContentTest extends AsyncFunSuite with Matchers with PlatformSecrets 
     val content = readContent(basePath + apiName)
     val config  = APIConfiguration.API()
     config.baseUnitClient().parseContent(content).map { result =>
-      result.rootSpec shouldEqual expectedSpec
+      result.sourceSpec shouldEqual expectedSpec
       result.baseUnit.sourceSpec shouldEqual Some(expectedSpec)
       expectType(result.baseUnit)
     }
