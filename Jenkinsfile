@@ -4,9 +4,20 @@ def failedStage = ""
 def color = '#FF8C00'
 def headerFlavour = "WARNING"
 
+node {
+  // Login to dockerhub to prevent rate-limiting. See https://salesforce.quip.com/aqcaAObOcXpF
+  withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub-pro-credentials', passwordVariable: 'DOCKERHUB_PASS', usernameVariable: 'DOCKERHUB_USER']]) {
+    withEnv(["HOME=${WORKSPACE}", "DOCKER_EMAIL=engineeringservices@mulesoft.com"]) {
+      sh(script:"echo '${env.DOCKERHUB_PASS}' | docker login -u '${env.DOCKERHUB_USER}' --password-stdin ", label:"log in to dockerhub")
+    }
+  }
+}
+
 pipeline {
   agent {
-    dockerfile true
+    dockerfile {
+      registryCredentialsId 'dockerhub-pro-credentials'
+    }
   }
   environment {
     NEXUS = credentials('exchange-nexus')
