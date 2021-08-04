@@ -1,6 +1,7 @@
 package amf.apicontract.internal.validation.shacl
 
 import amf.apicontract.internal.validation.plugin.BaseApiValidationPlugin
+import amf.core.client.common.{HighPriority, PluginPriority}
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
@@ -14,6 +15,8 @@ import scala.concurrent.{ExecutionContext, Future}
 object ShaclModelValidationPlugin extends BaseApiValidationPlugin with ShaclReportAdaptation {
 
   override val id: String = this.getClass.getSimpleName
+
+  override def priority: PluginPriority = HighPriority
 
   override protected def specificValidate(unit: BaseUnit, profile: ProfileName, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {

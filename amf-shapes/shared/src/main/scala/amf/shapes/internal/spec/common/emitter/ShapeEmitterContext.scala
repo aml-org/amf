@@ -7,7 +7,7 @@ import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExte
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.MultipleValuesArrayEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
@@ -22,7 +22,7 @@ import amf.shapes.internal.spec.common.{JSONSchemaDraft201909SchemaVersion, JSON
 import amf.shapes.internal.spec.contexts.DeclarationEmissionDecorator
 import amf.shapes.internal.spec.contexts.emitter.oas.{CompactableEmissionContext, OasCompactEmitterFactory}
 import amf.shapes.internal.spec.oas.emitter.compact.CompactOasRecursiveShapeEmitter
-import amf.shapes.internal.spec.raml.emitter.RamlTypePartEmitter
+import amf.shapes.internal.spec.raml.emitter.{Raml10TypePartEmitter, RamlTypePartEmitter}
 import org.yaml.model.{YDocument, YNode}
 
 import scala.util.matching.Regex
@@ -104,7 +104,7 @@ class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
     OasAnnotationEmitter(e, default)
 
-  override def vendor: Vendor = Vendor.JSONSCHEMA
+  override def spec: Spec = Spec.JSONSCHEMA
 
   override def ref(b: YDocument.PartBuilder, url: String): Unit = OasRefEmitter.ref(url, b)
 
@@ -157,11 +157,52 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissi
 
   def eh: AMFErrorHandler
 
-  def vendor: Vendor
+  def spec: Spec
 
   def ref(b: YDocument.PartBuilder, url: String): Unit
 
   def schemaVersion: SchemaVersion
 
   def options: RenderOptions
+}
+
+class Raml10ShapeEmitterContext(val eh: AMFErrorHandler, val options: RenderOptions) extends RamlShapeEmitterContext {
+  override def typesEmitter
+    : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter =
+    (shape, ordering, emitter, ignored, references) =>
+      Raml10TypePartEmitter(shape, ordering, emitter, ignored, references)(this)
+
+  override def typesKey: YNode = ???
+
+  override def localReference(shape: Shape): PartEmitter = ???
+
+  override def toOasNext: OasLikeShapeEmitterContext = ???
+
+  override def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter = ???
+
+  override def arrayEmitter(asOasExtension: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter = ???
+
+  override def customFacetsEmitter(f: FieldEntry,
+                                   ordering: SpecOrdering,
+                                   references: Seq[BaseUnit]): CustomFacetsEmitter = ???
+
+  override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter = ???
+
+  override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter = ???
+
+  override def spec: Spec = ???
+
+  override def ref(b: YDocument.PartBuilder, url: String): Unit = ???
+
+  override def schemaVersion: SchemaVersion = ???
+
+  override def isOas3: Boolean = ???
+
+  override def isOasLike: Boolean = ???
+
+  override def isRaml: Boolean = ???
+
+  override def isJsonSchema: Boolean = ???
+
+  override def isAsync: Boolean = ???
 }

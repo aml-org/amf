@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.core.internal.remote.{Async20YamlHint, Vendor}
+import amf.core.internal.remote.{Async20YamlHint, Spec}
 import amf.shapes.client.scala.model.domain.AnyShape
 
 class Async20ElementCycleTest extends DomainElementCycleTest {
@@ -8,7 +8,7 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
   override val basePath: String = "amf-cli/shared/src/test/resources/cycle/async20/"
   val validationsPath: String   = "amf-cli/shared/src/test/resources/validations/async20/"
   val upanddownPath: String     = "amf-cli/shared/src/test/resources/upanddown/cycle/async20/"
-  val vendor: Vendor            = Vendor.ASYNC20
+  val spec: Spec                = Spec.ASYNC20
 
   test("type - composition with refs and inlined") {
     renderElement(

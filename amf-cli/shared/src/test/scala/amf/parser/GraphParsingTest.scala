@@ -8,7 +8,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
 
   test("Parse api with context with expanded term definitions") {
     val ro = RenderOptions().withCompactUris.withPrettyPrint.withFlattenedJsonLd
-    cycle("api.source.jsonld", "api.golden.jsonld", AmfJsonHint, Amf, renderOptions = Some(ro))
+    cycle("api.source.jsonld", "api.golden.jsonld", AmfJsonHint, AmfJsonHint, renderOptions = Some(ro))
   }
 
   test("Parse api with link target maps") {
@@ -16,7 +16,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("api.source.jsonld",
           "api.golden.jsonld",
           AmfJsonHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(ro),
           directory = s"${basePath}link-target-map/")
   }
@@ -26,13 +26,17 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("recursive-api.flattened.jsonld",
           "recursive-api.flattened.jsonld",
           AmfJsonHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(ro))
   }
 
   test("Conserve id values when parsing to maintain consistency with recursive fixpoints - expanded") {
     val ro = RenderOptions().withCompactUris.withPrettyPrint.withoutFlattenedJsonLd
-    cycle("recursive-api.expanded.jsonld", "recursive-api.expanded.jsonld", AmfJsonHint, Amf, renderOptions = Some(ro))
+    cycle("recursive-api.expanded.jsonld",
+          "recursive-api.expanded.jsonld",
+          AmfJsonHint,
+          AmfJsonHint,
+          renderOptions = Some(ro))
   }
 
   test("Parse compacted id fields correctly applying base - flattened source") {
@@ -40,7 +44,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("recursive-api.flattened.jsonld",
           "recursive-api-full-uris.expanded.jsonld",
           AmfJsonHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(ro))
   }
 
@@ -49,7 +53,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("recursive-api.expanded.jsonld",
           "recursive-api-full-uris.expanded.jsonld",
           AmfJsonHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(ro))
   }
 
@@ -58,28 +62,32 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("recursive-api-full-uris.expanded.jsonld",
           "recursive-api-full-uris.expanded.jsonld",
           AmfJsonHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(ro))
   }
 
   test("Parse api with @base and absolute IRIs - flattened") {
     val ro = RenderOptions().withPrettyPrint.withFlattenedJsonLd
-    cycle("api.source.flattened.jsonld",
-          "api.golden.flattened.jsonld",
-          AmfJsonHint,
-          Amf,
-          renderOptions = Some(ro),
-          directory = s"$basePath/base-and-absolute-iris/")
+    cycle(
+      "api.source.flattened.jsonld",
+      "api.golden.flattened.jsonld",
+      AmfJsonHint,
+      AmfJsonHint,
+      renderOptions = Some(ro),
+      directory = s"$basePath/base-and-absolute-iris/"
+    )
   }
 
   test("Parse api with @base and absolute IRIs - expanded") {
     val ro = RenderOptions().withPrettyPrint.withoutFlattenedJsonLd
-    cycle("api.source.expanded.jsonld",
-          "api.golden.expanded.jsonld",
-          AmfJsonHint,
-          Amf,
-          renderOptions = Some(ro),
-          directory = s"$basePath/base-and-absolute-iris/")
+    cycle(
+      "api.source.expanded.jsonld",
+      "api.golden.expanded.jsonld",
+      AmfJsonHint,
+      AmfJsonHint,
+      renderOptions = Some(ro),
+      directory = s"$basePath/base-and-absolute-iris/"
+    )
   }
 
   test("Parse annotations with compact URIs") {
@@ -87,7 +95,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("api.source.jsonld",
           "api.target.jsonld",
           AmfJsonHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(ro),
           directory = s"$basePath/annotations-compact/")
 
@@ -98,7 +106,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("api.source.jsonld",
           "api.target.jsonld",
           AmfJsonHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(ro),
           directory = s"$basePath/annotations-expanded/")
   }
@@ -108,7 +116,7 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("api.source.jsonld",
           "api.target.jsonld",
           AmfJsonHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(ro),
           directory = s"$basePath/annotations-non-scalar/")
   }

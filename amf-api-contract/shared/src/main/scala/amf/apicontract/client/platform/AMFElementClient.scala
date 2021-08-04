@@ -5,7 +5,6 @@ import amf.aml.client.platform.model.document.Dialect
 import amf.aml.client.platform.render.AmlDomainElementEmitter
 import amf.apicontract.client.platform.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.platform.model.domain.{EndPoint, Operation}
-import amf.apicontract.client.platform.render.ApiDomainElementEmitter
 import amf.apicontract.client.platform.transform.AbstractElementTransformer
 import amf.apicontract.client.scala.{AMFElementClient => InternalAMFElementClient}
 import amf.apicontract.internal.convert.ApiClientConverters._
@@ -13,6 +12,7 @@ import amf.core.client.common.validation.{ProfileName, Raml10Profile}
 import amf.core.client.platform.errorhandling.ClientErrorHandler
 import amf.core.client.platform.model.document.BaseUnit
 import amf.core.client.platform.model.domain.DomainElement
+import amf.core.client.platform.render.AMFElementRenderer
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.shapes.client.platform.model.domain.AnyShape
 import amf.shapes.client.platform.render.{JsonSchemaShapeRenderer, RamlShapeRenderer}
@@ -38,12 +38,8 @@ class AMFElementClient private[amf] (private val _internal: InternalAMFElementCl
 
   def toRamlDatatype(element: AnyShape): String = RamlShapeRenderer.toRamlDatatype(element, getConfiguration())
 
-  // For Typescript compatibility
-  override def renderToBuilder[T](element: DomainElement, emissionStructure: Dialect, builder: DocBuilder[T]): Unit =
-    super.renderToBuilder(element, emissionStructure, builder)
-
-  def renderToBuilder[T](element: DomainElement, mediaType: String, builder: DocBuilder[T]): Unit =
-    ApiDomainElementEmitter.emitToBuilder(element, mediaType, obtainEH, builder)
+  override def renderToBuilder[T](element: DomainElement, builder: DocBuilder[T]): Unit =
+    AMFElementRenderer.renderToBuilder(element, builder, getConfiguration())
 
   /** Get this resource type as an endpoint. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
   def asEndpoint[T <: BaseUnit](unit: T, rt: ResourceType, profile: ProfileName = Raml10Profile): EndPoint =

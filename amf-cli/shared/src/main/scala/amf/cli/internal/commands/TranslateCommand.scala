@@ -4,9 +4,10 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.DialectInstance
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.apicontract.client.scala.AMFConfiguration
+import amf.cli.internal.commands.ConfigProvider.configFor
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.Platform
+import amf.core.internal.remote.{Platform, Spec}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -16,11 +17,11 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
   def run(parserConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val res: Future[Any] = for {
-      _         <- AMFInit(configuration)
-      model     <- parseInput(parserConfig, configuration)
-      _         <- checkValidation(parserConfig, model, configuration)
-      model     <- resolve(parserConfig, model, configuration)
-      generated <- generateOutput(parserConfig, model, configuration)
+      _               <- AMFInit(configuration)
+      (model, specId) <- parseInput(parserConfig, configuration)
+      _               <- checkValidation(parserConfig, model, specId, configuration)
+      model           <- resolve(parserConfig, model, specId, configuration)
+      generated       <- generateOutput(parserConfig, model, configuration)
     } yield {
       generated
     }
@@ -35,32 +36,20 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def checkValidation(parserConfig: ParserConfig, model: BaseUnit, configuration: AMLConfiguration): Future[Unit] = {
+  def checkValidation(parserConfig: ParserConfig,
+                      model: BaseUnit,
+                      specId: Spec,
+                      configuration: AMLConfiguration): Future[Unit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val customProfileLoaded: Future[ProfileName] = if (parserConfig.customProfile.isDefined) {
-      configuration.baseUnitClient().parseValidationProfile(parserConfig.customProfile.get) map (_.name)
-    } else {
-      Future {
-        model match {
-          case dialectInstance: DialectInstance =>
-            configuration.registry.plugins.parsePlugins
-              .collect {
-                case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
-              }
-              .find(dialect => dialectInstance.definedBy().value() == dialect.id)
-              .map(dialect => ProfileName(dialect.nameAndVersion()))
-              .getOrElse(parserConfig.profile)
-          case _ =>
-            parserConfig.profile
-        }
-      }
+
+    val dialects = configuration.configurationState().getDialects()
+    val validationConfig = dialects.foldLeft(configFor(specId)) { (acc, curr) =>
+      acc.withDialect(curr)
     }
-    customProfileLoaded flatMap { profileName =>
-      configuration.baseUnitClient().validate(model, profileName) map { report =>
-        if (!report.conforms) {
-          parserConfig.stderr.print(report.toString)
-          parserConfig.proc.exit(ExitCodes.FailingValidation)
-        }
+    validationConfig.baseUnitClient().validate(model) map { report =>
+      if (!report.conforms) {
+        parserConfig.stderr.print(report.toString)
+        parserConfig.proc.exit(ExitCodes.FailingValidation)
       }
     }
   }

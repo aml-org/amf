@@ -1,7 +1,6 @@
 package amf.parser
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.client.scala.parse.AMFParser
@@ -44,7 +43,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
 
   private def build(file: String, hint: Hint): Future[BaseUnit] = {
     val url           = s"file://$directory$file"
-    val configuration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    val configuration = APIConfiguration.API()
     AMFParser.parse(url, configuration).map(_.baseUnit)
   }
 

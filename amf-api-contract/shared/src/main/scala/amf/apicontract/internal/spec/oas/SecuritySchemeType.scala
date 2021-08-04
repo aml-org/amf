@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.oas
 
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 
 class SecuritySchemeType(val text: String)
 case class OasSecuritySchemeType(override val text: String)     extends SecuritySchemeType(text)
@@ -15,21 +15,21 @@ object OasLikeSecuritySchemeTypeMappings {
   private val BasicAuth     = OasSecuritySchemeType("basic")
 
   val mappings = Map(
-    Vendor.OAS20 -> Oas2SchemeMappings,
-    Vendor.OAS30 -> Oas3SchemeMappings
+    Spec.OAS20 -> Oas2SchemeMappings,
+    Spec.OAS30 -> Oas3SchemeMappings
   )
 
-  def mapsTo(vendor: Vendor, text: String): SecuritySchemeType = mappings(vendor).mapsTo(text)
-  def validTypesFor(vendor: Vendor): Set[String]               = mappings(vendor).validTypes
+  def mapsTo(spec: Spec, text: String): SecuritySchemeType = mappings(spec).mapsTo(text)
+  def validTypesFor(spec: Spec): Set[String]               = mappings(spec).validTypes
 
-  abstract class SchemeMappings(val vendor: Vendor) {
-    def applies(vendor: Vendor): Boolean = this.vendor.name == vendor.name
+  abstract class SchemeMappings(val spec: Spec) {
+    def applies(spec: Spec): Boolean = this.spec.id == spec.id
     def mapsTo(text: String): SecuritySchemeType
     def validTypes: Set[String] = types.keys.toSet
     def types: Map[String, OasSecuritySchemeType]
   }
 
-  private object Oas2SchemeMappings extends SchemeMappings(Vendor.OAS20) {
+  private object Oas2SchemeMappings extends SchemeMappings(Spec.OAS20) {
 
     lazy val types = Map(
       "OAuth 2.0"            -> OAuth20,
@@ -40,7 +40,7 @@ object OasLikeSecuritySchemeTypeMappings {
     override def mapsTo(text: String): SecuritySchemeType = types.getOrElse(text, UnknownSecuritySchemeType(text))
   }
 
-  private object Oas3SchemeMappings extends SchemeMappings(Vendor.OAS30) {
+  private object Oas3SchemeMappings extends SchemeMappings(Spec.OAS30) {
 
     lazy val types = Map(
       "OAuth 2.0"             -> OAuth20,

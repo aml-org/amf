@@ -4,12 +4,13 @@ import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
-import amf.core.client.scala.AMFResult
+import amf.core.client.scala.{AMFParseResult, AMFResult}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
-import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration, Root}
-import amf.core.internal.remote.Platform
+import amf.core.internal.annotations.SourceSpec
+import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig, Root}
+import amf.core.internal.remote.{Platform, Spec}
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
@@ -21,7 +22,7 @@ trait JsonSchemaSuite {
   protected def parseSchema(platform: Platform,
                             path: String,
                             mediatype: String,
-                            amfConfig: AMFConfiguration): AMFResult = {
+                            amfConfig: AMFConfiguration): AMFParseResult = {
     val content  = platform.fs.syncFile(path).read().toString
     val document = JsonParser.withSource(content, path).document()
     val root = Root(
@@ -35,8 +36,9 @@ trait JsonSchemaSuite {
     val options = ParsingOptions()
     val eh      = amfConfig.errorHandlerProvider.errorHandler()
     val parsed  = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None)
-    val unit    = wrapInDataTypeFragment(root, parsed)
-    AMFResult(unit, eh.getResults)
+    parsed.annotations += SourceSpec(Spec.OAS20)
+    val unit = wrapInDataTypeFragment(root, parsed)
+    new AMFParseResult(unit, eh.getResults)
   }
 
   private def wrapInDataTypeFragment(document: Root, parsed: AnyShape): DataTypeFragment = {

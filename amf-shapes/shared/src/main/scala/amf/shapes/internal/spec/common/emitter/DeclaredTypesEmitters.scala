@@ -4,7 +4,7 @@ import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -48,9 +48,9 @@ abstract class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
   override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
 
   // TODO: THIS SHOULD BE PART OF A SpecSettings object or something of the sort that the context has and we could access.
-  val key: String = spec.vendor match {
-    case Vendor.OAS30 | Vendor.ASYNC20 => "schemas"
-    case Vendor.JSONSCHEMA if spec.isJsonSchema =>
+  val key: String = spec.spec match {
+    case Spec.OAS30 | Spec.ASYNC20 => "schemas"
+    case Spec.JSONSCHEMA if spec.isJsonSchema =>
       spec.asInstanceOf[OasLikeShapeEmitterContext].schemasDeclarationsPath.replace("/", "")
     case _ => "definitions"
   }

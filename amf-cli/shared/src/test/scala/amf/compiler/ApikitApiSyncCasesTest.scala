@@ -1,9 +1,8 @@
 package amf.compiler
 
-import amf.apicontract.client.common.ProvidedMediaType
-import amf.apicontract.client.scala.WebAPIConfiguration
+import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
 import amf.core.client.common.remote.Content
-import amf.core.client.common.validation.Raml10Profile
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.resource.ResourceLoader
@@ -32,7 +31,6 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     val eh  = DefaultErrorHandler()
     AMFCompiler(
         url,
-        None,
         base = Context(platform),
         cache = Cache(),
         CompilerConfiguration(
@@ -72,12 +70,12 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     )
     val url = "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml"
     val eh  = DefaultErrorHandler()
-    val client = WebAPIConfiguration.WebAPI()
+    val client = RAMLConfiguration.RAML10()
       .withResourceLoaders(List(new URNResourceLoader(mappings)))
       .withErrorHandlerProvider(() => eh).baseUnitClient()
     for {
       parseResult <- client.parse(url)
-      _ <- Future.successful(client.transformEditing(parseResult.baseUnit, ProvidedMediaType.Raml10))
+      _ <- Future.successful(client.transform(parseResult.baseUnit, PipelineId.Editing))
     }yield {
       eh.getResults should have size 0
     }

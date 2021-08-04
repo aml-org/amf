@@ -15,7 +15,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser._
 import amf.core.internal.parser.domain.{Annotations, FragmentRef, SearchScope}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AliasCounter, IdCounter}
 import amf.shapes.client.scala.model.domain.AnyShape
@@ -65,7 +65,7 @@ abstract class WebApiContext(loc: String,
   def validateRefFormatWithError(ref: String): Boolean = true
 
   val syntax: SpecSyntax
-  val vendor: Vendor
+  val spec: Spec
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
@@ -174,7 +174,7 @@ abstract class WebApiContext(loc: String,
         ast.entries.foreach { entry =>
           val key: String = getEntryKey(entry)
           if (!ignore(shape, key) && !properties(key)) {
-            throwClosedShapeError(node, s"Property '$key' not supported in a $vendor $shape node", entry)
+            throwClosedShapeError(node, s"Property '$key' not supported in a $spec $shape node", entry)
           }
         }
       case None => nextValidation(node, shape, ast)
@@ -185,7 +185,7 @@ abstract class WebApiContext(loc: String,
   }
 
   protected def nextValidation(node: String, shape: String, ast: YMap): Unit =
-    throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $vendor", ast)
+    throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $spec", ast)
 
   protected def throwClosedShapeError(node: String, message: String, entry: YPart, isWarning: Boolean = false): Unit =
     if (isWarning) eh.warning(ClosedShapeSpecificationWarning, node, message, entry)

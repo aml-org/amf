@@ -2,14 +2,17 @@ package amf.emit
 
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
-import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
+import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Spec}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.testing.ConfigProvider
+import amf.testing.ConfigProvider.configFor
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -148,9 +151,9 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest with Pl
       unit <- parse(file, config)
     } yield {
       findShapeFunc(
-        config
+        configFor(hint.spec)
           .baseUnitClient()
-          .transformDefault(unit, Vendor.OAS20.mediaType)
+          .transform(unit, PipelineId.Default)
           .baseUnit
       ).map { element =>
           config.elementClient().toJsonSchema(element)

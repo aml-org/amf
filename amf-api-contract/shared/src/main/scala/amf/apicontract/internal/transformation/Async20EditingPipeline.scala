@@ -44,10 +44,10 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
 object Async20EditingPipeline {
   def apply()                    = new Async20EditingPipeline(true, name)
   private[amf] def cachePipeline = new Async20EditingPipeline(false, Async20CachePipeline.name)
-  val name: String               = PipelineName.from(AsyncApi20.mediaType, PipelineId.Editing)
+  val name: String               = PipelineId.Editing
 }
 
 object Async20CachePipeline {
-  val name: String                                 = PipelineName.from(AsyncApi20.mediaType, PipelineId.Cache)
+  val name: String                                 = PipelineId.Cache
   private[amf] def apply(): Async20EditingPipeline = Async20EditingPipeline.cachePipeline
 }

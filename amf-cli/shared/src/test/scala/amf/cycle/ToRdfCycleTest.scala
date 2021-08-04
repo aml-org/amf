@@ -7,10 +7,12 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.RdfUnitConverter
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.resolution.ResolutionCapabilities
+import amf.testing.ConfigProvider
+import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.{AsyncFunSuite, Matchers}
 
@@ -29,7 +31,7 @@ class ToRdfCycleTest
   val basePath = "file://amf-cli/shared/src/test/resources/rdf/"
 
   test("TrackedElement annotations are emitted to rdf") {
-    rdfFromApi("apis/tracked-element.raml", Vendor.RAML10).map { n3: String =>
+    rdfFromApi("apis/tracked-element.raml", Spec.RAML10).map { n3: String =>
       n3 should include("http://a.ml/vocabularies/document-source-maps#tracked-element")
     }
   }
@@ -39,10 +41,10 @@ class ToRdfCycleTest
     config.baseUnitClient().parse(fullPath).map(_.baseUnit)
   }
 
-  private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {
-    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+  private def rdfFromApi(path: String, spec: Spec): Future[String] = {
+    val config = configFor(spec).withErrorHandlerProvider(() => UnhandledErrorHandler)
     build(path, config)
-      .map(transform(_, PipelineId.Editing, vendor, config))
+      .map(transform(_, PipelineId.Editing, spec, config))
       .map(bu => RdfUnitConverter.toNativeRdfModel(bu, RenderOptions().withSourceMaps))
       .map(_.toN3())
   }

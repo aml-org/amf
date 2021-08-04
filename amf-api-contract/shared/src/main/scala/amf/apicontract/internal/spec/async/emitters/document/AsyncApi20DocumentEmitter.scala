@@ -13,9 +13,9 @@ import amf.apicontract.internal.spec.common.emitter
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SecurityRequirementsEmitter}
 import amf.apicontract.internal.spec.oas.emitter.domain.{InfoEmitter, TagsEmitter}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{AsyncApi20, Vendor}
+import amf.core.internal.remote.{AsyncApi20, Spec}
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter, ValueEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -26,26 +26,26 @@ import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
 import scala.collection.mutable
 
-class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpecEmitterContext) {
+class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncSpecEmitterContext) {
 
-  protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(specCtx)
 
   def emitWebApi(ordering: SpecOrdering): Seq[EntryEmitter] = {
-    val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    val api    = WebApiEmitter(model, ordering, vendor, Seq())
+    val model = retrieveWebApi()
+    val spec  = model.annotations.find(classOf[SourceSpec]).map(_.spec)
+    val api   = WebApiEmitter(model, ordering, spec, Seq())
     api.emitters
   }
 
   private def retrieveWebApi(): Api = document match {
     case document: Document => document.encodes.asInstanceOf[Api]
     case _ =>
-      spec.eh.violation(ResolutionValidation,
-                        document.id,
-                        None,
-                        "BaseUnit doesn't encode a WebApi.",
-                        document.position(),
-                        document.location())
+      specCtx.eh.violation(ResolutionValidation,
+                           document.id,
+                           None,
+                           "BaseUnit doesn't encode a WebApi.",
+                           document.position(),
+                           document.location())
       WebApi()
   }
 
@@ -77,7 +77,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
   def versionEntry(b: YDocument.EntryBuilder): Unit =
     b.asyncapi = YNode(YScalar("2.0.0"), YType.Str) // this should not be necessary but for use the same logic
 
-  case class WebApiEmitter(api: Api, ordering: SpecOrdering, vendor: Option[Vendor], references: Seq[BaseUnit]) {
+  case class WebApiEmitter(api: Api, ordering: SpecOrdering, spec: Option[Spec], references: Seq[BaseUnit]) {
     val emitters: Seq[EntryEmitter] = {
       val fs     = api.fields
       val result = mutable.ListBuffer[EntryEmitter]()

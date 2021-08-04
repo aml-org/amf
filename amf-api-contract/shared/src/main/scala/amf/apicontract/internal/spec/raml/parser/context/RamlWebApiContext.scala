@@ -6,7 +6,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.Clo
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
@@ -150,7 +150,7 @@ abstract class RamlWebApiContext(override val loc: String,
             eh.violation(
               ClosedShapeSpecification,
               node,
-              s"$subject ${errors.map(_.key.as[YScalar].text).map(e => s"'$e'").mkString(",")} not supported in a $vendor $shapeLabel node",
+              s"$subject ${errors.map(_.key.as[YScalar].text).map(e => s"'$e'").mkString(",")} not supported in a $spec $shapeLabel node",
               errors.head
             ) // pointing only to the first failed error
         }
@@ -159,7 +159,7 @@ abstract class RamlWebApiContext(override val loc: String,
         eh.violation(
           ClosedShapeSpecification,
           node,
-          s"Cannot validate unknown node type $shapeType for $vendor",
+          s"Cannot validate unknown node type $shapeType for $spec",
           shape.annotations
         )
     }
@@ -182,5 +182,5 @@ class PayloadContext(loc: String,
   override val syntax: SpecSyntax = new SpecSyntax {
     override val nodes: Map[String, Set[String]] = Map()
   }
-  override val vendor: Vendor = Vendor.PAYLOAD
+  override val spec: Spec = Spec.PAYLOAD
 }

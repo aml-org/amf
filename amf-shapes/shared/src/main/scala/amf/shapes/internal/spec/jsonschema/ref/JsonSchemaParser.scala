@@ -8,6 +8,8 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.metamodel.domain.ExternalSourceElementModel
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes.`application/json`
 import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel
@@ -51,7 +53,7 @@ class JsonSchemaParser {
             SchemaShape()
               .withId(shapeId)
               .set(ExternalSourceElementModel.Raw, document.raw, Annotations.synthesized())
-              .set(SchemaShapeModel.MediaType, "application/json", Annotations.synthesized())
+              .set(SchemaShapeModel.MediaType, `application/json`, Annotations.synthesized())
         }
 
       // TODO: check

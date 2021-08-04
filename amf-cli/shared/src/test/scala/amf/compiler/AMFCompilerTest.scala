@@ -1,7 +1,6 @@
 package amf.compiler
 
-import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, IgnoringErrorHandler, UnhandledErrorHandler}
@@ -105,10 +104,10 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Non existing included file") {
     val eh = DefaultErrorHandler()
     val amfConfig =
-      WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withErrorHandlerProvider(() => eh)
+      APIConfiguration.API().withErrorHandlerProvider(() => eh)
     build("file://amf-cli/shared/src/test/resources/non-exists-include.raml", Raml10YamlHint, amfConfig, None)
       .flatMap(bu => {
-        AMFValidator.validate(bu, Raml10Profile, amfConfig)
+        AMFValidator.validate(bu, amfConfig)
       })
       .map(r => {
         assert(!r.conforms)

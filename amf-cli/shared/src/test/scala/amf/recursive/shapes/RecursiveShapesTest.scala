@@ -5,7 +5,7 @@ import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation.{ProfileName, Raml10Profile}
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Hint, Oas20, Raml10YamlHint}
+import amf.core.internal.remote.{Hint, Oas20, Oas20JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.validation.MultiPlatformReportGenTest
 import org.scalatest.Assertion
@@ -50,7 +50,7 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
       super.cycle(source,
                   "oas/" + golden,
                   Raml10YamlHint,
-                  Oas20,
+                  Oas20JsonHint,
                   directory = basePath.replace("file://", ""))
   }
 

@@ -39,7 +39,7 @@ import amf.core.client.scala.model.domain.extensions.{
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{Raml08, Raml10, Vendor}
+import amf.core.internal.remote.{Raml08, Raml10, Spec}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
@@ -194,7 +194,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
             RenderValidation,
             "",
             None,
-            s"Custom facets not supported for vendor ${spec.vendor}",
+            s"Custom facets not supported for spec ${spec.spec}",
             f.value.value.position(),
             f.value.value.location()
           )
@@ -211,7 +211,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
             RenderValidation,
             shapeExtension.id,
             None,
-            s"Custom facets not supported for vendor ${spec.vendor}",
+            s"Custom facets not supported for spec ${spec.spec}",
             shapeExtension.position(),
             shapeExtension.location()
           )
@@ -229,7 +229,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
             RenderValidation,
             domainExtension.id,
             None,
-            s"Custom facets not supported for vendor ${spec.vendor}",
+            s"Custom facets not supported for spec ${spec.spec}",
             domainExtension.position(),
             domainExtension.location()
           )
@@ -251,7 +251,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
             spec.eh.violation(RenderValidation,
                               property.id,
                               None,
-                              s"Custom facets not supported for vendor ${spec.vendor}",
+                              s"Custom facets not supported for spec ${spec.spec}",
                               property.position(),
                               property.location())
           }
@@ -279,7 +279,7 @@ class Raml10SpecEmitterContext(eh: AMFErrorHandler,
                                options: RenderOptions = RenderOptions())
     extends RamlSpecEmitterContext(eh, refEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
-  override val vendor: Vendor                     = Raml10
+  override val spec: Spec                         = Raml10
 
   override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
@@ -300,7 +300,7 @@ class XRaml10SpecEmitterContext(eh: AMFErrorHandler,
 class Raml08SpecEmitterContext(eh: AMFErrorHandler, options: RenderOptions = RenderOptions())
     extends RamlSpecEmitterContext(eh, RamlRefEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
-  override val vendor: Vendor                     = Raml08
+  override val spec: Spec                         = Raml08
 
   override def schemaVersion: SchemaVersion = RAML08SchemaVersion
 }

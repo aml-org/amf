@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{Amf, Oas20JsonHint, Raml10, Raml10YamlHint}
+import amf.core.internal.remote.{Amf, AmfJsonHint, Oas20JsonHint, Raml10, Raml10YamlHint}
 
 /**
   *
@@ -13,7 +13,7 @@ class QueryStringResolutionTest extends ResolutionTest {
     cycle("query-string.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -22,7 +22,7 @@ class QueryStringResolutionTest extends ResolutionTest {
     cycle("query-string.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -31,7 +31,7 @@ class QueryStringResolutionTest extends ResolutionTest {
     cycle("security-with-query-string.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -40,7 +40,7 @@ class QueryStringResolutionTest extends ResolutionTest {
     cycle("security-with-query-string.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }

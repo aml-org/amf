@@ -1,15 +1,14 @@
 package amf.io
 
-import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.{RdfModel, RdfUnitConverter}
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
-import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Amf, Hint, Vendor}
+import amf.core.internal.remote.{AmfJsonHint, Hint, Spec}
+import amf.testing.ConfigProvider.configFor
 import org.scalactic.Fail
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -113,24 +112,26 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   case class CycleConfig(source: String,
                          golden: String,
                          hint: Hint,
-                         target: Vendor,
+                         renderTarget: Hint,
                          directory: String,
-                         syntax: Option[Syntax],
                          pipeline: Option[String],
-                         transformWith: Option[Vendor] = None) {
+                         transformWith: Option[Spec] = None) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
 
-    val sourceMediaType: String = hint.vendor.mediaType + "+" + hint.syntax.extension
-    val targetMediaType: String = target.mediaType + syntax.map(s => s"+${s.extension}").getOrElse("")
+    val targetMediaType: String = renderTarget.syntax.mediaType
   }
 
   /** Method to parse unit. Override if necessary. */
   def build(config: CycleConfig, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
+    build(config.sourcePath, config.goldenPath, amfConfig)
+  }
+
+  def build(sourcePath: String, goldenPath: String, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
     amfConfig
-      .withParsingOptions(amfConfig.options.parsingOptions.withBaseUnitUrl("file://" + config.goldenPath))
+      .withParsingOptions(amfConfig.options.parsingOptions.withBaseUnitUrl("file://" + goldenPath))
       .baseUnitClient()
-      .parse(s"file://${config.sourcePath}")
+      .parse(s"file://$sourcePath")
       .map(_.baseUnit)
   }
 
@@ -141,9 +142,19 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   def renderOptions(): RenderOptions = RenderOptions().withoutFlattenedJsonLd
 
   protected def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
-    val amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    val amfConfig: AMFConfiguration = APIConfiguration.API()
     val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {
       amfConfig.withRenderOptions(r)
+    })
+    eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
+      renderedConfig.withErrorHandlerProvider(() => e))
+  }
+
+  protected def buildConfig(from: AMFConfiguration,
+                            options: Option[RenderOptions],
+                            eh: Option[AMFErrorHandler]): AMFConfiguration = {
+    val renderedConfig: AMFConfiguration = options.fold(from.withRenderOptions(renderOptions()))(r => {
+      from.withRenderOptions(r)
     })
     eh.fold(renderedConfig.withErrorHandlerProvider(() => IgnoringErrorHandler))(e =>
       renderedConfig.withErrorHandlerProvider(() => e))
@@ -154,39 +165,33 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 trait BuildCycleTests extends BuildCycleTestCommon {
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, hint: Hint, syntax: Option[Syntax]): Future[Assertion] =
-    cycle(source, hint, basePath, syntax)
-
-  /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, hint: Hint): Future[Assertion] = cycle(source, hint, basePath, None)
-
-  /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, hint: Hint, directory: String, syntax: Option[Syntax]): Future[Assertion] =
-    cycle(source, source, hint, hint.vendor, directory, syntax = syntax, eh = None)
+  def cycle(source: String, hint: Hint): Future[Assertion] =
+    cycle(source, source, hint, hint, basePath)
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String): Future[Assertion] =
-    cycle(source, source, hint, hint.vendor, directory, eh = None)
+    cycle(source, source, hint, hint, directory, eh = None)
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   final def cycle(source: String,
                   golden: String,
                   hint: Hint,
-                  target: Vendor,
+                  target: Hint,
                   directory: String = basePath,
                   renderOptions: Option[RenderOptions] = None,
-                  syntax: Option[Syntax] = None,
                   pipeline: Option[String] = None,
-                  transformWith: Option[Vendor] = None,
+                  transformWith: Option[Spec] = None,
                   eh: Option[AMFErrorHandler] = None): Future[Assertion] = {
 
-    val config    = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
-    val amfConfig = buildConfig(renderOptions, eh)
+    val config          = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
+    val amfConfig       = buildConfig(renderOptions, eh)
+    val transformConfig = buildConfig(configFor(transformWith.getOrElse(target.spec)), renderOptions, eh)
+    val renderConfig    = buildConfig(configFor(target.spec), renderOptions, eh)
 
     for {
       parsed       <- build(config, amfConfig)
-      resolved     <- Future.successful(transform(parsed, config, amfConfig))
-      actualString <- Future.successful(render(resolved, config, amfConfig))
+      resolved     <- Future.successful(transform(parsed, config, transformConfig))
+      actualString <- Future.successful(render(resolved, config, renderConfig))
       actualFile   <- writeTemporaryFile(golden)(actualString)
       assertion    <- assertDifferences(actualFile, config.goldenPath)
     } yield {
@@ -203,12 +208,11 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   def cycleFullRdf(source: String,
                    golden: String,
                    hint: Hint,
-                   target: Vendor = Amf,
+                   target: Hint = AmfJsonHint,
                    directory: String = basePath,
-                   syntax: Option[Syntax] = None,
                    pipeline: Option[String] = None): Future[Assertion] = {
 
-    val config    = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, None)
+    val config    = CycleConfig(source, golden, hint, target, directory, pipeline, None)
     val amfConfig = buildConfig(None, None)
     build(config, amfConfig)
       .map(transformThroughRdf(_, config))
@@ -221,13 +225,12 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   def cycleRdf(source: String,
                golden: String,
                hint: Hint,
-               target: Vendor = Amf,
+               target: Hint = AmfJsonHint,
                directory: String = basePath,
-               syntax: Option[Syntax] = None,
                pipeline: Option[String] = None,
-               transformWith: Option[Vendor] = None): Future[Assertion] = {
+               transformWith: Option[Spec] = None): Future[Assertion] = {
 
-    val config    = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
+    val config    = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
     val amfConfig = buildConfig(None, None)
     build(config, amfConfig)
       .map(transformRdf(_, config))

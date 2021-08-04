@@ -1,6 +1,7 @@
 package amf.emit
 
-import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.client.scala.{AsyncAPIConfiguration, RAMLConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, OASConfiguration}
 import amf.core.client.common.validation._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
@@ -11,6 +12,8 @@ import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FunSuiteCycleTests
+import amf.testing.ConfigProvider.configFor
+import amf.testing.HintProvider.defaultHintFor
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 
@@ -33,7 +36,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
 
   def testCycleCompatibility(filePath: String,
                              from: Hint,
-                             to: Vendor,
+                             to: Spec,
                              basePath: String,
                              syntax: Option[Syntax] = None,
                              pipeline: Option[String] = None): Unit = {
@@ -43,16 +46,17 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
       val path = s"$filePath/$file"
 
       test(s"Test $path to $to") {
-        val config     = CycleConfig(path, path, from, to, basePath, syntax, pipeline)
-        val targetHint = hint(vendor = to)
-        val toProfile  = profile(to)
-        val amfConfig  = buildConfig(None, None)
+        val config       = CycleConfig(path, path, from, defaultHintFor(to), basePath, pipeline)
+        val targetHint   = hint(spec = to)
+        val toProfile    = profile(to)
+        val amfConfig    = buildConfig(None, None)
+        val targetConfig = buildConfig(amfConfigFrom(to), None, None)
         for {
           origin   <- build(config, amfConfig)
-          resolved <- successful(transform(origin, config, amfConfig))
-          rendered <- successful(render(resolved, config, amfConfig))
+          resolved <- successful(transform(origin, config, targetConfig))
+          rendered <- successful(render(resolved, config, targetConfig))
           tmp      <- writeTemporaryFile(path)(rendered)
-          report   <- validate(tmp, targetHint, toProfile, to)
+          report   <- validate(tmp, to)
         } yield {
           outputReportErrors(report)
         }
@@ -60,7 +64,16 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     }
   }
 
-  private def hint(vendor: Vendor) = vendor match {
+  private def amfConfigFrom(spec: Spec): AMFConfiguration = spec match {
+    case Spec.OAS30   => OASConfiguration.OAS30()
+    case Spec.OAS20   => OASConfiguration.OAS20()
+    case Spec.RAML10  => RAMLConfiguration.RAML10()
+    case Spec.RAML08  => RAMLConfiguration.RAML08()
+    case Spec.ASYNC20 => AsyncAPIConfiguration.Async20()
+    case _            => throw new IllegalArgumentException
+  }
+
+  private def hint(spec: Spec) = spec match {
     case Raml10 => Raml10YamlHint
     case Raml08 => Raml08YamlHint
     case Oas20  => Oas20YamlHint
@@ -70,16 +83,11 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
 
   private def outputReportErrors(report: AMFValidationReport) = report.toString should include(REPORT_CONFORMS)
 
-  private def validate(source: AsyncFile,
-                       hint: Hint,
-                       profileName: ProfileName,
-                       target: Vendor): Future[AMFValidationReport] = {
-
-    val config    = CycleConfig(source.path, source.path, hint, target, "", None, None)
+  private def validate(source: AsyncFile, spec: Spec): Future[AMFValidationReport] = {
     val handler   = DefaultErrorHandler()
-    val amfConfig = buildConfig(None, Some(handler))
-    build(config, amfConfig).flatMap { unit =>
-      amfConfig.baseUnitClient().validate(unit, profileName)
+    val amfConfig = buildConfig(configFor(spec), None, Some(handler))
+    build(source.path, source.path, amfConfig).flatMap { unit =>
+      amfConfig.baseUnitClient().validate(unit)
     }
   }
 
@@ -87,11 +95,11 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     amfConfig
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .baseUnitClient()
-      .transformCompatibility(unit, config.target.mediaType)
+      .transform(unit, PipelineId.Compatibility)
       .baseUnit
   }
 
-  private def profile(vendor: Vendor): ProfileName = vendor match {
+  private def profile(spec: Spec): ProfileName = spec match {
     case Raml10 => Raml10Profile
     case Raml08 => Raml08Profile
     case Oas20  => Oas20Profile

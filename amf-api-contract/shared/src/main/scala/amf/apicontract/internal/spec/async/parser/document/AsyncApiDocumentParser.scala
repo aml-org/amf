@@ -35,7 +35,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.{DeclaredElement, SourceVendor}
+import amf.core.internal.annotations.{DeclaredElement, SourceSpec}
 import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
@@ -58,7 +58,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     val references = AsyncReferencesParser(root.references).parse()
     parseDeclarations(map)
 
-    val api = parseApi(map).add(SourceVendor(ctx.vendor))
+    val api = parseApi(map).add(SourceSpec(ctx.spec))
     document
       .set(DocumentModel.Encodes, api, Annotations.inferred())
       .adopted(root.location)

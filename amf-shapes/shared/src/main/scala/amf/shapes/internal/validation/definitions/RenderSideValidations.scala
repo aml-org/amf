@@ -18,8 +18,8 @@ object RenderSideValidations extends Validations {
   )
 
   val UnknownVendor = validation(
-    "unknown-vendor",
-    "Unknown vendor provided"
+    "unknown-spec",
+    "Unknown spec provided"
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map()

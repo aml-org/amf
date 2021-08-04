@@ -4,6 +4,8 @@ import amf.shapes.internal.convert.ShapeClientConverters._
 import amf.client.validation.PayloadValidationUtils
 import amf.core.client.scala.model.DataType.{Boolean, Date, DateTime, DateTimeOnly, Integer, Nil, Number, String}
 import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes.{`application/json`, `application/yaml`}
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
@@ -14,9 +16,6 @@ import scala.language.postfixOps
 class ScalarValidationTest extends AsyncFunSuite with Matchers with PayloadValidationUtils {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
-  val APPLICATION_JSON = "application/json"
-  val APPLICATION_YAML = "application/yaml"
 
   val Node  = "NodeObject"
   val Array = "ArrayObject"
@@ -76,12 +75,12 @@ class ScalarValidationTest extends AsyncFunSuite with Matchers with PayloadValid
   }
 
   private def validateWithYamlParameter(toValidate: Any, shape: AnyShape) = {
-    val validator = parameterValidator(AnyShapeMatcher.asClient(shape), APPLICATION_YAML)
+    val validator = parameterValidator(AnyShapeMatcher.asClient(shape), `application/yaml`)
     validator.syncValidate(toValidate.toString).conforms
   }
 
   private def validateWithJsonPayload(scalarType: String, toValidate: Any, shape: AnyShape) = {
-    val validator = payloadValidator(AnyShapeMatcher.asClient(shape), APPLICATION_JSON)
+    val validator = payloadValidator(AnyShapeMatcher.asClient(shape), `application/json`)
     val valueForJson = converters
       .get(scalarType)
       .map(c => c.format(toValidate.toString))

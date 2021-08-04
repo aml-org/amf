@@ -2,6 +2,7 @@ package amf.resolution
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.AmfTransformationPipeline
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnknownSecuritySchemeErrorSpecification
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -11,6 +12,9 @@ import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.remote._
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.io.FunSuiteCycleTests
+import amf.testing.ConfigProvider._
+import amf.testing.{ConfigProvider, HintProvider}
+import amf.testing.HintProvider.defaultHintFor
 import org.scalatest.Assertion
 import org.scalatest.Matchers._
 
@@ -59,13 +63,13 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   }
 
   private def errorCycle(source: String, hint: Hint, errors: List[AMFValidationResult], path: String) = {
-    val config    = CycleConfig(source, source, hint, hint.vendor, path, Some(hint.syntax), None)
+    val config    = CycleConfig(source, source, hint, hint, path, None)
     val eh        = DefaultErrorHandler()
     val amfConfig = buildConfig(None, None) // need to ignore parsing errors, apparently
     for {
       u <- build(config, amfConfig)
       _ <- {
-        Future { transform(u, config, amfConfig.withErrorHandlerProvider(() => eh)) }
+        Future { transform(u, config, configFor(hint.spec).withErrorHandlerProvider(() => eh)) }
       }
     } yield {
       assertErrors(errors, eh.getResults)
@@ -88,9 +92,9 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    config.target match {
+    config.renderTarget.spec match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.baseUnitClient().transformDefault(unit, config.target.mediaType).baseUnit
+        amfConfig.baseUnitClient().transform(unit, PipelineId.Default).baseUnit
       case Amf =>
         TransformationPipelineRunner(amfConfig.errorHandlerProvider.errorHandler())
           .run(unit, AmfTransformationPipeline())

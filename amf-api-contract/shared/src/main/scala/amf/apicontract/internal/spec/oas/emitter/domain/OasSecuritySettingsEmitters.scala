@@ -8,7 +8,7 @@ import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.DataNode
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -27,12 +27,12 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
     val settings = f.value.value.asInstanceOf[Settings]
 
     settings match {
-      case o1: OAuth1Settings                                => OasOAuth1SettingsEmitters(o1, ordering).emitters()
-      case o2: OAuth2Settings if spec.vendor == Vendor.OAS30 => Oas3OAuth2SettingsEmitters(o2, ordering).emitters()
-      case o2: OAuth2Settings                                => OasOAuth2SettingsEmitters(o2, ordering).emitters()
-      case apiKey: ApiKeySettings                            => OasApiKeySettingsEmitters(apiKey, ordering).emitters()
-      case http: HttpSettings                                => OasHttpSettingsEmitters(http, ordering).emitters()
-      case openId: OpenIdConnectSettings                     => OasOpenIdConnectSettingsEmitters(openId, ordering).emitters()
+      case o1: OAuth1Settings                            => OasOAuth1SettingsEmitters(o1, ordering).emitters()
+      case o2: OAuth2Settings if spec.spec == Spec.OAS30 => Oas3OAuth2SettingsEmitters(o2, ordering).emitters()
+      case o2: OAuth2Settings                            => OasOAuth2SettingsEmitters(o2, ordering).emitters()
+      case apiKey: ApiKeySettings                        => OasApiKeySettingsEmitters(apiKey, ordering).emitters()
+      case http: HttpSettings                            => OasHttpSettingsEmitters(http, ordering).emitters()
+      case openId: OpenIdConnectSettings                 => OasOpenIdConnectSettingsEmitters(openId, ordering).emitters()
       case _ =>
         val internals = ListBuffer[EntryEmitter]()
         settings.fields

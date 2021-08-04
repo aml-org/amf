@@ -1,14 +1,16 @@
 package amf.validation
 
-import amf.apicontract.client.common.ProvidedMediaType
 import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.internal.spec.payload.PayloadRenderPlugin
 import amf.core.client.common.validation.Raml10Profile
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.document.{Document, Module, PayloadFragment}
 import amf.core.client.scala.model.domain.ScalarNode
 import amf.core.client.scala.validation.AMFValidator
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.render.AMFSerializer
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
@@ -21,6 +23,8 @@ import scala.concurrent.ExecutionContext
 class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  private val payloadRenderConfig = AMFGraphConfiguration.predefined().withPlugin(PayloadRenderPlugin)
 
   test("Test node shape with https id for js validation functions") {
 
@@ -37,7 +41,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
     doc.withReferences(Seq(module))
 
     for {
-      report <- AMFValidator.validate(module, Raml10Profile, RAMLConfiguration.RAML10())
+      report <- AMFValidator.validate(module, RAMLConfiguration.RAML10())
     } yield {
       report.conforms should be(true)
     }
@@ -45,10 +49,10 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
 
   test("Build scalar node and render") {
     val scalar   = ScalarNode("1", Some("http://a.ml/vocabularies/shapes#number")).withName("prop")
-    val fragment = PayloadFragment(scalar, "application/yaml")
+    val fragment = PayloadFragment(scalar, `application/yaml`)
 
     val s =
-      new AMFSerializer(fragment, ProvidedMediaType.PayloadYaml, WebAPIConfiguration.WebAPI().renderConfiguration).renderToString
+      new AMFSerializer(fragment, payloadRenderConfig.renderConfiguration, Some(`application/yaml`)).renderToString
     s should be("1\n") // without quotes
   }
 
@@ -63,7 +67,8 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
         | myType:
         |   type: number
         |   format: int""".stripMargin
-    val s     = new AMFSerializer(m, ProvidedMediaType.Raml10, RAMLConfiguration.RAML().renderConfiguration).renderToString
+    val s =
+      new AMFSerializer(m, RAMLConfiguration.RAML10().renderConfiguration, None).renderToString
     val diffs = Diff.ignoreAllSpace.diff(s, e)
     if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")
     succeed

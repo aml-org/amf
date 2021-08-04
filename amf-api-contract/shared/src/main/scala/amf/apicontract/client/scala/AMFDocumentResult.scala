@@ -1,6 +1,6 @@
 package amf.apicontract.client.scala
 
-import amf.core.client.scala.AMFResult
+import amf.core.client.scala.{AMFParseResult, AMFResult}
 import amf.core.client.scala.model.document.{Document, Module}
 import amf.core.client.scala.validation.AMFValidationResult
 
@@ -11,7 +11,8 @@ import amf.core.client.scala.validation.AMFValidationResult
   * @param report The [[AMFValidationReport]] from parsing the Document
   * @see [[AMFBaseUnitClient.parseDocument parseDocument]]
   */
-class AMFDocumentResult(val document: Document, results: Seq[AMFValidationResult]) extends AMFResult(document, results)
+class AMFDocumentResult(val document: Document, results: Seq[AMFValidationResult])
+    extends AMFParseResult(document, results)
 
 /**
   * An [[AMFResult]] where the parsing result is a library a.k.a. [[Module]]
@@ -20,4 +21,4 @@ class AMFDocumentResult(val document: Document, results: Seq[AMFValidationResult
   * @param report The Seq [[AMFValidationReport]] from parsing the library
   * @see [[AMFBaseUnitClient.parseLibrary parseLibrary]]
   */
-class AMFLibraryResult(val library: Module, results: Seq[AMFValidationResult]) extends AMFResult(library, results)
+class AMFLibraryResult(val library: Module, results: Seq[AMFValidationResult]) extends AMFParseResult(library, results)

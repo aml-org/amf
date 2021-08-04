@@ -1,0 +1,16 @@
+#%Dialect 1.0
+
+dialect: ABOUT
+version: 0.1
+
+documents:
+  library:
+    declares:
+      project: ProjectNode
+
+nodeMappings:
+  ProjectNode:
+    mapping:
+      name:
+        mandatory: true
+        range: string

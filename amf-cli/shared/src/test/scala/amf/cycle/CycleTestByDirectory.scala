@@ -3,7 +3,6 @@ package amf.cycle
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.internal.plugins.document.graph._
-import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote.{AmfJsonHint, Hint}
 import amf.io.{BuildCycleTests, JsonLdSerializationSuite}
 import org.mulesoft.common.io.{Fs, SyncFile}
@@ -87,7 +86,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
       val additionalExtension = if (isIgnored(d, Some(jsonldExtension))) ".ignore" else ""
       val input               = s"$dirName/api$fileExtension"
       val target              = s"$dirName/api$fileExtension.$jsonldExtension$additionalExtension"
-      runCycle(input, target, origin, AmfJsonHint, None, Some(renderOptionsFor(serialization.form)))
+      runCycle(input, target, origin, AmfJsonHint, Some(renderOptionsFor(serialization.form)))
     }
   }
 
@@ -106,10 +105,10 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
   private def goldenCycle(name: String, f: String): Unit = {
     if (Fs.syncFile(basePath + "/" + f + ".ignore").exists)
       s"Cycle for golden: $name" ignore {
-        runCycle(f + ".ignore", target, Some(target.syntax))
+        runCycle(f + ".ignore", target)
       } else
       s"Cycle for golden: $name" in {
-        runCycle(f, target, Some(target.syntax))
+        runCycle(f, target)
       }
   }
 
@@ -119,7 +118,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
                                                       .exists) ".ignore"
                                                 else "")
     s"Simple cycle for $name" in {
-      runCycle(name + "/api" + fileExtension, t, origin, target, syntax = Some(target.syntax), None)
+      runCycle(name + "/api" + fileExtension, t, origin, target, None)
     }
   }
 
@@ -151,11 +150,11 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
     if (Fs.syncFile(basePath + "/" + o + ".ignore").exists) {
 
       s"Generate golden from json-ld for $name" ignore {
-        runCycle(o + ".ignore", tar, AmfJsonHint, target, syntax = Some(target.syntax), None)
+        runCycle(o + ".ignore", tar, AmfJsonHint, target, None)
       }
     } else {
       s"Generate golden from json-ld for $name" in {
-        runCycle(o, tar, AmfJsonHint, target, syntax = Some(target.syntax), None)
+        runCycle(o, tar, AmfJsonHint, target, None)
       }
     }
   }
@@ -175,39 +174,24 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
 
     if (Fs.syncFile(basePath + "/" + f + ".ignore").exists) {
       s"Parse golden from json-ld for $name" ignore {
-        runCycle(f + ".ignore",
-                 f + ".ignore",
-                 target,
-                 target,
-                 syntax = Some(target.syntax),
-                 Some(renderOptionsFor(form)))
+        runCycle(f + ".ignore", f + ".ignore", target, target, Some(renderOptionsFor(form)))
       }
     } else {
       s"Parse golden from json-ld for $name" in {
-        runCycle(f, f, target, target, syntax = Some(target.syntax), Some(renderOptionsFor(form)))
+        runCycle(f, f, target, target, Some(renderOptionsFor(form)))
       }
     }
 
   }
 
-  private def runCycle(source: String,
-                       target: Hint,
-                       syntax: Option[Syntax],
-                       renderOptions: Option[RenderOptions] = None): Future[Assertion] =
-    runCycle(source, source, target, target, syntax, renderOptions)
+  private def runCycle(source: String, target: Hint, renderOptions: Option[RenderOptions] = None): Future[Assertion] =
+    runCycle(source, source, target, target, renderOptions)
 
   private def runCycle(source: String,
                        golden: String,
                        hint: Hint,
                        target: Hint,
-                       syntax: Option[Syntax],
                        renderOptions: Option[RenderOptions]): Future[Assertion] = {
-    cycle(source,
-          golden,
-          hint,
-          target.vendor,
-          syntax = Some(target.syntax),
-          eh = Some(DefaultErrorHandler()),
-          renderOptions = renderOptions)
+    cycle(source, golden, hint, target, eh = Some(DefaultErrorHandler()), renderOptions = renderOptions)
   }
 }
