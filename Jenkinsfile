@@ -59,6 +59,7 @@ pipeline {
           branch 'master'
           branch 'develop'
           branch 'remod-breaking'
+          branch 'release/5.0.0-beta'
         }
       }
       steps {
@@ -85,6 +86,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'support/*'
+          branch 'release/5.0.0-beta'
         }
       }
       steps {
