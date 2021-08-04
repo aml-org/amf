@@ -1,4 +1,4 @@
-declare module 'amf-client-js' {
+declare module 'amf-client' {
   export class FinishedRenderingSyntaxEvent  {
     unit: BaseUnit
 
@@ -96,7 +96,7 @@ declare module 'amf-client-js' {
 
   }
   export class AMFParseResult extends AMFResult  {
-    rootSpec: SpecId
+    rootSpec: Spec
 
   }
   export class ValidationProfile  {
@@ -223,7 +223,7 @@ declare module 'amf-client-js' {
     location: string
     usage: StrField
     modelVersion: StrField
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
 
     references(): Array<BaseUnit>
 
@@ -813,7 +813,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DomainElement
 
@@ -1044,7 +1044,7 @@ declare module 'amf-client-js' {
     contentType: Array<StrField>
     accepts: Array<StrField>
     position: Range
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     extendsNode: Array<DomainElement>
 
     withDocumentationTitle(title: string): CreativeWork
@@ -1338,7 +1338,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     declares: Array<DomainElement>
     externals: Array<External>
@@ -1404,7 +1404,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: NodeMapping
     externals: Array<External>
@@ -1631,7 +1631,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DomainElement
     declares: Array<DomainElement>
@@ -2280,7 +2280,7 @@ declare module 'amf-client-js' {
     contentType: Array<StrField>
     accepts: Array<StrField>
     position: Range
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     extendsNode: Array<DomainElement>
 
     constructor()
@@ -2397,7 +2397,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     declares: Array<DomainElement>
 
@@ -2463,7 +2463,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DialectDomainElement
     declares: Array<DomainElement>
@@ -2692,7 +2692,7 @@ declare module 'amf-client-js' {
     contentType: Array<StrField>
     accepts: Array<StrField>
     position: Range
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     extendsNode: Array<DomainElement>
 
     constructor()
@@ -2919,7 +2919,7 @@ declare module 'amf-client-js' {
     fragmentHeaders: Array<string>
     libraryHeader: undefined | string
     header: string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DomainElement
     declares: Array<DomainElement>
@@ -3497,7 +3497,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DialectDomainElement
     declares: Array<DomainElement>
@@ -3854,7 +3854,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DialectDomainElement
 
@@ -4104,7 +4104,7 @@ declare module 'amf-client-js' {
     base: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     declares: Array<DomainElement>
     externals: Array<External>
@@ -4488,7 +4488,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    sourceSpec: undefined | SpecId
+    sourceSpec: undefined | Spec
     modelVersion: StrField
     declares: Array<DomainElement>
 
@@ -5501,18 +5501,18 @@ declare module 'amf-client-js' {
 
 
   }
-  export class SpecId  {
-    static readonly RAML08: SpecId
-    static readonly RAML10: SpecId
-    static readonly OAS20: SpecId
-    static readonly OAS30: SpecId
-    static readonly ASYNC20: SpecId
-    static readonly AMF: SpecId
-    static readonly PAYLOAD: SpecId
-    static readonly AML: SpecId
-    static readonly JSONSCHEMA: SpecId
+  export class Spec  {
+    static readonly RAML08: Spec
+    static readonly RAML10: Spec
+    static readonly OAS20: Spec
+    static readonly OAS30: Spec
+    static readonly ASYNC20: Spec
+    static readonly AMF: Spec
+    static readonly PAYLOAD: Spec
+    static readonly AML: Spec
+    static readonly JSONSCHEMA: Spec
 
-    static apply(name: string): SpecId
+    static apply(name: string): Spec
 
 
   }
