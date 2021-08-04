@@ -296,7 +296,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val client = config().baseUnitClient()
     for {
       parseResult    <- client.parse(music).asFuture
-      validateResult <- configFor(parseResult.rootSpec).baseUnitClient().validate(parseResult.baseUnit).asFuture
+      validateResult <- configFor(parseResult.sourceSpec).baseUnitClient().validate(parseResult.baseUnit).asFuture
     } yield {
       val parseReport = AMFValidationReport.unknownProfile(parseResult._internal)
       val report      = parseReport.merge(validateResult._internal)

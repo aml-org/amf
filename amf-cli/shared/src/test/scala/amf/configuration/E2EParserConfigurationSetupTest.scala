@@ -57,7 +57,7 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
           document <- Future.successful { result.baseUnit }
         } yield {
           result.results should have length 0
-          f.expectation(document, result.rootSpec)
+          f.expectation(document, result.sourceSpec)
         }
       }
     case e: ExpectedErrorCase =>

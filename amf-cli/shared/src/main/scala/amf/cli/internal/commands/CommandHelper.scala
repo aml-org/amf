@@ -45,9 +45,9 @@ trait CommandHelper {
     if (config.resolve)
       parseResult map (result => {
         val transformed = configClient.transform(result.baseUnit, PipelineId.Default)
-        (transformed.baseUnit, result.rootSpec)
+        (transformed.baseUnit, result.sourceSpec)
       })
-    else parseResult.map(result => (result.baseUnit, result.rootSpec))
+    else parseResult.map(result => (result.baseUnit, result.sourceSpec))
   }
 
   protected def resolve(config: ParserConfig,

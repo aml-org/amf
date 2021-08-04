@@ -57,7 +57,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     val finalHint     = overridedHint.getOrElse(hint)
     for {
       parseResult <- parse(directory + api, initialConfig, finalHint)
-      report      <- configFor(parseResult.rootSpec).baseUnitClient().validate(parseResult.baseUnit)
+      report      <- configFor(parseResult.sourceSpec).baseUnitClient().validate(parseResult.baseUnit)
       r <- {
         val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val finalReport =
