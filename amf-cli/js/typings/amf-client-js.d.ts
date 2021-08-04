@@ -1,4 +1,4 @@
-declare module 'amf-client' {
+declare module 'amf-client-js' {
   export class FinishedRenderingSyntaxEvent  {
     unit: BaseUnit
 
