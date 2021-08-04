@@ -806,7 +806,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           .head
           .schema
           .asInstanceOf[AnyShape]
-          .isDefaultEmpty should be(expected)
+          .isNotExplicit should be(expected)
 
       assertDefault("get", expected = true)
       assertDefault("post", expected = true)
