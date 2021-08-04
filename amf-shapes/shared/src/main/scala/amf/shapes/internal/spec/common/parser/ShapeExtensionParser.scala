@@ -8,7 +8,12 @@ import amf.core.internal.remote.{Oas, Raml}
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.datanode.DataNodeParser
 import amf.shapes.internal.spec.raml.parser.TypeInfo
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{MissingRequiredUserDefinedFacet, UnableToParseShapeExtensions, UserDefinedFacetMatchesAncestorsTypeFacets, UserDefinedFacetMatchesBuiltInFacets}
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
+  MissingRequiredUserDefinedFacet,
+  UnableToParseShapeExtensions,
+  UserDefinedFacetMatchesAncestorsTypeFacets,
+  UserDefinedFacetMatchesBuiltInFacets
+}
 import org.yaml.model.YMap
 import amf.core.internal.utils._
 
@@ -22,13 +27,13 @@ case class ShapeExtensionParser(shape: Shape,
       shape.collectCustomShapePropertyDefinitions(onlyInherited = true).flatMap(_.values).distinct
     val directlyInherited = shape.effectiveInherits.flatMap(_.customShapePropertyDefinitions)
     inheritedDefinitions.foreach { shapeExtensionDefinition =>
-      val extensionKey = ctx.vendor match {
+      val extensionKey = ctx.spec match {
         case _: Raml => shapeExtensionDefinition.name.value() // TODO check this.
         case _: Oas  => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
         case _ =>
           ctx.eh.violation(UnableToParseShapeExtensions,
                            shape.id,
-                           s"Cannot parse shape extension for vendor ${ctx.vendor}",
+                           s"Cannot parse shape extension for spec ${ctx.spec}",
                            map)
           shapeExtensionDefinition.name.value()
       }

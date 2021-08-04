@@ -9,19 +9,20 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderInfo}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.plugins.render.RenderInfo
+import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.Spec
 import org.yaml.model.YDocument
 
 object Async20RenderPlugin extends ApiRenderPlugin {
 
-  override def vendor: Vendor = Vendor.ASYNC20
+  override def spec: Spec = Spec.ASYNC20
 
   override def priority: PluginPriority = NormalPriority
 
-  override def defaultSyntax(): String = AMFRenderPlugin.APPLICATION_YAML
+  override def defaultSyntax(): String = `application/yaml`
 
-  override def mediaTypes: Seq[String] = Async20MediaTypes.mediaTypes
+  override def mediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`)
 
   override def applies(element: RenderInfo): Boolean = element.unit match {
     case document: Document => document.encodes.isInstanceOf[Api]
@@ -45,5 +46,5 @@ object Async20RenderPlugin extends ApiRenderPlugin {
   }
 
   private def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext =
-    new Async20SpecEmitterContext(errorHandler)
+    new Async20SpecEmitterContext(errorHandler, options = options)
 }

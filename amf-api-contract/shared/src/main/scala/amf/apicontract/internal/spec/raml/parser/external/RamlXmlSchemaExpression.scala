@@ -9,6 +9,8 @@ import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes._
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.client.scala.model.domain.SchemaShape
 import amf.shapes.internal.domain.metamodel.SchemaShapeModel
@@ -79,7 +81,7 @@ case class RamlXmlSchemaExpression(key: YNode,
   private def buildSchemaShapeFrom(scalar: YScalar) = {
     val shape = SchemaShape()
       .set(ExternalSourceElementModel.Raw, AmfScalar(scalar.text, Annotations(scalar)), Annotations.inferred())
-      .set(SchemaShapeModel.MediaType, "application/xml", Annotations.synthesized())
+      .set(SchemaShapeModel.MediaType, `application/xml`, Annotations.synthesized())
     shape.withName(key.as[String])
     adopt(shape)
     shape
@@ -108,7 +110,7 @@ case class RamlXmlSchemaExpression(key: YNode,
       .set(ExternalSourceElementModel.Raw,
            AmfScalar(typeEntry.value.toString, Annotations(typeEntry.value)),
            Annotations.inferred())
-      .set(SchemaShapeModel.MediaType, "application/xml", Annotations.synthesized())
+      .set(SchemaShapeModel.MediaType, `application/xml`, Annotations.synthesized())
     shape.withName(key.as[String], Annotations(key))
     adopt(shape)
     shape

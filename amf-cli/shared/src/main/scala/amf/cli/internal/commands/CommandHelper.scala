@@ -2,15 +2,14 @@ package amf.cli.internal.commands
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.internal.utils.VocabulariesRegister
-import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, OASConfiguration, RAMLConfiguration}
 import amf.apicontract.internal.convert.ApiRegister
+import amf.core.client.common.transform._
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.common.transform._
-import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.parser.{AMFCompiler, CompilerConfiguration}
-import amf.core.internal.remote.{Cache, Context, Platform, Vendor}
+import amf.core.internal.remote.{Cache, Context, Platform, Spec}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -38,41 +37,39 @@ trait CommandHelper {
       })
   }
 
-  protected def parseInput(config: ParserConfig, configuration: AMLConfiguration): Future[BaseUnit] = {
+  protected def parseInput(config: ParserConfig, configuration: AMLConfiguration): Future[(BaseUnit, Spec)] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val inputFile                          = ensureUrl(config.input.get)
     val configClient                       = configuration.baseUnitClient()
-    val parsed                             = configClient.parse(inputFile)
-    val vendor                             = effectiveVendor(config.inputFormat)
+    val parseResult                        = configClient.parse(inputFile)
     if (config.resolve)
-      parsed map (result => {
-        val transformed =
-          configClient.transform(result.baseUnit, PipelineName.from(Vendor(vendor).mediaType, PipelineId.Default))
-        transformed.baseUnit
+      parseResult map (result => {
+        val transformed = configClient.transform(result.baseUnit, PipelineId.Default)
+        (transformed.baseUnit, result.sourceSpec)
       })
-    else parsed.map(_.baseUnit)
+    else parseResult.map(result => (result.baseUnit, result.sourceSpec))
   }
 
-  protected def resolve(config: ParserConfig, unit: BaseUnit, configuration: AMFGraphConfiguration): Future[BaseUnit] = {
+  protected def resolve(config: ParserConfig,
+                        unit: BaseUnit,
+                        specId: Spec,
+                        configuration: AMFGraphConfiguration): Future[BaseUnit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val configClient                       = configuration.baseUnitClient()
-    val vendor                             = effectiveVendor(config.inputFormat)
-    val vendorMediaType                    = Vendor(vendor).mediaType
     if (config.resolve && config.validate) {
       val inputFile = ensureUrl(config.input.get)
       val parsed = AMFCompiler(
         inputFile,
-        Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         Context(platform),
         cache = Cache(),
         CompilerConfiguration(configuration)
       ).build()
       parsed map { parsed =>
-        configClient.transform(parsed, PipelineName.from(vendorMediaType, PipelineId.Default)).baseUnit
+        configClient.transform(parsed, PipelineId.Default).baseUnit
       }
     } else if (config.resolve) {
       Future {
-        configClient.transform(unit, PipelineName.from(vendorMediaType, PipelineId.Default)).baseUnit
+        configClient.transform(unit, PipelineId.Default).baseUnit
       }
     } else {
       Future { unit }
@@ -90,10 +87,14 @@ trait CommandHelper {
     if (config.withCompactNamespaces) {
       generateOptions = generateOptions.withCompactUris
     }
-    val vendor    = effectiveVendor(config.outputFormat)
-    val mediaType = effectiveMediaType(config.outputMediaType, config.outputFormat) // TODO: media type not taken into account!
+    val spec         = effectiveVendor(config.outputFormat)
+    val renderConfig = configFor(spec)
     val result =
-      configuration.withRenderOptions(generateOptions).baseUnitClient().render(unit, Vendor(vendor).mediaType)
+      renderConfig
+        .getOrElse(configuration)
+        .withRenderOptions(generateOptions)
+        .baseUnitClient()
+        .render(unit)
     config.output match {
       case Some(f) =>
         platform.write(f, result)
@@ -102,11 +103,11 @@ trait CommandHelper {
     }
   }
 
-  def effectiveMediaType(mediaType: Option[String], vendor: Option[String]): String = {
+  def effectiveMediaType(mediaType: Option[String], spec: Option[String]): String = {
     mediaType match {
       case Some(effectiveMediaType) => effectiveMediaType
       case None =>
-        vendor match {
+        spec match {
 //          case Some(effectiveVendor) if AMFPluginsRegistry.documentPluginForID(effectiveVendor).isDefined =>
 //            AMFPluginsRegistry.documentPluginForID(effectiveVendor).get.documentSyntaxes.head
           case _ => "*/*"
@@ -114,11 +115,15 @@ trait CommandHelper {
     }
   }
 
-  def effectiveVendor(vendor: Option[String]): String = {
-    vendor match {
-      case Some(effectiveVendor) => effectiveVendor
-      case None                  => "Unknown"
-    }
+  private def configFor(spec: Spec): Option[AMFConfiguration] = spec match {
+    case Spec.RAML10  => Some(RAMLConfiguration.RAML10())
+    case Spec.RAML08  => Some(RAMLConfiguration.RAML08())
+    case Spec.OAS20   => Some(OASConfiguration.OAS20())
+    case Spec.OAS30   => Some(OASConfiguration.OAS30())
+    case Spec.ASYNC20 => Some(AsyncAPIConfiguration.Async20())
+    case _            => None
   }
+
+  def effectiveVendor(spec: Option[String]): Spec = spec.flatMap(Spec.unapply).getOrElse(Spec("unknown"))
 
 }

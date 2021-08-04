@@ -56,7 +56,7 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     * and it's because was parsed from
     * an empty (or only with example) payload, an not an explicit type def */
   @JSExport
-  def isDefaultEmpty: Boolean = _internal.isDefaultEmpty
+  def isNotExplicit: Boolean = _internal.isNotExplicit
 
   /**
     * @param trackId parent id of the original payload type with simpleinheritance and the searched example.

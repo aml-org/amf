@@ -14,7 +14,7 @@ class ExamplesResolutionTest extends ResolutionTest {
     cycle("response-examples.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -25,7 +25,7 @@ class ExamplesResolutionTest extends ResolutionTest {
       "response-declarations-with-multiple-media-types.yaml",
       config.golden,
       Oas20YamlHint,
-      target = Amf,
+      target = AmfJsonHint,
       renderOptions = Some(config.renderOptions),
       transformWith = Some(Raml10)
     )
@@ -35,7 +35,7 @@ class ExamplesResolutionTest extends ResolutionTest {
     cycle("response-examples.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -46,7 +46,7 @@ class ExamplesResolutionTest extends ResolutionTest {
         "examples/vocabulary-fragment/api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonHint,
         directory = validationPath,
         renderOptions = Some(config.renderOptions),
         transformWith = Some(Raml10)
@@ -59,7 +59,7 @@ class ExamplesResolutionTest extends ResolutionTest {
         "examples/dialect-fragment/api.raml",
         config.golden,
         Raml10YamlHint,
-        target = Amf,
+        target = AmfJsonHint,
         directory = validationPath,
         renderOptions = Some(config.renderOptions),
         transformWith = Some(Raml10)

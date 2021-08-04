@@ -25,7 +25,7 @@ import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.{DeclaredElement, LexicalInformation, SingleValueArray, SourceVendor}
+import amf.core.internal.annotations.{DeclaredElement, LexicalInformation, SingleValueArray, SourceSpec}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel}
 import amf.core.internal.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -102,7 +102,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     val references = ReferencesParser(document, root.location, "uses".asOasExtension, map, root.references).parse()
     parseDeclarations(root, map)
 
-    val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
+    val api = parseWebApi(map).add(SourceSpec(ctx.spec))
     document.set(DocumentModel.Encodes, api, Annotations.inferred())
 
     addDeclarationsToModel(document)
@@ -172,13 +172,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     def validateSchemeType(scheme: SecurityScheme): Unit = {
       val schemeType = scheme.`type`
       if (schemeType.nonEmpty && !OasLikeSecuritySchemeTypeMappings
-            .validTypesFor(ctx.vendor)
+            .validTypesFor(ctx.spec)
             .contains(schemeType.value()))
         ctx.eh.violation(
           InvalidSecuritySchemeType,
           scheme.id,
           Some(SecuritySchemeModel.Type.value.iri()),
-          s"'$schemeType' is not a valid security scheme type in ${ctx.vendor.name}",
+          s"'$schemeType' is not a valid security scheme type in ${ctx.spec.id}",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
           Some(ctx.rootContextDocument)
         )

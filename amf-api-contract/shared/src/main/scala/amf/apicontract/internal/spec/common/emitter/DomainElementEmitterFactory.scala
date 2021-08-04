@@ -19,7 +19,7 @@ import amf.apicontract.internal.spec.raml.emitter.domain.{Raml08EmitterFactory, 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
-import amf.core.internal.remote.{MediaTypeParser, Vendor}
+import amf.core.internal.remote.{MediaTypeParser, Spec}
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{CreativeWork, Example}
@@ -84,18 +84,4 @@ trait DomainElementEmitterFactory {
   def organizationEmitter(o: Organization): Option[PartEmitter]                             = None
   def tagEmitter(t: Tag): Option[PartEmitter]                                               = None
   def customDomainPropertyEmitter(t: CustomDomainProperty): Option[PartEmitter]             = None
-}
-
-object DomainElementEmitterFactory {
-  def apply(mediaType: String, eh: AMFErrorHandler): Option[DomainElementEmitterFactory] = {
-    val vendorMediaType = new MediaTypeParser(mediaType).getPureVendorExp
-    vendorMediaType match {
-      case Vendor.RAML08.mediaType  => Some(Raml08EmitterFactory(eh))
-      case Vendor.RAML10.mediaType  => Some(Raml10EmitterFactory(eh))
-      case Vendor.OAS20.mediaType   => Some(Oas20EmitterFactory(eh))
-      case Vendor.OAS30.mediaType   => Some(Oas30EmitterFactory(eh))
-      case Vendor.ASYNC20.mediaType => Some(AsyncDomainElementEmitterFactory(eh))
-      case _                        => None
-    }
-  }
 }

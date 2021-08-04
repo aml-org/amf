@@ -1,0 +1,21 @@
+#%Dialect 1.0
+
+dialect: Movie
+version: 1.0
+
+external:
+  schema-org: http://schema.org/
+
+documents:
+  fragments:
+    encodes:
+      movie: MovieNode
+
+nodeMappings:
+  MovieNode:
+    classTerm: schema-org.Movie
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        mandatory: true
+        range: string

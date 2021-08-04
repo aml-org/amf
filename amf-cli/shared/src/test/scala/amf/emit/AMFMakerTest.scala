@@ -1,32 +1,32 @@
 package amf.emit
 
-import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser._
+import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.remote._
-import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.testing.ConfigProvider
 import org.mulesoft.common.test.ListAssertions
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 import org.yaml.model.YMap
-import amf.core.internal.parser._
 
 class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions with PlatformSecrets {
 
   test("Test simple Raml generation") {
-    val root = ast(`document/api/bare`, Raml10)
+    val root = ast(`document/api/bare`, Raml10YamlHint)
     assertNode(root, ("title", "test"))
     assertNode(root, ("description", "test description"))
   }
 
   test("Test simple Oas generation") {
-    val root = ast(`document/api/bare`, Oas20)
+    val root = ast(`document/api/bare`, Oas20JsonHint)
     assertNode(root, ("info", List(("title", "test"), ("description", "test description"))))
   }
 
   test("Test complete Oas generation") {
-    val root = ast(`document/api/basic`, Oas20)
+    val root = ast(`document/api/basic`, Oas20JsonHint)
 
     assertNode(
       root,
@@ -43,8 +43,8 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     assertNode(root, ("schemes", Array("http", "https")))
     assertNode(root, ("basePath", "/api"))
     assertNode(root, ("host", "localhost.com"))
-    assertNode(root, ("consumes", Array("application/json")))
-    assertNode(root, ("produces", Array("application/json")))
+    assertNode(root, ("consumes", Array(`application/json`)))
+    assertNode(root, ("produces", Array(`application/json`)))
 
     assertNode(root,
                ("externalDocs",
@@ -56,7 +56,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   test("Test complete Raml generation") {
-    val root = ast(`document/api/basic`, Raml10)
+    val root = ast(`document/api/basic`, Raml10YamlHint)
     assertNode(root, ("title", "test"))
     assertNode(root, ("description", "test description"))
 
@@ -67,7 +67,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     assertNode(root, ("protocols", Array("http", "https")))
     assertNode(root, ("baseUri", "localhost.com/api"))
 
-    assertNode(root, ("mediaType", Array("application/json")))
+    assertNode(root, ("mediaType", Array(`application/json`)))
 
     assertNode(
       root,
@@ -83,13 +83,13 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   test("Test Raml generation with operations") {
-    val root = ast(`document/api/advanced`, Raml10)
+    val root = ast(`document/api/advanced`, Raml10YamlHint)
     assertNode(root,
                ("/endpoint", List(("get", List(("description", "test operation get"), ("displayName", "test get"))))))
   }
 
   test("Test Oas generation with operations") {
-    val root = ast(`document/api/advanced`, Oas20)
+    val root = ast(`document/api/advanced`, Oas20JsonHint)
     assertNode(
       root,
       ("paths",
@@ -121,9 +121,9 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     fail(s"Field $field not found in tree where was expected to be")
   }
 
-  private def ast(document: Document, vendor: Vendor): YMap = {
-    val config = APIConfiguration.API()
-    config.baseUnitClient().renderAST(document, vendor.mediaType) match {
+  private def ast(document: Document, target: Hint): YMap = {
+    val config = ConfigProvider.configFor(target.spec)
+    config.baseUnitClient().renderAST(document, target.syntax.mediaType) match {
       case doc: SyamlParsedDocument => doc.document.node.as[YMap]
       case _                        => YMap.empty
     }

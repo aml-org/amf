@@ -15,47 +15,47 @@ import org.yaml.model.YNode
 
 import scala.util.matching.Regex
 
-case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext)
-    extends AgnosticShapeEmitterContextAdapter(spec)
+case class OasLikeShapeEmitterContextAdapter(specCtx: OasLikeSpecEmitterContext)
+    extends AgnosticShapeEmitterContextAdapter(specCtx)
     with OasLikeShapeEmitterContext {
 
-  override def nameRegex: Regex = spec.nameRegex
+  override def nameRegex: Regex = specCtx.nameRegex
 
-  override def forceEmission: Option[String] = spec match {
+  override def forceEmission: Option[String] = specCtx match {
     case oasCtx: OasSpecEmitterContext => oasCtx.forceEmission
     case _                             => super.forceEmission
   }
 
-  override def setForceEmission(id: Option[String]): Unit = spec match {
+  override def setForceEmission(id: Option[String]): Unit = specCtx match {
     case oasCtx: OasSpecEmitterContext => oasCtx.setForceEmission(id)
     case _                             => super.setForceEmission(id)
   }
 
-  override def removeForceEmission: Unit = spec match {
+  override def removeForceEmission: Unit = specCtx match {
     case oasCtx: OasSpecEmitterContext => oasCtx.removeForceEmission
     case _                             => super.removeForceEmission
   }
 
-  override val definitionsQueue: DefinitionsQueue = spec match {
+  override val definitionsQueue: DefinitionsQueue = specCtx match {
     case oasCtx: OasSpecEmitterContext => oasCtx.definitionsQueue
     case _                             => DefinitionsQueue()(this)
   }
   override protected implicit val shapeCtx: OasLikeShapeEmitterContext = this
 
-  override def schemasDeclarationsPath: String = spec.schemasDeclarationsPath
+  override def schemasDeclarationsPath: String = specCtx.schemasDeclarationsPath
 
   override def customFacetsEmitter(f: FieldEntry,
                                    ordering: SpecOrdering,
                                    references: Seq[BaseUnit]): CustomFacetsEmitter =
-    spec.factory.customFacetsEmitter(f, ordering, references)
+    specCtx.factory.customFacetsEmitter(f, ordering, references)
 
   override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter =
-    spec.factory.facetsInstanceEmitter(extension, ordering)
+    specCtx.factory.facetsInstanceEmitter(extension, ordering)
 
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
-    spec.factory.annotationEmitter(e, default)
+    specCtx.factory.annotationEmitter(e, default)
 
-  override def anyOfKey: YNode = spec.anyOfKey
+  override def anyOfKey: YNode = specCtx.anyOfKey
 
   override def typeEmitters(shape: Shape,
                             ordering: SpecOrdering,
@@ -63,5 +63,5 @@ case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext)
                             references: Seq[BaseUnit],
                             pointer: Seq[String],
                             schemaPath: Seq[(String, String)]): Seq[Emitter] =
-    spec.factory.typeEmitters(shape, ordering, ignored, references, pointer, schemaPath)
+    specCtx.factory.typeEmitters(shape, ordering, ignored, references, pointer, schemaPath)
 }

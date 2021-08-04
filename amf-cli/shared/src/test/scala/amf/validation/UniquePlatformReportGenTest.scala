@@ -1,16 +1,16 @@
 package amf.validation
 
-import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
-import org.scalatest.{Assertion, AsyncFunSuite}
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation._
-import amf.core.client.scala.AMFResult
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
 import amf.io.FileAssertionTest
+import amf.testing.ConfigProvider.configFor
+import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -21,7 +21,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
   val reportsPath: String
   val hint: Hint
 
-  protected lazy val defaultProfile: ProfileName = hint.vendor match {
+  protected lazy val defaultProfile: ProfileName = hint.spec match {
     case Raml10 => Raml10Profile
     case Raml08 => Raml08Profile
     case Oas20  => Oas20Profile
@@ -53,11 +53,11 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
                          profileFile: Option[String] = None,
                          overridedHint: Option[Hint] = None,
                          directory: String = basePath): Future[Assertion] = {
-    val initialConfig = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    val initialConfig = APIConfiguration.API()
     val finalHint     = overridedHint.getOrElse(hint)
     for {
       parseResult <- parse(directory + api, initialConfig, finalHint)
-      report      <- initialConfig.baseUnitClient().validate(parseResult.baseUnit, profile)
+      report      <- configFor(parseResult.sourceSpec).baseUnitClient().validate(parseResult.baseUnit)
       r <- {
         val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val finalReport =
@@ -70,9 +70,9 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     }
   }
 
-  protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint): Future[AMFResult] = {
+  protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint) = {
     val client = conf.baseUnitClient()
-    client.parse(path, finalHint.vendor.mediaType)
+    client.parse(path)
   }
 
   protected def processGolden(g: String): String

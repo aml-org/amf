@@ -1,20 +1,20 @@
 package amf.apicontract.internal.plugins
 
-import amf.apicontract.client.common.ProvidedMediaType
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
-import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderInfo}
-import amf.core.internal.remote.Vendor
-import amf.shapes.internal.annotations.JSONSchemaRoot
+import amf.core.internal.plugins.render.RenderInfo
+import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.Spec
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.annotations.JSONSchemaRoot
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import org.yaml.model.YDocument
 
 object JsonSchemaRenderPlugin extends ApiRenderPlugin {
 
-  override def vendor: Vendor = Vendor.JSONSCHEMA
+  override def spec: Spec = Spec.JSONSCHEMA
 
   override def applies(element: RenderInfo): Boolean = firstAnyShape(element.unit).isDefined
 
@@ -23,9 +23,9 @@ object JsonSchemaRenderPlugin extends ApiRenderPlugin {
     case _                => None
   }
 
-  override def defaultSyntax(): String = AMFRenderPlugin.APPLICATION_JSON
+  override def defaultSyntax(): String = `application/json`
 
-  override def mediaTypes: Seq[String] = Seq(ProvidedMediaType.JsonSchema)
+  override def mediaTypes: Seq[String] = Seq(`application/json`)
 
   override def unparseAsYDocument(unit: BaseUnit,
                                   renderOptions: RenderOptions,

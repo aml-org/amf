@@ -39,6 +39,7 @@ class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override v
 }
 
 object AmfEditingPipeline {
-  val name: String = PipelineId.Editing
-  def apply()      = new AmfEditingPipeline(name = name)
+  val name: String                  = PipelineId.Editing
+  def apply()                       = new AmfEditingPipeline(name = name)
+  def apply(urlShortening: Boolean) = new AmfEditingPipeline(urlShortening, name = name)
 }

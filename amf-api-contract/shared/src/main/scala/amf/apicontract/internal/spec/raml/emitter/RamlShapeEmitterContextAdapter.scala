@@ -21,28 +21,28 @@ import amf.shapes.internal.spec.common.emitter.{
 import amf.shapes.internal.spec.raml.emitter.RamlTypePartEmitter
 import org.yaml.model.YNode
 
-case class RamlShapeEmitterContextAdapter(spec: RamlSpecEmitterContext)
-    extends AgnosticShapeEmitterContextAdapter(spec)
+case class RamlShapeEmitterContextAdapter(specCtx: RamlSpecEmitterContext)
+    extends AgnosticShapeEmitterContextAdapter(specCtx)
     with RamlShapeEmitterContext {
 
   override def typesEmitter
     : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter =
-    spec.factory.typesEmitter
+    specCtx.factory.typesEmitter
 
-  override def typesKey: YNode = spec.factory.typesKey
+  override def typesKey: YNode = specCtx.factory.typesKey
 
   override def customFacetsEmitter(f: FieldEntry,
                                    ordering: SpecOrdering,
                                    references: Seq[BaseUnit]): CustomFacetsEmitter =
-    spec.factory.customFacetsEmitter(f, ordering, references)
+    specCtx.factory.customFacetsEmitter(f, ordering, references)
 
   override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter =
-    spec.factory.facetsInstanceEmitter(extension, ordering)
+    specCtx.factory.facetsInstanceEmitter(extension, ordering)
 
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
-    spec.factory.annotationEmitter(e, default)
+    specCtx.factory.annotationEmitter(e, default)
 
-  override def toOasNext: OasLikeShapeEmitterContext = OasLikeShapeEmitterContextAdapter(toOas(spec))
+  override def toOasNext: OasLikeShapeEmitterContext = OasLikeShapeEmitterContextAdapter(toOas(specCtx))
 
-  override def localReference(shape: Shape): PartEmitter = spec.localReference(shape)
+  override def localReference(shape: Shape): PartEmitter = specCtx.localReference(shape)
 }

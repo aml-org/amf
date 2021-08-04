@@ -8,7 +8,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.ArrayEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
@@ -30,7 +30,7 @@ abstract class SpecEmitterContext(val eh: AMFErrorHandler,
 
   def localReference(reference: Linkable): PartEmitter
 
-  val vendor: Vendor
+  val spec: Spec
 
   val factory: SpecEmitterFactory
 

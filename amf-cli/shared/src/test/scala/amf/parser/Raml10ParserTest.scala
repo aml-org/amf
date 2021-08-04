@@ -1,7 +1,7 @@
 package amf.parser
 
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.internal.remote.{Amf, Raml10YamlHint}
+import amf.core.internal.remote.{Amf, AmfJsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class Raml10ParserTest extends FunSuiteCycleTests {
@@ -10,11 +10,13 @@ class Raml10ParserTest extends FunSuiteCycleTests {
 
   multiGoldenTest("Type with json schema in it's type facet has an inheritance to it",
                   "type-with-json-schema-in-type-facet.%s") { config =>
-    cycle("type-with-json-schema-in-type-facet.raml",
-          config.golden,
-          Raml10YamlHint,
-          Amf,
-          renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint))
+    cycle(
+      "type-with-json-schema-in-type-facet.raml",
+      config.golden,
+      Raml10YamlHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint)
+    )
   }
 
   multiGoldenTest("Nillable types in params are parsed", "api.%s") { config =>
@@ -22,7 +24,7 @@ class Raml10ParserTest extends FunSuiteCycleTests {
       "api.raml",
       config.golden,
       Raml10YamlHint,
-      Amf,
+      AmfJsonHint,
       renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint),
       directory = s"${basePath}nillable-type-in-parameter/",
       eh = Some(UnhandledErrorHandler)

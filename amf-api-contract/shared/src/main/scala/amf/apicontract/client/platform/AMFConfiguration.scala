@@ -60,16 +60,11 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
   override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMFConfiguration =
     _internal.withExecutionEnvironment(executionEnv._internal)
 
-  def merge(other: AMFConfiguration): AMFConfiguration = _internal.merge(other)
-
   override def withDialect(dialect: Dialect): AMFConfiguration = _internal.withDialect(asInternal(dialect))
 
   def withDialect(path: String): ClientFuture[AMFConfiguration] = _internal.withDialect(path).asClient
 
   def forInstance(url: String): ClientFuture[AMFConfiguration] = _internal.forInstance(url).asClient
-
-  def forInstance(url: String, mediaType: String): ClientFuture[AMFConfiguration] =
-    _internal.forInstance(url, Some(mediaType)).asClient
 
   override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMFConfiguration =
     _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))

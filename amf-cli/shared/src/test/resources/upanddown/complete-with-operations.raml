@@ -17,6 +17,7 @@ protocols:
   email: contactEmail
 documentation:
   -
+    title: "some title"
     content: externalDocsDescription
     (amf-url): http://test.com/externalDocsUrl
 /levelzero:
@@ -27,6 +28,7 @@ documentation:
     (amf-oasDeprecated): true
     (amf-summary): This is a summary
     (amf-externalDocs):
+      x-amf-title: "some title"
       url: http://test.com/urlExternalDocs
       description: descriptionExternalDocs
     protocols:
@@ -40,6 +42,7 @@ documentation:
     displayName: other some title
     description: other some description
     (amf-externalDocs):
+      x-amf-title: "some title"
       url: http://test.com/urlExternalDocs
       description: descriptionExternalDocs
     protocols:
@@ -54,6 +57,7 @@ documentation:
       (amf-oasDeprecated): true
       (amf-summary): This is a summary level one
       (amf-externalDocs):
+        x-amf-title: "some title"
         url: http://test.com/urlExternalDocs
         description: descriptionExternalDocs level one
       protocols:
@@ -67,6 +71,7 @@ documentation:
     displayName: Some title another level 0
     description: Some description another level 0
     (amf-externalDocs):
+      x-amf-title: "some title"
       url: http://test.com/urlExternalDocs
       description: descriptionExternalDocs another level 0
     protocols:

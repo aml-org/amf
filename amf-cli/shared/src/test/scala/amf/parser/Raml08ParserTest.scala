@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.core.internal.remote.{Amf, Raml08YamlHint}
+import amf.core.internal.remote.{Amf, AmfJsonHint, Raml08YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class Raml08ParserTest extends FunSuiteCycleTests {
@@ -10,7 +10,7 @@ class Raml08ParserTest extends FunSuiteCycleTests {
     cycle("schemas-lexical-info.raml",
           config.golden,
           Raml08YamlHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint))
   }
 }

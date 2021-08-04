@@ -2,7 +2,8 @@ package amf.shapes.internal.spec.raml.emitter
 
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.document.Module
-import amf.core.internal.remote.Raml10
+import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.{Mimes, Raml10}
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.internal.annotations.{GeneratedRamlDatatype, ParsedRamlDatatype}
@@ -33,8 +34,8 @@ trait RamlDatatypeSerializer extends PlatformSecrets {
 
     val ramlDatatype =
       new AMFSerializer(Module().withDeclaredElement(fixNameIfNeeded(element)),
-                        Raml10.mediaType,
-                        config.renderConfiguration).render()
+                        config.renderConfiguration,
+                        Some(`application/yaml`)).render()
     element.annotations.reject(_.isInstanceOf[ParsedRamlDatatype])
     element.annotations.reject(_.isInstanceOf[GeneratedRamlDatatype])
     element.annotations += GeneratedRamlDatatype(ramlDatatype)

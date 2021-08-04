@@ -3,6 +3,8 @@ package amf.validation
 import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes.`application/xml`
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.shapes.internal.spec.common.TypeDef.{IntType, StrType}
 import amf.shapes.client.scala.model.domain.UnionShape
@@ -203,7 +205,7 @@ trait ShapesFixture {
         |    </xs:complexType>
         |</xs:schema>""".stripMargin
 
-    val XmlShape: SchemaShape = SchemaShape().withName("xml").withMediaType("application/xml").withRaw(xmlUser)
+    val XmlShape: SchemaShape = SchemaShape().withName("xml").withMediaType(`application/xml`).withRaw(xmlUser)
 
     val UserXmlExample: String =
       """|<User>

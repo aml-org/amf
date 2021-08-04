@@ -2,12 +2,14 @@ package amf.emit
 
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
+import amf.apicontract.internal.spec.payload.PayloadRenderPlugin
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.SourceAST
-import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration}
+import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig}
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
@@ -65,11 +67,12 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   private def cycle(source: String, golden: String, removeRaw: Boolean = false): Future[Assertion] = {
-    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    val renderConfig = AMFGraphConfiguration.predefined().withPlugin(PayloadRenderPlugin)
     for {
       unit    <- config.baseUnitClient().parse(basePath + source).map(_.baseUnit)
       example <- findExample(unit, removeRaw)
-      temp    <- writeTemporaryFile(golden)(example.toJson(config))
+      temp    <- writeTemporaryFile(golden)(example.toJson(renderConfig))
       r       <- assertDifferences(temp, goldenPath + golden)
     } yield {
       r

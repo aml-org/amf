@@ -7,7 +7,7 @@ import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.apicontract.internal.spec.spec.toRaml
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
-import amf.core.internal.annotations.DefinedByVendor
+import amf.core.internal.annotations.DefinedBySpec
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.core.internal.remote.Raml10
 import amf.core.internal.validation.CoreValidations
@@ -63,7 +63,7 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
       case Left(refValue) => handleRef(refValue)
       case Right(_)       => parseRamlType(entry)
     }
-    shape.foreach(_.annotations += DefinedByVendor(Raml10))
+    shape.foreach(_.annotations += DefinedBySpec(Raml10))
     shape
   }
 

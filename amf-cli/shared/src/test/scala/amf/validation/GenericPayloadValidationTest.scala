@@ -1,8 +1,10 @@
 package amf.validation
 import amf.apicontract.client.scala.RAMLConfiguration
+import amf.apicontract.internal.spec.payload.PayloadParsePlugin
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.apicontract.internal.validation.payload.CandidateValidator
 import amf.core.client.common.validation.{AmfProfile, PayloadProfile, SeverityLevels}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.client.scala.model.domain.Shape
@@ -68,11 +70,12 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint
       }
-      val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-      val client = config.baseUnitClient()
+      val config        = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
+      val payloadClient = AMFGraphConfiguration.predefined().withPlugin(PayloadParsePlugin).baseUnitClient()
+      val client        = config.baseUnitClient()
       val candidates: Future[Seq[ValidationCandidate]] = for {
         library <- client.parse(payloadsPath + libraryFile).map(_.baseUnit)
-        payload <- client.parse(payloadsPath + payloadFile, hint.vendor.mediaType).map(_.baseUnit)
+        payload <- payloadClient.parse(payloadsPath + payloadFile).map(_.baseUnit)
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
         ValidationTransformationPipeline(AmfProfile, library, UnhandledErrorHandler)

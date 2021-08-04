@@ -15,6 +15,8 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
@@ -140,6 +142,6 @@ object OasPayloads {
   def defaultPayload(payloads: Seq[Payload]): Option[Payload] =
     payloads
       .find(p => p.mediaType.isNullOrEmpty)
-      .orElse(payloads.find(_.mediaType.is("application/json")))
+      .orElse(payloads.find(_.mediaType.is(`application/json`)))
       .orElse(payloads.headOption)
 }

@@ -1,0 +1,34 @@
+package amf.apicontract.internal.validation.shacl
+
+import amf.core.client.common.validation.SeverityLevels
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.internal.plugins.validation.{AMFValidatePlugin, ValidationInfo, ValidationOptions, ValidationResult}
+
+import scala.concurrent.{ExecutionContext, Future}
+
+case class ViolationModelValidationPlugin(configName: String) extends AMFValidatePlugin {
+  override val id: String = "Violation Plugin"
+
+  override def priority: PluginPriority = NormalPriority
+
+  override def validate(unit: BaseUnit, options: ValidationOptions)(
+      implicit executionContext: ExecutionContext): Future[ValidationResult] = {
+    val report = AMFValidationReport(unit.id, options.profile, Seq(validationResult))
+    Future.successful { ValidationResult(unit, report) }
+  }
+
+  override def applies(element: ValidationInfo): Boolean = true
+
+  private def validationResult: AMFValidationResult = AMFValidationResult(
+    s"Model validation is not supported for the $configName composite configuration",
+    SeverityLevels.VIOLATION,
+    "",
+    None,
+    "",
+    None,
+    None,
+    ""
+  )
+}

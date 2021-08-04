@@ -1,6 +1,6 @@
 package amf.cli.client
 
-import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.cli.internal.commands._
 import amf.core.client.scala.config.event.{AMFEventReportBuilder, TimedEventListener}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -17,7 +17,7 @@ import scala.language.postfixOps
 object Main extends PlatformSecrets {
 
   private val reportBuilder               = AMFEventReportBuilder()
-  private var amfConfig: AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+  private var amfConfig: AMFConfiguration = APIConfiguration.API()
 
   private def enableTracing(cfg: ParserConfig, config: AMFConfiguration) = {
     if (cfg.trace) {

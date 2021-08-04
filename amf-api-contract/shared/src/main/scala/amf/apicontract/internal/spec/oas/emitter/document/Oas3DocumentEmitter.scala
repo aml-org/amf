@@ -7,7 +7,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
-case class Oas3DocumentEmitter(document: BaseUnit)(implicit override val spec: OasSpecEmitterContext)
+case class Oas3DocumentEmitter(document: BaseUnit)(implicit override val specCtx: OasSpecEmitterContext)
     extends OasDocumentEmitter(document) {
 
   override protected def versionEntry(b: YDocument.EntryBuilder): Unit =

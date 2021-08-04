@@ -14,7 +14,8 @@ import amf.core.client.scala.model.domain.{DataNode, ScalarNode}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.convert.BaseUnitConverter
 import amf.core.internal.parser.{CompilerConfiguration, _}
-import amf.core.internal.remote.Vendor.AMF
+import amf.core.internal.remote.AmfJsonHint
+import amf.core.internal.remote.Spec.AMF
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.emit.AMFRenderer
@@ -132,7 +133,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
       new Async20WebApiContext("loc", Seq(), ParserContext(config = LimitedParseConfig(DefaultErrorHandler())))
 
     def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): String =
-      new AMFRenderer(document, AMF, renderOptions, None).renderToString
+      new AMFRenderer(document, AmfJsonHint, renderOptions).renderToString
 
     def defaultRenderOptions: RenderOptions = new RenderOptions().withPrettyPrint
   }

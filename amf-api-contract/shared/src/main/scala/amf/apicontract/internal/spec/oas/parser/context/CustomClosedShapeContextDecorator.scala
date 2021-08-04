@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.oas.parser.context
 import amf.apicontract.internal.spec.common.parser.{CustomSyntax, SpecNode}
 import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.model.domain.Shape
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.yaml.model.{YMap, YNode, YPart}
 
@@ -17,7 +17,7 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
     ) {
 
   override val syntax: SpecSyntax = decorated.syntax
-  override val vendor: Vendor     = decorated.vendor
+  override val spec: Spec         = decorated.spec
 
   override def link(node: YNode): Either[String, YNode] = decorated.link(node)
 
@@ -42,7 +42,7 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
       requiredFields.foreach { field =>
         if (!keys.contains(field.name)) {
           val isWarning = field.severity == SeverityLevels.WARNING
-          throwClosedShapeError(node, s"Property '${field.name}' is required in a $vendor $shape node", ast, isWarning)
+          throwClosedShapeError(node, s"Property '${field.name}' is required in a $spec $shape node", ast, isWarning)
         }
       }
 
@@ -51,7 +51,7 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
       keys.foreach(key => {
         if (!possible.contains(key) && !required.contains(key) && !ignore(shape, key)) {
           throwClosedShapeError(node,
-                                s"Property '$key' not supported in a $vendor $shape node",
+                                s"Property '$key' not supported in a $spec $shape node",
                                 getAstEntry(ast, key),
                                 isWarning = true)
         }

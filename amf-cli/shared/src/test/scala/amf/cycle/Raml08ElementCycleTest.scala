@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.core.internal.remote.{Raml08YamlHint, Raml10YamlHint, Vendor}
+import amf.core.internal.remote.{Raml08YamlHint, Raml10YamlHint, Spec}
 import amf.shapes.internal.annotations.ForceEntry
 import amf.shapes.client.scala.model.domain.AnyShape
 
@@ -10,7 +10,7 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
   val cyclePath: String         = "amf-cli/shared/src/test/resources/cycle/raml08/"
   val validationsPath: String   = "amf-cli/shared/src/test/resources/validations/"
   val resourcesPath: String     = "amf-cli/shared/src/test/resources/"
-  val vendor: Vendor            = Vendor.RAML08
+  val spec: Spec                = Spec.RAML08
 
   test("type - inlined json schema") {
     renderElement(

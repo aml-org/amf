@@ -936,7 +936,12 @@ object AMFRawValidations {
 
   object Raml10Validations extends RamlValidations {
     private lazy val result = super.validations() ++ Seq(
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = sh("properties"),
+        constraint = shape("duplicatePropertyNames")
       )
+    )
 
     override def validations(): Seq[AMFValidation] = result
   }

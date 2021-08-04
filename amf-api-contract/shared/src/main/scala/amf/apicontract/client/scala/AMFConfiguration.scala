@@ -5,21 +5,12 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
-import amf.apicontract.internal.plugins.{
-  ExternalJsonYamlRefsParsePlugin,
-  JsonSchemaParsePlugin,
-  JsonSchemaRenderPlugin
-}
-import amf.apicontract.internal.spec.async.{Async20ParsePlugin, Async20RenderPlugin}
-import amf.apicontract.internal.spec.oas.{Oas20ParsePlugin, Oas20RenderPlugin, Oas30ParsePlugin, Oas30RenderPlugin}
-import amf.apicontract.internal.spec.payload.{PayloadParsePlugin, PayloadRenderPlugin}
-import amf.apicontract.internal.spec.raml.{
-  Raml08ParsePlugin,
-  Raml08RenderPlugin,
-  Raml10ParsePlugin,
-  Raml10RenderPlugin
-}
+import amf.apicontract.internal.plugins.ApiContractFallbackPlugin
+import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20ParsePlugin, Async20RenderPlugin}
+import amf.apicontract.internal.spec.oas._
+import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
+import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.transformation.compatibility.{
   Oas20CompatibilityPipeline,
   Oas3CompatibilityPipeline,
@@ -27,8 +18,8 @@ import amf.apicontract.internal.transformation.compatibility.{
   Raml10CompatibilityPipeline
 }
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
-import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
-import amf.apicontract.internal.validation.shacl.{CustomShaclModelValidationPlugin, FullShaclModelValidationPlugin}
+import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
+import amf.apicontract.internal.validation.shacl.{ShaclModelValidationPlugin, ViolationModelValidationPlugin}
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -37,6 +28,7 @@ import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
@@ -46,6 +38,12 @@ import amf.shapes.internal.entities.ShapeEntities
 import scala.concurrent.Future
 
 sealed trait APIConfigurationBuilder {
+
+  protected def unsupportedTransformationsSet(configName: String) = List(
+    UnsupportedTransformationPipeline.editing(configName),
+    UnsupportedTransformationPipeline.default(configName),
+    UnsupportedTransformationPipeline.cache(configName)
+  )
 
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
@@ -61,19 +59,22 @@ sealed trait APIConfigurationBuilder {
           APISerializableAnnotations.annotations ++ WebAPISerializableAnnotations.annotations ++ ShapeSerializableAnnotations.annotations),
       configuration.listeners,
       configuration.options
-    ).withPlugins(List(
-      ExternalJsonYamlRefsParsePlugin,
-      PayloadRenderPlugin,
-      PayloadParsePlugin,
-      JsonSchemaParsePlugin,
-      JsonSchemaRenderPlugin,
-      CustomShaclModelValidationPlugin(),
-      FullShaclModelValidationPlugin(),
-      PayloadValidationPlugin(),
-      JsonSchemaShapePayloadValidationPlugin
-    ))
+    ).withPlugins(
+        List(
+          PayloadValidationPlugin(),
+          JsonSchemaShapePayloadValidationPlugin
+        ))
+      .withFallback(ApiContractFallbackPlugin())
     result
   }
+}
+
+private[amf] object BaseApiConfiguration extends APIConfigurationBuilder {
+
+  def BASE(): AMFConfiguration =
+    common()
+      .withValidationProfile(AmfValidationProfile)
+      .withTransformationPipelines(unsupportedTransformationsSet("Base"))
 }
 
 /**
@@ -83,11 +84,13 @@ sealed trait APIConfigurationBuilder {
   *   - Transformation Pipelines
   */
 object RAMLConfiguration extends APIConfigurationBuilder {
+
+  private val raml = "RAML"
+
   def RAML10(): AMFConfiguration =
     common()
-      .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin))
+      .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin, Raml10ElementRenderPlugin, ShaclModelValidationPlugin))
       .withValidationProfile(Raml10ValidationProfile)
-      .withValidationProfile(AmfValidationProfile)
       .withTransformationPipelines(
         List(
           Raml10TransformationPipeline(),
@@ -97,7 +100,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
         ))
   def RAML08(): AMFConfiguration =
     common()
-      .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin))
+      .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin, Raml08ElementRenderPlugin, ShaclModelValidationPlugin))
       .withValidationProfile(Raml08ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -107,7 +110,10 @@ object RAMLConfiguration extends APIConfigurationBuilder {
           Raml08CachePipeline()
         ))
 
-  def RAML(): AMFConfiguration = RAML08().merge(RAML10())
+  def RAML(): AMFConfiguration =
+    common()
+      .withPlugins(List(Raml08ParsePlugin, Raml10ParsePlugin, ViolationModelValidationPlugin(raml)))
+      .withTransformationPipelines(unsupportedTransformationsSet(raml))
 }
 
 /**
@@ -117,9 +123,12 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   *  - Transformation Pipelines
   */
 object OASConfiguration extends APIConfigurationBuilder {
+
+  private val oas = "OAS"
+
   def OAS20(): AMFConfiguration =
     common()
-      .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin))
+      .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin, Oas20ElementRenderPlugin, ShaclModelValidationPlugin))
       .withValidationProfile(Oas20ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -130,7 +139,7 @@ object OASConfiguration extends APIConfigurationBuilder {
         ))
   def OAS30(): AMFConfiguration =
     common()
-      .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin))
+      .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin, Oas30ElementRenderPlugin, ShaclModelValidationPlugin))
       .withValidationProfile(Oas30ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -139,12 +148,28 @@ object OASConfiguration extends APIConfigurationBuilder {
           Oas3CompatibilityPipeline(),
           Oas3CachePipeline()
         ))
-  def OAS(): AMFConfiguration = OAS20().merge(OAS30())
+
+  def OAS(): AMFConfiguration =
+    common()
+      .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin, ViolationModelValidationPlugin(oas)))
+      .withTransformationPipelines(unsupportedTransformationsSet(oas))
 }
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
-object WebAPIConfiguration {
-  def WebAPI(): AMFConfiguration = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
+object WebAPIConfiguration extends APIConfigurationBuilder {
+
+  private val name = "WebAPI"
+
+  def WebAPI(): AMFConfiguration =
+    common()
+      .withFallback(ApiContractFallbackPlugin(false))
+      .withPlugins(
+        List(Oas30ParsePlugin,
+             Oas20ParsePlugin,
+             Raml10ParsePlugin,
+             Raml08ParsePlugin,
+             ViolationModelValidationPlugin(name)))
+      .withTransformationPipelines(unsupportedTransformationsSet(name))
 }
 
 /**
@@ -156,7 +181,8 @@ object WebAPIConfiguration {
 object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFConfiguration =
     common()
-      .withPlugins(List(Async20ParsePlugin, Async20RenderPlugin))
+      .withPlugins(
+        List(Async20ParsePlugin, Async20RenderPlugin, Async20ElementRenderPlugin, ShaclModelValidationPlugin))
       .withValidationProfile(Async20ValidationProfile)
       .withTransformationPipelines(
         List(
@@ -167,8 +193,15 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
 }
 
 /** Merged [[WebAPIConfiguration]] and [[AsyncAPIConfiguration.Async20()]] configurations */
-object APIConfiguration {
-  def API(): AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+object APIConfiguration extends APIConfigurationBuilder {
+
+  private val name = "API"
+
+  def API(): AMFConfiguration =
+    WebAPIConfiguration
+      .WebAPI()
+      .withPlugins(List(Async20ParsePlugin, ViolationModelValidationPlugin(name)))
+      .withTransformationPipelines(unsupportedTransformationsSet(name))
 }
 
 /**
@@ -199,6 +232,8 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withUnitCache(cache: UnitCache): AMFConfiguration =
     super._withUnitCache(cache)
+
+  override def withFallback(plugin: DomainParsingFallback): AMFConfiguration = super._withFallback(plugin)
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMFConfiguration =
     super._withPlugin(amfPlugin)
@@ -236,13 +271,11 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withDialect(dialect: Dialect): AMFConfiguration =
     super.withDialect(dialect).asInstanceOf[AMFConfiguration]
 
-  override def forInstance(url: String, mediaType: Option[String] = None): Future[AMFConfiguration] =
-    super.forInstance(url, mediaType).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+  override def forInstance(url: String): Future[AMFConfiguration] =
+    super.forInstance(url).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMFConfiguration =
     super._withExecutionEnvironment(executionEnv)
-
-  def merge(other: AMFConfiguration): AMFConfiguration = super._merge(other)
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,

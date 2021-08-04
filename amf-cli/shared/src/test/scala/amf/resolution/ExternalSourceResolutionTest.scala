@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{Amf, Raml10, Raml10YamlHint}
+import amf.core.internal.remote.{Amf, AmfJsonHint, Raml10, Raml10YamlHint}
 
 /**
   *
@@ -13,7 +13,7 @@ class ExternalSourceResolutionTest extends ResolutionTest {
     cycle("xmlschema.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -22,7 +22,7 @@ class ExternalSourceResolutionTest extends ResolutionTest {
     cycle("jsonschema.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -31,7 +31,7 @@ class ExternalSourceResolutionTest extends ResolutionTest {
     cycle("xmlexample.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
@@ -40,7 +40,7 @@ class ExternalSourceResolutionTest extends ResolutionTest {
     cycle("jsonexample.raml",
           config.golden,
           Raml10YamlHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }

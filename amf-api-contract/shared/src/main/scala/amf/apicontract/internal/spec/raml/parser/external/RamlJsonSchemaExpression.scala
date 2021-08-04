@@ -12,6 +12,8 @@ import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.domain.{Annotations, JsonParserFactory}
 import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.annotations._
@@ -177,7 +179,7 @@ case class RamlJsonSchemaExpression(key: YNode,
 
       document
         .Oas2DocumentParser(
-          Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
+          Root(SyamlParsedDocument(schemaEntry), url, `application/json`, Nil, InferredLinkReference, text))(
           jsonSchemaContext)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/", None)(jsonSchemaContext)
       val resolvedShapes = jsonSchemaContext.declarations.shapes.values.toSeq

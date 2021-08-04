@@ -19,10 +19,10 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, 
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
-import amf.core.internal.annotations.{Aliases, ExplicitField, SourceAST, SourceVendor}
+import amf.core.internal.annotations.{Aliases, ExplicitField, SourceAST, SourceSpec}
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.internal.parser.domain.FieldEntry
-import amf.core.internal.remote.{Raml10, Vendor}
+import amf.core.internal.remote.{Raml10, Spec}
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
@@ -40,7 +40,7 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, ordering: SpecOrdering)(
-    implicit override val spec: RamlSpecEmitterContext)
+    implicit override val specCtx: RamlSpecEmitterContext)
     extends RamlRootLevelEmitters(document, ordering) {
   override def emitters: Seq[EntryEmitter] =
     declarationsEmitter()
@@ -52,7 +52,7 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
     val result = ListBuffer[EntryEmitter]()
 
     if (declarations.shapes.nonEmpty)
-      result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, document.references, ordering)
+      result += specCtx.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, document.references, ordering)
 
 //    if (declarations.annotations.nonEmpty)
 //      result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, document.references, ordering)
@@ -70,7 +70,7 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       result += RamlSecuritySchemesEmitters(declarations.securitySchemes.values.toSeq,
                                             document.references,
                                             ordering,
-                                            spec.factory.namedSecurityEmitter)
+                                            specCtx.factory.namedSecurityEmitter)
 //    if (declarations.parameters.nonEmpty)
 //      result += DeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, document.references) // todo here or move to 1.0 only?
 
@@ -78,13 +78,13 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       result += OasDeclaredResponsesEmitter("responses".asRamlAnnotation,
                                             declarations.responses.values.toSeq,
                                             ordering,
-                                            document.references)(toOas(spec))
+                                            document.references)(toOas(specCtx))
 
     result
   }
 }
 case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, ordering: SpecOrdering)(
-    implicit override val spec: RamlSpecEmitterContext)
+    implicit override val specCtx: RamlSpecEmitterContext)
     extends RamlRootLevelEmitters(document, ordering) {
 
   override def emitters: Seq[EntryEmitter] = {
@@ -120,7 +120,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
     val result = ListBuffer[EntryEmitter]()
 
     if (declarations.shapes.nonEmpty)
-      result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, document.references, ordering)
+      result += specCtx.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, document.references, ordering)
 
     if (declarations.annotations.nonEmpty)
       result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, document.references, ordering)
@@ -138,7 +138,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       result += emitter.domain.RamlSecuritySchemesEmitters(declarations.securitySchemes.values.toSeq,
                                                            document.references,
                                                            ordering,
-                                                           spec.factory.namedSecurityEmitter)
+                                                           specCtx.factory.namedSecurityEmitter)
 
     val oasParams = declarations.parameters.values.map(OasParameter(_)) ++ declarations.payloads.values
       .map(OasParameter(_))
@@ -146,13 +146,13 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       result += OasDeclaredParametersEmitter(oasParams.toSeq,
                                              ordering,
                                              document.references,
-                                             "parameters".asRamlAnnotation)(toOas(spec))
+                                             "parameters".asRamlAnnotation)(toOas(specCtx))
 
     if (declarations.responses.nonEmpty)
       result += OasDeclaredResponsesEmitter("responses".asRamlAnnotation,
                                             declarations.responses.values.toSeq,
                                             ordering,
-                                            document.references)(toOas(spec))
+                                            document.references)(toOas(specCtx))
 
     result
   }
@@ -169,7 +169,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 }
 
 abstract class RamlRootLevelEmitters(doc: BaseUnit with DeclaresModel, ordering: SpecOrdering)(
-    implicit val spec: RamlSpecEmitterContext) {
+    implicit val specCtx: RamlSpecEmitterContext) {
 
   def emitters: Seq[EntryEmitter]
 
@@ -229,38 +229,35 @@ case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering) extends
   override def position(): Position = ZERO
 }
 
-case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEmitterContext) {
+case class RamlDocumentEmitter(document: BaseUnit)(implicit val specCtx: RamlSpecEmitterContext) {
 
   private def retrieveWebApi(): WebApi = document match {
     case document: Document => document.encodes.asInstanceOf[WebApi]
     case _                  => throw new Exception("BaseUnit doesn't encode a WebApi.")
   }
   def apiEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
-    val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    WebApiEmitter(model, ordering, vendor, document.references).emitters
+    val model = retrieveWebApi()
+    val spec  = model.annotations.find(classOf[SourceSpec]).map(_.spec)
+    WebApiEmitter(model, ordering, spec, document.references).emitters
   }
 
   def emitDocument(): YDocument = {
     val doc                    = document.asInstanceOf[Document]
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, doc.encodes.annotations)
 
-    val content = spec.factory.rootLevelEmitters(doc, ordering).emitters ++ apiEmitters(ordering)
+    val content = specCtx.factory.rootLevelEmitters(doc, ordering).emitters ++ apiEmitters(ordering)
 
     YDocument(b => {
-      spec.factory.retrieveHeader(document).foreach(b.comment)
+      specCtx.factory.retrieveHeader(document).foreach(b.comment)
       b.obj { b =>
         traverse(ordering.sorted(content), b)
       }
     })
   }
 
-  case class WebApiEmitter(api: WebApi,
-                           ordering: SpecOrdering,
-                           vendor: Option[Vendor],
-                           references: Seq[BaseUnit] = Seq())(implicit val spec: RamlSpecEmitterContext) {
+  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering, spec: Option[Spec], references: Seq[BaseUnit] = Seq()) {
 
-    protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
+    protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(specCtx)
     val emitters: Seq[EntryEmitter] = {
       val fs     = api.fields
       val result = mutable.ListBuffer[EntryEmitter]()
@@ -272,17 +269,18 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       fs.entry(WebApiModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
       fs.entry(WebApiModel.ContentType) match {
-        case Some(f) => result += spec.arrayEmitter("mediaType", f, ordering)
+        case Some(f) => result += specCtx.arrayEmitter("mediaType", f, ordering)
         case None    =>
           // If there is not ContentType but an Accepts, this field is from an OAS so it will be emitted as an extension
-          fs.entry(WebApiModel.Accepts).map(f => result += spec.arrayEmitter("consumes".asRamlAnnotation, f, ordering))
+          fs.entry(WebApiModel.Accepts)
+            .map(f => result += specCtx.arrayEmitter("consumes".asRamlAnnotation, f, ordering))
       }
 
       fs.entry(WebApiModel.Version).map(f => result += RamlScalarEmitter("version", f))
 
       fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService".asRamlAnnotation, f))
 
-      fs.entry(WebApiModel.Schemes).map(f => result += spec.arrayEmitter("protocols", f, ordering))
+      fs.entry(WebApiModel.Schemes).map(f => result += specCtx.arrayEmitter("protocols", f, ordering))
 
       fs.entry(WebApiModel.Provider)
         .map(
@@ -292,15 +290,17 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
                                           ordering))
 
       fs.entry(WebApiModel.Tags)
-        .map(f =>
-          result += TagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering)(toOas(spec)))
+        .map(
+          f =>
+            result += TagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering)(
+              toOas(specCtx)))
 
       fs.entry(WebApiModel.Documentations).map(f => result += UserDocumentationsEmitter(f, ordering))
 
       fs.entry(WebApiModel.License)
         .map(f => result += LicenseEmitter("license".asRamlAnnotation, f.value.value.asInstanceOf[License], ordering))
 
-      fs.entry(WebApiModel.EndPoints).map(f => result ++= endpoints(f, ordering, vendor))
+      fs.entry(WebApiModel.EndPoints).map(f => result ++= endpoints(f, ordering, spec))
 
       result ++= AnnotationsEmitter(api, ordering).emitters
 
@@ -309,7 +309,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       ordering.sorted(result)
     }
 
-    private def endpoints(f: FieldEntry, ordering: SpecOrdering, vendor: Option[Vendor]): Seq[EntryEmitter] = {
+    private def endpoints(f: FieldEntry, ordering: SpecOrdering, spec: Option[Spec]): Seq[EntryEmitter] = {
 
       def defaultOrder(emitters: Seq[RamlEndPointEmitter]): Seq[RamlEndPointEmitter] = {
         emitters.sorted((x: RamlEndPointEmitter, y: RamlEndPointEmitter) => {
@@ -324,13 +324,13 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       val endpoints = f.array.values
         .asInstanceOf[Seq[EndPoint]]
 
-      val notOas = vendor.forall(v => !v.isOas)
+      val notOas = spec.forall(v => !v.isOas)
 
       if (notOas) {
         val graph                                               = endpoints.map(e => (e, e.parent.toSet)).toMap
         val all: mutable.ListMap[EndPoint, RamlEndPointEmitter] = mutable.ListMap[EndPoint, RamlEndPointEmitter]()
         tsort(graph, Seq()).foreach(_.foreach(e => {
-          val emitter = spec.factory.endpointEmitter(e, ordering, ListBuffer(), references)
+          val emitter = specCtx.factory.endpointEmitter(e, ordering, ListBuffer(), references)
           e.parent match {
             case Some(parent) =>
               all(parent) += emitter
@@ -345,7 +345,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
             .toSeq)
 
       } else {
-        endpoints.map(spec.factory.endpointEmitter(_, ordering, ListBuffer(), references))
+        endpoints.map(specCtx.factory.endpointEmitter(_, ordering, ListBuffer(), references))
       }
 
     }
@@ -353,9 +353,9 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
 }
 
-case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
+case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit specCtx: RamlSpecEmitterContext)
     extends EntryEmitter {
-  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(specCtx)
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "documentation",
@@ -375,9 +375,9 @@ case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
   override def position(): Position = f.array.values.headOption.map(_.annotations).map(pos).getOrElse(Position.ZERO)
 }
 
-case class OasExtCreativeWorkEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit val spec: SpecEmitterContext)
+case class OasExtCreativeWorkEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit val specCtx: SpecEmitterContext)
     extends EntryEmitter {
-  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(specCtx)
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
       f.value.annotations,

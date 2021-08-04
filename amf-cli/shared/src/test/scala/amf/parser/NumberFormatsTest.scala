@@ -2,7 +2,8 @@ package amf.parser
 
 import amf.apicontract.client.scala.RAMLConfiguration
 import amf.core.client.scala.model.document.Fragment
-import amf.core.internal.remote.Raml10
+import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.{Mimes, Raml10}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.client.scala.model.domain.ScalarShape
@@ -36,7 +37,7 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
       val client = RAMLConfiguration.RAML10().baseUnitClient()
       for {
         unit   <- client.parseContent(ex.api)
-        dumped <- Future.successful(client.render(unit.baseUnit, Raml10.mediaType))
+        dumped <- Future.successful(client.render(unit.baseUnit, `application/yaml`))
       } yield {
         unit.baseUnit match {
           case f: Fragment =>

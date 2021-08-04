@@ -2,12 +2,15 @@ package amf.cli.internal.convert
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.Raml10EditingPipeline
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Amf, Raml10YamlHint}
+import amf.core.internal.remote.{Amf, AmfJsonHint, Raml10YamlHint}
 import amf.core.internal.render.AMFSerializer
 import amf.io.FunSuiteCycleTests
+import amf.testing.ConfigProvider
+import amf.testing.ConfigProvider.configFor
 import org.scalatest.Assertion
 import org.yaml.builder.YDocumentBuilder
 import org.yaml.model.{YDocument, YPart}
@@ -24,15 +27,15 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
     RenderOptions().withSourceMaps.withPrettyPrint.withAmfJsonLdSerialization
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    amfConfig
+    configFor(config.hint.spec)
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .baseUnitClient()
-      .transform(unit, Raml10EditingPipeline.name)
+      .transform(unit, PipelineId.Editing)
       .baseUnit
   }
 
   private def run(source: String, golden: String, renderOptions: RenderOptions): Future[Assertion] =
-    cycle(source, golden, Raml10YamlHint, target = Amf, eh = None, renderOptions = Some(renderOptions))
+    cycle(source, golden, Raml10YamlHint, target = AmfJsonHint, eh = None, renderOptions = Some(renderOptions))
 
   multiGoldenTest("Test types with references", "types.%s") { config =>
     run("types.raml", config.golden, config.renderOptions)

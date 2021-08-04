@@ -1,5 +1,4 @@
 package amf.emit
-
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
@@ -17,14 +16,18 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   val oasPath           = "amf-cli/shared/src/test/resources/validations/oas2/"
 
   multiGoldenTest("Full oas to amf test", "full-example.json.%s") { config =>
-    cycle("full-example.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("full-example.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Orphan extensions oas to amf test", "orphan_extensions.%s") { config =>
     cycle("orphan_extensions.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -32,12 +35,12 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("traits-resource-types.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Basic oas to amf test", "basic.json.%s") { config =>
-    cycle("basic.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("basic.json", config.golden, Oas20JsonHint, target = AmfJsonHint, renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Oas generates endpoint although path is invalid",
@@ -45,20 +48,24 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("invalid-endpoint-path-still-parses.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           directory = oasPath,
           renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Complete oas to amf test", "complete.json.%s") { config =>
-    cycle("complete.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("complete.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Complete with formData parameter references oas to amf test", "formDataParameters.%s") { config =>
     cycle("formDataParameters.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -67,43 +74,55 @@ class CompleteCycleTest extends FunSuiteCycleTests {
       cycle("formdata-parameters-multiple.yaml",
             config.golden,
             Oas20YamlHint,
-            target = Amf,
+            target = AmfJsonHint,
             renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Complete with parameter references oas to amf test", "parameters.json.%s") { config =>
-    cycle("parameters.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("parameters.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Types dependency oas to amf test", "types-dependency.json.%s") { config =>
     cycle("types-dependency.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Types all facets oas to jsonld test", "types-facet.json.%s") { config =>
-    cycle("types-facet.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("types-facet.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Petstore oas to jsonld", "petstore/petstore.%s") { config =>
     cycle("petstore/petstore.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Annotations oas to jsonld test", "annotations.json.%s") { config =>
-    cycle("annotations.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("annotations.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Test libraries oas to amf", "libraries.json.%s") { config =>
     cycle("libraries.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           directory = referencesPath,
           renderOptions = Some(config.renderOptions))
   }
@@ -112,44 +131,64 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("data-type-fragment.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           directory = referencesPath,
           renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Schema types oas to amf test", "externals.json.%s") { config =>
-    cycle("externals.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("externals.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Security schemes oas to amf", "security.json.%s") { config =>
-    cycle("security.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("security.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("QueryString oas to amf", "query-string.json.%s") { config =>
-    cycle("query-string.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("query-string.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Security with QueryString oas to amf", "security-with-query-string.json.%s") { config =>
     cycle("security-with-query-string.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Example json to amf", "examples.json.%s") { config =>
-    cycle("examples.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("examples.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Facets oas to amf", "type-facets.json.%s") { config =>
-    cycle("type-facets.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("type-facets.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Raml operation param schema duplicate ids", "api.%s") { config =>
     cycle("api.raml",
           config.golden,
           Raml10YamlHint,
-          Amf,
+          AmfJsonHint,
           renderOptions = Some(config.renderOptions),
           directory = baseRaml10Path + "duplicate-id-in-param-types/")
   }
@@ -158,19 +197,19 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("shapes-with-items.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
   ignore("References oas to amf") {
-    cycle("with_references.json", "with_references.json.jsonld", Oas20JsonHint, target = Amf)
+    cycle("with_references.json", "with_references.json.jsonld", Oas20JsonHint, target = AmfJsonHint)
   }
 
   multiGoldenTest("Declared response oas to jsonld", "declared-responses.json.%s") { config =>
     cycle("declared-responses.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -178,7 +217,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("additional-properties.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -186,19 +225,19 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("collection-format.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Tags node oas to amf", "tags.%s") { config =>
-    cycle("tags.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("tags.json", config.golden, Oas20JsonHint, target = AmfJsonHint, renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Response declaration oas to amf", "oas_response_declaration.%s") { config =>
     cycle("oas_response_declaration.yaml",
           config.golden,
           Oas20YamlHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -206,7 +245,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("form-data-params.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           renderOptions = Some(config.renderOptions))
   }
 
@@ -214,7 +253,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("enums.json",
           config.golden,
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           directory = s"${basePath}enums/",
           renderOptions = Some(config.renderOptions))
   }
@@ -224,7 +263,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
       "api-with-security-requirements.json",
       config.golden,
       Oas20JsonHint,
-      target = Amf,
+      target = AmfJsonHint,
       directory = s"${validationsPath}oas-security/",
       renderOptions = Some(config.renderOptions)
     )
@@ -235,7 +274,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
       "raml-reference-draft-7.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonHint,
       directory = baseRaml10Path,
       renderOptions = Some(config.renderOptions)
     )
@@ -246,7 +285,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
       "raml-default-schema-version.raml",
       config.golden,
       Raml10YamlHint,
-      target = Amf,
+      target = AmfJsonHint,
       directory = baseRaml10Path,
       renderOptions = Some(config.renderOptions)
     )
@@ -254,19 +293,21 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   // TODO migrate to multiGoldenTest
   test("File type cycle") {
-    cycle("file-type.raml",
-          "file-type.json",
-          Raml10YamlHint,
-          target = Amf,
-          renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd))
+    cycle(
+      "file-type.raml",
+      "file-type.json",
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
+    )
   }
 
   multiTest("Types amf(raml) to amf test", "types.raml.%s", "types.raml.%s") { config =>
-    cycle(config.source, config.golden, AmfJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle(config.source, config.golden, AmfJsonHint, target = AmfJsonHint, renderOptions = Some(config.renderOptions))
   }
 
   multiTest("Annotations jsonld to jsonld test", "annotations.raml.%s", "annotations.raml.%s") { config =>
-    cycle(config.source, config.golden, AmfJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle(config.source, config.golden, AmfJsonHint, target = AmfJsonHint, renderOptions = Some(config.renderOptions))
   }
 
   test("Full oas to oas test") {
@@ -274,15 +315,15 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Full raml to oas test") {
-    cycle("full-example.raml", "full-example.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("full-example.raml", "full-example.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Full oas to raml test") {
-    cycle("full-example.json", "full-example.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("full-example.json", "full-example.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Default response to raml test") {
-    cycle("default-response.json", "default-response.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("default-response.json", "default-response.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Default response to raml test 2") {
@@ -298,11 +339,11 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Traits and resourceTypes raml to oas test") {
-    cycle("traits-resource-types.raml", "traits-resource-types.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("traits-resource-types.raml", "traits-resource-types.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   multiTest("Basic cycle for amf", "basic.%s", "basic.%s") { config =>
-    cycle(config.source, config.golden, AmfJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle(config.source, config.golden, AmfJsonHint, target = AmfJsonHint, renderOptions = Some(config.renderOptions))
   }
 
   test("Basic cycle for oas") {
@@ -310,27 +351,27 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   multiSourceTest("Basic amf(oas) to oas test", "basic.json.%s") { config =>
-    cycle(config.source, "basic.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "basic.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   test("Basic raml to oas test") {
-    cycle("basic.raml", "basic.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("basic.raml", "basic.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Basic oas to raml test") {
-    cycle("basic.json", "basic.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("basic.json", "basic.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   multiTest("Complete amf to amf test", "complete.%s", "complete.%s") { config =>
-    cycle(config.source, config.golden, AmfJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle(config.source, config.golden, AmfJsonHint, target = AmfJsonHint, renderOptions = Some(config.renderOptions))
   }
 
   test("Complete raml to oas test") {
-    cycle("complete.raml", "complete.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("complete.raml", "complete.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Complete oas to raml test") {
-    cycle("complete.json", "complete.raml", Oas20JsonHint, target = Raml10)
+    cycle("complete.json", "complete.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Complete oas to oas test") {
@@ -338,23 +379,27 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   multiSourceTest("Complete amf(oas) to oas test", "complete.json.%s") { config =>
-    cycle(config.source, "complete.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "complete.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   multiTest("Endpoints amf to amf test", "endpoints.%s", "endpoints.%s") { config =>
-    cycle(config.source, config.golden, AmfJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle(config.source, config.golden, AmfJsonHint, target = AmfJsonHint, renderOptions = Some(config.renderOptions))
   }
 
   test("Endpoints raml to oas test") {
-    cycle("endpoints.raml", "endpoints.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("endpoints.raml", "endpoints.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   multiGoldenTest("Endpoints oas to amf test", "endpoints.json.%s") { config =>
-    cycle("endpoints.json", config.golden, Oas20JsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("endpoints.json",
+          config.golden,
+          Oas20JsonHint,
+          target = AmfJsonHint,
+          renderOptions = Some(config.renderOptions))
   }
 
   test("Endpoints oas to raml test") {
-    cycle("endpoints.json", "endpoints.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("endpoints.json", "endpoints.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Endpoints oas to oas test") {
@@ -362,15 +407,18 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   multiSourceTest("Endpoints amf(oas) to oas test", "endpoints.json.%s") { config =>
-    cycle(config.source, "endpoints.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "endpoints.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   test("Complete with operations raml to oas test") {
-    cycle("complete-with-operations.raml", "complete-with-operations.json", Raml10YamlHint, target = Oas20)
+    cycle("complete-with-operations.raml", "complete-with-operations.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Complete with operations oas to raml test") {
-    cycle("complete-with-operations.json", "complete-with-operations.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("complete-with-operations.json",
+          "complete-with-operations.json.raml",
+          Oas20JsonHint,
+          target = Raml10YamlHint)
   }
 
   test("Complete with operations oas to oas test") {
@@ -378,15 +426,15 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Complete with request oas to raml test") {
-    cycle("operation-request.json", "operation-request.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("operation-request.json", "operation-request.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Complete with request raml to oas test") {
-    cycle("operation-request.raml", "operation-request.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("operation-request.raml", "operation-request.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Complete with response oas to raml test") {
-    cycle("operation-response.json", "operation-response.raml", Oas20JsonHint, target = Raml10)
+    cycle("operation-response.json", "operation-response.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Complete with response oas to oas test") {
@@ -394,7 +442,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Complete with response raml to oas test") {
-    cycle("operation-response.raml", "operation-response.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("operation-response.raml", "operation-response.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Complete with parameter references oas to oas test") {
@@ -402,27 +450,27 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   multiSourceTest("Orphan extensions amf to oas test", "orphan_extensions.%s") { config =>
-    cycle(config.source, "orphan_extensions.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "orphan_extensions.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   multiSourceTest("Complete with parameter references amf to oas test", "parameters.json.%s") { config =>
-    cycle(config.source, "parameters.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "parameters.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   multiSourceTest("Complete with formData parameter references amf to oas test", "formDataParameters.%s") { config =>
-    cycle(config.source, "formDataParameters.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "formDataParameters.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   ignore("Types dependency amf(oas) to oas test") {
-    cycle("types-dependency.json.jsonld", "types-dependency.json", AmfJsonHint, Oas20)
+    cycle("types-dependency.json.jsonld", "types-dependency.json", AmfJsonHint, Oas20JsonHint)
   }
 
   multiSourceTest("Types all facets jsonld to oas test", "types-facet.json.%s") { config =>
-    cycle(config.source, "types-facet.json.jsonld.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "types-facet.json.jsonld.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   multiSourceTest("Test libraries amf to oas", "libraries.json.%s") { config =>
-    cycle(config.source, "libraries.json", AmfJsonHint, target = Oas20, directory = referencesPath)
+    cycle(config.source, "libraries.json", AmfJsonHint, target = Oas20JsonHint, directory = referencesPath)
   }
 
   multiTest("Test data type fragment amf to amf", "data-type-fragment.raml.%s", "data-type-fragment.raml.%s") {
@@ -430,13 +478,13 @@ class CompleteCycleTest extends FunSuiteCycleTests {
       cycle(config.source,
             config.golden,
             AmfJsonHint,
-            target = Amf,
+            target = AmfJsonHint,
             directory = referencesPath,
             renderOptions = Some(config.renderOptions))
   }
 
   multiSourceTest("Test data type fragment amf to oas", "data-type-fragment.json.%s") { config =>
-    cycle(config.source, "data-type-fragment.json", AmfJsonHint, target = Oas20, directory = referencesPath)
+    cycle(config.source, "data-type-fragment.json", AmfJsonHint, target = Oas20JsonHint, directory = referencesPath)
   }
 
   // TODO: migrate to multiSourceTest
@@ -444,7 +492,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("extension.json.jsonld",
           "extension.json.json",
           AmfJsonHint,
-          target = Oas20,
+          target = Oas20JsonHint,
           directory = s"${referencesPath}extensions/")
   }
 
@@ -453,47 +501,50 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("overlay.json.jsonld",
           "overlay.json.json",
           AmfJsonHint,
-          target = Oas20,
+          target = Oas20JsonHint,
           directory = s"${referencesPath}extensions/")
   }
 
   multiSourceTest("Schema types amf to oas test", "externals.json.%s") { config =>
-    cycle(config.source, "externals.json.jsonld.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "externals.json.jsonld.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   multiSourceTest("QueryString amf to oas", "query-string.json.%s") { config =>
-    cycle(config.source, "query-string.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "query-string.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   multiSourceTest("Security with QueryString amf to oas", "security-with-query-string.json.%s") { config =>
-    cycle(config.source, "security-with-query-string.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "security-with-query-string.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   multiSourceTest("Example amf to json", "examples.json.%s") { config =>
-    cycle(config.source, "examples.jsonld.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "examples.jsonld.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   multiSourceTest("Declared response jsonld to oas", "declared-responses.json.%s") { config =>
-    cycle(config.source, "declared-responses.jsonld.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "declared-responses.jsonld.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   multiSourceTest("CollectionFormat shape amf to oas", "collection-format.%s") { config =>
-    cycle(config.source, "collection-format.jsonld.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "collection-format.jsonld.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   // TODO: migrate to multiSourceTest
   test("Anonymous and named examples with annotations json to raml") {
 
-    cycle("anonymous-and-named-examples.jsonld", "anonymous-and-named-examples.raml", AmfJsonHint, target = Raml10)
+    cycle("anonymous-and-named-examples.jsonld",
+          "anonymous-and-named-examples.raml",
+          AmfJsonHint,
+          target = Raml10YamlHint)
   }
 
   multiSourceTest("Tags node amf to oas", "tags.%s") { config =>
-    cycle(config.source, "tags.json.json", AmfJsonHint, target = Oas20)
+    cycle(config.source, "tags.json.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   // TODO: migrate to multiSourceTest
   test("Numeric facets jsonld to oas") {
-    cycle("numeric-facets.jsonld", "numeric-facets.jsonld.json", AmfJsonHint, target = Oas20)
+    cycle("numeric-facets.jsonld", "numeric-facets.jsonld.json", AmfJsonHint, target = Oas20JsonHint)
   }
 
   test("Complete with formData parameter references oas to oas test") {
@@ -501,15 +552,15 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Complete with formData parameter references oas to raml test") {
-    cycle("formDataParameters.json", "formDataParameters.raml", Oas20JsonHint, target = Raml10)
+    cycle("formDataParameters.json", "formDataParameters.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Complete with parameter references oas to raml test") {
-    cycle("parameters.json", "parameters.raml", Oas20JsonHint, target = Raml10)
+    cycle("parameters.json", "parameters.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Complete with payloads raml to oas test") {
-    cycle("payloads.raml", "payloads.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("payloads.raml", "payloads.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Complete with payloads oas to oas test") {
@@ -517,7 +568,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Complete with payloads oas to raml test") {
-    cycle("payloads.json", "payloads.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("payloads.json", "payloads.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Types implicit & explicit oas to oas test") {
@@ -528,14 +579,14 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("explicit-&-implicit-type-object.raml",
           "explicit-&-implicit-type-object.raml.json",
           Raml10YamlHint,
-          target = Oas20)
+          target = Oas20JsonHint)
   }
 
   test("Types implicit & explicit oas to raml test") {
     cycle("explicit-&-implicit-type-object.json",
           "explicit-&-implicit-type-object.json.raml",
           Oas20JsonHint,
-          target = Raml10)
+          target = Raml10YamlHint)
   }
 
   test("Types dependency oas to oas test") {
@@ -543,11 +594,11 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Types dependency raml to oas test") {
-    cycle("types-dependency.raml", "types-dependency.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("types-dependency.raml", "types-dependency.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Types dependency oas to raml test") {
-    cycle("types-dependency.json", "types-dependency.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("types-dependency.json", "types-dependency.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Types declarations oas to oas test") {
@@ -559,15 +610,15 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Types all facets oas to raml test") {
-    cycle("types-facet.json", "types-facet.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("types-facet.json", "types-facet.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Annotations in Scalars raml to oas") {
-    cycle("annotations-scalars.raml", "annotations-scalars.json", Raml10YamlHint, target = Oas20)
+    cycle("annotations-scalars.raml", "annotations-scalars.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Petstore oas to raml") {
-    cycle("petstore/petstore.json", "petstore/petstore.raml", Oas20JsonHint, target = Raml10)
+    cycle("petstore/petstore.json", "petstore/petstore.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Annotations oas to oas test") {
@@ -579,11 +630,11 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Types all types raml to oas test") {
-    cycle("all-type-types.raml", "all-type-types.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("all-type-types.raml", "all-type-types.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Types all types oas to raml test") {
-    cycle("all-type-types.json", "all-type-types.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("all-type-types.json", "all-type-types.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Test libraries oas to oas") {
@@ -596,11 +647,11 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   // todo what we do when library file name changes changes on dump
   ignore("Test libraries raml to oas") {
-    cycle("libraries.raml", "libraries.json.json", Raml10YamlHint, target = Oas20, directory = referencesPath)
+    cycle("libraries.raml", "libraries.json.json", Raml10YamlHint, target = Oas20JsonHint, directory = referencesPath)
   }
 
   ignore("Test libraries oas to raml") {
-    cycle("libraries.json", "libraries.raml.raml", Oas20JsonHint, target = Raml10, directory = referencesPath)
+    cycle("libraries.json", "libraries.raml.raml", Oas20JsonHint, target = Raml10YamlHint, directory = referencesPath)
   }
 
   ignore("Overlay fragment oas to amf") {
@@ -608,7 +659,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
       "overlay.json",
       "overlay.json.jsonld",
       Oas20JsonHint,
-      target = Amf,
+      target = AmfJsonHint,
       directory = s"${referencesPath}extensions/"
     )
   }
@@ -617,7 +668,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("overlay.json",
           "overlay.json.json",
           Oas20JsonHint,
-          target = Oas20,
+          target = Oas20JsonHint,
           directory = s"${referencesPath}extensions/")
   }
 
@@ -625,7 +676,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("extension.json",
           "extension.json.jsonld",
           Oas20JsonHint,
-          target = Amf,
+          target = AmfJsonHint,
           directory = s"${referencesPath}extensions/")
   }
 
@@ -633,12 +684,12 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("extension.json",
           "extension.json.json",
           Oas20JsonHint,
-          target = Oas20,
+          target = Oas20JsonHint,
           directory = s"${referencesPath}extensions/")
   }
 
   test("More types raml to oas test") {
-    cycle("more-types.raml", "more-types.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("more-types.raml", "more-types.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Types forward references oas to oas test") {
@@ -646,11 +697,15 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Schema types raml to oas test") {
-    cycle("externals.raml", "externals.json", Raml10YamlHint, target = Oas20)
+    cycle("externals.raml", "externals.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Closed node for 0.8 web form test") {
-    cycle("closed_web_form.raml", "closed_web_form.json", Raml08YamlHint, target = Oas20, directory = base08Path)
+    cycle("closed_web_form.raml",
+          "closed_web_form.json",
+          Raml08YamlHint,
+          target = Oas20JsonHint,
+          directory = base08Path)
   }
 
   test("Security schemes oas to oas") {
@@ -678,23 +733,23 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Facets raml to oas") {
-    cycle("type-facets.raml", "type-facets.json", Raml10YamlHint, target = Oas20)
+    cycle("type-facets.raml", "type-facets.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("OAS descriptions for responses area added automatically raml to oas") {
-    cycle("missing_oas_description.raml", "missing_oas_description.json", Raml10YamlHint, target = Oas20)
+    cycle("missing_oas_description.raml", "missing_oas_description.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("OAS descriptions for responses area added automatically oas to raml") {
-    cycle("missing_oas_description.json", "missing_oas_description.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("missing_oas_description.json", "missing_oas_description.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("SecurityScheme without name raml to oas") {
-    cycle("unnamed-security-scheme.raml", "unnamed-security-scheme.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("unnamed-security-scheme.raml", "unnamed-security-scheme.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("References raml to oas") {
-    cycle("with_references.raml", "with_references.json", Raml10YamlHint, target = Oas20)
+    cycle("with_references.raml", "with_references.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   ignore("References oas to oas") {
@@ -702,27 +757,27 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Car oas to oas") {
-    cycle("somecars.json", "somecars.json", Oas20JsonHint, target = Oas20)
+    cycle("somecars.json", "somecars.json", Oas20JsonHint, target = Oas20JsonHint)
   }
 
   test("Car oas to raml") {
-    cycle("somecars.json", "somecars.raml", Oas20JsonHint, target = Raml10)
+    cycle("somecars.json", "somecars.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("konst1 raml to oas") {
-    cycle("konst1.raml", "konst1.json", Raml10YamlHint, target = Oas20)
+    cycle("konst1.raml", "konst1.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("konst1 oas to raml") {
-    cycle("konst1.json", "konst1.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("konst1.json", "konst1.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Message for model objects not supported in 08") {
-    cycle("array-of-node.raml", "array-of-node-unsupported08.raml", Raml10YamlHint, target = Raml08)
+    cycle("array-of-node.raml", "array-of-node-unsupported08.raml", Raml10YamlHint, target = Raml08YamlHint)
   }
 
   test("JSON Schema with [{}]") {
-    cycle("array-of-node.raml", "array-of-node-unsupported08.raml", Raml10YamlHint, target = Raml08)
+    cycle("array-of-node.raml", "array-of-node-unsupported08.raml", Raml10YamlHint, target = Raml08YamlHint)
   }
 
   test("Declared response") {
@@ -730,110 +785,114 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Declared response oas to raml") {
-    cycle("declared-responses.json", "declared-responses.json.raml", Oas20JsonHint, target = Raml10)
+    cycle("declared-responses.json", "declared-responses.json.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Declared response raml to oas") {
-    cycle("declared-responses.json.raml", "declared-responses.json", Raml10YamlHint, target = Oas20)
+    cycle("declared-responses.json.raml", "declared-responses.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Additional properties shape oas to oas") {
-    cycle("additional-properties.json", "additional-properties.json", Oas20JsonHint, target = Oas20)
+    cycle("additional-properties.json", "additional-properties.json", Oas20JsonHint, target = Oas20JsonHint)
   }
 
   test("Additional properties shape oas to raml") {
-    cycle("additional-properties.json", "additional-properties.raml", Oas20JsonHint, target = Raml10)
+    cycle("additional-properties.json", "additional-properties.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Additional properties shape raml to oas") {
-    cycle("additional-properties.raml", "additional-properties.raml.json", Raml10YamlHint, target = Oas20)
+    cycle("additional-properties.raml", "additional-properties.raml.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("CollectionFormat shape oas to oas") {
-    cycle("collection-format.json", "collection-format.json.json", Oas20JsonHint, target = Oas20)
+    cycle("collection-format.json", "collection-format.json.json", Oas20JsonHint, target = Oas20JsonHint)
   }
 
   test("CollectionFormat shape oas to raml") {
-    cycle("collection-format.json", "collection-format.raml", Oas20JsonHint, target = Raml10)
+    cycle("collection-format.json", "collection-format.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Date format oas to raml") {
-    cycle("date-format.json", "date-format.raml", Oas20JsonHint, target = Raml10)
+    cycle("date-format.json", "date-format.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Tags node oas to oas") {
-    cycle("tags.json", "tags.json.json", Oas20JsonHint, target = Oas20)
+    cycle("tags.json", "tags.json.json", Oas20JsonHint, target = Oas20JsonHint)
   }
 
   test("Tags node oas to raml") {
-    cycle("tags.json", "tags.raml", Oas20JsonHint, target = Raml10)
+    cycle("tags.json", "tags.raml", Oas20JsonHint, target = Raml10YamlHint)
   }
 
   test("Tags node raml to oas") {
-    cycle("tags.raml", "tags.json.json", Raml10YamlHint, target = Oas20)
+    cycle("tags.raml", "tags.json.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Numeric facets raml to oas") {
-    cycle("numeric-facets.raml", "numeric-facets.json", Raml10YamlHint, target = Oas20)
+    cycle("numeric-facets.raml", "numeric-facets.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("Test parse types") {
-    cycle("shapes.raml", "shapes.json", Raml10YamlHint, target = Oas20, directory = s"${apiPath}types/")
+    cycle("shapes.raml", "shapes.json", Raml10YamlHint, target = Oas20JsonHint, directory = s"${apiPath}types/")
   }
 
   test("FormData multiple parameters oas to oas") {
-    cycle("form-data-params.json", "form-data-params.json", Oas20JsonHint, target = Oas20)
+    cycle("form-data-params.json", "form-data-params.json", Oas20JsonHint, target = Oas20JsonHint)
   }
 
   test("arrayTypes raml to oas") {
-    cycle("array_items.raml", "array_items.json", Raml10YamlHint, target = Oas20)
+    cycle("array_items.raml", "array_items.json", Raml10YamlHint, target = Oas20JsonHint)
   }
 
   test("PatternProperties JSON Schema oas to raml") {
-    cycle("oasPatternProperties.yaml", "oasPatternProperties.raml", Oas20YamlHint, target = Raml10)
+    cycle("oasPatternProperties.yaml", "oasPatternProperties.raml", Oas20YamlHint, target = Raml10YamlHint)
   }
 
   test("Test enums raml to oas") {
-    cycle("enums.raml", "enums.json", Raml10YamlHint, target = Oas20, directory = s"${basePath}enums/")
+    cycle("enums.raml", "enums.json", Raml10YamlHint, target = Oas20JsonHint, directory = s"${basePath}enums/")
   }
 
   test("Test enums oas to oas") {
-    cycle("enums.json", "enums.json.json", Oas20JsonHint, target = Oas20, directory = s"${basePath}enums/")
+    cycle("enums.json", "enums.json.json", Oas20JsonHint, target = Oas20JsonHint, directory = s"${basePath}enums/")
   }
 
   test("Test enums oas to raml") {
-    cycle("enums.json", "enums.json.raml", Oas20JsonHint, target = Raml10, directory = s"${basePath}enums/")
+    cycle("enums.json", "enums.json.raml", Oas20JsonHint, target = Raml10YamlHint, directory = s"${basePath}enums/")
   }
 
   test("Test nil example raml to raml") {
-    cycle("nil-example.raml", "nil-example.raml.raml", Raml10YamlHint, target = Raml10)
+    cycle("nil-example.raml", "nil-example.raml.raml", Raml10YamlHint, target = Raml10YamlHint)
   }
 
   test("Test nil example raml generated to itself") {
-    cycle("nil-example.raml.raml", "nil-example.raml.raml", Raml10YamlHint, target = Raml10)
+    cycle("nil-example.raml.raml", "nil-example.raml.raml", Raml10YamlHint, target = Raml10YamlHint)
   }
 
   test("Security requirement OAS to OAS") {
-    cycle("api-with-security-requirement.json",
-          "api-with-security-requirement.json",
-          Oas20JsonHint,
-          target = Oas20,
-          directory = s"${validationsPath}oas-security/")
+    cycle(
+      "api-with-security-requirement.json",
+      "api-with-security-requirement.json",
+      Oas20JsonHint,
+      target = Oas20JsonHint,
+      directory = s"${validationsPath}oas-security/"
+    )
   }
 
   test("Security requirements OAS to OAS") {
-    cycle("api-with-security-requirements.json",
-          "api-with-security-requirements.json",
-          Oas20JsonHint,
-          target = Oas20,
-          directory = s"${validationsPath}oas-security/")
+    cycle(
+      "api-with-security-requirements.json",
+      "api-with-security-requirements.json",
+      Oas20JsonHint,
+      target = Oas20JsonHint,
+      directory = s"${validationsPath}oas-security/"
+    )
   }
 
   test("Description parameters in OAS") {
     cycle("api-with-param-description.json",
           "api-with-param-description.json",
           Oas20JsonHint,
-          target = Oas20,
+          target = Oas20JsonHint,
           directory = s"${parserResultPath}oas/")
   }
 

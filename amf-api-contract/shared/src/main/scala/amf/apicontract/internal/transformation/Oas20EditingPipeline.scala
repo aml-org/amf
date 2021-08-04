@@ -22,10 +22,10 @@ class Oas20EditingPipeline private (urlShortening: Boolean, override val name: S
 object Oas20EditingPipeline {
   def apply()                    = new Oas20EditingPipeline(true, name)
   private[amf] def cachePipeline = new Oas20EditingPipeline(false, Oas20CachePipeline.name)
-  val name: String               = PipelineName.from(Oas20.mediaType, PipelineId.Editing)
+  val name: String               = PipelineId.Editing
 }
 
 object Oas20CachePipeline {
   def apply(): Oas20EditingPipeline = cachePipeline
-  val name: String                  = PipelineName.from(Oas20.mediaType, PipelineId.Cache)
+  val name: String                  = PipelineId.Cache
 }

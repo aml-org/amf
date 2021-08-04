@@ -1,7 +1,6 @@
 package amf.iterator
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
-
+import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.Parameter
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.compiler.CompilerTestBuilder
@@ -68,7 +67,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
     build(
       "file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
       Raml10YamlHint,
-      WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()),
+      APIConfiguration.API(),
       None
     ) map (
         baseUnit => {
@@ -83,7 +82,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
     build(
       "file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
       Raml10YamlHint,
-      WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()),
+      APIConfiguration.API(),
       None
     ) map (
         baseUnit => {
@@ -104,7 +103,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
     build(
       "file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
       Raml10YamlHint,
-      WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()),
+      APIConfiguration.API(),
       None
     ) map (
         baseUnit => {
@@ -119,7 +118,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
     build(
       "file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
       Raml10YamlHint,
-      WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()),
+      APIConfiguration.API(),
       None
     ) map (
         baseUnit => {

@@ -2,13 +2,17 @@ package amf.validation
 
 import amf.apicontract.client.scala.{AMFBaseUnitClient, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.{StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
+import amf.testing.ConfigProvider
+import amf.testing.ConfigProvider.configFor
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,7 +42,7 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
               "big-number-payload.raml",
               "{\"in\": 22337203685477999090}",
               conforms = true,
-              Option("application/json")),
+              Option(`application/json`)),
       Fixture("Invalid required pattern property",
               "required-pattern-prop.raml",
               "invalid-element-2: 2",
@@ -61,11 +65,11 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override def transform(unit: BaseUnit, client: AMFBaseUnitClient): BaseUnit = {
 
-    unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
+    unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceSpec match {
       case Some(Raml08) =>
-        client.transformDefault(unit, Raml08.mediaType).baseUnit
+        client.transform(unit, PipelineId.Default).baseUnit
       case _ =>
-        client.transformDefault(unit, Raml10.mediaType).baseUnit
+        client.transform(unit, PipelineId.Default).baseUnit
     }
   }
 }
@@ -94,7 +98,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                          payload: String,
                          mediaType: Option[String],
                          givenHint: Hint): Future[AMFValidationReport] = {
-    val config = WebAPIConfiguration.WebAPI()
+    val config = configFor(givenHint.spec)
     val client = config.baseUnitClient()
     for {
       model <- client

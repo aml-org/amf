@@ -22,9 +22,9 @@ case class OasShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refere
       _.list(b =>
         inherits.foreach { s =>
           if (s.annotations.contains(classOf[DeclaredElement]))
-            spec.ref(b, OasShapeDefinitions.appendSchemasPrefix(s.name.value(), Some(spec.vendor)))
+            spec.ref(b, OasShapeDefinitions.appendSchemasPrefix(s.name.value(), Some(spec.spec)))
           else if (s.linkTarget.isDefined)
-            spec.ref(b, OasShapeDefinitions.appendSchemasPrefix(s.name.value(), Some(spec.vendor)))
+            spec.ref(b, OasShapeDefinitions.appendSchemasPrefix(s.name.value(), Some(spec.spec)))
           else OasTypePartEmitter(s, ordering, references = references).emit(b)
       })
     )

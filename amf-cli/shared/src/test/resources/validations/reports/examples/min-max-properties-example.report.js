@@ -6,7 +6,7 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
-  Message: should NOT have less than 2 properties
+  Message: should NOT have fewer than 2 properties
   Level: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/min-max-properties-example.raml#/declarations/types/InvalidMax/example/badMin
   Property: file://amf-cli/shared/src/test/resources/validations/examples/min-max-properties-example.raml#/declarations/types/InvalidMax/example/badMin

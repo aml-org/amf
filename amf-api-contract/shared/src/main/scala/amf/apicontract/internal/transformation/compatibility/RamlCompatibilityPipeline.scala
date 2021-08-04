@@ -42,10 +42,10 @@ class RamlCompatibilityPipeline private[amf] (override val name: String, profile
 
 object Raml10CompatibilityPipeline {
   def apply()      = new RamlCompatibilityPipeline(name, Raml10Profile)
-  val name: String = PipelineName.from(Raml10.mediaType, PipelineId.Compatibility)
+  val name: String = PipelineId.Compatibility
 }
 
 object Raml08CompatibilityPipeline {
   def apply()      = new RamlCompatibilityPipeline(name, Raml08Profile)
-  val name: String = PipelineName.from(Raml08.mediaType, PipelineId.Compatibility)
+  val name: String = PipelineId.Compatibility
 }

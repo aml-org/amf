@@ -10,6 +10,7 @@ import amf.core.client.scala.validation.AMFValidator
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.core.internal.resource.StringResourceLoader
 import amf.io.FileAssertionTest
+import amf.testing.HintProvider.defaultHintFor
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -34,7 +35,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
     for {
       input  <- fs.asyncFile(basePath + source).read()
       left   <- parseBaseUnit(input.toString, l)
-      target <- Future.successful(new AMFRenderer(left, r.vendor, RenderOptions(), Some(r.syntax)).renderToString)
+      target <- Future.successful(new AMFRenderer(left, r, RenderOptions()).renderToString)
       _      <- parseBaseUnit(target, r)
     } yield {
       succeed
@@ -46,10 +47,10 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
     val conf = WebAPIConfiguration
       .WebAPI()
       .withErrorHandlerProvider(() => eh)
-      .withResourceLoader(StringResourceLoader("amf://id#", content))
+      .withResourceLoader(StringResourceLoader("amf://id#", content, Some(hint.spec.mediaType)))
     for {
       unit <- AMFParser.parse("amf://id#", conf)
-      _    <- AMFValidator.validate(unit.baseUnit, ProfileName(hint.vendor.name), conf)
+      _    <- AMFValidator.validate(unit.baseUnit, conf)
     } yield unit.baseUnit
   }
 }

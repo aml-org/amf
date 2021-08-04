@@ -10,7 +10,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.parser.{LimitedParseConfig, CompilerConfiguration}
+import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig}
 import amf.core.internal.remote.{Raml10, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.shapes.client.scala.model.domain.UnionShape
@@ -201,7 +201,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
 
   examples.foreach { example =>
     test(s"Resolve data types: $example") {
-      cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10, basePath)
+      cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10YamlHint, basePath)
     }
   }
 
@@ -218,7 +218,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
   // i dont get this test. Trais the fail? how?
   errorExamples.foreach { example =>
     test(s"Fails on erroneous data types: $example") {
-      cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10, basePath)
+      cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10YamlHint, basePath)
     }
   }
 }

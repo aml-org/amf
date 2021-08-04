@@ -9,13 +9,12 @@ import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.internal.remote._
 
 trait ResolutionCapabilities {
-  protected def transform(unit: BaseUnit, pipeline: String, vendor: Vendor, amfConfig: AMFConfiguration): BaseUnit = {
-    vendor match {
+  protected def transform(unit: BaseUnit, pipeline: String, spec: Spec, amfConfig: AMFConfiguration): BaseUnit = {
+    spec match {
       case AsyncApi | AsyncApi20 | Raml08 | Raml10 | Oas20 | Oas30 =>
-        amfConfig.baseUnitClient().transform(unit, PipelineName.from(vendor.mediaType, pipeline)).baseUnit
+        amfConfig.baseUnitClient().transform(unit, pipeline).baseUnit
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, UnhandledAmfPipeline(pipeline))
       case target => throw new Exception(s"Cannot resolve $target")
-      //    case _ => unit
     }
   }
 

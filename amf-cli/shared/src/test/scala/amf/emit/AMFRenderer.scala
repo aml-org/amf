@@ -1,20 +1,18 @@
 package amf.emit
 
 import amf.aml.internal.utils.VocabulariesRegister
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, WebAPIConfiguration}
-
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Platform, Vendor}
+import amf.core.internal.remote.{Hint, Platform, Spec}
 import amf.core.internal.render.AMFSerializer
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.testing.ConfigProvider.configFor
 
 import scala.concurrent.{ExecutionContext, Future}
 
 // TODO: this is only here for compatibility with the test suite
-class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax: Option[Syntax])
-    extends PlatformSecrets {
+class AMFRenderer(unit: BaseUnit, target: Hint, options: RenderOptions) extends PlatformSecrets {
 
   // Remod registering
   VocabulariesRegister.register(platform)
@@ -29,12 +27,12 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
   }
 
   private def render()(implicit executionContext: ExecutionContext): String = {
-    val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withRenderOptions(options)
-    new AMFSerializer(unit, vendor.mediaType, config.renderConfiguration).renderToString
+    val config = configFor(target.spec).withRenderOptions(options)
+    new AMFSerializer(unit, config.renderConfiguration, Some(target.syntax.mediaType)).renderToString
   }
 }
 
 object AMFRenderer {
-  def apply(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax: Option[Syntax] = None): AMFRenderer =
-    new AMFRenderer(unit, vendor, options, syntax)
+  def apply(unit: BaseUnit, target: Hint, options: RenderOptions, syntax: Option[Syntax] = None): AMFRenderer =
+    new AMFRenderer(unit, target, options)
 }
