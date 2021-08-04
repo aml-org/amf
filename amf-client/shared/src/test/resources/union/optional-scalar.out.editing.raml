@@ -1,20 +1,12 @@
 #%RAML 1.0
 title: New API
+types:
+  SomeType:
+    description: some description
+    type: string | nil
 /someEndpoint:
   post:
     body:
       application/json:
-        anyOf:
-          -
-            type: string
-            description: some description
-          -
-            type: nil
-types:
-  SomeType:
-    anyOf:
-      -
-        type: string
         description: some description
-      -
-        type: nil
+        type: string | nil
