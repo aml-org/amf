@@ -290,4 +290,23 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
           pipeline = Some(PipelineId.Default))
   }
 
+  test("Union with default - No Resolution") {
+    cycle("union-default.raml", "union-default.out.raml", Raml10YamlHint, Raml10YamlHint, pipeline = None)
+  }
+
+  test("Union with default - Editing Resolution") {
+    cycle("union-default.raml",
+          "union-default.out.editing.raml",
+          Raml10YamlHint,
+          Raml10YamlHint,
+          pipeline = Some(PipelineId.Editing))
+  }
+
+  test("Union with default - Default Resolution") {
+    cycle("union-default.raml",
+          "union-default.out.default.raml",
+          Raml10YamlHint,
+          Raml10YamlHint,
+          pipeline = Some(PipelineId.Default))
+  }
 }
