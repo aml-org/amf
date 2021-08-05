@@ -581,8 +581,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           }
         }
         val toParse = YMapEntry(YNode(name), YMap(newEntries, newEntries.headOption.map(_.sourceName).getOrElse("")))
-        val parsed =
-          ctx.factory.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
+        val parsed  = Raml10TypeParser(toParse, s => s.withId(union.id), typeInfo).parse().get
         parsed.inherits.head match {
           case union: UnionShape =>
             union.anyOf.tail.head match {
