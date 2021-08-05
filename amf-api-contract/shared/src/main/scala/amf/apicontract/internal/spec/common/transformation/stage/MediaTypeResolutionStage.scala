@@ -10,7 +10,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
+import amf.core.client.scala.model.domain.{AmfObject, AmfScalar, DomainElement, Shape}
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 import amf.shapes.client.scala.model.domain.NodeShape

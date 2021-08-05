@@ -329,15 +329,14 @@ object CustomShaclFunctions {
           propertiesArray <- element.fields.?[AmfArray](NodeShapeModel.Properties)
         } yield {
           val properties = propertiesArray.values
-          if (properties.distinct.size != properties.size) {
-            val duplicatedProperties = properties
-              .map(_.asInstanceOf[PropertyShape])
-              .flatMap(_.name.option())
-              .groupBy(identity)
-              .filter(_._2.size > 1)
-              .keys.toSeq.sorted
-              .mkString(", ")
-            val message = s"Duplicated property names: $duplicatedProperties"
+          val duplicatedNames = properties
+            .map(_.asInstanceOf[PropertyShape])
+            .flatMap(_.name.option())
+            .groupBy(identity)
+            .filter(_._2.size > 1)
+            .keys.toSeq.sorted
+          if (duplicatedNames.nonEmpty) {
+            val message = s"Duplicated property names: ${duplicatedNames.mkString(", ")}"
             val info    = ValidationInfo(NodeShapeModel.Properties, Some(message))
             validate(Some(info))
           }
