@@ -602,4 +602,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("invalid duplicated nullable property") {
     validate("duplicate-property/api.raml", Some("raml/duplicated-property.report"))
   }
+
+  test("nillable type notation should accept required facet") {
+    validate("nillable-with-required.raml")
+  }
+
+  test("nillable property of nillable type") {
+    validate("nillable-with-nillable.raml")
+  }
 }
