@@ -15,9 +15,11 @@ import amf.core.client.common.render.JSONSchemaVersions
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.platform.config.RenderOptions
+import amf.core.client.platform.model.AmfObjectWrapper
 import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.platform.model.domain._
 import amf.core.client.platform.parse.AMFParser
+import amf.core.client.platform.parse.AMFParser.parseStartingPoint
 import amf.core.client.platform.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
@@ -38,6 +40,7 @@ import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote._
 import amf.core.internal.resource.{ClientResourceLoaderAdapter, StringResourceLoader}
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.shapes.client.platform.config.ShapesConfiguration
 import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
 import org.mulesoft.common.test.Diff
@@ -2057,7 +2060,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
-  // TODO check with @tomi and @agus
   test("Test domain element emitter with unknown spec") {
     assertThrows[Throwable](
       amf.apicontract.client.scala.RAMLConfiguration.RAML10().elementClient().renderElement(InternalArrayNode()))
@@ -2118,6 +2120,20 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       assert(!parsed.conforms)
       assert(parsed.results.asSeq.size == 1)
       assert(resolved.conforms)
+    }
+  }
+
+  test("test read declared shape from api") {
+    val configuration    = ShapesConfiguration.predefined()
+    val basePath: String = "file://amf-cli/shared/src/test/resources/graphs/"
+    for {
+      content <- parseStartingPoint(basePath + "api.source.jsonld", "amf://id#1", configuration).asFuture
+    } yield {
+      val obj = content.element
+      obj.isInstanceOf[ScalarShape] should be(true)
+      val shape = obj.asInstanceOf[ScalarShape]
+      shape.name.value() should be("birthday")
+      succeed
     }
   }
 
