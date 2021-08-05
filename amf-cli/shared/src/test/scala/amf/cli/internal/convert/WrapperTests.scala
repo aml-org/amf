@@ -1308,7 +1308,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           .withDefinedBy(annotationType._internal)
           .withName(annotationType.name.value())
         shape.withCustomDomainProperties(Seq(annotation).asClient)
-        new IdAdopter(doc._internal, url).adopt() // TODO use client id adopter
+        client.setBaseUri(doc, url)
         doc
       }
       s       <- Future.successful(client.render(doc, `application/yaml`))

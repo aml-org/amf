@@ -39,7 +39,7 @@ trait JsonSchemaSuite {
     val parsed  = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None)
     parsed.annotations += SourceSpec(Spec.OAS20)
     val unit = wrapInDataTypeFragment(root, parsed)
-    new IdAdopter(unit, path).adopt()
+    amfConfig.baseUnitClient().setBaseUri(unit, path)
     new AMFParseResult(unit, eh.getResults)
   }
 

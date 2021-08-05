@@ -1,12 +1,13 @@
 package amf.parser
 
-import amf.apicontract.client.scala.APIConfiguration
+import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, OASConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.document.FieldsFilter.All
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.traversal.iterator.{AmfElementStrategy, InstanceCollector}
+import amf.core.internal.remote.Spec
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.mulesoft.common.collections.FilterType
 import org.scalatest.Matchers.{fail, succeed}
@@ -51,10 +52,19 @@ class ResolvedModelDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest 
     val client = APIConfiguration.API().baseUnitClient()
     for {
       parseResult <- client.parse(path)
-      transformResult <- Future.successful(client.transformWithPipelineId(parseResult.baseUnit, PipelineId.Cache))
+      transformResult <- Future.successful(amfConfigFrom(parseResult.sourceSpec).baseUnitClient().transform(parseResult.baseUnit, PipelineId.Cache))
     } yield {
       validateIds(transformResult.baseUnit)
     }
+  }
+
+  private def amfConfigFrom(spec: Spec): AMFConfiguration = spec match {
+    case Spec.OAS30   => OASConfiguration.OAS30()
+    case Spec.OAS20   => OASConfiguration.OAS20()
+    case Spec.RAML10  => RAMLConfiguration.RAML10()
+    case Spec.RAML08  => RAMLConfiguration.RAML08()
+    case Spec.ASYNC20 => AsyncAPIConfiguration.Async20()
+    case _            => throw new IllegalArgumentException
   }
 }
 

@@ -8,6 +8,7 @@ import amf.core.client.scala.model.document.{Document, Fragment}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.remote._
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.internal.adoption.IdAdopter
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
 import amf.shapes.client.scala.model.domain.NodeShape
@@ -93,7 +94,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
         .withReferences(Seq(dataTypeFragment))
         .withDeclares(Seq(personLink))
         .withRoot(true)
-      new IdAdopter(result, "file://amf-cli/shared/src/test/resources/references/" + file).adopt()
+      AMFGraphConfiguration.predefined().baseUnitClient().setBaseUri(result, "file://amf-cli/shared/src/test/resources/references/" + file)
       result
     }
   }
