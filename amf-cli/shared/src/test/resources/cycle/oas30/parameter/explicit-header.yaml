@@ -1,18 +1,19 @@
-content:
-  application/json:
-    schema:
-      type: object
-      required:
-        - lat
-        - long
-      properties:
-        lat:
-          type: number
-        long:
-          type: number
-examples:
-  default:
-    value:
-      lat: 5
-      long: 4.6
-      booleanFacet: true
+
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - lat
+          - long
+        properties:
+          lat:
+            type: number
+          long:
+            type: number
+  examples:
+    default:
+      value:
+        lat: 5
+        long: 4.6
+        booleanFacet: true

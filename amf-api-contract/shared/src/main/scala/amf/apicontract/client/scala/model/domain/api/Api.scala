@@ -93,7 +93,7 @@ abstract class Api(fields: Fields, annotations: Annotations)
   def sourceSpec: Option[Spec] = annotations.find(classOf[SourceSpec]).map(a => a.spec)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "#/api"
+  private[amf] override def componentId: String = "/api"
 
   override def nameField: Field = Name
 }
