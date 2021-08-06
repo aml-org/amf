@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
   Message: Maximum must be greater than or equal to minimum
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/array-invalid/input.raml/declares/array/array-range/scalar/items
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/array-invalid/input.raml#/declares/array/array-range/scalar/items
   Property: 
   Position: Some(LexicalInformation([(10,8)-(13,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/array-invalid/input.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#min-max-items
   Message: MaxItems must be greater than or equal to minItems
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/array-invalid/input.raml/declares/array/array-count
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/array-invalid/input.raml#/declares/array/array-count
   Property: 
   Position: Some(LexicalInformation([(13,4)-(17,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/array-invalid/input.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
   Message: Maximum must be greater than or equal to minimum
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/array-invalid/input.raml/declares/scalar/invalid
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/array-invalid/input.raml#/declares/scalar/invalid
   Property: 
   Position: Some(LexicalInformation([(17,4)-(20,23)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/array-invalid/input.raml

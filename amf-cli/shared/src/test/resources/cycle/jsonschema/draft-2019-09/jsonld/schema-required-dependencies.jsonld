@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "/any/schema",
+      "@id": "#/any/schema",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -11,12 +11,12 @@
       "shacl:name": "schema",
       "shacl:and": [
         {
-          "@id": "/any/schema/and/main"
+          "@id": "#/any/schema/and/main"
         }
       ]
     },
     {
-      "@id": "/any/schema/and/main",
+      "@id": "#/any/schema/and/main",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -27,26 +27,26 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "/any/schema/and/main/property/property/credit_card"
+          "@id": "#/any/schema/and/main/property/property/credit_card"
         },
         {
-          "@id": "/any/schema/and/main/property/property/something_else"
+          "@id": "#/any/schema/and/main/property/property/something_else"
         }
       ],
       "raml-shapes:dependencies": [
         {
-          "@id": "/any/schema/and/main/dependencies/dependency/credit_card"
+          "@id": "#/any/schema/and/main/dependencies/dependency/credit_card"
         }
       ],
       "raml-shapes:schemaDependencies": [
         {
-          "@id": "/any/schema/and/main/schemaDependencies/dependencySchema/credit_card"
+          "@id": "#/any/schema/and/main/schemaDependencies/dependencySchema/credit_card"
         }
       ],
       "shacl:name": "main"
     },
     {
-      "@id": "/any/schema/and/main/property/property/credit_card",
+      "@id": "#/any/schema/and/main/property/property/credit_card",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -59,13 +59,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "/any/schema/and/main/property/property/credit_card/scalar/credit_card"
+        "@id": "#/any/schema/and/main/property/property/credit_card/scalar/credit_card"
       },
       "shacl:minCount": 0,
       "shacl:name": "credit_card"
     },
     {
-      "@id": "/any/schema/and/main/property/property/something_else",
+      "@id": "#/any/schema/and/main/property/property/something_else",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -78,13 +78,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "/any/schema/and/main/property/property/something_else/scalar/something_else"
+        "@id": "#/any/schema/and/main/property/property/something_else/scalar/something_else"
       },
       "shacl:minCount": 0,
       "shacl:name": "something_else"
     },
     {
-      "@id": "/any/schema/and/main/dependencies/dependency/credit_card",
+      "@id": "#/any/schema/and/main/dependencies/dependency/credit_card",
       "@type": [
         "raml-shapes:PropertyDependencies",
         "doc:DomainElement"
@@ -95,18 +95,18 @@
       ]
     },
     {
-      "@id": "/any/schema/and/main/schemaDependencies/dependencySchema/credit_card",
+      "@id": "#/any/schema/and/main/schemaDependencies/dependencySchema/credit_card",
       "@type": [
         "raml-shapes:SchemaDependencies",
         "doc:DomainElement"
       ],
       "raml-shapes:propertySource": "credit_card",
       "raml-shapes:schemaTarget": {
-        "@id": "/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema"
+        "@id": "#/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema"
       }
     },
     {
-      "@id": "/any/schema/and/main/property/property/credit_card/scalar/credit_card",
+      "@id": "#/any/schema/and/main/property/property/credit_card/scalar/credit_card",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -122,7 +122,7 @@
       "shacl:name": "credit_card"
     },
     {
-      "@id": "/any/schema/and/main/property/property/something_else/scalar/something_else",
+      "@id": "#/any/schema/and/main/property/property/something_else/scalar/something_else",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -138,7 +138,7 @@
       "shacl:name": "something_else"
     },
     {
-      "@id": "/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema",
+      "@id": "#/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -149,13 +149,13 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema/property/property/billing_address"
+          "@id": "#/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema/property/property/billing_address"
         }
       ],
       "shacl:name": "schema"
     },
     {
-      "@id": "/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema/property/property/billing_address",
+      "@id": "#/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema/property/property/billing_address",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -168,13 +168,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema/property/property/billing_address/scalar/billing_address"
+        "@id": "#/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema/property/property/billing_address/scalar/billing_address"
       },
       "shacl:minCount": 1,
       "shacl:name": "billing_address"
     },
     {
-      "@id": "/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema/property/property/billing_address/scalar/billing_address",
+      "@id": "#/any/schema/and/main/schemaDependencies/dependencySchema/credit_card/schema/property/property/billing_address/scalar/billing_address",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -197,7 +197,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/any/schema"
+        "@id": "#/any/schema"
       },
       "doc:version": "3.1.0",
       "doc:root": false

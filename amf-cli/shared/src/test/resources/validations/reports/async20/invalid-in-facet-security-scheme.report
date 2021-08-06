@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#HttpApiKeySettings-in-pattern
   Message: Invalid 'in' value. The options are: query, header or cookie
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-in-facet.yaml/declares/http-invalid/settings/http-api-key
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-in-facet.yaml#/declares/http-invalid/settings/http-api-key
   Property: http://a.ml/vocabularies/security#in
   Position: Some(LexicalInformation([(29,10)-(29,22)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-in-facet.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#ApiKeySettings-in-pattern
   Message: Invalid 'in' value. The options are: user or password
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-in-facet.yaml/declares/api-key-invalid/settings/api-key
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-in-facet.yaml#/declares/api-key-invalid/settings/api-key
   Property: http://a.ml/vocabularies/security#in
   Position: Some(LexicalInformation([(39,10)-(39,22)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-in-facet.yaml

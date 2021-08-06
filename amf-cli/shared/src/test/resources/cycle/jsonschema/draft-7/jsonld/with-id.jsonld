@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "/any/schema",
+      "@id": "#/any/schema",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -11,24 +11,24 @@
       "shacl:name": "schema",
       "shacl:xone": [
         {
-          "@id": "/any/schema/exclusiveOr/scalar/A"
+          "@id": "#/any/schema/exclusiveOr/scalar/A"
         },
         {
-          "@id": "/any/schema/exclusiveOr/scalar/B"
+          "@id": "#/any/schema/exclusiveOr/scalar/B"
         },
         {
-          "@id": "/any/schema/exclusiveOr/scalar/X"
+          "@id": "#/any/schema/exclusiveOr/scalar/X"
         },
         {
-          "@id": "/any/schema/exclusiveOr/scalar/Y"
+          "@id": "#/any/schema/exclusiveOr/scalar/Y"
         },
         {
-          "@id": "/any/schema/exclusiveOr/scalar/C"
+          "@id": "#/any/schema/exclusiveOr/scalar/C"
         }
       ]
     },
     {
-      "@id": "/any/schema/exclusiveOr/scalar/A",
+      "@id": "#/any/schema/exclusiveOr/scalar/A",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -44,7 +44,7 @@
       "shacl:name": "A"
     },
     {
-      "@id": "/any/schema/exclusiveOr/scalar/B",
+      "@id": "#/any/schema/exclusiveOr/scalar/B",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -60,7 +60,7 @@
       "shacl:name": "B"
     },
     {
-      "@id": "/any/schema/exclusiveOr/scalar/X",
+      "@id": "#/any/schema/exclusiveOr/scalar/X",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -76,7 +76,7 @@
       "shacl:name": "X"
     },
     {
-      "@id": "/any/schema/exclusiveOr/scalar/Y",
+      "@id": "#/any/schema/exclusiveOr/scalar/Y",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -92,7 +92,7 @@
       "shacl:name": "Y"
     },
     {
-      "@id": "/any/schema/exclusiveOr/scalar/C",
+      "@id": "#/any/schema/exclusiveOr/scalar/C",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -115,7 +115,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/any/schema"
+        "@id": "#/any/schema"
       },
       "doc:version": "3.1.0",
       "doc:root": false

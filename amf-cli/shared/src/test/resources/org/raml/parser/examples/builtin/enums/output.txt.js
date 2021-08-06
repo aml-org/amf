@@ -8,15 +8,15 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be equal to one of the allowed values
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml/declares/scalar/countryBad/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml/declares/scalar/countryBad/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declares/scalar/countryBad/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declares/scalar/countryBad/examples/example/default-example
   Position: Some(LexicalInformation([(11,13)-(11,16)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be equal to one of the allowed values
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml/declares/scalar/sizesBad/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml/declares/scalar/sizesBad/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declares/scalar/sizesBad/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declares/scalar/sizesBad/examples/example/default-example
   Position: Some(LexicalInformation([(19,13)-(19,14)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml

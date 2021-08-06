@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-type-pattern
   Message: Security scheme type should be one of the supported ones
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml/declares/invalid-unknown
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declares/invalid-unknown
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(19,12)-(19,20)]))
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml

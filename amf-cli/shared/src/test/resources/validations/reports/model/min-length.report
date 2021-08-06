@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#ScalarShape-minLength-minInclusive
   Message: Min length facet should be greater or equal than 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/shapes/min-length.raml/declares/scalar/Email
+  Target: file://amf-cli/shared/src/test/resources/validations/shapes/min-length.raml#/declares/scalar/Email
   Property: http://www.w3.org/ns/shacl#minLength
   Position: Some(LexicalInformation([(6,15)-(6,17)]))
   Location: file://amf-cli/shared/src/test/resources/validations/shapes/min-length.raml

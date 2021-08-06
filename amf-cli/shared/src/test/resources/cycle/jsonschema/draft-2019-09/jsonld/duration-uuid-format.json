@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "/any/schema",
+      "@id": "#/any/schema",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -11,12 +11,12 @@
       "shacl:name": "schema",
       "shacl:and": [
         {
-          "@id": "/any/schema/and/main"
+          "@id": "#/any/schema/and/main"
         }
       ]
     },
     {
-      "@id": "/any/schema/and/main",
+      "@id": "#/any/schema/and/main",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -27,16 +27,16 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "/any/schema/and/main/property/property/durationFormat"
+          "@id": "#/any/schema/and/main/property/property/durationFormat"
         },
         {
-          "@id": "/any/schema/and/main/property/property/uuidFormat"
+          "@id": "#/any/schema/and/main/property/property/uuidFormat"
         }
       ],
       "shacl:name": "main"
     },
     {
-      "@id": "/any/schema/and/main/property/property/durationFormat",
+      "@id": "#/any/schema/and/main/property/property/durationFormat",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -49,13 +49,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "/any/schema/and/main/property/property/durationFormat/scalar/durationFormat"
+        "@id": "#/any/schema/and/main/property/property/durationFormat/scalar/durationFormat"
       },
       "shacl:minCount": 0,
       "shacl:name": "durationFormat"
     },
     {
-      "@id": "/any/schema/and/main/property/property/uuidFormat",
+      "@id": "#/any/schema/and/main/property/property/uuidFormat",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -68,13 +68,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "/any/schema/and/main/property/property/uuidFormat/scalar/uuidFormat"
+        "@id": "#/any/schema/and/main/property/property/uuidFormat/scalar/uuidFormat"
       },
       "shacl:minCount": 0,
       "shacl:name": "uuidFormat"
     },
     {
-      "@id": "/any/schema/and/main/property/property/durationFormat/scalar/durationFormat",
+      "@id": "#/any/schema/and/main/property/property/durationFormat/scalar/durationFormat",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -91,7 +91,7 @@
       "shacl:name": "durationFormat"
     },
     {
-      "@id": "/any/schema/and/main/property/property/uuidFormat/scalar/uuidFormat",
+      "@id": "#/any/schema/and/main/property/property/uuidFormat/scalar/uuidFormat",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -115,7 +115,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/any/schema"
+        "@id": "#/any/schema"
       },
       "doc:version": "3.1.0",
       "doc:root": false

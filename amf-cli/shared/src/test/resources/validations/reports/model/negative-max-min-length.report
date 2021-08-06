@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#ArrayShape-minCount-minInclusive
   Message: minItems for a RAML Array type must be greater than 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml/declares/array/array-type
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml#/declares/array/array-type
   Property: http://www.w3.org/ns/shacl#minCount
   Position: Some(LexicalInformation([(8,14)-(8,16)]))
   Location: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#ArrayShape-maxCount-minInclusive
   Message: maxItems for a RAML Array type must be greater than 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml/declares/array/array-type
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml#/declares/array/array-type
   Property: http://www.w3.org/ns/shacl#maxCount
   Position: Some(LexicalInformation([(9,14)-(9,16)]))
   Location: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#ScalarShape-minLength-minInclusive
   Message: Min length facet should be greater or equal than 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml/declares/scalar/string-type
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml#/declares/scalar/string-type
   Property: http://www.w3.org/ns/shacl#minLength
   Position: Some(LexicalInformation([(13,15)-(13,17)]))
   Location: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml
@@ -32,7 +32,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#ScalarShape-maxLength-minInclusive
   Message: Max length facet should be greater or equal than 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml/declares/scalar/string-type
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml#/declares/scalar/string-type
   Property: http://www.w3.org/ns/shacl#maxLength
   Position: Some(LexicalInformation([(14,15)-(14,17)]))
   Location: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml
@@ -40,7 +40,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#FileShape-maxLength-minInclusive
   Message: Max length facet should be greater or equal than 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml/declares/file-type
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml#/declares/file-type
   Property: http://www.w3.org/ns/shacl#maxLength
   Position: Some(LexicalInformation([(18,15)-(18,17)]))
   Location: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml
@@ -48,7 +48,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#FileShape-minLength-minInclusive
   Message: Min length facet should be greater or equal than 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml/declares/file-type
+  Target: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml#/declares/file-type
   Property: http://www.w3.org/ns/shacl#minLength
   Position: Some(LexicalInformation([(19,15)-(19,17)]))
   Location: file://amf-cli/shared/src/test/resources/validations/facets/negative-max-min-length.raml

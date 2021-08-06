@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#raml-root-schemes-values
   Message: Protocols must have a case insensitive value matching http or https
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/data/error1.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/data/error1.raml/web-api
   Property: http://a.ml/vocabularies/apiContract#scheme
   Position: Some(LexicalInformation([(7,10)-(8,8)]))
   Location: file://amf-cli/shared/src/test/resources/validations/data/error1.raml

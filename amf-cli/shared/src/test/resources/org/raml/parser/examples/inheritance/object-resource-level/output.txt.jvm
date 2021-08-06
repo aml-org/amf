@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'Player'
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/inheritance/object-resource-level/input.raml#/web-api/end-points/%2Fusers/get/202/application%2Fjson/any/schema/unresolved
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/inheritance/object-resource-level/input.raml/web-api/end-points/%2Fusers/get/202/application%2Fjson/any/schema/unresolved
   Property: 
   Position: Some(LexicalInformation([(89,20)-(89,26)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/inheritance/object-resource-level/input.raml

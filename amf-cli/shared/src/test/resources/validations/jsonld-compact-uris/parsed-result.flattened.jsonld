@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#/web-api",
+      "@id": "#1",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -106,281 +106,6 @@
       }
     },
     {
-      "@id": "#1",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": false,
-      "shacl:property": [
-        {
-          "@id": "#2"
-        },
-        {
-          "@id": "#4"
-        }
-      ],
-      "shacl:name": "A",
-      "apiContract:examples": [
-        {
-          "@id": "#6"
-        },
-        {
-          "@id": "#10"
-        },
-        {
-          "@id": "#15"
-        }
-      ]
-    },
-    {
-      "@id": "#2",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#a"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#3"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "a"
-    },
-    {
-      "@id": "#4",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#b"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#5"
-      },
-      "shacl:minCount": 1,
-      "shacl:name": "b"
-    },
-    {
-      "@id": "#6",
-      "@type": [
-        "apiContract:Example",
-        "doc:DomainElement"
-      ],
-      "core:name": "declared",
-      "doc:strict": true,
-      "doc:structuredValue": {
-        "@id": "#7"
-      },
-      "doc:raw": "a: cristian\nb: pavon"
-    },
-    {
-      "@id": "#10",
-      "@type": [
-        "apiContract:Example",
-        "doc:DomainElement"
-      ],
-      "core:name": "endpoint1",
-      "doc:strict": true,
-      "doc:structuredValue": {
-        "@id": "#11"
-      },
-      "doc:raw": "a: roman\nb: riquelme"
-    },
-    {
-      "@id": "#15",
-      "@type": [
-        "apiContract:Example",
-        "doc:DomainElement"
-      ],
-      "core:name": "endpointP",
-      "doc:strict": true,
-      "doc:structuredValue": {
-        "@id": "#16"
-      },
-      "doc:raw": "a: leonardo\nb: jara"
-    },
-    {
-      "@id": "#3",
-      "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:name": "a"
-    },
-    {
-      "@id": "#5",
-      "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:name": "b"
-    },
-    {
-      "@id": "#7",
-      "@type": [
-        "data:Object",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:a": {
-        "@id": "#8"
-      },
-      "data:b": {
-        "@id": "#9"
-      },
-      "core:name": "object_1"
-    },
-    {
-      "@id": "#11",
-      "@type": [
-        "data:Object",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:a": {
-        "@id": "#12"
-      },
-      "data:b": {
-        "@id": "#13"
-      },
-      "core:name": "object_1"
-    },
-    {
-      "@id": "#16",
-      "@type": [
-        "data:Object",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:a": {
-        "@id": "#17"
-      },
-      "data:b": {
-        "@id": "#18"
-      },
-      "core:name": "object_1"
-    },
-    {
-      "@id": "#8",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:value": "cristian",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "a"
-    },
-    {
-      "@id": "#9",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:value": "pavon",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "b"
-    },
-    {
-      "@id": "#12",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:value": "roman",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "a"
-    },
-    {
-      "@id": "#13",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:value": "riquelme",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "b"
-    },
-    {
-      "@id": "#17",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:value": "leonardo",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "a"
-    },
-    {
-      "@id": "#18",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:value": "jara",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "b"
-    },
-    {
       "@id": "",
       "doc:declares": [
         {
@@ -394,7 +119,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#/web-api"
+        "@id": "#1"
       },
       "doc:version": "3.1.0",
       "doc:root": true
@@ -402,9 +127,7 @@
   ],
   "@context": {
     "@base": "amf://id",
-    "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
-    "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#"

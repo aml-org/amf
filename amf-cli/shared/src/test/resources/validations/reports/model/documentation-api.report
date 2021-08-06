@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#CreativeWork-description-minCount
   Message: API documentation content is mandatory
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/documentation/api.raml/#/web-api/documentation/creative-work/foo
+  Target: file://amf-cli/shared/src/test/resources/validations/documentation/api.raml#/web-api/documentation/creative-work/foo
   Property: http://a.ml/vocabularies/core#description
   Position: Some(LexicalInformation([(4,6)-(5,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/documentation/api.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#CreativeWork-title-minCount
   Message: API documentation title is mandatory
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/documentation/api.raml/#/web-api/documentation/creative-work/null
+  Target: file://amf-cli/shared/src/test/resources/validations/documentation/api.raml#/web-api/documentation/creative-work/null
   Property: http://a.ml/vocabularies/core#title
   Position: Some(LexicalInformation([(5,6)-(6,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/documentation/api.raml

@@ -1,9 +1,9 @@
-<file://api.raml#/web-api> <http://a.ml/vocabularies/core#name> "Modular Recursion API" .
-<file://api.raml#/web-api> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/apiContract#API> .
-<file://api.raml#/web-api> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/apiContract#WebAPI> .
-<file://api.raml#/web-api> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/document#DomainElement> .
-<file://api.raml#/web-api> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/document#RootDomainElement> .
-<file://api.raml> <http://a.ml/vocabularies/document#encodes> <file://api.raml#/web-api> .
+<file://api.raml/web-api> <http://a.ml/vocabularies/core#name> "Modular Recursion API" .
+<file://api.raml/web-api> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/apiContract#API> .
+<file://api.raml/web-api> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/apiContract#WebAPI> .
+<file://api.raml/web-api> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/document#DomainElement> .
+<file://api.raml/web-api> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/document#RootDomainElement> .
+<file://api.raml> <http://a.ml/vocabularies/document#encodes> <file://api.raml/web-api> .
 <file://api.raml> <http://a.ml/vocabularies/document#references> <file://libs/base.raml> .
 <file://api.raml> <http://a.ml/vocabularies/document#references> <file://libs/user.raml> .
 <file://api.raml> <http://a.ml/vocabularies/document#root> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .

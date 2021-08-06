@@ -10,7 +10,7 @@ Level: Violation
 [1] should NOT have additional properties
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/discriminator/discriminator-array-items.raml/#/web-api/endpoint/end-points/%2Finvalid/supportedOperation/put/expects/request/payload/default/array/default/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/discriminator/discriminator-array-items.raml/#/web-api/endpoint/end-points/%2Finvalid/supportedOperation/put/expects/request/payload/default/array/default/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/discriminator/discriminator-array-items.raml#/web-api/endpoint/end-points/%2Finvalid/supportedOperation/put/expects/request/payload/default/array/default/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/discriminator/discriminator-array-items.raml#/web-api/endpoint/end-points/%2Finvalid/supportedOperation/put/expects/request/payload/default/array/default/examples/example/default-example
   Position: Some(LexicalInformation([(39,0)-(42,58)]))
   Location: file://amf-cli/shared/src/test/resources/validations/discriminator/discriminator-array-items.raml

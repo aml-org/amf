@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Payload-mediaType-minCount
   Message: Payload media type is mandatory
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/default-media-type/no-default/input.raml/#/web-api/endpoint/end-points/%2Fbad0/supportedOperation/post/expects/request/payload/default
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/default-media-type/no-default/input.raml#/web-api/endpoint/end-points/%2Fbad0/supportedOperation/post/expects/request/payload/default
   Property: http://a.ml/vocabularies/core#mediaType
   Position: Some(LexicalInformation([(5,4)-(7,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/default-media-type/no-default/input.raml

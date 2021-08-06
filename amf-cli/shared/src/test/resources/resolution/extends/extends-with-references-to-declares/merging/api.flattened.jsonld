@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -11,15 +11,15 @@
       "http://a.ml/vocabularies/core#name": "API",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FresourceTypeMerging"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FresourceTypeMerging"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FtraitMerging"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FtraitMerging"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FresourceTypeMerging",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FresourceTypeMerging",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -27,12 +27,12 @@
       "http://a.ml/vocabularies/apiContract#path": "/resourceTypeMerging",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FtraitMerging",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FtraitMerging",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -40,12 +40,12 @@
       "http://a.ml/vocabularies/apiContract#path": "/traitMerging",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -53,12 +53,12 @@
       "http://a.ml/vocabularies/apiContract#method": "get",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get/expects/request"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get/expects/request"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -66,12 +66,12 @@
       "http://a.ml/vocabularies/apiContract#method": "get",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get/expects/request"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get/expects/request"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get/expects/request",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -79,12 +79,12 @@
       ],
       "http://a.ml/vocabularies/apiContract#parameter": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get/expects/request",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -92,12 +92,12 @@
       ],
       "http://a.ml/vocabularies/apiContract#parameter": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FresourceTypeMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -107,11 +107,11 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog"
       }
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api/endpoint/end-points/%2FtraitMerging/supportedOperation/get/expects/request/parameter/parameter/query/myParam",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -121,11 +121,11 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog"
       }
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -136,19 +136,19 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/property/name"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/property/name"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/property/breed"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/property/breed"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/job"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/job"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "Dog"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/property/name",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/property/name",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -161,13 +161,13 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/property/name/scalar/name"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/property/name/scalar/name"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "name"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/property/breed",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/property/breed",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -180,13 +180,13 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/property/breed/scalar/breed"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/property/breed/scalar/breed"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "breed"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/job",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/job",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -199,13 +199,13 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/job/scalar/job"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/job/scalar/job"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "job"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/property/name/scalar/name",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/property/name/scalar/name",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -221,7 +221,7 @@
       "http://www.w3.org/ns/shacl#name": "name"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/property/breed/scalar/breed",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/property/breed/scalar/breed",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -237,7 +237,7 @@
       "http://www.w3.org/ns/shacl#name": "breed"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/declares/Dog/property/job/scalar/job",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/declares/Dog/property/job/scalar/job",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -261,7 +261,7 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml#/web-api"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/extends-with-references-to-declares/merging/api.raml/web-api"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true

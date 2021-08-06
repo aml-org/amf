@@ -11,7 +11,7 @@ foo should be string
 should match some schema in anyOf
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/anyOf/api3.raml/#/web-api/endpoint/end-points/%2Fep4/supportedOperation/get/returns/200/payload/application%2Fjson/any/schema/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/anyOf/api3.raml/#/web-api/endpoint/end-points/%2Fep4/supportedOperation/get/returns/200/payload/application%2Fjson/any/schema/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/anyOf/api3.raml#/web-api/endpoint/end-points/%2Fep4/supportedOperation/get/returns/200/payload/application%2Fjson/any/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/anyOf/api3.raml#/web-api/endpoint/end-points/%2Fep4/supportedOperation/get/returns/200/payload/application%2Fjson/any/schema/examples/example/default-example
   Position: Some(LexicalInformation([(62,0)-(63,23)]))
   Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/anyOf/api3.raml

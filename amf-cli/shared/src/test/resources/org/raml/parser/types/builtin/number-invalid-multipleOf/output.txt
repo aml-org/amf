@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#ScalarShape-multipleOf-minExclusive
   Message: multipleOf facet for a RAML scalar type must be greater than 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/number-invalid-multipleOf/input.raml/declares/scalar/TestType
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/number-invalid-multipleOf/input.raml#/declares/scalar/TestType
   Property: http://a.ml/vocabularies/shapes#multipleOf
   Position: Some(LexicalInformation([(6,20)-(6,21)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/number-invalid-multipleOf/input.raml

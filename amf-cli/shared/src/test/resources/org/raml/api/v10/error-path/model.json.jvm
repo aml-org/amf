@@ -10,16 +10,16 @@ Level: Violation
 /1/1 expected type: Number, found: String
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/array/Matrix/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/array/Matrix/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/array/Matrix/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/array/Matrix/examples/example/default-example
   Position: Some(LexicalInformation([(6,13)-(6,39)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /family/1 expected type: String, found: Integer
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/User/examples/example/badExample
-  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/User/examples/example/badExample
+  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/User/examples/example/badExample
+  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/User/examples/example/badExample
   Position: Some(LexicalInformation([(26,0)-(31,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
@@ -28,8 +28,8 @@ Level: Violation
 required key [family] not found
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/User/examples/example/anotherBadExample
-  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/User/examples/example/anotherBadExample
+  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/User/examples/example/anotherBadExample
+  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/User/examples/example/anotherBadExample
   Position: Some(LexicalInformation([(32,0)-(33,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
@@ -38,8 +38,8 @@ required key [family] not found
 /name expected type: String, found: Integer
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/User/examples/example/anotherOne
-  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/User/examples/example/anotherOne
+  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/User/examples/example/anotherOne
+  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/User/examples/example/anotherOne
   Position: Some(LexicalInformation([(34,0)-(39,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
@@ -49,15 +49,15 @@ required key [family] not found
 /users/2/age expected type: Integer, found: String
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/Book/examples/example/one
-  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/Book/examples/example/one
+  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/Book/examples/example/one
+  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/Book/examples/example/one
   Position: Some(LexicalInformation([(51,0)-(72,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /authors/1 expected type: String, found: Integer
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/Book/examples/example/two
-  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml/declares/Book/examples/example/two
+  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/Book/examples/example/two
+  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declares/Book/examples/example/two
   Position: Some(LexicalInformation([(73,0)-(84,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml

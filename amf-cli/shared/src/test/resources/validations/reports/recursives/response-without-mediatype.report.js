@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: prop should be array
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/response-without-mediatype.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/returns/200/payload/default/default/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/response-without-mediatype.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/returns/200/payload/default/default/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/response-without-mediatype.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/returns/200/payload/default/default/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/response-without-mediatype.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/returns/200/payload/default/default/examples/example/default-example
   Position: Some(LexicalInformation([(24,18)-(27,19)]))
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/response-without-mediatype.raml

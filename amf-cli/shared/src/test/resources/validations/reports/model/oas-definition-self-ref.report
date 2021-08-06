@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas-definition-self-ref.yaml/declares/any/underChannel2
+  Target: file://amf-cli/shared/src/test/resources/validations/oas-definition-self-ref.yaml#/declares/any/underChannel2
   Property: 
   Position: Some(LexicalInformation([(12,2)-(15,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/oas-definition-self-ref.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas-definition-self-ref.yaml/declares/recursiveObject
+  Target: file://amf-cli/shared/src/test/resources/validations/oas-definition-self-ref.yaml#/declares/recursiveObject
   Property: 
   Position: Some(LexicalInformation([(15,2)-(19,29)]))
   Location: file://amf-cli/shared/src/test/resources/validations/oas-definition-self-ref.yaml

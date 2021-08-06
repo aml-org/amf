@@ -75,7 +75,7 @@ case class ExtendsHelper(profile: ProfileName,
         val operation = ctxForTrait.factory
           .operationParser(entry, id, true)
           .parse()
-        new IdAdopter(operation, extensionId + "/applied").adopt()
+        new IdAdopter(operation, extensionId + "/applied").adoptFromRelative()
         operation
       }
     }
@@ -176,7 +176,7 @@ case class ExtendsHelper(profile: ProfileName,
 
     collector.toList match {
       case element :: _ =>
-        new IdAdopter(element, extensionId + "/applied").adopt()
+        new IdAdopter(element, extensionId + "/applied").adoptFromRelative()
         new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(element, errorHandler)
       case Nil =>
         errorHandler.violation(

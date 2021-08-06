@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/apiContract#API",
@@ -12,17 +12,17 @@
       "http://a.ml/vocabularies/core#version": "1",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -30,42 +30,42 @@
       "http://a.ml/vocabularies/apiContract#path": "/end{point",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/source-vendor/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -74,72 +74,72 @@
       "http://a.ml/vocabularies/apiContract#returns": [],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,18)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(4,25)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(15,3)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(16,1)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(14,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(13,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/endpoint/end-points/%2Fend%7Bpoint/supportedOperation/get/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(12,9)]"
     },
@@ -152,7 +152,7 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json/#/web-api"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true

@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#server": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F",
+            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,13 +35,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#urlTemplate"
@@ -56,10 +56,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F"
+                        "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -80,7 +80,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint",
+            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -92,7 +92,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get",
+                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -104,7 +104,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -112,7 +112,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -134,7 +134,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version/scalar/version",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version/scalar/version",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -156,16 +156,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version/source-map/synthesized-field/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version"
+                                    "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -175,7 +175,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -194,7 +194,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#header": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -221,7 +221,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -231,7 +231,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -246,16 +246,16 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -269,7 +269,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar_1",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -284,16 +284,16 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar_1/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar_1/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar_1/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar_1/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar_1"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/inherits/union/default-union/anyOf/scalar/default-scalar_1"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -319,7 +319,7 @@
                             ],
                             "http://a.ml/vocabularies/apiContract#examples": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample",
                                 "@type": [
                                   "http://a.ml/vocabularies/apiContract#Example",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -336,7 +336,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#structuredValue": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -359,13 +359,13 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1/source-map/synthesized-field/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1/source-map/synthesized-field/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -378,7 +378,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1/source-map/synthesized-field/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1/source-map/synthesized-field/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -393,10 +393,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1"
+                                                "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/stringExample/scalar_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -417,13 +417,13 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map/synthesized-field/element_1",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map/synthesized-field/element_1",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://a.ml/vocabularies/document#strict"
@@ -436,7 +436,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map/synthesized-field/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map/synthesized-field/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://a.ml/vocabularies/document#raw"
@@ -451,10 +451,10 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -466,15 +466,15 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#tracked-element": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map/tracked-element/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample/source-map/tracked-element/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/stringExample"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union"
                                           }
                                         ]
                                       }
@@ -483,7 +483,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample",
                                 "@type": [
                                   "http://a.ml/vocabularies/apiContract#Example",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -500,7 +500,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#structuredValue": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -523,13 +523,13 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1/source-map/synthesized-field/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1/source-map/synthesized-field/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -542,7 +542,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1/source-map/synthesized-field/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1/source-map/synthesized-field/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -557,10 +557,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1"
+                                                "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/examples/example/numberExample/scalar_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -581,13 +581,13 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map/synthesized-field/element_1",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map/synthesized-field/element_1",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://a.ml/vocabularies/document#strict"
@@ -600,7 +600,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map/synthesized-field/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map/synthesized-field/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://a.ml/vocabularies/document#raw"
@@ -615,10 +615,10 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -630,15 +630,15 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#tracked-element": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map/tracked-element/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample/source-map/tracked-element/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/example/numberExample"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union"
+                                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union"
                                           }
                                         ]
                                       }
@@ -649,16 +649,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -670,7 +670,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -683,7 +683,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/apiContract#examples"
@@ -696,10 +696,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/union/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -715,13 +715,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -736,10 +736,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union"
+                                    "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -749,7 +749,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/expects/request/header/parameter/header/x-union/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -770,16 +770,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -795,16 +795,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint"
+                        "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -814,7 +814,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/#/web-api/endpoint/end-points/%2Fendpoint/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/endpoint/end-points/%2Fendpoint/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -833,16 +833,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/web-api#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/web-api#/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -854,7 +854,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/web-api#/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/apiContract#server"
@@ -867,7 +867,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/web-api#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"
@@ -880,7 +880,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/web-api#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#version"
@@ -893,10 +893,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/web-api#/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/production/example-in-union.raml/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
