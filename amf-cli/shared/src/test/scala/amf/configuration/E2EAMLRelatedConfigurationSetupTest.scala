@@ -1,13 +1,14 @@
 package amf.configuration
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.apicontract.client.scala.APIConfiguration
 import amf.core.internal.remote.{AmlDialectSpec, Spec}
 import amf.core.internal.remote.Spec.AML
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class E2EDialectParserConfigurationSetupTest extends AsyncFunSuite with Matchers {
+class E2EAMLRelatedConfigurationSetupTest extends AsyncFunSuite with Matchers {
 
   private val baseConfig = AMLConfiguration.predefined()
   private val base       = "file://amf-cli/shared/src/test/resources/configuration/"
@@ -34,6 +35,14 @@ class E2EDialectParserConfigurationSetupTest extends AsyncFunSuite with Matchers
 
   test("Vocabulary has AML SourceVendor") {
     checkValidAndSourceVendor("vocabulary.yaml", AML)
+  }
+
+  test("API Configuration can validate dialect instance") {
+    val config = APIConfiguration.API()
+    config.withDialect(s"${base}dialect.yaml")
+      .flatMap { config => config.baseUnitClient().parse(base + "instance.yaml") }
+      .flatMap { result => config.baseUnitClient().validate(result.baseUnit) }
+      .map { result => result.conforms shouldBe true }
   }
 
   private def checkValidAndSourceVendor(file: String,
