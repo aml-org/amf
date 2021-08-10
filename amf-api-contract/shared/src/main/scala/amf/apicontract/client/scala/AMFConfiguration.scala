@@ -10,7 +10,6 @@ import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20P
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
-import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.transformation.compatibility.{
   Oas20CompatibilityPipeline,
   Oas3CompatibilityPipeline,
@@ -32,6 +31,7 @@ import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
+import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
 
