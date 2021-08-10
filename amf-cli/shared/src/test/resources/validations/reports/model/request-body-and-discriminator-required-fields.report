@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#content-required
   Message: Request body must have a 'content' field defined
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json/web-api/end-points/%2Ftest/get/requestBody
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json/web-api/end-points/%2Ftest/get/request%2FrequestBody
   Property: 
   Position: Some(LexicalInformation([(12,23)-(15,9)]))
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#discriminator-name-required
   Message: Discriminator must have a propertyName defined
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json/web-api/end-points/%2Ftest/get/200/application%2Fjson#/schema
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json/web-api/end-points/%2Ftest/get/resp/200/application%2Fjson#/shape/schema
   Property: 
   Position: Some(LexicalInformation([(23,35)-(24,19)]))
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json

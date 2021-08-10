@@ -11,8 +11,8 @@ employees[1].email should match pattern "^.+@.+\..+$"
 employees[2].name should be string
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declares/Office/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declares/Office/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declares/shape/Office/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declares/shape/Office/examples/example/default-example
   Position: Some(LexicalInformation([(19,12)-(42,13)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
 

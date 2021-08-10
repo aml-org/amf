@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#exclusive-properties-error
   Message: Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml#/declarations/securitySchemes/custom_with_query_param
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml#/declarations/securitySchemes/%2Fscheme%2Fcustom_with_query_param
   Property: 
   Position: Some(LexicalInformation([(8,0)-(12,0)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/security-scheme/describedby-exclusive-keys/input.raml

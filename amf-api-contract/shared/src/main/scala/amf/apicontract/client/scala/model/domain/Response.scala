@@ -68,7 +68,7 @@ class Response(override val fields: Fields, override val annotations: Annotation
   override def linkCopy(): Response = Response().withId(id)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/" + name.option().getOrElse("default-response").urlComponentEncoded
+  private[amf] override def componentId: String = "/resp/" + name.option().getOrElse("default-response").urlComponentEncoded
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Response.apply

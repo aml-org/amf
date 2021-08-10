@@ -31,7 +31,7 @@ case class Callback(fields: Fields, annotations: Annotations) extends NamedDomai
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String =
-    "/" + name.option().getOrElse("default-callback").urlComponentEncoded +
+    "/callback/" +
       s"/${expression.option().getOrElse("default-expression").urlComponentEncoded}"
   override def nameField: Field = Name
 

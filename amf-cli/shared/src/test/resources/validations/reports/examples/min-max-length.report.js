@@ -10,7 +10,7 @@ Level: Violation
 name should NOT be shorter than 5 characters
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml#/declares/User/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml#/declares/User/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml#/declares/shape/User/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml#/declares/shape/User/examples/example/default-example
   Position: Some(LexicalInformation([(15,0)-(16,26)]))
   Location: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml

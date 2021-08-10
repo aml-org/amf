@@ -8,7 +8,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape-warning
   Message: Property 'tokenUrl' is required in a OAS 2.0 password node
   Level: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/oas2/security/missing-tokenUrl-oauth2.json#/declarations/securitySchemes/oauth_2_auth
+  Target: file://amf-cli/shared/src/test/resources/validations/oas2/security/missing-tokenUrl-oauth2.json#/declarations/securitySchemes/%2Fscheme%2Foauth_2_auth
   Property: 
   Position: Some(LexicalInformation([(9,20)-(13,5)]))
   Location: file://amf-cli/shared/src/test/resources/validations/oas2/security/missing-tokenUrl-oauth2.json

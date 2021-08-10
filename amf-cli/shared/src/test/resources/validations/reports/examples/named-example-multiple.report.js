@@ -10,7 +10,7 @@ Level: Violation
 should have required property 'name'
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/api.raml#/declares/Person/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/api.raml#/declares/Person/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/api.raml#/declares/shape/Person/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/api.raml#/declares/shape/Person/examples/example/default-example
   Position: Some(LexicalInformation([(2,0)-(7,9)]))
   Location: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/example.raml

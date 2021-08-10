@@ -512,7 +512,7 @@
       ],
       "http://a.ml/vocabularies/core#name": "oauth2",
       "http://a.ml/vocabularies/security#scheme": {
-        "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2"
+        "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -1128,7 +1128,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2",
       "@type": [
         "http://a.ml/vocabularies/security#SecurityScheme",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -1137,15 +1137,15 @@
       "http://a.ml/vocabularies/security#type": "OAuth 2.0",
       "http://a.ml/vocabularies/apiContract#parameter": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token"
         }
       ],
       "http://a.ml/vocabularies/security#settings": {
-        "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2"
+        "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map"
         }
       ]
     },
@@ -1937,7 +1937,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(51,4)-(57,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -1948,16 +1948,16 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema"
+        "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2",
       "@type": [
         "http://a.ml/vocabularies/security#OAuth2Settings",
         "http://a.ml/vocabularies/security#Settings",
@@ -1968,40 +1968,40 @@
       ],
       "http://a.ml/vocabularies/security#flows": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_4"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_3"
         }
       ]
     },
@@ -2743,7 +2743,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(54,6)-(55,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2760,34 +2760,34 @@
       "http://a.ml/vocabularies/core#description": "Apply access token here.",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow",
       "@type": [
         "http://a.ml/vocabularies/security#OAuth2Flow",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -2796,59 +2796,59 @@
       "http://a.ml/vocabularies/security#accessTokenUri": "https://token.com",
       "http://a.ml/vocabularies/security#scope": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/scope/profile"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/scope/profile"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/scope/email"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/scope/email"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_4",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#parameter",
       "http://a.ml/vocabularies/document-source-maps#value": "[(26,6)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,2)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#settings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,4)-(25,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,4)-(20,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,2)-(18,8)]"
     },
@@ -3232,49 +3232,49 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#binding",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(29,10)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,8)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,8)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/scope/profile",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/scope/profile",
       "@type": [
         "http://a.ml/vocabularies/security#Scope",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -3282,7 +3282,7 @@
       "http://a.ml/vocabularies/core#name": "profile"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/scope/email",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/scope/email",
       "@type": [
         "http://a.ml/vocabularies/security#Scope",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -3290,32 +3290,32 @@
       "http://a.ml/vocabularies/core#name": "email"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,13)-(25,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#authorizationGrant",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,6)-(24,0)]"
     },
@@ -3485,50 +3485,50 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(49,27)-(49,32)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,10)-(28,14)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,10)-(29,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(29,10)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/parameter/parameter/query/access_token/scalar/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token/scalar/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,8)-(30,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#accessTokenUri",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(22,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#authorizationUri",
       "http://a.ml/vocabularies/document-source-maps#value": "[(22,6)-(23,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,6)-(25,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2/settings/oauth2/flows/default-flow",
+      "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/settings/oauth2/flows/default-flow",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,0)-(25,0)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/oauth2"
+          "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2"
         }
       ],
       "@type": [

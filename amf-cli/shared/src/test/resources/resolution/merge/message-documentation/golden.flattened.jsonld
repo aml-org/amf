@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "testId/message",
+      "@id": "testId/resp/message",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -9,11 +9,11 @@
       ],
       "http://a.ml/vocabularies/core#name": "message",
       "http://a.ml/vocabularies/core#documentation": {
-        "@id": "target/message/creative-work/baseUrl"
+        "@id": "target/resp/message/creative-work/baseUrl"
       }
     },
     {
-      "@id": "target/message/creative-work/baseUrl",
+      "@id": "target/resp/message/creative-work/baseUrl",
       "@type": [
         "http://a.ml/vocabularies/core#CreativeWork",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -34,7 +34,7 @@
         "http://a.ml/vocabularies/document#Unit"
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "testId/message"
+        "@id": "testId/resp/message"
       },
       "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false

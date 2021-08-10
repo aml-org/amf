@@ -53,19 +53,19 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode"
         },
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray"
@@ -84,7 +84,7 @@
       "http://a.ml/vocabularies/document#root": true
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -95,13 +95,13 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "baseType2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map"
         }
       ]
     },
@@ -126,7 +126,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -138,17 +138,17 @@
       "http://www.w3.org/ns/shacl#name": "myUnion",
       "http://a.ml/vocabularies/shapes#inherits": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -159,18 +159,18 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "baseType1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -181,16 +181,16 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "myNode",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map"
         }
       ]
     },
@@ -204,7 +204,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#items": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node"
       },
       "http://www.w3.org/ns/shacl#name": "myArray",
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -214,7 +214,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -227,40 +227,40 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/scalar/baseProp2"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/scalar/baseProp2"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "baseProp2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/declared-element/element_0"
         }
       ]
     },
@@ -274,7 +274,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#items": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -307,7 +307,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union",
       "@type": [
         "http://a.ml/vocabularies/shapes#UnionShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -317,52 +317,52 @@
       ],
       "http://a.ml/vocabularies/shapes#anyOf": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/declared-element/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -375,45 +375,45 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/scalar/baseProp1"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/scalar/baseProp1"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "baseProp1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/declared-element/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -426,18 +426,18 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "baseType1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -450,45 +450,45 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
       "http://www.w3.org/ns/shacl#name": "baseType2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/declared-element/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -498,13 +498,13 @@
       ],
       "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1"
         }
       ],
       "http://a.ml/vocabularies/document#link-label": "baseType1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map"
         }
       ]
     },
@@ -533,7 +533,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/scalar/baseProp2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/scalar/baseProp2",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -549,59 +549,59 @@
       "http://www.w3.org/ns/shacl#name": "baseProp2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/scalar/baseProp2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/scalar/baseProp2/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,15)-(12,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(8,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(12,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -611,13 +611,13 @@
       ],
       "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1"
         }
       ],
       "http://a.ml/vocabularies/document#link-label": "baseType1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node/source-map"
         }
       ]
     },
@@ -658,7 +658,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,4)-(16,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -668,18 +668,18 @@
       ],
       "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1"
         }
       ],
       "http://a.ml/vocabularies/document#link-label": "baseType1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node_1",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -689,64 +689,64 @@
       ],
       "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2"
         }
       ],
       "http://a.ml/vocabularies/document#link-label": "baseType2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node_1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node_1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-expression": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/source-map/type-expression/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/source-map/type-expression/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,4)-(24,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,2)-(23,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#inherits",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,4)-(26,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,2)-(26,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/scalar/baseProp1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/scalar/baseProp1",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -762,59 +762,59 @@
       "http://www.w3.org/ns/shacl#name": "baseProp1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/scalar/baseProp1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/scalar/baseProp1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,15)-(8,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(4,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(8,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -824,41 +824,41 @@
       ],
       "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1"
         }
       ],
       "http://a.ml/vocabularies/document#link-label": "baseType1",
       "http://www.w3.org/ns/shacl#name": "baseType1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -868,85 +868,85 @@
       ],
       "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2"
         }
       ],
       "http://a.ml/vocabularies/document#link-label": "baseType2",
       "http://www.w3.org/ns/shacl#name": "baseType2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,15)-(23,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,2)-(18,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,2)-(23,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-expression": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map/type-expression/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map/type-expression/element_0"
         }
       ]
     },
@@ -971,55 +971,55 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(13,8)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/scalar/baseProp2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/scalar/baseProp2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/scalar/baseProp2/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/scalar/baseProp2/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/scalar/baseProp2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/scalar/baseProp2/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(12,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,17)-(10,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node/source-map/lexical/element_0"
         }
       ]
     },
@@ -1034,262 +1034,262 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,10)-(16,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node_1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node_1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node_1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node_1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node_1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/source-map/type-expression/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/source-map/type-expression/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union",
       "http://a.ml/vocabularies/document-source-maps#value": "baseType1 | baseType2"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,4)-(26,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/scalar/baseProp1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/scalar/baseProp1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/scalar/baseProp1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/scalar/baseProp1/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/scalar/baseProp1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/scalar/baseProp1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,6)-(8,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,17)-(6,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,6)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,17)-(20,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2/source-map/synthesized-field/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(23,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,17)-(21,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,10)-(13,21)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node/source-map/type-expression/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node/source-map/type-expression/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myArray/shape/default-node",
       "http://a.ml/vocabularies/document-source-maps#value": "baseType1"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/scalar/baseProp2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/scalar/baseProp2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/scalar/baseProp2/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/scalar/baseProp2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(12,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/baseType2/property/property/baseProp2/scalar/baseProp2/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType2/property/property/baseProp2/scalar/baseProp2/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,17)-(10,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/shape/default-node",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,10)-(16,19)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,10)-(24,19)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node_1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node_1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myUnion/inherits/union/default-union/anyOf/default-node_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node_1/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myUnion/inherits/union/default-union/anyOf/shape/default-node_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,22)-(24,31)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/scalar/baseProp1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/scalar/baseProp1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/scalar/baseProp1/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/scalar/baseProp1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,6)-(8,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/array/myMatrix/array/default-array/default-node/baseType1/property/property/baseProp1/scalar/baseProp1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/baseType1/property/property/baseProp1/scalar/baseProp1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,17)-(6,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType1/baseType1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType1/shape/baseType1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,17)-(20,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2/source-map/synthesized-field/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/myNode/property/property/baseType2/baseType2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/closures-full-valid/api.raml#/declares/shape/myNode/property/property/baseType2/shape/baseType2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,17)-(21,26)]"
     }
   ]

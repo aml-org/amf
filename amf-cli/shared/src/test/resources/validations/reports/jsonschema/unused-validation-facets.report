@@ -16,7 +16,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#NodeShape-unevaluatedPropertiesSchema-maxCount
   Message: Unevaluated properties facet won't be taken into account in validation
   Level: Warning
-  Target: amf-cli/shared/src/test/resources/validations/jsonschema/unused-validation-facets.json#/any/schema/and/array/main/other
+  Target: amf-cli/shared/src/test/resources/validations/jsonschema/unused-validation-facets.json#/any/schema/and/array/main/shape/other
   Property: http://a.ml/vocabularies/shapes#unevaluatedPropertiesSchema
   Position: Some(LexicalInformation([(16,6)-(19,7)]))
   Location: amf-cli/shared/src/test/resources/validations/jsonschema/unused-validation-facets.json

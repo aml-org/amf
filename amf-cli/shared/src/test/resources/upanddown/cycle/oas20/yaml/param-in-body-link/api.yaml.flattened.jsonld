@@ -278,7 +278,7 @@
       ],
       "http://a.ml/vocabularies/core#name": "bp",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -294,7 +294,7 @@
       ],
       "http://a.ml/vocabularies/core#name": "fp",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -303,7 +303,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -315,7 +315,7 @@
       "http://www.w3.org/ns/shacl#name": "bp",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map"
         }
       ]
     },
@@ -347,7 +347,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -359,7 +359,7 @@
       "http://www.w3.org/ns/shacl#name": "fp",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp/source-map"
         }
       ]
     },
@@ -396,28 +396,28 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map/parameter-binding-in-body-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map/parameter-binding-in-body-lexical-info/element_0"
         }
       ]
     },
@@ -447,23 +447,23 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -498,38 +498,38 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,6)-(20,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,4)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp/source-map/parameter-binding-in-body-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/bp",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp/source-map/parameter-binding-in-body-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/bp/shape/bp",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,4)-(19,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp",
       "http://a.ml/vocabularies/document-source-maps#value": "[(22,2)-(25,12)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/fp",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/param-in-body-link/api.yaml#/declares/fp/shape/fp",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,4)-(24,8)]"
     }
   ]

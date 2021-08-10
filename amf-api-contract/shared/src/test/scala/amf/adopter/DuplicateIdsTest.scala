@@ -1,16 +1,15 @@
-package amf.parser
+package amf.adopter
 
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, AsyncAPIConfiguration, OASConfiguration, RAMLConfiguration}
+import amf.apicontract.client.scala._
 import amf.core.client.common.transform.PipelineId
-import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.document.FieldsFilter.All
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.traversal.iterator.{AmfElementStrategy, InstanceCollector}
 import amf.core.internal.remote.Spec
-import org.scalatest.{Assertion, AsyncFunSuite}
 import org.mulesoft.common.collections.FilterType
 import org.scalatest.Matchers.{fail, succeed}
+import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
 

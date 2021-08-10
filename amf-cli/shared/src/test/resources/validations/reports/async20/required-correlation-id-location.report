@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#CorrelationId-location-minCount
   Message: 'location' field is mandatory in CorrelationId
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-correlation-id-location.yaml#/async-api/endpoint/end-points/user%2F%7B%24%24%7D%2Fsignup/supportedOperation/publish/expects/request/default-id
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-correlation-id-location.yaml#/async-api/endpoint/end-points/user%2F%7B%24%24%7D%2Fsignup/supportedOperation/publish/expects/request/correlation-id/default-id
   Property: http://a.ml/vocabularies/core#location
   Position: Some(LexicalInformation([(10,0)-(10,27)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-correlation-id-location.yaml

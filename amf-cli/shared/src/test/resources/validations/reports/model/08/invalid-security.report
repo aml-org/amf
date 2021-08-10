@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-type-pattern
   Message: Security scheme type should be one of the supported ones
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/08/invalid-security.raml#/declares/auth
+  Target: file://amf-cli/shared/src/test/resources/validations/08/invalid-security.raml#/declares/scheme/auth
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(7,12)-(7,17)]))
   Location: file://amf-cli/shared/src/test/resources/validations/08/invalid-security.raml
@@ -18,7 +18,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: OAS security scheme type detected in RAML spec
   Level: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/08/invalid-security.raml#/declarations/securitySchemes/other
+  Target: file://amf-cli/shared/src/test/resources/validations/08/invalid-security.raml#/declarations/securitySchemes/%2Fscheme%2Fother
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(9,12)-(9,16)]))
   Location: file://amf-cli/shared/src/test/resources/validations/08/invalid-security.raml

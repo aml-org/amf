@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: ['note1'] should be integer
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/examples/pattern-properties/pattern_properties.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/returns/200/payload/application%2Fjson/schema/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/examples/pattern-properties/pattern_properties.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/returns/200/payload/application%2Fjson/schema/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/examples/pattern-properties/pattern_properties.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/examples/pattern-properties/pattern_properties.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
   Position: Some(LexicalInformation([(18,0)-(19,65)]))
   Location: file://amf-cli/shared/src/test/resources/validations/examples/pattern-properties/pattern_properties.raml

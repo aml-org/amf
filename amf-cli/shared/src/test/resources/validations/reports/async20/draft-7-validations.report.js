@@ -18,8 +18,8 @@ Level: Violation
 should match "then" schema
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/conditional-subschemas/examples/example/default-example_1
-  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/conditional-subschemas/examples/example/default-example_1
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/conditional-subschemas/examples/example/default-example_1
+  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/conditional-subschemas/examples/example/default-example_1
   Position: Some(LexicalInformation([(32,6)-(35,7)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml
 
@@ -28,8 +28,8 @@ should match "then" schema
 should match "else" schema
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/conditional-subschemas/examples/example/default-example_4
-  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/conditional-subschemas/examples/example/default-example_4
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/conditional-subschemas/examples/example/default-example_4
+  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/conditional-subschemas/examples/example/default-example_4
   Position: Some(LexicalInformation([(44,6)-(47,7)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml
 
@@ -38,8 +38,8 @@ should match "else" schema
 should match pattern "^[A-Za-z]*$"
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/property-names/examples/example/default-example_1
-  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/property-names/examples/example/default-example_1
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/property-names/examples/example/default-example_1
+  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/property-names/examples/example/default-example_1
   Position: Some(LexicalInformation([(55,7)-(55,30)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml
 
@@ -64,16 +64,16 @@ should contain a valid item
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: b should be > 0
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/exclusive-with-values/examples/example/default-example_1
-  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/exclusive-with-values/examples/example/default-example_1
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/exclusive-with-values/examples/example/default-example_1
+  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/exclusive-with-values/examples/example/default-example_1
   Position: Some(LexicalInformation([(96,8)-(99,9)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: a should be < 100
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/exclusive-with-values/examples/example/default-example_2
-  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/exclusive-with-values/examples/example/default-example_2
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/exclusive-with-values/examples/example/default-example_2
+  Property: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declares/shape/exclusive-with-values/examples/example/default-example_2
   Position: Some(LexicalInformation([(100,8)-(103,9)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml
 

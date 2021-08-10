@@ -8,23 +8,23 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /b/c/a/a expected type: String, found: Integer
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/A/examples/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/A/examples/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/shape/A/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/shape/A/examples/example/invalid
   Position: Some(LexicalInformation([(18,0)-(25,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /c/a/b/b expected type: String, found: Integer
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/A/property/property/b/b%3F/B/examples/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/A/property/property/b/b%3F/B/examples/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/shape/B/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/shape/B/examples/example/invalid
   Position: Some(LexicalInformation([(39,0)-(46,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /a/b/c/c expected type: String, found: Integer
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/A/property/property/b/b%3F/B/property/property/c/c%3F/C/examples/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/A/property/property/b/b%3F/B/property/property/c/c%3F/C/examples/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/shape/C/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml#/declares/shape/C/examples/example/invalid
   Position: Some(LexicalInformation([(60,0)-(66,18)]))
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/props2.raml

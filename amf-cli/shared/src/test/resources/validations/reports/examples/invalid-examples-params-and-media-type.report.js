@@ -40,15 +40,15 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be string
   Level: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/end-points/%2Ftest%2F%7BitemId%7D/supportedOperation/get/expects/requestBody/payload/application%2Fjson/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/end-points/%2Ftest%2F%7BitemId%7D/supportedOperation/get/expects/requestBody/payload/application%2Fjson/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/end-points/%2Ftest%2F%7BitemId%7D/supportedOperation/get/expects/request%2FrequestBody/payload/application%2Fjson/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/end-points/%2Ftest%2F%7BitemId%7D/supportedOperation/get/expects/request%2FrequestBody/payload/application%2Fjson/examples/example/default-example
   Position: Some(LexicalInformation([(90,25)-(90,26)]))
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: a should be number
   Level: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/end-points/%2Ftest%2F%7BitemId%7D/supportedOperation/get/returns/200/payload/application%2Fjson/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/end-points/%2Ftest%2F%7BitemId%7D/supportedOperation/get/returns/200/payload/application%2Fjson/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/end-points/%2Ftest%2F%7BitemId%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/endpoint/end-points/%2Ftest%2F%7BitemId%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/examples/example/default-example
   Position: Some(LexicalInformation([(107,27)-(107,55)]))
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json

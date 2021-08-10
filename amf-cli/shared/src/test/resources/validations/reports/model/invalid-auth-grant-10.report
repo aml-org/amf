@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Settings-authorizationGrant-pattern
   Message: Invalid authorization grant. The options are: authorization_code, password, client_credentials, implicit or any valid absolute URI
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/security-schemes/raml10AuthorizationGrant.raml#/declares/invalid/settings/oauth2
+  Target: file://amf-cli/shared/src/test/resources/validations/security-schemes/raml10AuthorizationGrant.raml#/declares/scheme/invalid/settings/oauth2
   Property: http://a.ml/vocabularies/security#authorizationGrant
   Position: Some(LexicalInformation([(11,31)-(11,109)]))
   Location: file://amf-cli/shared/src/test/resources/validations/security-schemes/raml10AuthorizationGrant.raml

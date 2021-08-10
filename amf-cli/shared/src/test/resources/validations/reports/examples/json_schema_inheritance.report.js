@@ -16,7 +16,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#json-schema-inheritance
   Message: Invalid reference to JSON Schema
   Level: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml#/declarations/types/Person/schema
+  Target: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml#/declarations/types/shape/Person/shape/schema
   Property: http://a.ml/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(18,4)-(21,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml
@@ -24,7 +24,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#json-schema-inheritance
   Message: Invalid reference to JSON Schema
   Level: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml#/declarations/types/PersonObject/property/a/a
+  Target: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml#/declarations/types/shape/PersonObject/property/a/shape/a
   Property: http://a.ml/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(23,4)-(24,29)]))
   Location: file://amf-cli/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml
