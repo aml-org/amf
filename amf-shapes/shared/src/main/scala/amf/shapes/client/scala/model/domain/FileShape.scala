@@ -21,7 +21,7 @@ case class FileShape private[amf] (override val fields: Fields, override val ann
   override val meta: AnyShapeModel = FileShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/" + name.option().getOrElse("default-file").urlComponentEncoded
+  private[amf] override def componentId: String = "/file-shape/" + name.option().getOrElse("default-file").urlComponentEncoded
 
   private[amf] override val ramlSyntaxKey: String = "fileShape"
 

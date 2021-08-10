@@ -1363,7 +1363,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
       shape.examples.asSeq
         .find(_.id.equals(
-          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declares/A/examples/example/declared"))
+          "file://amf-cli/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declares/shape/A/examples/example/declared"))
         .head
         .annotations()
         .isTracked should be(false)

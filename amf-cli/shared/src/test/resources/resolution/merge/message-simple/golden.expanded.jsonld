@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "testId/message",
+        "@id": "testId/resp/message",
         "@type": [
           "http://a.ml/vocabularies/apiContract#Response",
           "http://a.ml/vocabularies/apiContract#Message",
@@ -27,7 +27,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#payload": [
           {
-            "@id": "target/message/traitContentType",
+            "@id": "target/resp/message/traitContentType",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Payload",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -44,7 +44,7 @@
             ],
             "http://a.ml/vocabularies/shapes#schema": [
               {
-                "@id": "target/message/default/scalar/schema",
+                "@id": "target/resp/message/default/scalar/schema",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",

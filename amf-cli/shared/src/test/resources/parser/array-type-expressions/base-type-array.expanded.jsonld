@@ -109,7 +109,7 @@
         ],
         "http://a.ml/vocabularies/shapes#items": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/shape/items",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -119,7 +119,7 @@
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person"
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person"
               }
             ],
             "http://a.ml/vocabularies/document#link-label": [
@@ -134,13 +134,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/shape/items/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/shape/items/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -155,10 +155,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/shape/items/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items"
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/shape/items"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -286,7 +286,7 @@
         ],
         "http://a.ml/vocabularies/shapes#items": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/default-node",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -296,7 +296,7 @@
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person"
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person"
               }
             ],
             "http://a.ml/vocabularies/document#link-label": [
@@ -306,13 +306,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/default-node/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/default-node/source-map/synthesized-field/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node/source-map/synthesized-field/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -325,7 +325,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/default-node/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/document#link-label"
@@ -340,10 +340,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/default-node/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/default-node"
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -355,10 +355,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#type-expression": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/default-node/source-map/type-expression/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node/source-map/type-expression/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/default-node"
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myTypeExpression/shape/default-node"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -463,7 +463,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person",
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -478,7 +478,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -492,7 +492,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/scalar/name",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -512,16 +512,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/scalar/name/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/scalar/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/scalar/name/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/scalar/name/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/scalar/name"
+                            "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/scalar/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -531,7 +531,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/scalar/name/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/scalar/name/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -560,13 +560,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/source-map/synthesized-field/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/source-map/synthesized-field/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#path"
@@ -579,7 +579,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -594,10 +594,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name"
+                        "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -607,7 +607,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/property/property/name/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/property/property/name/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/shapes#range"
@@ -631,13 +631,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/source-map/synthesized-field/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#closed"
@@ -652,7 +652,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#property"
@@ -665,7 +665,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -678,10 +678,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -693,10 +693,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/array/myArray/items/Person"
+                    "@value": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declares/shape/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
