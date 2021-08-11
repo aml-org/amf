@@ -24,7 +24,7 @@ class YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with Payload
   test("payload validation") {
 
     val validator =
-      ramlConfig.payloadValidatorFactory().createFor(ScalarShape(), `application/yaml`, StrictValidationMode)
+      ramlConfig.elementClient().payloadValidatorFor(ScalarShape(), `application/yaml`, StrictValidationMode)
 
     val report = validator
       .validate(

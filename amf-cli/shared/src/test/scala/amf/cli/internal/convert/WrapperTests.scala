@@ -1154,7 +1154,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Test validate payload with invalid iri") {
     val payload = """test payload""".stripMargin
-    val factory = RAMLConfiguration.RAML().payloadValidatorFactory()
+    val client = RAMLConfiguration.RAML().elementClient()
     for {
       shape <- Future {
         new ScalarShape()
@@ -1162,8 +1162,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           .withName("test")
           .withId("api.raml/#/webapi/schema1")
       }
-      report <- factory
-        .createFor(shape, `application/yaml`, ValidationMode.StrictValidationMode)
+      report <- client
+        .payloadValidatorFor(shape, `application/yaml`, ValidationMode.StrictValidationMode)
         .validate(payload)
         .asFuture
     } yield {
@@ -1895,10 +1895,11 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |  ]
         |}
         |""".stripMargin
-    val client = OASConfiguration.OAS20().baseUnitClient()
+    val config = OASConfiguration.OAS20()
+    val unitClient = config.baseUnitClient()
     for {
-      parsed   <- client.parseContent(api, `application/json`).asFuture
-      resolved <- Future(client.transform(parsed.baseUnit, PipelineId.Editing))
+      parsed   <- unitClient.parseContent(api, `application/json`).asFuture
+      resolved <- Future(unitClient.transform(parsed.baseUnit, PipelineId.Editing))
       shape <- {
         Future.successful {
           val declarations = resolved.baseUnit.asInstanceOf[Document].declares.asSeq
@@ -1910,10 +1911,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         }
       }
       report <- {
-        val validator = client
-          .getConfiguration()
-          .payloadValidatorFactory()
-          .createFor(shape, `application/json`, ValidationMode.StrictValidationMode)
+        val validator = config.elementClient()
+          .payloadValidatorFor(shape, `application/json`, ValidationMode.StrictValidationMode)
         validator.validate(payload).asFuture
       }
     } yield {

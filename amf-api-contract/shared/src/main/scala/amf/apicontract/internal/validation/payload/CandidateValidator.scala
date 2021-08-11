@@ -13,9 +13,9 @@ object CandidateValidator {
   def validateAll(candidates: Seq[ValidationCandidate], config: ValidationConfiguration)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
 
-    val factory = config.amfConfig.payloadValidatorFactory()
+    val client = config.amfConfig.elementClient()
 
-    val pluginLookupFunc = (candidate: ValidationCandidate) => factory.createFor(candidate.shape, candidate.payload)
+    val pluginLookupFunc = (candidate: ValidationCandidate) => client.payloadValidatorFor(candidate.shape, candidate.payload)
 
     val validatorLookup = CachedFunction.from(pluginLookupFunc)
 
