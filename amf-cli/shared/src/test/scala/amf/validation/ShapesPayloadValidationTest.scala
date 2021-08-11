@@ -6,6 +6,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes.`application/xml`
 import amf.core.internal.utils.MediaTypeMatcher
+import amf.shapes.client.scala.config.ShapesConfiguration
 import amf.shapes.internal.spec.common.TypeDef.{IntType, StrType}
 import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
@@ -20,7 +21,7 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
 
   override val executionContext: ExecutionContext = global
 
-  private val AMF_CONFIG       = APIConfiguration.API()
+  private val AMF_CONFIG       = ShapesConfiguration.predefined()
   private val validatorFactory = AMF_CONFIG.payloadValidatorFactory()
 
   def createPayloadValidator(shape: Shape, mediaType: String) = {
