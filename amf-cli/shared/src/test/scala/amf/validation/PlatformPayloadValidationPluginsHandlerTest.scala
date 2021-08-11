@@ -39,7 +39,7 @@ class PlatformPayloadValidationPluginsHandlerTest
       library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.baseUnit)
       validator <- Future.successful {
         val shape = findShape(library, "A")
-        config.payloadValidatorFactory().createFor(shape, `application/json`, StrictValidationMode)
+        config.elementClient().payloadValidatorFor(shape, `application/json`, StrictValidationMode)
       }
       valid   <- validator.validate("{\"a\": 10}").map(_.conforms)
       invalid <- validator.validate("{\"a\": \"10\"}").map(r => !r.conforms)
@@ -56,7 +56,7 @@ class PlatformPayloadValidationPluginsHandlerTest
       library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.baseUnit)
       validator <- Future.successful {
         val shape = findShape(library, "B")
-        config.payloadValidatorFactory().createFor(shape, `application/json`, StrictValidationMode)
+        config.elementClient().payloadValidatorFor(shape, `application/json`, StrictValidationMode)
       }
       valid <- validator.validate("wadus").map(_.conforms)
     } yield {
@@ -72,7 +72,7 @@ class PlatformPayloadValidationPluginsHandlerTest
       validator <- Future.successful {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")
-        config.payloadValidatorFactory().createFor(shape, `application/json`, StrictValidationMode)
+        config.elementClient().payloadValidatorFor(shape, `application/json`, StrictValidationMode)
       }
       valid <- validator.validate("{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}").map(_.conforms)
     } yield {
@@ -88,7 +88,7 @@ class PlatformPayloadValidationPluginsHandlerTest
       validator <- Future.successful {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")
-        config.payloadValidatorFactory().createFor(shape, APPLICATION_WADUS, StrictValidationMode)
+        config.elementClient().payloadValidatorFor(shape, APPLICATION_WADUS, StrictValidationMode)
       }
       invalid <- validator.validate("{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}").map(r => !r.conforms)
     } yield {

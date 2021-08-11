@@ -22,12 +22,12 @@ trait PayloadValidationUtils {
   protected def parameterValidator(s: Shape,
                                    mediaType: String,
                                    config: AMFGraphConfiguration = defaultConfig): AMFShapePayloadValidator =
-    config.payloadValidatorFactory().createFor(s, mediaType, ScalarRelaxedValidationMode)
+    config.elementClient().payloadValidatorFor(s, mediaType, ScalarRelaxedValidationMode)
 
   protected def payloadValidator(s: Shape,
                                  mediaType: String,
                                  config: AMFGraphConfiguration = defaultConfig): AMFShapePayloadValidator =
-    config.payloadValidatorFactory().createFor(s, mediaType, StrictValidationMode)
+    config.elementClient().payloadValidatorFor(s, mediaType, StrictValidationMode)
 }
 
 trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers with PayloadValidationUtils {

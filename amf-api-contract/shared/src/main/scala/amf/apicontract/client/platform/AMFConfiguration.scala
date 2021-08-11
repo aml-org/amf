@@ -31,7 +31,7 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
     extends BaseAMLConfiguration(_internal) {
 
   override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
-  def elementClient(): AMFElementClient            = new AMFElementClient(this)
+  override def elementClient(): AMFElementClient   = new AMFElementClient(this)
   def configurationState(): AMFConfigurationState  = new AMFConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =

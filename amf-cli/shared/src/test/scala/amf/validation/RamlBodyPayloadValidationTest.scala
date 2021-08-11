@@ -110,14 +110,14 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
         mediaType
           .map(mediaTypeVal => {
             config
-              .payloadValidatorFactory()
-              .createFor(shape, mediaTypeVal, validationMode)
+              .elementClient()
+              .payloadValidatorFor(shape, mediaTypeVal, validationMode)
               .validate(payload)
           })
           .getOrElse(
             config
-              .payloadValidatorFactory()
-              .createFor(shape, payload.guessMediaType(false), validationMode)
+              .elementClient()
+              .payloadValidatorFor(shape, payload.guessMediaType(false), validationMode)
               .validate(payload))
       }
     } yield {
