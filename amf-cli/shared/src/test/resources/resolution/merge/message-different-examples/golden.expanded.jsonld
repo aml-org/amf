@@ -22,7 +22,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#examples": [
           {
-            "@id": "target/resp/message/example/default-example_1",
+            "@id": "target/example/default-example_1",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -39,7 +39,7 @@
             ],
             "http://a.ml/vocabularies/document#structuredValue": [
               {
-                "@id": "patch/resp/message/example/default-example_1/object_1",
+                "@id": "patch/examples/example/default-example_1/object_1",
                 "@type": [
                   "http://a.ml/vocabularies/data#Object",
                   "http://a.ml/vocabularies/data#Node",
@@ -47,7 +47,7 @@
                 ],
                 "http://a.ml/vocabularies/data#user": [
                   {
-                    "@id": "patch/resp/message/example/default-example_1/object_1/scalar_2",
+                    "@id": "patch/examples/example/default-example_1/object_1/user",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -72,7 +72,7 @@
                 ],
                 "http://a.ml/vocabularies/data#signup": [
                   {
-                    "@id": "patch/resp/message/example/default-example_1/object_1/scalar_3",
+                    "@id": "patch/examples/example/default-example_1/object_1/signup",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -109,21 +109,21 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "target/resp/message/example/default-example_1#/source-map",
+                "@id": "target/example/default-example_1#/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#tracked-element": [
                   {
-                    "@id": "target/resp/message/example/default-example_1#/source-map/tracked-element/element_0",
+                    "@id": "target/example/default-example_1#/source-map/tracked-element/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "target/resp/message/example/default-example_1"
+                        "@value": "target/example/default-example_1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "patch/resp/message"
+                        "@value": "patch"
                       }
                     ]
                   }

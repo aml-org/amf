@@ -4,7 +4,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.{EncodesModel, ExternalFragment}
 import amf.core.client.scala.model.domain.ScalarNode.forDataType
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
+import amf.core.client.scala.model.domain.{AmfObject, DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference}
 import amf.core.internal.annotations.{ReferenceId, ScalarType}
 import amf.core.internal.metamodel.domain.ScalarNodeModel
@@ -36,14 +36,13 @@ class DataNodeParser private (
     node: YNode,
     refsCounter: AliasCounter,
     parameters: AbstractVariables = AbstractVariables(),
-    parent: Option[String] = None,
     idCounter: IdCounter = new IdCounter)(implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler) {
 
   def parse(): DataNode = {
     if (refsCounter.exceedsThreshold(node)) {
       ctx.violation(
         ExceededMaxYamlReferences,
-        parent.getOrElse(""),
+        "",
         "Exceeded maximum yaml references threshold"
       )
       DataObjectNode()
@@ -51,7 +50,7 @@ class DataNodeParser private (
       val parsedNode = node.tag.tagType match {
         case YType.Seq => parseArray(node.as[Seq[YNode]], node)
         case YType.Map => parseObject(node.as[YMap])
-        case _         => ScalarNodeParser(parameters, parent, idCounter).parse(node)
+        case _         => ScalarNodeParser(parameters, idCounter).parse(node)
       }
       node match {
         case m: MutRef =>
@@ -74,10 +73,9 @@ class DataNodeParser private (
 
   protected def parseArray(seq: Seq[YNode], ast: YPart): DataNode = {
     val node = DataArrayNode(Annotations(ast)).withName(idCounter.genId("array"))
-    parent.foreach(p => node.adopted(p))
     val members: ListBuffer[DataNode] = ListBuffer()
     for { v <- seq } yield {
-      members += new DataNodeParser(v, refsCounter, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
+      members += new DataNodeParser(v, refsCounter, parameters, idCounter).parse().forceAdopted(node.id)
     }
     node.withMembers(members)
     node
@@ -85,14 +83,13 @@ class DataNodeParser private (
 
   protected def parseObject(value: YMap): DataNode = {
     val node = DataObjectNode(Annotations(value)).withSynthesizeName(idCounter.genId("object"))
-    parent.foreach(p => node.adopted(p))
     value.entries.map { entry =>
       parameters.parseVariables(entry.key)
       val value               = entry.value
       val propertyAnnotations = Annotations(entry)
 
       val propertyNode =
-        new DataNodeParser(value, refsCounter, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
+        new DataNodeParser(value, refsCounter, parameters, idCounter).parse().forceAdopted(node.id)
       node.addProperty(keyFor(entry), propertyNode, propertyAnnotations)
     }
     node
@@ -104,7 +101,6 @@ class DataNodeParser private (
 
 case class ScalarNodeParser(
     parameters: AbstractVariables = AbstractVariables(),
-    parent: Option[String] = None,
     idCounter: IdCounter = new IdCounter)(implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler) {
 
   private def newScalarNode(value: amf.core.internal.parser.domain.ScalarNode,
@@ -121,7 +117,6 @@ case class ScalarNodeParser(
     val scalarNode    = amf.core.internal.parser.domain.ScalarNode(node)
     val dataNode = newScalarNode(scalarNode, finalDataType, Annotations(node))
       .withSynthesizeName(idCounter.genId("scalar"))
-    parent.foreach(p => dataNode.adopted(p))
     parameters.parseVariables(scalarNode.text().toString)
     dataNode
   }
@@ -156,7 +151,7 @@ case class ScalarNodeParser(
 
       case other =>
         val parsed = parseScalar(YNode(other.toString()), "string")
-        ctx.eh.violation(SyamlError, parsed.id, None, s"Cannot parse scalar node from AST structure '$other'", node.location)
+        ctx.eh.violation(SyamlError, parsed, None, s"Cannot parse scalar node from AST structure '$other'", node.location)
         parsed
     }
   }
@@ -189,8 +184,8 @@ case class ScalarNodeParser(
 
   def parseIncludedAST(raw: String, node: YNode): DataNode = {
     val n = YamlParser(raw, node.sourceName).withIncludeTag("!include").document().node
-    if (n.isNull) ScalarNode(raw, Some(DataType.String)).withId(parent.getOrElse("") + "/included")
-    else DataNodeParser(n, parameters, parent, idCounter).parse()
+    if (n.isNull) ScalarNode(raw, Some(DataType.String))
+    else DataNodeParser(n, parameters, idCounter).parse()
   }
 
   /**
@@ -242,23 +237,21 @@ case class ScalarNodeParser(
 }
 
 object DataNodeParser {
-  def parse(parent: Option[String], idCounter: IdCounter)(node: YNode)(
+  def parse(idCounter: IdCounter)(node: YNode)(
       implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler): DataNode =
     new DataNodeParser(node,
                        refsCounter = AliasCounter(ctx.getMaxYamlReferences),
-                       parent = parent,
                        idCounter = idCounter).parse()
 
-  def apply(node: YNode, parameters: AbstractVariables = AbstractVariables(), parent: Option[String] = None)(
+  def apply(node: YNode, parameters: AbstractVariables = AbstractVariables())(
       implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler): DataNodeParser = {
     new DataNodeParser(node = node,
                        refsCounter = AliasCounter(ctx.getMaxYamlReferences),
-                       parameters = parameters,
-                       parent = parent)
+                       parameters = parameters)
   }
 
-  def apply(node: YNode, parameters: AbstractVariables, parent: Option[String], idCounter: IdCounter)(
+  def apply(node: YNode, parameters: AbstractVariables, idCounter: IdCounter)(
       implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler): DataNodeParser = {
-    new DataNodeParser(node, AliasCounter(ctx.getMaxYamlReferences), parameters, parent, idCounter)
+    new DataNodeParser(node, AliasCounter(ctx.getMaxYamlReferences), parameters, idCounter)
   }
 }

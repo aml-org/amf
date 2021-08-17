@@ -57,7 +57,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
       case _ if entry.value.toOption[YScalar].map(_.text).exists(s => s == "" || s == "null") => operation
       case _ =>
         ctx.eh.violation(InvalidOperationType,
-                         operation.id,
+                         operation,
                          s"Invalid node ${entry.value} for method ${operation.method.value()}",
                          entry.value.location)
         operation
@@ -68,7 +68,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     val map     = entry.value.as[YMap]
     val isTrait = ctx.contextType == RamlWebApiContextType.TRAIT
 
-    ctx.closedShape(operation.id, map, if (isTrait) "trait" else "operation")
+    ctx.closedShape(operation, map, if (isTrait) "trait" else "operation")
 
     map.key("displayName", OperationModel.Name in operation)
     map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)
@@ -84,7 +84,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     map.key(
       "tags".asRamlAnnotation,
       entry => {
-        val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
+        val tags = StringTagsParser(entry.value.as[YSequence], operation).parse()
         operation.withTags(tags)
       }
     )

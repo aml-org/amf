@@ -15,7 +15,7 @@ class PayloadParser(document: YDocument, location: String, mediaType: String)(im
   }
 
   private def parseNode(parent: String, node: YNode) =
-    DataNodeParser(node, parent = Some(parent)).parse()
+    DataNodeParser(node).parse()
 }
 
 object PayloadParser {

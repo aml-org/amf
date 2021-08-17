@@ -90,7 +90,7 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
 
     OAuth2FlowValidations.validateFlowFields(flow, ctx.eh, flowEntry)
 
-    ctx.closedShape(flow.id, flowMap, flow.flow.value())
+    ctx.closedShape(flow, flowMap, flow.flow.value())
     flow
   }
 

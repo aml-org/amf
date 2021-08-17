@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'ref.yaml#/definitions/person'
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas2/missing-ref.yaml#/declarations/types/shape/person/property/sibling/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/oas2/missing-ref.yaml#/declares/shape/person/property/property/sibling/unresolved
   Property: 
   Position: Some(LexicalInformation([(13,8)-(13,44)]))
   Location: file://amf-cli/shared/src/test/resources/validations/oas2/missing-ref.yaml

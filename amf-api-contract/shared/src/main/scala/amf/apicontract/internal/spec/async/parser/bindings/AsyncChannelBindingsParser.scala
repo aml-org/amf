@@ -58,7 +58,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     parseExchange(binding, map)
 
     parseBindingVersion(binding, WebSocketsChannelBindingModel.BindingVersion, map)
-    ctx.closedShape(binding.id, map, "amqpChannelBinding")
+    ctx.closedShape(binding, map, "amqpChannelBinding")
     binding
   }
 
@@ -75,7 +75,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
         parseVHost(exchange, Amqp091ChannelExchangeModel.VHost, exchangeMap)
 
-        ctx.closedShape(exchange.id, exchangeMap, "amqpExchangeChannelBinding")
+        ctx.closedShape(exchange, exchangeMap, "amqpExchangeChannelBinding")
 
         binding.set(Amqp091ChannelBindingModel.Exchange, exchange, Annotations(entry))
       }
@@ -95,7 +95,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
         parseVHost(queue, Amqp091QueueModel.VHost, queueMap)
 
-        ctx.closedShape(queue.id, queueMap, "amqpQueueChannelBinding")
+        ctx.closedShape(queue, queueMap, "amqpQueueChannelBinding")
 
         binding.set(Amqp091ChannelBindingModel.Queue, queue, Annotations(entry))
       }
@@ -121,7 +121,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
             entry => parseSchema(WebSocketsChannelBindingModel.Headers, binding, entry, binding.id + "/headers"))
     parseBindingVersion(binding, WebSocketsChannelBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "wsChannelBinding")
+    ctx.closedShape(binding, map, "wsChannelBinding")
 
     binding
   }

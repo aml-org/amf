@@ -16,8 +16,8 @@ case class Oas2SecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
   override def closedShape(scheme: SecurityScheme, map: YMap, shape: String): Unit = {
 
     val key = getSchemeType(map).getOrElse(shape)
-    ctx.closedShape(scheme.id, map, key)
-    filterFlow(map).foreach(ctx.closedShape(scheme.id, map, _))
+    ctx.closedShape(scheme, map, key)
+    filterFlow(map).foreach(ctx.closedShape(scheme, map, _))
   }
 
   private def filterFlow(map: YMap) = map.key("flow").map(_.value.as[String]) match {

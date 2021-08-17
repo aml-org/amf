@@ -42,31 +42,31 @@ class Raml10ParserErrorTest extends RamlParserErrorTest {
       erroneousTypeShape => {
         erroneousTypeShape.severityLevel should be("Violation")
         erroneousTypeShape.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/scalar/ErroneousType")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/scalar/ErroneousType")
         erroneousTypeShape.validationId should be(MissingRequiredUserDefinedFacet.id)
       },
       erroneousTypeShape => {
         erroneousTypeShape.severityLevel should be("Violation")
         erroneousTypeShape.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/scalar/ErroneousType")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/scalar/ErroneousType")
         erroneousTypeShape.validationId should be(ClosedShapeSpecification.id)
       },
       incorrect1 => {
         incorrect1.severityLevel should be("Violation")
         incorrect1.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/union/Incorrect1")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/union/Incorrect1")
         incorrect1.validationId should be(ClosedShapeSpecification.id)
       },
       incorrect2 => {
         incorrect2.severityLevel should be("Violation")
         incorrect2.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/union/Incorrect2")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/union/Incorrect2")
         incorrect2.validationId should be(ClosedShapeSpecification.id)
       },
       incorrect3 => {
         incorrect3.severityLevel should be("Violation")
         incorrect3.targetNode should be(
-          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/union/Incorrect3")
+          "file://amf-cli/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declares/union/Incorrect3")
         incorrect3.validationId should be(ClosedShapeSpecification.id)
       }
     )

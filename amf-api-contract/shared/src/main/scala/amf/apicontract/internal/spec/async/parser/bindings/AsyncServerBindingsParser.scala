@@ -54,7 +54,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
 
     parseBindingVersion(binding, MqttServerBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "mqttServerBinding")
+    ctx.closedShape(binding, map, "mqttServerBinding")
 
     binding
   }
@@ -70,7 +70,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
         lastWillMap.key("retain", MqttServerLastWillModel.Retain in lastWill)
         lastWillMap.key("message", MqttServerLastWillModel.Message in lastWill)
 
-        ctx.closedShape(lastWill.id, lastWillMap, "mqttServerLastWill")
+        ctx.closedShape(lastWill, lastWillMap, "mqttServerLastWill")
         binding.set(MqttServerBindingModel.LastWill, lastWill, Annotations(entry))
       }
     )

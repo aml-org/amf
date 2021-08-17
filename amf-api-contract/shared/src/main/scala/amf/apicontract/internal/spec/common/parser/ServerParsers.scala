@@ -31,9 +31,9 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
         (ServerModel.Url in server).allowingAnnotations(entry)
 
-        checkBalancedParams(value, entry.value, server.id, ServerModel.Url.value.iri(), ctx)
+        checkBalancedParams(value, entry.value, server, ServerModel.Url.value.iri(), ctx)
         if (!TemplateUri.isValid(value))
-          ctx.eh.violation(InvalidServerPath, api.id, TemplateUri.invalidMsg(value), entry.value.location)
+          ctx.eh.violation(InvalidServerPath, api, TemplateUri.invalidMsg(value), entry.value.location)
 
         map.key("serverDescription".asRamlAnnotation, ServerModel.Description in server)
 
@@ -49,7 +49,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
           .key("baseUriParameters")
           .foreach { entry =>
             ctx.eh.violation(ParametersWithoutBaseUri,
-                             api.id,
+                             api,
                              "'baseUri' not defined and 'baseUriParameters' defined.",
                              entry.location)
 
@@ -84,7 +84,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
         unused.foreach { p =>
           ctx.eh.warning(UnusedBaseUriParameter,
-                         p.id,
+                         p,
                          None,
                          s"Unused base uri parameter ${p.name.value()}",
                          p.position(),
@@ -130,7 +130,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     val webapiHasVersion = map.key("version").isDefined
     if (variables.contains("version") && !webapiHasVersion) {
       ctx.eh.warning(ImplicitVersionParameterWithoutApiVersion,
-                     api.id,
+                     api,
                      "'baseUri' defines 'version' variable without the API defining one",
                      entry.location)
     }
@@ -143,7 +143,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     val versionParameterExists = parameters.exists(_.name.option().exists(name => name.equals("version")))
     if (orderedVariables.contains("version") && versionParameterExists && apiHasVersion) {
       ctx.eh.warning(InvalidVersionBaseUriParameterDefinition,
-                     api.id,
+                     api,
                      "'version' baseUriParameter can't be defined if present in baseUri as variable",
                      entry.location)
     }
@@ -171,7 +171,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         basePath = entry.value.as[String]
 
         if (!basePath.startsWith("/")) {
-          ctx.eh.violation(InvalidBasePath, api.id, "'basePath' property must start with '/'", entry.value.location)
+          ctx.eh.violation(InvalidBasePath, api, "'basePath' property must start with '/'", entry.value.location)
           basePath = "/" + basePath
         }
       }

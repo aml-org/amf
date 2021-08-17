@@ -50,7 +50,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
     map.key("messageType", Amqp091MessageBindingModel.MessageType in binding)
     parseBindingVersion(binding, Amqp091MessageBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "amqpMessageBinding")
+    ctx.closedShape(binding, map, "amqpMessageBinding")
 
     binding
   }
@@ -63,7 +63,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
     map.key("headers", parseSchema(HttpMessageBindingModel.Headers, binding, _, binding.id))
     parseBindingVersion(binding, HttpMessageBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "httpMessageBinding")
+    ctx.closedShape(binding, map, "httpMessageBinding")
 
     binding
   }
@@ -76,7 +76,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
     map.key("key", entry => parseSchema(KafkaMessageBindingModel.MessageKey, binding, entry, binding.id + "/key"))
     parseBindingVersion(binding, KafkaMessageBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "kafkaMessageBinding")
+    ctx.closedShape(binding, map, "kafkaMessageBinding")
 
     binding
   }
@@ -89,7 +89,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
     parseBindingVersion(binding, MqttMessageBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "mqttMessageBinding")
+    ctx.closedShape(binding, map, "mqttMessageBinding")
 
     binding
   }

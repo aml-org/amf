@@ -50,7 +50,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     map.key("query", entry => parseSchema(HttpOperationBindingModel.Query, binding, entry, binding.id))
     parseBindingVersion(binding, HttpOperationBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "httpOperationBinding")
+    ctx.closedShape(binding, map, "httpOperationBinding")
 
     binding
   }
@@ -73,7 +73,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
 
     parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "amqpOperationBinding")
+    ctx.closedShape(binding, map, "amqpOperationBinding")
 
     binding
   }
@@ -89,7 +89,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
             entry => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry, binding.id + "/client-id"))
     parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "kafkaOperationBinding")
+    ctx.closedShape(binding, map, "kafkaOperationBinding")
 
     binding
   }
@@ -103,7 +103,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     map.key("retain", MqttOperationBindingModel.Retain in binding)
     parseBindingVersion(binding, MqttOperationBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "mqttOperationBinding")
+    ctx.closedShape(binding, map, "mqttOperationBinding")
 
     binding
   }

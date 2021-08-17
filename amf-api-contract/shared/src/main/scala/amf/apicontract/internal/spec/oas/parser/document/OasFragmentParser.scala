@@ -64,7 +64,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         .withLocation(root.location)
         .withId(root.location)
         .withEncodes(ExternalDomainElement().withRaw(root.raw))
-      ctx.eh.violation(InvalidFragmentType, fragment.id, "Unsupported oas type", map.location)
+      ctx.eh.violation(InvalidFragmentType, fragment, "Unsupported oas type", map.location)
       fragment
     }
 

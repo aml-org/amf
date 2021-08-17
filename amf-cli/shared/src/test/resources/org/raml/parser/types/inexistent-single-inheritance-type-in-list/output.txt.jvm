@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'InexistentType'
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-single-inheritance-type-in-list/input.raml#/declarations/types/unresolved
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-single-inheritance-type-in-list/input.raml#/declares/any/MyType/inherits/unresolved
   Property: 
   Position: Some(LexicalInformation([(5,12)-(5,26)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-single-inheritance-type-in-list/input.raml

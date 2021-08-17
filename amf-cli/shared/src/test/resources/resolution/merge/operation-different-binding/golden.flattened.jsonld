@@ -59,13 +59,13 @@
       ],
       "http://a.ml/vocabularies/apiBinding#operationType": "traitType",
       "http://a.ml/vocabularies/apiBinding#query": {
-        "@id": "patch/operation-bindings/http-operation#/shape/schema"
+        "@id": "patch/operation-bindings/bindings/http-operation/shape/schema"
       },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "latest",
       "http://a.ml/vocabularies/apiBinding#type": "http"
     },
     {
-      "@id": "patch/operation-bindings/http-operation#/shape/schema",
+      "@id": "patch/operation-bindings/bindings/http-operation/shape/schema",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -76,13 +76,13 @@
       "http://www.w3.org/ns/shacl#closed": false,
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "patch/operation-bindings/http-operation#/shape/schema/property/some"
+          "@id": "patch/operation-bindings/bindings/http-operation/shape/schema/property/property/some"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
-      "@id": "patch/operation-bindings/http-operation#/shape/schema/property/some",
+      "@id": "patch/operation-bindings/bindings/http-operation/shape/schema/property/property/some",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -95,13 +95,13 @@
         }
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "patch/operation-bindings/http-operation#/shape/schema/property/some/scalar/some"
+        "@id": "patch/operation-bindings/bindings/http-operation/shape/schema/property/property/some/scalar/some"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "some"
     },
     {
-      "@id": "patch/operation-bindings/http-operation#/shape/schema/property/some/scalar/some",
+      "@id": "patch/operation-bindings/bindings/http-operation/shape/schema/property/property/some/scalar/some",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",

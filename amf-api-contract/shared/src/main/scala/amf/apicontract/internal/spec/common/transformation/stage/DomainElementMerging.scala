@@ -480,7 +480,7 @@ object MergingValidator {
         } else {
           s"Unused uri parameter ${p.name.value()}"
         }
-        errorHandler.warning(UnusedBaseUriParameter, p.id, None, message, p.position(), p.location())
+        errorHandler.warning(UnusedBaseUriParameter, p, None, message, p.position(), p.location())
       }
     }
 

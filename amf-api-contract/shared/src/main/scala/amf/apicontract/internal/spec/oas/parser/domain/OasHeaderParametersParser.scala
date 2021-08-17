@@ -148,6 +148,6 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
     Oas3ParameterParser.parseStyleField(map, parameter)
     Oas3ParameterParser.parseExplodeField(map, parameter)
 
-    ctx.closedShape(parameter.id, map, "header")
+    ctx.closedShape(parameter, map, "header")
   }
 }

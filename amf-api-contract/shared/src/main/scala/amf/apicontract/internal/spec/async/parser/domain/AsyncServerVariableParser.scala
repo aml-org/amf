@@ -36,7 +36,7 @@ case class AsyncServerVariableParser(entry: YMapEntry, parent: String)(implicit 
                                 AmfArray(examples, Annotations(examplesEntry.value)),
                                 Annotations(examplesEntry))
           case _ =>
-            ctx.violation(ExamplesMustBeASeq, variable.id, "Examples facet must be an array of strings")
+            ctx.violation(ExamplesMustBeASeq, variable, "Examples facet must be an array of strings")
         }
       }
     )

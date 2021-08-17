@@ -28,7 +28,7 @@ class LicenseParser(node: YNode)(implicit ctx: WebApiContext) extends SpecParser
 
     AnnotationParser(license, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
-    ctx.closedShape(license.id, map, "license")
+    ctx.closedShape(license, map, "license")
 
     license
   }

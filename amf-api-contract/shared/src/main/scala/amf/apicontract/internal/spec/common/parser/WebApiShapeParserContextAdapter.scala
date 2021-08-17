@@ -8,7 +8,7 @@ import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, R
 import amf.apicontract.internal.spec.raml.parser.external.DefaultRamlExternalSchemaExpressionFactory
 import amf.apicontract.internal.spec.spec.{toOas, toOasDeclarations}
 import amf.core.client.scala.config.ParsingOptions
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
@@ -61,7 +61,7 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
 
   override def shapes: Map[String, Shape] = ctx.declarations.shapes
 
-  override def closedShape(node: String, ast: YMap, shape: String): Unit = ctx.closedShape(node, ast, shape)
+  override def closedShape(node: AmfObject, ast: YMap, shape: String): Unit = ctx.closedShape(node, ast, shape)
 
   override def registerJsonSchema(url: String, shape: AnyShape): Unit = ctx.registerJsonSchema(url, shape)
 
@@ -139,6 +139,9 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
     ctx.declarations.findAnnotation(key, scope)
 
   override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
+    ctx.violation(violationId, node, message)
+
+  override def violation(violationId: ValidationSpecification, node: AmfObject, message: String): Unit =
     ctx.violation(violationId, node, message)
 
   override def addNodeRefIds(ids: mutable.Map[YNode, String]): Unit = ctx.nodeRefIds ++= ids

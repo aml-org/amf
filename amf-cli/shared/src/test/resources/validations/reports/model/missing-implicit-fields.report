@@ -8,7 +8,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#missing-field-oauth-2-grant-type
   Message: 'authorizationUri' is required when 'implicit' grant type is used
   Level: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/implicit.raml#/declarations/securitySchemes/%2Fscheme%2Finvalid/settings/oauth2
+  Target: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/implicit.raml#/declares/scheme/invalid/settings/oauth2
   Property: 
   Position: Some(LexicalInformation([(9,0)-(11,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/security-schemes/oauth-2/implicit.raml

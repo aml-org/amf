@@ -30,7 +30,7 @@ class OrganizationParser(node: YNode)(implicit ctx: WebApiContext) extends SpecP
 
     AnnotationParser(organization, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
-    ctx.closedShape(organization.id, map, "contact")
+    ctx.closedShape(organization, map, "contact")
 
     organization
   }

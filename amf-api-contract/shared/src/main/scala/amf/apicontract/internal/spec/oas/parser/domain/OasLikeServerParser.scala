@@ -36,7 +36,7 @@ class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val
       server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
     }
     AnnotationParser(server, map)(WebApiShapeParserContextAdapter(ctx)).parse()
-    ctx.closedShape(server.id, map, "server")
+    ctx.closedShape(server, map, "server")
     server
   }
 
@@ -71,14 +71,14 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(val ctx: Oas
   }
 
   protected def parseMap(variable: Parameter, map: YMap): Unit = {
-    ctx.closedShape(variable.id, map, "serverVariable")
+    ctx.closedShape(variable, map, "serverVariable")
     implicit val shapeCtx: WebApiShapeParserContextAdapter = WebApiShapeParserContextAdapter(ctx)
     val schema = variable
       .withScalarSchema(entry.key)
       .add(Annotations(map))
       .withDataType(DataType.String, Annotations.synthesized())
     val counter: IdCounter = new IdCounter();
-    map.key("enum", ShapeModel.Values in schema using DataNodeParser.parse(Some(schema.id), counter))
+    map.key("enum", ShapeModel.Values in schema using DataNodeParser.parse(counter))
     map.key("default", entry => {
       schema.withDefaultStr(entry.value)
       schema.withDefault(DataNodeParser(entry.value).parse(), Annotations(entry.value))

@@ -166,7 +166,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                           e =>
                             ctx.eh.violation(
                               UnsupportedExampleMediaTypeErrorSpecification,
-                              res.id,
+                              res,
                               s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
                               e.location))
                       }
@@ -187,7 +187,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
           }
         )
 
-        ctx.closedShape(res.id, map, "response")
+        ctx.closedShape(res, map, "response")
 
         parseMap(res, map)
         res

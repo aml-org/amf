@@ -30,7 +30,7 @@ case class AndConstraintParser(map: YMap, shape: Shape, adopt: Shape => Unit, ve
             shape.fields.setWithoutId(ShapeModel.And, AmfArray(andNodes, Annotations(entry.value)), Annotations(entry))
           case _ =>
             ctx.eh.violation(InvalidAndType,
-                             shape.id,
+                             shape,
                              "And constraints are built from multiple shape nodes",
                              entry.value.location)
 

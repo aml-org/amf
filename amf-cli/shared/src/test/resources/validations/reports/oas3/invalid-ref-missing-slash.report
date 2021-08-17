@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference '#components/schemas/Message'
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-ref-missing-slash.json/web-api/end-points/%2Frepository/get/resp/404/application%2Fjson/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-ref-missing-slash.json#/web-api/endpoint/end-points/%2Frepository/supportedOperation/get/returns/resp/404/payload/application%2Fjson/unresolved
   Property: 
   Position: Some(LexicalInformation([(17,18)-(17,55)]))
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-ref-missing-slash.json

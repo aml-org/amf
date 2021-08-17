@@ -35,7 +35,7 @@ case class ScalarFormatType(shape: Shape, typeDef: TypeDef)(implicit ctx: ShapeP
 
         if (!FormatValidator.isValid(format, typeDef))
           ctx.eh.warning(InvalidShapeFormat,
-                         shape.id,
+                         shape,
                          s"Format $format is not valid for type ${XsdTypeDefMapping.xsd(typeDef)}",
                          n.location)
 

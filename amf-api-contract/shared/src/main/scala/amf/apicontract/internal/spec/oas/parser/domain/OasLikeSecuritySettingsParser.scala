@@ -45,8 +45,7 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
     }
 
     if (entries.nonEmpty) {
-      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))),
-                                parent = Some(settings.id))(WebApiShapeParserContextAdapter(ctx)).parse()
+      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(WebApiShapeParserContextAdapter(ctx)).parse()
       settings.set(SettingsModel.AdditionalProperties, node)
     }
 

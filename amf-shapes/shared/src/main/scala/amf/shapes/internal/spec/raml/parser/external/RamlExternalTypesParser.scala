@@ -64,7 +64,7 @@ trait RamlExternalTypesParser
     val shape = SchemaShape()
     adopt(shape)
     shapeCtx.eh.violation(InvalidExternalTypeType,
-                          shape.id,
+                          shape,
                           s"Cannot parse $externalType Schema expression out of a non string value",
                           value.location)
     ValueAndOrigin("", value, None, Some(shape))

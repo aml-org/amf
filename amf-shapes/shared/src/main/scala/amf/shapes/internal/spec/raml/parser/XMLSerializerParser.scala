@@ -48,7 +48,7 @@ case class XMLSerializerParser(defaultName: String, node: YNode)(implicit ctx: S
       serializer.set(XMLSerializerModel.Prefix, value.string(), Annotations(entry))
     })
 
-    ctx.closedShape(serializer.id, map, "xmlSerialization")
+    ctx.closedShape(serializer, map, "xmlSerialization")
 
     serializer
   }

@@ -26,7 +26,7 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
       .add(SourceSpec(ctx.spec))
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
-      ctx.closedShape(module.id, rootMap, "module")
+      ctx.closedShape(module, rootMap, "module")
 
       val references = ReferencesParser(module, root.location, "uses", rootMap, root.references).parse()
 

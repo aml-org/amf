@@ -228,7 +228,7 @@ case class RamlTypeDetector(parent: String,
             case Some(linkedShape: Shape)                         => apply(linkedShape, part, plainUnion)
             case _ =>
               ctx.eh.violation(InvalidTypeDefinition,
-                               shape.id,
+                               shape,
                                "Found reference to domain element different of Shape when shape was expected",
                                part.location)
               None

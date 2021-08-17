@@ -44,14 +44,14 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
             payloads ++= OasContentsParser(entry, request.withPayload).parse()
           case None =>
             ctx.eh.violation(RequestBodyContentRequired,
-                             request.id,
+                             request,
                              s"Request body must have a 'content' field defined",
                              map.location)
         }
         request.set(ResponseModel.Payloads, AmfArray(payloads, Annotations.virtual()), Annotations.inferred())
 
         AnnotationParser(request, map)(WebApiShapeParserContextAdapter(ctx)).parse()
-        ctx.closedShape(request.id, map, "request")
+        ctx.closedShape(request, map, "request")
         request
     }
   }

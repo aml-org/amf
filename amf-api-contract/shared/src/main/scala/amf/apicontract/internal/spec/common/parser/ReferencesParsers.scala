@@ -41,7 +41,7 @@ abstract class CommonReferencesParser(references: Seq[ParsedReference])(implicit
   protected def parseLibraries(declarations: ReferenceCollector[BaseUnit]): Unit
 }
 
-case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YMap, references: Seq[ParsedReference])(
+case class ReferencesParser(baseUnit: BaseUnit, rootLoc: String, key: String, map: YMap, references: Seq[ParsedReference])(
     implicit ctx: WebApiContext)
     extends CommonReferencesParser(references) {
 
@@ -68,13 +68,13 @@ case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YM
                       }
                       result += (alias, module)
                     case other =>
-                      ctx.eh.violation(ExpectedModule, id, s"Expected module but found: $other", e.location)
+                      ctx.eh.violation(ExpectedModule, rootLoc, s"Expected module but found: $other", e.location)
                   }
                 }
               })
           case YType.Null =>
           case _ =>
-            ctx.eh.violation(InvalidModuleType, id, s"Invalid ast type for uses: ${entry.value.tagType}", entry.value.location)
+            ctx.eh.violation(InvalidModuleType, rootLoc, s"Invalid ast type for uses: ${entry.value.tagType}", entry.value.location)
       }
     )
   }

@@ -18,7 +18,7 @@ import amf.apicontract.internal.spec.spec.toOas
 import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.scala.model.document.{BaseUnit, Document, ExtensionLike, Module}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
@@ -174,7 +174,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
 
-    ctx.closedShape(api.id, map, "webApi")
+    ctx.closedShape(api, map, "webApi")
 
     map.key("title", (WebApiModel.Name in api).allowingAnnotations)
 
@@ -449,7 +449,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
                     .parse() // todo: links??
 
                 ctx.eh.violation(InvalidParameterType,
-                                 parameter.domainElement.id,
+                                 parameter.domainElement,
                                  "Map needed to parse a parameter declaration",
                                  e.location)
                 parameter
@@ -522,7 +522,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
           val domainProp = CustomDomainProperty(ast)
           adopt(domainProp)
           ctx.eh.violation(InvalidAnnotationType,
-                           domainProp.id,
+                           domainProp,
                            "Invalid value type for annotation types parser, expected map or scalar reference",
                            ast.value.location)
           domainProp
@@ -552,7 +552,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                   domainProp.set(CustomDomainPropertyModel.Schema, schema, Annotations.inferred())
                 case _ =>
                   ctx.eh.violation(DeclarationNotFound,
-                                   domainProp.id,
+                                   domainProp,
                                    "Could not find declared annotation link in references",
                                    scalar.location)
                   domainProp
@@ -563,7 +563,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
   case class AnnotationTypesParser(ast: YPart, annotationName: String, map: YMap, adopt: CustomDomainProperty => Unit) {
 
-    def checkValidTarget(entry: YMapEntry, nodeId: String): Unit = {
+    def checkValidTarget(entry: YMapEntry, node: AmfObject): Unit = {
       val targets = entry.value.value match {
         case value: YScalar =>
           Seq(value.text)
@@ -595,7 +595,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
         if (!validTargets.contains(target))
           ctx.eh.warning(
             InvalidAllowedTargets,
-            nodeId,
+            node,
             s"$target is not a valid target",
             entry.value.location
           )
@@ -637,18 +637,18 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
               val annotations = Annotations(entry)
               val targets: AmfArray = entry.value.tagType match {
                 case YType.Seq =>
-                  checkValidTarget(entry, custom.id)
+                  checkValidTarget(entry, custom)
                   ArrayNode(entry.value).string()
                 case YType.Map =>
                   ctx.eh.violation(
                     InvalidAllowedTargetsType,
-                    custom.id,
+                    custom,
                     "Property 'allowedTargets' in a RAML annotation can only be a valid scalar or an array of valid scalars",
                     entry.value.location
                   )
                   AmfArray(Seq())
                 case _ =>
-                  checkValidTarget(entry, custom.id)
+                  checkValidTarget(entry, custom)
                   annotations += SingleValueArray()
                   AmfArray(Seq(ScalarNode(entry.value).string()))
               }
@@ -676,7 +676,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
           custom
         case None =>
           ctx.eh.violation(InvalidAnnotationType,
-                           custom.id,
+                           custom,
                            "Cannot parse annotation type fragment, cannot find information map",
                            ast.location)
           custom

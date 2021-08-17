@@ -47,7 +47,7 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
     val map     = entry.value.as[YMap]
     val payload = buildPayloadWithMediaType()
 
-    ctx.closedShape(payload.id, map, "content")
+    ctx.closedShape(payload, map, "content")
 
     // schema
     map.key(
@@ -83,7 +83,7 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
 
     AnnotationParser(payload, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
-    ctx.closedShape(payload.id, map, "content")
+    ctx.closedShape(payload, map, "content")
 
     payload
   }

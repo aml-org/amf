@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#duplicated-operation-id
   Message: Duplicated operation id '"someID"'
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/duplicate-operation-ids.json/web-api/end-points/%2FotherPath/get
+  Target: file://amf-cli/shared/src/test/resources/validations/duplicate-operation-ids.json#/web-api/endpoint/end-points/%2FotherPath/supportedOperation/get
   Property: 
   Position: Some(LexicalInformation([(20,22)-(20,30)]))
   Location: file://amf-cli/shared/src/test/resources/validations/duplicate-operation-ids.json

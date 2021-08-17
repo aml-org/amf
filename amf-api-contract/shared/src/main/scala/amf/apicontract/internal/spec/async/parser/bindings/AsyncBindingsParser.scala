@@ -37,7 +37,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
     val map: YMap          = entryLike.asMap
     val bindings: Bindings = createBindings()
     nameAndAdopt(bindings, entryLike.key)
-    ctx.closedShape(bindings.id, map, "bindings")
+    ctx.closedShape(bindings, map, "bindings")
     parseBindings(bindings, map)
   }
 
@@ -130,12 +130,12 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
   protected def parseEmptyBinding(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding = {
     val binding = EmptyBinding(Annotations(entry))
 
-    validateEmptyMap(entry.value, binding.id, entry.key.as[String])
+    validateEmptyMap(entry.value, binding, entry.key.as[String])
 
     binding.asInstanceOf[Binding]
   }
 
-  private def validateEmptyMap(value: YNode, node: String, `type`: String)(implicit ctx: AsyncWebApiContext): Unit =
+  private def validateEmptyMap(value: YNode, node: AmfObject, `type`: String)(implicit ctx: AsyncWebApiContext): Unit =
     if (value.as[YMap].entries.nonEmpty) {
       ctx.eh.violation(ParserSideValidations.NonEmptyBindingMap,
                        node,

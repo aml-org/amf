@@ -2,6 +2,7 @@ package amf.apicontract.internal.spec.common.parser
 
 import amf.aml.internal.parse.common.DeclarationKeyCollector
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.PathTemplateUnbalancedParameters
+import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.parser.domain.BaseSpecParser
 import amf.shapes.internal.spec.common.parser.QuickFieldParserOps
 import org.yaml.model._
@@ -12,7 +13,7 @@ trait SpecParserOps extends QuickFieldParserOps {
 
   protected def checkBalancedParams(path: String,
                                     value: YNode,
-                                    node: String,
+                                    node: AmfObject,
                                     property: String,
                                     ctx: WebApiContext): Unit = {
     val pattern1 = "\\{[^}]*\\{".r
