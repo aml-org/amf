@@ -7,22 +7,22 @@ import amf.grpc.internal.spec.parser.syntax.GrpcASTParserHelper
 import amf.grpc.internal.spec.parser.syntax.TokenTypes._
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
-case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper  {
+case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends GrpcASTParserHelper {
 
   def parse(adopt: Operation => Unit): Operation = {
     parseServiceMessages(adopt)
   }
 
   def parseServiceMessages(adopt: Operation => Unit): Operation = {
-    val operationName = parseName()
+    val operationName         = parseName()
     val messages: Seq[String] = collect(ast, Seq(MESSAGE_TYPE, MESSAGE_NAME)).map { case n: Node => n.source }
-    val request = messages.head
-    val response = messages.last
+    val request               = messages.head
+    val response              = messages.last
     val operation = parseStreamingMetadata() match {
-      case (false, false) => buildOperation(operationName,"post", request, response, adopt)
-      case (true, false)  => buildOperation(operationName,"publish", request, response, adopt)
-      case (false, true)  => buildOperation(operationName,"subscribe", request, response, adopt)
-      case (true, true)   => buildOperation(operationName,"pubsub", request, response, adopt)
+      case (false, false) => buildOperation(operationName, "post", request, response, adopt)
+      case (true, false)  => buildOperation(operationName, "publish", request, response, adopt)
+      case (false, true)  => buildOperation(operationName, "subscribe", request, response, adopt)
+      case (true, true)   => buildOperation(operationName, "pubsub", request, response, adopt)
     }
     parseOptions(ast, operation)
     operation
@@ -35,29 +35,36 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
     })
   }
 
-  def buildOperation(operationName: String, operationType: String, request: String, response: String, adopt: Operation => Unit): Operation = {
-    val operation = Operation(toAnnotations(ast)).withName(operationName).withOperationId(operationName).withMethod(operationType)
+  def buildOperation(operationName: String,
+                     operationType: String,
+                     request: String,
+                     response: String,
+                     adopt: Operation => Unit): Operation = {
+    val operation =
+      Operation(toAnnotations(ast)).withName(operationName).withOperationId(operationName).withMethod(operationType)
     adopt(operation)
     val requestBody = parseObjectRange(ast, request)
-    operation.withRequest()
-      .withPayload(Some(Mimes.`APPLICATION/GRPC`))
+    operation
+      .withRequest()
+      .withPayload(Some(Mimes.`application/grpc`))
       .withSchema(requestBody)
     val responseBody = parseObjectRange(ast, response)
-    operation.withResponse("")
-      .withPayload(Some(Mimes.`APPLICATION/PROTOBUF`))
+    operation
+      .withResponse("")
+      .withPayload(Some(Mimes.`application/protobuf`))
       .withSchema(responseBody)
     operation
   }
 
   def parseStreamingMetadata(): (Boolean, Boolean) = {
-    var foundRequest = false
-    var streamRequest = false
+    var foundRequest   = false
+    var streamRequest  = false
     var streamResponse = false
     ast.children.foreach {
-      case n: Node if n.name == MESSAGE_TYPE && !foundRequest => foundRequest = true
+      case n: Node if n.name == MESSAGE_TYPE && !foundRequest  => foundRequest = true
       case t: Terminal if t.value == "stream" && !foundRequest => streamRequest = true
       case t: Terminal if t.value == "stream" && foundRequest  => streamResponse = true
-      case _  => //ignore
+      case _                                                   => //ignore
     }
     (streamRequest, streamResponse)
   }
@@ -68,11 +75,11 @@ case class GrpcRPCParser(ast: Node)(implicit val ctx: GrpcWebApiContext) extends
         withOptTerminal(node) {
           case Some(name) =>
             name.value
-          case None       =>
+          case None =>
             astError("", "Missing mandatory proto3 rpcName", toAnnotations(node))
             "AnonymousOperation"
         }
-      case _         =>
+      case _ =>
         astError("", "Missing mandatory proto3 rpcName", toAnnotations(ast))
         "AnonymousOperation"
     }

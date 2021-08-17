@@ -4,22 +4,24 @@ import amf.aml.internal.parse.common.DeclarationContext
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
 import amf.apicontract.internal.spec.common.{OasParameter, WebApiDeclarations}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  ClosedShapeSpecification,
+  ClosedShapeSpecificationWarning
+}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParsedReference, ParserContext}
+import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser._
 import amf.core.internal.parser.domain.{Annotations, FragmentRef, SearchScope}
-import amf.core.internal.remote.Spec
 import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlAMFErrorHandler}
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AliasCounter, IdCounter}
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
+import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
 import amf.shapes.internal.spec.datanode.DataNodeParserContext
 import amf.shapes.internal.spec.jsonschema.ref.{AstFinder, AstIndex, AstIndexBuilder, JsonSchemaInference}
@@ -60,11 +62,10 @@ abstract class WebApiContext(loc: String,
     with PlatformSecrets
     with JsonSchemaInference
     with ParseErrorHandler
-    with IllegalTypeHandler
-{
+    with IllegalTypeHandler {
 
-  val syamleh = new SyamlAMFErrorHandler(wrapped.config.eh)
-  override def handle[T](error: YError, defaultValue: T): T = syamleh.handle(error, defaultValue)
+  val syamleh                                                            = new SyamlAMFErrorHandler(wrapped.config.eh)
+  override def handle[T](error: YError, defaultValue: T): T              = syamleh.handle(error, defaultValue)
   override def handle(location: SourceLocation, e: SyamlException): Unit = syamleh.handle(location, e)
 
   override val defaultSchemaVersion: JSONSchemaVersion = JSONSchemaDraft4SchemaVersion
@@ -123,7 +124,12 @@ abstract class WebApiContext(loc: String,
     val referenceUrl = getReferenceUrl(fileUrl)
     obtainFragment(fileUrl) flatMap { fragment =>
       AstFinder.findAst(fragment, referenceUrl)(WebApiShapeParserContextAdapter(ctx)).map { node =>
-        ctx.factory.parameterParser(YMapEntryLike(node)(new SYamlAMFParserErrorHandler(ctx.eh)), parentId, None, new IdCounter()).parse
+        ctx.factory
+          .parameterParser(YMapEntryLike(node)(new SYamlAMFParserErrorHandler(ctx.eh)),
+                           parentId,
+                           None,
+                           new IdCounter())
+          .parse
       }
     }
   }
