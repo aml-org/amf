@@ -59,6 +59,7 @@ pipeline {
           branch 'master'
           branch 'develop'
           branch 'remod-breaking'
+	  branch 'ang-governance'
         }
       }
       steps {
