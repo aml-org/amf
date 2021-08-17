@@ -143,7 +143,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         val empty = AnyShape()
         adopt(empty)
         ctx.eh.violation(JsonSchemaFragmentNotFound,
-                         empty.id,
+                         empty,
                          s"could not find json schema fragment ${localPath.get} in file $basePath",
                          origin.valueAST.location)
         empty
@@ -278,7 +278,7 @@ case class RamlJsonSchemaExpression(key: YNode,
       case None =>
         val shape = SchemaShape()
         adopt(shape)
-        ctx.eh.violation(UnableToParseJsonSchema, shape.id, "Cannot parse JSON Schema", value.location)
+        ctx.eh.violation(UnableToParseJsonSchema, shape, "Cannot parse JSON Schema", value.location)
         shape
     }
   }

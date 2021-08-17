@@ -37,7 +37,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       val requirement = SecurityRequirement(Annotations(node)).withName(ScalarNode(node))
       adopted(requirement)
 
-      ctx.eh.violation(InvalidSecurityRequirementObject, requirement.id, s"Invalid security requirement $node", node.location)
+      ctx.eh.violation(InvalidSecurityRequirementObject, requirement, s"Invalid security requirement $node", node.location)
       Some(requirement)
   }
 
@@ -79,7 +79,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
               if (!isValidScope(se.flows.headOption, s)) {
                 ctx.eh.violation(
                   UnknownScopeErrorSpecification,
-                  s.id,
+                  s,
                   Some(OAuth2FlowModel.Scopes.value.toString),
                   s"Scope '${s.name.value()}' not found in settings of declared secured by ${scheme.scheme.name.value()}.",
                   s.position(),
@@ -106,7 +106,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
           case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
           case None             => "Scopes array must be empty for given security scheme"
         }
-        ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node.location)
+        ctx.eh.violation(ScopeNamesMustBeEmpty, scheme, msg, node.location)
       }
     }
 
@@ -122,7 +122,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
           val securityScheme = SecurityScheme(Annotations.virtual())
           scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme, Annotations.synthesized())
           ctx.eh.violation(DeclarationNotFound,
-                           securityScheme.id,
+                           securityScheme,
                            s"Security scheme '$name' not found in declarations.",
                            part.location)
           securityScheme

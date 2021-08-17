@@ -47,7 +47,7 @@ case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDom
       case (Some(_), Some(_)) =>
         ctx.eh.violation(
           ExclusivePropertiesSpecification,
-          exemplifiedDomainElement.id,
+          exemplifiedDomainElement,
           s"Properties 'example' and 'examples' are exclusive and cannot be declared together",
           map.location
         )
@@ -79,7 +79,7 @@ case class RamlExamplesParser(map: YMap,
     if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined) {
       ctx.eh.violation(
         ExclusivePropertiesSpecification,
-        exemplified.id,
+        exemplified,
         s"Properties '$singleExampleKey' and '$multipleExamplesKey' are exclusive and cannot be declared together",
         map.location
       )
@@ -167,7 +167,7 @@ case class RamlSingleExampleParser(key: String,
                                 errMsg =>
                                   ctx.eh.violation(
                                     InvalidFragmentType,
-                                    s,
+                                    "",
                                     errMsg,
                                     entry.value.location
                                 )))
@@ -210,7 +210,7 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
 
           AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
-          if (ctx.spec.isRaml) ctx.closedShape(example.id, map, "example")
+          if (ctx.spec.isRaml) ctx.closedShape(example, map, "example")
         } else ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()
       case YType.Null => // ignore
       case _          => ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()
@@ -280,7 +280,7 @@ case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleO
 
     AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
-    ctx.closedShape(example.id, map, "example")
+    ctx.closedShape(example, map, "example")
     example
   }
 }
@@ -326,7 +326,7 @@ case class NodeDataNodeParser(node: YNode,
 
   private def parseDataNode(exampleNode: Option[YNode], ann: Seq[Annotation] = Seq()) = {
     val dataNode = exampleNode.map { ex =>
-      val dataNode = DataNodeParser(ex, parent = Some(parentId)).parse()
+      val dataNode = DataNodeParser(ex).parse()
       dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
       dataNode.annotations += LexicalInformation(Range(ex.value.range))
       ann.foreach { a =>

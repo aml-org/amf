@@ -60,7 +60,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
         val res = Response()
         adopted(res)
 
-        ctx.closedShape(res.id, map, "response")
+        ctx.closedShape(res, map, "response")
 
         map.key("description", ResponseModel.Description in res)
 
@@ -106,7 +106,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
             }
           )
 
-          ctx.closedShape(res.id, map, "response")
+          ctx.closedShape(res, map, "response")
         }
 
         // OAS 3.0.0

@@ -234,6 +234,8 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
       val syamleh = new SYamlAMFParserErrorHandler(errorHandler)
       override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
         eh.violation(violationId, node, message, "")
+      override def violation(violationId: ValidationSpecification, node: AmfObject, message: String): Unit =
+        eh.violation(violationId, node, message, "")
       override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
       override def refs: Seq[ParsedReference]                                                          = Seq.empty
       override def getMaxYamlReferences: Option[Int]                                                   = maxYamlRefs

@@ -49,7 +49,7 @@ case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit c
 
         AnnotationParser(encoding, m)(WebApiShapeParserContextAdapter(ctx)).parse()
 
-        ctx.closedShape(encoding.id, m, "encoding")
+        ctx.closedShape(encoding, m, "encoding")
 
         encoding
       }

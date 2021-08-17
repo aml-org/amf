@@ -106,7 +106,7 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
 
     AnnotationParser(templatedLink, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
-    ctx.closedShape(templatedLink.id, map, "link")
+    ctx.closedShape(templatedLink, map, "link")
 
     templatedLink
   }

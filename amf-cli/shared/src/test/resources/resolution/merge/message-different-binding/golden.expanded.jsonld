@@ -22,14 +22,14 @@
         ],
         "http://a.ml/vocabularies/apiBinding#binding": [
           {
-            "@id": "target/resp/message/message-bindings",
+            "@id": "target/message-bindings",
             "@type": [
               "http://a.ml/vocabularies/apiBinding#MessageBindings",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/apiBinding#bindings": [
               {
-                "@id": "target/resp/message/message-bindings/kafka-message",
+                "@id": "target/message-bindings/kafka-message",
                 "@type": [
                   "http://a.ml/vocabularies/apiBinding#KafkaMessageBinding",
                   "http://a.ml/vocabularies/apiBinding#MessageBinding",
@@ -37,7 +37,7 @@
                 ],
                 "http://a.ml/vocabularies/apiBinding#messageKey": [
                   {
-                    "@id": "target/resp/message/message-bindings/kafka-message/key/scalar/schema",
+                    "@id": "target/message-bindings/bindings/kafka-message/scalar/schema",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -69,7 +69,7 @@
                 ]
               },
               {
-                "@id": "target/resp/message/message-bindings/amqp091-message",
+                "@id": "target/message-bindings/amqp091-message",
                 "@type": [
                   "http://a.ml/vocabularies/apiBinding#Amqp091MessageBinding",
                   "http://a.ml/vocabularies/apiBinding#MessageBinding",

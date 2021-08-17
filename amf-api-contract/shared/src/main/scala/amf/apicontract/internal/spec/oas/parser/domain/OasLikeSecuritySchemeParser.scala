@@ -56,7 +56,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
   }
 
   protected def closedShape(scheme: SecurityScheme, map: YMap, shape: String): Unit =
-    ctx.closedShape(scheme.id, map, shape)
+    ctx.closedShape(scheme, map, shape)
 
   def parseType(map: YMap, scheme: SecurityScheme): Unit = {
     map.key("type", SecuritySchemeModel.Type in scheme)
@@ -65,7 +65,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
       case Some("OAuth 1.0" | "OAuth 2.0" | "Basic Authentication" | "Digest Authentication" | "Pass Through") =>
         ctx.eh.warning(
           CrossSecurityWarningSpecification,
-          scheme.id,
+          scheme,
           Some(SecuritySchemeModel.Type.value.iri()),
           s"RAML 1.0 security scheme type detected in OAS 2.0 spec",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
@@ -74,7 +74,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
       case Some(s) if s.startsWith("x-") =>
         ctx.eh.warning(
           CrossSecurityWarningSpecification,
-          scheme.id,
+          scheme,
           Some(SecuritySchemeModel.Type.value.iri()),
           s"RAML 1.0 extension security scheme type '$s' detected in ${ctx.spec.id} spec",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
@@ -90,7 +90,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
         if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
           ctx.eh.violation(
             MissingSecuritySchemeErrorSpecification,
-            scheme.id,
+            scheme,
             Some(SecuritySchemeModel.Type.value.iri()),
             "Security Scheme must have a mandatory value from 'oauth2', 'basic' or 'apiKey'",
             Some(LexicalInformation(Range(map.range))),

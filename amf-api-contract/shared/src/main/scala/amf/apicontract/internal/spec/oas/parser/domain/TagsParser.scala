@@ -5,6 +5,7 @@ import amf.apicontract.internal.metamodel.domain.TagModel
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiContext, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.spec.toOas
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
+import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser}
@@ -34,13 +35,13 @@ class TagsParser(node: YNode, adopt: Tag => Tag)(implicit ctx: WebApiContext) ex
 
     AnnotationParser(tag, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
-    ctx.closedShape(tag.id, map, "tag")
+    ctx.closedShape(tag, map, "tag")
 
     tag
   }
 }
 
-case class StringTagsParser(seq: YSequence, parentId: String)(implicit ctx: WebApiContext) {
+case class StringTagsParser(seq: YSequence, parent: AmfObject)(implicit ctx: WebApiContext) {
 
   def parse(): Seq[Tag] = {
     val tags = mutable.ListBuffer[Tag]()
@@ -48,10 +49,9 @@ case class StringTagsParser(seq: YSequence, parentId: String)(implicit ctx: WebA
       node.value match {
         case scalar: YScalar =>
           val tag = Tag(Annotations(scalar)).withName(scalar.text)
-          tag.adopted(parentId)
           tags += tag
         case _ =>
-          ctx.eh.violation(ParserSideValidations.InvalidTagType, parentId, s"Tag value must be of type string", node.location)
+          ctx.eh.violation(ParserSideValidations.InvalidTagType, parent, s"Tag value must be of type string", node.location)
       }
     }
     tags

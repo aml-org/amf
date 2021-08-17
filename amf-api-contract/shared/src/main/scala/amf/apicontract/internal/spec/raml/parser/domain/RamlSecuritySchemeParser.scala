@@ -42,7 +42,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
         val scheme = adopt(SecurityScheme(part))
 
         val map = value.as[YMap]
-        ctx.closedShape(scheme.id, map, "securitySchema")
+        ctx.closedShape(scheme, map, "securitySchema")
 
         map.key("type", (SecuritySchemeModel.Type in scheme).allowingAnnotations)
 
@@ -50,7 +50,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
           case Some("oauth2" | "basic" | "apiKey" | "http" | "openIdConnect") =>
             ctx.eh.warning(
               CrossSecurityWarningSpecification,
-              scheme.id,
+              scheme,
               Some(SecuritySchemeModel.Type.value.iri()),
               "OAS security scheme type detected in RAML spec",
               scheme.`type`.annotations().find(classOf[LexicalInformation]),
@@ -65,7 +65,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
             if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
               ctx.eh.violation(
                 MissingSecuritySchemeErrorSpecification,
-                scheme.id,
+                scheme,
                 Some(SecuritySchemeModel.Type.value.iri()),
                 "Security Scheme must have a mandatory value from 'OAuth 1.0', 'OAuth 2.0', 'Basic Authentication', 'Digest Authentication', 'Pass Through', x-<other>'",
                 Some(LexicalInformation(Range(map.range))),
@@ -114,7 +114,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
         entry.value.tagType match {
           case YType.Map =>
             val value = entry.value.as[YMap]
-            ctx.closedShape(scheme.id, value, "describedBy")
+            ctx.closedShape(scheme, value, "describedBy")
 
             value.key(
               "headers",
@@ -133,7 +133,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
             if (value.key("queryParameters").isDefined && value.key("queryString").isDefined) {
               ctx.eh.violation(
                 ExclusivePropertiesSpecification,
-                scheme.id,
+                scheme,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
                 value.location
               )
@@ -186,7 +186,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
           case YType.Null =>
           case _ =>
             ctx.eh.violation(InvalidSecuritySchemeDescribedByType,
-                             scheme.id,
+                             scheme,
                              s"Invalid 'describedBy' type, map expected",
                              entry.value.location)
         }

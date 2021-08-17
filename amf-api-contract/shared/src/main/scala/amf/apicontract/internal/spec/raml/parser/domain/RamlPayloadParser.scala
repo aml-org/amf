@@ -97,7 +97,7 @@ case class Raml08PayloadParser(entry: YMapEntry, parentId: String, parseOptional
       case _ =>
         ctx.violation(
           InvalidPayload,
-          payload.id,
+          payload,
           "Invalid payload. Payload must be a map or null"
         )
     }

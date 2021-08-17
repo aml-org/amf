@@ -52,7 +52,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     }
 
     AnnotationParser(param, map)(WebApiShapeParserContextAdapter(ctx)).parse()
-    ctx.closedShape(param.id, map, "parameter")
+    ctx.closedShape(param, map, "parameter")
     param
   }
 

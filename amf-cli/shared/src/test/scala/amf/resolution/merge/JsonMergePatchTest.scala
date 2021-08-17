@@ -10,8 +10,9 @@ import amf.apicontract.internal.spec.common.transformation.stage.{AsyncKeyCriter
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.Document
-import amf.core.client.scala.model.domain.{DataNode, ScalarNode}
+import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DataNode, ScalarNode}
 import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.convert.BaseUnitConverter
 import amf.core.internal.parser.{CompilerConfiguration, _}
 import amf.core.internal.remote.AmfJsonHint
@@ -129,6 +130,12 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
 
     def getMerger: JsonMergePatch = AsyncJsonMergePatch()
 
+    def adoptAndMerge(target: AmfObject, patch: AmfObject): AmfElement = {
+      new IdAdopter(target, "target").adoptFromRelative()
+      new IdAdopter(patch, "patch").adoptFromRelative()
+      getMerger.merge(target, patch)
+    }
+
     def getBogusParserCtx: AsyncWebApiContext =
       new Async20WebApiContext("loc", Seq(), ParserContext(config = LimitedParseConfig(DefaultErrorHandler())))
 
@@ -143,7 +150,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     override def build(targetFile: String, patchFile: String): Document = {
       val target = parseOperation(targetFile, "target")
       val patch  = parseOperation(patchFile, "patch")
-      val merged = getMerger.merge(target, patch)
+      val merged = adoptAndMerge(target, patch)
       Document().withId("testId").withEncodes(merged.asInstanceOf[Operation])
     }
 
@@ -162,7 +169,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     override def build(targetFile: String, patchFile: String): Document = {
       val target = parseMessage(targetFile, "target")
       val patch  = parseMessage(patchFile, "patch")
-      val merged = getMerger.merge(target, patch)
+      val merged = adoptAndMerge(target, patch)
       Document().withId("testId").withEncodes(merged.asInstanceOf[Message])
     }
 
@@ -181,7 +188,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     override def build(targetFile: String, patchFile: String): Document = {
       val target = parseNode(targetFile, "target")
       val patch  = parseNode(patchFile, "patch")
-      val merged = getMerger.merge(target, patch)
+      val merged = adoptAndMerge(target, patch)
       Document().withId("testId").withEncodes(merged.asInstanceOf[DataNode])
     }
 

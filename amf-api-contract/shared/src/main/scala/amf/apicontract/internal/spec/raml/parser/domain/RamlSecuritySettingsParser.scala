@@ -53,8 +53,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
     }
 
     if (entries.nonEmpty) {
-      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))),
-                                parent = Some(settings.id))(WebApiShapeParserContextAdapter(ctx)).parse()
+      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(WebApiShapeParserContextAdapter(ctx)).parse()
       settings.set(SettingsModel.AdditionalProperties, node)
     }
     settings
@@ -90,7 +89,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
               val scope = Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
               ctx.eh.violation(
                 UnknownScopeErrorSpecification,
-                scope.id,
+                scope,
                 s"Scope '${element.toString}' not found in settings of declared secured by ${ss.scheme.name.value()}.",
                 n.location
               )
@@ -155,7 +154,7 @@ class Raml10SecuritySettingsParser(node: YNode, `type`: String, scheme: DomainEl
       case (requiredField, grant) =>
         if (!keys.contains(requiredField.name))
           ctx.eh.warning(MissingRequiredFieldForGrantType,
-                         settings.id,
+                         settings,
                          s"'${requiredField.name}' is required when '$grant' grant type is used",
                          map.location)
     }

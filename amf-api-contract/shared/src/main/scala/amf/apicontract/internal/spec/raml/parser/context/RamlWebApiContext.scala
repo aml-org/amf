@@ -122,7 +122,6 @@ abstract class RamlWebApiContext(override val loc: String,
 
     implicit val errorHandler: IllegalTypeHandler = new SYamlAMFParserErrorHandler(eh)
 
-    val node       = shape.id
     val facets     = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
     val shapeLabel = RamlShapeTypeBeautifier.beautify(shapeType)
 
@@ -151,7 +150,7 @@ abstract class RamlWebApiContext(override val loc: String,
             val subject = if (errors.size > 1) "Properties" else "Property"
             eh.violation(
               ClosedShapeSpecification,
-              node,
+              shape,
               s"$subject ${errors.map(_.key.as[YScalar].text).map(e => s"'$e'").mkString(",")} not supported in a $spec $shapeLabel node",
               errors.head.location
             ) // pointing only to the first failed error
@@ -160,7 +159,7 @@ abstract class RamlWebApiContext(override val loc: String,
       case None =>
         eh.violation(
           ClosedShapeSpecification,
-          node,
+          shape.id,
           s"Cannot validate unknown node type $shapeType for $spec",
           shape.annotations
         )

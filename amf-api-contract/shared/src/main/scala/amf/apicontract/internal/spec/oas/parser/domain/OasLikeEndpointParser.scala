@@ -35,12 +35,12 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
     val pathText = path.toString
     val endpoint = EndPoint(Annotations(entry)).set(EndPointModel.Path, path, Annotations.inferred()).adopted(parentId)
 
-    checkBalancedParams(pathText, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
+    checkBalancedParams(pathText, entry.value, endpoint, EndPointModel.Path.value.iri(), ctx)
 
     if (!TemplateUri.isValid(pathText))
-      ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(pathText), entry.value.location)
+      ctx.eh.violation(InvalidEndpointPath, endpoint, TemplateUri.invalidMsg(pathText), entry.value.location)
     if (collector.exists(other => other.path.option() exists (identicalPaths(_, pathText)))) {
-      ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + pathText, entry.location)
+      ctx.eh.violation(DuplicatedEndpointPath, endpoint, "Duplicated resource path " + pathText, entry.location)
       None
     } else parseEndpoint(endpoint)
   }
@@ -56,12 +56,12 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
         ctx.obtainRemoteYNode(value).orElse(ctx.declarations.asts.get(value)) match {
           case Some(map) if map.tagType == YType.Map => Some(parseEndpointMap(endpoint, map.as[YMap]))
           case Some(n) =>
-            ctx.eh.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n.location)
+            ctx.eh.violation(InvalidEndpointType, endpoint, "Invalid node for path item", n.location)
             None
 
           case None =>
             ctx.eh.violation(InvalidEndpointPath,
-                             endpoint.id,
+                             endpoint,
                              s"Cannot find fragment path item ref $value",
                              entry.value.location)
             None
@@ -71,7 +71,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
     }
 
   protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
-    ctx.closedShape(endpoint.id, map, "pathItem")
+    ctx.closedShape(endpoint, map, "pathItem")
 
     map.key("description".asOasExtension, EndPointModel.Description in endpoint)
 

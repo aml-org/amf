@@ -2,7 +2,7 @@ package amf.shapes.internal.spec
 
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, UnresolvedComponents}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, Declarations, FutureDeclarations, SearchScope}
@@ -43,7 +43,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def syntax: SpecSyntax
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo)
   def shapes: Map[String, Shape]
-  def closedShape(node: String, ast: YMap, shape: String): Unit
+  def closedShape(node: AmfObject, ast: YMap, shape: String): Unit
   def registerJsonSchema(url: String, shape: AnyShape)
   def isMainFileContext: Boolean
   def findNamedExampleOrError(ast: YPart)(key: String): Example

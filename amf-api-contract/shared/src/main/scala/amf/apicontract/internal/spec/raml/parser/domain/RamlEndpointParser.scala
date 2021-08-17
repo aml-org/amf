@@ -73,14 +73,14 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     val endpoint = producer(path).add(Annotations(entry))
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
-    checkBalancedParams(path, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
+    checkBalancedParams(path, entry.value, endpoint, EndPointModel.Path.value.iri(), ctx)
     endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)), Annotations(entry.key))
 
     if (!TemplateUri.isValid(path))
-      ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value.location)
+      ctx.eh.violation(InvalidEndpointPath, endpoint, TemplateUri.invalidMsg(path), entry.value.location)
 
     if (collector.exists(e => e.path.is(path)))
-      ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry.location)
+      ctx.eh.violation(DuplicatedEndpointPath, endpoint, "Duplicated resource path " + path, entry.location)
     else {
       entry.value.tagType match {
         case YType.Null => collector += endpoint
@@ -93,7 +93,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
   protected def parseEndpoint(endpoint: EndPoint, map: YMap): Unit = {
     val isResourceType = ctx.contextType == RamlWebApiContextType.RESOURCE_TYPE
-    ctx.closedShape(endpoint.id, map, if (isResourceType) "resourceType" else "endPoint")
+    ctx.closedShape(endpoint, map, if (isResourceType) "resourceType" else "endPoint")
 
     map.key("displayName", (EndPointModel.Name in endpoint).allowingAnnotations)
     map.key("description", (EndPointModel.Description in endpoint).allowingAnnotations)
@@ -230,7 +230,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
             val nestedEndpointName = entry.key.toString()
             ctx.eh.violation(
               NestedEndpoint,
-              endpoint.id,
+              endpoint,
               None,
               s"Nested endpoint in resourceType: '$nestedEndpointName'",
               Some(LexicalInformation(Range(entry.key.range))),
@@ -260,7 +260,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   private def validateSlashInDataNode(node: DataNode, entry: YMapEntry): Unit = node match {
     case scalar: ScalarDataNode if scalar.value.option().exists(_.contains('/')) =>
       ctx.eh.violation(SlashInUriParameterValues,
-                       node.id,
+                       node,
                        s"Value '${scalar.value.value()}' of uri parameter must not contain '/' character",
                        entry.value.location)
     case _ =>
@@ -329,7 +329,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     endpointParams.foreach { p =>
       if (!p.name.option().exists(n => pathParams.contains(n)))
         ctx.eh.warning(UnusedBaseUriParameter,
-                       p.id,
+                       p,
                        None,
                        s"Unused uri parameter ${p.name.value()}",
                        p.position(),
@@ -339,7 +339,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     endpoint.operations.flatMap(o => Option(o.request)).flatMap(_.uriParameters).foreach { p =>
       if (!p.name.option().exists(n => pathParams.contains(n))) {
         ctx.eh.warning(UnusedBaseUriParameter,
-                       p.id,
+                       p,
                        None,
                        s"Unused operation uri parameter ${p.name.value()}",
                        p.position(),

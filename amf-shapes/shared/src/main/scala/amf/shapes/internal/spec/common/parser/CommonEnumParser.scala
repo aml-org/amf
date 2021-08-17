@@ -17,8 +17,8 @@ object CommonEnumParser {
       implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler): YNode => DataNode = {
     val enumParentId = s"$parentId/enum"
     enumType match {
-      case EnumParsing.SCALAR_ENUM => ScalarNodeParser(parent = Some(enumParentId)).parse
-      case _                       => DataNodeParser.parse(parent = Some(enumParentId), idCounter = new IdCounter())
+      case EnumParsing.SCALAR_ENUM => ScalarNodeParser().parse
+      case _                       => DataNodeParser.parse(idCounter = new IdCounter())
     }
   }
 }

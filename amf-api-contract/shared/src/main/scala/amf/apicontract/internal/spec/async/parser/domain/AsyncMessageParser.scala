@@ -14,7 +14,7 @@ import amf.apicontract.internal.spec.oas.parser.domain
 import amf.apicontract.internal.spec.oas.parser.domain.OasLikeTagsParser
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
 import amf.core.internal.annotations.{TrackedElement, VirtualElement}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
@@ -24,13 +24,7 @@ import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.{Example, NodeShape}
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
-import amf.shapes.internal.spec.common.parser.{
-  AnnotationParser,
-  ExampleDataParser,
-  Oas3ExampleOptions,
-  OasLikeCreativeWorkParser,
-  YMapEntryLike
-}
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, ExampleDataParser, Oas3ExampleOptions, OasLikeCreativeWorkParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 
 object AsyncMessageParser {
@@ -148,7 +142,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       }
     )
 
-    val examples: MessageExamples = parseExamplesFacet(map, message.id)
+    val examples: MessageExamples = parseExamplesFacet(map, message)
     examples.all.foreach { ex =>
       ex.annotations += TrackedElement.fromInstance(message)
     }
@@ -171,7 +165,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
               message.set(MessageModel.HeaderSchema, NodeShape(entry.value), Annotations(entry))
 
               ctx.eh.violation(ParserSideValidations.HeaderMustBeObject,
-                               message.id,
+                               message,
                                ParserSideValidations.HeaderMustBeObject.message,
                                entry.value.location)
           }
@@ -193,7 +187,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     if (shouldParsePayloadModel(map))
       parsePayload(map, message)
 
-    ctx.closedShape(message.id, map, "message")
+    ctx.closedShape(message, map, "message")
     AnnotationParser(message, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     message
   }
@@ -223,7 +217,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     def all: Seq[Example] = headers ++: payload
   }
 
-  private def parseExamplesFacet(map: YMap, parentId: String): MessageExamples =
+  private def parseExamplesFacet(map: YMap, parent: AmfObject): MessageExamples =
     map
       .key("examples")
       .map { examplesEntry =>
@@ -232,10 +226,10 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
         val examplePairs = seq.nodes.zipWithIndex.map {
           case (node, index) =>
             val map = node.as[YMap]
-            ctx.closedShape(parentId, map, "message examples")
+            ctx.closedShape(parent, map, "message examples")
             val List(headerExample, payloadExample) = List("headers", "payload").map { key =>
               map.key(key).map { n =>
-                parseExample(n, counter.genId("default-example"), parentId).add(ExampleIndex(index))
+                parseExample(n, counter.genId("default-example")).add(ExampleIndex(index))
               }
             }
             (headerExample, payloadExample)
@@ -245,10 +239,9 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       }
       .getOrElse(MessageExamples(Nil, Nil))
 
-  private def parseExample(n: YMapEntry, name: String, parentId: String): Example = {
+  private def parseExample(n: YMapEntry, name: String): Example = {
     val node = n.value
     val exa  = Example(node).withName(name)
-    exa.adopted(parentId)
     ExampleDataParser(YMapEntryLike(node), exa, Oas3ExampleOptions)(WebApiShapeParserContextAdapter(ctx)).parse()
   }
 }
@@ -262,7 +255,7 @@ case class AsyncMessageTraitPopulator()(implicit ctx: AsyncWebApiContext) extend
   override def populate(map: YMap, message: Message): Message = {
     val nextMessage = super.populate(map, message)
     nextMessage.set(IsAbstract, AmfScalar(true), Annotations.synthesized())
-    ctx.closedShape(nextMessage.id, map, "messageTrait")
+    ctx.closedShape(nextMessage, map, "messageTrait")
     nextMessage
   }
 }

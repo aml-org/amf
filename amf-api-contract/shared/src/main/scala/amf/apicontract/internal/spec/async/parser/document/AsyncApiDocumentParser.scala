@@ -3,38 +3,20 @@ package amf.apicontract.internal.spec.async.parser.document
 import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
-import amf.apicontract.client.scala.model.domain.bindings.{
-  ChannelBindings,
-  MessageBindings,
-  OperationBindings,
-  ServerBindings
-}
+import amf.apicontract.client.scala.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.internal.metamodel.domain.bindings.{
-  ChannelBindingsModel,
-  MessageBindingsModel,
-  OperationBindingsModel,
-  ServerBindingsModel
-}
+import amf.apicontract.internal.metamodel.domain.bindings.{ChannelBindingsModel, MessageBindingsModel, OperationBindingsModel, ServerBindingsModel}
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
-import amf.apicontract.internal.spec.async.parser.bindings.{
-  AsyncChannelBindingsParser,
-  AsyncMessageBindingsParser,
-  AsyncOperationBindingsParser,
-  AsyncServerBindingsParser
-}
+import amf.apicontract.internal.spec.async.parser.bindings.{AsyncChannelBindingsParser, AsyncMessageBindingsParser, AsyncOperationBindingsParser, AsyncServerBindingsParser}
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.parser.domain._
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.document.OasLikeDeclarationsHelper
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser, OasLikeTagsParser}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  InvalidIdentifier,
-  MandatoryChannelsProperty
-}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{InvalidIdentifier, MandatoryChannelsProperty}
 import amf.core.client.scala.model.document.Document
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations.{DeclaredElement, SourceSpec}
 import amf.core.internal.metamodel.document.DocumentModel
@@ -61,7 +43,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     ctx.setJsonSchemaAST(map)
 
     val references = AsyncReferencesParser(root.references).parse()
-    parseDeclarations(map)
+    parseDeclarations(map, document)
 
     val api = parseApi(map).add(SourceSpec(ctx.spec))
     document
@@ -82,7 +64,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     map.key("id", entry => IdentifierParser(entry, api, ctx).parse())
     map.key("channels") match {
       case Some(entry) => parseChannels(entry, api)
-      case None        => ctx.eh.violation(MandatoryChannelsProperty, api.id, "'channels' is mandatory in async spec")
+      case None        => ctx.eh.violation(MandatoryChannelsProperty, api, "'channels' is mandatory in async spec")
     }
     map.key(
       "externalDocs",
@@ -120,7 +102,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("channels")
 
-    ctx.closedShape(api.id, map, "webApi")
+    ctx.closedShape(api, map, "webApi")
     api
   }
 
@@ -133,7 +115,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
   override protected val definitionsKey: String = "schemas"
 
-  def parseDeclarations(map: YMap): Unit = {
+  def parseDeclarations(map: YMap, parentObj: AmfObject): Unit = {
     map.key("components").foreach { components =>
       val parent        = root.location + "#/declarations"
       val componentsMap = components.value.as[YMap]
@@ -152,7 +134,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
       parseMessageDeclarations(componentsMap, parent + "/messages")
 
-      ctx.closedShape(parent, componentsMap, "components")
+      ctx.closedShape(parentObj, componentsMap, "components")
       validateNames()
     }
   }
@@ -319,7 +301,7 @@ case class IdentifierParser(entry: YMapEntry, webApi: AsyncApi, override implici
         val id = entry.value.as[String]
         webApi.set(WebApiModel.Identifier, AmfScalar(id, Annotations(entry.value)), Annotations(entry))
       case _ =>
-        ctx.eh.violation(InvalidIdentifier, webApi.id, "'id' must be a string", entry.location)
+        ctx.eh.violation(InvalidIdentifier, webApi, "'id' must be a string", entry.location)
     }
   }
 }

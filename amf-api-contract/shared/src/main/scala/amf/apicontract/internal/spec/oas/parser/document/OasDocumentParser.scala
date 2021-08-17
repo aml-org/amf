@@ -14,16 +14,10 @@ import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.OasLikeSecuritySchemeTypeMappings
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser, OasLikeTagsParser, OasResponseParser}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  InvalidAnnotationType,
-  InvalidParameterType,
-  InvalidSecurityRequirementsSeq,
-  InvalidSecuritySchemeType,
-  MandatoryPathsProperty
-}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{InvalidAnnotationType, InvalidParameterType, InvalidSecurityRequirementsSeq, InvalidSecuritySchemeType, MandatoryPathsProperty}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations.{DeclaredElement, LexicalInformation, SingleValueArray, SourceSpec}
 import amf.core.internal.metamodel.Field
@@ -37,12 +31,7 @@ import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.{
-  AnnotationParser,
-  OasLikeCreativeWorkParser,
-  RamlCreativeWorkParser,
-  YMapEntryLike
-}
+import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser, RamlCreativeWorkParser, YMapEntryLike}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model.{YMapEntry, YNode, _}
@@ -104,7 +93,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
     ctx.setJsonSchemaAST(map)
 
     val references = ReferencesParser(document, root.location, "uses".asOasExtension, map, root.references).parse()
-    parseDeclarations(root, map)
+    parseDeclarations(root, map, document)
 
     val api = parseWebApi(map).add(SourceSpec(ctx.spec))
     document.set(DocumentModel.Encodes, api, Annotations.inferred())
@@ -119,7 +108,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
     document
   }
 
-  def parseDeclarations(root: Root, map: YMap): Unit = {
+  def parseDeclarations(root: Root, map: YMap, parentObj: AmfObject): Unit = {
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent + "/types", Some(this))
     parseAnnotationTypeDeclarations(map, parent)
@@ -180,7 +169,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
             .contains(schemeType.value()))
         ctx.eh.violation(
           InvalidSecuritySchemeType,
-          scheme.id,
+          scheme,
           Some(SecuritySchemeModel.Type.value.iri()),
           s"'$schemeType' is not a valid security scheme type in ${ctx.spec.id}",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
@@ -233,7 +222,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
                 val parameter =
                   ctx.factory.parameterParser(YMapEntryLike(e), parentPath, Some(typeName), nameGenerator).parse
                 ctx.eh.violation(InvalidParameterType,
-                                 parameter.domainElement.id,
+                                 parameter.domainElement,
                                  "Map needed to parse a parameter declaration",
                                  e.location)
                 parameter
@@ -311,13 +300,13 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
 
     map.key("paths") match {
       case Some(entry) => parseEndpoints(api, entry)
-      case None        => ctx.eh.violation(MandatoryPathsProperty, api.id, "'paths' is mandatory in OAS spec")
+      case None        => ctx.eh.violation(MandatoryPathsProperty, api, "'paths' is mandatory in OAS spec")
     }
 
     AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("paths")
 
-    ctx.closedShape(api.id, map, "webApi")
+    ctx.closedShape(api, map, "webApi")
 
     api
   }
@@ -348,7 +337,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
         .regex("^/.*")
         .foldLeft(List[EndPoint]())((acc, curr) => acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse())
     api.set(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
-    ctx.closedShape(api.id, paths, "paths")
+    ctx.closedShape(api, paths, "paths")
   }
 }
 
@@ -378,7 +367,7 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
           adopt(customDomainProperty)
           ctx.eh.violation(
             InvalidAnnotationType,
-            customDomainProperty.id,
+            customDomainProperty,
             "Invalid value node type for annotation types parser, expected map or scalar reference",
             ast.value.location
           )
@@ -407,7 +396,7 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
           val customDomainProperty = CustomDomainProperty().withName(annotationName)
           adopt(customDomainProperty)
           ctx.eh.violation(DeclarationNotFound,
-                           customDomainProperty.id,
+                           customDomainProperty,
                            "Could not find declared annotation link in references",
                            scalar.location)
           customDomainProperty
@@ -487,7 +476,7 @@ abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBas
               case _ =>
                 val documentation = RamlCreativeWorkParser(YNode(YMap.empty)).parse()
                 ctx.eh.violation(DeclarationNotFound,
-                                 documentation.id,
+                                 documentation,
                                  s"not supported scalar $n.text for documentation item",
                                  n.location)
                 documentation

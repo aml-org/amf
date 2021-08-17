@@ -40,12 +40,12 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
 
     val map = entry.value.as[YMap]
 
-    ctx.closedShape(operation.id, map, closedShapeName)
+    ctx.closedShape(operation, map, closedShapeName)
 
     map.key("operationId").foreach { entry =>
       val operationId = entry.value.toString()
       if (!ctx.registerOperationId(operationId))
-        ctx.eh.violation(DuplicatedOperationId, operation.id, s"Duplicated operation id '$operationId'", entry.value.location)
+        ctx.eh.violation(DuplicatedOperationId, operation, s"Duplicated operation id '$operationId'", entry.value.location)
     }
 
     parseOperationId(map, operation)
@@ -75,14 +75,14 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
     val operation = super.parse()
     val map       = entry.value.as[YMap]
 
-    ctx.closedShape(operation.id, map, "operation")
+    ctx.closedShape(operation, map, "operation")
 
     map.key("deprecated", OperationModel.Deprecated in operation)
 
     map.key(
       "tags",
       entry => {
-        val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
+        val tags = StringTagsParser(entry.value.as[YSequence], operation).parse()
         operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
       }
     )
@@ -127,7 +127,7 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
                     // Validation for OAS 3
                     if (ctx.isInstanceOf[Oas3WebApiContext] && entry.key.tagType != YType.Str)
                       ctx.eh.violation(InvalidStatusCode,
-                                       r.id,
+                                       r,
                                        "Status code for a Response object must be a string",
                                        entry.key.location)
                 }

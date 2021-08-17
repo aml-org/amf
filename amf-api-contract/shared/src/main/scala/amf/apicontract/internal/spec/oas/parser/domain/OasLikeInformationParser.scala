@@ -13,7 +13,7 @@ case class OasLikeInformationParser(entry: YMapEntry, api: Api, override implici
   def parse(): Unit = {
     val info = entry.value.as[YMap]
 
-    ctx.closedShape(api.id, info, "info")
+    ctx.closedShape(api, info, "info")
 
     info.key("title", WebApiModel.Name in api)
     info.key("description", WebApiModel.Description in api)

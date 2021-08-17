@@ -133,13 +133,13 @@ case class Raml10ParameterParser(entry: YMapEntry,
                     parameter.set(ParameterModel.Schema, tracking(schema, parameter), Annotations(entry))
                   case None =>
                     ctx.eh.violation(UnresolvedReference,
-                                     parameter.id,
+                                     parameter,
                                      "Cannot declare unresolved parameter",
                                      entry.value.location)
                     parameter
                 }
               case _ =>
-                ctx.eh.violation(UnresolvedReference, parameter.id, "Cannot declare unresolved parameter", entry.value.location)
+                ctx.eh.violation(UnresolvedReference, parameter, "Cannot declare unresolved parameter", entry.value.location)
                 parameter
 
             }
@@ -297,7 +297,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     if (map.key("name").isEmpty) {
       ctx.eh.violation(
         ParameterNameRequired,
-        element.id,
+        element,
         "'name' property is required in a parameter.",
         map.location
       )
@@ -333,7 +333,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
                  as it will become a model validation and violation in the next major */
         ctx.eh.warning(
           invalidExampleFieldWarning,
-          p.domainElement.id,
+          p.domainElement,
           s"Property 'example' not supported in a parameter node",
           map.location
         )
@@ -360,7 +360,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
           .orElse {
             ctx.eh.violation(
               UnresolvedParameter,
-              parameter.id,
+              parameter,
               "Cannot find valid schema for parameter",
               map.location
             )
@@ -383,12 +383,12 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     map.key("description", ParameterModel.Description in parameter)
     map.key("required", (ParameterModel.Required in parameter).explicit)
 
-    ctx.closedShape(parameter.id, map, "parameter")
+    ctx.closedShape(parameter, map, "parameter")
     AnnotationParser(parameter, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     parameter
   }
 
-  def parseType(container: SchemaContainer, binding: String, typeParsing: () => Unit): SchemaContainer = {
+  def parseType(container: SchemaContainer with AmfObject, binding: String, typeParsing: () => Unit): SchemaContainer = {
 
     def setDefaultSchema = (c: SchemaContainer) => c.setSchema(AnyShape(Annotations(Inferred())))
 
@@ -396,7 +396,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
       case None =>
         setDefaultSchema(container)
         ctx.eh.violation(MissingParameterType,
-                         container.id,
+                         container,
                          s"'type' is required in a parameter with binding '$binding'",
                          map.location)
       case Some(entry) =>
@@ -406,19 +406,19 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     container
   }
 
-  private def checkItemsField(entry: YMapEntry, container: SchemaContainer): Unit = {
+  private def checkItemsField(entry: YMapEntry, container: SchemaContainer with AmfObject): Unit = {
     val typeValue = entry.value.asScalar.get.text
     val items     = map.key("items")
     if (typeValue == "array" && items.isEmpty)
       ctx.eh.warning(ItemsFieldRequiredWarning, // TODO: Should be violation
-                     container.id,
+                     container,
                      "'items' field is required when schema type is array",
                      map.location)
   }
 
   private def parseFormDataPayload(bindingRange: Option[Range]): Payload = {
     val payload = commonPayload(bindingRange)
-    ctx.closedShape(payload.id, map, "parameter")
+    ctx.closedShape(payload, map, "parameter")
     parseType(
       payload,
       "formData",
@@ -437,7 +437,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
           .orElse {
             ctx.eh.violation(
               UnresolvedParameter,
-              payload.id,
+              payload,
               "Cannot find valid schema for parameter",
               map.location
             )
@@ -465,7 +465,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
 
   private def parseBodyPayload(bindingRange: Option[Range]): Payload = {
     val payload: Payload = commonPayload(bindingRange)
-    ctx.closedShape(payload.id, map, "bodyParameter")
+    ctx.closedShape(payload, map, "bodyParameter")
 
     map.key("mediaType".asOasExtension, PayloadModel.MediaType in payload)
     // Force to re-adopt with the new mediatype if exists
@@ -519,7 +519,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     if (schemaToCheck.isInstanceOf[FileShape])
       ctx.eh.violation(
         OasFormDataNotFileSpecification,
-        schema.id,
+        schema,
         "File types in parameters must be declared in formData params",
         map.location
       )
@@ -556,7 +556,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
                 setName(parameter)
                 parameter.adopted(parentId)
                 ctx.eh.violation(UnresolvedParameter,
-                                 parameter.id,
+                                 parameter,
                                  s"Cannot find parameter or payload reference $refUrl",
                                  ref.location)
                 OasParameter(parameter, Some(ref))
@@ -698,7 +698,7 @@ object Oas3ParameterParser {
     val paramBinding = param.binding.value()
     if (!isStyleValid(paramBinding, style))
       ctx.eh.violation(InvalidParameterStyleBindingCombination,
-                       param.id,
+                       param,
                        s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'")
   }
 
@@ -767,7 +767,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
         val bodyParam = body.head
         ctx.eh.violation(
           OasBodyAndFormDataParameterSpecification,
-          bodyParam.domainElement.id,
+          bodyParam.domainElement,
           "Cannot declare 'body' and 'formData' params at the same time for a request or resource",
           bodyParam.ast.get.location
         )
@@ -816,14 +816,14 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
                 case Some(ast) =>
                   ctx.eh.violation(
                     DuplicatedParameters,
-                    oasParam.domainElement.id,
+                    oasParam.domainElement,
                     s"Parameter $name of type $binding was found duplicated",
                     ast.location
                   )
                 case None =>
                   ctx.eh.violation(
                     DuplicatedParameters,
-                    oasParam.domainElement.id,
+                    oasParam.domainElement,
                     s"Parameter $name of type $binding was found duplicated"
                   )
               }
@@ -844,7 +844,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       params.tail.foreach { param =>
         ctx.eh.violation(
           id,
-          param.domainElement.id,
+          param.domainElement,
           "Cannot declare more than one 'body' parameter for a request or a resource",
           param.ast.get.location
         )

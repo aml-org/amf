@@ -43,7 +43,7 @@ case class ParametrizedDeclarationParser(
               .zipWithIndex
               .map {
                 case (variableEntry, index) =>
-                  val node = DataNodeParser(variableEntry.value, parent = Some(s"${declaration.id}_$index"))(
+                  val node = DataNodeParser(variableEntry.value)(
                     WebApiShapeParserContextAdapter(ctx)).parse()
                   VariableValue(variableEntry)
                     .withName(variableEntry.key)
@@ -59,7 +59,7 @@ case class ParametrizedDeclarationParser(
       case _ =>
         val declaration = producer("")
         declaration.add(Annotations(node))
-        ctx.eh.violation(InvalidAbstractDeclarationType, declaration.id, "Invalid model extension.", node.location)
+        ctx.eh.violation(InvalidAbstractDeclarationType, declaration, "Invalid model extension.", node.location)
         declaration
     }
   }
