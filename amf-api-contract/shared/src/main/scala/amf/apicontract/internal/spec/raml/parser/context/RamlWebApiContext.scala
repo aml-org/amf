@@ -7,13 +7,13 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
-import amf.core.internal.remote.Vendor
+import amf.core.internal.remote.Spec
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
+import amf.shapes.internal.spec.{RamlShapeTypeBeautifier, RamlWebApiContextType}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import amf.shapes.internal.spec.raml.parser.TypeInfo
-import amf.shapes.internal.spec.{RamlShapeTypeBeautifier, RamlWebApiContextType}
-import org.yaml.model._
+import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YNode, YScalar, YType}
 
 import scala.collection.mutable
 

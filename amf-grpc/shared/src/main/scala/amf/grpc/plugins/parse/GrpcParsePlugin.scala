@@ -7,7 +7,7 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandl
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{Grpc, Syntax, Vendor}
+import amf.core.internal.remote.{Grpc, Spec, Syntax}
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.document.GrpcDocumentParser
 import amf.grpc.internal.spec.parser.domain.GrpcPackageParser
@@ -16,7 +16,10 @@ import amf.grpc.internal.spec.parser.syntax.TokenTypes.SYNTAX
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
-  override protected def vendor: Vendor = Grpc
+
+  override def spec: Spec = Grpc
+
+  override def validSpecsToReference: Seq[Spec] = super.validSpecsToReference :+ spec
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
     GrpcDocumentParser(document)(context(document, ctx)).parseDocument()
@@ -40,7 +43,7 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
       case Some(syntaxNode: Node) =>
         syntaxNode.children.exists {
           case t: Terminal => t.value == "\"proto3\""
-          case _ => false
+          case _           => false
         }
       case _ => false
     }
@@ -58,7 +61,7 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
     // setup the package path
     GrpcPackageParser(ast, Document())(grpcCtx).parseName() match {
       case Some((pkg, _)) => grpcCtx.nestedMessage(pkg)
-      case _ => grpcCtx
+      case _              => grpcCtx
     }
   }
 }

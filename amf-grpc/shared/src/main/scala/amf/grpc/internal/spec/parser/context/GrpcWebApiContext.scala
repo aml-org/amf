@@ -7,12 +7,13 @@ import amf.apicontract.internal.spec.common.parser.{SecuritySchemeParser, WebApi
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.remote.{Proto3, Vendor}
+import amf.core.internal.remote.{Proto3, Spec}
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.yaml.model.{YNode, YPart}
 
 object GrpcVersionFactory extends SpecVersionFactory {
-  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser = throw new Exception("GRPC specs don't support security schemes")
+  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+    throw new Exception("GRPC specs don't support security schemes")
 }
 
 class GrpcWebApiContext(override val loc: String,
@@ -20,14 +21,16 @@ class GrpcWebApiContext(override val loc: String,
                         override val options: ParsingOptions,
                         private val wrapped: ParserContext,
                         private val ds: Option[WebApiDeclarations] = None,
-                        val messagePath: Seq[String] = Seq("")) extends WebApiContext(loc, refs, options, wrapped, ds) {
+                        val messagePath: Seq[String] = Seq(""))
+    extends WebApiContext(loc, refs, options, wrapped, ds) {
 
   override val syntax: SpecSyntax = new SpecSyntax {
     override val nodes: Map[String, Set[String]] = Map()
   }
-  override val vendor: Vendor = Proto3
+  override val spec: Spec = Proto3
 
-  override def link(node: YNode): Either[String, YNode] = throw new Exception("GrpcContext cannot be used with a SYaml parser")
+  override def link(node: YNode): Either[String, YNode] =
+    throw new Exception("GrpcContext cannot be used with a SYaml parser")
 
   override protected def ignore(shape: String, property: String): Boolean = false
 
@@ -35,7 +38,8 @@ class GrpcWebApiContext(override val loc: String,
 
   override val factory: SpecVersionFactory = GrpcVersionFactory
 
-  def nestedMessage(messageName: String) = new GrpcWebApiContext(loc, refs, options, wrapped, ds, messagePath ++ Seq(messageName))
+  def nestedMessage(messageName: String) =
+    new GrpcWebApiContext(loc, refs, options, wrapped, ds, messagePath ++ Seq(messageName))
 
   def fullMessagePath(messageName: String): String = {
     if (messageName.startsWith(".")) { // fully qualified path
@@ -48,7 +52,7 @@ class GrpcWebApiContext(override val loc: String,
   }
 
   def topLevelPackageRef(messageName: String): Option[String] = {
-    if (messageName.startsWith(".")) {  // fully qualified path
+    if (messageName.startsWith(".")) { // fully qualified path
       None
     } else if (messageName.startsWith(messagePath(1))) { // reference from package
       Some("." + messageName)
