@@ -46,7 +46,6 @@ import amf.plugins.domain.webapi.models
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
-import amf.core.utils.AmfStrings
 
 import scala.collection.mutable
 import scala.util.Try
@@ -674,9 +673,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       val requiredFields = parseRequiredFields(map, shape)
 
-      val properties  = mutable.LinkedHashMap[String, PropertyShape]()
-      val properEntry = map.key("properties")
-      properEntry.foreach(entry => {
+      val properties      = mutable.LinkedHashMap[String, PropertyShape]()
+      val propertiesEntry = map.key("properties")
+      propertiesEntry.foreach(entry => {
         Option(entry.value.as[YMap]) match {
           case Some(m) =>
             val props = PropertiesParser(m, shape.withProperty, requiredFields).parse()
@@ -684,6 +683,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           case _ => // Empty properties node.
         }
       })
+      generateUndefinedRequiredProperties(requiredFields, shape, properties)
       if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         InnerShapeParser("propertyNames", NodeShapeModel.PropertyNames, map, shape, adopt, version).parse()
 
@@ -699,17 +699,16 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           case _ => // Empty properties node.
         }
       })
-      val valueAnnotations = properEntry.map { pe =>
+      val valueAnnotations = propertiesEntry.map { pe =>
         Annotations(pe.value)
       } orElse {
         patternPropEntry.map { pp =>
           Annotations(pp.value)
         }
-      } getOrElse { Annotations() }
+      } getOrElse { Annotations.virtual() }
 
       if (properties.nonEmpty)
         shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, valueAnnotations), valueAnnotations)
-      shape.properties.foreach(p => properties += (p.name.value() -> p))
 
       parseShapeDependencies(shape)
 
@@ -723,6 +722,20 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       shape
     }
+  }
+
+  private def generateUndefinedRequiredProperties(requiredFields: Map[String, YNode],
+                                                  shape: NodeShape,
+                                                  properties: mutable.LinkedHashMap[String, PropertyShape]): Unit = {
+    val undefinedRequiredProperties = requiredFields.keySet.filter(!properties.keySet.contains(_))
+    val generatedRequiredProperties = undefinedRequiredProperties
+      .map(propertyName => {
+        PropertyShape(Annotations.virtual())
+          .withName(propertyName)
+          .set(PropertyShapeModel.MinCount, AmfScalar(1), Annotations.synthesized())
+          .set(PropertyShapeModel.Range, AnyShape(), Annotations.synthesized())
+      })
+    properties ++= generatedRequiredProperties.map(p => p.name.value() -> p)
   }
 
   private def parseShapeDependencies(shape: NodeShape): Unit = {
@@ -909,7 +922,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                 val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
                 property.set(
                   PropertyShapeModel.MinCount,
-                  AmfScalar(if (required) 1 else 0, Annotations.synthesized()), // does this annotation make sense? should parent not be `synthetized`?
+                  AmfScalar(if (required) 1 else 0, Annotations.synthesized()), // does this annotation make sense? should parent not be `synthesized`?
                   Annotations(entry) += ExplicitField()
                 )
               }
