@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: "test api"
+
+types:
+    testSchema: |
+      {
+        "type": "object",
+        "properties": {
+          "a": { "type": "string", "required": "false" },
+          "b": { "type": "string", "required": "false" }
+        },
+        "required": ["c"]
+      }
+
+/pets:
+  get:
+    responses:
+      200:
+        description: Not Found
+        body:
+          application/json:
+            type: testSchema
+            examples:
+              complete-object:
+                a: a string
+                b: a string
+                c: a string
+              only-required:
+                c: null

@@ -16,7 +16,10 @@ import amf.core.internal.utils.IdCounter
 import amf.shapes.internal.annotations.{CollectionFormatFromItems, JSONSchemaId, TypePropertyLexicalInfo}
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
+import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
+  DiscriminatorValue,
+  DiscriminatorValueTarget
+}
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
@@ -24,7 +27,12 @@ import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.{TypeDef, _}
 import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.datanode.{DataNodeParser, ScalarNodeParser}
-import amf.shapes.internal.spec.jsonschema.parser.{ContentParser, Draft2019ShapeDependenciesParser, Draft4ShapeDependenciesParser, UnevaluatedParser}
+import amf.shapes.internal.spec.jsonschema.parser.{
+  ContentParser,
+  Draft2019ShapeDependenciesParser,
+  Draft4ShapeDependenciesParser,
+  UnevaluatedParser
+}
 import amf.shapes.internal.spec.oas.{OasShapeDefinitions, parser}
 import amf.shapes.internal.spec.raml.parser.XMLSerializerParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
@@ -32,7 +40,18 @@ import org.yaml.model._
 import amf.core.internal.utils._
 import amf.core.internal.parser._
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, FileShape, MatrixShape, NodeShape, ScalarShape, SchemaShape, TupleShape, UnionShape, UnresolvedShape}
+import amf.shapes.client.scala.model.domain.{
+  AnyShape,
+  ArrayShape,
+  FileShape,
+  MatrixShape,
+  NodeShape,
+  ScalarShape,
+  SchemaShape,
+  TupleShape,
+  UnionShape,
+  UnresolvedShape
+}
 
 import scala.collection.mutable
 import scala.util.Try
@@ -363,7 +382,10 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                 .map(_.get)
               shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(entry.value))
             case _ =>
-              ctx.eh.violation(InvalidUnionType, shape.id, "Unions are built from multiple shape nodes", entry.value.location)
+              ctx.eh.violation(InvalidUnionType,
+                               shape.id,
+                               "Unions are built from multiple shape nodes",
+                               entry.value.location)
 
           }
         }
@@ -464,7 +486,10 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     private def validateMissingItemsField(shape: Shape): Unit = {
       if (version.isInstanceOf[OAS30SchemaVersion]) {
-        ctx.eh.violation(ItemsFieldRequired, shape.id, "'items' field is required when schema type is array", map.location)
+        ctx.eh.violation(ItemsFieldRequired,
+                         shape.id,
+                         "'items' field is required when schema type is array",
+                         map.location)
       }
     }
   }
@@ -665,9 +690,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       val requiredFields = parseRequiredFields(map, shape)
 
-      val properties  = mutable.LinkedHashMap[String, PropertyShape]()
-      val properEntry = map.key("properties")
-      properEntry.foreach(entry => {
+      val properties      = mutable.LinkedHashMap[String, PropertyShape]()
+      val propertiesEntry = map.key("properties")
+      propertiesEntry.foreach(entry => {
         Option(entry.value.as[YMap]) match {
           case Some(m) =>
             val props = PropertiesParser(m, shape.withProperty, requiredFields).parse()
@@ -675,6 +700,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           case _ => // Empty properties node.
         }
       })
+      generateUndefinedRequiredProperties(requiredFields, shape, properties)
       if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         InnerShapeParser("propertyNames", NodeShapeModel.PropertyNames, map, shape, adopt, version).parse()
 
@@ -690,13 +716,13 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           case _ => // Empty properties node.
         }
       })
-      val valueAnnotations = properEntry.map { pe =>
+      val valueAnnotations = propertiesEntry.map { pe =>
         Annotations(pe.value)
       } orElse {
         patternPropEntry.map { pp =>
           Annotations(pp.value)
         }
-      } getOrElse { Annotations() }
+      } getOrElse { Annotations.virtual() }
 
       if (properties.nonEmpty)
         shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, valueAnnotations), valueAnnotations)
@@ -714,6 +740,20 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       shape
     }
+  }
+
+  private def generateUndefinedRequiredProperties(requiredFields: Map[String, YNode],
+                                                  shape: NodeShape,
+                                                  properties: mutable.LinkedHashMap[String, PropertyShape]): Unit = {
+    val undefinedRequiredProperties = requiredFields.keySet.filter(!properties.keySet.contains(_))
+    val generatedRequiredProperties = undefinedRequiredProperties
+      .map(propertyName => {
+        PropertyShape(Annotations.virtual())
+          .withName(propertyName)
+          .set(PropertyShapeModel.MinCount, AmfScalar(1), Annotations.synthesized())
+          .set(PropertyShapeModel.Range, AnyShape(), Annotations.synthesized())
+      })
+    properties ++= generatedRequiredProperties.map(p => p.name.value() -> p)
   }
 
   private def parseShapeDependencies(shape: NodeShape): Unit = {
@@ -785,7 +825,10 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         case Some(entry) =>
           (NodeShapeModel.Discriminator in shape)(entry)
         case None =>
-          ctx.eh.violation(DiscriminatorNameRequired, shape.id, s"Discriminator must have a propertyName defined", map.location)
+          ctx.eh.violation(DiscriminatorNameRequired,
+                           shape.id,
+                           s"Discriminator must have a propertyName defined",
+                           map.location)
       }
       map.key("mapping", parseMappings)
       ctx.closedShape(shape.id, map, "discriminator")
@@ -1026,7 +1069,10 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           entry.value.to[String] match {
             case Right(str) => shape.withRaw(str)
             case _ =>
-              errorHandler.violation(InvalidSchemaType, shape.id, "Cannot parse non string schema shape", entry.value.location)
+              errorHandler.violation(InvalidSchemaType,
+                                     shape.id,
+                                     "Cannot parse non string schema shape",
+                                     entry.value.location)
               shape.withRaw("")
           }
         }
