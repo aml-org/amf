@@ -201,7 +201,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
     }
 
     private def resourcePath(endPoint: EndPoint) =
-      endPoint.path.map(_.replaceAll("\\{ext\\}", "")).getOrlElse("")
+      endPoint.path.option().map(_.replaceAll("\\{ext\\}", "")).getOrElse("")
 
     private def findExtendsPredicate(element: DomainElement): Boolean = {
       if (visited.contains(element.id) && !fromOverlay) true

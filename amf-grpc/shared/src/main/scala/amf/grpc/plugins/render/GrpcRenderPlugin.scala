@@ -9,14 +9,14 @@ import amf.core.client.scala.parse.document.ParsedDocument
 import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
 import amf.core.internal.plugins.syntax.{ASTBuilder, StringDocBuilder}
 import amf.core.internal.remote.Spec.GRPC
-import amf.core.internal.remote.{Proto3, Spec, Syntax}
+import amf.core.internal.remote.{Grpc, Spec, Syntax}
 import amf.grpc.internal.spec.emitter.document.GrpcDocumentEmitter
 import org.yaml.builder.DocBuilder
 import org.yaml.model.YDocument
 
 object GrpcRenderPlugin extends AMFRenderPlugin {
 
-  override def defaultSyntax(): String = Proto3.mediaType
+  override def defaultSyntax(): String = Grpc.mediaType
 
   override def mediaTypes: Seq[String] = Syntax.proto3Mimes.toSeq
 

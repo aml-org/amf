@@ -32,7 +32,7 @@ import amf.apicontract.internal.transformation.compatibility.{
   Raml10CompatibilityPipeline
 }
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
-import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
+import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
 import amf.apicontract.internal.validation.shacl.{ShaclModelValidationPlugin, ViolationModelValidationPlugin}
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider

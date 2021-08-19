@@ -7,7 +7,7 @@ import amf.apicontract.internal.spec.common.parser.{SecuritySchemeParser, WebApi
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.core.internal.remote.{Proto3, Spec}
+import amf.core.internal.remote.{Grpc, Spec}
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.yaml.model.{YNode, YPart}
 
@@ -27,7 +27,7 @@ class GrpcWebApiContext(override val loc: String,
   override val syntax: SpecSyntax = new SpecSyntax {
     override val nodes: Map[String, Set[String]] = Map()
   }
-  override val spec: Spec = Proto3
+  override val spec: Spec = Grpc
 
   override def link(node: YNode): Either[String, YNode] =
     throw new Exception("GrpcContext cannot be used with a SYaml parser")

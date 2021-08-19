@@ -8,6 +8,7 @@ import amf.grpc.client.scala.GRPCConfiguration
 import amf.io.FunSuiteCycleTests
 
 trait GrpcFunSuiteCycleTests extends FunSuiteCycleTests {
+
   override def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
     val amfConfig: AMFConfiguration = GRPCConfiguration.GRPC()
     val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {
