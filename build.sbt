@@ -64,7 +64,7 @@ lazy val amlLibJS  = "com.github.amlorg" %% "amf-aml_sjs0.6" % amlVersion
 lazy val rdfJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "rdfJVM")
 lazy val rdfLibJVM = "com.github.amlorg" %% "amf-rdf" % amlVersion
 lazy val rdfJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "rdfJS")
-lazy val rdfLibJS  = "com.github.amlorg" %% "amf-rdf.6" % amlVersion
+lazy val rdfLibJS  = "com.github.amlorg" %% "amf-rdf_sjs0.6" % amlVersion
 
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
