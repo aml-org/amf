@@ -1,6 +1,11 @@
 package amf.apicontract.internal.transformation.stages
 
-import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
+import amf.apicontract.client.scala.model.domain.templates.{
+  ParametrizedResourceType,
+  ParametrizedTrait,
+  ResourceType,
+  Trait
+}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
 import amf.apicontract.internal.spec.common.emitter.{Raml10EndPointEmitter, Raml10OperationEmitter}
@@ -144,8 +149,9 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
         val branches = ListBuffer[BranchContainer]()
 
-        val operationTree = OperationTreeBuilder(operation)(new SYamlAMFParserErrorHandler(IgnoringErrorHandler)).build()
-        val branchesObj   = Branches()(extendsContext)
+        val operationTree =
+          OperationTreeBuilder(operation)(new SYamlAMFParserErrorHandler(IgnoringErrorHandler)).build()
+        val branchesObj = Branches()(extendsContext)
 
         // Method branch
         branches += branchesObj.method(resolver, operation, local, operationTree)
@@ -194,14 +200,8 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
         .getOrElse("")
     }
 
-    private def resourcePath(endPoint: EndPoint) = {
-      endPoint.path.option() match {
-        case Some(path) =>
-          path.replaceAll("\\{ext\\}", "")
-        case _          => // ignore
-          ""
-      }
-    }
+    private def resourcePath(endPoint: EndPoint) =
+      endPoint.path.map(_.replaceAll("\\{ext\\}", "")).getOrlElse("")
 
     private def findExtendsPredicate(element: DomainElement): Boolean = {
       if (visited.contains(element.id) && !fromOverlay) true

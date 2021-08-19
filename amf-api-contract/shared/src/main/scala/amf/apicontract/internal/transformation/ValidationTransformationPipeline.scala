@@ -1,6 +1,11 @@
 package amf.apicontract.internal.transformation
 
-import amf.apicontract.internal.spec.common.transformation.stage.{AnnotationRemovalStage, MediaTypeResolutionStage, PayloadAndParameterResolutionStage, ResponseExamplesResolutionStage}
+import amf.apicontract.internal.spec.common.transformation.stage.{
+  AnnotationRemovalStage,
+  MediaTypeResolutionStage,
+  PayloadAndParameterResolutionStage,
+  ResponseExamplesResolutionStage
+}
 import amf.apicontract.internal.transformation.stages.ExtensionsResolutionStage
 import amf.core.client.common.validation.{Async20Profile, GrpcProfile, Oas30Profile, ProfileName}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -32,7 +37,6 @@ object ValidationTransformationPipeline {
     val pipeline = profile match {
       case Oas30Profile   => Oas30ValidationTransformationPipeline()
       case Async20Profile => Async20CachePipeline()
-      //case GrpcProfile    => GrpcTransformationPipeline()
       case _              => new ValidationTransformationPipeline(profile)
     }
     val runner = TransformationPipelineRunner(eh)
