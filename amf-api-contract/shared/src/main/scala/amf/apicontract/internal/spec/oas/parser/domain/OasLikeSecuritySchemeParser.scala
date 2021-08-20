@@ -46,7 +46,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
           .securitySettingsParser(map, scheme)
           .parse()
           .map { settings =>
-            scheme.set(SecuritySchemeModel.Settings, settings, Annotations(map))
+            scheme.setWithoutId(SecuritySchemeModel.Settings, settings, Annotations(map))
           }
 
         AnnotationParser(scheme, map)(WebApiShapeParserContextAdapter(ctx)).parse()

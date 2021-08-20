@@ -46,7 +46,7 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
 
     if (entries.nonEmpty) {
       val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(WebApiShapeParserContextAdapter(ctx)).parse()
-      settings.set(SettingsModel.AdditionalProperties, node)
+      settings.setWithoutId(SettingsModel.AdditionalProperties, node)
     }
 
     AnnotationParser(scheme, xSettings)(WebApiShapeParserContextAdapter(ctx)).parse()
@@ -58,12 +58,12 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
 
     map.key("name", entry => {
       val value = ScalarNode(entry.value)
-      settings.set(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
+      settings.setWithoutId(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
     })
 
     map.key("in", entry => {
       val value = ScalarNode(entry.value)
-      settings.set(ApiKeySettingsModel.In, value.string(), Annotations(entry))
+      settings.setWithoutId(ApiKeySettingsModel.In, value.string(), Annotations(entry))
     })
 
     map.key(
@@ -98,7 +98,7 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
   def parseScopes(flow: OAuth2Flow, map: YMap): Unit = map.key("scopes").foreach { entry =>
     val scopeMap = entry.value.as[YMap]
     val scopes   = scopeMap.entries.filterNot(entry => isOasAnnotation(entry.key)).map(parseScope(_, flow.id))
-    flow.set(OAuth2FlowModel.Scopes, AmfArray(scopes, Annotations(entry.value)), Annotations(entry))
+    flow.setWithoutId(OAuth2FlowModel.Scopes, AmfArray(scopes, Annotations(entry.value)), Annotations(entry))
   }
 
   def parseScope(scopeEntry: YMapEntry, parentId: String): Scope = {
@@ -106,9 +106,9 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
     val description: String = scopeEntry.value
 
     Scope(scopeEntry)
-      .set(ScopeModel.Name, AmfScalar(name, Annotations(scopeEntry.key)), Annotations.inferred())
-      .set(ScopeModel.Description, AmfScalar(description, Annotations(scopeEntry.key)), Annotations.inferred())
-      .adopted(parentId)
+      .setWithoutId(ScopeModel.Name, AmfScalar(name, Annotations(scopeEntry.key)), Annotations.inferred())
+      .setWithoutId(ScopeModel.Description, AmfScalar(description, Annotations(scopeEntry.key)), Annotations.inferred())
+
   }
 
   def parse(): Option[Settings]

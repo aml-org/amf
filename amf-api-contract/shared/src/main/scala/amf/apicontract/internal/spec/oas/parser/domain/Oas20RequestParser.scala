@@ -49,7 +49,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
           entries += entry
           val queryParameters =
             RamlParametersParser(entry.value.as[YMap],
-                                 (p: Parameter) => p.adopted(request.getOrCreate.id),
+                                 (p: Parameter) => Unit,
                                  binding = "query")(spec.toRaml(ctx))
               .parse()
           parameters = parameters.add(Parameters(query = queryParameters))
@@ -63,7 +63,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
           entries += entry
           val headers =
             RamlParametersParser(entry.value.as[YMap],
-                                 (p: Parameter) => p.adopted(request.getOrCreate.id),
+                                 (p: Parameter) => Unit,
                                  binding = "header")(spec.toRaml(ctx))
               .parse()
           parameters = parameters.add(Parameters(header = headers))
@@ -77,7 +77,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
         entry.value.as[YMap].entries.headOption.foreach { paramEntry =>
           entries += paramEntry
           val parameter =
-            Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), binding = "path")(
+            Raml08ParameterParser(paramEntry, (p: Parameter) => Unit, binding = "path")(
               spec.toRaml(ctx))
               .parse()
           parameters = parameters.add(Parameters(baseUri08 = Seq(parameter)))
@@ -88,16 +88,16 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
     parameters match {
       case Parameters(query, path, header, _, baseUri08, _) =>
         if (query.nonEmpty)
-          request.getOrCreate.set(RequestModel.QueryParameters,
+          request.getOrCreate.setWithoutId(RequestModel.QueryParameters,
                                   AmfArray(query, Annotations(entries.head)),
                                   Annotations(entries.head))
         if (header.nonEmpty)
-          request.getOrCreate.set(RequestModel.Headers,
+          request.getOrCreate.setWithoutId(RequestModel.Headers,
                                   AmfArray(header, Annotations(entries.head)),
                                   Annotations(entries.head))
 
         if (path.nonEmpty || baseUri08.nonEmpty)
-          request.getOrCreate.set(RequestModel.UriParameters,
+          request.getOrCreate.setWithoutId(RequestModel.UriParameters,
                                   AmfArray(path ++ baseUri08, Annotations(entries.head)),
                                   Annotations(entries.head))
     }
@@ -117,14 +117,14 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
     )
 
     if (payloads.nonEmpty)
-      request.getOrCreate.set(RequestModel.Payloads,
+      request.getOrCreate.setWithoutId(RequestModel.Payloads,
                               AmfArray(payloads, Annotations(entries.head.value)),
                               Annotations(entries.head))
 
     map.key(
       "queryString".asOasExtension,
       queryEntry => {
-        Raml10TypeParser(queryEntry, shape => shape.adopted(request.getOrCreate.id))(
+        Raml10TypeParser(queryEntry, shape => Unit)(
           WebApiShapeParserContextAdapter(toRaml(ctx)))
           .parse()
           .map(s => request.getOrCreate.withQueryString(tracking(s, request.getOrCreate)))

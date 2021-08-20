@@ -102,7 +102,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
     ctx.declarations += ctx.factory
       .securitySchemeParser(entry, scheme => {
         val name = entry.key.as[String]
-        scheme.withName(name).adopted(parent)
+        scheme.withName(name)
       })
       .parse()
       .add(DeclaredElement())
@@ -134,7 +134,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
       }
 
       Raml08TypeParser(entry,
-                       shape => shape.withName(entry.key).adopted(parent),
+                       shape => shape.withName(entry.key),
                        isAnnotation = false,
                        StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
         .parse() match {

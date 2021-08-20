@@ -16,8 +16,8 @@ import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
-case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
-    extends AsyncBindingsParser(entryLike, parent) {
+case class AsyncOperationBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)
+    extends AsyncBindingsParser(entryLike) {
   override type Binding  = OperationBinding
   override type Bindings = OperationBindings
   override val bindingsField: Field = OperationBindingsModel.Bindings
@@ -25,7 +25,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
   override protected def createBindings(): OperationBindings = OperationBindings()
 
   protected def createParser(entryOrMap: YMapEntryLike): AsyncBindingsParser =
-    AsyncOperationBindingsParser(entryOrMap, parent)
+    AsyncOperationBindingsParser(entryOrMap)
 
   def handleRef(fullRef: String): OperationBindings = {
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "operationBindings")
@@ -34,7 +34,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
       .map(operationBindings =>
         nameAndAdopt(operationBindings.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
                      entryLike.key))
-      .getOrElse(remote(fullRef, entryLike, parent))
+      .getOrElse(remote(fullRef, entryLike))
   }
 
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): OperationBindings =
@@ -42,7 +42,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
 
   override protected def parseHttp(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): OperationBinding = {
-    val binding = HttpOperationBinding(Annotations(entry)).adopted(parent)
+    val binding = HttpOperationBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("type", HttpOperationBindingModel.OperationType in binding)
@@ -57,7 +57,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
 
   override protected def parseAmqp(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): OperationBinding = {
-    val binding = Amqp091OperationBinding(Annotations(entry)).adopted(parent)
+    val binding = Amqp091OperationBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("expiration", Amqp091OperationBindingModel.Expiration in binding)
@@ -80,7 +80,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
 
   override protected def parseKafka(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): OperationBinding = {
-    val binding = KafkaOperationBinding(Annotations(entry)).adopted(parent)
+    val binding = KafkaOperationBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("groupId",
@@ -96,7 +96,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
 
   override protected def parseMqtt(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): OperationBinding = {
-    val binding = MqttOperationBinding(Annotations(entry)).adopted(parent)
+    val binding = MqttOperationBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("qos", MqttOperationBindingModel.Qos in binding)

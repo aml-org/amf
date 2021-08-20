@@ -21,7 +21,7 @@ case class AsyncServersParser(map: YMap, api: AsyncApi)(implicit val ctx: AsyncW
     map.entries.map { entry =>
       AsyncServerParser(api.id, entry)
         .parse()
-        .set(ServerModel.Name,
+        .setWithoutId(ServerModel.Name,
              AmfScalar(entry.key.asScalar.map(_.text).getOrElse(entry.key.toString), Annotations(entry.key)),
              Annotations.inferred())
     }
@@ -36,8 +36,8 @@ private case class AsyncServerParser(parent: String, entry: YMapEntry)(implicit 
     map.key("protocol", ServerModel.Protocol in server)
     map.key("protocolVersion", ServerModel.ProtocolVersion in server)
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncServerBindingsParser(YMapEntryLike(entry.value), server.id).parse()
-      server.set(ServerModel.Bindings, bindings, Annotations(entry))
+      val bindings = AsyncServerBindingsParser(YMapEntryLike(entry.value)).parse()
+      server.setWithoutId(ServerModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(server, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
     }
@@ -49,9 +49,9 @@ private case class AsyncServerParser(parent: String, entry: YMapEntry)(implicit 
         val securedBy = entry.value
           .as[Seq[YNode]]
           .flatMap(s =>
-            OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => se.adopted(server.id), idCounter).parse())
+            OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => Unit, idCounter).parse())
 
-        server.set(ServerModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        server.setWithoutId(ServerModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
     )
 

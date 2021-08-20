@@ -23,7 +23,7 @@ case class AndConstraintParser(map: YMap, shape: Shape, adopt: Shape => Unit, ve
               .map {
                 case (node, index) =>
                   val entry = YMapEntry(YNode(s"item$index"), node)
-                  OasTypeParser(entry, item => item.adopted(shape.id + "/and/" + index), version).parse()
+                  OasTypeParser(entry, item => Unit, version).parse()
               }
               .filter(_.isDefined)
               .map(_.get)

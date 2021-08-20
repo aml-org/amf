@@ -36,12 +36,12 @@ case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDom
     (map.key("example"), map.key("examples")) match {
       case (Some(exampleEntry), None) =>
         val examples = List(parseExample(exampleEntry.value))
-        exemplifiedDomainElement.set(ExamplesField.Examples,
+        exemplifiedDomainElement.setWithoutId(ExamplesField.Examples,
                                      AmfArray(examples, Annotations(exampleEntry)),
                                      Annotations(exampleEntry))
       case (None, Some(examplesEntry)) =>
         val examples = Oas3NamedExamplesParser(examplesEntry, exemplifiedDomainElement.id).parse()
-        exemplifiedDomainElement.set(ExamplesField.Examples,
+        exemplifiedDomainElement.setWithoutId(ExamplesField.Examples,
                                      AmfArray(examples, Annotations(examplesEntry.value)),
                                      Annotations(examplesEntry))
       case (Some(_), Some(_)) =>
@@ -56,7 +56,7 @@ case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDom
   }
 
   private def parseExample(yNode: YNode) = {
-    val example = Example(yNode).adopted(exemplifiedDomainElement.id)
+    val example = Example(yNode)
     ExampleDataParser(YMapEntryLike(yNode), example, Oas3ExampleOptions).parse()
   }
 }
@@ -91,9 +91,9 @@ case class RamlExamplesParser(map: YMap,
       .key(multipleExamplesKey)
       .orElse(map.key(singleExampleKey)) match {
       case Some(e) =>
-        exemplified.set(ExamplesField.Examples, AmfArray(examples, Annotations(e)), Annotations(e))
+        exemplified.setWithoutId(ExamplesField.Examples, AmfArray(examples, Annotations(e)), Annotations(e))
       case _ if examples.nonEmpty =>
-        exemplified.set(ExamplesField.Examples, AmfArray(examples), Annotations.inferred())
+        exemplified.setWithoutId(ExamplesField.Examples, AmfArray(examples), Annotations.inferred())
       case _ => // ignore
     }
   }
@@ -148,7 +148,7 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
           .getOrElse(RamlSingleExampleValueParser(entry, simpleProducer, options).parse())
       case Right(_) => RamlSingleExampleValueParser(entry, simpleProducer, options).parse()
     }
-    example.set(ExampleModel.Name, name.text(), Annotations.inferred())
+    example.setWithoutId(ExampleModel.Name, name.text(), Annotations.inferred())
   }
 }
 
@@ -234,10 +234,10 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
 
   private val keyName = ScalarNode(entry.key)
 
-  private def setName(e: Example): Example = e.set(ExampleModel.Name, keyName.string(), Annotations(entry.key))
+  private def setName(e: Example): Example = e.setWithoutId(ExampleModel.Name, keyName.string(), Annotations(entry.key))
 
   private def newExample(ast: YPart): Example =
-    setName(Example(entry)).adopted(parentId)
+    setName(Example(entry))
 
   private def parseLink(fullRef: String, map: YMap) = {
     val name = OasShapeDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
@@ -255,7 +255,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
             val errorExample =
               setName(
                 error.ErrorNamedExample(name, map).link(AmfScalar(name), Annotations(map), Annotations.synthesized()))
-                .adopted(parentId)
+
             errorExample
         }
       }
@@ -270,7 +270,7 @@ case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleO
     map.key("description", (ExampleModel.Description in example).allowingAnnotations)
     map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
 
-    example.set(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations.synthesized())
+    example.setWithoutId(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations.synthesized())
 
     map
       .key("value")

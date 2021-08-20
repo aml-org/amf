@@ -24,28 +24,28 @@ case class XMLSerializerParser(defaultName: String, node: YNode)(implicit ctx: S
       "attribute",
       entry => {
         val value = ScalarNode(entry.value)
-        serializer.set(XMLSerializerModel.Attribute, value.boolean(), Annotations(entry) += ExplicitField())
+        serializer.setWithoutId(XMLSerializerModel.Attribute, value.boolean(), Annotations(entry) += ExplicitField())
       }
     )
 
     map.key("wrapped", entry => {
       val value = ScalarNode(entry.value)
-      serializer.set(XMLSerializerModel.Wrapped, value.boolean(), Annotations(entry) += ExplicitField())
+      serializer.setWithoutId(XMLSerializerModel.Wrapped, value.boolean(), Annotations(entry) += ExplicitField())
     })
 
     map.key("name", entry => {
       val value = ScalarNode(entry.value)
-      serializer.set(XMLSerializerModel.Name, value.string(), Annotations(entry) += ExplicitField())
+      serializer.setWithoutId(XMLSerializerModel.Name, value.string(), Annotations(entry) += ExplicitField())
     })
 
     map.key("namespace", entry => {
       val value = ScalarNode(entry.value)
-      serializer.set(XMLSerializerModel.Namespace, value.string(), Annotations(entry))
+      serializer.setWithoutId(XMLSerializerModel.Namespace, value.string(), Annotations(entry))
     })
 
     map.key("prefix", entry => {
       val value = ScalarNode(entry.value)
-      serializer.set(XMLSerializerModel.Prefix, value.string(), Annotations(entry))
+      serializer.setWithoutId(XMLSerializerModel.Prefix, value.string(), Annotations(entry))
     })
 
     ctx.closedShape(serializer, map, "xmlSerialization")

@@ -70,7 +70,7 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
 
   private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
     val flows = entry.value.as[YMap].entries.map(parseFlow(settings.id, _))
-    settings.set(OAuth2SettingsModel.Flows, AmfArray(flows, Annotations(entry.value)), Annotations(entry))
+    settings.setWithoutId(OAuth2SettingsModel.Flows, AmfArray(flows, Annotations(entry.value)), Annotations(entry))
   }
 
   private def parseFlow(parent: String, flowEntry: YMapEntry) = {
@@ -78,9 +78,7 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
     val flowMap = flowEntry.value.as[YMap]
     val flowKey = ScalarNode(flowEntry.key).string()
 
-    flow.set(OAuth2FlowModel.Flow, flowKey, Annotations(flowEntry.key))
-
-    flow.adopted(parent)
+    flow.setWithoutId(OAuth2FlowModel.Flow, flowKey, Annotations(flowEntry.key))
 
     flowMap.key("authorizationUrl", OAuth2FlowModel.AuthorizationUri in flow)
     flowMap.key("tokenUrl", OAuth2FlowModel.AccessTokenUri in flow)

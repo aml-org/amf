@@ -64,7 +64,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     }
 
     rootMap.key("usage", usage => {
-      fragment.set(
+      fragment.setWithoutId(
         FragmentModel.Usage,
         AmfScalar(usage.value.as[String], Annotations(usage.value)),
         Annotations(usage.value)
@@ -92,17 +92,15 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
   case class DocumentationItemFragmentParser(map: YMap) {
     def parse(): DocumentationItemFragment = {
 
-      val item = DocumentationItemFragment().adopted(root.location)
+      val item = DocumentationItemFragment()
 
-      item.withEncodes(RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse())
-
-      item
+      item.setWithoutId(FragmentModel.Encodes, (RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse()))
     }
   }
 
   case class DataTypeFragmentParser(map: YMap) {
     def parse(): DataTypeFragment = {
-      val dataType = DataTypeFragment().adopted(root.location)
+      val dataType = DataTypeFragment()
 
       Raml10TypeParser(
         map,
@@ -111,7 +109,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         StringDefaultType
       )(WebApiShapeParserContextAdapter(ctx))
         .parse()
-        .foreach(dataType.withEncodes)
+        .foreach(dataType.setWithoutId(FragmentModel.Encodes, _))
 
       dataType
     }
@@ -119,51 +117,50 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
   case class ResourceTypeFragmentParser(map: YMap) {
     def parse(): ResourceTypeFragment = {
-      val resourceType = ResourceTypeFragment().adopted(root.location + "#")
+      val resourceType = ResourceTypeFragment()
 
       val abstractDeclaration =
         new AbstractDeclarationParser(ResourceType(map).withId(resourceType.id), resourceType.id, YMapEntryLike(map))
           .parse()
 
       resourceType.withEncodes(abstractDeclaration)
-
+      resourceType.setWithoutId(FragmentModel.Encodes, abstractDeclaration)
     }
   }
 
   case class TraitFragmentParser(map: YMap) {
     def parse(): TraitFragment = {
-      val traitFragment = TraitFragment().adopted(root.location + "#")
+      val traitFragment = TraitFragment()
 
       val abstractDeclaration =
         new AbstractDeclarationParser(Trait(map).withId(traitFragment.id), traitFragment.id, YMapEntryLike(map))
           .parse()
 
-      traitFragment.withEncodes(abstractDeclaration)
+      traitFragment.setWithoutId(FragmentModel.Encodes, abstractDeclaration)
     }
   }
 
   case class AnnotationFragmentParser(map: YMap) {
     def parse(): AnnotationTypeDeclarationFragment = {
-      val annotation = AnnotationTypeDeclarationFragment().adopted(root.location)
+      val annotation = AnnotationTypeDeclarationFragment()
 
       val property =
         AnnotationTypesParser(map,
                               "annotation",
                               map,
-                              (annotation: CustomDomainProperty) => annotation.adopted(root.location + "#/")).parse()
+                              (annotation: CustomDomainProperty) => Unit).parse()
 
-      annotation.withEncodes(property)
+      annotation.setWithoutId(FragmentModel.Encodes, property)
     }
   }
 
   case class SecuritySchemeFragmentParser(map: YMap) {
     def parse(): SecuritySchemeFragment = {
-      val security = SecuritySchemeFragment().adopted(root.location)
+      val security = SecuritySchemeFragment()
 
-      security.withEncodes(
-        RamlSecuritySchemeParser(map,
+      security.setWithoutId(FragmentModel.Encodes, RamlSecuritySchemeParser(map,
                                  (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) =>
-                                   security.adopted(root.location + "#/"))
+                                   security)
           .parse())
     }
   }

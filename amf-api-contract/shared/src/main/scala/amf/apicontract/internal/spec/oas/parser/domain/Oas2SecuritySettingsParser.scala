@@ -37,16 +37,16 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
       }
 
   override def parseOauth2Settings(settings: OAuth2Settings): OAuth2Settings = {
-    val flow = new Lazy[OAuth2Flow](() => OAuth2Flow(map).adopted(settings.id))
+    val flow = new Lazy[OAuth2Flow](() => OAuth2Flow(map))
 
     map.key("authorizationUrl",
             entry =>
-              flow.getOrCreate.set(OAuth2FlowModel.AuthorizationUri,
+              flow.getOrCreate.setWithoutId(OAuth2FlowModel.AuthorizationUri,
                                    ScalarNode(entry.value).string(),
                                    Annotations(entry.value)))
     map.key("tokenUrl",
             entry =>
-              flow.getOrCreate.set(OAuth2FlowModel.AccessTokenUri,
+              flow.getOrCreate.setWithoutId(OAuth2FlowModel.AccessTokenUri,
                                    ScalarNode(entry.value).string(),
                                    Annotations(entry.value)))
 
@@ -54,7 +54,7 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
       "flow",
       entry => {
         val value = ScalarNode(entry.value)
-        flow.getOrCreate.set(OAuth2FlowModel.Flow, value.string(), Annotations(entry))
+        flow.getOrCreate.setWithoutId(OAuth2FlowModel.Flow, value.string(), Annotations(entry))
       }
     )
 
@@ -74,8 +74,7 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
     AnnotationParser(settings, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("scopes")
 
     flow.option.foreach { f =>
-      f.adopted(settings.id)
-      settings.set(OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred())
+      settings.setWithoutId(OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred())
     }
 
     settings
