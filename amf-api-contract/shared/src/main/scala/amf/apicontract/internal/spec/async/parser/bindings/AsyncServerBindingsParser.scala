@@ -17,15 +17,15 @@ import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
-case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
-    extends AsyncBindingsParser(entryLike, parent) {
+case class AsyncServerBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)
+    extends AsyncBindingsParser(entryLike) {
 
   override type Binding  = ServerBinding
   override type Bindings = ServerBindings
   override val bindingsField: Field = ServerBindingsModel.Bindings
 
   override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
-    AsyncServerBindingsParser(entryLike, parent)
+    AsyncServerBindingsParser(entryLike)
 
   override protected def createBindings(): ServerBindings = ServerBindings()
 
@@ -36,14 +36,14 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
       .map(serverBindings =>
         nameAndAdopt(serverBindings.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
                      entryLike.key))
-      .getOrElse(remote(fullRef, entryLike, parent))
+      .getOrElse(remote(fullRef, entryLike))
   }
 
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): ServerBindings =
     new ErrorServerBindings(fullRef, entryLike.asMap)
 
   override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): ServerBinding = {
-    val binding = MqttServerBinding(Annotations(entry)).adopted(parent)
+    val binding = MqttServerBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("clientId", MqttServerBindingModel.ClientId in binding)
@@ -62,7 +62,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
   private def parseLastWill(binding: MqttServerBinding, map: YMap)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key(
       "lastWill", { entry =>
-        val lastWill    = MqttServerLastWill(Annotations(entry.value)).adopted(binding.id)
+        val lastWill    = MqttServerLastWill(Annotations(entry.value))
         val lastWillMap = entry.value.as[YMap]
 
         lastWillMap.key("topic", MqttServerLastWillModel.Topic in lastWill)
@@ -71,7 +71,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
         lastWillMap.key("message", MqttServerLastWillModel.Message in lastWill)
 
         ctx.closedShape(lastWill, lastWillMap, "mqttServerLastWill")
-        binding.set(MqttServerBindingModel.LastWill, lastWill, Annotations(entry))
+        binding.setWithoutId(MqttServerBindingModel.LastWill, lastWill, Annotations(entry))
       }
     )
   }

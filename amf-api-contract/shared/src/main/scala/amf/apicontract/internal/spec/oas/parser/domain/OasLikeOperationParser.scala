@@ -35,7 +35,7 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
 
   def parse(): Operation = {
     val operation: Operation = Operation(Annotations(entry))
-    operation.set(Method, entryKey, Annotations.inferred())
+    operation.setWithoutId(Method, entryKey, Annotations.inferred())
     adopt(operation)
 
     val map = entry.value.as[YMap]
@@ -83,7 +83,7 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
       "tags",
       entry => {
         val tags = StringTagsParser(entry.value.as[YSequence], operation).parse()
-        operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+        operation.setWithoutId(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
       }
     )
 
@@ -119,9 +119,8 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
               responses += OasResponseParser(
                 entry.value.as[YMap], {
                   r =>
-                    r.set(ResponseModel.Name, node.text(), Annotations(entry.key))
-                      .adopted(operation.id)
-                      .set(ResponseModel.StatusCode, node.text(), Annotations.inferred())
+                    r.setWithoutId(ResponseModel.Name, node.text(), Annotations(entry.key))
+                      .setWithoutId(ResponseModel.StatusCode, node.text(), Annotations.inferred())
                     if (!r.annotations.contains(classOf[SourceAST]))
                       r.annotations ++= Annotations(entry)
                     // Validation for OAS 3
@@ -134,7 +133,7 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
               ).parse()
           }
 
-        operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))
+        operation.setWithoutId(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))
       }
     )
 
@@ -147,9 +146,9 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
     val requirements = entry.value
       .as[Seq[YNode]]
       .flatMap(s =>
-        OasLikeSecurityRequirementParser(s, (s: SecurityRequirement) => s.adopted(operation.id), idCounter).parse())
+        OasLikeSecurityRequirementParser(s, (s: SecurityRequirement) => Unit, idCounter).parse())
     val extension = operation.security
-    operation.set(WebApiModel.Security,
+    operation.setWithoutId(WebApiModel.Security,
                   AmfArray(requirements ++ extension, Annotations(entry.value)),
                   Annotations(entry))
   }
@@ -161,9 +160,9 @@ case class Oas20OperationParser(entry: YMapEntry, adopt: Operation => Operation)
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
-    Oas20RequestParser(map, (r: Request) => r.adopted(operation.id))
+    Oas20RequestParser(map, (r: Request) => Unit)
       .parse()
-      .map(r => operation.set(OperationModel.Request, AmfArray(Seq(r), Annotations.virtual()), Annotations(map)))
+      .map(r => operation.setWithoutId(OperationModel.Request, AmfArray(Seq(r), Annotations.virtual()), Annotations(map)))
 
     map.key("schemes", OperationModel.Schemes in operation)
     map.key("consumes", OperationModel.Accepts in operation)
@@ -183,8 +182,7 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
     map.key(
       "requestBody",
       entry => {
-        operation.fields.set(
-          operation.id,
+        operation.fields.setWithoutId(
           OperationModel.Request,
           AmfArray(Seq(Oas30RequestParser(entry.value.as[YMap], operation.id, entry).parse()),
                    Annotations(entry.value)),
@@ -206,12 +204,12 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
           .flatMap { callbackEntry =>
             val name = callbackEntry.key.as[YScalar].text
             Oas30CallbackParser(callbackEntry.value.as[YMap],
-                                _.withName(name).adopted(operation.id),
+                                _.withName(name),
                                 name,
                                 callbackEntry)
               .parse()
           }
-        operation.fields.set(operation.id,
+        operation.fields.setWithoutId(
                              OperationModel.Callbacks,
                              AmfArray(callbacks, Annotations(entry.value)),
                              Annotations(entry))

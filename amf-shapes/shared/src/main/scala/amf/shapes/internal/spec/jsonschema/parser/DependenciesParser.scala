@@ -36,7 +36,7 @@ case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: 
     val propertyDependencies =
       seqEntries.map(e => DependenciesParser(e, parentId, PropertyDependencyParser(e.value)).parse())
     if (propertyDependencies.nonEmpty)
-      shape.set(NodeShapeModel.Dependencies,
+      shape.setWithoutId(NodeShapeModel.Dependencies,
                 AmfArray(propertyDependencies, Annotations.virtual()),
                 Annotations.inferred())
   }
@@ -45,7 +45,7 @@ case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: 
     val schemaDependencies =
       entries.map(e => DependenciesParser(e, parentId, SchemaDependencyParser(e.value, version)).parse())
     if (schemaDependencies.nonEmpty)
-      shape.set(NodeShapeModel.SchemaDependencies,
+      shape.setWithoutId(NodeShapeModel.SchemaDependencies,
                 AmfArray(schemaDependencies, Annotations.virtual()),
                 Annotations.inferred())
   }
@@ -65,7 +65,7 @@ case class Draft2019ShapeDependenciesParser(shape: NodeShape, map: YMap, parentI
         .as[YMap]
         .entries
         .map(e => DependenciesParser(e, parentId, SchemaDependencyParser(e.value, version)).parse())
-      shape.set(NodeShapeModel.SchemaDependencies,
+      shape.setWithoutId(NodeShapeModel.SchemaDependencies,
                 AmfArray(schemaDependencies, Annotations(entry.value)),
                 Annotations(entry))
     }
@@ -76,7 +76,7 @@ case class Draft2019ShapeDependenciesParser(shape: NodeShape, map: YMap, parentI
         .entries
         .map(e => DependenciesParser(e, parentId, PropertyDependencyParser(e.value)).parse())
       shape
-        .set(NodeShapeModel.Dependencies, AmfArray(propertyDependencies, Annotations(entry.value)), Annotations(entry))
+        .setWithoutId(NodeShapeModel.Dependencies, AmfArray(propertyDependencies, Annotations(entry.value)), Annotations(entry))
     }
   }
 }
@@ -93,9 +93,9 @@ case class SchemaDependencyParser(node: YNode, version: SchemaVersion)(implicit 
 
   override def parse(dependency: Dependencies): Dependencies = {
     val optionalShape =
-      OasTypeParser(YMapEntryLike(node.as[YMap]), "schema", shape => shape.adopted(dependency.id), version).parse()
+      OasTypeParser(YMapEntryLike(node.as[YMap]), "schema", shape => Unit, version).parse()
     optionalShape.foreach { s =>
-      dependency.set(SchemaDependenciesModel.SchemaTarget, s, Annotations(node))
+      dependency.setWithoutId(SchemaDependenciesModel.SchemaTarget, s, Annotations(node))
     }
     dependency
   }
@@ -107,7 +107,7 @@ case class PropertyDependencyParser(node: YNode)(implicit ctx: ShapeParserContex
   override def create(entry: YMapEntry): Dependencies = PropertyDependencies(entry)
 
   override def parse(dependency: Dependencies): Dependencies = {
-    dependency.set(PropertyDependenciesModel.PropertyTarget, AmfArray(targets()), Annotations(node))
+    dependency.setWithoutId(PropertyDependenciesModel.PropertyTarget, AmfArray(targets()), Annotations(node))
   }
 
   private def targets(): Seq[AmfScalar] = {
@@ -121,7 +121,7 @@ case class DependenciesParser(entry: YMapEntry, parentId: String, parser: Specia
     implicit ctx: ShapeParserContext) {
   def parse(): Dependencies = {
     val dependency = parser.create(entry)
-    dependency.set(DependenciesModel.PropertySource, AmfScalar(dependencyKey), Annotations(entry.key))
+    dependency.setWithoutId(DependenciesModel.PropertySource, AmfScalar(dependencyKey), Annotations(entry.key))
     dependency.withId(parentId + dependency.componentId)
     parser.parse(dependency)
   }

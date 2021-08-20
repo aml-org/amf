@@ -38,13 +38,13 @@ abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operat
       "tags",
       entry => {
         val tags = OasLikeTagsParser(operation.id, entry).parse()
-        operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+        operation.setWithoutId(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
       }
     )
 
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncOperationBindingsParser(YMapEntryLike(entry.value), operation.id).parse()
-      operation.set(OperationModel.Bindings, bindings, Annotations(entry))
+      val bindings = AsyncOperationBindingsParser(YMapEntryLike(entry.value)).parse()
+      operation.setWithoutId(OperationModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
     }
@@ -87,8 +87,7 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation =>
         val traits = traitEntry.value.as[YSequence].nodes.map { node =>
           AsyncOperationTraitRefParser(node, adopt).parseLinkOrError()
         }
-        operation.fields.set(operation.id,
-                             OperationModel.Extends,
+        operation.fields.setWithoutId(OperationModel.Extends,
                              AmfArray(traits, Annotations(traitEntry.value)),
                              Annotations(traitEntry))
       }
@@ -108,8 +107,8 @@ private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Op
         AsyncOperationTraitRefParser(node, adopt, Some(entryKey.toString)).parseLink(url)
       case Right(_) =>
         val operation = super.parse()
-        operation.set(OperationModel.Name, entryKey, Annotations(entry.key))
-        operation.set(AbstractModel.IsAbstract, AmfScalar(true), Annotations.synthesized())
+        operation.setWithoutId(OperationModel.Name, entryKey, Annotations(entry.key))
+        operation.setWithoutId(AbstractModel.IsAbstract, AmfScalar(true), Annotations.synthesized())
         operation
     }
   }

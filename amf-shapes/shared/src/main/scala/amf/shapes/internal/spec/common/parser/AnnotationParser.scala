@@ -43,7 +43,7 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
   private def setExtensions(extensions: Seq[DomainExtension]): Unit = {
     val oldExtensions = customDomainPropertiesFrom(element)
     if (extensions.nonEmpty)
-      element.set(DomainElementModel.CustomDomainProperties,
+      element.setWithoutId(DomainElementModel.CustomDomainProperties,
                   AmfArray(oldExtensions ++ extensions, Annotations.inferred()),
                   Annotations.inferred())
   }
@@ -74,7 +74,7 @@ private case class ExtensionParser(annotation: String, parent: Option[AmfObject]
         CustomDomainProperty(Annotations(entry)).withName(annotation, Annotations(entry.key)))
     validateAllowedTargets(customDomainProperty)
     domainExtension
-      .set(DomainExtensionModel.Extension, dataNode, Annotations.inferred())
+      .setWithoutId(DomainExtensionModel.Extension, dataNode, Annotations.inferred())
       .withName(annotation, Annotations(entry.key))
     domainExtension.fields.setWithoutId(DomainExtensionModel.DefinedBy, customDomainProperty, Annotations.inferred())
     domainExtension

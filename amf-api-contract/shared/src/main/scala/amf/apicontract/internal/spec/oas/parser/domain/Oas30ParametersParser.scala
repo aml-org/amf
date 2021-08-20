@@ -23,17 +23,17 @@ case class Oas30ParametersParser(map: YMap, producer: () => Request)(implicit ct
         parameters match {
           case Parameters(query, path, header, cookie, baseUri08, _) =>
             if (query.nonEmpty)
-              request.getOrCreate.set(RequestModel.QueryParameters,
+              request.getOrCreate.setWithoutId(RequestModel.QueryParameters,
                                       AmfArray(query, Annotations(entry)),
                                       Annotations(entry))
             if (header.nonEmpty)
-              request.getOrCreate.set(RequestModel.Headers, AmfArray(header, Annotations(entry)), Annotations(entry))
+              request.getOrCreate.setWithoutId(RequestModel.Headers, AmfArray(header, Annotations(entry)), Annotations(entry))
             if (path.nonEmpty || baseUri08.nonEmpty)
-              request.getOrCreate.set(RequestModel.UriParameters,
+              request.getOrCreate.setWithoutId(RequestModel.UriParameters,
                                       AmfArray(path ++ baseUri08, Annotations(entry)),
                                       Annotations(entry))
             if (cookie.nonEmpty)
-              request.getOrCreate.set(RequestModel.CookieParameters,
+              request.getOrCreate.setWithoutId(RequestModel.CookieParameters,
                                       AmfArray(cookie, Annotations(entry)),
                                       Annotations(entry))
         }

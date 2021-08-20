@@ -16,6 +16,6 @@ abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(im
   protected def parseServers(key: String): Unit =
     map.key(key).foreach { entry =>
       val servers = entry.value.as[Seq[YMap]].map(m => new OasLikeServerParser(elem.id, YMapEntryLike(m)).parse())
-      elem.set(field, AmfArray(servers, Annotations(entry)), Annotations(entry))
+      elem.setWithoutId(field, AmfArray(servers, Annotations(entry)), Annotations(entry))
     }
 }

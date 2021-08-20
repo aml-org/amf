@@ -68,7 +68,7 @@ case class RamlJsonSchemaExpression(key: YNode,
           NodeDataNodeParser(entry.value, wrapper.id, quiet = false)(WebApiShapeParserContextAdapter(ctx)).parse()
         wrapper.setDefaultStrValue(entry)
         dataNodeResult.dataNode.foreach { dataNode =>
-          wrapper.set(ShapeModel.Default, dataNode, Annotations(entry))
+          wrapper.setWithoutId(ShapeModel.Default, dataNode, Annotations(entry))
         }
       }
     )
@@ -76,7 +76,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     wrapperName(key).foreach(t => wrapper.withName(t, Annotations(key)))
     val typeEntryAnnotations =
       map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
-    wrapper.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations.virtual()), typeEntryAnnotations)
+    wrapper.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations.virtual()), typeEntryAnnotations)
     wrapper
   }
 

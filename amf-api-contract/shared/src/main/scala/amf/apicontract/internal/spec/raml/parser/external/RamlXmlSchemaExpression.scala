@@ -84,7 +84,7 @@ case class RamlXmlSchemaExpression(key: YNode,
 
   private def buildSchemaShapeFrom(scalar: YScalar) = {
     val shape = SchemaShape()
-      .set(ExternalSourceElementModel.Raw, AmfScalar(scalar.text, Annotations(scalar)), Annotations.inferred())
+      .setWithoutId(ExternalSourceElementModel.Raw, AmfScalar(scalar.text, Annotations(scalar)), Annotations.inferred())
       .set(SchemaShapeModel.MediaType, `application/xml`, Annotations.synthesized())
     shape.withName(key.as[String])
     adopt(shape)
@@ -101,7 +101,7 @@ case class RamlXmlSchemaExpression(key: YNode,
           NodeDataNodeParser(entry.value, parsedSchema.id, quiet = false)(WebApiShapeParserContextAdapter(ctx)).parse()
         parsedSchema.setDefaultStrValue(entry)
         dataNodeResult.dataNode.foreach { dataNode =>
-          parsedSchema.set(ShapeModel.Default, dataNode, Annotations(entry))
+          parsedSchema.setWithoutId(ShapeModel.Default, dataNode, Annotations(entry))
         }
       }
     )

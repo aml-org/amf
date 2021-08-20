@@ -31,15 +31,14 @@ trait OasLikeDeclarationsHelper {
             val typeName = e.key.as[YScalar].text
             OasTypeParser
               .buildDeclarationParser(e, shape => {
-                shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
-                shape.adopted(typesPrefix)
+                shape.setWithoutId(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
               })(WebApiShapeParserContextAdapter(ctx))
               .parse() match {
               case Some(shape) =>
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>
                 ctx.eh.violation(UnableToParseShape,
-                                 NodeShape().adopted(typesPrefix).id,
+                                 NodeShape().id,
                                  s"Error parsing shape at $typeName",
                                  e.location)
             }
@@ -67,7 +66,7 @@ trait OasLikeDeclarationsHelper {
     def violation(elem: NamedDomainElement, msg: String): Unit = {
       ctx.eh.violation(
         ParserSideValidations.InvalidFieldNameInComponents,
-        elem.id,
+        elem,
         msg,
         elem.annotations
       )

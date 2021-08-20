@@ -30,7 +30,7 @@ case class OasHeaderParametersParser(map: YMap, adopt: Parameter => Unit)(implic
           OasHeaderParameterParser(
             entry.value.as[YMap], { header =>
               header.add(Annotations(entry))
-              header.set(ParameterModel.Name, ScalarNode(entry.key).string(), Annotations.inferred())
+              header.setWithoutId(ParameterModel.Name, ScalarNode(entry.key).string(), Annotations.inferred())
               adopt(header)
             }
           ).parse())
@@ -86,17 +86,17 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
       parseOas2Header(header, map)
       header
     }
-    header.set(ParameterModel.Binding, AmfScalar("header"), Annotations.synthesized()) // we need to add the binding in order to conform all parameters validations
+    header.setWithoutId(ParameterModel.Binding, AmfScalar("header"), Annotations.synthesized()) // we need to add the binding in order to conform all parameters validations
     header
   }
 
   protected def parseOas2Header(parameter: Parameter, map: YMap): Unit = {
     val name = Option(parameter.name).map(_.value())
-    parameter.set(ParameterModel.Required, AmfScalar(!name.exists(_.endsWith("?"))), Annotations.synthesized())
+    parameter.setWithoutId(ParameterModel.Required, AmfScalar(!name.exists(_.endsWith("?"))), Annotations.synthesized())
 
     map.key("x-amf-required", (ParameterModel.Required in parameter).explicit)
 
-    val adoption: Shape => Unit = shape => shape.adopted(parameter.id)
+    val adoption: Shape => Unit = shape => Unit
 
     map.key(
       "type",
@@ -104,7 +104,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
         OasTypeParser(YMapEntryLike(map), "schema", adoption, OAS20SchemaVersion(SchemaPosition.Schema))(
           WebApiShapeParserContextAdapter(ctx))
           .parse()
-          .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter), Annotations(map)))
+          .map(s => parameter.setWithoutId(ParameterModel.Schema, tracking(s, parameter), Annotations(map)))
       }
     )
   }
@@ -116,10 +116,10 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))(
+        OasTypeParser(entry, (shape) => shape.withName("schema"))(
           WebApiShapeParserContextAdapter(ctx))
           .parse()
-          .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
+          .map(s => parameter.setWithoutId(ParameterModel.Schema, tracking(s, parameter), Annotations(entry)))
       }
     )
     map.key(
@@ -128,10 +128,10 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
         val payloadProducer: Option[String] => Payload = mediaType => {
           val res = Payload()
           mediaType.map(res.withMediaType)
-          res.adopted(parameter.id)
+          res
         }
         val payloads = OasContentsParser(entry, payloadProducer).parse()
-        if (payloads.nonEmpty) parameter.set(ResponseModel.Payloads, AmfArray(payloads), Annotations(entry))
+        if (payloads.nonEmpty) parameter.setWithoutId(ResponseModel.Payloads, AmfArray(payloads), Annotations(entry))
       }
     )
     Oas3ParameterParser.validateSchemaOrContent(map, parameter)
@@ -139,8 +139,8 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
     def setShape(examples: Seq[Example], maybeEntry: Option[YMapEntry]): Unit =
       if (examples.nonEmpty)
         maybeEntry
-          .map(entry => parameter.set(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
-          .getOrElse(parameter.set(PayloadModel.Examples, AmfArray(examples)))
+          .map(entry => parameter.setWithoutId(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
+          .getOrElse(parameter.setWithoutId(PayloadModel.Examples, AmfArray(examples)))
 
     OasExamplesParser(map, parameter)(WebApiShapeParserContextAdapter(ctx)).parse()
 

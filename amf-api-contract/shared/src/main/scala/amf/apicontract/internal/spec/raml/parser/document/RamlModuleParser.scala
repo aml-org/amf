@@ -25,7 +25,7 @@ case class RamlModuleParser(root: Root, spec: Spec)(implicit override val ctx: R
   def parseModule(): Module = {
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
-      .adopted(root.location)
+
       .add(SourceSpec(ctx.spec))
       .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
 

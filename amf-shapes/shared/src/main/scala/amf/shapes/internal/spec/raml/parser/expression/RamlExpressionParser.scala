@@ -23,41 +23,22 @@ object RamlExpressionParser {
                                    ContextDeclarationFinder(ctx),
                                    annotations,
                                    ContextRegister(ctx, Some(node)))(ctx.eh)
-    builder
+    val result = builder
       .build()
-      .map(adoptShapeTree(_, adopt))
       .map(addAnnotations(_, part, expression))
+    result.foreach(adopt(_))
+    result
   }
 
   def check(adopt: Shape => Unit, expression: String)(implicit ctx: ShapeParserContext): Option[Shape] = {
     val tokens = new RamlExpressionLexer(expression, Position.ZERO).lex()
     val builder =
       new RamlExpressionASTBuilder(tokens, ContextDeclarationFinder(ctx), unresolvedRegister = EmptyRegister())(ctx.eh)
-    builder.build().map(adoptShapeTree(_, adopt))
+    val result = builder.build()
+    result.foreach(adopt(_))
+    result
   }
 
-  private def adoptShapeTree(shape: Shape, adopt: Shape => Unit): Shape = {
-    if (shape.isLink) return shape
-    adopt(shape)
-    shape match {
-      case union: UnionShape =>
-        val anyOf = union.anyOf.zipWithIndex.map {
-          case (shape, index) if !shape.isLink => adoptShapeTree(shape, ParentAdopt(union.id + s"/$index"))
-          case (shape, _) if shape.isLink      => adoptShapeTree(shape, DontAdopt())
-        }
-        union.fields.getValueAsOption(UnionShapeModel.AnyOf).foreach { value =>
-          union.setWithoutId(UnionShapeModel.AnyOf, AmfArray(anyOf, value.value.annotations), value.annotations)
-        }
-        union
-      case array: ArrayShape if array.hasItems =>
-        val items = adoptShapeTree(array.items, ParentAdopt(array.id))
-        array.fields.getValueAsOption(ArrayShapeModel.Items).foreach { value =>
-          array.setWithoutId(ArrayShapeModel.Items, items, value.annotations)
-        }
-        array
-      case _ => shape
-    }
-  }
 
   private def addAnnotations(shape: Shape, part: YPart, expression: String): Shape = {
     shape.annotations.reject(
@@ -73,13 +54,5 @@ object RamlExpressionParser {
     case e: YMapEntry => e.value.value
     case n: YNode     => n.value
     case s: YScalar   => s
-  }
-
-  case class DontAdopt() extends Function[Shape, Unit] {
-    override def apply(v1: Shape): Unit = Unit
-  }
-
-  case class ParentAdopt(parent: String) extends Function[Shape, Unit] {
-    override def apply(shape: Shape): Unit = shape.adopted(parent)
   }
 }

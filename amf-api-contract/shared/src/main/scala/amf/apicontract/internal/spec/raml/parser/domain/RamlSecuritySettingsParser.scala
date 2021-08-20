@@ -54,7 +54,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
 
     if (entries.nonEmpty) {
       val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(WebApiShapeParserContextAdapter(ctx)).parse()
-      settings.set(SettingsModel.AdditionalProperties, node)
+      settings.setWithoutId(SettingsModel.AdditionalProperties, node)
     }
     settings
   }
@@ -68,7 +68,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
 
   protected def oauth2(): OAuth2Settings = {
     val settings = scheme.withOAuth2Settings()
-    val flow     = new Lazy[OAuth2Flow](() => OAuth2Flow(map).adopted(settings.id))
+    val flow     = new Lazy[OAuth2Flow](() => OAuth2Flow(map))
 
     map.key("authorizationUri", entry => (OAuth2FlowModel.AuthorizationUri in flow.getOrCreate).apply(entry))
     map.key("accessTokenUri",
@@ -84,9 +84,9 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
             if (ss.scheme.isLink) ss.scheme.effectiveLinkTarget().asInstanceOf[SecurityScheme] else ss.scheme
           effectiveScheme.settings match {
             case se: OAuth2Settings if isValidScope(se.flows.headOption, element.toString()) =>
-              Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
+              Scope().setWithoutId(ScopeModel.Name, ScalarNode(n).text())
             case _: OAuth2Settings =>
-              val scope = Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
+              val scope = Scope().setWithoutId(ScopeModel.Name, ScalarNode(n).text())
               ctx.eh.violation(
                 UnknownScopeErrorSpecification,
                 scope,
@@ -95,10 +95,10 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
               )
               scope
             case _ =>
-              Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
+              Scope().setWithoutId(ScopeModel.Name, ScalarNode(n).text())
           }
         case _ =>
-          Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
+          Scope().setWithoutId(ScopeModel.Name, ScalarNode(n).text())
       }
     }
 
@@ -108,7 +108,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
 
     flow.option.foreach(f =>
       settings.fields
-        .set(settings.id, OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred()))
+        .setWithoutId(OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred()))
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
     settings

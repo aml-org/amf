@@ -94,7 +94,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
   case class DocumentationItemFragmentParser(map: YMap) {
     def parse(): DocumentationItemFragment = {
 
-      val item = DocumentationItemFragment().adopted(root.location + "#/")
+      val item = DocumentationItemFragment()
 
       item.withEncodes(OasLikeCreativeWorkParser(map, item.id)(WebApiShapeParserContextAdapter(ctx)).parse())
 
@@ -104,7 +104,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
 
   case class DataTypeFragmentParser(map: YMap) {
     def parse(): DataTypeFragment = {
-      val dataType = DataTypeFragment().adopted(root.location)
+      val dataType = DataTypeFragment()
       val filterMap = YMap(
         map.entries.filter({
           case c: YMapEntry =>
@@ -130,13 +130,13 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
 
   case class AnnotationFragmentParser(map: YMap) {
     def parse(): AnnotationTypeDeclarationFragment = {
-      val annotation = AnnotationTypeDeclarationFragment().adopted(root.location)
+      val annotation = AnnotationTypeDeclarationFragment()
 
       val property =
         AnnotationTypesParser(map,
                               "annotation",
                               map,
-                              (annotation: CustomDomainProperty) => annotation.adopted(root.location + "#/")).parse()
+                              (annotation: CustomDomainProperty) => Unit).parse()
 
       annotation.withEncodes(property)
     }
@@ -144,7 +144,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
 
   case class ResourceTypeFragmentParser(map: YMap) {
     def parse(): ResourceTypeFragment = {
-      val resourceType = ResourceTypeFragment().adopted(root.location)
+      val resourceType = ResourceTypeFragment()
 
       val abstractDeclaration =
         new AbstractDeclarationParser(ResourceType(map).withId(resourceType.id + "#/"),
@@ -158,7 +158,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
 
   case class TraitFragmentParser(map: YMap) {
     def parse(): TraitFragment = {
-      val traitFragment = TraitFragment().adopted(root.location)
+      val traitFragment = TraitFragment()
 
       val abstractDeclaration =
         new AbstractDeclarationParser(Trait(map).withId(traitFragment.id + "#/"), traitFragment.id, YMapEntryLike(map))
@@ -170,13 +170,13 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
 
   case class SecuritySchemeFragmentParser(map: YMap) {
     def parse(): SecuritySchemeFragment = {
-      val security = SecuritySchemeFragment().adopted(root.location)
+      val security = SecuritySchemeFragment()
 
       security.withEncodes(
         ctx.factory
           .securitySchemeParser(map,
                                 (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) =>
-                                  security.adopted(root.location + "#/"))
+                                  security)
           .parse())
     }
   }
@@ -184,7 +184,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
   case class NamedExampleFragmentParser(map: YMap) {
     def parse(): NamedExampleFragment = {
       val entries      = map.entries.filter(e => e.key.as[YScalar].text != "fragmentType".asOasExtension)
-      val namedExample = NamedExampleFragment().adopted(root.location + "#/")
+      val namedExample = NamedExampleFragment()
 
       val producer = (name: Option[String]) => {
         val example = Example()

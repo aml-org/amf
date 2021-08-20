@@ -24,7 +24,6 @@ case class OasModuleParser(root: Root, spec: Spec)(implicit val ctx: OasWebApiCo
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
       .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
-      .adopted(root.location)
       .add(sourceVendor)
     module.set(BaseUnitModel.Location, root.location)
 

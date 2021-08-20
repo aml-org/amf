@@ -28,12 +28,11 @@ class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val
 
   def parse(): Server = {
     map.key("url", ServerModel.Url in server)
-    server.adopted(parent)
 
     map.key("description", ServerModel.Description in server)
     map.key("variables").foreach { entry =>
       val variables = entry.value.as[YMap].entries.map(ctx.factory.serverVariableParser(_, server.id).parse())
-      server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
+      server.setWithoutId(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
     }
     AnnotationParser(server, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     ctx.closedShape(server, map, "server")
@@ -44,7 +43,7 @@ class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val
     val s = Server(entryLike.annotations)
     entryLike.key.foreach { k =>
       val name = ScalarNode(k)
-      s.set(ServerModel.Name, name.string())
+      s.setWithoutId(ServerModel.Name, name.string())
     }
     s
   }
@@ -58,11 +57,10 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(val ctx: Oas
   def parse(): Parameter = {
 
     val node     = ScalarNode(entry.key)
-    val variable = Parameter(entry).set(ParameterModel.Name, node.string(), Annotations(entry.key))
-    variable.adopted(parent)
-    variable.set(ParameterModel.Binding, AmfScalar("path"), Annotations.synthesized())
-    variable.set(ParameterModel.ParameterName, AmfScalar(node.string()), Annotations.synthesized())
-    variable.set(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
+    val variable = Parameter(entry).setWithoutId(ParameterModel.Name, node.string(), Annotations(entry.key))
+    variable.setWithoutId(ParameterModel.Binding, AmfScalar("path"), Annotations.synthesized())
+    variable.setWithoutId(ParameterModel.ParameterName, AmfScalar(node.string()), Annotations.synthesized())
+    variable.setWithoutId(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
 
     val map = entry.value.as[YMap]
     parseMap(variable, map)

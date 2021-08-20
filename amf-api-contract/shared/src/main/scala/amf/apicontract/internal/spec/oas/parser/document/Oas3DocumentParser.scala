@@ -101,7 +101,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
       entry => {
         addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         val headers: Seq[Parameter] =
-          OasHeaderParametersParser(entry.value.as[YMap], _.adopted(parent)).parse()
+          OasHeaderParametersParser(entry.value.as[YMap], _ => Unit).parse()
         headers.foreach(header => {
           header.add(DeclaredElement()).add(DeclaredHeader())
           ctx.declarations.registerHeader(header)
@@ -134,7 +134,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .foreach { callbackEntry =>
             val name = callbackEntry.key.as[YScalar].text
             val callbacks =
-              Oas30CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent), name, callbackEntry)
+              Oas30CallbackParser(callbackEntry.value.as[YMap], _.withName(name), name, callbackEntry)
                 .parse()
             callbacks.foreach { callback =>
               callback.add(DeclaredElement())

@@ -34,10 +34,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
   def parseDocument(): Document = parseDocument(Document())
 
   private def parseDocument[T <: Document](document: T): T = {
-    document
-      .adopted(root.location)
-      .withLocation(root.location)
-      .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.ASYNC20))
+    document.withLocation(root.location).withProcessingData(APIContractProcessingData().withSourceSpec(Spec.ASYNC20))
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     ctx.setJsonSchemaAST(map)
@@ -47,8 +44,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
     val api = parseApi(map).add(SourceSpec(ctx.spec))
     document
-      .set(DocumentModel.Encodes, api, Annotations.inferred())
-      .adopted(root.location)
+      .setWithoutId(DocumentModel.Encodes, api, Annotations.inferred())
 
     addDeclarationsToModel(document)
     if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
@@ -59,7 +55,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
   def parseApi(map: YMap): AsyncApi = {
     YamlTagValidator.validate(root)
-    val api = AsyncApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
+    val api = AsyncApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node)
     map.key("info", entry => OasLikeInformationParser(entry, api, ctx).parse())
     map.key("id", entry => IdentifierParser(entry, api, ctx).parse())
     map.key("channels") match {
@@ -69,7 +65,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     map.key(
       "externalDocs",
       entry => {
-        api.set(
+        api.setWithoutId(
           WebApiModel.Documentations,
           AmfArray(Seq(OasLikeCreativeWorkParser(entry.value, api.id)(WebApiShapeParserContextAdapter(ctx)).parse()),
                    Annotations(entry.value)),
@@ -81,12 +77,12 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       "servers",
       entry => {
         val servers = AsyncServersParser(entry.value.as[YMap], api).parse()
-        api.set(WebApiModel.Servers, AmfArray(servers, Annotations(entry.value)), Annotations(entry))
+        api.setWithoutId(WebApiModel.Servers, AmfArray(servers, Annotations(entry.value)), Annotations(entry))
       }
     )
     map.key("tags", entry => {
       val tags = OasLikeTagsParser(api.id, entry).parse()
-      api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+      api.setWithoutId(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
     })
     map.key(
       "defaultContentType",
@@ -94,8 +90,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
         val annotations = Annotations(entry)
         val contentType = ScalarNode(entry.value).string()
         val value       = AmfArray(Seq(contentType))
-        api.set(WebApiModel.ContentType, value, annotations)
-        api.set(WebApiModel.Accepts, value, annotations)
+        api.setWithoutId(WebApiModel.ContentType, value, annotations)
+        api.setWithoutId(WebApiModel.Accepts, value, annotations)
       }
     )
 
@@ -110,7 +106,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     val paths = entry.value.as[YMap]
     val endpoints = paths.entries.foldLeft(List[EndPoint]())((acc, curr) =>
       acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse())
-    api.set(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
+    api.setWithoutId(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
   }
 
   override protected val definitionsKey: String = "schemas"
@@ -158,7 +154,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       entry => {
         addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
-          val adopt     = (o: Operation) => o.adopted(parent)
+          val adopt     = (o: Operation) => o
           val operation = AsyncOperationParser(entry, adopt, isTrait = true).parse()
           operation.add(DeclaredElement())
           ctx.declarations += operation
@@ -190,10 +186,10 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
               entry,
               (scheme) => {
                 val name = entry.key.as[String]
-                scheme.set(SecuritySchemeModel.Name,
+                scheme.setWithoutId(SecuritySchemeModel.Name,
                            AmfScalar(name, Annotations(entry.key.value)),
                            Annotations(entry.key))
-                scheme.adopted(parent)
+                scheme
               }
             )
             .parse()
@@ -235,7 +231,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       "messageBindings",
       componentsMap,
       entry => {
-        AsyncMessageBindingsParser(YMapEntryLike(entry), parent).parse()
+        AsyncMessageBindingsParser(YMapEntryLike(entry)).parse()
       },
       MessageBindingsModel
     )
@@ -246,7 +242,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       "serverBindings",
       componentsMap,
       entry => {
-        AsyncServerBindingsParser(YMapEntryLike(entry), parent).parse()
+        AsyncServerBindingsParser(YMapEntryLike(entry)).parse()
       },
       ServerBindingsModel
     )
@@ -257,7 +253,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       "operationBindings",
       componentsMap,
       entry => {
-        AsyncOperationBindingsParser(YMapEntryLike(entry), parent).parse()
+        AsyncOperationBindingsParser(YMapEntryLike(entry)).parse()
       },
       OperationBindingsModel
     )
@@ -268,7 +264,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       "channelBindings",
       componentsMap,
       entry => {
-        AsyncChannelBindingsParser(YMapEntryLike(entry), parent).parse()
+        AsyncChannelBindingsParser(YMapEntryLike(entry)).parse()
       },
       ChannelBindingsModel
     )
@@ -299,7 +295,7 @@ case class IdentifierParser(entry: YMapEntry, webApi: AsyncApi, override implici
     entry.value.tagType match {
       case YType.Str =>
         val id = entry.value.as[String]
-        webApi.set(WebApiModel.Identifier, AmfScalar(id, Annotations(entry.value)), Annotations(entry))
+        webApi.setWithoutId(WebApiModel.Identifier, AmfScalar(id, Annotations(entry.value)), Annotations(entry))
       case _ =>
         ctx.eh.violation(InvalidIdentifier, webApi, "'id' must be a string", entry.location)
     }

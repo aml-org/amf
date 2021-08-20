@@ -31,8 +31,8 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
     key.foreach(
       k =>
         correlationId
-          .set(CorrelationIdModel.Name, ScalarNode(k).string(), Annotations(k)))
-    correlationId.adopted(parentId).add(entryLike.annotations)
+          .setWithoutId(CorrelationIdModel.Name, ScalarNode(k).string(), Annotations(k)))
+    correlationId.add(entryLike.annotations)
   }
 
   private def handleRef(map: YMap, fullRef: String) = {

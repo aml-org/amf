@@ -33,16 +33,21 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
   def parse(): Option[EndPoint] = {
     val path     = ScalarNode(entry.key).text()
     val pathText = path.toString
-    val endpoint = EndPoint(Annotations(entry)).set(EndPointModel.Path, path, Annotations.inferred()).adopted(parentId)
+    val endpoint = EndPoint(Annotations(entry)).setWithoutId(EndPointModel.Path, path, Annotations.inferred())
 
     checkBalancedParams(pathText, entry.value, endpoint, EndPointModel.Path.value.iri(), ctx)
 
     if (!TemplateUri.isValid(pathText))
       ctx.eh.violation(InvalidEndpointPath, endpoint, TemplateUri.invalidMsg(pathText), entry.value.location)
-    if (collector.exists(other => other.path.option() exists (identicalPaths(_, pathText)))) {
-      ctx.eh.violation(DuplicatedEndpointPath, endpoint, "Duplicated resource path " + pathText, entry.location)
-      None
-    } else parseEndpoint(endpoint)
+
+    val duplicated = collector.find(other => other.path.option() exists (identicalPaths(_, pathText)))
+    duplicated match {
+      case Some(other) =>
+        ctx.eh.violation(DuplicatedEndpointPath, other, "Duplicated resource path " + pathText, entry.location)
+        None
+      case None =>
+        parseEndpoint(endpoint)
+    }
   }
 
   /**
@@ -106,7 +111,7 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
     map.key("uriParameters".asOasExtension).foreach { entry =>
       entries += entry
       val uriParameters =
-        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id), binding = "path")(
+        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "path")(
           toRaml(ctx))
           .parse()
       parameters = parameters.add(Parameters(path = uriParameters))
@@ -114,13 +119,13 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
     parameters match {
       case Parameters(query, path, header, cookie, _, _)
           if query.nonEmpty || path.nonEmpty || header.nonEmpty || cookie.nonEmpty =>
-        endpoint.set(EndPointModel.Parameters,
+        endpoint.setWithoutId(EndPointModel.Parameters,
                      AmfArray(query ++ path ++ header ++ cookie, Annotations(entries.head.value)),
                      Annotations(entries.head))
       case _ =>
     }
     if (parameters.body.nonEmpty)
-      endpoint.set(EndPointModel.Payloads, AmfArray(parameters.body), Annotations(entries.head))
+      endpoint.setWithoutId(EndPointModel.Payloads, AmfArray(parameters.body), Annotations(entries.head))
 
     // PARAM PARSER
 
@@ -149,10 +154,10 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
         val securedBy = entry.value
           .as[Seq[YNode]]
           .flatMap(s =>
-            OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => se.adopted(endpoint.id), idCounter)
+            OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => Unit, idCounter)
               .parse())
 
-        endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        endpoint.setWithoutId(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
     )
 
@@ -161,10 +166,10 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o.adopted(endpoint.id))
+          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o)
           operations += operationParser.parse()
         }
-        endpoint.set(EndPointModel.Operations, AmfArray(operations, Annotations.inferred()), Annotations.inferred())
+        endpoint.setWithoutId(EndPointModel.Operations, AmfArray(operations, Annotations.inferred()), Annotations.inferred())
       }
     )
 
@@ -215,8 +220,8 @@ case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: Li
     super.parseEndpointMap(endpoint, map)
 
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncChannelBindingsParser(YMapEntryLike(entry.value), endpoint.id).parse()
-      endpoint.set(EndPointModel.Bindings, bindings, Annotations(entry))
+      val bindings = AsyncChannelBindingsParser(YMapEntryLike(entry.value)).parse()
+      endpoint.setWithoutId(EndPointModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(endpoint, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
     }
@@ -226,7 +231,7 @@ case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: Li
       "parameters",
       entry => {
         val parameters = AsyncParametersParser(endpoint.id, entry.value.as[YMap]).parse()
-        endpoint.fields.set(endpoint.id,
+        endpoint.fields.setWithoutId(
                             EndPointModel.Parameters,
                             AmfArray(parameters, Annotations(entry.value)),
                             Annotations(entry))
@@ -238,10 +243,10 @@ case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: Li
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o.adopted(endpoint.id))
+          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o)
           operations += operationParser.parse()
         }
-        endpoint.set(EndPointModel.Operations, AmfArray(operations, Annotations(map)), Annotations(map))
+        endpoint.setWithoutId(EndPointModel.Operations, AmfArray(operations, Annotations(map)), Annotations(map))
       }
     )
 
