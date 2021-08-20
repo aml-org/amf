@@ -7,6 +7,7 @@ import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.model.DataType
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
+import amf.core.parser.Annotations.{inferred, synthesized, virtual}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, Fields, FutureDeclarations, Range, ScalarNode, SearchScope, YMapOps, YNodeLikeOps}
 import amf.core.utils.{AmfStrings, IdCounter}
@@ -107,7 +108,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
             parsed,
             NilShape().withId(union.id + "_nil")
           ),
-          Annotations.synthesized()
+          synthesized()
         )
         union
       case _ =>
@@ -320,11 +321,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       map
         .key("type")
-        .fold(
-          shape
-            .set(ScalarShapeModel.DataType,
-                 AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
-                 Annotations.synthesized()))(
+        .fold(shape
+          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), synthesized()))(
           entry =>
             shape.set(ScalarShapeModel.DataType,
                       AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef), Annotations(entry.value)),
@@ -643,14 +641,14 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       map.key("minProperties", NodeShapeModel.MinProperties in shape)
       map.key("maxProperties", NodeShapeModel.MaxProperties in shape)
 
-      shape.set(NodeShapeModel.Closed, AmfScalar(value = false), Annotations.synthesized())
+      shape.set(NodeShapeModel.Closed, AmfScalar(value = false), synthesized())
 
       map.key("additionalProperties").foreach { entry =>
         entry.value.tagType match {
           case YType.Bool => (NodeShapeModel.Closed in shape).negated.explicit(entry)
           case YType.Map =>
             OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
-              shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations.synthesized())
+              shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, synthesized())
             }
           case _ =>
             ctx.eh.violation(InvalidAdditionalPropertiesType,
@@ -699,16 +697,19 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           case _ => // Empty properties node.
         }
       })
-      val valueAnnotations = propertiesEntry.map { pe =>
-        Annotations(pe.value)
+
+      val (propertiesAnnotations, propertiesFieldAnnotations) = propertiesEntry.map { pe =>
+        (Annotations(pe.value), Annotations(pe))
       } orElse {
         patternPropEntry.map { pp =>
-          Annotations(pp.value)
+          (Annotations(pp.value), Annotations(pp))
         }
-      } getOrElse { Annotations.virtual() }
+      } getOrElse { (virtual(), inferred()) }
 
       if (properties.nonEmpty)
-        shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, valueAnnotations), valueAnnotations)
+        shape.set(NodeShapeModel.Properties,
+                  AmfArray(properties.values.toSeq, propertiesAnnotations),
+                  propertiesFieldAnnotations)
 
       parseShapeDependencies(shape)
 
@@ -730,10 +731,10 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     val undefinedRequiredProperties = requiredFields.keySet.filter(!properties.keySet.contains(_))
     val generatedRequiredProperties = undefinedRequiredProperties
       .map(propertyName => {
-        PropertyShape(Annotations.virtual())
+        PropertyShape(virtual())
           .withName(propertyName)
-          .set(PropertyShapeModel.MinCount, AmfScalar(1), Annotations.synthesized())
-          .set(PropertyShapeModel.Range, AnyShape(), Annotations.synthesized())
+          .set(PropertyShapeModel.MinCount, AmfScalar(1), synthesized())
+          .set(PropertyShapeModel.Range, AnyShape(), synthesized())
       })
     properties ++= generatedRequiredProperties.map(p => p.name.value() -> p)
   }
@@ -836,7 +837,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           ctx.declarations
             .findType(definitionName, SearchScope.All) match {
             case Some(s) =>
-              s.link(AmfScalar(key.toString), Annotations(ast), Annotations.synthesized())
+              s.link(AmfScalar(key.toString), Annotations(ast), synthesized())
                 .asInstanceOf[AnyShape]
                 .withName(name, nameAnnotations)
                 .withSupportsRecursion(true)
@@ -888,18 +889,18 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       val name     = entry.key.as[YScalar].text
       val required = requiredFields.contains(name)
       val requiredAnnotations =
-        requiredFields.get(name).map(node => Annotations(node)).getOrElse(Annotations.synthesized())
+        requiredFields.get(name).map(node => Annotations(node)).getOrElse(synthesized())
 
       val property = producer(name)
         .add(Annotations(entry))
         .set(PropertyShapeModel.MinCount,
-             AmfScalar(if (required) 1 else 0, Annotations.synthesized()),
+             AmfScalar(if (required) 1 else 0, synthesized()),
              requiredAnnotations += ExplicitField())
 
       property.set(
         PropertyShapeModel.Path,
         AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri(), Annotations(entry.key)),
-        Annotations.inferred()
+        inferred()
       )
 
       if (version.isInstanceOf[OAS20SchemaVersion])
@@ -922,8 +923,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                 val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
                 property.set(
                   PropertyShapeModel.MinCount,
-                  AmfScalar(if (required) 1 else 0, Annotations.synthesized()), // does this annotation make sense? should parent not be `synthesized`?
-                  Annotations(entry) += ExplicitField()
+                  AmfScalar(if (required) 1 else 0),
+                  synthesized()
                 )
               }
             }
@@ -932,7 +933,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       OasTypeParser(entry, shape => shape.adopted(property.id), version)
         .parse()
-        .foreach(property.set(PropertyShapeModel.Range, _, Annotations.inferred()))
+        .foreach(property.set(PropertyShapeModel.Range, _, inferred()))
 
       if (patterned) property.withPatternName(name)
 
