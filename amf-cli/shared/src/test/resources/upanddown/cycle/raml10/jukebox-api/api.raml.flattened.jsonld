@@ -1102,10 +1102,12 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songId/source-map/lexical/element_1"
-        },
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songId/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songId/source-map/lexical/element_0"
         }
@@ -1137,10 +1139,12 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songTitle/source-map/lexical/element_1"
-        },
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songTitle/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songTitle/source-map/lexical/element_0"
         }
@@ -1174,10 +1178,12 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/albumId/source-map/lexical/element_1"
-        },
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/albumId/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/albumId/source-map/lexical/element_0"
         }
@@ -1196,7 +1202,7 @@
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,16)-(22,3)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(22,3)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/source-map/lexical/element_0",
@@ -1254,14 +1260,14 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songId/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(11,5)]"
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songId/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songId/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(8,6)-(8,22)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songId",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(11,5)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songTitle/scalar/songTitle/source-map",
@@ -1283,14 +1289,14 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songTitle/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songTitle",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,4)-(15,5)]"
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songTitle/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songTitle/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,6)-(14,22)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songTitle",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,4)-(15,5)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/albumId/scalar/albumId/source-map",
@@ -1318,14 +1324,14 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/albumId/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/albumId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,4)-(21,5)]"
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/albumId/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/albumId/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,6)-(18,22)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/albumId",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(16,4)-(21,5)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml#/declarations/types/song/property/songId/scalar/songId/source-map/type-property-lexical-info/element_0",

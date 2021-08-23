@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: "test api"
+
+types:
+    testSchema: |
+      {
+        "type": "object",
+        "oneOf": [
+          {
+            "required": [
+              "option_one"
+            ]
+          },
+          {
+            "required": [
+              "option_two"
+            ]
+          }
+        ]
+      }
+
+/pets:
+  get:
+    responses:
+      200:
+        description: ok
+        body:
+          application/json:
+            type: testSchema
+            example:
+              option_one: {}

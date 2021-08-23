@@ -222,9 +222,24 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
+                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declarations/types/A/schema/property/input/source-map/synthesized-field/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
+                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declarations/types/A/schema/property/input/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declarations/types/A/schema/property/input/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declarations/types/A/schema/property/input"
@@ -233,19 +248,6 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(13,13)-(16,14)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/type-with-json-schema-in-type-facet.raml#/declarations/types/A/schema/property/input/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://www.w3.org/ns/shacl#minCount"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(14,15)-(14,32)]"
                           }
                         ]
                       }
@@ -295,7 +297,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(12,25)-(17,12)]"
+                        "@value": "[(12,11)-(17,12)]"
                       }
                     ]
                   },

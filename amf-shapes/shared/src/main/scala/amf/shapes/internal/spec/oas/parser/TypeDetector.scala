@@ -30,7 +30,8 @@ object TypeDetector {
     override def detect(map: YMap): Option[TypeDef] = first.detect(map).orElse(second.detect(map))
   }
 
-  case class ExplicitTypeCriteria()(implicit val errorHandler: AMFErrorHandler with IllegalTypeHandler) extends TypeCriteria {
+  case class ExplicitTypeCriteria()(implicit val errorHandler: AMFErrorHandler with IllegalTypeHandler)
+      extends TypeCriteria {
     override def detect(map: YMap): Option[TypeDef] = map.key("type").flatMap { e =>
       val typeText          = e.value.as[YScalar].text
       val formatTextOrEmpty = map.key("format").flatMap(e => e.value.toOption[YScalar].map(_.text)).getOrElse("")
@@ -78,6 +79,7 @@ object TypeDetector {
         .orElse(map.key("patternProperties"))
         .orElse(map.key("additionalProperties"))
         .orElse(map.key("discriminator"))
+        .orElse(map.key("required"))
         .map(_ => ObjectType)
   }
 
