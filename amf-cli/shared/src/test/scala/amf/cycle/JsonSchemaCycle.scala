@@ -1,11 +1,11 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.remote.{Mimes, Spec}
+import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
 import amf.emit.AMFRenderer
@@ -32,7 +32,10 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
   }
 
   test("HERE_HERE Draft 2019-09 semantics") {
-    cycle("draft-2019-09/semantics.json", "draft-2019-09/cycled/semantics.json", DRAFT_2019_09_EMITTER, JSON)
+    cycle("draft-2019-09/semantics.json",
+          "draft-2019-09/cycled/semantics.json",
+          DRAFT_2019_09_EMITTER,
+          `application/json`)
   }
 
   test("Draft 2019-09 duration and uuid formats") {

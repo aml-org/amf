@@ -5,8 +5,15 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
-import amf.core.internal.parser.domain.{Annotations, Declarations, Fields, FragmentRef, FutureDeclarations, SearchScope}
-import amf.core.internal.remote.{JsonSchemaDialect, Vendor}
+import amf.core.internal.parser.domain.{
+  Annotations,
+  Declarations,
+  Fields,
+  FragmentRef,
+  FutureDeclarations,
+  SearchScope
+}
+import amf.core.internal.remote.{JsonSchemaDialect, Spec}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
@@ -24,7 +31,7 @@ import amf.core.internal.utils.AliasCounter
 import scala.collection.mutable
 
 object JsonSchemaSyntax extends SpecSyntax {
-  override  val nodes: Map[String,Set[String]] = Map(
+  override val nodes: Map[String, Set[String]] = Map(
     "schema" -> Set(
       "$ref",
       "$schema",
@@ -74,13 +81,12 @@ object JsonSchemaSyntax extends SpecSyntax {
   )
 }
 
-trait JsonSchemaLikeContext  extends JsonSchemaInference { this: ShapeParserContext =>
+trait JsonSchemaLikeContext extends JsonSchemaInference { this: ShapeParserContext =>
   var jsonSchemaIndex: Option[AstIndex]
   var globalSpace: mutable.Map[String, Any]
   var localJSONSchemaContext: Option[YNode]
   var indexCache: mutable.Map[String, AstIndex]
   var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(this)
-
 
   def findJsonPathIn(index: AstIndex, path: String): Option[YMapEntryLike] = index.getNode(normalizeJsonPath(path))
 
@@ -120,9 +126,7 @@ trait JsonSchemaLikeContext  extends JsonSchemaInference { this: ShapeParserCont
     localJSONSchemaContext = Some(value)
     val index = indexCache.getOrElse(
       location, {
-        val result = AstIndexBuilder.buildAst(value,
-          AliasCounter(),
-          computeJsonSchemaVersion(value))(this)
+        val result = AstIndexBuilder.buildAst(value, AliasCounter(), computeJsonSchemaVersion(value))(this)
         indexCache.put(location, result)
         result
       }
@@ -134,10 +138,9 @@ trait JsonSchemaLikeContext  extends JsonSchemaInference { this: ShapeParserCont
 
 }
 
-abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(ctx.eh)
-  with JsonSchemaLikeContext {
+abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(ctx.eh) with JsonSchemaLikeContext {
 
-  override def vendor: Vendor = JsonSchemaDialect
+  override def spec: Spec = JsonSchemaDialect
 
   override def syntax: SpecSyntax = JsonSchemaSyntax
 
@@ -160,7 +163,6 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
 
   override def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit]): Option[AnyShape] = None
 
-
   override def loc: String = ctx.rootContextDocument
 
   override def shapes: Map[String, Shape] = Map()
@@ -170,16 +172,14 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
   override def registerJsonSchema(url: String, shape: AnyShape): Unit =
     ctx.globalSpace.update(normalizedJsonPointer(url), shape)
 
-
   override def isMainFileContext: Boolean = false
 
   override def findNamedExampleOrError(ast: YPart)(key: String): Example = {
-    eh.violation(DeclarationNotFound, "", s"NamedExample '$key' not found", ast)
+    eh.violation(DeclarationNotFound, "", s"NamedExample '$key' not found", ast.location)
     Example(Fields(), Annotations(ast))
   }
 
   override def linkTypes: Boolean = false
-
 
   override def findNamedExample(key: String, error: Option[String => Unit]): Option[Example] = None
 
@@ -202,7 +202,6 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
 
   override def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape =
     throw new Exception("Parser - Can only be used from JSON Schema")
-
 
   override def findDocumentations(key: String,
                                   scope: SearchScope.Scope,
@@ -229,7 +228,6 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
   override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
     throw new Exception("Parser - Cann called only from JSON Schema")
 
-
   override def ramlExternalSchemaParserFactory: RamlExternalSchemaExpressionFactory =
     throw new Exception("Parser - Cann called only from JSON Schema")
 
@@ -246,12 +244,15 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
 object JsonSchemaContext {
   def apply(ctx: ParserContext): ShapeParserContext = {
     new JsonSchemaContext(ctx) {
-      override var jsonSchemaIndex: Option[AstIndex] = None
-      override var globalSpace: mutable.Map[String, Any] = mutable.Map()
-      override var localJSONSchemaContext: Option[YNode] = None
+      override var jsonSchemaIndex: Option[AstIndex]         = None
+      override var globalSpace: mutable.Map[String, Any]     = mutable.Map()
+      override var localJSONSchemaContext: Option[YNode]     = None
       override var indexCache: mutable.Map[String, AstIndex] = mutable.Map()
 
-      override def makeJsonSchemaContextForParsing(url: String, document: Root, options: ParsingOptions): ShapeParserContext = JsonSchemaContext(ctx)
+      override def makeJsonSchemaContextForParsing(url: String,
+                                                   document: Root,
+                                                   options: ParsingOptions): ShapeParserContext =
+        JsonSchemaContext(ctx)
 
     }
   }
