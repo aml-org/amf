@@ -76,13 +76,13 @@ trait RamlParsePlugin extends ApiParsePlugin {
                          "The !include tag must be avoided when referencing a library",
                          _))
         else if (!LibraryReference.eq(definedKind))
-          nodes.foreach(
-            ctx.eh.violation(ExpectedModule, reference.unit.id, "Libraries must be applied by using 'uses'", _))
+          positions.foreach(
+            ctx.eh.violation(ExpectedModule, reference.unit, "Libraries must be applied by using 'uses'", _))
       case _ =>
         // if is not a library, kind should not be LibraryReference
         if (LibraryReference.eq(definedKind))
-          nodes.foreach(
-            ctx.eh.violation(InvalidInclude, reference.unit.id, "Fragments must be imported by using '!include'", _))
+          positions.foreach(
+            ctx.eh.violation(InvalidInclude, reference.unit, "Fragments must be imported by using '!include'", _))
     }
   }
 

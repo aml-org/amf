@@ -59,4 +59,6 @@ object GraphQLParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
       case _             => false
     }
   }
+
+  override def withIdAdoption: Boolean = false // TODO pending analysis and parsing cleanup
 }
