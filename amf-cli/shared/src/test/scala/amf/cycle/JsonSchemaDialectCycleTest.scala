@@ -1,19 +1,14 @@
 package amf.cycle
 
 import amf.aml.client.scala.AMLDialectResult
-import amf.core.client.scala.AMFResult
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
-import amf.core.internal.parser.Root
-import amf.core.internal.remote.{JsonSchemaDialect, Platform, Vendor}
+import amf.core.internal.remote.{AmfJsonHint, AmlHint}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
-import amf.shapes.client.scala.config.{SemanticJsonSchemaConfiguration, ShapesConfiguration}
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.JsonSchemaDialectParsePlugin
+import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
 import org.scalatest.{Assertion, AsyncFunSuite}
-import org.yaml.parser.JsonParser
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -55,6 +50,6 @@ class JsonSchemaDialectCycleTest extends AsyncFunSuite with PlatformSecrets with
   private def emit(unit: BaseUnit)(implicit executionContext: ExecutionContext): String = {
     val options =
       RenderOptions().withCompactUris.withoutSourceMaps.withoutRawSourceMaps.withFlattenedJsonLd.withPrettyPrint
-    new AMFRenderer(unit, Vendor.AML, options, None).renderToString
+    new AMFRenderer(unit, AmlHint, options).renderToString
   }
 }
