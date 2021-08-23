@@ -79,6 +79,7 @@ object TypeDetector {
         .orElse(map.key("patternProperties"))
         .orElse(map.key("additionalProperties"))
         .orElse(map.key("discriminator"))
+        .orElse(map.key("required"))
         .map(_ => ObjectType)
   }
 
