@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-status-code
   Message: Status code for a Response object must be a string
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-status-code.yaml#/web-api/endpoint/end-points/%2Fresource1/supportedOperation/get/returns/resp/200
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-status-code.yaml#/web-api/endpoint/end-points/%2Fresource1/supportedOperation/get/GET_resource1/returns/resp/200
   Property: 
   Position: Some(LexicalInformation([(9,8)-(9,11)]))
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-status-code.yaml
