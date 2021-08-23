@@ -2,15 +2,15 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
 
 import amf.aml.client.scala.model.domain.NodeMappable
 import amf.aml.internal.metamodel.domain.NodeMappableModel
+import amf.aml.internal.render.emitters.common.IdCounter
 import amf.core.client.scala.model.domain.DomainElement
 import amf.shapes.client.scala.model.domain.SemanticContext
 
-import java.util.concurrent.atomic.AtomicReference
 import scala.collection.mutable
 
 class ShapeTransformationContext(val shapeMap: mutable.Map[String, DomainElement] = mutable.Map(),
                                  val externals: mutable.Map[String, String] = mutable.Map(),
-                                 val idCounter: AtomicReference[Int] = new AtomicReference(0),
+                                 val idCounter: IdCounter = new IdCounter,
                                  val shapeDeclarationNames: mutable.Set[String] = mutable.Set(),
                                  val semantics: SemanticContext = SemanticContext()) {
 
@@ -27,18 +27,21 @@ class ShapeTransformationContext(val shapeMap: mutable.Map[String, DomainElement
 
   def genName[T <: NodeMappableModel](nodeMapping: NodeMappable[T]): NodeMappable[T] = {
     val nodeMappingName = nodeMapping.name.option().getOrElse("SchemaNode")
-    val name =  if (shapeDeclarationNames.contains(nodeMappingName)) {
-      s"${nodeMappingName}${idCounter.updateAndGet((v) => v + 1)}"
-    } else {
-      nodeMappingName
-    }
+    val name =
+      if (shapeDeclarationNames.contains(nodeMappingName))
+        idCounter.genId(nodeMappingName)
+      else nodeMappingName
     nodeMapping.withName(name)
     shapeDeclarationNames.add(nodeMapping.name.value())
     nodeMapping
   }
 
   def updateSemanticContext(newSemantics: SemanticContext): ShapeTransformationContext = {
-    new ShapeTransformationContext(shapeMap, externals, idCounter, shapeDeclarationNames, semantics.merge(newSemantics).normalize())
+    new ShapeTransformationContext(shapeMap,
+                                   externals,
+                                   idCounter,
+                                   shapeDeclarationNames,
+                                   semantics.merge(newSemantics).normalize())
   }
 
   private def updateExternals(): Unit = {
