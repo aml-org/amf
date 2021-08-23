@@ -8,7 +8,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SimpleReferenceHandler}
 import amf.core.internal.parser.Root
-import amf.core.internal.remote.{JsonSchema, JsonSchemaDialect, Vendor}
+import amf.core.internal.remote.{JsonSchema, JsonSchemaDialect, Mimes, Spec}
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.contexts.parser.JsonSchemaContext
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
@@ -16,7 +16,7 @@ import amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect.{SchemaTra
 
 object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
 
-  override val id: String = Vendor.JSONSCHEMADIALECT.name
+  override val id: String = "JSON Schema Dialect"
 
   override def applies(element: Root): Boolean = true
 
@@ -61,15 +61,16 @@ object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
   /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-  override def mediaTypes: Seq[String] = Seq(JsonSchemaDialect.mediaType, JsonSchema.mediaType)
+  override def mediaTypes: Seq[String] = Seq(Mimes.`application/semantics+schema+json`, Mimes.`application/json`)
 
   /**
     * media types which specifies vendors that may be referenced.
     */
-  override def validMediaTypesToReference: Seq[String] = Nil
+  override def validSpecsToReference: Seq[Spec] = Nil
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = SimpleReferenceHandler
 
   override def allowRecursiveReferences: Boolean = true
 
+  override def spec: Spec = JsonSchemaDialect
 }
