@@ -135,7 +135,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       case oasSchema: OASSchemaVersion if oasSchema.position.toString == "parameter" => UndefinedType
       case _                                                                         => AnyType
     }
-    TypeDetector.detect(map)(new SyamlAMFErrorHandler(ctx.eh)).getOrElse(defaultType)
+    TypeDetector.detect(map, version)(new SyamlAMFErrorHandler(ctx.eh)).getOrElse(defaultType)
   }
 
   private def parseDisjointUnionType(): UnionShape = {
