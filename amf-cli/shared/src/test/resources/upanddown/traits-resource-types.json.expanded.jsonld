@@ -28,7 +28,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -53,7 +53,7 @@
                 "http://a.ml/vocabularies/apiContract#returns": [],
                 "http://a.ml/vocabularies/document#extends": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#ParametrizedTrait",
                       "http://a.ml/vocabularies/document#ParametrizedDeclaration",
@@ -437,7 +437,7 @@
                     ],
                     "http://a.ml/vocabularies/document#variable": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName",
                         "@type": [
                           "http://a.ml/vocabularies/document#VariableValue",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -449,7 +449,7 @@
                         ],
                         "http://a.ml/vocabularies/document#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -472,13 +472,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1/source-map/synthesized-field/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1/source-map/synthesized-field/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -491,7 +491,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -506,10 +506,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/scalar_1"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -525,16 +525,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -544,7 +544,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/variable/tokenName/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/document#value"
@@ -563,16 +563,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -582,7 +582,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/secured/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/secured/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -599,7 +599,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#ParametrizedTrait",
                       "http://a.ml/vocabularies/document#ParametrizedDeclaration",
@@ -983,7 +983,7 @@
                     ],
                     "http://a.ml/vocabularies/document#variable": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages",
                         "@type": [
                           "http://a.ml/vocabularies/document#VariableValue",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -995,7 +995,7 @@
                         ],
                         "http://a.ml/vocabularies/document#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -1018,13 +1018,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1/source-map/synthesized-field/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1/source-map/synthesized-field/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -1037,7 +1037,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -1052,10 +1052,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/scalar_1"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1071,16 +1071,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1090,7 +1090,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/variable/maxPages/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/document#value"
@@ -1109,16 +1109,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1128,7 +1128,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/extends/paged/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/extends/paged/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -1147,13 +1147,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/source-map/lexical/element_2",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#returns"
@@ -1166,7 +1166,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/document#extends"
@@ -1179,10 +1179,10 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/supportedOperation/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1198,7 +1198,7 @@
             ],
             "http://a.ml/vocabularies/document#extends": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#ParametrizedTrait",
                   "http://a.ml/vocabularies/document#ParametrizedDeclaration",
@@ -1211,7 +1211,7 @@
                 ],
                 "http://a.ml/vocabularies/document#target": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr/trait/default-abstract",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr/trait/default-abstract",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Trait",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
@@ -1229,13 +1229,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr/trait/default-abstract/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr/trait/default-abstract/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr/trait/default-abstract/source-map/synthesized-field/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr/trait/default-abstract/source-map/synthesized-field/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/document#link-target"
@@ -1250,10 +1250,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr/trait/default-abstract/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr/trait/default-abstract/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr/trait/default-abstract"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr/trait/default-abstract"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1269,16 +1269,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1288,7 +1288,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/descr/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/descr/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -1305,7 +1305,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#ParametrizedResourceType",
                   "http://a.ml/vocabularies/document#ParametrizedDeclaration",
@@ -1916,7 +1916,7 @@
                 ],
                 "http://a.ml/vocabularies/document#variable": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName",
                     "@type": [
                       "http://a.ml/vocabularies/document#VariableValue",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -1928,7 +1928,7 @@
                     ],
                     "http://a.ml/vocabularies/document#value": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar",
                           "http://a.ml/vocabularies/data#Node",
@@ -1951,13 +1951,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1/source-map/synthesized-field/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -1970,7 +1970,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#name"
@@ -1985,10 +1985,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/scalar_1"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2004,16 +2004,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2023,7 +2023,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/queryParamName/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/queryParamName/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/document#value"
@@ -2040,7 +2040,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName",
                     "@type": [
                       "http://a.ml/vocabularies/document#VariableValue",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -2052,7 +2052,7 @@
                     ],
                     "http://a.ml/vocabularies/document#value": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar",
                           "http://a.ml/vocabularies/data#Node",
@@ -2075,13 +2075,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1/source-map/synthesized-field/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -2094,7 +2094,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#name"
@@ -2109,10 +2109,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/scalar_1"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2128,16 +2128,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2147,7 +2147,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/variable/fallbackParamName/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/document#value"
@@ -2166,16 +2166,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2185,7 +2185,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/extends/searchableCollection/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/extends/searchableCollection/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -2204,16 +2204,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2223,7 +2223,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/end-points/%2Fbooks/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/endpoint/%2Fbooks/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/document#extends"

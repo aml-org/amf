@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -47,14 +47,14 @@
                 ],
                 "http://a.ml/vocabularies/security#security": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1",
                     "@type": [
                       "http://a.ml/vocabularies/security#SecurityRequirement",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/security#schemes": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2",
                         "@type": [
                           "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -350,7 +350,7 @@
                         ],
                         "http://a.ml/vocabularies/security#settings": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2",
                             "@type": [
                               "http://a.ml/vocabularies/security#OAuth2Settings",
                               "http://a.ml/vocabularies/security#Settings",
@@ -358,14 +358,14 @@
                             ],
                             "http://a.ml/vocabularies/security#flows": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow",
                                 "@type": [
                                   "http://a.ml/vocabularies/security#OAuth2Flow",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
                                 "http://a.ml/vocabularies/security#scope": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow/scope/https%3A%2F%2Foauth.net%2F2.full_control",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow/scope/https%3A%2F%2Foauth.net%2F2.full_control",
                                     "@type": [
                                       "http://a.ml/vocabularies/security#Scope",
                                       "http://a.ml/vocabularies/document#DomainElement"
@@ -379,16 +379,16 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_1",
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_1",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow"
+                                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -398,7 +398,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/flows/default-flow/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://a.ml/vocabularies/security#scope"
@@ -417,16 +417,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/settings/oauth2"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -442,16 +442,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -461,7 +461,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/schemes/Oauth2/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/security#settings"
@@ -480,16 +480,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/security/default-requirement_1"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/security/default-requirement_1"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -505,16 +505,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -524,7 +524,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/supportedOperation/post/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/security#security"
@@ -543,16 +543,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -562,7 +562,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/end-points/%2Ftraining/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/raml-security/api.raml#/web-api/endpoint/%2Ftraining/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"

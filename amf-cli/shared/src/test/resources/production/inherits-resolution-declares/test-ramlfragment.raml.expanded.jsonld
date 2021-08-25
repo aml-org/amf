@@ -80,7 +80,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa",
+            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -92,7 +92,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/supportedOperation/get",
+                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -104,7 +104,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/supportedOperation/get/expects/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -112,7 +112,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/supportedOperation/get/expects/request/application%2Fjson",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/expects/request/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -146,16 +146,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/supportedOperation/get/expects/request/application%2Fjson/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/expects/request/application%2Fjson/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/supportedOperation/get/expects/request/application%2Fjson/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/expects/request/application%2Fjson/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/supportedOperation/get/expects/request/application%2Fjson"
+                                    "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/expects/request/application%2Fjson"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -173,16 +173,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/supportedOperation/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/supportedOperation/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/supportedOperation/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -198,16 +198,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa"
+                        "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -217,7 +217,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fa/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fa/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -234,7 +234,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb",
+            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -246,7 +246,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get",
+                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -258,7 +258,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -266,7 +266,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/application%2Fjson",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -300,16 +300,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/application%2Fjson/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/application%2Fjson/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/application%2Fjson/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/application%2Fjson/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/application%2Fjson"
+                                    "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/application%2Fjson"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -327,16 +327,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -352,16 +352,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb"
+                        "@value": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -371,7 +371,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/end-points/%2Fb/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/test-ramlfragment.raml#/web-api/endpoint/%2Fb/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
