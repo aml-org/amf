@@ -634,4 +634,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("invalid required key with boolean value in draft 4 onwards") {
     validate("invalid-boolean-required.raml", Some("raml/invalid-boolean-required.report"))
   }
+
+  test("required with non-declared property and additionalProperties = false") {
+    validate("required-with-no-additional-props.raml", None, Raml08Profile)
+  }
 }
