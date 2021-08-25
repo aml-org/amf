@@ -6,7 +6,10 @@ def headerFlavour = "WARNING"
 
 pipeline {
   agent {
-    dockerfile true
+    dockerfile {
+      filename 'Dockerfile'
+      registryCredentialsId 'dockerhub-pro-credentials'
+    }
   }
   environment {
     NEXUS = credentials('exchange-nexus')
