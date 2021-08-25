@@ -131,7 +131,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       case oasSchema: OASSchemaVersion if oasSchema.position.toString == "parameter" => UndefinedType
       case _                                                                         => AnyType
     }
-    TypeDetector.detect(map)(ctx.eh).getOrElse(defaultType)
+    TypeDetector.detect(map, version)(ctx.eh).getOrElse(defaultType)
   }
 
   private def parseDisjointUnionType(): UnionShape = {
@@ -735,6 +735,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           .withName(propertyName)
           .set(PropertyShapeModel.MinCount, AmfScalar(1), synthesized())
           .set(PropertyShapeModel.Range, AnyShape(), synthesized())
+          .set(PropertyShapeModel.Path, AmfScalar((Namespace.Data + propertyName).iri()), synthesized())
       })
     properties ++= generatedRequiredProperties.map(p => p.name.value() -> p)
   }
