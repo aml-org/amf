@@ -750,6 +750,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           .withName(propertyName)
           .set(PropertyShapeModel.MinCount, AmfScalar(1), synthesized())
           .set(PropertyShapeModel.Range, AnyShape(), synthesized())
+          .set(PropertyShapeModel.Path, AmfScalar((Namespace.Data + propertyName).iri()), synthesized())
       })
     properties ++= generatedRequiredProperties.map(p => p.name.value() -> p)
   }
