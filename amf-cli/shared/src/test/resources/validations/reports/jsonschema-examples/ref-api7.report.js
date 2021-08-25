@@ -10,8 +10,8 @@ Level: Violation
 should have required property 'wadus'
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml#/web-api/endpoint/end-points/%2Fep1/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml#/web-api/endpoint/end-points/%2Fep1/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml#/web-api/endpoint/%2Fep1/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml#/web-api/endpoint/%2Fep1/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
   Position: Some(LexicalInformation([(21,0)-(23,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml
 
@@ -20,7 +20,7 @@ should have required property 'wadus'
 left should have required property 'wadus'
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml#/web-api/endpoint/end-points/%2Fep2/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml#/web-api/endpoint/end-points/%2Fep2/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml#/web-api/endpoint/%2Fep2/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml#/web-api/endpoint/%2Fep2/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
   Position: Some(LexicalInformation([(31,0)-(35,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/ref/api7.raml

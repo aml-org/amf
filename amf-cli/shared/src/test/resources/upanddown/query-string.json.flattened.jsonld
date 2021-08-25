@@ -12,7 +12,7 @@
       "http://a.ml/vocabularies/core#version": "1.0",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -30,12 +30,12 @@
       "http://a.ml/vocabularies/apiContract#path": "/locations",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/source-map"
         }
       ]
     },
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -73,24 +73,24 @@
       "http://a.ml/vocabularies/apiContract#method": "get",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request"
         }
       ],
       "http://a.ml/vocabularies/apiContract#returns": [],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/source-map/lexical/element_0"
         }
       ]
     },
@@ -120,45 +120,45 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(52,1)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#queryString": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(18,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -173,39 +173,39 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/declares/shape/paging"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,13)-(17,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,8)-(16,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(17,7)]"
     },
     {
@@ -234,7 +234,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union",
       "@type": [
         "http://a.ml/vocabularies/shapes#UnionShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -244,45 +244,45 @@
       ],
       "http://a.ml/vocabularies/shapes#anyOf": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,13)-(17,7)]"
     },
     {
@@ -366,7 +366,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -382,12 +382,12 @@
       "http://a.ml/vocabularies/document#link-label": "lat-long",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -403,44 +403,44 @@
       "http://a.ml/vocabularies/document#link-label": "loc",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-expression": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map/type-expression/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map/type-expression/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(15,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#inherits",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,10)-(14,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,10)-(11,16)]"
     },
     {
@@ -548,45 +548,45 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map/type-expression/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map/type-expression/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union",
       "http://a.ml/vocabularies/document-source-maps#value": "lat-long | loc"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,12)-(13,28)]"
     },
     {
@@ -648,23 +648,23 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(46,8)-(48,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,12)-(13,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/end-points/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request/shape/x-amf-queryString/inherits/union/default-union/anyOf/shape/default-node_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,23)-(13,26)]"
     },
     {

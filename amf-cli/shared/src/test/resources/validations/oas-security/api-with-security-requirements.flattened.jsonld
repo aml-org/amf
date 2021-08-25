@@ -12,7 +12,7 @@
       "http://a.ml/vocabularies/core#version": "1.0",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets"
         }
       ],
       "http://a.ml/vocabularies/security#security": [
@@ -30,7 +30,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -38,12 +38,12 @@
       "http://a.ml/vocabularies/apiContract#path": "/pets",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/source-map"
         }
       ]
     },
@@ -113,7 +113,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -121,23 +121,23 @@
       "http://a.ml/vocabularies/apiContract#method": "get",
       "http://a.ml/vocabularies/apiContract#returns": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/source-map/lexical/element_0"
         }
       ]
     },
@@ -245,7 +245,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(4,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -256,27 +256,27 @@
       "http://a.ml/vocabularies/core#description": "Success!",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,4)-(28,5)]"
     },
     {
@@ -375,29 +375,29 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,4)-(17,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(27,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
       "http://a.ml/vocabularies/document-source-maps#value": "[(22,8)-(26,9)]"
     },
@@ -531,18 +531,18 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,6)-(16,19)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,10)-(23,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,12)-(24,37)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/end-points/%2Fpets/supportedOperation/get/returns/resp/200",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,10)-(25,11)]"
     },
     {

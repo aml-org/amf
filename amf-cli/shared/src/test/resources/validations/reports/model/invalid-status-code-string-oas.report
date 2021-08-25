@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
   Message: Status code for a Response must be a value between 100 and 599 or 'default'
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-status-code-string/api.json#/web-api/endpoint/end-points/%2Fpets%2F%7Bid%7D/supportedOperation/get/returns/resp/k
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-status-code-string/api.json#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/returns/resp/k
   Property: http://a.ml/vocabularies/apiContract#statusCode
   Position: Some(LexicalInformation([(11,10)-(11,13)]))
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-status-code-string/api.json

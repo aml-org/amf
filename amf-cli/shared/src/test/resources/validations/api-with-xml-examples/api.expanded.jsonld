@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#/web-api/endpoint/end-points/%2Fcontacts",
+            "@id": "#/web-api/endpoint/%2Fcontacts",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get",
+                "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200",
+                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -65,7 +65,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml",
+                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -77,7 +77,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+                            "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
                             "@type": [
                               "raml-shapes:SchemaShape",
                               "raml-shapes:AnyShape",
@@ -97,7 +97,7 @@
                             ],
                             "apiContract:examples": [
                               {
-                                "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
+                                "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
                                 "@type": [
                                   "apiContract:Example",
                                   "doc:DomainElement"
@@ -119,13 +119,13 @@
                                 ],
                                 "sourcemaps:sources": [
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map",
                                     "@type": [
                                       "sourcemaps:SourceMap"
                                     ],
                                     "sourcemaps:synthesized-field": [
                                       {
-                                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_1",
+                                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_1",
                                         "sourcemaps:element": [
                                           {
                                             "@value": "doc:strict"
@@ -138,7 +138,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_0",
+                                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_0",
                                         "sourcemaps:element": [
                                           {
                                             "@value": "doc:raw"
@@ -153,10 +153,10 @@
                                     ],
                                     "sourcemaps:lexical": [
                                       {
-                                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/lexical/element_0",
+                                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/lexical/element_0",
                                         "sourcemaps:element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
+                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
                                           }
                                         ],
                                         "sourcemaps:value": [
@@ -168,15 +168,15 @@
                                     ],
                                     "sourcemaps:tracked-element": [
                                       {
-                                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/tracked-element/element_0",
+                                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/tracked-element/element_0",
                                         "sourcemaps:element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
+                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
                                           }
                                         ],
                                         "sourcemaps:value": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml"
+                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml"
                                           }
                                         ]
                                       }
@@ -197,13 +197,13 @@
                             ],
                             "sourcemaps:sources": [
                               {
-                                "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map",
+                                "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map",
                                 "@type": [
                                   "sourcemaps:SourceMap"
                                 ],
                                 "sourcemaps:synthesized-field": [
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
                                     "sourcemaps:element": [
                                       {
                                         "@value": "core:mediaType"
@@ -216,7 +216,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
                                     "sourcemaps:element": [
                                       {
                                         "@value": "doc:location"
@@ -231,10 +231,10 @@
                                 ],
                                 "sourcemaps:lexical": [
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
                                     "sourcemaps:element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
+                                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
                                       }
                                     ],
                                     "sourcemaps:value": [
@@ -246,10 +246,10 @@
                                 ],
                                 "sourcemaps:declared-element": [
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
                                     "sourcemaps:element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
+                                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
                                       }
                                     ],
                                     "sourcemaps:value": [
@@ -265,16 +265,16 @@
                         ],
                         "sourcemaps:sources": [
                           {
-                            "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml/source-map",
+                            "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml/source-map",
                             "@type": [
                               "sourcemaps:SourceMap"
                             ],
                             "sourcemaps:lexical": [
                               {
-                                "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml/source-map/lexical/element_0",
+                                "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml/source-map/lexical/element_0",
                                 "sourcemaps:element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml"
+                                    "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml"
                                   }
                                 ],
                                 "sourcemaps:value": [
@@ -290,16 +290,16 @@
                     ],
                     "sourcemaps:sources": [
                       {
-                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/source-map",
+                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/source-map",
                         "@type": [
                           "sourcemaps:SourceMap"
                         ],
                         "sourcemaps:lexical": [
                           {
-                            "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
+                            "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
                             "sourcemaps:element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/returns/resp/200"
+                                "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200"
                               }
                             ],
                             "sourcemaps:value": [
@@ -315,16 +315,16 @@
                 ],
                 "sourcemaps:sources": [
                   {
-                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/source-map",
+                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/source-map",
                     "@type": [
                       "sourcemaps:SourceMap"
                     ],
                     "sourcemaps:lexical": [
                       {
-                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/source-map/lexical/element_1",
+                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/source-map/lexical/element_1",
                         "sourcemaps:element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get"
                           }
                         ],
                         "sourcemaps:value": [
@@ -334,7 +334,7 @@
                         ]
                       },
                       {
-                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/get/source-map/lexical/element_0",
+                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/source-map/lexical/element_0",
                         "sourcemaps:element": [
                           {
                             "@value": "apiContract:returns"
@@ -351,7 +351,7 @@
                 ]
               },
               {
-                "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post",
+                "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -363,7 +363,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201",
+                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -381,7 +381,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml",
+                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -393,7 +393,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+                            "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
                             "@type": [
                               "raml-shapes:SchemaShape",
                               "raml-shapes:AnyShape",
@@ -413,7 +413,7 @@
                             ],
                             "apiContract:examples": [
                               {
-                                "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
+                                "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
                                 "@type": [
                                   "apiContract:Example",
                                   "doc:DomainElement"
@@ -435,13 +435,13 @@
                                 ],
                                 "sourcemaps:sources": [
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map",
                                     "@type": [
                                       "sourcemaps:SourceMap"
                                     ],
                                     "sourcemaps:synthesized-field": [
                                       {
-                                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_1",
+                                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_1",
                                         "sourcemaps:element": [
                                           {
                                             "@value": "doc:strict"
@@ -454,7 +454,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_0",
+                                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_0",
                                         "sourcemaps:element": [
                                           {
                                             "@value": "doc:raw"
@@ -469,10 +469,10 @@
                                     ],
                                     "sourcemaps:lexical": [
                                       {
-                                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/lexical/element_0",
+                                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/lexical/element_0",
                                         "sourcemaps:element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
+                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
                                           }
                                         ],
                                         "sourcemaps:value": [
@@ -484,15 +484,15 @@
                                     ],
                                     "sourcemaps:tracked-element": [
                                       {
-                                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/tracked-element/element_0",
+                                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/tracked-element/element_0",
                                         "sourcemaps:element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
+                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
                                           }
                                         ],
                                         "sourcemaps:value": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml"
+                                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml"
                                           }
                                         ]
                                       }
@@ -513,13 +513,13 @@
                             ],
                             "sourcemaps:sources": [
                               {
-                                "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map",
+                                "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map",
                                 "@type": [
                                   "sourcemaps:SourceMap"
                                 ],
                                 "sourcemaps:synthesized-field": [
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
                                     "sourcemaps:element": [
                                       {
                                         "@value": "core:mediaType"
@@ -532,7 +532,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
                                     "sourcemaps:element": [
                                       {
                                         "@value": "doc:location"
@@ -547,10 +547,10 @@
                                 ],
                                 "sourcemaps:lexical": [
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
                                     "sourcemaps:element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
+                                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
                                       }
                                     ],
                                     "sourcemaps:value": [
@@ -562,10 +562,10 @@
                                 ],
                                 "sourcemaps:declared-element": [
                                   {
-                                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
+                                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
                                     "sourcemaps:element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
+                                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
                                       }
                                     ],
                                     "sourcemaps:value": [
@@ -581,16 +581,16 @@
                         ],
                         "sourcemaps:sources": [
                           {
-                            "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml/source-map",
+                            "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml/source-map",
                             "@type": [
                               "sourcemaps:SourceMap"
                             ],
                             "sourcemaps:lexical": [
                               {
-                                "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml/source-map/lexical/element_0",
+                                "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml/source-map/lexical/element_0",
                                 "sourcemaps:element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml"
+                                    "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml"
                                   }
                                 ],
                                 "sourcemaps:value": [
@@ -606,16 +606,16 @@
                     ],
                     "sourcemaps:sources": [
                       {
-                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/source-map",
+                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/source-map",
                         "@type": [
                           "sourcemaps:SourceMap"
                         ],
                         "sourcemaps:lexical": [
                           {
-                            "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201/source-map/lexical/element_0",
+                            "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/source-map/lexical/element_0",
                             "sourcemaps:element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/returns/resp/201"
+                                "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201"
                               }
                             ],
                             "sourcemaps:value": [
@@ -631,16 +631,16 @@
                 ],
                 "sourcemaps:sources": [
                   {
-                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/source-map",
+                    "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/source-map",
                     "@type": [
                       "sourcemaps:SourceMap"
                     ],
                     "sourcemaps:lexical": [
                       {
-                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/source-map/lexical/element_1",
+                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/source-map/lexical/element_1",
                         "sourcemaps:element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post"
+                            "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post"
                           }
                         ],
                         "sourcemaps:value": [
@@ -650,7 +650,7 @@
                         ]
                       },
                       {
-                        "@id": "#/web-api/endpoint/end-points/%2Fcontacts/supportedOperation/post/source-map/lexical/element_0",
+                        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/source-map/lexical/element_0",
                         "sourcemaps:element": [
                           {
                             "@value": "apiContract:returns"
@@ -669,16 +669,16 @@
             ],
             "sourcemaps:sources": [
               {
-                "@id": "#/web-api/endpoint/end-points/%2Fcontacts/source-map",
+                "@id": "#/web-api/endpoint/%2Fcontacts/source-map",
                 "@type": [
                   "sourcemaps:SourceMap"
                 ],
                 "sourcemaps:lexical": [
                   {
-                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/source-map/lexical/element_1",
+                    "@id": "#/web-api/endpoint/%2Fcontacts/source-map/lexical/element_1",
                     "sourcemaps:element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/end-points/%2Fcontacts"
+                        "@value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts"
                       }
                     ],
                     "sourcemaps:value": [
@@ -688,7 +688,7 @@
                     ]
                   },
                   {
-                    "@id": "#/web-api/endpoint/end-points/%2Fcontacts/source-map/lexical/element_0",
+                    "@id": "#/web-api/endpoint/%2Fcontacts/source-map/lexical/element_0",
                     "sourcemaps:element": [
                       {
                         "@value": "apiContract:path"

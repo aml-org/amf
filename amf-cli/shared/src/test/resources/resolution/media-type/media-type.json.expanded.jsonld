@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one",
+            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -55,7 +55,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -72,7 +72,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -87,7 +87,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#property": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -101,7 +101,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -121,16 +121,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one/source-map/type-property-lexical-info/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one/source-map/type-property-lexical-info/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one"
+                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -142,10 +142,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one/source-map/lexical/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one/source-map/lexical/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one"
+                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -155,7 +155,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/scalar/one/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -184,13 +184,13 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/source-map/synthesized-field/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/source-map/synthesized-field/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -205,10 +205,10 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one"
+                                            "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/one"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -222,7 +222,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -236,7 +236,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
                                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -256,16 +256,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two/source-map/type-property-lexical-info/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two/source-map/type-property-lexical-info/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two"
+                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -277,10 +277,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two/source-map/lexical/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two/source-map/lexical/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two"
+                                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -290,7 +290,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/scalar/two/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -319,13 +319,13 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/source-map",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/source-map/synthesized-field/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/source-map/synthesized-field/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -340,10 +340,10 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/source-map/lexical/element_0",
+                                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two/source-map/lexical/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two"
+                                            "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/property/property/two"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -364,13 +364,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#closed"
@@ -385,10 +385,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -400,10 +400,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -413,7 +413,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#name"
@@ -428,10 +428,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/parameter-binding-in-body-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName/source-map/parameter-binding-in-body-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/payload/myName/shape/myName"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/payload/myName/shape/myName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -447,16 +447,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#body-parameter": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson/source-map/body-parameter/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson/source-map/body-parameter/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -468,10 +468,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson"
+                                    "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/request/application%2Fjson"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -489,7 +489,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -512,7 +512,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/application%2Fjson",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -524,7 +524,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -544,16 +544,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map/auto-generated-name/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map/auto-generated-name/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -565,10 +565,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -578,7 +578,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -593,10 +593,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default"
+                                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/payload/default/scalar/default"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -614,13 +614,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/source-map/lexical/element_2",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -633,7 +633,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#description"
@@ -646,10 +646,10 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404"
+                                "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -665,16 +665,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -684,7 +684,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#returns"
@@ -703,16 +703,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/end-points/%2Flevelzero%2Flevel-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/endpoint/%2Flevelzero%2Flevel-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Amqp091ChannelQueue-name-maxLength
   Message: Amqp channel binding name can't be longer than 255 characters
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-name-max-length.yaml#/async-api/endpoint/end-points/%2FinvalidName/channel-bindings/bindings/amqp091-channel/amqp091-queue
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-name-max-length.yaml#/async-api/endpoint/%2FinvalidName/channel-bindings/bindings/amqp091-channel/amqp091-queue
   Property: http://a.ml/vocabularies/core#name
   Position: Some(LexicalInformation([(23,16)-(28,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-name-max-length.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Amqp091ChannelExchange-name-maxLength
   Message: Amqp channel binding name can't be longer than 255 characters
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-name-max-length.yaml#/async-api/endpoint/end-points/%2FanotherInvalidName/channel-bindings/bindings/amqp091-channel/amqp091-exchange
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-name-max-length.yaml#/async-api/endpoint/%2FanotherInvalidName/channel-bindings/bindings/amqp091-channel/amqp091-exchange
   Property: http://a.ml/vocabularies/core#name
   Position: Some(LexicalInformation([(33,16)-(38,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-name-max-length.yaml

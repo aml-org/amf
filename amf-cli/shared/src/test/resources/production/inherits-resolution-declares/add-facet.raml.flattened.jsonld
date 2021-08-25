@@ -12,7 +12,7 @@
       "http://a.ml/vocabularies/core#version": "v1",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -30,12 +30,12 @@
       "http://a.ml/vocabularies/apiContract#path": "/b",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/source-map"
         }
       ]
     },
@@ -62,7 +62,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -70,26 +70,26 @@
       "http://a.ml/vocabularies/apiContract#method": "get",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/source-map/lexical/element_0"
         }
       ]
     },
@@ -114,7 +114,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(13,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -122,70 +122,70 @@
       ],
       "http://a.ml/vocabularies/apiContract#payload": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,0)-(13,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#path",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,0)-(8,2)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema"
+        "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(13,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -203,23 +203,23 @@
       "http://www.w3.org/ns/shacl#name": "A",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(13,26)]"
     },
@@ -248,32 +248,32 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,8)-(13,26)]"
     },
     {
@@ -320,23 +320,23 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,8)-(13,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#maxProperties",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,10)-(13,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/end-points/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/inherits-resolution-declares/add-facet.raml#/web-api/endpoint/%2Fb/supportedOperation/get/expects/request/payload/application%2Fjson/shape/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,10)-(12,14)]"
     },
     {

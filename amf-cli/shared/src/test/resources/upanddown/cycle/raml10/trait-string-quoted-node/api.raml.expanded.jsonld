@@ -28,7 +28,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -40,7 +40,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -52,7 +52,7 @@
                 ],
                 "http://a.ml/vocabularies/document#extends": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#ParametrizedTrait",
                       "http://a.ml/vocabularies/document#ParametrizedDeclaration",
@@ -436,7 +436,7 @@
                     ],
                     "http://a.ml/vocabularies/document#variable": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example",
                         "@type": [
                           "http://a.ml/vocabularies/document#VariableValue",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -448,7 +448,7 @@
                         ],
                         "http://a.ml/vocabularies/document#value": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -471,13 +471,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1/source-map/synthesized-field/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1/source-map/synthesized-field/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -490,7 +490,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -505,10 +505,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/scalar_1"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -524,16 +524,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -543,7 +543,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/variable/example/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/document#value"
@@ -562,16 +562,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -581,7 +581,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/extends/searchable/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/extends/searchable/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -600,16 +600,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -619,7 +619,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/supportedOperation/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/document#extends"
@@ -638,16 +638,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -657,7 +657,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/end-points/%2Fsongs/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/endpoint/%2Fsongs/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"

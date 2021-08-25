@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/resolution#examples-with-invalid-mime-type
   Message: Mime type 'application/xml' defined in examples must be present in a 'produces' property
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/invalid-mime-type.json#/web-api/endpoint/end-points/%2FaPath/supportedOperation/post/returns/resp/default/examples/example/application%2Fxml
+  Target: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/invalid-mime-type.json#/web-api/endpoint/%2FaPath/supportedOperation/post/returns/resp/default/examples/example/application%2Fxml
   Property: 
   Position: Some(LexicalInformation([(33,14)-(35,15)]))
   Location: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/invalid-mime-type.json
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/resolution#examples-with-invalid-mime-type
   Message: Mime type 'otro/invalido' defined in examples must be present in a 'produces' property
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/invalid-mime-type.json#/web-api/endpoint/end-points/%2FaPath/supportedOperation/post/returns/resp/default/examples/example/otro%2Finvalido
+  Target: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/invalid-mime-type.json#/web-api/endpoint/%2FaPath/supportedOperation/post/returns/resp/default/examples/example/otro%2Finvalido
   Property: 
   Position: Some(LexicalInformation([(36,14)-(38,15)]))
   Location: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/invalid-mime-type.json

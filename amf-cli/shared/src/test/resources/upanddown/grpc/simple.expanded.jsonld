@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -52,7 +52,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -60,7 +60,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/request/application%2Fgrpc",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/request/application%2Fgrpc",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -72,7 +72,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -97,13 +97,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -118,10 +118,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/request/application%2Fgrpc#/shape/HelloRequest"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -141,7 +141,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/resp/",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/resp/",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -159,7 +159,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/resp/application%2Fprotobuf",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/resp/application%2Fprotobuf",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -171,7 +171,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -196,13 +196,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -217,10 +217,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/resp/application%2Fprotobuf#/shape/HelloReply"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -245,16 +245,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1#/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1#/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1#/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1#/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/post/SayHello1"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -268,7 +268,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -285,7 +285,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -293,7 +293,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/request/application%2Fgrpc",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/request/application%2Fgrpc",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -305,7 +305,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -330,13 +330,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -351,10 +351,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/request/application%2Fgrpc#/shape/HelloRequest"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -374,7 +374,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/resp/",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/resp/",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -392,7 +392,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/resp/application%2Fprotobuf",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/resp/application%2Fprotobuf",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -404,7 +404,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -429,13 +429,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -450,10 +450,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/resp/application%2Fprotobuf#/shape/HelloReply"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -478,16 +478,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2#/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2#/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2#/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2#/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/publish/SayHello2"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -501,7 +501,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -518,7 +518,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -526,7 +526,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/request/application%2Fgrpc",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/request/application%2Fgrpc",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -538,7 +538,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -563,13 +563,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -584,10 +584,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/request/application%2Fgrpc#/shape/HelloRequest"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -607,7 +607,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/resp/",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/resp/",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -625,7 +625,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -637,7 +637,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -662,13 +662,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -683,10 +683,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf#/shape/HelloReply"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -711,16 +711,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3#/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3#/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3#/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3#/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/subscribe/SayHello3"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -734,7 +734,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -751,7 +751,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -759,7 +759,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/request/application%2Fgrpc",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/request/application%2Fgrpc",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -771,7 +771,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -796,13 +796,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -817,10 +817,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/request/application%2Fgrpc#/shape/HelloRequest"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -840,7 +840,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/resp/",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/resp/",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -858,7 +858,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -870,7 +870,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -895,13 +895,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/document#link-target"
@@ -916,10 +916,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf#/shape/HelloReply"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -944,16 +944,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4#/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4#/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4#/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4#/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter/pubsub/SayHello4"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -969,16 +969,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter#/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter#/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter#/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter#/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/end-points/Greeter"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

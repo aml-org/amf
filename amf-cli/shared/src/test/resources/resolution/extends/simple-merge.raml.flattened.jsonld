@@ -11,7 +11,7 @@
       "http://a.ml/vocabularies/core#name": "API",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -29,12 +29,12 @@
       "http://a.ml/vocabularies/apiContract#path": "/products",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/source-map"
         }
       ]
     },
@@ -58,7 +58,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -67,31 +67,31 @@
       "http://a.ml/vocabularies/core#description": "override the description",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request"
         }
       ],
       "http://a.ml/vocabularies/apiContract#returns": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/source-map/lexical/element_0"
         }
       ]
     },
@@ -111,7 +111,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -119,17 +119,17 @@
       ],
       "http://a.ml/vocabularies/apiContract#header": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -139,44 +139,44 @@
       "http://a.ml/vocabularies/core#name": "200",
       "http://a.ml/vocabularies/apiContract#payload": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(16,27)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#path",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(9,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -186,72 +186,72 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "header",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema"
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,4)-(13,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(16,27)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,2)-(16,27)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -267,36 +267,36 @@
       "http://www.w3.org/ns/shacl#name": "schema",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#header",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,6)-(8,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema",
       "@type": [
         "http://a.ml/vocabularies/shapes#AnyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -306,91 +306,91 @@
       "http://www.w3.org/ns/shacl#name": "schema",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,6)-(16,27)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,8)-(16,27)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#binding",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,8)-(8,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,8)-(8,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,10)-(16,27)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/request/parameter/header/APIKey/scalar/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,8)-(8,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map/auto-generated-name/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/end-points/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema",
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/endpoint/%2Fproducts/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,10)-(16,27)]"
     },
     {

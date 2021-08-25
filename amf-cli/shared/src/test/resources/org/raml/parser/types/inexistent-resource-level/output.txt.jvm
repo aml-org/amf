@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'MissingType'
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-resource-level/input.raml#/web-api/endpoint/end-points/%2Flist/supportedOperation/get/returns/resp/200/payload/application%2Fxml/any/schema/inherits/unresolved
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-resource-level/input.raml#/web-api/endpoint/%2Flist/supportedOperation/get/returns/resp/200/payload/application%2Fxml/any/schema/inherits/unresolved
   Property: 
   Position: Some(LexicalInformation([(18,18)-(18,29)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-resource-level/input.raml

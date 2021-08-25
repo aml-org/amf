@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest",
+            "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get",
+                "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/expects/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -55,7 +55,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -89,16 +89,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson"
+                                    "@value": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/payload/application%2Fjson"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -114,13 +114,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/expects/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/expects/request/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/expects/request/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#payload"
@@ -139,16 +139,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/supportedOperation/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -164,16 +164,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest"
+                        "@value": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -183,7 +183,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/end-points/%2Ftest/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/production/recursive-union.raml#/web-api/endpoint/%2Ftest/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"

@@ -36,7 +36,7 @@
       },
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -95,7 +95,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -103,12 +103,12 @@
       "http://a.ml/vocabularies/apiContract#path": "/user/{id}",
       "http://a.ml/vocabularies/apiContract#payload": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/source-map"
         }
       ]
     },
@@ -214,32 +214,32 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "user",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/source-map/lexical/element_0"
         }
       ]
     },
@@ -349,7 +349,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,15)-(15,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user",
       "@type": [
         "http://a.ml/vocabularies/shapes#ArrayShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -358,54 +358,54 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#items": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items"
       },
       "http://www.w3.org/ns/shacl#name": "user",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#body-parameter": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/body-parameter/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/body-parameter/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#required-param-payload": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/required-param-payload/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/required-param-payload/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D",
       "http://a.ml/vocabularies/document-source-maps#value": "[(31,4)-(46,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(32,6)-(45,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -421,118 +421,118 @@
       "http://www.w3.org/ns/shacl#name": "items",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/parameter-binding-in-body-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/parameter-binding-in-body-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_1"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/body-parameter/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/body-parameter/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(34,10)-(34,24)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(38,10)-(43,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user",
       "http://a.ml/vocabularies/document-source-maps#value": "[(33,8)-(44,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/source-map/required-param-payload/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/source-map/required-param-payload/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user",
       "http://a.ml/vocabularies/document-source-maps#value": "true->[(37,10)-(37,26)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/parameter-binding-in-body-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/parameter-binding-in-body-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user",
       "http://a.ml/vocabularies/document-source-maps#value": "[(35,10)-(35,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#items",
       "http://a.ml/vocabularies/document-source-maps#value": "[(40,12)-(42,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(34,10)-(34,24)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user",
       "http://a.ml/vocabularies/document-source-maps#value": "[(38,10)-(43,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user",
       "http://a.ml/vocabularies/document-source-maps#value": "[(39,12)-(39,18)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items",
       "http://a.ml/vocabularies/document-source-maps#value": "[(41,14)-(41,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items",
       "http://a.ml/vocabularies/document-source-maps#value": "[(40,12)-(42,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/end-points/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/endpoint/%2Fuser%2F%7Bid%7D/payload/user/array/user/scalar/items/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(41,14)-(41,30)]"
     },

@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
   Message: Status code for a Response must be a value between 100 and 599
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/invalid-status-code/input.raml#/web-api/endpoint/end-points/%2Fresource/supportedOperation/get/returns/resp/699
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/invalid-status-code/input.raml#/web-api/endpoint/%2Fresource/supportedOperation/get/returns/resp/699
   Property: http://a.ml/vocabularies/apiContract#statusCode
   Position: Some(LexicalInformation([(7,6)-(7,9)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/invalid-status-code/input.raml

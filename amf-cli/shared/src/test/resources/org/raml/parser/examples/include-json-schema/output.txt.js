@@ -20,7 +20,7 @@ name should be string
 name should be string
 
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/web-api/endpoint/end-points/%2Fsend/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/web-api/endpoint/end-points/%2Fsend/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/web-api/endpoint/%2Fsend/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/web-api/endpoint/%2Fsend/supportedOperation/post/expects/request/payload/application%2Fjson/shape/schema/examples/example/default-example
   Position: Some(LexicalInformation([(23,16)-(26,17)]))
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml

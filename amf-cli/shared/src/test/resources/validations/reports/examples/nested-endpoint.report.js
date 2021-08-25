@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/resolution#nested-endpoint
   Message: Nested endpoint in resourceType: '/groups'
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/nested-endpoint.raml#/web-api/endpoint/end-points/%2Fusers/extends/hasGroups/applied
+  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/nested-endpoint.raml#/web-api/endpoint/%2Fusers/extends/hasGroups/applied
   Property: 
   Position: Some(LexicalInformation([(9,4)-(9,11)]))
   Location: file://amf-cli/shared/src/test/resources/validations/resource_types/nested-endpoint.raml

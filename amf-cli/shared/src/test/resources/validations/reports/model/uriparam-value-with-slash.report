@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value
   Message: Value 'invalid/value-default' of uri parameter must not contain '/' character
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/endpoint/end-points/%2Fdefault%2Finvalid%2F%7BuserId%7D/parameter/parameter/path/userId/scalar/schema/scalar_1
+  Target: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/endpoint/%2Fdefault%2Finvalid%2F%7BuserId%7D/parameter/parameter/path/userId/scalar/schema/scalar_1
   Property: 
   Position: Some(LexicalInformation([(6,12)-(9,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value
   Message: Value 'invalid/value-enums' of uri parameter must not contain '/' character
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/endpoint/end-points/%2Fin-enum%2Finvalid%2F%7BuserId%7D/parameter/parameter/path/userId/scalar/schema/in/scalar_2
+  Target: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/endpoint/%2Fin-enum%2Finvalid%2F%7BuserId%7D/parameter/parameter/path/userId/scalar/schema/in/scalar_2
   Property: 
   Position: Some(LexicalInformation([(11,12)-(14,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value
   Message: Value 'invalid/value-example' of uri parameter must not contain '/' character
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/endpoint/end-points/%2Fin-example%2Finvalid%2F%7BuserId%7D/parameter/parameter/path/userId/scalar/schema/examples/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/endpoint/%2Fin-example%2Finvalid%2F%7BuserId%7D/parameter/parameter/path/userId/scalar/schema/examples/example/default-example
   Property: 
   Position: Some(LexicalInformation([(16,12)-(19,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml
@@ -32,7 +32,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value
   Message: Value 'invalid/value-examples' of uri parameter must not contain '/' character
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/endpoint/end-points/%2Fin-examples%2Finvalid%2F%7BuserId%7D/parameter/parameter/path/userId/scalar/schema/examples/example/whatever
+  Target: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/endpoint/%2Fin-examples%2Finvalid%2F%7BuserId%7D/parameter/parameter/path/userId/scalar/schema/examples/example/whatever
   Property: 
   Position: Some(LexicalInformation([(21,12)-(26,0)]))
   Location: file://amf-cli/shared/src/test/resources/validations/uriparam-value-with-slash.raml

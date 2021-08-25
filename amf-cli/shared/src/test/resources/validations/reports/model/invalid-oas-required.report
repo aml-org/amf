@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#description-is-required-in-response
   Message: Response must have a 'description' field
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json#/web-api/endpoint/end-points/%2Fa/supportedOperation/get/returns/resp/200
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json#/web-api/endpoint/%2Fa/supportedOperation/get/returns/resp/200
   Property: http://a.ml/vocabularies/core#description
   Position: Some(LexicalInformation([(19,10)-(23,11)]))
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json
