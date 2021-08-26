@@ -5,16 +5,12 @@ annotationTypes:
   base:
     type: string | nil
   ignored:
+    type: string | nil
+    description: |
+      This annotation allows to specify a method which will not be transformed into an operation.
+      Optionally, a reason can be defined.
     allowedTargets:
       - Method
-    anyOf:
-      -
-        type: string
-        description: |
-          This annotation allows to specify a method which will not be transformed into an operation.
-          Optionally, a reason can be defined.
-      -
-        type: nil
   operationName:
     type: string
     description: |

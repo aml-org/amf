@@ -27,6 +27,7 @@ import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionPar
 import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings.shape
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{ScalarType, _}
@@ -558,29 +559,39 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
     val union = UnionShape(Annotations.virtual()).withName(name, nameAnnotations)
     adopt(union)
 
-    val parsed = node.value match {
+    node.value match {
       case s: YScalar =>
         val toParse = YMapEntry(YNode(""), YNode(s.text.stripSuffix("?")))
-        ctx.factory.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
+        val parsed =
+          ctx.factory.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
+        union.set(UnionShapeModel.AnyOf,
+                  AmfArray(
+                    Seq(
+                      parsed,
+                      NilShape(Annotations.virtual()).withId(union.id)
+                    )),
+                  Annotations.synthesized())
       case m: YMap =>
         val newEntries = m.entries.map { entry =>
           if (entry.key.as[YScalar].text == "type") {
-            YMapEntry("type", entry.value.as[YScalar].text.stripSuffix("?"))
+            val typeToUnion = s"${entry.value.as[YScalar].text.stripSuffix("?")} | nil"
+            YMapEntry("type", typeToUnion)
           } else {
             entry
           }
         }
-
-        val toParse = YMapEntry(YNode(""), YMap(newEntries, newEntries.headOption.map(_.sourceName).getOrElse("")))
-        ctx.factory.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
+        val toParse = YMapEntry(YNode(name), YMap(newEntries, newEntries.headOption.map(_.sourceName).getOrElse("")))
+        val parsed  = Raml10TypeParser(toParse, s => s.withId(union.id), typeInfo).parse().get
+        parsed.inherits.head match {
+          case union: UnionShape =>
+            union.anyOf.tail.head match {
+              case nil: NilShape => nil.add(Annotations.virtual())
+              case _             => // ignore
+            }
+          case _ => // ignore
+        }
+        parsed
     }
-    union.set(UnionShapeModel.AnyOf,
-              AmfArray(
-                Seq(
-                  parsed,
-                  NilShape(Annotations.virtual()).withId(union.id)
-                )),
-              Annotations.synthesized())
   }
 
   // These are the actual custom facets, just regular properties in the AST map that have been

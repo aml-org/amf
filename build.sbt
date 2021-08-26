@@ -143,7 +143,12 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
       case x =>
         val oldStrategy = (assemblyMergeStrategy in assembly).value
         oldStrategy(x)
-    }
+    },
+    assembly / artifact := {
+      val art = (assembly / artifact).value
+      art.withClassifier(Some("assembly"))
+    },
+    addArtifact(assembly / artifact, assembly)
   )
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,

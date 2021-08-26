@@ -4,9 +4,5 @@ title: New API
   post:
     body:
       application/json:
-        anyOf:
-          -
-            type: string
-            description: some description
-          -
-            type: nil
+        description: some description
+        type: string | nil

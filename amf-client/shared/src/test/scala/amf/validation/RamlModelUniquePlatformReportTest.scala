@@ -602,4 +602,40 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("invalid duplicated nullable property") {
     validate("duplicate-property/api.raml", Some("raml/duplicated-property.report"))
   }
+
+  test("nillable type notation should accept required facet") {
+    validate("nillable-with-required.raml")
+  }
+
+  test("nillable property of nillable type") {
+    validate("nillable-with-nillable.raml")
+  }
+
+  test("inline schema with required facet") {
+    validate("raml-inline-required.raml")
+  }
+
+  test("schema with properties and undefined required property") {
+    validate("raml-implicit-required-property.raml")
+  }
+
+  test("valid subschema with required facet") {
+    validate("raml-subschema-with-required.raml")
+  }
+
+  test("valid required key with boolean value in draft 3") {
+    validate("valid-draft-3-required.raml")
+  }
+
+  test("required key with boolean value in draft 4 onwards") {
+    validate("boolean-required-in-draft-4.raml", Some("raml/boolean-required-in-draft-4.report"))
+  }
+
+  test("invalid required key with boolean value in draft 4 onwards") {
+    validate("invalid-boolean-required.raml", Some("raml/invalid-boolean-required.report"))
+  }
+
+  test("required with non-declared property and additionalProperties = false") {
+    validate("required-with-no-additional-props.raml", None, Raml08Profile)
+  }
 }

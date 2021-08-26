@@ -1,6 +1,8 @@
 #%RAML 1.0
 title: New API
 types:
+  OtherType:
+    type: SomeType | nil
   SomeType:
     type: object
     properties:
@@ -8,12 +10,6 @@ types:
         type: string
       b:
         type: integer
-  OtherType:
-    anyOf:
-      -
-        type: SomeType
-      -
-        type: nil
 /someEndpoint:
   post:
     body:

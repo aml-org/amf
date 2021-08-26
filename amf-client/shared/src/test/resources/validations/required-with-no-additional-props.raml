@@ -1,0 +1,29 @@
+#%RAML 0.8
+
+title: Test
+
+/person:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema:  |
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type" : "object",
+                "properties": {
+                  "name": {"type": "string"},
+                  "age": {"type": "integer"}
+                },
+                "additionalProperties": false,
+                "required": [
+                  "address"
+                ]
+              }
+            example:  |
+              {
+               "name": "Pepito",
+               "age": 33,
+               "address": "anything"
+               }
