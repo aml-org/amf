@@ -1,6 +1,5 @@
 package amf.shapes.client.scala.model.domain
 
-import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.metamodel.Field
@@ -9,7 +8,6 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.domain.metamodel.ExampleModel._
-import amf.shapes.internal.spec.common.emitter.PayloadSerializer
 import org.yaml.model.YPart
 
 /**
@@ -19,7 +17,6 @@ class Example private[amf] (override val fields: Fields, override val annotation
     extends NamedDomainElement
     with Linkable
     with ExternalSourceElement
-    with PayloadSerializer
     with Key {
 
   def displayName: StrField     = fields.field(DisplayName)
@@ -45,14 +42,6 @@ class Example private[amf] (override val fields: Fields, override val annotation
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String =
     "/example/" + name.option().getOrElse("default-example").urlComponentEncoded
-
-  def toJson: String = toJson(this, AMFGraphConfiguration.predefined())
-
-  def toYaml: String = toYaml(this, AMFGraphConfiguration.predefined())
-
-  def toJson(config: AMFGraphConfiguration): String = toJson(this, config)
-
-  def toYaml(config: AMFGraphConfiguration): String = toYaml(this, config)
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Example.apply

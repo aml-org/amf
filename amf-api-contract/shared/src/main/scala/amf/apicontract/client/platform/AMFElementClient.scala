@@ -48,5 +48,4 @@ class AMFElementClient private[amf] (private val _internal: InternalAMFElementCl
   /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
   def asOperation[T <: BaseUnit](unit: T, tr: Trait, profile: ProfileName = Raml10Profile): Operation =
     AbstractElementTransformer.asOperation(unit, tr, obtainEH, profile)
-
 }

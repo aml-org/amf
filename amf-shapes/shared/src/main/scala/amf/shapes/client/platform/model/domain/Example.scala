@@ -66,9 +66,4 @@ case class Example(override private[amf] val _internal: InternalExample)
   }
 
   override def linkCopy(): Example = _internal.linkCopy()
-
-  def toJson(): String                              = _internal.toJson
-  def toYaml(): String                              = _internal.toYaml
-  def toJson(config: AMFGraphConfiguration): String = _internal.toJson(config)
-  def toYaml(config: AMFGraphConfiguration): String = _internal.toYaml(config)
 }

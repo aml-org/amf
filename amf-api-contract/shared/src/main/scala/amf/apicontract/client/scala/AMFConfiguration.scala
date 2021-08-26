@@ -32,6 +32,7 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.remote.Spec
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
+import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
@@ -259,7 +260,7 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val registry: AMFRegistry,
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
-    extends AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
+    extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   override def baseUnitClient(): AMFBaseUnitClient         = new AMFBaseUnitClient(this)
   override def elementClient(): AMFElementClient           = new AMFElementClient(this)
