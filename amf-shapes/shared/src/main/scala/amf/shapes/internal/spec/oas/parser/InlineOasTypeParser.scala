@@ -675,7 +675,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         entry.value.tagType match {
           case YType.Bool => (NodeShapeModel.Closed in shape).negated.explicit(entry)
           case YType.Map =>
-            parser.OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
+            parser.OasTypeParser(entry, s => Unit, version).parse().foreach { s =>
               shape.setWithoutId(NodeShapeModel.AdditionalPropertiesSchema, s, synthesized())
             }
           case _ =>
