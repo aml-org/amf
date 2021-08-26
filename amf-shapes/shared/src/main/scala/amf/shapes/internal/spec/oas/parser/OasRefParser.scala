@@ -163,8 +163,7 @@ class OasRefParser(map: YMap,
       case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullUrl, e, u)
       case Some(shape)              => createLinkToParsedShape(ref, shape)
       case _                        =>
-        // TODO: parsed json schema is registered with ref but searched with fullRef, leads to repeated parsing
-        parseRemoteSchema(ref) match {
+        parseRemoteSchema(ref, fullUrl) match {
           case None =>
             val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fullUrl)
             // it might still be resolvable at the RAML (not JSON Schema) level
@@ -214,10 +213,10 @@ class OasRefParser(map: YMap,
         .withSupportsRecursion(true))
   }
 
-  private def parseRemoteSchema(fullRef: String): Option[AnyShape] = {
-    ctx.parseRemoteJSONPath(fullRef).map { shape =>
-      ctx.registerJsonSchema(fullRef, shape)
-      ctx.futureDeclarations.resolveRef(fullRef, shape)
+  private def parseRemoteSchema(ref: String, fullUrl: String): Option[AnyShape] = {
+    ctx.parseRemoteJSONPath(ref).map { shape =>
+      ctx.registerJsonSchema(fullUrl, shape)
+      ctx.futureDeclarations.resolveRef(ref, shape)
       shape
     }
   }

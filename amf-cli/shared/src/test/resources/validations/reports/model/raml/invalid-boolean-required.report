@@ -1,5 +1,5 @@
 Model: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml
-Profile:
+Profile: 
 Conforms? false
 Number of results: 3
 
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-required-value
   Message: 'required' field has to be an array
   Level: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml#/declarations/types/A
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml#/declares/shape/A
   Property: 
   Position: Some(LexicalInformation([(18,6)-(18,22)]))
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml
@@ -18,7 +18,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#invalid-required-boolean-for-schema-version
   Message: Required property boolean value is only supported in JSON Schema draft-3
   Level: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml#/declarations/types/A/property/someProp
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml#/declares/shape/A/property/property/someProp
   Property: 
   Position: Some(LexicalInformation([(11,10)-(11,26)]))
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml
@@ -26,7 +26,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#invalid-required-boolean-for-schema-version
   Message: Required property boolean value is only supported in JSON Schema draft-3
   Level: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml#/declarations/types/A/property/otherProp
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml#/declares/shape/A/property/property/otherProp
   Property: 
   Position: Some(LexicalInformation([(15,10)-(15,26)]))
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-boolean-required.raml
