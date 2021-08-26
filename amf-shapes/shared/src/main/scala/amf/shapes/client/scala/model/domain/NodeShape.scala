@@ -5,6 +5,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.client.scala.model.{BoolField, IntField, StrField}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
+import amf.shapes.client.scala.model.domain.core.ShapeOperation
 import amf.shapes.internal.domain.metamodel.NodeShapeModel._
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, NodeShapeModel}
 import org.yaml.model.YPart
@@ -46,8 +47,8 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def withDependencies(dependencies: Seq[PropertyDependencies]): this.type = setArray(Dependencies, dependencies)
   def withSchemaDependencies(dependencies: Seq[SchemaDependencies]): this.type =
     setArray(NodeShapeModel.SchemaDependencies, dependencies)
-  def withPropertyNames(shape: Shape): this.type              = set(PropertyNames, shape)
-  def withAdditionalPropertiesSchema(shape: Shape): this.type = set(AdditionalPropertiesSchema, shape)
+  def withPropertyNames(shape: Shape): this.type                 = set(PropertyNames, shape)
+  def withAdditionalPropertiesSchema(shape: Shape): this.type    = set(AdditionalPropertiesSchema, shape)
   def withAdditionalPropertiesKeySchema(shape: Shape): this.type = set(AdditionalPropertiesKeySchema, shape)
 
   def withDependency(): PropertyDependencies = {
@@ -71,6 +72,12 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def withInheritsScalar(name: String): ScalarShape = {
     val result = ScalarShape().withName(name)
     add(Inherits, result)
+    result
+  }
+
+  def withOperation(name: String): ShapeOperation = {
+    val result = ShapeOperation().withName(name)
+    add(Operation, result)
     result
   }
 

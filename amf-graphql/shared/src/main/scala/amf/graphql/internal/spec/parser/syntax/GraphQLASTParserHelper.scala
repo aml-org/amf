@@ -19,20 +19,22 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   val SCALAR_TYPES = Seq(INT, FLOAT, STRING, BOOLEAN, ID)
 
   def findDescription(n: ASTElement): Option[Terminal] = {
-    collect(n, Seq(DESCRIPTION, STRING_VALUE)).headOption match {
-      case Some(t: Terminal) => Some(t)
-      case _                 => None
+    collect(n, Seq(DESCRIPTION, STRING_VALUE)).headOption.flatMap {
+      case n: Node => n.children.collectFirst({ case t: Terminal => t })
+      case _       => None
     }
   }
 
   def findName(n: Node, default: String, errorId: String, error: String)(implicit ctx: GraphQLWebApiContext): String = {
-    find(n, NAME).headOption match {
+    findAndGetTerminal(n, NAME) match {
       case Some(t: Terminal) => t.value
       case _ =>
         astError(errorId, error, toAnnotations(n))
         default
     }
   }
+
+  def searchName(n: Node): Option[String] = findAndGetTerminal(n, NAME).map(_.value)
 
   // GraphQL specific helpers
   def parseType(n: Node, errorId: String)(implicit ctx: GraphQLWebApiContext): AnyShape = {
