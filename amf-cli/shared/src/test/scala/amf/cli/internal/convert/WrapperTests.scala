@@ -803,7 +803,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     nodeShape.withProperty("name").withRange(shape)
     doc.withDeclaredElement(nodeShape)
 
-    val linked: NodeShape = nodeShape.link(Some("#/definitions/person"))
+    val linked: NodeShape = nodeShape.link("#/definitions/person")
     linked.withName("Person")
     doc.encodes
       .asInstanceOf[Api[_]]
