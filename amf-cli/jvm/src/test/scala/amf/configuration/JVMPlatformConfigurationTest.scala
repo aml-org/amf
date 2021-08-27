@@ -1,0 +1,3 @@
+package amf.configuration
+
+class JVMPlatformConfigurationTest extends PlatformConfigurationTest
