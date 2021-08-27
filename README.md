@@ -137,7 +137,11 @@ $ sbt buildCommandLine
 
 This will generate an executable JAR at the top level directory that can be used to execute AMF from the command line.
 
-Using this JAR, you can run tasks from command line, for instance:
+Alternatively, you can download the assembly JAR from nexus [releases](https://repository-master.mulesoft.org/nexus/content/repositories/releases/com/github/amlorg/amf-client_2.12/) 
+or [snapshots](https://repository-master.mulesoft.org/nexus/content/repositories/snapshots/com/github/amlorg/amf-client_2.12/), 
+select the desired version and download the `amf-client_2.12-x.y.z-assembly.jar` file. This JAR is already built and executable.
+
+Using AMFs JAR, you can run tasks from command line, for instance:
 ```bash
 $ java -jar amf-x.y.z.jar parse -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
 ```
