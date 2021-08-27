@@ -1,0 +1,53 @@
+#%RAML 0.8
+baseUri: http://uri.com
+
+
+title: title
+version: 1.0.0
+protocols: [ HTTP ]
+
+/mdp/content:
+  description: Thi.
+  get:
+    description: Returns
+    headers:
+    responses:
+      200:
+        body:
+          application/json:
+            schema:
+            example: !include example/invalid-example-1.json
+/mdp/channels:
+  description: This
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema:
+            example: !include example/invalid-example-2.json
+/{contentUri}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema:
+            example: !include example/invalid-example-3.json
+/{channelUri}:
+  description: Represe
+    responses:
+      200:
+        body:
+          application/json:
+            schema:
+            example: !include example/invalid-example-4.json
+/{recurrenceUri}:
+  description: Represe
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema:
+            example: !include example/invalid-example-5.json
