@@ -1,5 +1,5 @@
 package amf.shapes.internal.convert
 
-import amf.core.internal.convert.CoreBaseClientConverter
+import amf.aml.internal.convert.VocabulariesBaseClientConverter
 
-trait ShapesBaseClientConverter extends ShapesBaseConverter with CoreBaseClientConverter
+trait ShapesBaseClientConverter extends ShapesBaseConverter with VocabulariesBaseClientConverter

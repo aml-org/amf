@@ -2,7 +2,6 @@ package amf.emit
 
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
-import amf.apicontract.internal.spec.payload.PayloadRenderPlugin
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
@@ -10,40 +9,44 @@ import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig}
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes._
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.spec.common.parser.{DefaultExampleOptions, RamlExamplesParser}
+import amf.shapes.internal.spec.payload.PayloadRenderPlugin
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YDocument, YMap}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
+class ExampleRenderTest extends AsyncFunSuite with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
   test("Simple yaml scalar example") {
-    cycle("simple-yaml-scalar.raml", "simple-yaml-scalar.json")
+    cycle("simple-yaml-scalar.raml", "simple-yaml-scalar.yaml", mediaType = `application/yaml`)
   }
 
   test("Simple yaml scalar example without raw") {
-    cycle("simple-yaml-scalar.raml", "simple-yaml-scalar.json", removeRaw = true)
+    cycle("simple-yaml-scalar.raml", "simple-yaml-scalar.yaml", removeRaw = true, mediaType = `application/yaml`)
   }
 
   test("Simple yaml object example") {
-    cycle("simple-yaml-object.raml", "simple-yaml-object.json")
+    cycle("simple-yaml-object.raml", "simple-yaml-object.yaml", mediaType = `application/yaml`)
   }
 
   test("Simple yaml object example without raw") {
-    cycle("simple-yaml-object.raml", "simple-yaml-object.json", removeRaw = true)
+    cycle("simple-yaml-object.raml", "simple-yaml-object.yaml", removeRaw = true, mediaType = `application/yaml`)
   }
 
   test("Simple yaml array example") {
-    cycle("simple-yaml-array.raml", "simple-yaml-array.json")
+    cycle("simple-yaml-array.raml", "simple-yaml-array.yaml", mediaType = `application/yaml`)
   }
 
   test("Simple yaml array example without raw") {
-    cycle("simple-yaml-array.raml", "simple-yaml-array.json", removeRaw = true)
+    cycle("simple-yaml-array.raml", "simple-yaml-array.yaml", removeRaw = true, mediaType = `application/yaml`)
   }
 
   test("Json object example") {
@@ -63,16 +66,23 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   test("Xml example") {
-    cycle("xml-example.raml", "xml-example.json")
+    cycle("xml-example.raml", "xml-example.xml", mediaType = `application/xml`)
   }
 
-  private def cycle(source: String, golden: String, removeRaw: Boolean = false): Future[Assertion] = {
+  test("Render yaml example to json without raw") {
+    cycle("simple-yaml-object.raml", "yaml-object-as-json.json", removeRaw = true, mediaType = `application/json`)
+  }
+
+  test("Render yaml example to json") {
+    cycle("simple-yaml-object.raml", "yaml-object-as-json.json", mediaType = `application/json`)
+  }
+
+  private def cycle(source: String, golden: String, removeRaw: Boolean = false, mediaType: String = `application/json`) = {
     val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val renderConfig = AMFGraphConfiguration.predefined().withPlugin(PayloadRenderPlugin)
     for {
       unit    <- config.baseUnitClient().parse(basePath + source).map(_.baseUnit)
       example <- findExample(unit, removeRaw)
-      temp    <- writeTemporaryFile(golden)(example.toJson(renderConfig))
+      temp    <- writeTemporaryFile(golden)(config.elementClient().renderExample(example, mediaType))
       r       <- assertDifferences(temp, goldenPath + golden)
     } yield {
       r

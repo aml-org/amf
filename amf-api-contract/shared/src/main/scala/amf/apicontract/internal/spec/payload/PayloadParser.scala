@@ -1,7 +1,8 @@
 package amf.apicontract.internal.spec.payload
 
-import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapeParserContextAdapter}
+import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.core.client.scala.model.document.PayloadFragment
+import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.yaml.model.{YDocument, YNode}
 
@@ -14,7 +15,7 @@ class PayloadParser(document: YDocument, location: String, mediaType: String)(im
   }
 
   private def parseNode(parent: String, node: YNode) =
-    DataNodeParser(node, parent = Some(parent))(WebApiShapeParserContextAdapter(ctx)).parse()
+    DataNodeParser(node, parent = Some(parent)).parse()
 }
 
 object PayloadParser {

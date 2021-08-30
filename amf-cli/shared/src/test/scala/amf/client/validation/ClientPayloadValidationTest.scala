@@ -9,7 +9,7 @@ import amf.core.client.platform.model.domain.{PropertyShape, RecursiveShape, Sha
 import amf.core.client.platform.validation.payload.AMFShapePayloadValidator
 import amf.core.client.scala.model.domain.{RecursiveShape => InternalRecursiveShape}
 import amf.core.internal.remote.Mimes._
-import amf.shapes.client.platform.config.ShapesConfiguration
+import amf.shapes.client.platform.ShapesConfiguration
 import amf.shapes.client.platform.model.domain._
 import amf.shapes.client.scala.model.domain.{ScalarShape => InternalScalarShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
@@ -17,7 +17,7 @@ import org.scalatest.{AsyncFunSuite, Matchers}
 import scala.concurrent.ExecutionContext
 
 trait PayloadValidationUtils {
-  protected def defaultConfig: AMLConfiguration = ShapesConfiguration.predefined()
+  protected def defaultConfig: ShapesConfiguration = ShapesConfiguration.predefined()
 
   protected def parameterValidator(s: Shape,
                                    mediaType: String,

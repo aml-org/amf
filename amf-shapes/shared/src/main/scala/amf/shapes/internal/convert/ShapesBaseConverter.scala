@@ -1,30 +1,15 @@
 package amf.shapes.internal.convert
 
+import amf.aml.internal.convert.VocabulariesBaseConverter
 import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.platform.model.domain
+import amf.shapes.client.platform.{ShapesConfiguration => ClientShapesConfiguration}
+import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.client.scala.model.domain.{
-  AnyShape,
-  ArrayShape,
-  CreativeWork,
-  DiscriminatorValueMapping,
-  Example,
-  FileShape,
-  IriTemplateMapping,
-  NilShape,
-  NodeShape,
-  PropertyDependencies,
-  ScalarShape,
-  SchemaDependencies,
-  SchemaShape,
-  TupleShape,
-  UnionShape,
-  XMLSerializer
-}
 
 trait ShapesBaseConverter
-    extends CoreBaseConverter
+    extends VocabulariesBaseConverter
     with NilShapeConverter
     with SchemaShapeConverter
     with NodeShapeConverter
@@ -41,6 +26,7 @@ trait ShapesBaseConverter
     with CreativeWorkConverter
     with IriTemplateMappingConverter
     with DiscriminatorValueMappingConverter
+    with ShapesConfigurationConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -174,5 +160,14 @@ trait DiscriminatorValueMappingConverter extends PlatformSecrets {
     override def asClient(from: DiscriminatorValueMapping): domain.DiscriminatorValueMapping =
       platform.wrap[domain.DiscriminatorValueMapping](from)
     override def asInternal(from: domain.DiscriminatorValueMapping): DiscriminatorValueMapping = from._internal
+  }
+}
+
+trait ShapesConfigurationConverter {
+  implicit object ShapesConfigurationMatcher
+      extends BidirectionalMatcher[ShapesConfiguration, ClientShapesConfiguration] {
+    override def asClient(from: ShapesConfiguration): ClientShapesConfiguration = new ClientShapesConfiguration(from)
+
+    override def asInternal(from: ClientShapesConfiguration): ShapesConfiguration = from._internal
   }
 }

@@ -7,7 +7,7 @@ import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes.`application/xml`
 import amf.core.internal.utils.MediaTypeMatcher
-import amf.shapes.client.scala.config.ShapesConfiguration
+import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.internal.spec.common.TypeDef.{IntType, StrType}
 import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, NodeShape, ScalarShape, SchemaShape, UnionShape}

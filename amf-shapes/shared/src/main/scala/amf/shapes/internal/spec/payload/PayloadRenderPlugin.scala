@@ -1,15 +1,13 @@
-package amf.apicontract.internal.spec.payload
+package amf.shapes.internal.spec.payload
 
 import amf.core.client.common.{LowPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document
 import amf.core.client.scala.model.document.{BaseUnit, PayloadFragment}
-import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo, SYAMLBasedRenderPlugin}
-import amf.core.internal.remote.{Mimes, Spec}
-import amf.core.internal.remote.Mimes._
+import amf.core.internal.plugins.render.{RenderInfo, SYAMLBasedRenderPlugin}
+import amf.core.internal.remote.Mimes.{`application/json`, `application/yaml`}
+import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.emitter.PayloadEmitter
-import org.yaml.builder.{DocBuilder, YDocumentBuilder}
 import org.yaml.model.YDocument
 
 object PayloadRenderPlugin extends SYAMLBasedRenderPlugin {

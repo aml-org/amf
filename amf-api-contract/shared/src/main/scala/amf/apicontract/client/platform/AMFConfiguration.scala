@@ -21,15 +21,15 @@ import amf.core.internal.convert.TransformationPipelineConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
-import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.execution.BaseExecutionEnvironment
 import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
 import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
 import amf.core.internal.remote.Spec
+import amf.shapes.client.platform.BaseShapesConfiguration
 
 @JSExportAll
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
-    extends BaseAMLConfiguration(_internal) {
+    extends BaseShapesConfiguration(_internal) {
 
   override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
   override def elementClient(): AMFElementClient   = new AMFElementClient(this)
