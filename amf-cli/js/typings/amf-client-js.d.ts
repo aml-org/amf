@@ -1,4 +1,8 @@
 declare module 'amf-client-js' {
+  export class AMFObjectResult  {
+    results: Array<AMFValidationResult>
+
+  }
   export class FinishedRenderingSyntaxEvent  {
     unit: BaseUnit
 
@@ -119,6 +123,11 @@ declare module 'amf-client-js' {
   }
   export class AMFConfigurationState extends AMLConfigurationState  {
   }
+  export interface ClientUnitCache  {
+    fetch(url: string): Promise<CachedReference>
+
+
+  }
   export class ValidatePayloadRequest  {
     shape: Shape
     mediaType: string
@@ -175,7 +184,7 @@ declare module 'amf-client-js' {
 
 
   }
-  export class AMFConfiguration extends BaseAMLConfiguration  {
+  export class AMFConfiguration extends BaseShapesConfiguration  {
     baseUnitClient(): AMFBaseUnitClient
 
     elementClient(): AMFElementClient
@@ -227,7 +236,11 @@ declare module 'amf-client-js' {
 
     references(): Array<BaseUnit>
 
+    pkg(): StrField
+
     withReferences(references: Array<BaseUnit>): this
+
+    withPkg(pkg: string): this
 
     withId(id: string): this
 
@@ -280,8 +293,6 @@ declare module 'amf-client-js' {
     validator(shape: Shape, mediaType: string, config: ShapeValidationConfiguration, validationMode: ValidationMode): AMFShapePayloadValidator
 
 
-  }
-  export class JenaLoadedModelEvent  {
   }
   export class DataArrangeShape extends AnyShape  {
     minItems: IntField
@@ -340,8 +351,6 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ShaclReportPrintingStartedEvent  {
-  }
   export interface UnitCache  {
     fetch(url: string): Promise<CachedReference>
 
@@ -383,8 +392,6 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ShaclReportPrintingFinishedEvent  {
-  }
   export interface Annotable  {
     annotations(): Annotations
 
@@ -404,6 +411,8 @@ declare module 'amf-client-js' {
     linkLabel: StrField
     extendsNode: Array<DomainElement>
 
+    link<T>(label: string): T
+
     linkCopy(): AbstractDeclaration
 
     withName(name: string): this
@@ -421,6 +430,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -473,6 +484,27 @@ declare module 'amf-client-js' {
   }
   export class Unspecified implements JSONSchemaVersion  {
   }
+  export class BaseShapesConfiguration extends BaseAMLConfiguration  {
+    withParsingOptions(parsingOptions: ParsingOptions): BaseShapesConfiguration
+
+    withRenderOptions(renderOptions: RenderOptions): BaseShapesConfiguration
+
+    withErrorHandlerProvider(provider: ErrorHandlerProvider): BaseShapesConfiguration
+
+    withResourceLoader(rl: ResourceLoader): BaseShapesConfiguration
+
+    withResourceLoaders(rl: Array<ResourceLoader>): BaseShapesConfiguration
+
+    withUnitCache(cache: UnitCache): BaseShapesConfiguration
+
+    withTransformationPipeline(pipeline: TransformationPipeline): BaseShapesConfiguration
+
+    withEventListener(listener: AMFEventListener): BaseShapesConfiguration
+
+    withDialect(dialect: Dialect): BaseShapesConfiguration
+
+
+  }
   export class BaseAMLElementClient extends AMFGraphElementClient  {
     renderToBuilder<T>(element: DomainElement, builder: org.yaml.builder.JsOutputBuilder): void
 
@@ -505,6 +537,7 @@ declare module 'amf-client-js' {
     conforms: boolean
     results: Array<AMFValidationResult>
     baseUnit: BaseUnit
+    toString: string
 
   }
   export interface ServerBinding extends DomainElement, Linkable  {
@@ -519,6 +552,10 @@ declare module 'amf-client-js' {
     withLinkTarget(target: undefined): this
 
     withLinkLabel(label: string): this
+
+    link<T>(): T
+
+    link<T>(label: string): T
 
 
   }
@@ -537,6 +574,13 @@ declare module 'amf-client-js' {
     is(other: number): boolean
 
     is(accepts: undefined): boolean
+
+
+  }
+  export interface ClientResourceLoader  {
+    fetch(resource: string): Promise<Content>
+
+    accepts(resource: string): boolean
 
 
   }
@@ -620,13 +664,6 @@ declare module 'amf-client-js' {
     document: Document
 
   }
-  export interface ShapePayloadValidatorFactory  {
-    createFor(shape: Shape, mediaType: string, mode: ValidationMode): AMFShapePayloadValidator
-
-    createFor(shape: Shape, fragment: PayloadFragment): AMFShapePayloadValidator
-
-
-  }
   export class DetectedSyntaxMediaTypeEvent  {
   }
   export class RecursiveShape implements Shape  {
@@ -658,6 +695,8 @@ declare module 'amf-client-js' {
     defaultValue: DataNode
     extendsNode: Array<DomainElement>
     and: Array<Shape>
+
+    link<T>(label: string): T
 
     withValues(values: Array<DataNode>): this
 
@@ -695,6 +734,8 @@ declare module 'amf-client-js' {
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
+    link<T>(): T
+
     withLinkTarget(target: undefined): this
 
     withDisplayName(name: string): this
@@ -724,6 +765,10 @@ declare module 'amf-client-js' {
   export class AMFGraphElementClient  {
     getConfiguration(): AMFGraphConfiguration
 
+    payloadValidatorFor(shape: Shape, mediaType: string, mode: ValidationMode): AMFShapePayloadValidator
+
+    payloadValidatorFor(shape: Shape, fragment: PayloadFragment): AMFShapePayloadValidator
+
 
   }
   export interface MessageBinding extends DomainElement, Linkable  {
@@ -746,16 +791,12 @@ declare module 'amf-client-js' {
   }
   export class JsonSchemaDraft201909 implements JSONSchemaVersion  {
   }
-  export class ShaclLoadedRdfShapesModelEvent  {
-  }
   export class AMLElementClient extends BaseAMLElementClient  {
     renderToBuilder<T>(element: DomainElement, builder: org.yaml.builder.JsOutputBuilder): void
 
     getConfiguration(): AMLConfiguration
 
 
-  }
-  export class ShaclLoadedJsLibrariesEvent  {
   }
   export class FinishedTransformationEvent  {
     unit: BaseUnit
@@ -835,15 +876,20 @@ declare module 'amf-client-js' {
 
     withEncodes(encoded: DomainElement): this
 
+    pkg(): StrField
+
+    withPkg(pkg: string): this
+
     references(): Array<BaseUnit>
 
     withId(id: string): this
 
 
   }
-  export class ShaclLoadedRdfDataModelEvent  {
-  }
-  export class ShaclFinishedEvent  {
+  export class BaseShapesElementClient extends BaseAMLElementClient  {
+    getConfiguration(): ShapesConfiguration
+
+
   }
   export interface DomainElement extends CustomizableElement  {
     customDomainProperties: Array<DomainExtension>
@@ -925,11 +971,11 @@ declare module 'amf-client-js' {
 
     properties(): Array<string>
 
-    scalarByProperty(id: string): Array<any>
+    containsProperty(uri: string): boolean
 
-    getObjectByPropertyId(id: string): Array<DomainElement>
+    getObjectByProperty(uri: string): Array<DomainElement>
 
-    remove(uri: string): this
+    scalarByProperty(uri: string): Array<any>
 
 
   }
@@ -982,13 +1028,22 @@ declare module 'amf-client-js' {
     totalPlugins: number
 
   }
-  export class ShaclValidationStartedEvent  {
-  }
-  export class ShaclStartedEvent  {
-  }
-  export class ShaclValidationFinishedEvent  {
-  }
   export class StrictValidationMode extends ValidationMode  {
+  }
+  export class ShapesElementClient extends BaseShapesElementClient  {
+    getConfiguration(): ShapesConfiguration
+
+    toJsonSchema(element: AnyShape): string
+
+    buildJsonSchema(element: AnyShape): string
+
+    toRamlDatatype(element: AnyShape): string
+
+    renderExample(example: Example, mediaType: string): string
+
+    renderToBuilder<T>(element: DomainElement, builder: org.yaml.builder.JsOutputBuilder): void
+
+
   }
   export class AbstractElementTransformer  {
     static asEndpoint<T>(unit: T, rt: ResourceType, errorHandler: ClientErrorHandler, profile: ProfileName): EndPoint
@@ -1096,20 +1151,8 @@ declare module 'amf-client-js' {
     profileName: ProfileName
 
   }
-  export interface ClientUnitCache  {
-    fetch(url: string): Promise<CachedReference>
-
-
-  }
   export interface ErrorHandlerProvider  {
     errorHandler(): ClientErrorHandler
-
-
-  }
-  export interface ClientResourceLoader  {
-    fetch(resource: string): Promise<Content>
-
-    accepts(resource: string): boolean
 
 
   }
@@ -1188,6 +1231,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withHeaderSchema(schema: NodeShape): this
 
     withPayloads(payloads: Array<Payload>): this
@@ -1225,6 +1270,8 @@ declare module 'amf-client-js' {
     withSummary(summary: string): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -1367,6 +1414,10 @@ declare module 'amf-client-js' {
 
     withNodeMappings(nodeMappings: Array<NodeMapping>): DialectLibrary
 
+    pkg(): StrField
+
+    withPkg(pkg: string): this
+
     withDeclares(declares: Array<DomainElement>): this
 
     nodeMappings(): Array<NodeMapping>
@@ -1432,6 +1483,10 @@ declare module 'amf-client-js' {
     withEncodes(encoded: DomainElement): this
 
     withEncodes(nodeMapping: NodeMapping): DialectFragment
+
+    pkg(): StrField
+
+    withPkg(pkg: string): this
 
     references(): Array<BaseUnit>
 
@@ -1511,6 +1566,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withHeaders(headers: Array<Parameter>): this
 
     linkCopy(): SecurityScheme
@@ -1551,6 +1608,8 @@ declare module 'amf-client-js' {
 
     withDefaultSettings(): Settings
 
+    link<T>(): T
+
     withLinkTarget(target: undefined): this
 
     withHttpApiKeySettings(): HttpApiKeySettings
@@ -1569,10 +1628,13 @@ declare module 'amf-client-js' {
   }
   export class UnionShape extends AnyShape  {
     anyOf: Array<Shape>
+    serializationSchema: Shape
 
     constructor()
 
     withAnyOf(anyOf: Array<Shape>): UnionShape
+
+    withSerializationSchema(schema: Shape): this
 
 
   }
@@ -1659,6 +1721,10 @@ declare module 'amf-client-js' {
 
     withEncodes(encoded: DomainElement): this
 
+    pkg(): StrField
+
+    withPkg(pkg: string): this
+
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
@@ -1689,6 +1755,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withDeliveryMode(deliveryMode: number): this
 
     linkCopy(): Amqp091OperationBinding
@@ -1714,6 +1782,8 @@ declare module 'amf-client-js' {
     withBcc(bCC: Array<string>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -1774,6 +1844,7 @@ declare module 'amf-client-js' {
     defaultValueStr: StrField
     displayName: StrField
     name: StrField
+    serializationOrder: IntField
     customDomainProperties: Array<DomainExtension>
     path: StrField
     xone: Array<Shape>
@@ -1806,6 +1877,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withValues(values: Array<DataNode>): this
 
     withPath(path: string): this
@@ -1823,6 +1896,8 @@ declare module 'amf-client-js' {
     withMaxCount(max: number): this
 
     withIf(ifShape: Shape): this
+
+    withSerializationOrder(order: number): this
 
     withCustomShapePropertyDefinition(name: string): PropertyShape
 
@@ -1847,6 +1922,8 @@ declare module 'amf-client-js' {
     withWriteOnly(writeOnly: boolean): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -2061,6 +2138,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): OperationBindings
 
     withName(name: string): this
@@ -2076,6 +2155,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -2094,7 +2175,7 @@ declare module 'amf-client-js' {
     targetProperty: string
     validationId: string
     source: any
-    lexical: Range
+    position: Range
     location: undefined | string
 
     constructor(message: string, level: string, targetNode: string, targetProperty: string, validationId: string, position: Range, location: string)
@@ -2114,6 +2195,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): MqttOperationBinding
 
     withRetain(retain: boolean): this
@@ -2129,6 +2212,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -2221,6 +2306,8 @@ declare module 'amf-client-js' {
     static RAML08(): AMFConfiguration
 
     static RAML(): AMFConfiguration
+
+    static fromSpec(spec: Spec): AMFConfiguration
 
 
   }
@@ -2345,6 +2432,7 @@ declare module 'amf-client-js' {
     static readonly ASYNC20: ProfileName
     static readonly AML: ProfileName
     static readonly PAYLOAD: ProfileName
+    static readonly GRPC: ProfileName
 
   }
   export class OAuth2Settings extends Settings  {
@@ -2422,6 +2510,10 @@ declare module 'amf-client-js' {
     withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    pkg(): StrField
+
+    withPkg(pkg: string): this
 
     withDeclares(declares: Array<DomainElement>): this
 
@@ -2503,6 +2595,10 @@ declare module 'amf-client-js' {
 
     definedBy(): StrField
 
+    pkg(): StrField
+
+    withPkg(pkg: string): this
+
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
@@ -2563,6 +2659,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withKeepAlive(keepAlive: number): this
 
     linkCopy(): MqttServerBinding
@@ -2582,6 +2680,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -2785,6 +2885,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): ChannelBindings
 
     withName(name: string): this
@@ -2798,6 +2900,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -2814,48 +2918,56 @@ declare module 'amf-client-js' {
 
 
   }
-  export class DialectDomainElement implements DomainElement  {
+  export class DialectDomainElement implements DomainElement, Linkable  {
     customDomainProperties: Array<DomainExtension>
+    linkTarget: undefined | DomainElement
+    isLink: boolean
+    declarationName: StrField
     isExternalLink: BoolField
     id: string
     position: Range
+    linkLabel: StrField
     extendsNode: Array<DomainElement>
 
     constructor()
 
-    setObjectProperty(propertyId: string, value: DialectDomainElement): this
+    link<T>(label: string): T
+
+    withObjectCollectionProperty(propertyId: string, value: Array<DialectDomainElement>): this
+
+    linkCopy(): DialectDomainElement
+
+    withLiteralProperty(propertyId: string, value: boolean): this
 
     isAbstract(): BoolField
 
     withAbstract(isAbstract: boolean): DialectDomainElement
 
-    setObjectCollectionProperty(propertyId: string, value: Array<DialectDomainElement>): this
-
-    setLiteralProperty(propertyId: string, value: Array<any>): this
+    withDeclarationName(name: string): DialectDomainElement
 
     localRefName(): string
 
     graph(): Graph
 
-    setLiteralProperty(propertyId: string, value: boolean): this
-
-    getScalarValueByPropertyUri(propertyId: string): Array<any>
-
     withIsExternalLink(isExternalLink: boolean): DomainElement
 
-    getScalarByPropertyUri(propertyId: string): Array<any>
+    withLinkLabel(label: string): this
+
+    withObjectProperty(uri: string, value: DialectDomainElement): this
 
     getTypeUris(): Array<string>
 
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
+    containsProperty(property: PropertyMapping): boolean
+
     getPropertyUris(): Array<string>
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
-    setLiteralProperty(propertyId: string, value: string): this
+    link<T>(): T
 
-    getObjectPropertyUri(propertyId: string): Array<DialectDomainElement>
+    withLinkTarget(target: undefined): this
 
     withDefinedby(nodeMapping: NodeMapping): DialectDomainElement
 
@@ -2863,11 +2975,17 @@ declare module 'amf-client-js' {
 
     withInstanceTypes(types: Array<string>): DialectDomainElement
 
+    withLiteralProperty(propertyId: string, value: number): this
+
+    withLiteralProperty(propertyId: string, value: Array<any>): this
+
     includeName(): string
 
-    setLiteralProperty(propertyId: string, value: number): this
+    withLiteralProperty(propertyId: string, value: string): this
 
     withId(id: string): this
+
+    getObjectByProperty(uri: string): Array<DialectDomainElement>
 
 
   }
@@ -2885,6 +3003,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): MessageBindings
 
     withName(name: string): this
@@ -2898,6 +3018,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -2959,7 +3081,11 @@ declare module 'amf-client-js' {
 
     withEncodes(encoded: DomainElement): this
 
+    pkg(): StrField
+
     documents(): DocumentsModel
+
+    withPkg(pkg: string): this
 
     withDeclares(declares: Array<DomainElement>): this
 
@@ -2985,6 +3111,7 @@ declare module 'amf-client-js' {
     encoding: StrField
     mediaType: StrField
     schema: Shape
+    serializationOrder: Shape
 
     constructor()
 
@@ -3013,6 +3140,8 @@ declare module 'amf-client-js' {
     withMediaType(mediaType: string): this
 
     withSchema(schema: Shape): this
+
+    withSerializationSchema(schema: Shape): this
 
     linkCopy(): ScalarShape
 
@@ -3164,6 +3293,8 @@ declare module 'amf-client-js' {
 
     static OAS(): AMFConfiguration
 
+    static fromSpec(spec: Spec): AMFConfiguration
+
 
   }
   export class Content  {
@@ -3273,16 +3404,6 @@ declare module 'amf-client-js' {
     static readonly FoundReferences: 'FoundReferences'
     static readonly SelectedParsePlugin: 'SelectedParsePlugin'
     static readonly DetectedSyntaxMediaType: 'DetectedSyntaxMediaType'
-    static readonly ShaclLoadedRdfDataModel: 'ShaclLoadedRdfDataModel'
-    static readonly ShaclLoadedRdfShapesModel: 'ShaclLoadedRdfShapesModel'
-    static readonly JenaModelLoaded: 'JenaModelLoaded'
-    static readonly ShaclValidationStarted: 'ShaclValidationStarted'
-    static readonly ShaclValidationFinished: 'ShaclValidationFinished'
-    static readonly ShaclFinished: 'ShaclFinished'
-    static readonly ShaclStarted: 'ShaclStarted'
-    static readonly ShaclReportPrintingStarted: 'ShaclReportPrintingStarted'
-    static readonly ShaclReportPrintingFinished: 'ShaclReportPrintingFinished'
-    static readonly ShaclLoadedJsLibraries: 'ShaclLoadedJsLibraries'
 
   }
   export class AnyShape implements Shape  {
@@ -3320,6 +3441,8 @@ declare module 'amf-client-js' {
     and: Array<Shape>
 
     constructor()
+
+    link<T>(label: string): T
 
     withValues(values: Array<DataNode>): this
 
@@ -3360,6 +3483,8 @@ declare module 'amf-client-js' {
     withWriteOnly(writeOnly: boolean): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     inlined(): boolean
 
@@ -3414,6 +3539,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withBindings(bindings: Array<ServerBinding>): this
 
     linkCopy(): ServerBindings
@@ -3429,6 +3556,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -3446,6 +3575,7 @@ declare module 'amf-client-js' {
     discriminatorValueMapping: Array<DiscriminatorValueMapping>
     properties: Array<PropertyShape>
     additionalPropertiesSchema: Shape
+    additionalPropertiesKeySchema: Shape
     dependencies: Array<PropertyDependencies>
     schemaDependencies: Array<SchemaDependencies>
     propertyNames: Shape
@@ -3469,6 +3599,8 @@ declare module 'amf-client-js' {
     withProperties(properties: Array<PropertyShape>): this
 
     withAdditionalPropertiesSchema(additionalPropertiesSchema: Shape): this
+
+    withAdditionalPropertiesKeySchema(additionalPropertiesKeySchema: Shape): this
 
     withDependencies(dependencies: Array<PropertyDependencies>): this
 
@@ -3536,6 +3668,10 @@ declare module 'amf-client-js' {
     withEncodes(encoded: DomainElement): this
 
     definedBy(): StrField
+
+    pkg(): StrField
+
+    withPkg(pkg: string): this
 
     withDeclares(declares: Array<DomainElement>): this
 
@@ -3793,7 +3929,7 @@ declare module 'amf-client-js' {
   }
   export class Annotations  {
     isLocal: boolean
-    t: boolean
+    isTracked: boolean
     resolvedLink: undefined | string
     resolvedLinkTarget: undefined | string
     inheritanceProvenance: undefined | string
@@ -3827,6 +3963,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withKey(key: Shape): this
 
     linkCopy(): KafkaMessageBinding
@@ -3843,9 +3981,16 @@ declare module 'amf-client-js' {
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
+    link<T>(): T
+
     withLinkTarget(target: undefined): this
 
     withId(id: string): this
+
+
+  }
+  export class DefaultExecutionEnvironment  {
+    static apply(): ExecutionEnvironment
 
 
   }
@@ -3879,6 +4024,10 @@ declare module 'amf-client-js' {
     withEncodes(encoded: DialectDomainElement): DialectInstanceFragment
 
     withEncodes(encoded: DomainElement): this
+
+    pkg(): StrField
+
+    withPkg(pkg: string): this
 
     references(): Array<BaseUnit>
 
@@ -3933,6 +4082,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withIdTemplate(idTemplate: string): NodeMapping
 
     linkCopy(): NodeMapping
@@ -3950,6 +4101,8 @@ declare module 'amf-client-js' {
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
     withNodeTypeMapping(nodeType: string): NodeMapping
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -3978,6 +4131,7 @@ declare module 'amf-client-js' {
   export class CustomDomainProperty implements DomainElement, Linkable  {
     displayName: StrField
     name: StrField
+    serializationOrder: IntField
     customDomainProperties: Array<DomainExtension>
     description: StrField
     domain: Array<StrField>
@@ -3992,6 +4146,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): CustomDomainProperty
 
     withName(name: string): this
@@ -3999,6 +4155,8 @@ declare module 'amf-client-js' {
     withDescription(description: string): this
 
     withDomain(domain: Array<string>): this
+
+    withSerializationOrder(order: number): this
 
     withSchema(schema: Shape): this
 
@@ -4011,6 +4169,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -4033,6 +4193,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): EmptyBinding
 
     graph(): Graph
@@ -4044,6 +4206,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -4142,6 +4306,10 @@ declare module 'amf-client-js' {
 
     withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
 
+    pkg(): StrField
+
+    withPkg(pkg: string): this
+
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
@@ -4166,6 +4334,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): KafkaOperationBinding
 
     withGroupId(groupId: Shape): this
@@ -4183,6 +4353,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -4223,6 +4395,8 @@ declare module 'amf-client-js' {
     static parseContent(content: string, configuration: AMFGraphConfiguration): Promise<AMFParseResult>
 
     static parseContent(content: string, mediaType: string, configuration: AMFGraphConfiguration): Promise<AMFParseResult>
+
+    static parseStartingPoint(graphUrl: string, startingPoint: string, env: AMFGraphConfiguration): Promise<AMFObjectResult>
 
 
   }
@@ -4373,6 +4547,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): CorrelationId
 
     withName(name: string): this
@@ -4391,6 +4567,8 @@ declare module 'amf-client-js' {
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
+    link<T>(): T
+
     withLinkTarget(target: undefined): this
 
     withId(id: string): this
@@ -4399,6 +4577,8 @@ declare module 'amf-client-js' {
   }
   export class APIConfiguration  {
     static API(): AMFConfiguration
+
+    static fromSpec(spec: Spec): AMFConfiguration
 
 
   }
@@ -4414,6 +4594,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    link<T>(label: string): T
 
     linkCopy(): HttpMessageBinding
 
@@ -4431,6 +4613,8 @@ declare module 'amf-client-js' {
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
+    link<T>(): T
+
     withLinkTarget(target: undefined): this
 
     withId(id: string): this
@@ -4438,7 +4622,7 @@ declare module 'amf-client-js' {
 
   }
   export class AmlDomainElementEmitter  {
-    static emitToBuilder<T>(element: DomainElement, amlConfig: AMLConfiguration, builder: org.yaml.builder.JsOutputBuilder): void
+    static emitToBuilder<T>(element: DomainElement, amlConfig: BaseAMLConfiguration, builder: org.yaml.builder.JsOutputBuilder): void
 
 
   }
@@ -4456,6 +4640,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    link<T>(label: string): T
 
     linkCopy(): Amqp091ChannelBinding
 
@@ -4476,6 +4662,8 @@ declare module 'amf-client-js' {
     withExchange(exchange: Amqp091ChannelExchange): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -4512,6 +4700,10 @@ declare module 'amf-client-js' {
 
     withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
 
+    pkg(): StrField
+
+    withPkg(pkg: string): this
+
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
@@ -4543,6 +4735,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): MqttMessageBinding
 
     graph(): Graph
@@ -4556,6 +4750,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -4587,6 +4783,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withMessageType(messageType: string): this
 
     linkCopy(): Amqp091MessageBinding
@@ -4604,6 +4802,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -4642,6 +4842,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     withSecurity(security: Array<SecurityRequirement>): this
 
     linkCopy(): Operation
@@ -4671,6 +4873,8 @@ declare module 'amf-client-js' {
     withSummary(summary: string): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -4702,6 +4906,10 @@ declare module 'amf-client-js' {
 
     withDeprecated(deprecated: boolean): this
 
+
+  }
+  export class ExecutionEnvironment  {
+    constructor()
 
   }
   export class External implements DomainElement  {
@@ -4797,6 +5005,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): HttpOperationBinding
 
     withMethod(method: string): this
@@ -4814,6 +5024,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -4836,6 +5048,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     typeDiscriminator(): Map<string, string>
 
     linkCopy(): UnionNodeMapping
@@ -4857,6 +5071,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -5169,11 +5385,6 @@ declare module 'amf-client-js' {
     constructor(priority: number)
 
   }
-  export class ShapesConfiguration  {
-    static predefined(): AMLConfiguration
-
-
-  }
   export class PayloadFragment extends Fragment  {
     mediaType: StrField
     dataNode: DataNode
@@ -5210,6 +5421,8 @@ declare module 'amf-client-js' {
   }
   export class WebAPIConfiguration  {
     static WebAPI(): AMFConfiguration
+
+    static fromSpec(spec: Spec): AMFConfiguration
 
 
   }
@@ -5260,6 +5473,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): Example
 
     withName(name: string): this
@@ -5268,11 +5483,7 @@ declare module 'amf-client-js' {
 
     withDescription(description: string): this
 
-    toYaml(): string
-
     graph(): Graph
-
-    toJson(config: AMFGraphConfiguration): string
 
     withIsExternalLink(isExternalLink: boolean): DomainElement
 
@@ -5284,15 +5495,13 @@ declare module 'amf-client-js' {
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
+    link<T>(): T
+
     withValue(value: string): this
 
     withLinkTarget(target: undefined): this
 
     withStrict(strict: boolean): this
-
-    toJson(): string
-
-    toYaml(config: AMFGraphConfiguration): string
 
     withDisplayName(displayName: string): this
 
@@ -5316,6 +5525,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    link<T>(label: string): T
+
     linkCopy(): WebSocketsChannelBinding
 
     withMethod(method: string): this
@@ -5333,6 +5544,8 @@ declare module 'amf-client-js' {
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
 
     withLinkTarget(target: undefined): this
 
@@ -5511,6 +5724,7 @@ declare module 'amf-client-js' {
     static readonly PAYLOAD: Spec
     static readonly AML: Spec
     static readonly JSONSCHEMA: Spec
+    static readonly GRPC: Spec
 
     static apply(name: string): Spec
 
@@ -5521,19 +5735,10 @@ declare module 'amf-client-js' {
     static readonly ScalarRelaxedValidationMode: ValidationMode
 
   }
-  export class DefaultExecutionEnvironment  {
-    static apply(): ExecutionEnvironment
-
-
-  }
-  export class ExecutionEnvironment  {
-    constructor()
-
-  }
   export class AMFGraphConfiguration  {
     baseUnitClient(): AMFGraphBaseUnitClient
 
-    payloadValidatorFactory(): ShapePayloadValidatorFactory
+    elementClient(): AMFGraphElementClient
 
     withParsingOptions(parsingOptions: ParsingOptions): AMFGraphConfiguration
 
@@ -5556,6 +5761,43 @@ declare module 'amf-client-js' {
     static empty(): AMFGraphConfiguration
 
     static predefined(): AMFGraphConfiguration
+
+
+  }
+  export class ShapesConfiguration extends BaseShapesConfiguration  {
+    baseUnitClient(): AMLBaseUnitClient
+
+    elementClient(): ShapesElementClient
+
+    configurationState(): AMLConfigurationState
+
+    withParsingOptions(parsingOptions: ParsingOptions): ShapesConfiguration
+
+    withRenderOptions(renderOptions: RenderOptions): ShapesConfiguration
+
+    withErrorHandlerProvider(provider: ErrorHandlerProvider): ShapesConfiguration
+
+    withResourceLoader(rl: ResourceLoader): ShapesConfiguration
+
+    withResourceLoaders(rl: Array<ResourceLoader>): ShapesConfiguration
+
+    withUnitCache(cache: UnitCache): ShapesConfiguration
+
+    withTransformationPipeline(pipeline: TransformationPipeline): ShapesConfiguration
+
+    withEventListener(listener: AMFEventListener): ShapesConfiguration
+
+    withDialect(dialect: Dialect): ShapesConfiguration
+
+    withDialect(path: string): Promise<ShapesConfiguration>
+
+    forInstance(url: string): Promise<ShapesConfiguration>
+
+    withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): ShapesConfiguration
+
+    static empty(): ShapesConfiguration
+
+    static predefined(): ShapesConfiguration
 
 
   }
