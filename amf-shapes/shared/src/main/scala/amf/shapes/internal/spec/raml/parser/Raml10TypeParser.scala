@@ -250,10 +250,10 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
               ChainedReferenceSpecification,
               shape.id,
               s"Chained reference '$text",
-              node
+              node.location
             )
           } else {
-            shape.unresolved(text, node)
+            shape.unresolved(text, Nil, Some(node.location))
           }
           shape
       }
@@ -339,7 +339,7 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
         Some(AnyShape(ast).withName(name, Annotations()).add(Inferred()))
       case _ =>
         // TODO get parent id
-        ctx.eh.violation(UnableToSetDefaultType, "", s"Cannot set default type $defaultType in raml 08", ast)
+        ctx.eh.violation(UnableToSetDefaultType, "", s"Cannot set default type $defaultType in raml 08", ast.location)
         None
     }
     product.foreach(adopt)
@@ -411,7 +411,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
               }
               Some(shape.withName(name, Annotations()))
             case _ =>
-              ctx.eh.violation(InvalidTypeDefinition, "", s"Invalid type def ${value.text} for ${Raml08.id}", value)
+              ctx.eh.violation(InvalidTypeDefinition, "", s"Invalid type def ${value.text} for ${Raml08.id}", value.location)
               None
           }
         }
@@ -576,29 +576,39 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
     val union = UnionShape(Annotations.virtual()).withName(name, nameAnnotations)
     adopt(union)
 
-    val parsed = node.value match {
+    node.value match {
       case s: YScalar =>
         val toParse = YMapEntry(YNode(""), YNode(s.text.stripSuffix("?")))
-        ctx.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
+        val parsed =
+          ctx.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
+        union.set(UnionShapeModel.AnyOf,
+                  AmfArray(
+                    Seq(
+                      parsed,
+                      NilShape(Annotations.virtual()).withId(union.id)
+                    )),
+                  Annotations.synthesized())
       case m: YMap =>
         val newEntries = m.entries.map { entry =>
           if (entry.key.as[YScalar].text == "type") {
-            YMapEntry("type", entry.value.as[YScalar].text.stripSuffix("?"))
+            val typeToUnion = s"${entry.value.as[YScalar].text.stripSuffix("?")} | nil"
+            YMapEntry("type", typeToUnion)
           } else {
             entry
           }
         }
-
-        val toParse = YMapEntry(YNode(""), YMap(newEntries, newEntries.headOption.map(_.sourceName).getOrElse("")))
-        ctx.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
+        val toParse = YMapEntry(YNode(name), YMap(newEntries, newEntries.headOption.map(_.sourceName).getOrElse("")))
+        val parsed  = Raml10TypeParser(toParse, s => s.withId(union.id), typeInfo).parse().get
+        parsed.inherits.head match {
+          case union: UnionShape =>
+            union.anyOf.tail.head match {
+              case nil: NilShape => nil.add(Annotations.virtual())
+              case _             => // ignore
+            }
+          case _ => // ignore
+        }
+        parsed
     }
-    union.set(UnionShapeModel.AnyOf,
-              AmfArray(
-                Seq(
-                  parsed,
-                  NilShape(Annotations.virtual()).withId(union.id)
-                )),
-              Annotations.synthesized())
   }
 
   // These are the actual custom facets, just regular properties in the AST map that have been
@@ -688,7 +698,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         InheritanceParser(ast.asInstanceOf[YMapEntry], shape, None).parse()
         shape
       case _ =>
-        ctx.eh.violation(InvalidUnionType, shape.id, s"Invalid node for union shape '${node.toString()}", node)
+        ctx.eh.violation(InvalidUnionType, shape.id, s"Invalid node for union shape '${node.toString()}", node.location)
         shape
     }
   }
@@ -734,10 +744,10 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                     ChainedReferenceSpecification,
                     shape.id,
                     s"Chained reference '$text",
-                    node
+                    node.location
                   )
                 } else {
-                  unresolve.unresolved(text, node)
+                  unresolve.unresolved(text, Nil, Some(node.location))
                 }
                 shape.annotations.reject(isLexical)
                 shape.annotations ++= unresolve.annotations
@@ -761,7 +771,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
       case Left(key) =>
         val referenced = ctx.findType(key,
                                       SearchScope.Fragments,
-                                      Some((s: String) => ctx.eh.violation(InvalidFragmentType, parendId, s, node)))
+                                      Some((s: String) => ctx.eh.violation(InvalidFragmentType, parendId, s, node.location)))
         referenced.map(createLink(_).add(ExternalFragmentRef(key)))
       case _ =>
         val text       = node.as[YScalar].text
@@ -905,7 +915,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                 ctx.eh.violation(InvalidDatetimeFormat,
                                  shape.id,
                                  s"Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
-                                 ast)
+                                 ast.location)
               }
             })
         case _ =>
@@ -918,7 +928,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           InvalidDecimalPoint,
           shape.id,
           "Invalid decimal point for an integer: " + value,
-          ast
+          ast.location
         )
         false
       } else true
@@ -949,7 +959,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               shape.set(UnionShapeModel.AnyOf, AmfArray(unionNodes, Annotations(entry.value)), Annotations(entry))
 
             case _ =>
-              ctx.eh.violation(InvalidUnionType, shape.id, "Unions are built from multiple shape nodes", entry)
+              ctx.eh.violation(InvalidUnionType, shape.id, "Unions are built from multiple shape nodes", entry.location)
           }
         }
       )
@@ -979,7 +989,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               shape.setArray(ShapeModel.Or, nodes, Annotations(entry.value))
 
             case _ =>
-              ctx.eh.violation(InvalidOrType, shape.id, "Or constraints are built from multiple shape nodes", entry)
+              ctx.eh.violation(InvalidOrType, shape.id, "Or constraints are built from multiple shape nodes", entry.location)
           }
         }
       )
@@ -1007,7 +1017,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               shape.setArray(ShapeModel.And, nodes, Annotations(entry.value))
 
             case _ =>
-              ctx.eh.violation(InvalidAndType, shape.id, "And constraints are built from multiple shape nodes", entry)
+              ctx.eh.violation(InvalidAndType, shape.id, "And constraints are built from multiple shape nodes", entry.location)
           }
         }
       )
@@ -1040,7 +1050,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               ctx.eh.violation(InvalidXoneType,
                                shape.id,
                                "Xone constraints are built from multiple shape nodes",
-                               entry)
+                               entry.location)
           }
         }
       )
@@ -1095,7 +1105,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
             shape.id,
             Some(FileShapeModel.FileTypes.value.iri()),
             s"Unexpected syntax for the fileTypes property: ${entry.value.tagType}",
-            entry.value
+            entry.value.location
           )
         case _ => // ignore
       }
@@ -1139,7 +1149,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
             // not an array regular array parsing
             case _ =>
               val tuple = TupleShape(ast).withName(name, nameAnnotations)
-              ctx.eh.violation(InvalidTupleType, tuple.id, "Tuples must have a list of types", ast)
+              ctx.eh.violation(InvalidTupleType, tuple.id, "Tuples must have a list of types", ast.location)
               Left(tuple)
           }
         case None => Right(ArrayShape(ast).withName(name, nameAnnotations))
@@ -1181,7 +1191,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           adopt(parsed)
           parsed
         case _ =>
-          ctx.eh.violation(UnableToParseArray, shape.id, "Cannot parse data arrangement shape", map)
+          ctx.eh.violation(UnableToParseArray, shape.id, "Cannot parse data arrangement shape", map.location)
           shape
       }
     }
@@ -1430,7 +1440,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                     shape.id,
                     Some(ShapeModel.Inherits.value.iri()),
                     "Inheritance from JSON Schema",
-                    entry.value
+                    entry.value.location
                   )
                   ctx.ramlExternalSchemaParserFactory
                     .createJson("schema",
@@ -1469,10 +1479,10 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           ChainedReferenceSpecification,
           unresolvedShape.id,
           s"Chained reference '$reference",
-          node
+          node.location
         )
       } else {
-        unresolvedShape.unresolved(reference, node)
+        unresolvedShape.unresolved(reference, Nil, Some(node.location))
       }
       adopt(unresolvedShape)
       unresolvedShape
@@ -1528,7 +1538,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                   PatternPropertiesOnClosedNodeSpecification,
                   shape.id,
                   s"Node without additional properties support cannot have pattern properties",
-                  node
+                  node.location
                 )
               }
               // We check we are not using schemas in properties
@@ -1557,7 +1567,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                 InvalidValueInPropertiesFacet,
                 shape.id,
                 s"Properties facet must be a map of key and values",
-                entry
+                entry.location
               )
           }
         }
@@ -1576,21 +1586,21 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
     def checkExtendedUnionDiscriminator(): Unit = {
       if (shape.inherits.length == 1 && shape.inherits.head.isInstanceOf[UnionShape]) {
-        map.key("discriminator").foreach {
+        map.key("discriminator").foreach { k =>
           ctx.eh.violation(
             DiscriminatorOnExtendedUnionSpecification,
             shape.id,
             "Property discriminator forbidden in a node extending a unionShape",
-            _
+            k.location
           )
         }
 
-        map.key("discriminatorValue").foreach {
+        map.key("discriminatorValue").foreach { k =>
           ctx.eh.violation(
             DiscriminatorOnExtendedUnionSpecification,
             shape.id,
             "Property discriminatorValue forbidden in a node extending a unionShape",
-            _
+            k.location
           )
         }
       }
@@ -1683,7 +1693,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
         case None =>
           // TODO get parent id
-          ctx.eh.violation(InvalidPropertyType, "", "Invalid property name", entry.key)
+          ctx.eh.violation(InvalidPropertyType, "", "Invalid property name", entry.key.location)
           None
       }
     }
@@ -1756,7 +1766,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
             ctx.eh.violation(InvalidFragmentType,
                              p.id,
                              s"User defined facet name '${p.name.value()}' must not begin with open parenthesis",
-                             entry)
+                             entry.location)
           }
           shape.set(ShapeModel.CustomShapePropertyDefinitions,
                     AmfArray(properties, Annotations(entry.value)),

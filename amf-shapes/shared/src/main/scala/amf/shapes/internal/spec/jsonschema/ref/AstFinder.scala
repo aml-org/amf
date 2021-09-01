@@ -46,7 +46,7 @@ object AstFinder {
       ctx.eh.violation(UnableToParseJsonSchema,
                        shapeId,
                        s"Cannot find path ${hashFragment.getOrElse("")} in JSON schema $url",
-                       node)
+                       node.location)
       YMapEntryLike(node)
     }
   }

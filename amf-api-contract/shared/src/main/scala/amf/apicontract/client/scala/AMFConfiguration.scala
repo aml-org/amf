@@ -10,7 +10,6 @@ import amf.apicontract.internal.spec.async.{Async20ElementRenderPlugin, Async20P
 import amf.apicontract.internal.spec.oas._
 import amf.apicontract.internal.spec.raml._
 import amf.apicontract.internal.transformation._
-import amf.apicontract.internal.validation.payload.{JsonSchemaShapePayloadValidationPlugin, PayloadValidationPlugin}
 import amf.apicontract.internal.transformation.compatibility.{
   Oas20CompatibilityPipeline,
   Oas3CompatibilityPipeline,
@@ -30,14 +29,17 @@ import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
+import amf.core.internal.remote.Spec
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.core.ValidationProfile
+import amf.shapes.client.scala.ShapesConfiguration
+import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
 import amf.shapes.internal.entities.ShapeEntities
 
 import scala.concurrent.Future
 
-sealed trait APIConfigurationBuilder {
+trait APIConfigurationBuilder {
 
   protected def unsupportedTransformationsSet(configName: String) = List(
     UnsupportedTransformationPipeline.editing(configName),
@@ -114,6 +116,15 @@ object RAMLConfiguration extends APIConfigurationBuilder {
     common()
       .withPlugins(List(Raml08ParsePlugin, Raml10ParsePlugin, ViolationModelValidationPlugin(raml)))
       .withTransformationPipelines(unsupportedTransformationsSet(raml))
+
+  def fromSpec(spec: Spec): AMFConfiguration = spec match {
+    case Spec.RAML08 => RAMLConfiguration.RAML08()
+    case Spec.RAML10 => RAMLConfiguration.RAML10()
+    case _ =>
+      throw UnrecognizedSpecException(
+        s"Spec ${spec.id} not supported by RAMLConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}"
+      )
+  }
 }
 
 /**
@@ -153,7 +164,18 @@ object OASConfiguration extends APIConfigurationBuilder {
     common()
       .withPlugins(List(Oas30ParsePlugin, Oas20ParsePlugin, ViolationModelValidationPlugin(oas)))
       .withTransformationPipelines(unsupportedTransformationsSet(oas))
+
+  def fromSpec(spec: Spec): AMFConfiguration = spec match {
+    case Spec.OAS20 => OASConfiguration.OAS20()
+    case Spec.OAS30 => OASConfiguration.OAS30()
+    case _ =>
+      throw UnrecognizedSpecException(
+        s"Spec ${spec.id} not supported by OASConfiguration. Supported specs are ${Spec.OAS20.id}, ${Spec.OAS30.id}"
+      )
+  }
 }
+
+case class UnrecognizedSpecException(msg: String) extends IllegalArgumentException(msg)
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
 object WebAPIConfiguration extends APIConfigurationBuilder {
@@ -170,6 +192,17 @@ object WebAPIConfiguration extends APIConfigurationBuilder {
              Raml08ParsePlugin,
              ViolationModelValidationPlugin(name)))
       .withTransformationPipelines(unsupportedTransformationsSet(name))
+
+  def fromSpec(spec: Spec): AMFConfiguration = spec match {
+    case Spec.RAML08 => RAMLConfiguration.RAML08()
+    case Spec.RAML10 => RAMLConfiguration.RAML10()
+    case Spec.OAS20  => OASConfiguration.OAS20()
+    case Spec.OAS30  => OASConfiguration.OAS30()
+    case _ =>
+      throw UnrecognizedSpecException(
+        s"Spec ${spec.id} not supported by WebApiConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}"
+      )
+  }
 }
 
 /**
@@ -202,6 +235,18 @@ object APIConfiguration extends APIConfigurationBuilder {
       .WebAPI()
       .withPlugins(List(Async20ParsePlugin, ViolationModelValidationPlugin(name)))
       .withTransformationPipelines(unsupportedTransformationsSet(name))
+
+  def fromSpec(spec: Spec): AMFConfiguration = spec match {
+    case Spec.RAML08  => RAMLConfiguration.RAML08()
+    case Spec.RAML10  => RAMLConfiguration.RAML10()
+    case Spec.OAS20   => OASConfiguration.OAS20()
+    case Spec.OAS30   => OASConfiguration.OAS30()
+    case Spec.ASYNC20 => AsyncAPIConfiguration.Async20()
+    case _ =>
+      throw UnrecognizedSpecException(
+        s"Spec ${spec.id} not supported by APIConfiguration. Supported specs are ${Spec.RAML08.id}, ${Spec.RAML10.id}, ${Spec.OAS20.id}, ${Spec.OAS30.id}, ${Spec.ASYNC20.id}"
+      )
+  }
 }
 
 /**
@@ -215,7 +260,7 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val registry: AMFRegistry,
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
-    extends AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
+    extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   override def baseUnitClient(): AMFBaseUnitClient         = new AMFBaseUnitClient(this)
   override def elementClient(): AMFElementClient           = new AMFElementClient(this)

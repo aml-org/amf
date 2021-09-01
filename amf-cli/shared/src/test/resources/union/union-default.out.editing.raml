@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: New API
+types:
+  UnionType:
+    default: 20
+    type: integer | nil
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        default: 20
+        type: integer | nil

@@ -23,6 +23,7 @@ import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig, YNodeLikeOps}
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
@@ -148,8 +149,9 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
         val branches = ListBuffer[BranchContainer]()
 
-        val operationTree = OperationTreeBuilder(operation)(IgnoringErrorHandler).build()
-        val branchesObj   = Branches()(extendsContext)
+        val operationTree =
+          OperationTreeBuilder(operation)(new SYamlAMFParserErrorHandler(IgnoringErrorHandler)).build()
+        val branchesObj = Branches()(extendsContext)
 
         // Method branch
         branches += branchesObj.method(resolver, operation, local, operationTree)
@@ -198,7 +200,8 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
         .getOrElse("")
     }
 
-    private def resourcePath(endPoint: EndPoint) = endPoint.path.value().replaceAll("\\{ext\\}", "")
+    private def resourcePath(endPoint: EndPoint) =
+      endPoint.path.option().map(_.replaceAll("\\{ext\\}", "")).getOrElse("")
 
     private def findExtendsPredicate(element: DomainElement): Boolean = {
       if (visited.contains(element.id) && !fromOverlay) true

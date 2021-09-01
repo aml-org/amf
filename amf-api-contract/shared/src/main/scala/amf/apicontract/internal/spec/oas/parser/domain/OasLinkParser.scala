@@ -52,7 +52,7 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
       case Some(requestNode) =>
         buildAndPopulate(requestNode.as[YMap]).add(ExternalReferenceUrl(fullRef))
       case None =>
-        ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
+        ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map.location)
         nameAndAdopt(new ErrorLink(fullRef, map).link(fullRef))
 
     }

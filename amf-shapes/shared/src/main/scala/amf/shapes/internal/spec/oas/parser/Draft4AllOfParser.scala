@@ -32,7 +32,7 @@ case class AndConstraintParser(map: YMap, shape: Shape, adopt: Shape => Unit, ve
             ctx.eh.violation(InvalidAndType,
                              shape.id,
                              "And constraints are built from multiple shape nodes",
-                             entry.value)
+                             entry.value.location)
 
         }
       }

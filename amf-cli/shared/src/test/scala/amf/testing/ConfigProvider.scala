@@ -7,7 +7,8 @@ import amf.apicontract.client.scala.{
   OASConfiguration,
   RAMLConfiguration
 }
-import amf.core.internal.remote.{Amf, AsyncApi20, Oas20, Oas30, Raml08, Raml10, Spec}
+import amf.core.internal.remote.{Amf, AsyncApi20, Grpc, Oas20, Oas30, Raml08, Raml10, Spec}
+import amf.grpc.client.scala.GRPCConfiguration
 
 object ConfigProvider {
 
@@ -17,6 +18,7 @@ object ConfigProvider {
     case Oas20      => OASConfiguration.OAS20()
     case Oas30      => OASConfiguration.OAS30()
     case AsyncApi20 => AsyncAPIConfiguration.Async20()
+    case Grpc       => GRPCConfiguration.GRPC()
     case _          => BaseApiConfiguration.BASE()
   }
 }

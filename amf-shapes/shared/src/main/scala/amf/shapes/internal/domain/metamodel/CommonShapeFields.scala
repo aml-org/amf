@@ -1,7 +1,7 @@
 package amf.shapes.internal.domain.metamodel
 
-import amf.core.internal.metamodel.Field
 import amf.core.client.scala.vocabulary.Namespace.{Shacl, Shapes}
+import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Bool, Double, Int, Str}
 import amf.core.internal.metamodel.domain.{ExternalModelVocabularies, ModelDoc, ModelVocabularies}
 

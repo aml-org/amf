@@ -1,11 +1,13 @@
 package amf.validation
 
+import amf.aml.client.scala.AMLElementClient
 import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes.`application/xml`
 import amf.core.internal.utils.MediaTypeMatcher
+import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.internal.spec.common.TypeDef.{IntType, StrType}
 import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NilShape, NodeShape, ScalarShape, SchemaShape, UnionShape}
@@ -20,15 +22,15 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
 
   override val executionContext: ExecutionContext = global
 
-  private val AMF_CONFIG       = APIConfiguration.API()
-  private val validatorFactory = AMF_CONFIG.payloadValidatorFactory()
+  private val config                   = ShapesConfiguration.predefined()
+  private val client: AMLElementClient = config.elementClient()
 
   def createPayloadValidator(shape: Shape, mediaType: String) = {
-    validatorFactory.createFor(shape, mediaType, StrictValidationMode)
+    client.payloadValidatorFor(shape, mediaType, StrictValidationMode)
   }
 
   def createParameterValidator(shape: Shape, mediaType: String) = {
-    validatorFactory.createFor(shape, mediaType, ScalarRelaxedValidationMode)
+    client.payloadValidatorFor(shape, mediaType, ScalarRelaxedValidationMode)
   }
 
   case class ShapeInfo(shape: AnyShape, examples: Seq[ExampleInfo], mode: ValidationMode = StrictValidationMode)

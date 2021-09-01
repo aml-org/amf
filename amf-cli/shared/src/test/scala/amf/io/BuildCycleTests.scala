@@ -5,9 +5,9 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.rdf.{RdfModel, RdfUnitConverter}
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.core.internal.remote.{AmfJsonHint, Hint, Spec}
+import amf.rdf.client.scala.{RdfModel, RdfUnitConverter}
 import amf.testing.ConfigProvider.configFor
 import org.scalactic.Fail
 import org.scalatest.{Assertion, AsyncFunSuite}

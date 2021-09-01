@@ -42,7 +42,7 @@ The **only** guaranteed output of AMF is the JSON-LD "AMF model". Any other outp
 
 ## Documentation
 - [The AML Project](https://a.ml)
-- [What is AMF?](https://a.ml/docbook/overview_amf.html)
+- [What is AMF?](https://a.ml/docs)
 - [AMF model documentation](documentation/model.md)
 - [Validation insights](./documentation/validation.md)
 - [Basic use cases - parsing & validating an API](documentation/basic_use_cases.md)

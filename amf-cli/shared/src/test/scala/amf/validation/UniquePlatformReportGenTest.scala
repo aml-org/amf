@@ -35,7 +35,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
 
   protected def handleReport(report: AMFValidationReport, golden: Option[String]): Future[Assertion] =
     golden match {
-      case Some(g) =>
+      case Some(_) =>
         writeTemporaryFile(golden.get)(generate(report)).flatMap(assertDifferences(_, reportsPath + golden.get))
       case None =>
         Future.successful({

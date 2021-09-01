@@ -15,9 +15,11 @@ import amf.core.client.common.render.JSONSchemaVersions
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.platform.config.RenderOptions
+import amf.core.client.platform.model.AmfObjectWrapper
 import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.platform.model.domain._
 import amf.core.client.platform.parse.AMFParser
+import amf.core.client.platform.parse.AMFParser.parseStartingPoint
 import amf.core.client.platform.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
@@ -38,6 +40,7 @@ import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote._
 import amf.core.internal.resource.{ClientResourceLoaderAdapter, StringResourceLoader}
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.shapes.client.platform.ShapesConfiguration
 import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
 import org.mulesoft.common.test.Diff
@@ -674,39 +677,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     assert(shape.defaultValue == null)
   }
 
-  test("Remove field and dump") {
-    val api =
-      """
-        |#%RAML 1.0
-        |title: this should remain
-        |description: remove
-        |license:
-        | url: removeUrl
-        | name: test
-        |/endpoint1:
-        | get:
-        |   responses:
-        |     200:
-      """.stripMargin
-
-    val excepted =
-      """
-        |#%RAML 1.0
-        |title: this should remain
-        |/endpoint1:
-        | get: {}""".stripMargin
-    val client = RAMLConfiguration.RAML10().baseUnitClient()
-    for {
-      unit      <- client.parseContent(api, Raml10.mediaType + "+yaml").asFuture
-      removed   <- removeFields(unit.baseUnit)
-      generated <- Future.successful(client.render(removed, `application/yaml`))
-    } yield {
-      val deltas = Diff.ignoreAllSpace.diff(excepted, generated)
-      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
-      else succeed
-    }
-  }
-
   test("Test swagger 2.0 entry generation in yaml") {
     val expected =
       """
@@ -833,7 +803,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     nodeShape.withProperty("name").withRange(shape)
     doc.withDeclaredElement(nodeShape)
 
-    val linked: NodeShape = nodeShape.link(Some("#/definitions/person"))
+    val linked: NodeShape = nodeShape.link("#/definitions/person")
     linked.withName("Person")
     doc.encodes
       .asInstanceOf[Api[_]]
@@ -1038,16 +1008,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
-  private def removeFields(unit: BaseUnit): Future[BaseUnit] = Future {
-    val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
-    webApi.description.remove()
-    val operation: Operation = webApi.endPoints.asSeq.head.operations.asSeq.head
-    operation.graph().remove("http://a.ml/vocabularies/apiContract#returns")
-
-    webApi.graph().remove("http://a.ml/vocabularies/core#license")
-    unit
-  }
-
   private def resourceLoaderFor(url: String, content: String): ResourceLoader = {
     new ResourceLoader {
       override def fetch(resource: String): Future[Content] =
@@ -1151,7 +1111,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Test validate payload with invalid iri") {
     val payload = """test payload""".stripMargin
-    val factory = RAMLConfiguration.RAML().payloadValidatorFactory()
+    val client  = RAMLConfiguration.RAML().elementClient()
     for {
       shape <- Future {
         new ScalarShape()
@@ -1159,8 +1119,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           .withName("test")
           .withId("api.raml/#/webapi/schema1")
       }
-      report <- factory
-        .createFor(shape, `application/yaml`, ValidationMode.StrictValidationMode)
+      report <- client
+        .payloadValidatorFor(shape, `application/yaml`, ValidationMode.StrictValidationMode)
         .validate(payload)
         .asFuture
     } yield {
@@ -1892,10 +1852,11 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |  ]
         |}
         |""".stripMargin
-    val client = OASConfiguration.OAS20().baseUnitClient()
+    val config     = OASConfiguration.OAS20()
+    val unitClient = config.baseUnitClient()
     for {
-      parsed   <- client.parseContent(api, `application/json`).asFuture
-      resolved <- Future(client.transform(parsed.baseUnit, PipelineId.Editing))
+      parsed   <- unitClient.parseContent(api, `application/json`).asFuture
+      resolved <- Future(unitClient.transform(parsed.baseUnit, PipelineId.Editing))
       shape <- {
         Future.successful {
           val declarations = resolved.baseUnit.asInstanceOf[Document].declares.asSeq
@@ -1907,10 +1868,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         }
       }
       report <- {
-        val validator = client
-          .getConfiguration()
-          .payloadValidatorFactory()
-          .createFor(shape, `application/json`, ValidationMode.StrictValidationMode)
+        val validator = config
+          .elementClient()
+          .payloadValidatorFor(shape, `application/json`, ValidationMode.StrictValidationMode)
         validator.validate(payload).asFuture
       }
     } yield {
@@ -2057,7 +2017,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
-  // TODO check with @tomi and @agus
   test("Test domain element emitter with unknown spec") {
     assertThrows[Throwable](
       amf.apicontract.client.scala.RAMLConfiguration.RAML10().elementClient().renderElement(InternalArrayNode()))
@@ -2118,6 +2077,20 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       assert(!parsed.conforms)
       assert(parsed.results.asSeq.size == 1)
       assert(resolved.conforms)
+    }
+  }
+
+  test("test read declared shape from api") {
+    val configuration    = ShapesConfiguration.predefined()
+    val basePath: String = "file://amf-cli/shared/src/test/resources/graphs/"
+    for {
+      content <- parseStartingPoint(basePath + "api.source.jsonld", "amf://id#1", configuration).asFuture
+    } yield {
+      val obj = content.element
+      obj.isInstanceOf[ScalarShape] should be(true)
+      val shape = obj.asInstanceOf[ScalarShape]
+      shape.name.value() should be("birthday")
+      succeed
     }
   }
 

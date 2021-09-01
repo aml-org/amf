@@ -15,7 +15,7 @@ object JsonSchemaParsingHelper {
         .withName(fullRef)
         .withId(fullRef)
         .withSupportsRecursion(true)
-    tmpShape.unresolved(fullRef, schemaEntry)(ctx)
+    tmpShape.unresolved(fullRef, Nil, Some(schemaEntry.location))(ctx)
     tmpShape.withContext(ctx)
     adopt(tmpShape)
     ctx.registerJsonSchema(fullRef, tmpShape)

@@ -4,7 +4,7 @@ import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfObject, DomainElement, RecursiveShape}
 import amf.core.client.scala.parse.AMFParser
-import amf.shapes.client.scala.config.ShapesConfiguration
+import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class AMFGraphPartialParsingTest extends AsyncFunSuite with Matchers {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  val basePath: String                   = "file://amf-cli/shared/src/test/resources/graphs/"
+  val basePath: String                                     = "file://amf-cli/shared/src/test/resources/graphs/"
 
   test("test read declared shape from api") {
     parse(

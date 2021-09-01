@@ -16,7 +16,7 @@ import amf.core.client.scala.validation.payload.{
 }
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
-import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
+import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlSyntaxRenderPlugin}
 import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.validation.ValidationConfiguration
@@ -28,6 +28,7 @@ import amf.shapes.internal.spec.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema.BaseJsonSchemaPayloadValidator.supportedMediaTypes
+import org.yaml.model.{IllegalTypeHandler, YError}
 import org.yaml.parser.YamlParser
 
 import java.io.StringWriter
@@ -217,7 +218,7 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
 
     val parser = mediaType match {
       case `application/json` => JsonParserFactory.fromChars(payload)(errorHandler)
-      case _                  => YamlParser(payload)(errorHandler)
+      case _                  => YamlParser(payload)(new SYamlAMFParserErrorHandler(errorHandler))
     }
     val node = parser.document().node
     val parsedNode =
@@ -226,15 +227,19 @@ abstract class BaseJsonSchemaPayloadValidator(shape: Shape,
     PayloadFragment(parsedNode, mediaType)
   }
 
-  private def dataNodeParsingCtx(errorHandler: AMFErrorHandler,
-                                 maxYamlRefs: Option[Int]): ErrorHandlingContext with DataNodeParserContext = {
-    new ErrorHandlingContext()(errorHandler) with DataNodeParserContext {
+  private def dataNodeParsingCtx(
+      errorHandler: AMFErrorHandler,
+      maxYamlRefs: Option[Int]): ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler = {
+    new ErrorHandlingContext()(errorHandler) with DataNodeParserContext with IllegalTypeHandler {
+      val syamleh = new SYamlAMFParserErrorHandler(errorHandler)
       override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
         eh.violation(violationId, node, message, "")
       override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
       override def refs: Seq[ParsedReference]                                                          = Seq.empty
       override def getMaxYamlReferences: Option[Int]                                                   = maxYamlRefs
       override def fragments: Map[String, FragmentRef]                                                 = Map.empty
+
+      override def handle[T](error: YError, defaultValue: T): T = syamleh.handle(error, defaultValue)
     }
   }
 

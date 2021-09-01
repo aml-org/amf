@@ -12,4 +12,4 @@ resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal)
 resolvers += "jitpack" at "https://jitpack.io"
 credentials ++= Common.credentials()
 
-addSbtPlugin("com.github.amlorg" % "scala-js-typings" % "0.0.11")
+addSbtPlugin("com.github.amlorg" % "scala-js-typings" % "0.0.14")

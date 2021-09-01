@@ -21,17 +21,18 @@ import amf.core.internal.convert.TransformationPipelineConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.apicontract.client.scala
-import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.execution.BaseExecutionEnvironment
 import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
 import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
+import amf.core.internal.remote.Spec
+import amf.shapes.client.platform.BaseShapesConfiguration
 
 @JSExportAll
 class AMFConfiguration private[amf] (private[amf] override val _internal: scala.AMFConfiguration)
-    extends BaseAMLConfiguration(_internal) {
+    extends BaseShapesConfiguration(_internal) {
 
   override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
-  def elementClient(): AMFElementClient            = new AMFElementClient(this)
+  override def elementClient(): AMFElementClient   = new AMFElementClient(this)
   def configurationState(): AMFConfigurationState  = new AMFConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =
@@ -79,9 +80,10 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
 @JSExportAll
 @JSExportTopLevel("RAMLConfiguration")
 object RAMLConfiguration {
-  def RAML10(): AMFConfiguration = InternalRAMLConfiguration.RAML10()
-  def RAML08(): AMFConfiguration = InternalRAMLConfiguration.RAML08()
-  def RAML(): AMFConfiguration   = InternalRAMLConfiguration.RAML()
+  def RAML10(): AMFConfiguration             = InternalRAMLConfiguration.RAML10()
+  def RAML08(): AMFConfiguration             = InternalRAMLConfiguration.RAML08()
+  def RAML(): AMFConfiguration               = InternalRAMLConfiguration.RAML()
+  def fromSpec(spec: Spec): AMFConfiguration = InternalRAMLConfiguration.fromSpec(spec)
 }
 
 /**
@@ -93,16 +95,18 @@ object RAMLConfiguration {
 @JSExportAll
 @JSExportTopLevel("OASConfiguration")
 object OASConfiguration {
-  def OAS20(): AMFConfiguration = InternalOASConfiguration.OAS20()
-  def OAS30(): AMFConfiguration = InternalOASConfiguration.OAS30()
-  def OAS(): AMFConfiguration   = InternalOASConfiguration.OAS()
+  def OAS20(): AMFConfiguration              = InternalOASConfiguration.OAS20()
+  def OAS30(): AMFConfiguration              = InternalOASConfiguration.OAS30()
+  def OAS(): AMFConfiguration                = InternalOASConfiguration.OAS()
+  def fromSpec(spec: Spec): AMFConfiguration = InternalOASConfiguration.fromSpec(spec)
 }
 
 /** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
 @JSExportAll
 @JSExportTopLevel("WebAPIConfiguration")
 object WebAPIConfiguration {
-  def WebAPI(): AMFConfiguration = InternalWebAPIConfiguration.WebAPI()
+  def WebAPI(): AMFConfiguration             = InternalWebAPIConfiguration.WebAPI()
+  def fromSpec(spec: Spec): AMFConfiguration = InternalWebAPIConfiguration.fromSpec(spec)
 }
 
 /**
@@ -120,5 +124,6 @@ object AsyncAPIConfiguration {
 @JSExportAll
 @JSExportTopLevel("APIConfiguration")
 object APIConfiguration {
-  def API(): AMFConfiguration = InternalAPIConfiguration.API()
+  def API(): AMFConfiguration                = InternalAPIConfiguration.API()
+  def fromSpec(spec: Spec): AMFConfiguration = InternalAPIConfiguration.fromSpec(spec)
 }

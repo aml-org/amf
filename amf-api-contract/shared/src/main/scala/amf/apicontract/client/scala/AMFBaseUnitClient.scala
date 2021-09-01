@@ -7,6 +7,7 @@ import amf.core.client.scala.{AMFParseResult, AMFResult}
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
 import amf.core.client.scala.parse.{AMFParser, InvalidBaseUnitTypeException}
 import amf.core.internal.metamodel.document.{DocumentModel, ModuleModel}
+import amf.shapes.client.scala.ShapesBaseUnitClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -15,7 +16,7 @@ import scala.concurrent.{ExecutionContext, Future}
   * For more complex uses see [[AMFParser]] or [[amf.core.client.scala.render.AMFRenderer]]
   */
 class AMFBaseUnitClient private[amf] (override protected val configuration: AMFConfiguration)
-    extends AMLBaseUnitClient(configuration) {
+    extends ShapesBaseUnitClient(configuration) {
 
   override implicit val exec: ExecutionContext = configuration.getExecutionContext
 

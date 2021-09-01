@@ -1,19 +1,10 @@
 package amf.parser
 
-import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.rdf.RdfModel
-import amf.core.internal.validation.core.{
-  SHACLValidator,
-  ShaclValidationOptions,
-  ValidationReport,
-  ValidationSpecification
-}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
-import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
 
 class ParserTest extends FunSuite {
@@ -131,32 +122,5 @@ class ParserTest extends FunSuite {
     sequence.nodes(1).as[Int] shouldBe 3
 
     include(content.entries(3))
-
-    class TestValidator extends SHACLValidator {
-      override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
-          implicit executionContext: ExecutionContext): Future[String] =
-        throw new Exception("Validation not supported")
-
-      override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
-          implicit executionContext: ExecutionContext): Future[ValidationReport] =
-        throw new Exception("Validation not supported")
-
-      override def registerLibrary(url: String, code: String): Unit = throw new Exception("Validation not supported")
-
-      override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ShaclValidationOptions)(
-          implicit executionContext: ExecutionContext): Future[String] =
-        throw new Exception("Validation not supported")
-
-      override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ShaclValidationOptions)(
-          implicit executionContext: ExecutionContext): Future[ValidationReport] =
-        throw new Exception("Validation not supported")
-
-      override def emptyRdfModel(): RdfModel = throw new Exception("Validation not supported")
-
-      override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel =
-        throw new Exception("Validation not supported")
-
-      override def supportsJSFunctions: Boolean = false
-    }
   }
 }

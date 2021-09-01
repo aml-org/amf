@@ -23,7 +23,7 @@ trait SpecParserOps extends QuickFieldParserOps {
         node,
         Some(property),
         "Invalid path template syntax",
-        value
+        value.location
       )
     }
   }

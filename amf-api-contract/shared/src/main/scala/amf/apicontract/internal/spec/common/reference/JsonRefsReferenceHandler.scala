@@ -29,9 +29,9 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
         links(parsed.document)
         refUrls.foreach { ref =>
           if (ref.nodeValue.startsWith("http:") || ref.nodeValue.startsWith("https:"))
-            references += (ref.nodeValue, LinkReference, ref.node) // this is not for all scalars, link must be a string
+            references += (ref.nodeValue, LinkReference, ref.node.location) // this is not for all scalars, link must be a string
           else
-            references += (ref.nodeValue, InferredLinkReference, ref.node) // Is inferred because we don't know how to dereference by default
+            references += (ref.nodeValue, InferredLinkReference, ref.node.location) // Is inferred because we don't know how to dereference by default
         }
       case _ => // ignore
     }
@@ -55,7 +55,7 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
       case YType.Str =>
         val refValue = ref.as[String]
         if (!refValue.startsWith("#")) refUrls += RefNode(ref, refValue.split("#").head)
-      case _ => errorHandler.violation(UnresolvedReference, "", s"Unexpected $$ref with $ref", ref.value)
+      case _ => errorHandler.violation(UnresolvedReference, "", s"Unexpected $$ref with $ref", ref.value.location)
     }
   }
 }

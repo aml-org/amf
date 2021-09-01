@@ -92,7 +92,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
                 UnknownScopeErrorSpecification,
                 scope.id,
                 s"Scope '${element.toString}' not found in settings of declared secured by ${ss.scheme.name.value()}.",
-                n
+                n.location
               )
               scope
             case _ =>
@@ -157,7 +157,7 @@ class Raml10SecuritySettingsParser(node: YNode, `type`: String, scheme: DomainEl
           ctx.eh.warning(MissingRequiredFieldForGrantType,
                          settings.id,
                          s"'${requiredField.name}' is required when '$grant' grant type is used",
-                         map)
+                         map.location)
     }
   }
 

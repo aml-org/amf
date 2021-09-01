@@ -250,6 +250,7 @@ Fragment encoding a RAML annotation type
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## AnyShape
 Base class for all shapes stored in the graph model
@@ -276,6 +277,7 @@ Base class for all shapes stored in the graph model
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -339,6 +341,7 @@ Shape that contains a nested collection of data shapes
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -403,6 +406,7 @@ Base class for every single document model unit. After parsing a document the pa
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## Callback
 Model defining the information for a HTTP callback/ webhook
@@ -486,6 +490,7 @@ It can be validated using a SHACL shape
  | domain | [url] | RDFS domain property | http://www.w3.org/2000/01/rdf-schema#domain |
  | schema | [Shape](#shape) | Schema for an entity | http://a.ml/vocabularies/shapes#schema |
  | name | string | Name for an entity | http://a.ml/vocabularies/core#name |
+ | serializationOrder | int | position in the set of properties for a shape used to serialize this property on the wire | http://a.ml/vocabularies/shapes#serializationOrder |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -510,6 +515,7 @@ Fragment encoding a RAML data type
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## DatatypePropertyTerm
 
@@ -540,6 +546,7 @@ Definition of an AML dialect, mapping AST nodes from dialect documents into an o
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## DialectFragment
 AML dialect mapping fragment that can be included in multiple AML dialects
@@ -554,6 +561,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## DialectInstance
 
@@ -570,6 +578,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## DialectInstanceFragment
 
@@ -586,6 +595,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## DialectInstanceLibrary
 
@@ -601,6 +611,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## DialectInstancePatch
 
@@ -617,6 +628,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## DialectLibrary
 Library of AML mappings that can be reused in different AML dialects
@@ -631,6 +643,7 @@ Library of AML mappings that can be reused in different AML dialects
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## DiscriminatorValueMapping
 Mapping that relates a certain discriminator value to a certain shape
@@ -655,6 +668,7 @@ The main difference is that the Document encoded DomainElement is stand-alone an
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## DocumentMapping
 Mapping for a particular dialect document into a graph base unit
@@ -677,6 +691,7 @@ Fragment encoding a RAML documentation item
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## Documents
 Mapping from different type of dialect documents to base units in the parsed graph
@@ -784,6 +799,7 @@ API spec information designed to be applied and compelement the information of a
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## ExtensionLike
 A Document that extends a target document, overwriting part of the information or overlaying additional information.
@@ -798,6 +814,7 @@ A Document that extends a target document, overwriting part of the information o
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## External
 
@@ -834,6 +851,7 @@ Fragment encoding an external entity
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## ExternalSourceElement
 Inlined fragment of information
@@ -879,6 +897,7 @@ Shape describing data uploaded in an API request
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -900,6 +919,7 @@ A Fragment is a parsing Unit that encodes a DomainElement
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## HttpApiKeySettings
 Settings for an Http API Key security scheme
@@ -1036,6 +1056,7 @@ Data shape containing nested multi-dimensional collection shapes
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1103,6 +1124,7 @@ It main purpose is to expose the declared references so they can be re-used
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## MqttMessageBinding
 
@@ -1159,6 +1181,7 @@ Fragment encoding a RAML named example
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## NilShape
 Data shape representing the null/nil value in the input schema
@@ -1185,6 +1208,7 @@ Data shape representing the null/nil value in the input schema
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1218,6 +1242,7 @@ Shape that validates a record of fields, like a JS object
  | minProperties | int | Minimum number of properties in the input node constraint | http://a.ml/vocabularies/shapes#minProperties |
  | maxProperties | int | Maximum number of properties in the input node constraint | http://a.ml/vocabularies/shapes#maxProperties |
  | closed | boolean | Additional properties in the input node accepted constraint | http://www.w3.org/ns/shacl#closed |
+ | additionalPropertiesKeySchema | [Shape](#shape) | Additional properties key schema | http://www.w3.org/ns/shacl#additionalPropertiesKeySchema |
  | additionalPropertiesSchema | [Shape](#shape) | Additional properties schema | http://www.w3.org/ns/shacl#additionalPropertiesSchema |
  | discriminator | string | Discriminator property | http://a.ml/vocabularies/shapes#discriminator |
  | discriminatorValue | string | Values for the discriminator property | http://a.ml/vocabularies/shapes#discriminatorValue |
@@ -1249,6 +1274,7 @@ Shape that validates a record of fields, like a JS object
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1399,6 +1425,7 @@ Model defining a RAML overlay
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## Parameter
 Piece of data required or returned by an Operation
@@ -1491,6 +1518,7 @@ Fragment encoding HTTP payload information
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## PropertyDependencies
 Dependency between sets of property shapes
@@ -1538,6 +1566,7 @@ Constraint over a property in a data shape.
  | minCount | int | Minimum count property constraint | http://www.w3.org/ns/shacl#minCount |
  | maxCount | int | Maximum count property constraint | http://www.w3.org/ns/shacl#maxCount |
  | patternName | string | Patterned property constraint | http://a.ml/vocabularies/shapes#patternName |
+ | serializationOrder | int | position in the set of properties for a shape used to serialize this property on the wire | http://a.ml/vocabularies/shapes#serializationOrder |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1558,6 +1587,7 @@ Constraint over a property in a data shape.
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
@@ -1596,6 +1626,7 @@ Recursion on a Shape structure, used when expanding a shape and finding the cano
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
@@ -1654,6 +1685,7 @@ Fragment encoding a RAML resource type
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## Response
 Response information for an operation
@@ -1730,6 +1762,7 @@ Data shape describing a scalar value in the input data model, reified as an scal
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1775,6 +1808,7 @@ Raw schema that cannot be parsed using AMF shapes model
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -1832,6 +1866,7 @@ Fragment encoding a RAML security scheme
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## SemanticExtension
 Mapping a particular extension name to an extension definition
@@ -1912,6 +1947,7 @@ Shapes can be recursive and inherit from other shapes.
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
 
 ## ShapeExtension
@@ -1982,6 +2018,7 @@ Fragment encoding a RAML trait
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## TupleShape
 Data shape containing a multi-valued collection of shapes
@@ -2015,6 +2052,7 @@ Data shape containing a multi-valued collection of shapes
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -2065,6 +2103,7 @@ Shape representing the union of many alternative data shapes
  | else | [Shape](#shape) | Composition of data shape when if data shape is invalid | http://www.w3.org/ns/shacl#else |
  | readOnly | boolean | Read only property constraint | http://a.ml/vocabularies/shapes#readOnly |
  | writeOnly | boolean | Write only property constraint | http://a.ml/vocabularies/shapes#writeOnly |
+ | serializationSchema | [Shape](#shape) | Serialization schema for a shape | http://a.ml/vocabularies/shapes#serializationSchema |
  | deprecated | boolean | Deprecated annotation for a property constraint | http://a.ml/vocabularies/shapes#deprecated |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | xmlSerialization | [XMLSerializer](#xmlserializer) | Information about how to serialize | http://a.ml/vocabularies/shapes#xmlSerialization |
@@ -2100,6 +2139,7 @@ Basic primitives for the declaration of vocabularies.
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
 
 ## VocabularyReference
 

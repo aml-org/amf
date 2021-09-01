@@ -1,0 +1,19 @@
+#%RAML 1.0
+
+title: test
+
+types:
+  A: |
+    {
+      "type": "object",
+      "properties": {
+        "someProp" : {
+          "required": true
+        },
+        "otherProp" : {
+          "type": "string",
+          "required": true
+        }
+      },
+      "required": true
+    }

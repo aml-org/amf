@@ -6,7 +6,10 @@ def headerFlavour = "WARNING"
 
 pipeline {
   agent {
-    dockerfile true
+    dockerfile {
+      filename 'Dockerfile'
+      registryCredentialsId 'dockerhub-pro-credentials'
+    }
   }
   environment {
     NEXUS = credentials('exchange-nexus')
@@ -161,7 +164,7 @@ pipeline {
               }
               def newAmfVersion = getAmfVersion()
               echo "Starting ApiQuery hook API-Query/api-query-amf-integration/master with amf version: ${newAmfVersion}"
-              build job: "API-Query/api-query-amf-integration/master", wait: false, parameters: [[$class: 'StringParameterValue', name: 'AMF_NEW_VERSION', value: newAmfVersion]]
+              build job: "API-Query-new/api-query-amf-integration/master", wait: false, parameters: [[$class: 'StringParameterValue', name: 'AMF_NEW_VERSION', value: newAmfVersion]]
             }
           } catch(ignored) {
             failedStage = failedStage + " JOBS TRIGGER "

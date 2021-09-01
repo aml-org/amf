@@ -42,7 +42,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
           ctx.eh.violation(InvalidFragmentType,
                            root.location,
                            "Cannot parse empty map",
-                           root.parsed.asInstanceOf[SyamlParsedDocument].document)
+                           root.parsed.asInstanceOf[SyamlParsedDocument].document.location)
         YMap.empty
     }
 

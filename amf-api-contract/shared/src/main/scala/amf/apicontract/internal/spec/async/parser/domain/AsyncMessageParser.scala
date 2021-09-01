@@ -173,7 +173,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
               ctx.eh.violation(ParserSideValidations.HeaderMustBeObject,
                                message.id,
                                ParserSideValidations.HeaderMustBeObject.message,
-                               entry.value)
+                               entry.value.location)
           }
       }
     )

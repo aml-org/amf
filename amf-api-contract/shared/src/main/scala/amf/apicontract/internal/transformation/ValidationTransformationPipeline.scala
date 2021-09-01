@@ -7,7 +7,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.{
   ResponseExamplesResolutionStage
 }
 import amf.apicontract.internal.transformation.stages.ExtensionsResolutionStage
-import amf.core.client.common.validation.{Async20Profile, Oas30Profile, ProfileName}
+import amf.core.client.common.validation.{Async20Profile, GrpcProfile, Oas30Profile, ProfileName}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}

@@ -1,17 +1,15 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.rdf.RdfUnitConverter
 import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
+import amf.rdf.client.scala.RdfUnitConverter
 import amf.resolution.ResolutionCapabilities
-import amf.testing.ConfigProvider
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.{AsyncFunSuite, Matchers}
