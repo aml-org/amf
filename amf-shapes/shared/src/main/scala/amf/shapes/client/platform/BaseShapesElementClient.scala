@@ -18,8 +18,6 @@ abstract class BaseShapesElementClient private[amf] (private val _internal: Inte
     this(new InternalShapesElementClient(configuration))
   }
 
-  override def getConfiguration(): ShapesConfiguration = _internal.getConfiguration
-
   def toJsonSchema(element: AnyShape): String                    = _internal.toJsonSchema(element)
   def buildJsonSchema(element: AnyShape): String                 = _internal.buildJsonSchema(element)
   def toRamlDatatype(element: AnyShape): String                  = _internal.toRamlDatatype(element)
