@@ -456,14 +456,8 @@ declare module 'amf-client-js' {
 
 
   }
-  export class AMFElementClient extends BaseAMLElementClient  {
+  export class AMFElementClient extends BaseShapesElementClient  {
     getConfiguration(): AMFConfiguration
-
-    toJsonSchema(element: AnyShape): string
-
-    buildJsonSchema(element: AnyShape): string
-
-    toRamlDatatype(element: AnyShape): string
 
     renderToBuilder<T>(element: DomainElement, builder: org.yaml.builder.JsOutputBuilder): void
 
@@ -887,8 +881,6 @@ declare module 'amf-client-js' {
 
   }
   export class BaseShapesElementClient extends BaseAMLElementClient  {
-    getConfiguration(): ShapesConfiguration
-
     toJsonSchema(element: AnyShape): string
 
     buildJsonSchema(element: AnyShape): string
@@ -1042,6 +1034,7 @@ declare module 'amf-client-js' {
   }
   export class ShapesElementClient extends BaseShapesElementClient  {
     getConfiguration(): ShapesConfiguration
+
 
   }
   export class AbstractElementTransformer  {
