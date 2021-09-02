@@ -148,6 +148,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     val filterKeys = Seq(
       "example",
+      "examples",
       "examples".asOasExtension,
       "title",
       "description",
