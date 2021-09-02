@@ -92,7 +92,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  def validateUnionType(): Unit =
+  private def validateUnionType(): Unit =
     if (version.isInstanceOf[OAS30SchemaVersion])
       ctx.eh.violation(InvalidJsonSchemaType,
                        "",
@@ -124,7 +124,6 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     * JSON Schema allows to define multiple types for a shape.
     * In this case we can parse this as a union because properties
     * are going to be disjoint for each of them
-    * @return
     */
   private def detectDisjointUnion(): Boolean = {
     map.key("type").isDefined && map.key("type").get.value.asOption[YSequence].isDefined
@@ -141,43 +140,56 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
   private def parseDisjointUnionType(): UnionShape = {
 
     // val detectedTypes = map.key("type").get.value.as[YSequence].nodes.map(_.as[String])
-    val filtered = YMap(map.entries.filter(_.key.as[String] != "type"), map.sourceName)
+    val allEntriesExceptType = YMap(map.entries.filter(_.key.as[String] != "type"), map.sourceName)
 
-    val parser = UnionShapeParser(YMapEntryLike(filtered), name)
+    val parser = UnionShapeParser(YMapEntryLike(allEntriesExceptType), name)
     adopt(parser.shape) // We need to set the shape id before parsing to properly adopt nested nodes
     val union = parser.parse()
 
-    val finals = filtered.entries.filter { entry =>
-      val prop = entry.key.as[String]
-      prop != "example" && prop != "examples".asOasExtension && prop != "title" &&
-      prop != "description" && prop != "default" && prop != "enum" &&
-      prop != "externalDocs" && prop != "xml" && prop != "facets".asOasExtension &&
-      prop != "anyOf" && prop != "allOf" && prop != "oneOf" && prop != "not"
+    val filterKeys = Seq(
+      "example",
+      "examples".asOasExtension,
+      "title",
+      "description",
+      "default",
+      "enum",
+      "externalDocs",
+      "xml",
+      "facets".asOasExtension,
+      "anyOf",
+      "allOf",
+      "oneOf",
+      "not"
+    )
+    val filteredEntries = allEntriesExceptType.entries.filter { entry =>
+      !filterKeys.contains(entry.key.as[String])
     }
-
-    val exclusiveProps = YMap(finals, finals.headOption.map(_.sourceName).getOrElse(""))
-    var i              = 0
-    val sequence       = map.key("type").get.value.as[YSequence]
-    val parsedTypes: Seq[AmfElement] = sequence.nodes map { node =>
-      i += 1
+    val propsToPropagate = YMap(filteredEntries, filteredEntries.headOption.map(_.sourceName).getOrElse(""))
+    val typesSeq         = map.key("type").get.value.as[YSequence]
+    var index            = 0
+    val parsedTypes: Seq[AmfElement] = typesSeq.nodes map { node =>
+      index += 1
       if (node.tagType == YType.Str) {
         node.as[String] match {
           case "object" =>
-            Some(parseObjectType(name + i, exclusiveProps, s => s.withId(union.id + "/object")))
+            Some(parseObjectType(name + index, propsToPropagate, s => s.withId(union.id + "/object")))
           case "array" =>
-            Some(parseArrayType(name + i, exclusiveProps, s => s.withId(union.id + "/array")))
+            Some(parseArrayType(name + index, propsToPropagate, s => s.withId(union.id + "/array")))
           case "number" =>
-            Some(parseScalarType(TypeDef.NumberType, name + i, exclusiveProps, s => s.withId(union.id + "/number")))
+            Some(
+              parseScalarType(TypeDef.NumberType, name + index, propsToPropagate, s => s.withId(union.id + "/number")))
           case "integer" =>
-            Some(parseScalarType(TypeDef.IntType, name + i, exclusiveProps, s => s.withId(union.id + "/integer")))
+            Some(
+              parseScalarType(TypeDef.IntType, name + index, propsToPropagate, s => s.withId(union.id + "/integer")))
           case "string" =>
-            Some(parseScalarType(TypeDef.StrType, name + i, exclusiveProps, s => s.withId(union.id + "/string")))
+            Some(parseScalarType(TypeDef.StrType, name + index, propsToPropagate, s => s.withId(union.id + "/string")))
           case "boolean" =>
-            Some(parseScalarType(TypeDef.BoolType, name + i, exclusiveProps, s => s.withId(union.id + "/boolean")))
+            Some(
+              parseScalarType(TypeDef.BoolType, name + index, propsToPropagate, s => s.withId(union.id + "/boolean")))
           case "null" =>
-            Some(parseScalarType(TypeDef.NilType, name + i, exclusiveProps, s => s.withId(union.id + "/nil")))
+            Some(parseScalarType(TypeDef.NilType, name + index, propsToPropagate, s => s.withId(union.id + "/nil")))
           case "any" =>
-            Some(parseAnyType(name + i, exclusiveProps, s => s.withId(union.id + "/any")))
+            Some(parseAnyType(name + index, propsToPropagate, s => s.withId(union.id + "/any")))
           case other =>
             ctx.eh.violation(InvalidDisjointUnionType,
                              union.id,
@@ -186,7 +198,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
             None
         }
       } else if (node.tagType == YType.Map) {
-        val entry = YMapEntry(s"union_member_$i", node)
+        val entry = YMapEntry(s"union_member_$index", node)
         OasTypeParser(entry, shape => shape.adopted(union.id), version).parse()
       } else {
         ctx.eh.violation(InvalidDisjointUnionType,
@@ -197,7 +209,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       }
     } collect { case Some(t: AmfElement) => t }
 
-    if (parsedTypes.nonEmpty) union.setArrayWithoutId(UnionShapeModel.AnyOf, parsedTypes, Annotations(sequence))
+    if (parsedTypes.nonEmpty) union.setArrayWithoutId(UnionShapeModel.AnyOf, parsedTypes, Annotations(typesSeq))
 
     union
   }
