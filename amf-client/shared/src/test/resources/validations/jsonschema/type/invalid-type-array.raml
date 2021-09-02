@@ -14,8 +14,19 @@ types:
           ],
           "examples": [
             "a string",
-            null
+            123
           ]
         }
       }
     }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: testType
+            example:
+              validTestProp: "a string"
+              invalidTestProp: 123
