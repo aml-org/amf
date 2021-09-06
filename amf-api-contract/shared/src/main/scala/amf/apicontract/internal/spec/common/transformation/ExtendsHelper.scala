@@ -17,6 +17,7 @@ import amf.core.internal.annotations.{Aliases, LexicalInformation, SourceAST, So
 import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig}
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.RamlWebApiContextType
@@ -26,21 +27,17 @@ import org.yaml.model._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-case class ExtendsHelper(profile: ProfileName,
+case class ExtendsHelper(spec: Spec,
                          keepEditingInfo: Boolean,
                          errorHandler: AMFErrorHandler,
                          context: Option[RamlWebApiContext] = None) {
-  def custom(profile: ProfileName): RamlWebApiContext = profile match {
-    case Raml08Profile => new CustomRaml08WebApiContext()
-    case _             => new CustomRaml10WebApiContext()
-  }
 
   def asOperation[T <: BaseUnit](node: DataNode,
                                  unit: T,
                                  name: String,
                                  trAnnotations: Annotations,
                                  extensionId: String): Operation = {
-    val ctx = context.getOrElse(custom(profile))
+    val ctx = context.getOrElse(custom(spec))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
     val entry               = emitDataNode(node, trAnnotations, name, referencesCollector)(ctx)
@@ -55,7 +52,7 @@ case class ExtendsHelper(profile: ProfileName,
                                     entry: YMapEntry,
                                     referencesCollector: mutable.Map[String, DomainElement] =
                                       mutable.Map[String, DomainElement]()): Operation = {
-    val ctx = context.getOrElse(custom(profile))
+    val ctx = context.getOrElse(custom(spec))
 
     extractContextDeclarationsFrom(unit, entry.value.sourceName)(ctx)
     referencesCollector.foreach {
@@ -79,6 +76,11 @@ case class ExtendsHelper(profile: ProfileName,
     operation
   }
 
+  private def custom(spec: Spec): RamlWebApiContext = spec match {
+    case Spec.RAML08 => new CustomRaml08WebApiContext()
+    case _           => new CustomRaml10WebApiContext()
+  }
+
   def entryAsOperation[T <: BaseUnit](unit: T,
                                       name: String,
                                       extensionId: String,
@@ -96,7 +98,7 @@ case class ExtendsHelper(profile: ProfileName,
                                 name: String,
                                 extensionId: String): EndPoint = {
 
-    val ctx = context.getOrElse(custom(profile))
+    val ctx = context.getOrElse(custom(spec))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
     val entry: YMapEntry    = emitDataNode(node, rtAnnotations, name, referencesCollector)(ctx)
@@ -151,7 +153,7 @@ case class ExtendsHelper(profile: ProfileName,
                                      entry: YMapEntry,
                                      referencesCollector: mutable.Map[String, DomainElement] =
                                        mutable.Map[String, DomainElement]()): EndPoint = {
-    val ctx       = context.getOrElse(custom(profile))
+    val ctx       = context.getOrElse(custom(spec))
     val collector = ListBuffer[EndPoint]()
 
     extractContextDeclarationsFrom(unit, entry.sourceName)(ctx)

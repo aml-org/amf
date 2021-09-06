@@ -24,6 +24,7 @@ import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig, YNodeLikeOps}
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
+import amf.core.internal.remote.Spec
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
@@ -53,6 +54,11 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
                           val fromOverlay: Boolean = false,
                           visited: mutable.Set[String] = mutable.Set())(implicit val errorHandler: AMFErrorHandler) {
 
+    private lazy val spec = profile match {
+      case Raml08Profile => Spec.RAML08
+      case _             => Spec.RAML10
+    }
+
     /** Default to raml10 context. */
     def ctx(): RamlWebApiContext = profile match {
       case Raml08Profile =>
@@ -72,7 +78,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
           val node = rt.dataNode.copyNode()
           node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
             apiContext.eh.violation(ResolutionValidation, r.id, None, message, r.position(), r.location()))
-          val extendsHelper = ExtendsHelper(profile, keepEditingInfo = keepEditingInfo, errorHandler, Some(apiContext))
+          val extendsHelper = ExtendsHelper(spec, keepEditingInfo = keepEditingInfo, errorHandler, Some(apiContext))
           extendsHelper.asEndpoint(
             context.model,
             node,
@@ -299,7 +305,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
                                           parameterized.location())
                 })
 
-                val extendsHelper = ExtendsHelper(profile, keepEditingInfo = true, errorHandler, Some(apiContext))
+                val extendsHelper = ExtendsHelper(spec, keepEditingInfo = true, errorHandler, Some(apiContext))
                 val op = extendsHelper.asOperation(
                   node,
                   context.model,

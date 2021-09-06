@@ -8,6 +8,7 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandl
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DataNode
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Spec
 import org.yaml.model.YMapEntry
 
 /**
@@ -15,47 +16,47 @@ import org.yaml.model.YMapEntry
   */
 object AbstractElementTransformer {
 
-  def asEndpoint[T <: BaseUnit](unit: T,
-                                rt: ResourceType,
-                                profile: ProfileName = Raml10Profile,
-                                errorHandler: AMFErrorHandler = UnhandledErrorHandler): EndPoint = {
+  def asEndpoint(unit: BaseUnit,
+                 rt: ResourceType,
+                 spec: Spec = Spec.RAML10,
+                 errorHandler: AMFErrorHandler = UnhandledErrorHandler): EndPoint = {
     rt.linkTarget match {
       case Some(_) =>
         val resourceType = rt.effectiveLinkTarget().asInstanceOf[ResourceType]
-        asEndpoint(unit, resourceType, profile, errorHandler)
+        asEndpoint(unit, resourceType, spec, errorHandler)
       case _ =>
         Option(rt.dataNode)
           .map { dataNode =>
-            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+            val extendsHelper = ExtendsHelper(spec, keepEditingInfo = false, errorHandler)
             extendsHelper.asEndpoint(unit, dataNode, rt.annotations, rt.name.value(), rt.id)
           }
           .getOrElse(EndPoint())
     }
   }
 
-  def entryAsEndpoint[T <: BaseUnit](unit: T,
-                                     rt: ResourceType,
-                                     node: DataNode,
-                                     entry: YMapEntry,
-                                     errorHandler: AMFErrorHandler = UnhandledErrorHandler,
-                                     profile: ProfileName = Raml10Profile): EndPoint = {
-    val helper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+  def entryAsEndpoint(unit: BaseUnit,
+                      rt: ResourceType,
+                      node: DataNode,
+                      entry: YMapEntry,
+                      errorHandler: AMFErrorHandler = UnhandledErrorHandler,
+                      spec: Spec = Spec.RAML10): EndPoint = {
+    val helper = ExtendsHelper(spec, keepEditingInfo = false, errorHandler)
     helper.entryAsEndpoint(unit, node, rt.name.option().getOrElse(""), rt.id, entry)
   }
 
   /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
-  def asOperation[T <: BaseUnit](unit: T,
-                                 tr: Trait,
-                                 profile: ProfileName = Raml10Profile,
-                                 errorHandler: AMFErrorHandler = UnhandledErrorHandler): Operation = {
+  def asOperation(unit: BaseUnit,
+                  tr: Trait,
+                  spec: Spec = Spec.RAML10,
+                  errorHandler: AMFErrorHandler = UnhandledErrorHandler): Operation = {
     tr.linkTarget match {
       case Some(_) =>
         val value = tr.effectiveLinkTarget().asInstanceOf[Trait]
-        asOperation(unit, value, profile, errorHandler)
+        asOperation(unit, value, spec, errorHandler)
       case _ =>
         Option(tr.dataNode)
           .map { dataNode =>
-            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+            val extendsHelper = ExtendsHelper(spec, keepEditingInfo = false, errorHandler)
             extendsHelper.asOperation(
               dataNode,
               unit,
@@ -71,9 +72,9 @@ object AbstractElementTransformer {
   def entryAsOperation[T <: BaseUnit](unit: T,
                                       tr: Trait,
                                       entry: YMapEntry,
-                                      profile: ProfileName = Raml10Profile,
+                                      spec: Spec = Spec.RAML10,
                                       errorHandler: AMFErrorHandler = UnhandledErrorHandler): Operation = {
-    val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+    val extendsHelper = ExtendsHelper(spec, keepEditingInfo = false, errorHandler)
     extendsHelper.entryAsOperation(unit, tr.name.option().getOrElse(""), tr.id, entry)
   }
 }

@@ -10,6 +10,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DataNode, DomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.client.scala.render.AMFElementRenderer
+import amf.core.internal.remote.Spec
 import amf.shapes.client.scala.ShapesElementClient
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.render.{JsonSchemaShapeRenderer, RamlShapeRenderer}
@@ -26,32 +27,29 @@ class AMFElementClient private[amf] (override protected val configuration: AMFCo
   }
 
   /** Get this resource type as an endpoint. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
-  def asEndpoint[T <: BaseUnit](unit: T, rt: ResourceType, profile: ProfileName = Raml10Profile): EndPoint =
-    AbstractElementTransformer.asEndpoint(unit, rt, profile, configuration.errorHandlerProvider.errorHandler())
+  def asEndpoint(unit: BaseUnit, rt: ResourceType, spec: Spec = Spec.RAML10): EndPoint =
+    AbstractElementTransformer.asEndpoint(unit, rt, spec, configuration.errorHandlerProvider.errorHandler())
 
   /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
-  def asOperation[T <: BaseUnit](unit: T, tr: Trait, profile: ProfileName = Raml10Profile): Operation =
-    AbstractElementTransformer.asOperation(unit, tr, profile, configuration.errorHandlerProvider.errorHandler())
+  def asOperation(unit: BaseUnit, tr: Trait, spec: Spec = Spec.RAML10): Operation =
+    AbstractElementTransformer.asOperation(unit, tr, spec, configuration.errorHandlerProvider.errorHandler())
 
-  def entryAsEndpoint[T <: BaseUnit](unit: T,
-                                     rt: ResourceType,
-                                     node: DataNode,
-                                     entry: YMapEntry,
-                                     profile: ProfileName = Raml10Profile): EndPoint =
+  def entryAsEndpoint(unit: BaseUnit,
+                      rt: ResourceType,
+                      node: DataNode,
+                      entry: YMapEntry,
+                      spec: Spec = Spec.RAML10): EndPoint =
     AbstractElementTransformer.entryAsEndpoint(unit,
                                                rt,
                                                node,
                                                entry,
                                                configuration.errorHandlerProvider.errorHandler(),
-                                               profile)
+                                               spec)
 
-  def entryAsOperation[T <: BaseUnit](unit: T,
-                                      tr: Trait,
-                                      entry: YMapEntry,
-                                      profile: ProfileName = Raml10Profile): Operation =
+  def entryAsOperation(unit: BaseUnit, tr: Trait, entry: YMapEntry, spec: Spec = Spec.RAML10): Operation =
     AbstractElementTransformer.entryAsOperation(unit,
                                                 tr,
                                                 entry,
-                                                profile,
+                                                spec,
                                                 configuration.errorHandlerProvider.errorHandler())
 }
