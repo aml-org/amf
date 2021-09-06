@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: test
+
+types:
+  testType: |
+    {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "testProp": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "examples": [
+            "a string",
+            123
+          ]
+        }
+      }
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: testType
+            example:
+              validTestProp: "a string"
+              invalidTestProp: 123
