@@ -8,6 +8,7 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
+      label 'gn-8-16-1'
       registryCredentialsId 'dockerhub-pro-credentials'
     }
   }
