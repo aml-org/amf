@@ -13,8 +13,8 @@ object Common {
 
   val settings: Seq[Def.Setting[_]] = Seq(
     scalaVersion := "2.12.11",
-    parallelExecution in Test := false,
-    fork in Test := false,
+    Test / parallelExecution := false,
+    Test / fork := false,
     scalacOptions ++= Seq("-unchecked", "-target:jvm-1.8", "-feature", "-deprecation", "-Xfatal-warnings"),
     scalacOptions ++= Seq("-encoding", "utf-8"),
     javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
