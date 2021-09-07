@@ -638,4 +638,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("required with non-declared property and additionalProperties = false") {
     validate("required-with-no-additional-props.raml", None, Raml08Profile)
   }
+
+  test("override type any with type object[]") {
+    validate("override-any-with-array.raml")
+  }
+
+  test("override type any with other type that is object[]") {
+    validate("override-any-with-array-type.raml")
+  }
 }

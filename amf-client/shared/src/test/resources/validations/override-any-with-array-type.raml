@@ -1,0 +1,23 @@
+#%RAML 1.0
+
+title: test
+
+types:
+  BaseObject:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          type: any
+
+  ArrayOfObjects:
+    type: object[]
+
+  CustomObjectList:
+    type: BaseObject
+    properties:
+      items:
+        type: array
+        items:
+          type: ArrayOfObjects
