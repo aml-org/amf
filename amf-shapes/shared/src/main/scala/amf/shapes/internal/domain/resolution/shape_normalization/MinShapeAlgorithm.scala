@@ -97,6 +97,9 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
         case baseArray: MatrixShape if superShape.isInstanceOf[MatrixShape] =>
           val superArray = superShape.asInstanceOf[MatrixShape]
           computeMinMatrix(baseArray, superArray)
+        case baseArray: MatrixShape if isArrayOfAnyShapes(superShape) =>
+          val superArray = superShape.asInstanceOf[ArrayShape]
+          computeMinMatrixWithAnyShape(baseArray, superArray)
         case baseArray: TupleShape if superShape.isInstanceOf[TupleShape] =>
           val superArray = superShape.asInstanceOf[TupleShape]
           computeMinTuple(baseArray, superArray)
@@ -239,6 +242,29 @@ private[resolution] class MinShapeAlgorithm()(implicit val context: Normalizatio
       computeNarrowRestrictions(ArrayShapeModel.fields,
                                 baseMatrix,
                                 superMatrix,
+                                filteredFields = Seq(ArrayShapeModel.Items))
+    } else {
+      if (Option(superItems).isDefined) baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, superItems)
+    }
+
+    baseMatrix
+  }
+
+  protected def isArrayOfAnyShapes(shape: Shape): Boolean =
+    shape.isInstanceOf[ArrayShape] && shape.asInstanceOf[ArrayShape].items.isInstanceOf[AnyShape]
+
+  protected def computeMinMatrixWithAnyShape(baseMatrix: MatrixShape, superArray: ArrayShape): Shape = {
+
+    val superItems = superArray
+    val baseItems  = baseMatrix.items
+    if (Option(superItems).isDefined && Option(baseItems).isDefined) {
+
+      val newItems = context.minShape(baseItems, superItems)
+      baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
+
+      computeNarrowRestrictions(ArrayShapeModel.fields,
+                                baseMatrix,
+                                superArray,
                                 filteredFields = Seq(ArrayShapeModel.Items))
     } else {
       if (Option(superItems).isDefined) baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, superItems)
