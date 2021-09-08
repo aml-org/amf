@@ -2,6 +2,7 @@ package amf.apicontract.client.scala
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.document.DialectInstance
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
@@ -252,7 +253,6 @@ object APIConfiguration extends APIConfigurationBuilder {
 /**
   * The AMFConfiguration lets you customize all AMF-specific configurations.
   * Its immutable and created through builders. An instance is needed to use AMF.
-  *
   * @see [[AMFBaseUnitClient]]
   */
 class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
@@ -262,19 +262,44 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val options: AMFOptions)
     extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
-  override def baseUnitClient(): AMFBaseUnitClient         = new AMFBaseUnitClient(this)
-  override def elementClient(): AMFElementClient           = new AMFElementClient(this)
+  /** Contains common AMF graph operations associated to documents */
+  override def baseUnitClient(): AMFBaseUnitClient = new AMFBaseUnitClient(this)
+
+  /** Contains functionality associated with specific elements of the AMF model */
+  override def elementClient(): AMFElementClient = new AMFElementClient(this)
+
+  /** Contains methods to get information about the current state of the configuration */
   override def configurationState(): AMFConfigurationState = new AMFConfigurationState(this)
 
+  /**
+    * Set [[ParsingOptions]]
+    * @param parsingOptions [[ParsingOptions]] to add to configuration object
+    * @return [[AMFConfiguration]] with [[ParsingOptions]] added
+    */
   override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =
     super._withParsingOptions(parsingOptions)
 
+  /**
+    * Add a [[ResourceLoader]]
+    * @param rl [[ResourceLoader]] to add to configuration object
+    * @return [[AMFConfiguration]] with the [[ResourceLoader]] added
+    */
   override def withResourceLoader(rl: ResourceLoader): AMFConfiguration =
     super._withResourceLoader(rl)
 
+  /**
+    * Set the configuration [[ResourceLoader]]s
+    * @param rl a list of [[ResourceLoader]] to set to the configuration object
+    * @return [[AMFConfiguration]] with [[ResourceLoader]]s set
+    */
   override def withResourceLoaders(rl: List[ResourceLoader]): AMFConfiguration =
     super._withResourceLoaders(rl)
 
+  /**
+    * Set [[UnitCache]]
+    * @param cache [[UnitCache]] to add to configuration object
+    * @return [[AMFConfiguration]] with [[UnitCache]] added
+    */
   override def withUnitCache(cache: UnitCache): AMFConfiguration =
     super._withUnitCache(cache)
 
@@ -295,6 +320,11 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   private[amf] override def withValidationProfile(profile: ValidationProfile): AMFConfiguration =
     super._withValidationProfile(profile)
 
+  /**
+    * Add a [[TransformationPipeline]]
+    * @param pipeline [[TransformationPipeline]] to add to configuration object
+    * @return [[AMFConfiguration]] with [[TransformationPipeline]] added
+    */
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =
     super._withTransformationPipeline(pipeline)
 
@@ -302,23 +332,58 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): AMFConfiguration =
     super._withTransformationPipelines(pipelines)
 
+  /**
+    * Set [[RenderOptions]]
+    * @param renderOptions [[RenderOptions]] to set to configuration object
+    * @return [[AMFConfiguration]] with [[RenderOptions]] added
+    */
   override def withRenderOptions(renderOptions: RenderOptions): AMFConfiguration =
     super._withRenderOptions(renderOptions)
 
+  /**
+    * Set [[ErrorHandlerProvider]]
+    * @param provider [[ErrorHandlerProvider]] to set to configuration object
+    * @return [[AMFConfiguration]] with [[ErrorHandlerProvider]] set
+    */
   override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration =
     super._withErrorHandlerProvider(provider)
 
+  /**
+    * Add an [[AMFEventListener]]
+    * @param listener [[AMFEventListener]] to add to configuration object
+    * @return [[AMFConfiguration]] with [[AMFEventListener]] added
+    */
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = super._withEventListener(listener)
 
-  override def withDialect(path: String): Future[AMFConfiguration] =
-    super.withDialect(path).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+  /**
+    * Register a Dialect
+    * @param url URL of the Dialect to register
+    * @return A CompletableFuture of [[AMFConfiguration]]
+    */
+  override def withDialect(url: String): Future[AMFConfiguration] =
+    super.withDialect(url).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
+  /**
+    * Register a Dialect
+    * @param dialect [[Dialect]] to register
+    * @return [[AMFConfiguration]] with [[Dialect]] registered
+    */
   override def withDialect(dialect: Dialect): AMFConfiguration =
     super.withDialect(dialect).asInstanceOf[AMFConfiguration]
 
+  /**
+    * Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url of the [[DialectInstance]]
+    * @return A CompletableFuture of [[AMFConfiguration]]
+    */
   override def forInstance(url: String): Future[AMFConfiguration] =
     super.forInstance(url).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
+  /**
+    * Set [[BaseExecutionEnvironment]]
+    * @param executionEnv [[BaseExecutionEnvironment]] to set to configuration object
+    * @return [[AMFConfiguration]] with [[BaseExecutionEnvironment]] set
+    */
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMFConfiguration =
     super._withExecutionEnvironment(executionEnv)
 

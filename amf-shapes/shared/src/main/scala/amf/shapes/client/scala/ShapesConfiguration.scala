@@ -1,6 +1,7 @@
 package amf.shapes.client.scala
 
 import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.document.DialectInstance
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.client.scala.{AMLBaseUnitClient, AMLConfiguration, AMLConfigurationState, AMLElementClient}
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
@@ -40,19 +41,52 @@ class ShapesConfiguration private[amf] (override private[amf] val resolvers: AMF
                               options: AMFOptions = options): ShapesConfiguration =
     new ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
 
-  override def baseUnitClient(): ShapesBaseUnitClient      = new ShapesBaseUnitClient(this)
-  override def elementClient(): ShapesElementClient        = new ShapesElementClient(this)
+  /** Contains common AMF graph operations associated to documents */
+  override def baseUnitClient(): ShapesBaseUnitClient = new ShapesBaseUnitClient(this)
+
+  /** Contains functionality associated with specific elements of the AMF model */
+  override def elementClient(): ShapesElementClient = new ShapesElementClient(this)
+
+  /** Contains methods to get information about the current state of the configuration */
   override def configurationState(): AMLConfigurationState = new AMLConfigurationState(this)
 
+  /**
+    * Set [[ParsingOptions]]
+    * @param parsingOptions [[ParsingOptions]] to add to configuration object
+    * @return [[ShapesConfiguration]] with [[ParsingOptions]] added
+    */
   override def withParsingOptions(parsingOptions: ParsingOptions): ShapesConfiguration =
     super._withParsingOptions(parsingOptions)
 
+  /**
+    * Set [[RenderOptions]]
+    * @param renderOptions [[RenderOptions]] to add to configuration object
+    * @return [[ShapesConfiguration]] with [[ParsingOptions]] added
+    */
+  override def withRenderOptions(renderOptions: RenderOptions): ShapesConfiguration =
+    super._withRenderOptions(renderOptions)
+
+  /**
+    * Add a [[ResourceLoader]]
+    * @param rl [[ResourceLoader]] to add to configuration object
+    * @return [[ShapesConfiguration]] with the [[ResourceLoader]] added
+    */
   override def withResourceLoader(rl: ResourceLoader): ShapesConfiguration =
     super._withResourceLoader(rl)
 
+  /**
+    * Set the configuration [[ResourceLoader]]s
+    * @param rl a list of [[ResourceLoader]] to set to the configuration object
+    * @return [[ShapesConfiguration]] with [[ResourceLoader]]s set
+    */
   override def withResourceLoaders(rl: List[ResourceLoader]): ShapesConfiguration =
     super._withResourceLoaders(rl)
 
+  /**
+    * Set [[UnitCache]]
+    * @param cache [[UnitCache]] to add to configuration object
+    * @return [[ShapesConfiguration]] with [[UnitCache]] added
+    */
   override def withUnitCache(cache: UnitCache): ShapesConfiguration =
     super._withUnitCache(cache)
 
@@ -67,23 +101,31 @@ class ShapesConfiguration private[amf] (override private[amf] val resolvers: AMF
   private[amf] override def withValidationProfile(profile: ValidationProfile): ShapesConfiguration =
     super._withValidationProfile(profile)
 
+  /**
+    * Add a [[TransformationPipeline]]
+    * @param pipeline [[TransformationPipeline]] to add to configuration object
+    * @return [[ShapesConfiguration]] with [[TransformationPipeline]] added
+    */
   override def withTransformationPipeline(pipeline: TransformationPipeline): ShapesConfiguration =
     super._withTransformationPipeline(pipeline)
 
-  /**
-    * AMF internal method just to facilitate the construction
-    * @param pipelines
-    * @return
-    */
+  /** AMF internal method just to facilitate the construction */
   override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): ShapesConfiguration =
     super._withTransformationPipelines(pipelines)
 
-  override def withRenderOptions(renderOptions: RenderOptions): ShapesConfiguration =
-    super._withRenderOptions(renderOptions)
-
+  /**
+    * Set [[ErrorHandlerProvider]]
+    * @param provider [[ErrorHandlerProvider]] to set to configuration object
+    * @return [[ShapesConfiguration]] with [[ErrorHandlerProvider]] set
+    */
   override def withErrorHandlerProvider(provider: ErrorHandlerProvider): ShapesConfiguration =
     super._withErrorHandlerProvider(provider)
 
+  /**
+    * Add an [[AMFEventListener]]
+    * @param listener [[AMFEventListener]] to add to configuration object
+    * @return [[ShapesConfiguration]] with [[AMFEventListener]] added
+    */
   override def withEventListener(listener: AMFEventListener): ShapesConfiguration = super._withEventListener(listener)
 
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): ShapesConfiguration =
@@ -95,15 +137,35 @@ class ShapesConfiguration private[amf] (override private[amf] val resolvers: AMF
   private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): ShapesConfiguration =
     super._withAnnotations(annotations)
 
+  /**
+    * Set [[BaseExecutionEnvironment]]
+    * @param executionEnv [[BaseExecutionEnvironment]] to set to configuration object
+    * @return [[ShapesConfiguration]] with [[BaseExecutionEnvironment]] set
+    */
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): ShapesConfiguration =
     super._withExecutionEnvironment(executionEnv)
 
-  override def withDialect(path: String): Future[ShapesConfiguration] =
-    super.withDialect(path).map(_.asInstanceOf[ShapesConfiguration])(getExecutionContext)
-
+  /**
+    * Register a Dialect
+    * @param dialect [[Dialect]] to register
+    * @return [[ShapesConfiguration]] with [[Dialect]] registered
+    */
   override def withDialect(dialect: Dialect): ShapesConfiguration =
     super.withDialect(dialect).asInstanceOf[ShapesConfiguration]
 
+  /**
+    * Register a Dialect
+    * @param url URL of the Dialect to register
+    * @return A CompletableFuture of [[ShapesConfiguration]]
+    */
+  override def withDialect(url: String): Future[ShapesConfiguration] =
+    super.withDialect(url).map(_.asInstanceOf[ShapesConfiguration])(getExecutionContext)
+
+  /**
+    * Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url of the [[DialectInstance]]
+    * @return A CompletableFuture of [[ShapesConfiguration]]
+    */
   override def forInstance(url: String): Future[ShapesConfiguration] =
     super.forInstance(url).map(_.asInstanceOf[ShapesConfiguration])(getExecutionContext)
 }
