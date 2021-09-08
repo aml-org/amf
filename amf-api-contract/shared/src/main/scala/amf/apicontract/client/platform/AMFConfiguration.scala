@@ -1,7 +1,7 @@
 package amf.apicontract.client.platform
 
-import amf.aml.client.platform.BaseAMLConfiguration
 import amf.aml.client.platform.model.document.Dialect
+import amf.aml.client.platform.model.document.DialectInstance
 import amf.aml.internal.convert.VocabulariesClientConverter.DialectConverter
 import amf.apicontract.client.scala.{
   APIConfiguration => InternalAPIConfiguration,
@@ -42,6 +42,7 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
   /** Contains functionality associated with specific elements of the AMF model */
   override def elementClient(): AMFElementClient = new AMFElementClient(this)
 
+  /** Contains methods to get information about the current state of the configuration */
   def configurationState(): AMFConfigurationState = new AMFConfigurationState(this)
 
   /**
@@ -124,11 +125,16 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: scala.
 
   /**
     * Register a Dialect
-    * @param path path of the Dialect to register
+    * @param url URL of the Dialect to register
     * @return A CompletableFuture of [[AMFConfiguration]]
     */
-  def withDialect(path: String): ClientFuture[AMFConfiguration] = _internal.withDialect(path).asClient
+  def withDialect(url: String): ClientFuture[AMFConfiguration] = _internal.withDialect(url).asClient
 
+  /**
+    * Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url of the [[DialectInstance]]
+    * @return A CompletableFuture of [[AMFConfiguration]]
+    */
   def forInstance(url: String): ClientFuture[AMFConfiguration] = _internal.forInstance(url).asClient
 
   override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMFConfiguration =

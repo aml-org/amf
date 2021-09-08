@@ -2,6 +2,7 @@ package amf.apicontract.client.scala
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.document.DialectInstance
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
@@ -267,6 +268,7 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   /** Contains functionality associated with specific elements of the AMF model */
   override def elementClient(): AMFElementClient = new AMFElementClient(this)
 
+  /** Contains methods to get information about the current state of the configuration */
   override def configurationState(): AMFConfigurationState = new AMFConfigurationState(this)
 
   /**
@@ -369,6 +371,11 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withDialect(dialect: Dialect): AMFConfiguration =
     super.withDialect(dialect).asInstanceOf[AMFConfiguration]
 
+  /**
+    * Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url of the [[DialectInstance]]
+    * @return A CompletableFuture of [[AMFConfiguration]]
+    */
   override def forInstance(url: String): Future[AMFConfiguration] =
     super.forInstance(url).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
