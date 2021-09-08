@@ -98,8 +98,8 @@ class ShapesConfiguration private[amf] (override private[amf] val resolvers: AMF
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): ShapesConfiguration =
     super._withExecutionEnvironment(executionEnv)
 
-  override def withDialect(path: String): Future[ShapesConfiguration] =
-    super.withDialect(path).map(_.asInstanceOf[ShapesConfiguration])(getExecutionContext)
+  override def withDialect(url: String): Future[ShapesConfiguration] =
+    super.withDialect(url).map(_.asInstanceOf[ShapesConfiguration])(getExecutionContext)
 
   override def withDialect(dialect: Dialect): ShapesConfiguration =
     super.withDialect(dialect).asInstanceOf[ShapesConfiguration]

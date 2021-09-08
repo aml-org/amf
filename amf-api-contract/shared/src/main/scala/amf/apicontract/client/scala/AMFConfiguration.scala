@@ -355,11 +355,11 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   /**
     * Register a Dialect
-    * @param path path of the Dialect to register
+    * @param url URL of the Dialect to register
     * @return A CompletableFuture of [[AMFConfiguration]]
     */
-  override def withDialect(path: String): Future[AMFConfiguration] =
-    super.withDialect(path).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+  override def withDialect(url: String): Future[AMFConfiguration] =
+    super.withDialect(url).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
 
   /**
     * Register a Dialect
