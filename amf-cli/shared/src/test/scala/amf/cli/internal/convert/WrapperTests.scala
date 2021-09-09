@@ -2094,6 +2094,25 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+  test("Merge parse result and validation report") {
+    val client = RAMLConfiguration.RAML10().baseUnitClient()
+    val api =
+      """
+        | #%RAML 1.0
+        | title: API
+        | version: 1.0
+        | /endpoint:
+        |   'syntax-error?:
+        |""".stripMargin
+    for {
+      parsingResult    <- client.parseContent(api).asFuture
+      validationReport <- client.validate(parsingResult.baseUnit).asFuture
+    } yield {
+      val merged = parsingResult.merge(validationReport)
+      assert(!parsingResult.conforms && validationReport.conforms && !merged.conforms)
+    }
+  }
+
 //
 //  // todo: move to common (file system)
   def getAbsolutePath(path: String): String
