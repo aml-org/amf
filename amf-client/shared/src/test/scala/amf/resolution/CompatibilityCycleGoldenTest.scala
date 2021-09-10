@@ -182,4 +182,14 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     )
   }
 
+  test("RAML headers") {
+    cycle(
+      "oas30/parameter-names.json",
+      "cycled-apis/raml/parameter-names.raml",
+      OasJsonHint,
+      Raml,
+      transformWith = Some(Raml10)
+    )
+  }
+
 }

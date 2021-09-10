@@ -34,7 +34,8 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
     new RamlCompatiblePayloadAndParameterResolutionStage(profileName),
     new SanitizeCustomTypeNames(),
     new RecursionDetection(),
-    new AnnotationRemovalStage()
+    new AnnotationRemovalStage(),
+    new ParameterNameNormalization()
   )
 
   override def profileName: ProfileName = RamlProfile
