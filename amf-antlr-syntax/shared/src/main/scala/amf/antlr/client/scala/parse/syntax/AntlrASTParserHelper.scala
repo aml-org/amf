@@ -9,9 +9,6 @@ import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
 trait AntlrASTParserHelper {
   def find(node: Node, name: String): Seq[ASTElement] = node.children.filter(_.name == name)
 
-  def findAndGetTerminal(node: Node, name: String): Option[Terminal] =
-    find(node, name).headOption.flatMap({ case n: Node => n.children.collectFirst({ case t: Terminal => t }) })
-
   def collect(node: ASTElement, names: Seq[String]): Seq[ASTElement] = {
     if (names.isEmpty) {
       Seq(node)
@@ -43,6 +40,13 @@ trait AntlrASTParserHelper {
         case _ =>
           None
       }
+    }
+  }
+
+  def pathToTerminal(node: Node, names: Seq[String]): Option[Terminal] = {
+    path(node, names)  match {
+      case Some(t: Terminal) => Some(t)
+      case _                 => None
     }
   }
 

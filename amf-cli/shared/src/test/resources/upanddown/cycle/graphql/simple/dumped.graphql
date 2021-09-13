@@ -1,0 +1,36 @@
+"""
+schema documentation
+"""
+schema {
+  query: CustomQuery
+  mutation: Mutation
+  subscription: Subscription
+}
+type CustomQuery {
+  """
+  Get all the people
+  """
+  allPersons(
+    """
+    Last parameter
+    """
+    last: Int
+  ): [Person!]!
+}
+type Mutation {
+
+  createPerson(name: String!,age: Int!): Person!
+}
+type Subscription {
+
+  newPerson: Person!
+}
+type Person {
+  name : String!
+  age : Int!
+  posts(limit: Int,offset: Int): [Post!]!
+}
+type Post {
+  title : String!
+  author : Person!
+}

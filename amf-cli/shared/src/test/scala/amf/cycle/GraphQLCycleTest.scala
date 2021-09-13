@@ -2,14 +2,12 @@ package amf.cycle
 
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.config.RenderOptions
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler, UnhandledErrorHandler}
 import amf.core.internal.remote.{AmfJsonHint, GraphQLHint, GrpcProtoHint}
 import amf.graphql.client.scala.GraphQLConfiguration
 import amf.io.FunSuiteCycleTests
 
-class GraphQLCycleTest extends FunSuiteCycleTests {
-  override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/graphql/"
-
+trait GraphQLFunSuiteCycleTests extends FunSuiteCycleTests {
   override def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
     val amfConfig: AMFConfiguration = GraphQLConfiguration.GraphQL()
     val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {
@@ -19,8 +17,36 @@ class GraphQLCycleTest extends FunSuiteCycleTests {
       renderedConfig.withErrorHandlerProvider(() => e))
   }
 
-  test("Can cycle through a simple gRPC API") {
+}
+
+
+class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
+  override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/graphql/"
+
+
+  test("Can cycle through a simple GraphQL API") {
     cycle("simple/api.graphql", "simple/api.jsonld", GraphQLHint, AmfJsonHint)
   }
 
+  test("HERE_HERE Can cycle through a simple GraphQL API") {
+    cycle("simple/api.graphql", "simple/dumped.graphql", GraphQLHint, GraphQLHint)
+  }
+
 }
+
+/*
+class GraphQLParserTest extends GraphQLFunSuiteCycleTests {
+  override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/graphql/simple/"
+
+  multiGoldenTest("HERE_HERE Can generate simple GraphQL specs", "api.%s") { config =>
+    cycle(
+      "api.graphql",
+      config.golden,
+      GraphQLHint,
+      AmfJsonHint,
+      renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint),
+      eh = Some(UnhandledErrorHandler)
+    )
+  }
+}
+*/

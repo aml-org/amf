@@ -2,11 +2,19 @@
 schema documentation
 """
 schema {
-    query: Query
+    query: CustomQuery
 }
 
-type Query {
-    allPersons(last: Int): [Person!]!
+type CustomQuery {
+    """
+    Get all the people
+    """
+    allPersons(
+        """
+        Last parameter
+        """
+        last: Int
+    ): [Person!]!
 }
 
 """
@@ -23,7 +31,7 @@ type Subscription {
 type Person {
     name: String!
     age: Int!
-    posts: [Post!]!
+    posts(limit: Int, offset: Int): [Post!]!
 }
 
 type Post {

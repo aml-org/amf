@@ -836,7 +836,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     nodeShape.withProperty("name").withRange(shape)
     doc.withDeclaredElement(nodeShape)
 
-    val linked: NodeShape = nodeShape.link(Some("#/definitions/person"))
+    val linked: NodeShape = nodeShape.link("#/definitions/person")
     linked.withName("Person")
     doc.encodes
       .asInstanceOf[Api[_]]
@@ -1045,9 +1045,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
     webApi.description.remove()
     val operation: Operation = webApi.endPoints.asSeq.head.operations.asSeq.head
-    operation.graph().remove("http://a.ml/vocabularies/apiContract#returns")
+    operation.graph()._internal.removeField("http://a.ml/vocabularies/apiContract#returns")
 
-    webApi.graph().remove("http://a.ml/vocabularies/core#license")
+    webApi.graph()._internal.removeField("http://a.ml/vocabularies/core#license")
     unit
   }
 

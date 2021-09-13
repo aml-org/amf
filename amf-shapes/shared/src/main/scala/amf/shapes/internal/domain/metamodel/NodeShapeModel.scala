@@ -8,7 +8,7 @@ import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.domain.metamodel.core.ShapeOperationModel
+import amf.shapes.internal.domain.metamodel.operations.ShapeOperationModel
 
 /**
   * Node shape metaModel.
@@ -102,10 +102,10 @@ trait NodeShapeModel extends AnyShapeModel {
              "Properties that may not be evaluated in schema validation")
   )
 
-  val Operation: Field = Field(
-    ShapeOperationModel,
-    ApiContract + "supportedOperation",
-    ModelDoc(ModelVocabularies.Shapes, "supportedOperation", "Supported operation to request object")
+  val Operations: Field = Field(
+    Array(ShapeOperationModel),
+    Shapes + "supportedOperation",
+    ModelDoc(ModelVocabularies.Shapes, "supportedOperation", "Supported operations for this shape")
   )
 
   val specificFields = List(
@@ -124,7 +124,7 @@ trait NodeShapeModel extends AnyShapeModel {
     SchemaDependencies,
     UnevaluatedProperties,
     UnevaluatedPropertiesSchema,
-    Operation
+    Operations
   )
 
   override val fields: List[Field] =

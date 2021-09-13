@@ -47,7 +47,8 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   }
 
   def parseNestedType(objTypeDef: Node): Unit = {
-    ctx.declarations += new GraphQLNestedTypeParser(objTypeDef).parse(doc.id)
+    val shape = new GraphQLNestedTypeParser(objTypeDef).parse(doc.id)
+    ctx.declarations += shape
   }
 
   private def processTypes(node: Node) = {
@@ -61,11 +62,10 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, OBJECT_TYPE_DEFINITION)) foreach {
       case objTypeDef: Node =>
         searchName(objTypeDef) match {
-          case Some(query) if query == QUERY_TYPE => parseTopLevelType(objTypeDef, RootTypes.Query)
-          case Some(subscription) if subscription == SUBSCRIPTION_TYPE =>
-            parseTopLevelType(objTypeDef, RootTypes.Subscription)
-          case Some(mutation) if mutation == MUTATION_TYPE => parseTopLevelType(objTypeDef, RootTypes.Mutation)
-          case _                                           => parseNestedType(objTypeDef)
+          case Some(query)        if query == QUERY_TYPE               => parseTopLevelType(objTypeDef, RootTypes.Query)
+          case Some(subscription) if subscription == SUBSCRIPTION_TYPE => parseTopLevelType(objTypeDef, RootTypes.Subscription)
+          case Some(mutation)     if mutation == MUTATION_TYPE         => parseTopLevelType(objTypeDef, RootTypes.Mutation)
+          case _                                                       => parseNestedType(objTypeDef)
         }
     }
   }
@@ -73,14 +73,14 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   private def parseSchemaNode(schemaNode: ASTElement): Unit = {
     findDescription(schemaNode) match {
       case Some(terminal: Terminal) => // the description of the schema is set at the API level
-        webapi.set(WebApiModel.Description, (terminal.value), toAnnotations(terminal))
+        webapi.set(WebApiModel.Description, cleanDocumentation(terminal.value), toAnnotations(terminal))
       case _ => // ignore
     }
 
     // let's setup the names of the top level types
     collect(schemaNode, Seq(ROOT_OPERATION_TYPE_DEFINITION)).foreach {
       case typeDef: Node =>
-        val targetType: String = path(typeDef, Seq(NAMED_TYPE, NAME)) match {
+        val targetType: String = path(typeDef, Seq(NAMED_TYPE, NAME, NAME_TERMINAL)) match {
           case Some(t: Terminal) => t.value
           case _ =>
             astError(webapi.id,
@@ -89,12 +89,19 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
             ""
         }
         find(typeDef, OPERATION_TYPE).headOption match {
-          case Some(t: Terminal) =>
-            t.value match {
-              case "query"        => QUERY_TYPE = targetType
-              case "mutation"     => MUTATION_TYPE = targetType
-              case "subscription" => SUBSCRIPTION_TYPE = targetType
-              case v              => astError(webapi.id, s"Unknown root-level operation type ${v}", toAnnotations(t))
+          case Some(n: Node) =>
+            n.children.headOption match {
+              case Some(t: Terminal) =>
+                t.value match {
+                  case "query"        => QUERY_TYPE = targetType
+                  case "mutation"     => MUTATION_TYPE = targetType
+                  case "subscription" => SUBSCRIPTION_TYPE = targetType
+                  case v              => astError(webapi.id, s"Unknown root-level operation type ${v}", toAnnotations(t))
+                }
+              case _               =>
+                astError(webapi.id,
+                  "Cannot find operation type for top-level schema root operation type definition",
+                  toAnnotations(n))
             }
           case _ =>
             astError(webapi.id,

@@ -12,6 +12,7 @@ object TokenTypes {
   val OBJECT_TYPE_DEFINITION = "objectTypeDefinition"
   val TYPE = "type"
   val NAME = "name"
+  val NAME_TERMINAL = "NAME"
   val ROOT_OPERATION_TYPE_DEFINITION = "rootOperationTypeDefinition"
   val OPERATION_TYPE = "operationType"
   val NAMED_TYPE = "namedType"

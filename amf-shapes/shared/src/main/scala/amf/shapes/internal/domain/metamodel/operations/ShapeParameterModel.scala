@@ -1,4 +1,4 @@
-package amf.shapes.internal.domain.metamodel.core
+package amf.shapes.internal.domain.metamodel.operations
 
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Shapes}
@@ -13,7 +13,7 @@ import amf.core.internal.metamodel.domain.{
 }
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Bool, Str}
-import amf.shapes.client.scala.model.domain.core.ShapeParameter
+import amf.shapes.client.scala.model.domain.operations.ShapeParameter
 
 object ShapeParameterModel
     extends DomainElementModel
@@ -38,7 +38,7 @@ object ShapeParameterModel
 
   override val key: Field = Name
 
-  override val `type`: List[ValueType] = ApiContract + "Parameter" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = Shapes + "Parameter" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
     List(Name, ParameterName, Description, Required, Schema) ++ LinkableElementModel.fields ++ DomainElementModel.fields
@@ -46,7 +46,7 @@ object ShapeParameterModel
   override def modelInstance = ShapeParameter()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.ApiContract,
+    ModelVocabularies.Shapes,
     "Parameter",
     "Piece of data required or returned by an Operation"
   )
