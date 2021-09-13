@@ -8,7 +8,7 @@ import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
@@ -24,7 +24,7 @@ case class NamedPropertyTypeEmitter(annotation: CustomDomainProperty,
     val name = annotation.name.option() match {
       case Some(n) => n
       case _ =>
-        spec.eh.violation(ResolutionValidation,
+        spec.eh.violation(TransformationValidation,
                           annotation.id,
                           None,
                           s"Annotation type without name $annotation",

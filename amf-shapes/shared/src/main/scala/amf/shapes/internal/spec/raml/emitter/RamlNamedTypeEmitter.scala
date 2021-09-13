@@ -7,7 +7,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain.ShapeHelpers
 import amf.shapes.client.scala.model.domain.{AnyShape, ShapeHelpers}
 import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
@@ -38,7 +38,7 @@ case class RamlNamedTypeEmitter(shape: AnyShape,
     case s: Shape with ShapeHelpers => typesEmitter(s, ordering, None, Seq(), references).emit(b)
     case _ =>
       spec.eh.violation(
-        ResolutionValidation,
+        TransformationValidation,
         shape.id,
         None,
         "Cannot emit inline shape that doesnt support type expressions",

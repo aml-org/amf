@@ -6,7 +6,7 @@ import amf.core.internal.annotations._
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry}
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{
@@ -394,7 +394,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
             ensureInheritanceAnnotations(propertyShape, canonicalProperty)
             canonicalProperty
           case other =>
-            context.errorHandler.violation(ResolutionValidation,
+            context.errorHandler.violation(TransformationValidation,
                                            other.id,
                                            None,
                                            s"Resolution error: Expecting property shape, found $other",

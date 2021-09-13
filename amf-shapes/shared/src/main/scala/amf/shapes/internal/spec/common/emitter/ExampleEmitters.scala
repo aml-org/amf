@@ -10,7 +10,7 @@ import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, NullEmitter, pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.internal.utils.{IdCounter, _}
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
@@ -307,7 +307,7 @@ abstract class RamlExampleValuesEmitter(example: Example, ordering: SpecOrdering
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other =>
-      spec.eh.violation(ResolutionValidation,
+      spec.eh.violation(TransformationValidation,
                         example.id,
                         None,
                         s"IllegalTypeDeclarations found: $other",

@@ -21,7 +21,7 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils._
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
@@ -124,7 +124,7 @@ case class OasOperationPartEmitter(operation: Operation,
             case Some(shape: AnyShape) =>
               result += RamlNamedTypeEmitter(shape, ordering, Nil, ramlTypesEmitter)
             case Some(other) =>
-              spec.eh.violation(ResolutionValidation,
+              spec.eh.violation(TransformationValidation,
                                 request.id,
                                 None,
                                 "Cannot emit a non WebApi Shape",

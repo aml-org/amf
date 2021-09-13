@@ -9,12 +9,12 @@ class AsyncContentTypeResolutionStage() extends TransformationStep() {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
-      resolve(webApi)
+      transform(webApi)
       doc
     case _ => model
   }
 
-  private def resolve(api: Api): Unit = {
+  private def transform(api: Api): Unit = {
     val contentType = api.contentType.headOption
     contentType.foreach { mediaType =>
       val payloads = getPayloads(api)

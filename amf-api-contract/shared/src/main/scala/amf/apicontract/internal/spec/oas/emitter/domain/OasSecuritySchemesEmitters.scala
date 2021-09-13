@@ -13,7 +13,7 @@ import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -90,7 +90,7 @@ class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
       case Some(n) => n
       case None =>
         spec.eh.violation(
-          ResolutionValidation,
+          TransformationValidation,
           securityScheme.id,
           None,
           s"Cannot declare security scheme without name $securityScheme",

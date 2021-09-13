@@ -22,7 +22,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.spec.common.emitter.{OasResponseExamplesEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.oas.emitter.OasDeclaredShapesEmitter
 import org.yaml.model.YDocument.EntryBuilder
@@ -115,7 +115,7 @@ case class OasNamedParameterEmitter(oasParameter: OasParameter, ordering: SpecOr
       case Some(n) => n
       case _ =>
         spec.eh.violation(
-          ResolutionValidation,
+          TransformationValidation,
           oasParameter.domainElement.id,
           None,
           s"Cannot declare parameter without name ${oasParameter.domainElement}",

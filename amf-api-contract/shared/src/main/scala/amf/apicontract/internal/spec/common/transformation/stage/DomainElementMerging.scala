@@ -80,7 +80,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
           main.set(otherField, adoptInner(main.id, otherValue.value))
       }
     } else if (isExplicitField(otherFieldEntry)) {
-      errorHandler.violation(CoreValidations.ResolutionValidation,
+      errorHandler.violation(CoreValidations.TransformationValidation,
                              main.id,
                              s"Cannot merge '${otherField.value.name}' into ${main.meta.doc.displayName}",
                              main.annotations)
@@ -193,7 +193,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         case _: DomainElementModel =>
           merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
         case _ =>
-          errorHandler.violation(CoreValidations.ResolutionValidation,
+          errorHandler.violation(CoreValidations.TransformationValidation,
                                  main.id,
                                  s"Cannot merge '${otherField.`type`}':not a (Scalar|Array|Object)",
                                  main.annotations)
@@ -308,7 +308,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       case key: KeyField  => mergeByKeyValue(target, field, element, key, m, o)
       case DataNodeModel  => mergeDataNodes(target, field, m, o)
       case _ =>
-        ctx.eh.violation(CoreValidations.ResolutionValidation,
+        ctx.eh.violation(CoreValidations.TransformationValidation,
                          target.id,
                          s"Cannot merge '$element': not a KeyField nor a Scalar",
                          target.annotations)

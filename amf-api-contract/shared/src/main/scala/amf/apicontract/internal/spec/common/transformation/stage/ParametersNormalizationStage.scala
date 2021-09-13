@@ -22,12 +22,12 @@ abstract class ParametersNormalizationStage(profile: ProfileName) extends Transf
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val api = doc.encodes.asInstanceOf[Api]
-      resolve(api)
+      transform(api)
       doc
     case _ => model
   }
 
-  protected def resolve(api: Api): Api = api
+  protected def transform(api: Api): Api = api
 
   protected def pushParamsToEndpointOperations(endpoint: EndPoint, finalParams: Parameters) = {
     endpoint.operations.foreach { op =>
@@ -61,7 +61,7 @@ class OpenApiParametersNormalizationStage extends ParametersNormalizationStage(O
     * @param api WebApi in
     * @return api WebApi out
     */
-  override protected def resolve(api: Api): Api = {
+  override protected def transform(api: Api): Api = {
     // collect endpoint path parameters
     api.endPoints.foreach { endpoint =>
       val finalParams = Parameters.classified(endpoint.path.value(), endpoint.parameters)
@@ -84,7 +84,7 @@ class AmfParametersNormalizationStage extends ParametersNormalizationStage(AmfPr
     * @param api BaseApi in
     * @return api BaseApi out
     */
-  override protected def resolve(api: Api): Api = {
+  override protected def transform(api: Api): Api = {
     // collect endpoint path parameters
     api.endPoints.foreach { endpoint =>
       val finalParams = Parameters(path = removeParamsFromMadeUpServer(api))
@@ -121,7 +121,7 @@ class Raml10ParametersNormalizationStage extends ParametersNormalizationStage(Am
     * @param baseApi Api in
     * @return baseApi Api out
     */
-  override protected def resolve(baseApi: Api): Api = {
+  override protected def transform(baseApi: Api): Api = {
     // collect endpoint path parameters
     baseApi.endPoints.foreach { endpoint =>
       val endpointParameters = endpoint.parameters

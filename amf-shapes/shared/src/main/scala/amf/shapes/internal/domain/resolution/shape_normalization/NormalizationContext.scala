@@ -4,13 +4,13 @@ import amf.core.client.common.validation.{ProfileName, Raml08Profile}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.metamodel.domain.ShapeModel
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.validation.definitions.ShapeResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
 
 private[resolution] class NormalizationContext(final val errorHandler: AMFErrorHandler,
-                                            final val keepEditingInfo: Boolean,
-                                            final val profile: ProfileName,
-                                            val cache: NormalizationCache = NormalizationCache()) {
+                                               final val keepEditingInfo: Boolean,
+                                               final val profile: ProfileName,
+                                               val cache: NormalizationCache = NormalizationCache()) {
 
   val isRaml08: Boolean                        = profile.equals(Raml08Profile)
   private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
@@ -32,7 +32,7 @@ private[resolution] class NormalizationContext(final val errorHandler: AMFErrorH
         derivedShape
       case other: Throwable =>
         errorHandler.violation(
-          ResolutionValidation,
+          TransformationValidation,
           derivedShape.id,
           Some(ShapeModel.Inherits.value.iri()),
           other.getMessage,

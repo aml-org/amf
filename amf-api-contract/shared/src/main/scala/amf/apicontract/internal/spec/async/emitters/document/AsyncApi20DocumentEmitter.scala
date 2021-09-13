@@ -19,7 +19,7 @@ import amf.core.internal.remote.{AsyncApi20, Spec}
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter, ValueEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
@@ -40,7 +40,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncS
   private def retrieveWebApi(): Api = document match {
     case document: Document => document.encodes.asInstanceOf[Api]
     case _ =>
-      specCtx.eh.violation(ResolutionValidation,
+      specCtx.eh.violation(TransformationValidation,
                            document.id,
                            None,
                            "BaseUnit doesn't encode a WebApi.",

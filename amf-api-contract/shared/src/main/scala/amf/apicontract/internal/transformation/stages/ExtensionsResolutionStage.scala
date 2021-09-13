@@ -23,7 +23,7 @@ import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
 
 import scala.collection.mutable
@@ -135,7 +135,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       val docFullUrl       = documentAliases.find(_._1 == alias).map(_._2._1).get
       if (extensionFullUrl != docFullUrl)
         errorHandler.violation(
-          ResolutionValidation,
+          TransformationValidation,
           s"Conflicting urls for alias '$alias' and libraries: '$extensionFullUrl' - '$docFullUrl'",
           document.location().getOrElse(document.id)
         )

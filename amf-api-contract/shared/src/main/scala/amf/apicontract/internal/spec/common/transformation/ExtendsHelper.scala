@@ -252,7 +252,7 @@ case class ExtendsHelper(profile: ProfileName,
       case _: Fragment => // Trait or RT, nothing to do
       case other =>
         ctx.eh.violation(
-          CoreValidations.ResolutionValidation,
+          CoreValidations.TransformationValidation,
           other,
           None,
           "Error resolving nested declaration, found something that is not a library or a fragment"

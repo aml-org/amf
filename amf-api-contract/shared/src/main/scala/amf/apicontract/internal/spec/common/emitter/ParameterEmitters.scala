@@ -28,7 +28,7 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, FileShape, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, FileShapeModel}
@@ -139,7 +139,7 @@ case class Raml10ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
           result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
             .entries()
         case Some(other) =>
-          spec.eh.violation(ResolutionValidation,
+          spec.eh.violation(TransformationValidation,
                             other.id,
                             None,
                             "Cannot emit parameter for a non WebAPI shape",

@@ -16,7 +16,7 @@ import amf.shapes.internal.domain.resolution.shape_normalization._
   */
 class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean) extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
-    new ShapeNormalization(profile, keepEditingInfo)(errorHandler).resolve(model)
+    new ShapeNormalization(profile, keepEditingInfo)(errorHandler).transform(model)
 
   private class ShapeNormalization(profile: ProfileName, val keepEditingInfo: Boolean)(
       implicit val errorHandler: AMFErrorHandler) {
@@ -24,7 +24,7 @@ class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean
     protected var m: Option[BaseUnit] = None
     protected val context             = new NormalizationContext(errorHandler, keepEditingInfo, profile)
 
-    def resolve[T <: BaseUnit](model: T): T = {
+    def transform[T <: BaseUnit](model: T): T = {
       m = Some(model)
       model.transform(ShapeSelector, transform).asInstanceOf[T]
     }

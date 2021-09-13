@@ -32,7 +32,7 @@ class ShapeTransformationPipelineTest extends FunSuite {
       NodeShape(ann).withId("file://location.com/#nodeshape2").withLinkLabel("linkTo").withLinkTarget(target)
 
     val result: Shape =
-      new CompleteShapeTransformationPipeline(origin, UnhandledErrorHandler, ProfileNames.RAML10).resolve()
+      new CompleteShapeTransformationPipeline(origin, UnhandledErrorHandler, ProfileNames.RAML10).transform()
 
     result.linkTarget.isEmpty should be(true)
     val node = result.asInstanceOf[NodeShape]
@@ -65,7 +65,7 @@ class ShapeTransformationPipelineTest extends FunSuite {
       NodeShape(ann).withId("file://location.com/#nodeshape2").withProperties(Seq(prop3)).withInherits(Seq(father))
 
     val result: Shape =
-      new CompleteShapeTransformationPipeline(origin, UnhandledErrorHandler, ProfileNames.RAML10).resolve()
+      new CompleteShapeTransformationPipeline(origin, UnhandledErrorHandler, ProfileNames.RAML10).transform()
 
     result.inherits.isEmpty should be(true)
     val node = result.asInstanceOf[NodeShape]
@@ -98,7 +98,7 @@ class ShapeTransformationPipelineTest extends FunSuite {
 
     val lastObject = NodeShape(ann).withId("file://location.com/#nodeshape3").withProperties(Seq(prop3))
     val result: Shape =
-      new CompleteShapeTransformationPipeline(lastObject, UnhandledErrorHandler, ProfileNames.RAML10).resolve()
+      new CompleteShapeTransformationPipeline(lastObject, UnhandledErrorHandler, ProfileNames.RAML10).transform()
 
     result.linkTarget.isEmpty should be(true)
     val node = result.asInstanceOf[NodeShape]
@@ -132,7 +132,7 @@ class ShapeTransformationPipelineTest extends FunSuite {
       NodeShape(ann).withId("file://location.com/#fathers").withProperties(Seq(prop3))
     val lastObject = NodeShape(ann).withId("file://location.com/#nodeshape3").withInherits(Seq(father))
     val result: Shape =
-      new CompleteShapeTransformationPipeline(lastObject, UnhandledErrorHandler, ProfileNames.RAML10).resolve()
+      new CompleteShapeTransformationPipeline(lastObject, UnhandledErrorHandler, ProfileNames.RAML10).transform()
 
     val ns         = result.asInstanceOf[NodeShape]
     val prop3After = ns.properties.find(_.name.value() == "prop3").get

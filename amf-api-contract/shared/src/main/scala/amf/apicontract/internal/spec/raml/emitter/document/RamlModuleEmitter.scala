@@ -14,7 +14,7 @@ import amf.core.internal.remote.Raml10
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.common.emitter._
@@ -97,7 +97,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
       Option(dataType.encodes) match {
         case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = Nil).entries()
         case Some(other) =>
-          spec.eh.violation(ResolutionValidation,
+          spec.eh.violation(TransformationValidation,
                             other.id,
                             None,
                             "Cannot emit non WebApi Shape",

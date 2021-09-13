@@ -34,7 +34,7 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
@@ -150,7 +150,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
   private def retrieveWebApi(): WebApi = document match {
     case document: Document => document.encodes.asInstanceOf[WebApi]
     case _ =>
-      specCtx.eh.violation(ResolutionValidation,
+      specCtx.eh.violation(TransformationValidation,
                            document.id,
                            None,
                            "BaseUnit doesn't encode a WebApi.",
