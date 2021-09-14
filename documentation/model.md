@@ -120,6 +120,11 @@ AMF Model Documentation
 * [Settings](#settings)
 * [Shape](#shape)
 * [ShapeExtension](#shapeextension)
+* [ShapeOperation](#shapeoperation)
+* [ShapeParameter](#shapeparameter)
+* [ShapePayload](#shapepayload)
+* [ShapeRequest](#shaperequest)
+* [ShapeResponse](#shaperesponse)
 * [SourceMap](#sourcemap)
 * [Tag](#tag)
 * [TemplatedLink](#templatedlink)
@@ -1239,6 +1244,7 @@ Shape that validates a record of fields, like a JS object
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
+ | isAbstract | boolean | Marks this shape as an abstract node shape declared for pure re-use | http://a.ml/vocabularies/shapes#isAbstract |
  | minProperties | int | Minimum number of properties in the input node constraint | http://a.ml/vocabularies/shapes#minProperties |
  | maxProperties | int | Maximum number of properties in the input node constraint | http://a.ml/vocabularies/shapes#maxProperties |
  | closed | boolean | Additional properties in the input node accepted constraint | http://www.w3.org/ns/shacl#closed |
@@ -1254,6 +1260,7 @@ Shape that validates a record of fields, like a JS object
  | schemaDependencies | [[SchemaDependencies](#schemadependencies)] | Applied schemas if property exists constraint | http://a.ml/vocabularies/shapes#schemaDependencies |
  | unevaluatedProperties | boolean | Accepts that properties may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedProperties |
  | unevaluatedPropertiesSchema | [Shape](#shape) | Properties that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedPropertiesSchema |
+ | supportedOperation | [[ShapeOperation](#shapeoperation)] | Supported operations for this shape | http://a.ml/vocabularies/shapes#supportedOperation |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1958,6 +1965,60 @@ Custom extensions for a data shape definition inside an API definition
  | definedBy | [CustomDomainProperty](#customdomainproperty) | Definition for the extended entity | http://a.ml/vocabularies/document#definedBy |
  | extension | [DataNode](#datanode) | Data structure associated to the extension | http://a.ml/vocabularies/document#extension |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## ShapeOperation
+Action that can be executed over the data of a particular shape
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
+ | expects | [ShapeRequest](#shaperequest) | Request information required by the operation | http://a.ml/vocabularies/shapes#expects |
+ | returns | [ShapeResponse](#shaperesponse) | Response data returned by the operation | http://a.ml/vocabularies/shapes#returns |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## ShapeParameter
+Piece of data required or returned by an Operation
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | paramName | string | Name of a parameter | http://a.ml/vocabularies/apiContract#paramName |
+ | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
+ | required | boolean | Marks the parameter as required | http://a.ml/vocabularies/apiContract#required |
+ | schema | [Shape](#shape) | Schema the parameter value must validate | http://a.ml/vocabularies/shapes#schema |
+ | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
+ | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
+ | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## ShapePayload
+Encoded payload using certain media-type
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | schema | [Shape](#shape) | Schema associated to this payload | http://a.ml/vocabularies/shapes#schema |
+ | examples | [[Example](#example)] | Examples for a particular domain element | http://a.ml/vocabularies/apiContract#examples |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+ | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
+ | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
+ | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
+
+## ShapeRequest
+Request information for an operation
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | parameter | [[ShapeParameter](#shapeparameter)] | Parameters associated to the communication model | http://a.ml/vocabularies/apiContract#parameter |
+
+## ShapeResponse
+Response information for an operation
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | payload | [ShapePayload](#shapepayload) | Payload for a Request/Response | http://a.ml/vocabularies/apiContract#payload |
 
 ## SourceMap
 SourceMaps include tags with syntax specific information obtained when parsing a particular specification syntax like RAML or OpenAPI.

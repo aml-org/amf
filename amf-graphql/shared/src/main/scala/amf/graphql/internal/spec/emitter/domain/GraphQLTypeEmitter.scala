@@ -22,11 +22,13 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
   def renderInheritance(nodeShape: NodeShape): String = {
     nodeShape.effectiveInherits.headOption map { iface =>
       s"implements ${iface.name.value()} "
-    } getOrElse("")
+    } getOrElse ""
   }
 
-  def checkObjectType(shape: NodeShape): String = {
-    if (shape.isAbstract.option().getOrElse(false)) {
+  def checkObjectType(name: String, shape: NodeShape): String = {
+    if (ctx.inputTypeNames.contains(name)) {
+      "input"
+    } else if (shape.isAbstract.option().getOrElse(false)) {
       "interface"
     } else {
       "type"
@@ -36,8 +38,9 @@ case class GraphQLTypeEmitter(shape: AnyShape, ctx: GraphQLEmitterContext, b: St
   def emitObject(node: NodeShape, b: StringDocBuilder): Unit = {
     b.fixed { f =>
       val maybeInheritance = renderInheritance(node)
-      val effectiveType = checkObjectType(node)
-      f.+=(s"$effectiveType ${shape.name.value()} $maybeInheritance{", pos(node.annotations))
+      val name = shape.name.value()
+      val effectiveType = checkObjectType(name, node)
+      f.+=(s"$effectiveType $name $maybeInheritance{", pos(node.annotations))
       f.obj { o =>
         o.list { l =>
           node.properties.foreach { prop =>

@@ -1,12 +1,11 @@
 package amf.graphql.internal.spec.parser.syntax
 
 import amf.antlr.client.scala.parse.syntax.AntlrASTParserHelper
-import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.vocabulary.Namespace.XsdTypes
 import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NilShape, NodeShape, ScalarShape, UnionShape, UnresolvedShape}
+import amf.shapes.client.scala.model.domain._
 import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
 import org.mulesoft.lexer.SourceLocation
 

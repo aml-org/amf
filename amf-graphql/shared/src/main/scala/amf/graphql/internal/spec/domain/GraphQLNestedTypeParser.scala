@@ -1,16 +1,13 @@
 package amf.graphql.internal.spec.domain
 
-import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
-import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
-import amf.shapes.client.scala.model.domain.operations.ShapeOperation
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, UnresolvedShape}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 import org.mulesoft.lexer.SourceLocation
 
-class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
+class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(implicit val ctx: GraphQLWebApiContext) extends GraphQLCommonTypeParser {
   val obj: NodeShape = NodeShape(toAnnotations(objTypeNode))
 
   def parse(parentId: String): NodeShape = {
@@ -26,20 +23,7 @@ class GraphQLNestedTypeParser(objTypeNode: Node, isInterface: Boolean = false)(i
     obj
   }
 
-  def collectFields(): Unit = {
-    collect(objTypeNode, Seq(FIELDS_DEFINITION, FIELD_DEFINITION)).foreach {
-      case fieldNode: Node =>
-        GraphQLFieldParser(fieldNode).parse {
-          case Left(propertyShape: PropertyShape) =>
-            propertyShape.adopted(obj.id)
-            obj.withProperties(obj.properties ++ Seq(propertyShape))
-          case Right(shapeOperation: ShapeOperation) =>
-            shapeOperation.adopted(obj.id)
-            obj.withOperations(obj.operations ++ Seq(shapeOperation))
-        }
-      case _ => // ignore
-    }
-  }
+  def collectFields(): Unit = collectFieldsFromPath(objTypeNode, Seq(FIELDS_DEFINITION, FIELD_DEFINITION))
 
   def collectInheritance(): Unit = {
     val ifaces = collect(objTypeNode, Seq(IMPLEMENTS_INTERFACES, NAMED_TYPE, NAME)).map { case ifaceName: Node =>

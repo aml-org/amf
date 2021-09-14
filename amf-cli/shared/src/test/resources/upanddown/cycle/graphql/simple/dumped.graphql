@@ -7,10 +7,12 @@ schema {
   subscription: Subscription
 }
 type CustomQuery {
+
+  allAnimals(animalRequest: AnimalRequest): [Animal]!
   """
   Get all the people
   """
-  allPersons(
+  allPeople(
     """
     Last parameter
     """
@@ -44,4 +46,7 @@ enum Kingdom {
   ANIMAL
   VEGETAL
   MUSHROOM
+}
+input AnimalRequest {
+  kingodm : Kingdom
 }

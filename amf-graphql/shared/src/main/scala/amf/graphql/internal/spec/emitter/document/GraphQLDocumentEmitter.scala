@@ -10,7 +10,7 @@ import amf.shapes.client.scala.model.domain.AnyShape
 
 class GraphQLDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends GraphQLEmitter {
 
-  val ctx = new GraphQLEmitterContext(document).classifyEndpoints()
+  val ctx = new GraphQLEmitterContext(document).classifyEndpoints().indexInputTypes
 
   def emit(): Unit = {
     builder.doc { doc =>

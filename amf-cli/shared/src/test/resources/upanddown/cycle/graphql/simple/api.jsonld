@@ -28,19 +28,19 @@
 ],
 "http://a.ml/vocabularies/apiContract#endpoint": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPersons",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPeople",
 "@type": [
 "http://a.ml/vocabularies/apiContract#EndPoint",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/apiContract#path": [
 {
-"@value": "/query/allPersons"
+"@value": "/query/allPeople"
 }
 ],
 "http://a.ml/vocabularies/core#name": [
 {
-"@value": "CustomQuery.allPersons"
+"@value": "CustomQuery.allPeople"
 }
 ],
 "http://a.ml/vocabularies/core#description": [
@@ -50,7 +50,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#supportedOperation": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPersons/query",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPeople/query",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Operation",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -62,12 +62,12 @@
 ],
 "http://a.ml/vocabularies/core#name": [
 {
-"@value": "CustomQuery.allPersons"
+"@value": "CustomQuery.allPeople"
 }
 ],
 "http://a.ml/vocabularies/apiContract#expects": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPersons/query/request",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPeople/query/request",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Request",
 "http://a.ml/vocabularies/apiContract#Message",
@@ -75,7 +75,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#parameter": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPersons/query/request/parameter/default-binding/last",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPeople/query/request/parameter/default-binding/last",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Parameter",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -97,7 +97,7 @@
 ],
 "http://a.ml/vocabularies/shapes#schema": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPersons/query/request/parameter/default-binding/last/scalar/default-scalar",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPeople/query/request/parameter/default-binding/last/scalar/default-scalar",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://a.ml/vocabularies/shapes#AnyShape",
@@ -118,7 +118,7 @@
 ],
 "http://a.ml/vocabularies/apiContract#returns": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPersons/query/default",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPeople/query/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Response",
 "http://a.ml/vocabularies/apiContract#Message",
@@ -136,14 +136,14 @@
 ],
 "http://a.ml/vocabularies/apiContract#payload": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPersons/query/default/default",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPeople/query/default/default",
 "@type": [
 "http://a.ml/vocabularies/apiContract#Payload",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
 "http://a.ml/vocabularies/shapes#schema": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPersons/query/default/default/array/default-array",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallPeople/query/default/default/array/default-array",
 "@type": [
 "http://a.ml/vocabularies/shapes#ArrayShape",
 "http://a.ml/vocabularies/shapes#AnyShape",
@@ -181,7 +181,183 @@
 ],
 "http://a.ml/vocabularies/apiContract#operationId": [
 {
-"@value": "CustomQuery.allPersons"
+"@value": "CustomQuery.allPeople"
+}
+]
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallAnimals",
+"@type": [
+"http://a.ml/vocabularies/apiContract#EndPoint",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#path": [
+{
+"@value": "/query/allAnimals"
+}
+],
+"http://a.ml/vocabularies/core#name": [
+{
+"@value": "CustomQuery.allAnimals"
+}
+],
+"http://a.ml/vocabularies/apiContract#supportedOperation": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallAnimals/query",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Operation",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#method": [
+{
+"@value": "query"
+}
+],
+"http://a.ml/vocabularies/core#name": [
+{
+"@value": "CustomQuery.allAnimals"
+}
+],
+"http://a.ml/vocabularies/apiContract#expects": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallAnimals/query/request",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Request",
+"http://a.ml/vocabularies/apiContract#Message",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#parameter": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallAnimals/query/request/parameter/default-binding/animalRequest",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": [
+{
+"@value": "animalRequest"
+}
+],
+"http://a.ml/vocabularies/apiContract#required": [
+{
+"@value": false
+}
+],
+"http://a.ml/vocabularies/shapes#schema": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/AnimalRequest/link-121068150",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/AnimalRequest"
+}
+],
+"http://a.ml/vocabularies/document#link-label": [
+{
+"@value": "AnimalRequest"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/apiContract#returns": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallAnimals/query/default",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Response",
+"http://a.ml/vocabularies/apiContract#Message",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#statusCode": [
+{
+"@value": "200"
+}
+],
+"http://a.ml/vocabularies/core#name": [
+{
+"@value": "default"
+}
+],
+"http://a.ml/vocabularies/apiContract#payload": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallAnimals/query/default/default",
+"@type": [
+"http://a.ml/vocabularies/apiContract#Payload",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/shapes#schema": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallAnimals/query/default/default/array/default-array",
+"@type": [
+"http://a.ml/vocabularies/shapes#ArrayShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/shapes#items": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/web-api/end-points/%2Fquery%2FallAnimals/query/default/default/array/default-array/items/union/default-union",
+"@type": [
+"http://a.ml/vocabularies/shapes#UnionShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/shapes#anyOf": [
+{
+"@id": "null/nullwrapper/nil/default-nil",
+"@type": [
+"http://a.ml/vocabularies/shapes#NilShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/Animal/link--821614581",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/Animal"
+}
+],
+"http://a.ml/vocabularies/document#link-label": [
+{
+"@value": "Animal"
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/apiContract#operationId": [
+{
+"@value": "CustomQuery.allAnimals"
 }
 ]
 }
@@ -327,7 +503,7 @@
 ],
 "http://a.ml/vocabularies/shapes#schema": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/Person/link--1734190909",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/Person/link-176129017",
 "@type": [
 "http://www.w3.org/ns/shacl#NodeShape",
 "http://a.ml/vocabularies/shapes#AnyShape",
@@ -429,7 +605,7 @@
 ],
 "http://a.ml/vocabularies/shapes#schema": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/Person/link--1531229437",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/Person/link--1046493873",
 "@type": [
 "http://www.w3.org/ns/shacl#NodeShape",
 "http://a.ml/vocabularies/shapes#AnyShape",
@@ -751,7 +927,7 @@
 ],
 "http://a.ml/vocabularies/shapes#items": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/Post/link--1687874346",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/Post/link-222445580",
 "@type": [
 "http://www.w3.org/ns/shacl#NodeShape",
 "http://a.ml/vocabularies/shapes#AnyShape",
@@ -976,7 +1152,7 @@
 ],
 "http://a.ml/vocabularies/shapes#range": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar/link-374937554",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar/link--539867502",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
 "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1097,6 +1273,64 @@
 ]
 }
 ]
+}
+]
+},
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/AnimalRequest",
+"@type": [
+"http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#property": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql#/AnimalRequest/property/kingodm",
+"@type": [
+"http://www.w3.org/ns/shacl#PropertyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/shapes#range": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar/link-1739266786",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/document#link-target": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar"
+}
+],
+"http://a.ml/vocabularies/document#link-label": [
+{
+"@value": "Kingdom"
+}
+]
+}
+],
+"http://www.w3.org/ns/shacl#minCount": [
+{
+"@value": 0
+}
+],
+"http://www.w3.org/ns/shacl#name": [
+{
+"@value": "kingodm"
+}
+]
+}
+],
+"http://www.w3.org/ns/shacl#name": [
+{
+"@value": "AnimalRequest"
 }
 ]
 }

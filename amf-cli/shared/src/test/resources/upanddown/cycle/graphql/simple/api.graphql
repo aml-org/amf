@@ -9,12 +9,17 @@ type CustomQuery {
     """
     Get all the people
     """
-    allPersons(
+    allPeople(
         """
         Last parameter
         """
         last: Int
     ): [Person!]!
+    allAnimals(animalRequest: AnimalRequest): [Animal]!
+}
+
+input AnimalRequest {
+  kingodm: Kingdom
 }
 
 """

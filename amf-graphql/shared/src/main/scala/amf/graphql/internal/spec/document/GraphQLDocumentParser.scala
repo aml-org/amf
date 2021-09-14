@@ -8,7 +8,7 @@ import amf.core.client.scala.model.document.Document
 import amf.core.internal.parser.Root
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
-import amf.graphql.internal.spec.domain.{GraphQLNestedEnumParser, GraphQLNestedTypeParser, GraphQLNestedUnionParser, GraphQLRootTypeParser}
+import amf.graphql.internal.spec.domain.{GraphQLInputTypeParser, GraphQLNestedEnumParser, GraphQLNestedTypeParser, GraphQLNestedUnionParser, GraphQLRootTypeParser}
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnionShape}
@@ -22,7 +22,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   var MUTATION_TYPE     = "Mutation"
 
   val doc: Document  = Document()
-  def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
+  private def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
 
   def parseDocument(): Document = {
     val ast = root.parsed.asInstanceOf[AntlrParsedDocument].ast
@@ -46,22 +46,27 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     doc.adopted(root.location).withLocation(root.location).withEncodes(webApi)
   }
 
-  def parseNestedType(objTypeDef: Node): Unit = {
+  private def parseNestedType(objTypeDef: Node): Unit = {
     val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = false).parse(doc.id)
     ctx.declarations += shape
   }
 
-  def parseInterfaceType(objTypeDef: Node): Unit = {
+  private def parseInputType(objTypeDef: Node): Unit = {
+    val shape = new GraphQLInputTypeParser(objTypeDef).parse(doc.id)
+    ctx.declarations += shape
+  }
+
+  private def parseInterfaceType(objTypeDef: Node): Unit = {
     val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = true).parse(doc.id)
     ctx.declarations += shape
   }
 
-  def parseUnionType(unionTypeDef: Node): Unit = {
+  private def parseUnionType(unionTypeDef: Node): Unit = {
     val shape:UnionShape = new GraphQLNestedUnionParser(unionTypeDef).parse(doc.id)
     ctx.declarations += shape
   }
 
-  def parseEnumType(enumTypeDef: Node): Unit = {
+  private def parseEnumType(enumTypeDef: Node): Unit = {
     val enum: ScalarShape = new GraphQLNestedEnumParser(enumTypeDef).parse(doc.id)
     ctx.declarations += enum
   }
@@ -84,6 +89,12 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
         }
     }
 
+    // let's parse input types
+    this
+      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, INPUT_OBJECT_TYPE_DEFINITION)) foreach {
+      case objTypeDef: Node =>
+        parseInputType(objTypeDef)
+    }
     // let's parse interfaces
     this
       .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, INTERFACE_TYPE_DEFINITION)) foreach {

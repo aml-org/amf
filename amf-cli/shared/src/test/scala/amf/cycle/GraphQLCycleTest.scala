@@ -28,7 +28,7 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
     cycle("simple/api.graphql", "simple/api.jsonld", GraphQLHint, AmfJsonHint)
   }
 
-  test("HERE_HERE Can cycle through a simple GraphQL API") {
+  test("Can cycle through a simple GraphQL API") {
     cycle("simple/api.graphql", "simple/dumped.graphql", GraphQLHint, GraphQLHint)
   }
 
@@ -41,20 +41,3 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
   }
 
 }
-
-/*
-class GraphQLParserTest extends GraphQLFunSuiteCycleTests {
-  override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/graphql/simple/"
-
-  multiGoldenTest("HERE_HERE Can generate simple GraphQL specs", "api.%s") { config =>
-    cycle(
-      "api.graphql",
-      config.golden,
-      GraphQLHint,
-      AmfJsonHint,
-      renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint),
-      eh = Some(UnhandledErrorHandler)
-    )
-  }
-}
-*/

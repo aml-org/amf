@@ -18,8 +18,6 @@ case class GraphQLFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
     }
   }
 
-
-
   private def arguments(): Seq[ASTElement] = collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION))
 
 }
