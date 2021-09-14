@@ -70,8 +70,9 @@ class PlatformPayloadValidationPluginsHandlerTest
     for {
       library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.baseUnit)
       validator <- Future.successful {
-        val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
-        val shape    = findShape(resolved, "D")
+        val resolved =
+          TransformationPipelineRunner(UnhandledErrorHandler, config).run(library, AmfTransformationPipeline())
+        val shape = findShape(resolved, "D")
         config.elementClient().payloadValidatorFor(shape, `application/json`, StrictValidationMode)
       }
       valid <- validator.validate("{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}").map(_.conforms)
@@ -86,8 +87,9 @@ class PlatformPayloadValidationPluginsHandlerTest
     for {
       library <- client.parse(basePath + "payload_validation_shapes.raml").map(_.baseUnit)
       validator <- Future.successful {
-        val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
-        val shape    = findShape(resolved, "D")
+        val resolved =
+          TransformationPipelineRunner(UnhandledErrorHandler, config).run(library, AmfTransformationPipeline())
+        val shape = findShape(resolved, "D")
         config.elementClient().payloadValidatorFor(shape, APPLICATION_WADUS, StrictValidationMode)
       }
       invalid <- validator.validate("{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}").map(r => !r.conforms)

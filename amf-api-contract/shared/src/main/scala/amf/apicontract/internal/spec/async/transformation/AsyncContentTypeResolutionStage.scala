@@ -1,12 +1,15 @@
 package amf.apicontract.internal.spec.async.transformation
 
 import amf.apicontract.client.scala.model.domain.api.Api
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.TransformationStep
 
 class AsyncContentTypeResolutionStage() extends TransformationStep() {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
       transform(webApi)

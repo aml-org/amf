@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement, Shape}
@@ -19,7 +20,9 @@ class UnionsAsTypeExpressions() extends TransformationStep {
 
   val counter = new IdCounter()
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     try {
       val document                                        = model.asInstanceOf[DeclaresModel]
       val declarations: mutable.ListBuffer[DomainElement] = mutable.ListBuffer()

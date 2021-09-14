@@ -1,12 +1,15 @@
 package amf.apicontract.internal.transformation.compatibility.oas3
 
 import amf.apicontract.client.scala.model.domain.Operation
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationStep
 
 class CleanRepeatedOperationIds() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit =
     try {
       val operations           = getOperationsFromModel(model)
       val repeatedOperationIds = operationsWithRepeatedIds(operations)

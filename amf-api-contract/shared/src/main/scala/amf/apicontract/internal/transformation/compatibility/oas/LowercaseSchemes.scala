@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.Operation
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -23,7 +24,9 @@ class LowercaseSchemes() extends TransformationStep {
     if (s.nonEmpty) element.set(field, s)
   }
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val api = d.encodes.asInstanceOf[Api]

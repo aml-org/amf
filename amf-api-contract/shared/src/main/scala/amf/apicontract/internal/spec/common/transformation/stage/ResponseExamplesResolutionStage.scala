@@ -7,6 +7,7 @@ import amf.apicontract.internal.validation.definitions.ResolutionSideValidations
   ExamplesWithInvalidMimeType,
   ExamplesWithNoSchemaDefined
 }
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.TransformationStep
@@ -19,7 +20,9 @@ import amf.shapes.internal.domain.resolution.ExampleTracking
   * for mutate each payload schema
   */
 class ResponseExamplesResolutionStage() extends TransformationStep() {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       d.withEncodes(resolveApi(d.encodes.asInstanceOf[Api])(errorHandler))
     case _ => model

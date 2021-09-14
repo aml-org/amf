@@ -4,13 +4,16 @@ import amf.apicontract.client.scala.model.domain.Operation
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationStep
 
 class CleanSchemes() extends TransformationStep {
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit =
     try {
       model
         .iterator()

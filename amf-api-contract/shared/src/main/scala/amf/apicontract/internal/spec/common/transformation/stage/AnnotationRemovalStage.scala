@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.common.transformation.stage
 
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, FieldsFilter}
 import amf.core.client.scala.model.domain.Annotation
@@ -9,7 +10,9 @@ import amf.shapes.internal.annotations.{ExternalJsonSchemaShape, ExternalReferen
 
 class AnnotationRemovalStage() extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = model match {
     case d: Document =>
       d.iterator(fieldsFilter = FieldsFilter.All, visited = InstanceCollector())
         .foreach(_.annotations.reject(eliminationCriteria))

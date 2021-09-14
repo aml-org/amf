@@ -17,7 +17,7 @@ class OASProductionResolutionTest extends ResolutionTest {
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     if (config.renderTarget.spec.equals(Amf) && config.transformWith.isEmpty) {
-      TransformationPipelineRunner(UnhandledErrorHandler).run(unit, Oas20TransformationPipeline())
+      TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(unit, Oas20TransformationPipeline())
     } else super.transform(unit, config, amfConfig)
   }
 

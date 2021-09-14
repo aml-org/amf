@@ -29,7 +29,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
         model.declares
           .collectFirst { case rt: ResourceType => rt }
           .map { rt =>
-            val endPoint = AbstractElementTransformer.asEndpoint(model, rt)
+            val endPoint = AbstractElementTransformer.asEndpoint(model, rt, defaultConfig)
             endPoint.description.value() should be("The collection of <<resourcePathName>>")
             succeed
           }
@@ -44,7 +44,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
         model.declares
           .collectFirst { case tr: Trait => tr }
           .map { rt =>
-            val op = AbstractElementTransformer.asOperation(model, rt)
+            val op = AbstractElementTransformer.asOperation(model, rt, defaultConfig)
             op.description.value() should be("Some requests require authentication.")
             succeed
           }
@@ -60,7 +60,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
         model.declares
           .collectFirst { case tr: Trait => tr }
           .map { rt =>
-            val op = AbstractElementTransformer.asOperation(model, rt)
+            val op = AbstractElementTransformer.asOperation(model, rt, defaultConfig)
             op.request.queryParameters shouldNot be(empty)
             succeed
           }
@@ -76,7 +76,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
         model.declares
           .collectFirst { case rt: ResourceType => rt }
           .map { rt =>
-            val op    = AbstractElementTransformer.asEndpoint(model, rt)
+            val op    = AbstractElementTransformer.asEndpoint(model, rt, defaultConfig)
             val props = op.operations.last.responses.head.payloads.head.schema.asInstanceOf[NodeShape].properties
             assert(Option(props.find(_.name.is("p2")).get.range).isEmpty)
             succeed
@@ -102,7 +102,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
           .target
           .asInstanceOf[Trait]
 
-        val res = AbstractElementTransformer.asOperation(model, tr)
+        val res = AbstractElementTransformer.asOperation(model, tr, defaultConfig)
         assert(Option(res).isDefined)
         succeed
       }
@@ -124,7 +124,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
           .asInstanceOf[ParametrizedDeclaration]
           .target
           .asInstanceOf[Trait]
-        val res = AbstractElementTransformer.asOperation(model, tr)
+        val res = AbstractElementTransformer.asOperation(model, tr, defaultConfig)
         assert(res.fields.fields().isEmpty)
       }
   }

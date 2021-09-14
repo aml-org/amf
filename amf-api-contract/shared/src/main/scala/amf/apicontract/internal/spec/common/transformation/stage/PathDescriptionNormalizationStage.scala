@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
 import amf.core.client.common.validation.{Async20Profile, Oas30Profile, ProfileName}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfScalar
@@ -18,7 +19,9 @@ import amf.core.internal.metamodel.Field
 class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
     extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile | Async20Profile => normalizeDescriptions(model)

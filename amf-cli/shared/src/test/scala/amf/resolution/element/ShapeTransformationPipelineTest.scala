@@ -1,6 +1,7 @@
 package amf.resolution.element
 import amf.core.client.common.validation.ProfileNames
 import amf.core.client.platform.model.DataTypes
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -32,7 +33,8 @@ class ShapeTransformationPipelineTest extends FunSuite {
       NodeShape(ann).withId("file://location.com/#nodeshape2").withLinkLabel("linkTo").withLinkTarget(target)
 
     val result: Shape =
-      new CompleteShapeTransformationPipeline(origin, UnhandledErrorHandler, ProfileNames.RAML10).transform()
+      new CompleteShapeTransformationPipeline(origin, UnhandledErrorHandler, ProfileNames.RAML10)
+        .transform(AMFGraphConfiguration.empty())
 
     result.linkTarget.isEmpty should be(true)
     val node = result.asInstanceOf[NodeShape]
@@ -65,7 +67,8 @@ class ShapeTransformationPipelineTest extends FunSuite {
       NodeShape(ann).withId("file://location.com/#nodeshape2").withProperties(Seq(prop3)).withInherits(Seq(father))
 
     val result: Shape =
-      new CompleteShapeTransformationPipeline(origin, UnhandledErrorHandler, ProfileNames.RAML10).transform()
+      new CompleteShapeTransformationPipeline(origin, UnhandledErrorHandler, ProfileNames.RAML10)
+        .transform(AMFGraphConfiguration.empty())
 
     result.inherits.isEmpty should be(true)
     val node = result.asInstanceOf[NodeShape]
@@ -98,7 +101,8 @@ class ShapeTransformationPipelineTest extends FunSuite {
 
     val lastObject = NodeShape(ann).withId("file://location.com/#nodeshape3").withProperties(Seq(prop3))
     val result: Shape =
-      new CompleteShapeTransformationPipeline(lastObject, UnhandledErrorHandler, ProfileNames.RAML10).transform()
+      new CompleteShapeTransformationPipeline(lastObject, UnhandledErrorHandler, ProfileNames.RAML10)
+        .transform(AMFGraphConfiguration.empty())
 
     result.linkTarget.isEmpty should be(true)
     val node = result.asInstanceOf[NodeShape]
@@ -132,7 +136,8 @@ class ShapeTransformationPipelineTest extends FunSuite {
       NodeShape(ann).withId("file://location.com/#fathers").withProperties(Seq(prop3))
     val lastObject = NodeShape(ann).withId("file://location.com/#nodeshape3").withInherits(Seq(father))
     val result: Shape =
-      new CompleteShapeTransformationPipeline(lastObject, UnhandledErrorHandler, ProfileNames.RAML10).transform()
+      new CompleteShapeTransformationPipeline(lastObject, UnhandledErrorHandler, ProfileNames.RAML10)
+        .transform(AMFGraphConfiguration.empty())
 
     val ns         = result.asInstanceOf[NodeShape]
     val prop3After = ns.properties.find(_.name.value() == "prop3").get

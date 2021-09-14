@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.common.transformation.stage
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.{Server, ServerContainer}
 import amf.core.client.common.validation.{Oas30Profile, ProfileName}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.TransformationStep
@@ -15,7 +16,9 @@ import amf.core.client.scala.transform.TransformationStep
 class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
     extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile => normalizeServers(model)

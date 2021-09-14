@@ -9,6 +9,7 @@ import amf.apicontract.internal.spec.common.transformation.ExtendsHelper
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.MissingExtensionInReferences
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document._
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
@@ -36,14 +37,16 @@ import scala.collection.mutable.ListBuffer
 class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: Boolean)
     extends TransformationStep()
     with PlatformSecrets {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     val extendsStage = new ExtendsResolutionStage(profile, keepEditingInfo)
     val resolvedModel = model match {
       case overlay: Overlay =>
-        new OverlayResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, overlay)
+        new OverlayResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, overlay, configuration)
       case extension: Extension =>
-        new ExtensionResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, extension)
-      case _ => extendsStage.transform(model, errorHandler)
+        new ExtensionResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, extension, configuration)
+      case _ => extendsStage.transform(model, errorHandler, configuration)
     }
     assignNewRoot(resolvedModel)
   }
@@ -148,9 +151,9 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     }
   }
 
-  def resolve(model: BaseUnit, entryPoint: T): BaseUnit
+  def resolve(model: BaseUnit, entryPoint: T, configuration: AMFGraphConfiguration): BaseUnit
 
-  protected def resolveOverlay(model: BaseUnit, entryPoint: T): BaseUnit = {
+  protected def resolveOverlay(model: BaseUnit, entryPoint: T, configuration: AMFGraphConfiguration): BaseUnit = {
     extensionsQueue(ListBuffer[BaseUnit](entryPoint), entryPoint) match {
       case (document: Document) :: extensions =>
         // Don't remove Extends field from the model when traits and resource types are resolved.
@@ -158,7 +161,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
         val referenceStage = new ReferenceResolutionStage(keepEditingInfo)
 
         // All includes are resolved and applied for both Master Tree and Extension Tree.
-        referenceStage.transform(document, errorHandler)
+        referenceStage.transform(document, errorHandler, configuration)
 
         // Current Target Tree Object is set to the Target Tree root (API).
         val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[Api]
@@ -168,7 +171,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
           // Current Extension Tree Object is set to the Extension Tree root (API).
           case extension: ExtensionLike[_] =>
             // Resolve references.
-            referenceStage.transform(extension, errorHandler)
+            referenceStage.transform(extension, errorHandler, configuration)
 
             val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
@@ -188,7 +191,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
         // Then, with all the declarations and references applied.
         // All Trait and Resource Types applications are applied in the Master Tree.
-        extendsStage.transform(document, errorHandler)
+        extendsStage.transform(document, errorHandler, configuration)
 
         extensions.foreach {
           // Current Extension Tree Object is set to the Extension Tree root (API).
@@ -206,7 +209,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             adoptIris(iriMerger, masterTree, IdTracker())
 
             // Traits and Resource Types applications are applied one more time to the Target Tree.
-            extendsStage.transform(document, errorHandler)
+            extendsStage.transform(document, errorHandler, configuration)
         }
 
         // now we can remove is/type predicates safely if requested by pipeline
@@ -308,7 +311,8 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 class ExtensionResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
     override implicit val errorHandler: AMFErrorHandler)
     extends ExtensionLikeResolutionStage[Extension](profile, keepEditingInfo) {
-  override def resolve(model: BaseUnit, entryPoint: Extension): BaseUnit = resolveOverlay(model, entryPoint)
+  override def resolve(model: BaseUnit, entryPoint: Extension, configuration: AMFGraphConfiguration): BaseUnit =
+    resolveOverlay(model, entryPoint, configuration)
 
   override def setDomainElementArrayValue(target: DomainElement,
                                           field: Field,
@@ -326,7 +330,8 @@ class ExtensionResolutionStage(override val profile: ProfileName, override val k
 class OverlayResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
     override implicit val errorHandler: AMFErrorHandler)
     extends ExtensionLikeResolutionStage[Overlay](profile, keepEditingInfo) {
-  override def resolve(model: BaseUnit, entryPoint: Overlay): BaseUnit = resolveOverlay(model, entryPoint)
+  override def resolve(model: BaseUnit, entryPoint: Overlay, configuration: AMFGraphConfiguration): BaseUnit =
+    resolveOverlay(model, entryPoint, configuration)
 
   override def setDomainElementArrayValue(target: DomainElement,
                                           field: Field,

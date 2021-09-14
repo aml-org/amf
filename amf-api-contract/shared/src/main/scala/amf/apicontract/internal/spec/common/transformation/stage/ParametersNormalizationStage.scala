@@ -5,6 +5,7 @@ import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, RequestModel, ServerModel}
 import amf.apicontract.internal.spec.common.Parameters
 import amf.core.client.common.validation.{AmfProfile, Oas20Profile, ProfileName}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfArray
@@ -19,7 +20,9 @@ import amf.core.internal.annotations.SynthesizedField
   */
 abstract class ParametersNormalizationStage(profile: ProfileName) extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val api = doc.encodes.asInstanceOf[Api]
       transform(api)

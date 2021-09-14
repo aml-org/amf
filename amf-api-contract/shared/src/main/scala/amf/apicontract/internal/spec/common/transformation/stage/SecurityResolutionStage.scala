@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.security.SecurityRequirement
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.DomainElement
@@ -12,7 +13,9 @@ import amf.core.internal.metamodel.Field
 
 class SecurityResolutionStage() extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         resolveSecurity(doc.encodes.asInstanceOf[Api])

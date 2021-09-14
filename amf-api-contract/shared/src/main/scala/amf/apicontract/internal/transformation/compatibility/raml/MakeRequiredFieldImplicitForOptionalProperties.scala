@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
@@ -18,14 +19,18 @@ class MakeRequiredFieldImplicitForOptionalProperties()
 
   protected var m: Option[BaseUnit] = None
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     m = Some(model)
-    model.transform(NodeShapeSelector, transform)(errorHandler)
+    model.transform(NodeShapeSelector, transform(_, _, configuration))(errorHandler)
   }
 
-  protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
+  protected def transform(element: DomainElement,
+                          isCycle: Boolean,
+                          configuration: AMFGraphConfiguration): Option[DomainElement] = {
     element match {
-      case nodeShape: NodeShape => transformer.transform(nodeShape)
+      case nodeShape: NodeShape => transformer.transform(nodeShape, configuration)
       case other                => Some(other)
     }
   }
@@ -33,7 +38,7 @@ class MakeRequiredFieldImplicitForOptionalProperties()
 }
 
 object ImplicitRequiredTransformer extends ElementStageTransformer[NodeShape] {
-  override def transform(node: NodeShape): Option[NodeShape] = {
+  override def transform(node: NodeShape, configuration: AMFGraphConfiguration): Option[NodeShape] = {
     node.properties.foreach { propertyShape =>
       propertyShape.fields
         .entry(PropertyShapeModel.MinCount)

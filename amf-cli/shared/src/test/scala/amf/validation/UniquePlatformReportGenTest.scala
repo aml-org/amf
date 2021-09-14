@@ -97,7 +97,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
     for {
       model <- config.baseUnitClient().parse(basePath + api).map(_.baseUnit)
       report <- {
-        TransformationPipelineRunner(errorHandler).run(model, new ValidationTransformationPipeline(profile))
+        TransformationPipelineRunner(errorHandler, config).run(model, new ValidationTransformationPipeline(profile))
         val results = errorHandler.getResults
         val report  = AMFValidationReport(model.id, profile, results)
         handleReport(report, golden)
