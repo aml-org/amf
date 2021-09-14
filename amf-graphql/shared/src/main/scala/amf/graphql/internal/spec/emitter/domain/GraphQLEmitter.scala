@@ -28,7 +28,7 @@ trait GraphQLEmitter {
           case l: ArrayShape  =>s"[${typeTarget(l.items.asInstanceOf[AnyShape])}]!"
           case u: UnionShape =>
             unpackNilUnion(u) match {
-              case NullableShape(false, s) => throw new Exception(s"Union type ${s} not supported yet")
+              case NullableShape(false, s) => s"${u.name.value()}!"
               case NullableShape(true, s)  => s"${cleanNonNullable(typeTarget(s))}"
             }
           case _              =>

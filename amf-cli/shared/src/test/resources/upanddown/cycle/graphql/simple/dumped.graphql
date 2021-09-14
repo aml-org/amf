@@ -25,6 +25,7 @@ type Subscription {
 
   newPerson: Person!
 }
+union LivingThing = Person | Animal
 type Person {
   name : String!
   age : Int!
@@ -33,4 +34,14 @@ type Person {
 type Post {
   title : String!
   author : Person!
+}
+type Animal {
+  age : Int!
+  paws : Int
+  kingdom : Kingdom
+}
+enum Kingdom {
+  ANIMAL
+  VEGETAL
+  MUSHROOM
 }

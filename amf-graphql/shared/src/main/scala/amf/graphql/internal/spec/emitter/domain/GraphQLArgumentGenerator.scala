@@ -10,9 +10,10 @@ case class GraphQLArgumentGenerator(param: Parameter, ctx: GraphQLEmitterContext
   def generate(): GeneratedGraphQLArgument = {
     val name = param.name.value()
     val targetName = typeTarget(param.schema)
-    val effetiveTargetName = param.required.option().getOrElse(false) match {
-      case true => targetName
-      case false => cleanNonNullable(targetName)
+    val effetiveTargetName = if (param.required.option().getOrElse(false)) {
+      targetName
+    } else {
+      cleanNonNullable(targetName)
     }
 
     val documentation = param.description.option()

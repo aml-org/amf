@@ -38,3 +38,17 @@ type Post {
     title: String!
     author: Person!
 }
+
+    union LivingThing = Person | Animal
+
+type Animal {
+age: Int!
+paws: Int
+kingdom: Kingdom
+}
+
+enum Kingdom {
+ANIMAL,
+VEGETAL,
+MUSHROOM
+}

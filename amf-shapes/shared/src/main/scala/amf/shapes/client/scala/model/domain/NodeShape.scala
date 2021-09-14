@@ -16,6 +16,7 @@ import org.yaml.model.YPart
 case class NodeShape private[amf] (override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {
 
+  def isAbstract: BoolField                         = fields.field(IsAbstract)
   def minProperties: IntField                       = fields.field(MinProperties)
   def maxProperties: IntField                       = fields.field(MaxProperties)
   def closed: BoolField                             = fields.field(Closed)
@@ -34,6 +35,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def unevaluatedProperties: Boolean              = fields.field(UnevaluatedProperties)
   def unevaluatedPropertiesSchema: Shape          = fields.field(UnevaluatedPropertiesSchema)
 
+  def withIsAbstract(isAbstract: Boolean): this.type                         = set(IsAbstract, isAbstract)
   def withMinProperties(min: Int): this.type                                 = set(MinProperties, min)
   def withUnevaluatedProperties(value: Boolean): this.type                   = set(UnevaluatedProperties, value)
   def withUnevaluatedPropertiesSchema(shape: Shape): this.type               = set(UnevaluatedPropertiesSchema, shape)

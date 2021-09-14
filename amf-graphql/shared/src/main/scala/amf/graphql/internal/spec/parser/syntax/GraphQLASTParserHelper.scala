@@ -44,15 +44,22 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
   }
 
   def findName(n: Node, default: String, errorId: String, error: String)(implicit ctx: GraphQLWebApiContext): String = {
-    pathToTerminal(n, Seq(NAME, NAME_TERMINAL)) match {
-      case Some(t: Terminal) => t.value
-      case _ =>
-        pathToTerminal(n, Seq(NAMED_TYPE, NAME, NAME_TERMINAL)) match {
-          case Some(t: Terminal) => t.value
-          case _                 =>
-            astError(errorId, error, toAnnotations(n))
-            default
-        }
+    val potentialPaths: Seq[Seq[String]] = Stream(
+      Seq(NAME, NAME_TERMINAL),
+      Seq(NAMED_TYPE, NAME, NAME_TERMINAL),
+      Seq(NAME)
+    )
+
+    val maybeName = potentialPaths.map { path =>
+      pathToTerminal(n, path)
+    } collectFirst { case Some(t) => t.value }
+
+    maybeName match {
+      case Some(name) =>
+        name
+      case _          =>
+        astError(errorId, error, toAnnotations(n))
+        default
     }
   }
 
@@ -131,19 +138,23 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
 
   def parseObjectType(t: Node, errorId: String)(implicit ctx: GraphQLWebApiContext): AnyShape = {
     maybeNullable(t, errorId, (t, typeName) => {
-      ctx.declarations.findType(typeName, SearchScope.All) match {
-        case Some(s: NodeShape) =>
-          s.link(typeName, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
-        case _ =>
-          val shape = UnresolvedShape(typeName, toAnnotations(t))
-          shape.withContext(ctx)
-          shape.unresolved(
-            typeName,
-            Nil,
-            Some(new SourceLocation(t.file, 0, 0, t.start.line, t.start.column, t.end.line, t.end.column)))
-          shape
-      }
+      findOrLinkType(typeName, t)
     })
+  }
+
+  def findOrLinkType(typeName: String, t: ASTElement)(implicit ctx: GraphQLWebApiContext): AnyShape = {
+    ctx.declarations.findType(typeName, SearchScope.All) match {
+      case Some(s: NodeShape) =>
+        s.link(typeName, toAnnotations(t)).asInstanceOf[NodeShape].withName(typeName, toAnnotations(t))
+      case _ =>
+        val shape = UnresolvedShape(typeName, toAnnotations(t))
+        shape.withContext(ctx)
+        shape.unresolved(
+          typeName,
+          Nil,
+          Some(new SourceLocation(t.file, 0, 0, t.start.line, t.start.column, t.end.line, t.end.column)))
+        shape
+    }
   }
 
   def maybeNamedNullable(t: Node, typeName: String, parse:(Node, String) => AnyShape)(implicit ctx: GraphQLWebApiContext): AnyShape = {

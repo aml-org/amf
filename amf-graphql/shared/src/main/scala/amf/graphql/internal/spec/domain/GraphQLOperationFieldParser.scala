@@ -1,9 +1,8 @@
 package amf.graphql.internal.spec.domain
 
-import amf.core.internal.remote.Payload
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
-import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
+import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
 import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapePayload, ShapeRequest}
 import org.mulesoft.antlrast.ast.Node
 

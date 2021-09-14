@@ -6,12 +6,12 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.model.document.Document
 import amf.core.internal.parser.Root
-import amf.graphql.internal.spec.context
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
-import amf.graphql.internal.spec.domain.{GraphQLNestedTypeParser, GraphQLRootTypeParser}
+import amf.graphql.internal.spec.domain.{GraphQLNestedEnumParser, GraphQLNestedTypeParser, GraphQLNestedUnionParser, GraphQLRootTypeParser}
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
+import amf.shapes.client.scala.model.domain.{ScalarShape, UnionShape}
 import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
 
 case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
@@ -47,11 +47,26 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   }
 
   def parseNestedType(objTypeDef: Node): Unit = {
-    val shape = new GraphQLNestedTypeParser(objTypeDef).parse(doc.id)
+    val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = false).parse(doc.id)
     ctx.declarations += shape
   }
 
-  private def processTypes(node: Node) = {
+  def parseInterfaceType(objTypeDef: Node): Unit = {
+    val shape = new GraphQLNestedTypeParser(objTypeDef, isInterface = true).parse(doc.id)
+    ctx.declarations += shape
+  }
+
+  def parseUnionType(unionTypeDef: Node): Unit = {
+    val shape:UnionShape = new GraphQLNestedUnionParser(unionTypeDef).parse(doc.id)
+    ctx.declarations += shape
+  }
+
+  def parseEnumType(enumTypeDef: Node): Unit = {
+    val enum: ScalarShape = new GraphQLNestedEnumParser(enumTypeDef).parse(doc.id)
+    ctx.declarations += enum
+  }
+
+  private def processTypes(node: Node): Unit = {
     this.collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, SCHEMA_DEFINITION)).toList match {
       case head :: Nil => parseSchemaNode(head)
       case _           => // ignore TODO violation
@@ -67,6 +82,27 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
           case Some(mutation)     if mutation == MUTATION_TYPE         => parseTopLevelType(objTypeDef, RootTypes.Mutation)
           case _                                                       => parseNestedType(objTypeDef)
         }
+    }
+
+    // let's parse interfaces
+    this
+      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, INTERFACE_TYPE_DEFINITION)) foreach {
+      case objTypeDef: Node =>
+        parseInterfaceType(objTypeDef)
+    }
+
+    // let's parse unions
+    this
+      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, UNION_TYPE_DEFINITION)) foreach {
+      case unionTypeDef: Node =>
+        parseUnionType(unionTypeDef)
+    }
+
+    // let's parse enums
+    this
+      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, ENUM_TYPE_DEFINITION)) foreach {
+      case enumTypeDef: Node =>
+        parseEnumType(enumTypeDef)
     }
   }
 

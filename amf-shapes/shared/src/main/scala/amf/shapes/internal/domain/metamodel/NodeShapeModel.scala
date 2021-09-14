@@ -108,7 +108,14 @@ trait NodeShapeModel extends AnyShapeModel {
     ModelDoc(ModelVocabularies.Shapes, "supportedOperation", "Supported operations for this shape")
   )
 
+  val IsAbstract: Field = Field(
+    Bool,
+    Shapes + "isAbstract",
+    ModelDoc(ModelVocabularies.Shapes, "isAbstract", "Marks this shape as an abstract node shape declared for pure re-use")
+  )
+
   val specificFields = List(
+    IsAbstract,
     MinProperties,
     MaxProperties,
     Closed,
