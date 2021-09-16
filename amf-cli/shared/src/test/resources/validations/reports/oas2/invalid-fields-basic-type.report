@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-fields-basic-type.json
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-fields-basic-type.json
 Profile: OAS 2.0
-Conforms? true
+Conforms: true
 Number of results: 1
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#closed-shape-warning
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape-warning
   Message: Property 'tokenUrl' not supported in a OAS 2.0 basic node
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-fields-basic-type.json#/declarations/securitySchemes/basic
   Property: 
-  Position: Some(LexicalInformation([(12,6)-(12,28)]))
+  Range: [(12,6)-(12,28)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-fields-basic-type.json

@@ -1,15 +1,15 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/invalid-yaml/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/invalid-yaml/input.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
+- Constraint: http://a.ml/vocabularies/amf/core#syaml-error
   Message: Syntax error in the following text: '    invalidyaml
 '
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(4,0)-(5,0)]))
+  Range: [(4,0)-(5,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/invalid-yaml/input.raml

@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-to-async-type.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-to-async-type.yaml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'User'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-to-async-type.yaml#/async-api/end-points/users%2Fsignup/subscribe/default-response/default/any/schema/unresolved
   Property: 
-  Position: Some(LexicalInformation([(17,16)-(17,20)]))
+  Range: [(17,16)-(17,20)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-to-async-type.yaml

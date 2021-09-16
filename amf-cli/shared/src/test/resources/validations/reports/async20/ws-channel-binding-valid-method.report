@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/ws-channel-binding-valid-method.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/ws-channel-binding-valid-method.yaml
 Profile: ASYNC 2.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#WebSocketsChannelBinding-method-in
+- Constraint: http://a.ml/vocabularies/amf/parser#WebSocketsChannelBinding-method-in
   Message: 'method' for channel binding object must be one of 'GET' or 'POST'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/ws-channel-binding-valid-method.yaml#/async-api/end-points/%2Finvalid/channel-bindings/web-socket-channel
   Property: http://a.ml/vocabularies/apiBinding#method
-  Position: Some(LexicalInformation([(17,16)-(17,23)]))
+  Range: [(17,16)-(17,23)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/ws-channel-binding-valid-method.yaml

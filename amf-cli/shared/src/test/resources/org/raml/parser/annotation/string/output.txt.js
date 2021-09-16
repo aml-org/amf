@@ -1,30 +1,30 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be string
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/image/scalar_1
   Property: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/image/scalar_1
-  Position: Some(LexicalInformation([(18,11)-(18,12)]))
+  Range: [(18,11)-(18,12)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should NOT be longer than 2 characters
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/foo/scalar_1
   Property: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/foo/scalar_1
-  Position: Some(LexicalInformation([(19,9)-(19,12)]))
+  Range: [(19,9)-(19,12)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should NOT be shorter than 10 characters
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/tato/scalar_1
   Property: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/tato/scalar_1
-  Position: Some(LexicalInformation([(20,10)-(20,15)]))
+  Range: [(20,10)-(20,15)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/string/input.raml

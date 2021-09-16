@@ -1,30 +1,30 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
+- Constraint: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
   Message: Security scheme 'b' not found in declarations.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml#/web-api/default-requirement_1/b
   Property: 
-  Position: Some(LexicalInformation([(4,12)-(4,13)]))
+  Range: [(4,12)-(4,13)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
+- Constraint: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
   Message: Security scheme 'c' not found in declarations.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml#/web-api/end-points/%2Fsec/default-requirement_1/c
   Property: 
-  Position: Some(LexicalInformation([(7,14)-(7,15)]))
+  Range: [(7,14)-(7,15)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
+- Constraint: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
   Message: Security scheme 'd' not found in declarations.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml#/web-api/end-points/%2Fsec/post/default-requirement_1/d
   Property: 
-  Position: Some(LexicalInformation([(9,16)-(9,17)]))
+  Range: [(9,16)-(9,17)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml

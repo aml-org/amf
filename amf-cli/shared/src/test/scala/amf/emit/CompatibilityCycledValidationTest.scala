@@ -32,8 +32,6 @@ class CompatibilityCycledValidationTest extends CompatibilityCycle {
 
 trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformSecrets {
 
-  private val REPORT_CONFORMS = "Conforms? true"
-
   def testCycleCompatibility(filePath: String,
                              from: Hint,
                              to: Spec,
@@ -58,7 +56,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
           tmp      <- writeTemporaryFile(path)(rendered)
           report   <- validate(tmp, to)
         } yield {
-          outputReportErrors(report)
+          report.conforms shouldBe true
         }
       }
     }
@@ -80,8 +78,6 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
     case Oas30  => Oas30YamlHint
     case _      => throw new IllegalArgumentException
   }
-
-  private def outputReportErrors(report: AMFValidationReport) = report.toString should include(REPORT_CONFORMS)
 
   private def validate(source: AsyncFile, spec: Spec): Future[AMFValidationReport] = {
     val handler   = DefaultErrorHandler()

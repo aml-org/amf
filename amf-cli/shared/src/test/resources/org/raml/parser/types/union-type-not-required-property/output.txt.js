@@ -1,11 +1,11 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: testProperty[2] should match some schema in anyOf
 testProperty[2].theProperty should be equal to one of the allowed values
 testProperty[3] should match some schema in anyOf
@@ -23,8 +23,8 @@ testProperty[9] should have required property 'mandatory'
 testProperty[9] should match some schema in anyOf
 testProperty[9].theProperty should be equal to one of the allowed values
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
   Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
-  Position: Some(LexicalInformation([(20,0)-(38,0)]))
+  Range: [(20,0)-(38,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml

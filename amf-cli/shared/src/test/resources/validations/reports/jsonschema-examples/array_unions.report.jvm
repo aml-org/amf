@@ -1,16 +1,16 @@
-Model: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /Values/2 required key [b] not found
 /Values/2/a expected type: String, found: Integer
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
   Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
-  Position: Some(LexicalInformation([(50,20)-(57,21)]))
+  Range: [(50,20)-(57,21)]
   Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml

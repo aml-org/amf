@@ -1,30 +1,30 @@
-Model: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'properties' not supported in a RAML 1.0 module node
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
   Property: 
-  Position: Some(LexicalInformation([(3,0)-(5,16)]))
+  Range: [(3,0)-(5,16)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
 
-- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'financeDetail.raml'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml#/web-api/end-points/%2Fclaims%2F%7Bclaim-id%7D/patch/request/application%2Fjson/any/schema/unresolved
   Property: 
-  Position: Some(LexicalInformation([(8,16)-(8,43)]))
+  Range: [(8,16)-(8,43)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml
 
-- Source: http://a.ml/vocabularies/amf/core#expected-module
+- Constraint: http://a.ml/vocabularies/amf/core#expected-module
   Message: Libraries must be applied by using 'uses'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
   Property: 
-  Position: Some(LexicalInformation([(8,16)-(8,43)]))
+  Range: [(8,16)-(8,43)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml

@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/discriminator/missing/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/types/discriminator/missing/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: required key [kind] not found
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/discriminator/missing/input.raml#/web-api/end-points/%2Fresource/get/200/application%2Fjson/schema/example/missing
   Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/discriminator/missing/input.raml#/web-api/end-points/%2Fresource/get/200/application%2Fjson/schema/example/missing
-  Position: Some(LexicalInformation([(29,0)-(31,0)]))
+  Range: [(29,0)-(31,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/discriminator/missing/input.raml

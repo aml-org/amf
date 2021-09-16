@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/resource_types/non-existent-include.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/resource_types/non-existent-include.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#declaration-not-found
+- Constraint: http://a.ml/vocabularies/amf/core#declaration-not-found
   Message: ResourceType resourceTypes/nonexistent.raml not found
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(4,15)-(4,54)]))
+  Range: [(4,15)-(4,54)]
   Location: file://amf-cli/shared/src/test/resources/validations/resource_types/non-existent-include.raml
 
-- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: File Not Found: amf-cli/shared/src/test/resources/validations/resource_types/resourceTypes/nonexistent.raml (No such file or directory)
-  Level: Violation
+  Severity: Violation
   Target: resourceTypes/nonexistent.raml
   Property: 
-  Position: Some(LexicalInformation([(4,15)-(4,54)]))
+  Range: [(4,15)-(4,54)]
   Location: file://amf-cli/shared/src/test/resources/validations/resource_types/non-existent-include.raml

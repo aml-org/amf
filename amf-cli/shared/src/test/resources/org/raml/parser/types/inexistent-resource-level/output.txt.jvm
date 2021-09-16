@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-resource-level/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-resource-level/input.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'MissingType'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-resource-level/input.raml#/web-api/end-points/%2Flist/get/200/application%2Fxml/any/schema/unresolved
   Property: 
-  Position: Some(LexicalInformation([(18,18)-(18,29)]))
+  Range: [(18,18)-(18,29)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/inexistent-resource-level/input.raml

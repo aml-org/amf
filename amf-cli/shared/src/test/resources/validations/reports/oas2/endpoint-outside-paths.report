@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/oas2/endpoint-outside-paths.json
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas2/endpoint-outside-paths.json
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#mandatory-paths-property
+- Constraint: http://a.ml/vocabularies/amf/parser#mandatory-paths-property
   Message: 'paths' is mandatory in OAS spec
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/oas2/endpoint-outside-paths.json#/web-api
   Property: 
-  Position: None
+  Range: 
   Location: 
 
-- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property '/pets' not supported in a OAS 2.0 webApi node
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/oas2/endpoint-outside-paths.json#/web-api
   Property: 
-  Position: Some(LexicalInformation([(8,2)-(17,3)]))
+  Range: [(8,2)-(17,3)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas2/endpoint-outside-paths.json

@@ -1,24 +1,24 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/type-and-schema-in-resource/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/type-and-schema-in-resource/input.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exclusive-schema-type
+- Constraint: http://a.ml/vocabularies/amf/parser#exclusive-schema-type
   Message: 'schema' and 'type' properties are mutually exclusive
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(11,12)-(11,18)]))
+  Range: [(11,12)-(11,18)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/type-and-schema-in-resource/input.raml
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#schema-deprecated
+- Constraint: http://a.ml/vocabularies/amf/parser#schema-deprecated
   Message: 'schema' keyword it's deprecated for 1.0 version, should use 'type' instead
-  Level: Warning
+  Severity: Warning
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(11,12)-(11,18)]))
+  Range: [(11,12)-(11,18)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/exclusive-fields/type-and-schema-in-resource/input.raml

@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/raml/overlay-inferred-values/base.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/overlay-inferred-values/base.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#resolution-validation
+- Constraint: http://a.ml/vocabularies/amf/core#resolution-validation
   Message: Property 'http://a.ml/vocabularies/apiContract#required' in 'Parameter' is not allowed to be overriden or added in overlays
-  Level: Violation
+  Severity: Violation
   Target: http://a.ml/vocabularies/apiContract#required
   Property: 
-  Position: Some(LexicalInformation([(9,8)-(10,0)]))
+  Range: [(9,8)-(10,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/raml/overlay-inferred-values/invalid-overlay.raml

@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/custom-facets-invalid/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/types/custom-facets-invalid/input.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#missing-user-defined-facet
+- Constraint: http://a.ml/vocabularies/amf/parser#missing-user-defined-facet
   Message: Missing required facet 'test'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/custom-facets-invalid/input.raml#/declarations/types/scalar/SubType
   Property: 
-  Position: Some(LexicalInformation([(8,0)-(12,0)]))
+  Range: [(8,0)-(12,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/custom-facets-invalid/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#user-defined-facets-matches-ancestor
+- Constraint: http://a.ml/vocabularies/amf/parser#user-defined-facets-matches-ancestor
   Message: Custom defined facet 'test' matches custom facet from inherited type
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/custom-facets-invalid/input.raml#/declarations/types/scalar/SubType
   Property: 
-  Position: Some(LexicalInformation([(8,0)-(12,0)]))
+  Range: [(8,0)-(12,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/custom-facets-invalid/input.raml

@@ -1,16 +1,16 @@
-Model: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /lastname expected maxLength: 5, actual: 6
 /name expected minLength: 5, actual: 3
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml#/declarations/types/User/example/default-example
   Property: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml#/declarations/types/User/example/default-example
-  Position: Some(LexicalInformation([(15,0)-(16,26)]))
+  Range: [(15,0)-(16,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/lengths.raml

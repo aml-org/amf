@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-endpoint-path
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-endpoint-path
   Message: '/end{point' is not a valid template uri.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json#/web-api/end-points/%2Fend%7Bpoint
   Property: 
-  Position: Some(LexicalInformation([(8,18)-(14,5)]))
+  Range: [(8,18)-(14,5)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-endpoint-path-still-parses.json

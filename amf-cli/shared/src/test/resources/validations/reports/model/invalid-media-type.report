@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/webapi/invalid_media_type.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/webapi/invalid_media_type.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#WebAPI-accepts-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#WebAPI-accepts-pattern
   Message: Default media types must be valid
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/webapi/invalid_media_type.raml#/web-api
   Property: http://a.ml/vocabularies/apiContract#accepts
-  Position: Some(LexicalInformation([(3,11)-(3,26)]))
+  Range: [(3,11)-(3,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/webapi/invalid_media_type.raml

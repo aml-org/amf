@@ -1,63 +1,63 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 6
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /0/1 expected type: Number, found: String
 /1/1 expected type: Number, found: String
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/array/Matrix/example/default-example
   Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/array/Matrix/example/default-example
-  Position: Some(LexicalInformation([(6,13)-(6,39)]))
+  Range: [(6,13)-(6,39)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /family/1 expected type: String, found: Integer
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/badExample
   Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/badExample
-  Position: Some(LexicalInformation([(26,0)-(31,0)]))
+  Range: [(26,0)-(31,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: required key [age] not found
 required key [family] not found
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/anotherBadExample
   Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/anotherBadExample
-  Position: Some(LexicalInformation([(32,0)-(33,0)]))
+  Range: [(32,0)-(33,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /age expected type: Integer, found: String
 /name expected type: String, found: Integer
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/anotherOne
   Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/anotherOne
-  Position: Some(LexicalInformation([(34,0)-(39,0)]))
+  Range: [(34,0)-(39,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /users/1/family/1 expected type: String, found: Integer
 /users/1/family/2 expected type: String, found: Integer
 /users/2/age expected type: Integer, found: String
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/one
   Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/one
-  Position: Some(LexicalInformation([(51,0)-(72,0)]))
+  Range: [(51,0)-(72,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /authors/1 expected type: String, found: Integer
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/two
   Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/two
-  Position: Some(LexicalInformation([(73,0)-(84,0)]))
+  Range: [(73,0)-(84,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/error-path/input.raml

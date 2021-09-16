@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-type-facet-as-map.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-type-facet-as-map.yaml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
+- Constraint: http://a.ml/vocabularies/amf/core#syaml-error
   Message: YAML scalar expected
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(9,11)-(11,16)]))
+  Range: [(9,11)-(11,16)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-type-facet-as-map.yaml

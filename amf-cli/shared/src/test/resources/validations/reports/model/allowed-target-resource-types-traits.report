@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/resource-types-and-traits.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/resource-types-and-traits.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-resource not allowed in target ResourceType, allowed targets: Resource
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/resource-types-and-traits.raml#/web-api/end-points/%2Fapplying-resource-type/searchableCollection/applied
   Property: 
-  Position: Some(LexicalInformation([(18,4)-(18,49)]))
+  Range: [(18,4)-(18,49)]
   Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/resource-types-and-traits.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-annotation-target
   Message: Annotation meta-method not allowed in target Trait, allowed targets: Method
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/resource-types-and-traits.raml#/declarations/traits/trait/chargeable/applied/chargeable
   Property: 
-  Position: Some(LexicalInformation([(26,4)-(26,45)]))
+  Range: [(26,4)-(26,45)]
   Location: file://amf-cli/shared/src/test/resources/validations/annotations/allowed-targets/resource-types-and-traits.raml

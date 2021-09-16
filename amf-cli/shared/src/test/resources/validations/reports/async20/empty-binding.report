@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/empty-binding.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/empty-binding.yaml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#non-empty-binding-map
+- Constraint: http://a.ml/vocabularies/amf/parser#non-empty-binding-map
   Message: Reserved name binding 'amqp' must have an empty map
-  Level: Violation
+  Severity: Violation
   Target: null
   Property: 
-  Position: Some(LexicalInformation([(12,11)-(13,27)]))
+  Range: [(12,11)-(13,27)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/empty-binding.yaml

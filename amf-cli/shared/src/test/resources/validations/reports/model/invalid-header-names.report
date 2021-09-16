@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/invalid-header-names.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/invalid-header-names.raml
 Profile: RAML 1.0
-Conforms? true
+Conforms: true
 Number of results: 1
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#mandatory-header-name-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#mandatory-header-name-pattern
   Message: Header name must comply RFC-7230
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/invalid-header-names.raml#/web-api/end-points/%2Fjobs/post/request/parameter/header/invalid%40header
   Property: 
-  Position: Some(LexicalInformation([(11,6)-(12,39)]))
+  Range: [(11,6)-(12,39)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-header-names.raml

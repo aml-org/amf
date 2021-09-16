@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/mandatory-server-url.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/mandatory-server-url.yaml
 Profile: ASYNC 2.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#Server-urlTemplate-minCount
+- Constraint: http://a.ml/vocabularies/amf/parser#Server-urlTemplate-minCount
   Message: Server must have an 'url' property
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/mandatory-server-url.yaml#/async-api/null
   Property: http://a.ml/vocabularies/core#urlTemplate
-  Position: Some(LexicalInformation([(7,2)-(10,26)]))
+  Range: [(7,2)-(10,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/mandatory-server-url.yaml

@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/resource_types/nested-endpoint.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/resource_types/nested-endpoint.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/resolution#nested-endpoint
+- Constraint: http://a.ml/vocabularies/amf/resolution#nested-endpoint
   Message: Nested endpoint in resourceType: '/groups'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/resource_types/nested-endpoint.raml#/web-api/end-points/%2Fusers/hasGroups
   Property: 
-  Position: Some(LexicalInformation([(9,4)-(9,11)]))
+  Range: [(9,4)-(9,11)]
   Location: file://amf-cli/shared/src/test/resources/validations/resource_types/nested-endpoint.raml

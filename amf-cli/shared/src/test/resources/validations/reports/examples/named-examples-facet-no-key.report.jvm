@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: expected type: JSONObject, found: String
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml#/declarations/types/Person/example/name
   Property: file://amf-cli/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml#/declarations/types/Person/example/name
-  Position: Some(LexicalInformation([(2,6)-(2,10)]))
+  Range: [(2,6)-(2,10)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples/named-examples-facet-no-key/example.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: expected type: JSONObject, found: Integer
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml#/declarations/types/Person/example/age
   Property: file://amf-cli/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml#/declarations/types/Person/example/age
-  Position: Some(LexicalInformation([(3,5)-(3,7)]))
+  Range: [(3,5)-(3,7)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples/named-examples-facet-no-key/example.raml

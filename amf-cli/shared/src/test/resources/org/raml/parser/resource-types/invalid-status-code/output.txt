@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/invalid-status-code/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/invalid-status-code/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
   Message: Status code for a Response must be a value between 100 and 599
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/invalid-status-code/input.raml#/web-api/end-points/%2Fresource/get/699
   Property: http://a.ml/vocabularies/apiContract#statusCode
-  Position: Some(LexicalInformation([(7,6)-(7,9)]))
+  Range: [(7,6)-(7,9)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/invalid-status-code/input.raml

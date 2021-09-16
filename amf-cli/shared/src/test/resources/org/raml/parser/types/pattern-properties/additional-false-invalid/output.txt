@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/pattern-properties/additional-false-invalid/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/types/pattern-properties/additional-false-invalid/input.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#pattern-properties-on-closed-node
+- Constraint: http://a.ml/vocabularies/amf/parser#pattern-properties-on-closed-node
   Message: Node without additional properties support cannot have pattern properties
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/pattern-properties/additional-false-invalid/input.raml#/declarations/types/Person
   Property: 
-  Position: Some(LexicalInformation([(4,9)-(17,16)]))
+  Range: [(4,9)-(17,16)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/pattern-properties/additional-false-invalid/input.raml

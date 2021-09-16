@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/raml/included-json-with-duplicate-keys/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml/included-json-with-duplicate-keys/api.raml
 Profile: RAML 1.0
-Conforms? true
+Conforms: true
 Number of results: 1
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-warning
+- Constraint: http://a.ml/vocabularies/amf/core#syaml-warning
   Message: Duplicate key : 'name'
-  Level: Warning
+  Severity: Warning
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(4,2)-(4,8)]))
+  Range: [(4,2)-(4,8)]
   Location: file://amf-cli/shared/src/test/resources/validations/raml/included-json-with-duplicate-keys/schema.json

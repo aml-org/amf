@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/oas3/server-variable-missing-field.json
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas3/server-variable-missing-field.json
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#server-variable-missing-default
+- Constraint: http://a.ml/vocabularies/amf/parser#server-variable-missing-default
   Message: Server variable must define a 'default' field
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/oas3/server-variable-missing-field.json#/web-api/https%3A%2F%2F%7Busername%7D.gigantic-server.com%3A%7Bport%7D%2F%7BbasePath%7D/parameter/default-binding/port
   Property: 
-  Position: Some(LexicalInformation([(16,16)-(21,9)]))
+  Range: [(16,16)-(21,9)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/server-variable-missing-field.json

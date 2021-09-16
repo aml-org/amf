@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/uri-templates/nested-braces-in-baseUri/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/uri-templates/nested-braces-in-baseUri/input.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#path-template-unbalanced-parameters
+- Constraint: http://a.ml/vocabularies/amf/parser#path-template-unbalanced-parameters
   Message: Invalid path template syntax
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/uri-templates/nested-braces-in-baseUri/input.raml#/web-api/http%3A%2F%2Fmyapi.com%2F%7B%7BnotValid%7D%7D
   Property: http://a.ml/vocabularies/core#urlTemplate
-  Position: Some(LexicalInformation([(3,9)-(3,38)]))
+  Range: [(3,9)-(3,38)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/uri-templates/nested-braces-in-baseUri/input.raml

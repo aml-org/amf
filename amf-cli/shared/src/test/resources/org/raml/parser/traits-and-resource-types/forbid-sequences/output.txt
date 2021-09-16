@@ -1,48 +1,48 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 5
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-abstract-declaration-type
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-abstract-declaration-type
   Message: Invalid type !!seq for 'resourceTypes' node.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml#/declarations/resourceTypes
   Property: 
-  Position: Some(LexicalInformation([(4,14)-(7,0)]))
+  Range: [(4,14)-(7,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-abstract-declaration-type
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-abstract-declaration-type
   Message: Invalid type !!seq for 'traits' node.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml#/declarations/traits
   Property: 
-  Position: Some(LexicalInformation([(7,7)-(10,0)]))
+  Range: [(7,7)-(10,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-types-type
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-types-type
   Message: Invalid type !!seq for 'types' node.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml#/declarations/types
   Property: 
-  Position: Some(LexicalInformation([(10,8)-(13,0)]))
+  Range: [(10,8)-(13,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-secured-by-type
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-secured-by-type
   Message: Invalid type !!seq for 'securitySchemes' node.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml#/declarations/securitySchemes
   Property: 
-  Position: Some(LexicalInformation([(13,16)-(15,0)]))
+  Range: [(13,16)-(15,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#schemas-deprecated
+- Constraint: http://a.ml/vocabularies/amf/parser#schemas-deprecated
   Message: 'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead
-  Level: Warning
+  Severity: Warning
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(10,0)-(10,7)]))
+  Range: [(10,0)-(10,7)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/forbid-sequences/input.raml

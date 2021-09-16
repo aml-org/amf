@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/title/null-title/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/title/null-title/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#WebAPI-name-minLength
+- Constraint: http://a.ml/vocabularies/amf/parser#WebAPI-name-minLength
   Message: Info object 'title' must not be empty
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/title/null-title/input.raml#/web-api
   Property: http://a.ml/vocabularies/core#name
-  Position: Some(LexicalInformation([(2,6)-(2,6)]))
+  Range: [(2,6)-(2,6)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/title/null-title/input.raml

@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/types/big_nums.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/types/big_nums.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 1000000000000 is not less or equal to 999999999999
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/big_nums.raml#/declarations/types/scalar/LongNumber/example/three
   Property: file://amf-cli/shared/src/test/resources/validations/types/big_nums.raml#/declarations/types/scalar/LongNumber/example/three
-  Position: Some(LexicalInformation([(11,13)-(11,26)]))
+  Range: [(11,13)-(11,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/big_nums.raml
