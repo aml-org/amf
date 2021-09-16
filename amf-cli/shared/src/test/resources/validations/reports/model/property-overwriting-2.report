@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/types/property-overwriting-2.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/types/property-overwriting-2.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type 'any' can't override
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/property-overwriting-2.raml#/declarations/types/Father/property/age
   Property: http://a.ml/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(15,6)-(17,22)]))
+  Range: [(15,6)-(17,22)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/property-overwriting-2.raml

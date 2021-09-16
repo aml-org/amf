@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/resource_types/examplesValidation.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/resource_types/examplesValidation.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 11 is not less or equal to 10
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/resource_types/examplesValidation.raml#/web-api/end-points/%2FnonParametrizedIncorrect/get/request/application%2Fjson/any/schema/example/default-example
   Property: file://amf-cli/shared/src/test/resources/validations/resource_types/examplesValidation.raml#/web-api/end-points/%2FnonParametrizedIncorrect/get/request/application%2Fjson/any/schema/example/default-example
-  Position: Some(LexicalInformation([(34,17)-(34,19)]))
+  Range: [(34,17)-(34,19)]
   Location: file://amf-cli/shared/src/test/resources/validations/resource_types/examplesValidation.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 11 is not less or equal to 10
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/resource_types/examplesValidation.raml#/web-api/end-points/%2FparametrizedIncorrect/get/request/application%2Fjson/any/schema/example/default-example
   Property: file://amf-cli/shared/src/test/resources/validations/resource_types/examplesValidation.raml#/web-api/end-points/%2FparametrizedIncorrect/get/request/application%2Fjson/any/schema/example/default-example
-  Position: Some(LexicalInformation([(52,17)-(52,19)]))
+  Range: [(52,17)-(52,19)]
   Location: file://amf-cli/shared/src/test/resources/validations/resource_types/examplesValidation.raml

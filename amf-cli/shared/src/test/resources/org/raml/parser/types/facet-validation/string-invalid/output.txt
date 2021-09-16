@@ -1,32 +1,32 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#min-max-length
+- Constraint: http://a.ml/vocabularies/amf/parser#min-max-length
   Message: MaxLength must be greater than or equal to minLength
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/types/scalar/MySecondType
-  Property:
-  Position: Some(LexicalInformation([(9,4)-(14,0)]))
+  Property: 
+  Range: [(9,4)-(14,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/types/scalar/MyThirdType
   Property: http://www.w3.org/ns/shacl#maxLength
-  Position: Some(LexicalInformation([(16,17)-(16,19)]))
+  Range: [(16,17)-(16,19)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for min-length than base type for maxProperties
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/types/scalar/MyFourthType
   Property: http://www.w3.org/ns/shacl#minLength
-  Position: Some(LexicalInformation([(21,17)-(21,19)]))
+  Range: [(21,17)-(21,19)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml

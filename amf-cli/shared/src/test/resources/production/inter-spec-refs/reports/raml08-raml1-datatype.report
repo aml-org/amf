@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/raml08-raml1-datatype/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/raml08-raml1-datatype/api.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-definition
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-type-definition
   Message: Invalid type def object for RAML 0.8
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(2,6)-(2,12)]))
+  Range: [(2,6)-(2,12)]
   Location: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/raml08-raml1-datatype/datatype.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'properties' not supported in a RAML 0.8 stringScalarShape node
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/raml08-raml1-datatype/api.raml#/declarations/schemas/scalar/a
   Property: 
-  Position: Some(LexicalInformation([(3,0)-(5,18)]))
+  Range: [(3,0)-(5,18)]
   Location: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/raml08-raml1-datatype/datatype.raml

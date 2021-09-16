@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-fragment-in-uri.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-fragment-in-uri.yaml
 Profile: ASYNC 2.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#uri-fragment
+- Constraint: http://a.ml/vocabularies/amf/parser#uri-fragment
   Message: Fragments must not be defined in uri
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-fragment-in-uri.yaml#/async-api/end-points/%2Finvalid%23example
   Property: http://a.ml/vocabularies/apiContract#path
-  Position: Some(LexicalInformation([(8,2)-(8,18)]))
+  Range: [(8,2)-(8,18)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-fragment-in-uri.yaml

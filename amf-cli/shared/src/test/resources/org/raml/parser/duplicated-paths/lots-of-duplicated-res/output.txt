@@ -1,30 +1,30 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path
   Message: Duplicated resource path /tons/of/api/resources
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml#/web-api/end-points/%2Ftons%2Fof%2Fapi%2Fresources
   Property: 
-  Position: Some(LexicalInformation([(25,4)-(27,0)]))
+  Range: [(25,4)-(27,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path
   Message: Duplicated resource path /tons/of/api
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml#/web-api/end-points/%2Ftons%2Fof%2Fapi
   Property: 
-  Position: Some(LexicalInformation([(27,2)-(29,0)]))
+  Range: [(27,2)-(29,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path
   Message: Duplicated resource path /tons/of/api/resources/even/and/more
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml#/web-api/end-points/%2Ftons%2Fof%2Fapi%2Fresources%2Feven%2Fand%2Fmore
   Property: 
-  Position: Some(LexicalInformation([(39,4)-(41,0)]))
+  Range: [(39,4)-(41,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml

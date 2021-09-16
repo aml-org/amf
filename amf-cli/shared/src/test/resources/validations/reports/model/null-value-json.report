@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/null-value-json.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/null-value-json.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
+- Constraint: http://a.ml/vocabularies/amf/core#syaml-error
   Message: Expecting !!int, !!null provided
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(16,25)-(16,26)]))
+  Range: [(16,25)-(16,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/null-value-json.raml
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
+- Constraint: http://a.ml/vocabularies/amf/core#syaml-error
   Message: Syntax error : Unexpected '}'
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(16,25)-(16,26)]))
+  Range: [(16,25)-(16,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/null-value-json.raml

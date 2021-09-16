@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml
 Profile: ASYNC 2.0
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#Parameter-binding-validParameterLocation
+- Constraint: http://a.ml/vocabularies/amf/parser#Parameter-binding-validParameterLocation
   Message: Does not comply with runtime expression ABNF syntax
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml#/async-api/end-points/%2Fuser%2F%7BuserId%7D%2Fsignup/parameter/somewhere%20else/userId
   Property: http://a.ml/vocabularies/apiContract#binding
-  Position: Some(LexicalInformation([(14,18)-(14,32)]))
+  Range: [(14,18)-(14,32)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml
 
-- Source: http://a.ml/vocabularies/amf/parser#CorrelationId-location-validCorrelationIdLocation
+- Constraint: http://a.ml/vocabularies/amf/parser#CorrelationId-location-validCorrelationIdLocation
   Message: Does not comply with runtime expression ABNF syntax
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml#/async-api/end-points/%2Fuser%2F%7BuserId%7D%2Fsignup/subscribe/default-response/default-id
   Property: http://a.ml/vocabularies/core#location
-  Position: Some(LexicalInformation([(28,20)-(28,50)]))
+  Range: [(28,20)-(28,50)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml

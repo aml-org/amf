@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/examples/examples-array-not-map.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/examples/examples-array-not-map.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#examples-must-be-map
+- Constraint: http://a.ml/vocabularies/amf/parser#examples-must-be-map
   Message: Property 'examples' should be a map
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(10,8)-(12,22)]))
+  Range: [(10,8)-(12,22)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples/examples-array-not-map.raml

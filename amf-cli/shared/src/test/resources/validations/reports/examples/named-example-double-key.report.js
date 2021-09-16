@@ -1,16 +1,16 @@
-Model: file://amf-cli/shared/src/test/resources/validations/examples/named-example-double-key/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/examples/named-example-double-key/api.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should have required property 'age'
 should have required property 'name'
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/named-example-double-key/api.raml#/declarations/types/Person/example/a
   Property: file://amf-cli/shared/src/test/resources/validations/examples/named-example-double-key/api.raml#/declarations/types/Person/example/a
-  Position: Some(LexicalInformation([(2,0)-(4,9)]))
+  Range: [(2,0)-(4,9)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples/named-example-double-key/example.raml

@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/response-with-no-schema.json
+ModelId: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/response-with-no-schema.json
 Profile: OAS 2.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/resolution#examples-with-no-schema-defined
+- Constraint: http://a.ml/vocabularies/amf/resolution#examples-with-no-schema-defined
   Message: When schema is undefined, 'examples' facet is invalid as no content is returned as part of the response
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/response-with-no-schema.json#/web-api/end-points/%2FaPath/post/default/example/application%2Fjson
   Property: 
-  Position: Some(LexicalInformation([(16,14)-(18,15)]))
+  Range: [(16,14)-(18,15)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples-mime-type/response-with-no-schema.json

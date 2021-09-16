@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-key.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-key.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#resolution-validation
+- Constraint: http://a.ml/vocabularies/amf/core#resolution-validation
   Message: Cannot find variable 'missingParameterInKey'.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-key.raml#/declarations/traits/trait/t1
   Property: 
-  Position: Some(LexicalInformation([(11,6)-(12,0)]))
+  Range: [(11,6)-(12,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-key.raml

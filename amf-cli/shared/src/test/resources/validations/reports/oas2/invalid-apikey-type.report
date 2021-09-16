@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-apikey-type.json
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-apikey-type.json
 Profile: OAS 2.0
-Conforms? true
+Conforms: true
 Number of results: 2
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#closed-shape-warning
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape-warning
   Message: Property 'in' is required in a OAS 2.0 apiKey node
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-apikey-type.json#/declarations/securitySchemes/Bearer
   Property: 
-  Position: Some(LexicalInformation([(9,14)-(11,5)]))
+  Range: [(9,14)-(11,5)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-apikey-type.json
 
-- Source: http://a.ml/vocabularies/amf/parser#closed-shape-warning
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape-warning
   Message: Property 'name' is required in a OAS 2.0 apiKey node
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-apikey-type.json#/declarations/securitySchemes/Bearer
   Property: 
-  Position: Some(LexicalInformation([(9,14)-(11,5)]))
+  Range: [(9,14)-(11,5)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas2/security/invalid-apikey-type.json

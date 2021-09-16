@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/unequallyDefined.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/unequallyDefined.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/resolution#unequal-media-type-definitions-in-extends-payloads
+- Constraint: http://a.ml/vocabularies/amf/resolution#unequal-media-type-definitions-in-extends-payloads
   Message: Cannot merge payloads with explicit and implicit media types
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/unequallyDefined.raml#/web-api/end-points/%2Fe-explicit/get/200
   Property: 
-  Position: Some(LexicalInformation([(23,8)-(26,0)]))
+  Range: [(23,8)-(26,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/unequallyDefined.raml
 
-- Source: http://a.ml/vocabularies/amf/resolution#unequal-media-type-definitions-in-extends-payloads
+- Constraint: http://a.ml/vocabularies/amf/resolution#unequal-media-type-definitions-in-extends-payloads
   Message: Cannot merge payloads with explicit and implicit media types
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/unequallyDefined.raml#/web-api/end-points/%2Fe-implicit/get/200
   Property: 
-  Position: Some(LexicalInformation([(31,8)-(33,0)]))
+  Range: [(31,8)-(33,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/unequallyDefined.raml

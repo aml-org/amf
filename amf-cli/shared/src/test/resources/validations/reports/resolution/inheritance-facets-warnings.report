@@ -1,80 +1,80 @@
-Model: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 9
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://www.w3.org/2001/XMLSchema#integer < http://www.w3.org/2001/XMLSchema#string 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedType/property/a/scalar/a
   Property: http://a.ml/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(112,6)-(114,0)]))
+  Range: [(112,6)-(114,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Incompatible types [object, string]
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedType1/property/a/a
   Property: http://a.ml/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(122,6)-(125,0)]))
+  Range: [(122,6)-(125,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for max-properties than base type for maxProperties
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMaxProperties
   Property: http://a.ml/vocabularies/shapes#maxProperties
-  Position: Some(LexicalInformation([(19,19)-(19,20)]))
+  Range: [(19,19)-(19,20)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for min-properties than base type for minProperties
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMinProperties
   Property: http://a.ml/vocabularies/shapes#minProperties
-  Position: Some(LexicalInformation([(26,19)-(26,20)]))
+  Range: [(26,19)-(26,20)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMaxLength/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#maxLength
-  Position: Some(LexicalInformation([(51,19)-(51,22)]))
+  Range: [(51,19)-(51,22)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: different values for pattern constraint
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedPattern/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#pattern
-  Position: Some(LexicalInformation([(64,8)-(66,0)]))
+  Range: [(64,8)-(66,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for maximum than base type for maximum
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMaximum/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#maxInclusive
-  Position: Some(LexicalInformation([(77,17)-(77,20)]))
+  Range: [(77,17)-(77,20)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for min-minimum than base type for minimum
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMinimum/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#minInclusive
-  Position: Some(LexicalInformation([(90,17)-(90,20)]))
+  Range: [(90,17)-(90,20)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Values in subtype enumeration (f) not found in the supertype enumeration (a,b)
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedEnum/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#in
-  Position: Some(LexicalInformation([(103,15)-(103,18)]))
+  Range: [(103,15)-(103,18)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/inheritance-facets.raml

@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-style-for-parameter2.json
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-style-for-parameter2.json
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-parameter-style-binding-combination
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-parameter-style-binding-combination
   Message: 'form' style cannot be used with 'header' value of parameter property 'in'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-style-for-parameter2.json#/web-api/end-points/%2Ffoo/get/default/parameter/default-binding/Set-Cookie
   Property: 
-  Position: None
+  Range: 
   Location: 

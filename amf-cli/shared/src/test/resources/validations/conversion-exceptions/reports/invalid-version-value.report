@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-version-value.jsonld
+ModelId: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-version-value.jsonld
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
+- Constraint: http://a.ml/vocabularies/amf/core#syaml-error
   Message: Expected scalar but found: ["a", "seq"]
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(12,18)-(12,30)]))
+  Range: [(12,18)-(12,30)]
   Location: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-version-value.jsonld

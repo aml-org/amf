@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/duplicate-operation-ids.json
+ModelId: file://amf-cli/shared/src/test/resources/validations/duplicate-operation-ids.json
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#duplicated-operation-id
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicated-operation-id
   Message: Duplicated operation id '"someID"'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/duplicate-operation-ids.json#/web-api/end-points/%2FotherPath/get
   Property: 
-  Position: Some(LexicalInformation([(20,22)-(20,30)]))
+  Range: [(20,22)-(20,30)]
   Location: file://amf-cli/shared/src/test/resources/validations/duplicate-operation-ids.json

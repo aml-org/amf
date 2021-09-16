@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-root-field-value.jsonld
+ModelId: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-root-field-value.jsonld
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
+- Constraint: http://a.ml/vocabularies/amf/core#syaml-error
   Message: Expecting !!bool, !!int provided
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(12,18)-(12,19)]))
+  Range: [(12,18)-(12,19)]
   Location: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-root-field-value.jsonld

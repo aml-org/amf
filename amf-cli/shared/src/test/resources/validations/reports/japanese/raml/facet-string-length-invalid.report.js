@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/japanese/raml/facet-string-length-invalid.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/japanese/raml/facet-string-length-invalid.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should NOT be longer than 7 characters
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/japanese/raml/facet-string-length-invalid.raml#/declarations/types/scalar/TooLongEmail/example/default-example
   Property: file://amf-cli/shared/src/test/resources/validations/japanese/raml/facet-string-length-invalid.raml#/declarations/types/scalar/TooLongEmail/example/default-example
-  Position: Some(LexicalInformation([(6,13)-(6,21)]))
+  Range: [(6,13)-(6,21)]
   Location: file://amf-cli/shared/src/test/resources/validations/japanese/raml/facet-string-length-invalid.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should NOT be shorter than 10 characters
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/japanese/raml/facet-string-length-invalid.raml#/declarations/types/scalar/TooShortEmail/example/default-example
   Property: file://amf-cli/shared/src/test/resources/validations/japanese/raml/facet-string-length-invalid.raml#/declarations/types/scalar/TooShortEmail/example/default-example
-  Position: Some(LexicalInformation([(10,13)-(10,21)]))
+  Range: [(10,13)-(10,21)]
   Location: file://amf-cli/shared/src/test/resources/validations/japanese/raml/facet-string-length-invalid.raml

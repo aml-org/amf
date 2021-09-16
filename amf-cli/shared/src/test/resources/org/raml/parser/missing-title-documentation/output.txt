@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/missing-title-documentation/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/missing-title-documentation/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#CreativeWork-title-minCount
+- Constraint: http://a.ml/vocabularies/amf/parser#CreativeWork-title-minCount
   Message: API documentation title is mandatory
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/missing-title-documentation/input.raml#/web-api/creative-work/null
   Property: http://a.ml/vocabularies/core#title
-  Position: Some(LexicalInformation([(4,6)-(6,0)]))
+  Range: [(4,6)-(6,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/missing-title-documentation/input.raml

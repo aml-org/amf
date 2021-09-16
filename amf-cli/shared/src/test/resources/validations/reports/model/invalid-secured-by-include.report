@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/invalid-secured-by-include/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/invalid-secured-by-include/api.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
+- Constraint: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
   Message: 'securedBy' property doesn't accept !include tag, only references to security schemes.
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(3,11)-(3,31)]))
+  Range: [(3,11)-(3,31)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-secured-by-include/api.raml

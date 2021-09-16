@@ -1,38 +1,38 @@
-Model: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 4
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: expected type: String, found: Integer
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidInt1
   Property: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidInt1
-  Position: Some(LexicalInformation([(11,19)-(11,20)]))
+  Range: [(11,19)-(11,20)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: expected type: String, found: Long
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidInt2
   Property: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidInt2
-  Position: Some(LexicalInformation([(12,19)-(12,31)]))
+  Range: [(12,19)-(12,31)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: expected type: String, found: Boolean
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidBoolean
   Property: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidBoolean
-  Position: Some(LexicalInformation([(13,22)-(13,26)]))
+  Range: [(13,22)-(13,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: expected type: String, found: Double
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidNumber
   Property: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidNumber
-  Position: Some(LexicalInformation([(14,21)-(14,24)]))
+  Range: [(14,21)-(14,24)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples/string-hierarchy.raml

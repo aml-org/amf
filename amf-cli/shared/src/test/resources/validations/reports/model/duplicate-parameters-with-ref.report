@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/duplicate-parameters-with-ref.json
+ModelId: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/duplicate-parameters-with-ref.json
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#duplicate-parameters
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicate-parameters
   Message: Parameter formParam of type formData was found duplicated
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/duplicate-parameters-with-ref.json#/declarations/parameters/ParameterExample/link--1340641655
   Property: 
-  Position: Some(LexicalInformation([(16,11)-(16,50)]))
+  Range: [(16,11)-(16,50)]
   Location: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/duplicate-parameters-with-ref.json

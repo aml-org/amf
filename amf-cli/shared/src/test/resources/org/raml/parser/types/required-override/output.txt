@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/types/required-override/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/types/required-override/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: sub type has a weaker constraint for minItems than base type for minItems
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/required-override/input.raml#/declarations/types/Type2/property/p2
   Property: http://www.w3.org/ns/shacl#minCount
-  Position: Some(LexicalInformation([(13,6)-(14,0)]))
+  Range: [(13,6)-(14,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/required-override/input.raml

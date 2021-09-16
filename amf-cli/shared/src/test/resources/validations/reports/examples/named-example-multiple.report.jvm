@@ -1,16 +1,16 @@
-Model: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/api.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: required key [age] not found
 required key [name] not found
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/api.raml#/declarations/types/Person/example/default-example
   Property: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/api.raml#/declarations/types/Person/example/default-example
-  Position: Some(LexicalInformation([(2,0)-(7,9)]))
+  Range: [(2,0)-(7,9)]
   Location: file://amf-cli/shared/src/test/resources/validations/examples/named-example-multiple/example.raml

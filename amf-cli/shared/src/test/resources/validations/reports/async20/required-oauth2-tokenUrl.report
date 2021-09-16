@@ -1,30 +1,30 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
+- Constraint: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
   Message: Missing tokenUrl for authorizationCode flow
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/authorizationCode
   Property: 
-  Position: Some(LexicalInformation([(10,6)-(20,37)]))
+  Range: [(10,6)-(20,37)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml
 
-- Source: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
+- Constraint: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
   Message: Missing tokenUrl for clientCredentials flow
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/clientCredentials
   Property: 
-  Position: Some(LexicalInformation([(10,6)-(20,37)]))
+  Range: [(10,6)-(20,37)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml
 
-- Source: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
+- Constraint: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
   Message: Missing tokenUrl for password flow
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/password
   Property: 
-  Position: Some(LexicalInformation([(10,6)-(20,37)]))
+  Range: [(10,6)-(20,37)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml

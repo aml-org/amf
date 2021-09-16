@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-flows.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-flows.yaml
 Profile: ASYNC 2.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredFlowsInOAuth2
+- Constraint: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredFlowsInOAuth2
   Message: 'flows' field is mandatory in OAuth2 security scheme
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-flows.yaml#/declarations/securitySchemes/oauthFlow
   Property: 
-  Position: Some(LexicalInformation([(8,4)-(10,0)]))
+  Range: [(8,4)-(10,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-flows.yaml

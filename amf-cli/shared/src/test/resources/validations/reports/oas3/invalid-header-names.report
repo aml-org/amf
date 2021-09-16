@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-header-names.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-header-names.yaml
 Profile: OAS 3.0
-Conforms? true
+Conforms: true
 Number of results: 1
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#mandatory-header-name-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#mandatory-header-name-pattern
   Message: Header name must comply RFC-7230
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-header-names.yaml#/web-api/end-points/%2FmyPath/parameter/header/X-%40-ID
   Property: 
-  Position: Some(LexicalInformation([(9,8)-(13,0)]))
+  Range: [(9,8)-(13,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/invalid-header-names.yaml

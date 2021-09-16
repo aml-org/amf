@@ -1,16 +1,16 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema-yaml-example/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema-yaml-example/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+- Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /age expected type: Integer, found: String
 /name expected type: String, found: Integer
 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema-yaml-example/input.raml#/declarations/types/User/example/default-example
   Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema-yaml-example/input.raml#/declarations/types/User/example/default-example
-  Position: Some(LexicalInformation([(7,0)-(9,0)]))
+  Range: [(7,0)-(9,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/include-json-schema-yaml-example/input.raml

@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/invalid-fragments/named-example-expected.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/invalid-fragments/named-example-expected.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-fragment-type
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-fragment-type
   Message: Fragment defined in data-type.raml does not conform to the expected type NamedExample
-  Level: Violation
+  Severity: Violation
   Target: data-type.raml
   Property: 
-  Position: Some(LexicalInformation([(17,21)-(17,44)]))
+  Range: [(17,21)-(17,44)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-fragments/named-example-expected.raml

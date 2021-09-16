@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/custom-js-validations/mutiple-of.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/custom-js-validations/mutiple-of.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#ScalarShape-multipleOf-minExclusive
+- Constraint: http://a.ml/vocabularies/amf/parser#ScalarShape-multipleOf-minExclusive
   Message: multipleOf facet for a RAML scalar type must be greater than 0
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/custom-js-validations/mutiple-of.raml#/declarations/types/scalar/error
   Property: http://a.ml/vocabularies/shapes#multipleOf
-  Position: Some(LexicalInformation([(7,16)-(7,17)]))
+  Range: [(7,16)-(7,17)]
   Location: file://amf-cli/shared/src/test/resources/validations/custom-js-validations/mutiple-of.raml

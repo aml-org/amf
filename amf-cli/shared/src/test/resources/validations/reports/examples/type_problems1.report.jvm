@@ -1,4 +1,4 @@
-Model: file://amf-cli/shared/src/test/resources/validations/production/type_problems1.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/production/type_problems1.raml
 Profile: RAML 0.8
-Conforms? true
+Conforms: true
 Number of results: 0

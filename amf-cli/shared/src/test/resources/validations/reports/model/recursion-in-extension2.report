@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/recursion-in-extension/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/recursion-in-extension/api.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#recursive-shape
+- Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/recursion-in-extension/type1.raml#/type
   Property: 
-  Position: Some(LexicalInformation([(2,0)-(4,14)]))
+  Range: [(2,0)-(4,14)]
   Location: file://amf-cli/shared/src/test/resources/validations/recursion-in-extension/type1.raml

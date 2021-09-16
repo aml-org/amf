@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/multiple-inheritance-restrictions.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/multiple-inheritance-restrictions.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
+- Constraint: http://a.ml/vocabularies/amf/parser#min-max-inclusive
   Message: Maximum must be greater than or equal to minimum
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/multiple-inheritance-restrictions.raml#/declarations/types/scalar/Number3
   Property: 
-  Position: Some(LexicalInformation([(11,2)-(11,31)]))
+  Range: [(11,2)-(11,31)]
   Location: file://amf-cli/shared/src/test/resources/validations/multiple-inheritance-restrictions.raml

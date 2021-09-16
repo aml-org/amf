@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/types/property_overwriting.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/types/property_overwriting.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
+- Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://a.ml/vocabularies/shapes#number < http://www.w3.org/2001/XMLSchema#string 
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/types/property_overwriting.raml#/declarations/types/Employee/property/name/scalar/name
   Property: http://a.ml/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(12,8)-(13,21)]))
+  Range: [(12,8)-(13,21)]
   Location: file://amf-cli/shared/src/test/resources/validations/types/property_overwriting.raml

@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-expanded-context-entry-type-format.jsonld
+ModelId: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-expanded-context-entry-type-format.jsonld
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
+- Constraint: http://a.ml/vocabularies/amf/core#syaml-error
   Message: Expecting !!str, !!map provided
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(21,15)-(23,7)]))
+  Range: [(21,15)-(23,7)]
   Location: file://amf-cli/shared/src/test/resources/validations/conversion-exceptions/invalid-expanded-context-entry-type-format.jsonld

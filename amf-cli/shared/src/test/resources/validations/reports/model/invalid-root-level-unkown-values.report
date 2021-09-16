@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/protocols/invalid-root-level-unkown-values.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/protocols/invalid-root-level-unkown-values.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#raml-root-schemes-values
+- Constraint: http://a.ml/vocabularies/amf/parser#raml-root-schemes-values
   Message: Protocols must have a case insensitive value matching http or https
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/protocols/invalid-root-level-unkown-values.raml#/web-api
   Property: http://a.ml/vocabularies/apiContract#scheme
-  Position: Some(LexicalInformation([(4,10)-(5,7)]))
+  Range: [(4,10)-(5,7)]
   Location: file://amf-cli/shared/src/test/resources/validations/protocols/invalid-root-level-unkown-values.raml

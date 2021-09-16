@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/upanddown/oas3/unique-name-for-tags.json
+ModelId: file://amf-cli/shared/src/test/resources/upanddown/oas3/unique-name-for-tags.json
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#duplicate-tags
+- Constraint: http://a.ml/vocabularies/amf/parser#duplicate-tags
   Message: Tag with name 'hola' was found duplicated
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/unique-name-for-tags.json#/web-api/tag/hola
   Property: 
-  Position: Some(LexicalInformation([(12,4)-(12,20)]))
+  Range: [(12,4)-(12,20)]
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/unique-name-for-tags.json

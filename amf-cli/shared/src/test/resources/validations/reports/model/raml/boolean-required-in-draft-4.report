@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/validations/boolean-required-in-draft-4.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/boolean-required-in-draft-4.raml
 Profile: RAML 1.0
-Conforms? true
+Conforms: true
 Number of results: 2
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-required-boolean-for-schema-version
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-required-boolean-for-schema-version
   Message: Required property boolean value is only supported in JSON Schema draft-3
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/boolean-required-in-draft-4.raml#/declarations/types/A/property/someProp
   Property: 
-  Position: Some(LexicalInformation([(11,10)-(11,26)]))
+  Range: [(11,10)-(11,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/boolean-required-in-draft-4.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-required-boolean-for-schema-version
+- Constraint: http://a.ml/vocabularies/amf/parser#invalid-required-boolean-for-schema-version
   Message: Required property boolean value is only supported in JSON Schema draft-3
-  Level: Warning
+  Severity: Warning
   Target: file://amf-cli/shared/src/test/resources/validations/boolean-required-in-draft-4.raml#/declarations/types/A/property/otherProp
   Property: 
-  Position: Some(LexicalInformation([(15,10)-(15,26)]))
+  Range: [(15,10)-(15,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/boolean-required-in-draft-4.raml

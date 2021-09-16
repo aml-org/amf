@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/raml-json-ref-with-spaces/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml-json-ref-with-spaces/api.raml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'SKU purchased from appstore'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/raml-json-ref-with-spaces/api.raml#/declarations/schemas/author/property/sku/unresolved
   Property: 
-  Position: Some(LexicalInformation([(12,6)-(12,43)]))
+  Range: [(12,6)-(12,43)]
   Location: file://amf-cli/shared/src/test/resources/validations/raml-json-ref-with-spaces/schema.json

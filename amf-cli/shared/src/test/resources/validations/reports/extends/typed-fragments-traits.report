@@ -1,30 +1,30 @@
-Model: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml
+ModelId: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+- Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'closedShape' not supported in a RAML 1.0 trait node
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml#/declarations/traits/trait/t1/applied/t1
   Property: 
-  Position: Some(LexicalInformation([(3,0)-(3,8)]))
+  Range: [(3,0)-(3,8)]
   Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/trait1.raml
 
-- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentTypeParameter'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml#/web-api/end-points/%2Fendpoint/put/request/application%2Fjson/any/schema/unresolved
   Property: 
-  Position: Some(LexicalInformation([(5,10)-(5,27)]))
+  Range: [(5,10)-(5,27)]
   Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/trait3.raml
 
-- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentExplicitType'
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml#/web-api/end-points/%2Fendpoint/post/request/application%2Fjson/any/schema/unresolved
   Property: 
-  Position: Some(LexicalInformation([(5,10)-(5,32)]))
+  Range: [(5,10)-(5,32)]
   Location: file://amf-cli/shared/src/test/resources/validations/extends/typed-fragments/traits/trait2.raml

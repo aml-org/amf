@@ -1,22 +1,22 @@
-Model: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/parameters-missing/input.raml
+ModelId: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/parameters-missing/input.raml
 Profile: RAML 1.0
-Conforms? false
+Conforms: false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#resolution-validation
+- Constraint: http://a.ml/vocabularies/amf/core#resolution-validation
   Message: Cannot find variable 'header'.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/parameters-missing/input.raml#/declarations/traits/trait/secured
   Property: 
-  Position: Some(LexicalInformation([(23,12)-(23,19)]))
+  Range: [(23,12)-(23,19)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/parameters-missing/input.raml
 
-- Source: http://a.ml/vocabularies/amf/core#resolution-validation
+- Constraint: http://a.ml/vocabularies/amf/core#resolution-validation
   Message: Cannot find variable 'method'.
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/parameters-missing/input.raml#/web-api/end-points/%2Fbroken/collection
   Property: 
-  Position: Some(LexicalInformation([(31,10)-(31,20)]))
+  Range: [(31,10)-(31,20)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/traits-and-resource-types/parameters-missing/input.raml

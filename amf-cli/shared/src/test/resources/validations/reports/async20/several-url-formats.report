@@ -1,62 +1,62 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
 Profile: ASYNC 2.0
-Conforms? false
+Conforms: false
 Number of results: 7
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#License-url-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#License-url-pattern
   Message: Must be in the format of a URL
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/async-api/license
   Property: http://a.ml/vocabularies/core#url
-  Position: Some(LexicalInformation([(7,9)-(7,20)]))
+  Range: [(7,9)-(7,20)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
 
-- Source: http://a.ml/vocabularies/amf/parser#Organization-url-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#Organization-url-pattern
   Message: Must be in the format of a URL
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/async-api/organization
   Property: http://a.ml/vocabularies/core#url
-  Position: Some(LexicalInformation([(10,9)-(10,27)]))
+  Range: [(10,9)-(10,27)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
 
-- Source: http://a.ml/vocabularies/amf/parser#AsyncAPI-termsOfService-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#AsyncAPI-termsOfService-pattern
   Message: Must be in the format of a URL
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/async-api
   Property: http://a.ml/vocabularies/core#termsOfService
-  Position: Some(LexicalInformation([(11,18)-(11,47)]))
+  Range: [(11,18)-(11,47)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
 
-- Source: http://a.ml/vocabularies/amf/parser#CreativeWork-url-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#CreativeWork-url-pattern
   Message: Must be in the format of a URL
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/async-api/creative-work/invalid%20url%20format
   Property: http://a.ml/vocabularies/core#url
-  Position: Some(LexicalInformation([(14,7)-(14,25)]))
+  Range: [(14,7)-(14,25)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
 
-- Source: http://a.ml/vocabularies/amf/parser#OAuth2Flow-authorizationUri-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#OAuth2Flow-authorizationUri-pattern
   Message: Must be in the format of a URL
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/declarations/securitySchemes/invalidUrls/settings/oauth2/authorizationCode
   Property: http://a.ml/vocabularies/security#authorizationUri
-  Position: Some(LexicalInformation([(22,28)-(22,39)]))
+  Range: [(22,28)-(22,39)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
 
-- Source: http://a.ml/vocabularies/amf/parser#OAuth2Flow-accessTokenUri-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#OAuth2Flow-accessTokenUri-pattern
   Message: Must be in the format of a URL
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/declarations/securitySchemes/invalidUrls/settings/oauth2/authorizationCode
   Property: http://a.ml/vocabularies/security#accessTokenUri
-  Position: Some(LexicalInformation([(23,20)-(23,31)]))
+  Range: [(23,20)-(23,31)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
 
-- Source: http://a.ml/vocabularies/amf/parser#OAuth2Flow-refreshUri-pattern
+- Constraint: http://a.ml/vocabularies/amf/parser#OAuth2Flow-refreshUri-pattern
   Message: Must be in the format of a URL
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/declarations/securitySchemes/invalidUrls/settings/oauth2/authorizationCode
   Property: http://a.ml/vocabularies/security#refreshUri
-  Position: Some(LexicalInformation([(24,22)-(24,33)]))
+  Range: [(24,22)-(24,33)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml

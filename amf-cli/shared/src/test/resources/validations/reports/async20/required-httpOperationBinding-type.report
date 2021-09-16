@@ -1,14 +1,14 @@
-Model: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-httpOperationBinding-type.yaml
+ModelId: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-httpOperationBinding-type.yaml
 Profile: ASYNC 2.0
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#HttpOperationBinding-operationType-minCount
+- Constraint: http://a.ml/vocabularies/amf/parser#HttpOperationBinding-operationType-minCount
   Message: 'type' for http operation binding is required
-  Level: Violation
+  Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-httpOperationBinding-type.yaml#/async-api/end-points/%2Femployees/subscribe/operation-bindings/http-operation
   Property: http://a.ml/vocabularies/apiBinding#operationType
-  Position: Some(LexicalInformation([(9,8)-(11,0)]))
+  Range: [(9,8)-(11,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-httpOperationBinding-type.yaml
