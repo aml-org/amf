@@ -44,7 +44,6 @@ sonarProperties ++= Map(
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
   resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
-  resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   assembly / aggregate := false,
   libraryDependencies ++= Seq(
@@ -83,7 +82,7 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
-    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
+    libraryDependencies += "com.github.erosb" % "everit-json-schema" % "1.12.2",
     libraryDependencies += "org.json"                          % "json"                   % "20201115",
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
