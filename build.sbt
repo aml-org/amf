@@ -243,13 +243,41 @@ lazy val graphqlJS =
     .in(file("./amf-graphql/js"))
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
+lazy val sfdc = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-sfdc"
+    ))
+  .in(file("./amf-sfdc"))
+  .settings(commonSettings)
+  .dependsOn(apiContract, antlr)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-sfdc-javadoc.jar",
+    Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-sfdc.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+  )
+  .disablePlugins(SonarPlugin)
+
+lazy val sfdcJVM =
+  sfdc.jvm
+    .in(file("./amf-sfdc/jvm"))
+lazy val sfdcJS =
+  sfdc.js
+    .in(file("./amf-sfdc/js"))
+    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
+
 /** **********************************************
   * AMF CLI
   * ********************************************* */
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc)
+  .dependsOn(grpc, sfdc)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
