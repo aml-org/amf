@@ -7,6 +7,7 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 addSbtPlugin("com.github.mwz" % "sbt-sonar" % "2.1.0")
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.10.0-RC1")
 addSbtPlugin("com.eed3si9n" % "sbt-sriracha" % "0.1.0")
+addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.10.0")
 
 resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral)
 resolvers += "jitpack" at "https://jitpack.io"

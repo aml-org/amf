@@ -19,6 +19,8 @@ name := "amf"
 ThisBuild / version := versions("amf.apicontract")
 ThisBuild / scalaVersion := "2.12.11"
 
+val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model")
+
 publish := {}
 
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
@@ -110,12 +112,17 @@ lazy val shapesJS =
   * AMF-Api-contract
   * ********************************************* */
 lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
+  .enablePlugins(BuildInfoPlugin)
   .settings(
     Seq(
       name := "amf-api-contract"
     ))
   .in(file("./amf-api-contract"))
-  .settings(commonSettings)
+  .settings(commonSettings ++ Seq(
+    apiContractModelVersion := versions("amf.model"),
+    buildInfoKeys := Seq[BuildInfoKey](apiContractModelVersion),
+    buildInfoPackage := "amf.apicontract.internal.unsafe"
+  ))
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",

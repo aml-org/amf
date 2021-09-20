@@ -6,6 +6,7 @@ import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.document.BaseUnitProcessingData
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.remote.Spec
+import amf.apicontract.internal.unsafe.ApiContractBuildInfo
 
 case class APIContractProcessingData(override val fields: Fields, override val annotations: Annotations)
     extends BaseUnitProcessingData(fields, annotations) {
@@ -19,7 +20,7 @@ case class APIContractProcessingData(override val fields: Fields, override val a
 
   def withSourceSpec(spec: Spec): this.type = set(SourceSpec, spec.id)
 
-  set(APIContractModelVersion, "3.1.0") // TODO set this value with SBT
+  set(APIContractModelVersion, ApiContractBuildInfo.apiContractModelVersion)
 
   override def withTransformed(value: Boolean): APIContractProcessingData.this.type = super.withTransformed(value)
   override def meta: APIContractProcessingDataModel.type                            = APIContractProcessingDataModel
