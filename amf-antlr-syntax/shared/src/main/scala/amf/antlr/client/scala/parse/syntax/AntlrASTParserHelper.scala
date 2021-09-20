@@ -43,17 +43,25 @@ trait AntlrASTParserHelper {
     }
   }
 
-  def withNode[T](element: ASTElement)(f: Node => T)(implicit ctx: ParserContext): T = element match {
-    case node: Node => f(node)
-    case _ => throw new Exception(s"Unexpected AST terminal token $element")
+  def pathToTerminal(node: Node, names: Seq[String]): Option[Terminal] = {
+    path(node, names)  match {
+      case Some(t: Terminal) => Some(t)
+      case _                 => None
+    }
   }
 
-  def withOptTerminal[T](element: ASTElement)(f: Option[Terminal] => T)(implicit ctx: ParserContext): T = element match {
-    case node: Node if node.children.length == 1 && node.children.head.isInstanceOf[Terminal] =>
-      f(Some(node.children.head.asInstanceOf[Terminal]))
-    case _ =>
-      f(None)
+  def withNode[T](element: ASTElement)(f: Node => T)(implicit ctx: ParserContext): T = element match {
+    case node: Node => f(node)
+    case _          => throw new Exception(s"Unexpected AST terminal token $element")
   }
+
+  def withOptTerminal[T](element: ASTElement)(f: Option[Terminal] => T)(implicit ctx: ParserContext): T =
+    element match {
+      case node: Node if node.children.length == 1 && node.children.head.isInstanceOf[Terminal] =>
+        f(Some(node.children.head.asInstanceOf[Terminal]))
+      case _ =>
+        f(None)
+    }
 
   def toAnnotations(elem: ASTElement): Annotations = {
     val lexInfo = LexicalInformation(elem.start.line, elem.start.column, elem.end.line, elem.end.column)
@@ -64,4 +72,3 @@ trait AntlrASTParserHelper {
     ctx.eh.violation(ParserSideValidations.InvalidAst, id, message, annotations)
   }
 }
-
