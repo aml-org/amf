@@ -17,6 +17,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 name := "amf"
 
 ThisBuild / version := versions("amf.apicontract")
+ThisBuild / scalaVersion := "2.12.11"
 
 publish := {}
 
@@ -43,7 +44,7 @@ sonarProperties ++= Map(
 
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
-  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
+  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral),
   resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   assembly / aggregate := false,
@@ -305,4 +306,9 @@ buildJS := {
 addCommandAlias(
   "buildCommandLine",
   "; clean; cliJVM/assembly"
+)
+
+ThisBuild / libraryDependencies ++= Seq(
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.1" cross CrossVersion.constant("2.12.11")),
+  "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.constant("2.12.11")
 )
