@@ -29,6 +29,13 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/header/h1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
@@ -401,8 +408,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#fragment"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/source-map"

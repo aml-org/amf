@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/api.raml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -7972,8 +7979,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/api.raml/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/api.raml#/source-map"
@@ -8045,9 +8054,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml#/declarations/types/NewCreditCardRequestData"
         }
       ],
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#usage": "Data shapes for the HTTP API",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml#/source-map"
@@ -8074,7 +8085,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml#/declarations/traits/trait/partial"
         }
       ],
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#"
@@ -8091,6 +8101,9 @@
       ],
       "http://a.ml/vocabularies/document#usage": "Common traits for the HTTP API",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml#/source-map"
@@ -8107,8 +8120,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#fragment"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/source-map"
@@ -8125,9 +8140,11 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/trait/default-abstract"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#usage": "Apply this trait to a GET method that supports content-based caching using ETags",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/source-map"
@@ -8927,6 +8944,13 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -9035,9 +9059,11 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/trait/default-abstract"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#usage": "Apply this trait to a GET method that supports pagination.",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/source-map"
@@ -9054,9 +9080,11 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/trait/default-abstract"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#usage": "Apply this to a method that support sorting.",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/source-map"
@@ -9073,14 +9101,23 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/trait/default-abstract"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#usage": "Apply this trait to a metheod that supports returning only specific attributes of the response",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml#/source-map",
@@ -9142,6 +9179,13 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -9167,6 +9211,13 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/trait/default-abstract/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/source-map",
@@ -12886,6 +12937,13 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -12916,6 +12974,13 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -12944,6 +13009,13 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/trait/default-abstract/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/source-map",

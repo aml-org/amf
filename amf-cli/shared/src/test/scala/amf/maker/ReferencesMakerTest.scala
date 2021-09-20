@@ -1,7 +1,7 @@
 package amf.maker
 
 import amf.apicontract.client.scala.WebAPIConfiguration
-import amf.apicontract.client.scala.model.document.DataTypeFragment
+import amf.apicontract.client.scala.model.document.{APIContractProcessingData, DataTypeFragment}
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.model.document.{Document, Fragment}
@@ -77,6 +77,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
         .withId("file://amf-cli/shared/src/test/resources/references/fragments/" + fragmentFile)
         .withEncodes(person)
         .withRoot(false)
+        .withProcessingData(APIContractProcessingData())
     }
 
     val usesDataType: Document = {
@@ -95,6 +96,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
         .withReferences(Seq(dataTypeFragment))
         .withDeclares(Seq(personLink))
         .withRoot(true)
+        .withProcessingData(APIContractProcessingData())
     }
   }
 }

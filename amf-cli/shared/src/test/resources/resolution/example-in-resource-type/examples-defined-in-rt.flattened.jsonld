@@ -3,6 +3,14 @@
     {
       "@id": "#22",
       "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.1.0",
+      "doc:transformed": true
+    },
+    {
+      "@id": "#23",
+      "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -11,21 +19,21 @@
       "core:name": "PC Billing System API",
       "apiContract:endpoint": [
         {
-          "@id": "#23"
+          "@id": "#24"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#22": "RAML 1.0"
+          "#23": "RAML 1.0"
         },
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
-          "#22": "[(2,0)-(28,27)]"
+          "#23": "[(2,0)-(28,27)]"
         }
       }
     },
     {
-      "@id": "#23",
+      "@id": "#24",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -33,23 +41,23 @@
       "apiContract:path": "/applying-rt",
       "apiContract:supportedOperation": [
         {
-          "@id": "#25"
+          "@id": "#26"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#24"
+          "@id": "#25"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(22,0)-(22,12)]",
-          "#23": "[(22,0)-(28,27)]"
+          "#24": "[(22,0)-(28,27)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#26",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -57,18 +65,18 @@
       "apiContract:method": "get",
       "apiContract:returns": [
         {
-          "@id": "#26"
+          "@id": "#27"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(25,4)-(28,27)]",
-          "#25": "[(24,2)-(28,27)]"
+          "#26": "[(24,2)-(28,27)]"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#25",
       "@type": [
         "apiContract:ParametrizedResourceType",
         "doc:ParametrizedDeclaration",
@@ -81,12 +89,12 @@
       "smaps": {
         "lexical": {
           "core:name": "[(23,8)-(23,26)]",
-          "#24": "[(23,8)-(23,26)]"
+          "#25": "[(23,8)-(23,26)]"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#27",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -102,7 +110,7 @@
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(27,8)-(28,27)]",
-          "#26": "[(26,6)-(28,27)]"
+          "#27": "[(26,6)-(28,27)]"
         }
       }
     },
@@ -558,10 +566,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#22"
+        "@id": "#23"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#22"
+      }
     }
   ],
   "@context": {

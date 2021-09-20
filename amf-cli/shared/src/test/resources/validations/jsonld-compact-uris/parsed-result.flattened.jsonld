@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "#22",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.1.0",
+      "doc:transformed": true
+    },
+    {
       "@id": "#/web-api",
       "@type": [
         "apiContract:WebAPI",
@@ -11,12 +19,12 @@
       "core:name": "test",
       "apiContract:endpoint": [
         {
-          "@id": "#23"
+          "@id": "#24"
         }
       ]
     },
     {
-      "@id": "#23",
+      "@id": "#24",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -24,34 +32,8 @@
       "apiContract:path": "/endpoint1",
       "apiContract:supportedOperation": [
         {
-          "@id": "#24"
-        },
-        {
-          "@id": "#26"
-        }
-      ]
-    },
-    {
-      "@id": "#24",
-      "@type": [
-        "apiContract:Operation",
-        "doc:DomainElement"
-      ],
-      "apiContract:method": "get",
-      "apiContract:expects": [
-        {
           "@id": "#25"
-        }
-      ]
-    },
-    {
-      "@id": "#26",
-      "@type": [
-        "apiContract:Operation",
-        "doc:DomainElement"
-      ],
-      "apiContract:method": "post",
-      "apiContract:expects": [
+        },
         {
           "@id": "#27"
         }
@@ -59,6 +41,32 @@
     },
     {
       "@id": "#25",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:expects": [
+        {
+          "@id": "#26"
+        }
+      ]
+    },
+    {
+      "@id": "#27",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "post",
+      "apiContract:expects": [
+        {
+          "@id": "#28"
+        }
+      ]
+    },
+    {
+      "@id": "#26",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -71,7 +79,7 @@
       ]
     },
     {
-      "@id": "#27",
+      "@id": "#28",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -396,8 +404,10 @@
       "doc:encodes": {
         "@id": "#/web-api"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#22"
+      }
     }
   ],
   "@context": {

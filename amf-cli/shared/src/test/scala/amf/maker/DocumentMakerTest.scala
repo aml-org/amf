@@ -1,6 +1,7 @@
 package amf.maker
 
 import amf.apicontract.client.scala.WebAPIConfiguration
+import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -124,6 +125,7 @@ class DocumentMakerTest extends WebApiMakerTest {
     val document = Document()
       .withEncodes(api)
       .withRoot(true)
+      .withProcessingData(APIContractProcessingData())
     document
   }
 

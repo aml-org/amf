@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.1.0",
+      "doc:transformed": true
+    },
+    {
       "@id": "#/async-api",
       "@type": [
         "apiContract:AsyncAPI",
@@ -111,8 +119,10 @@
       "doc:encodes": {
         "@id": "#/async-api"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      }
     }
   ],
   "@context": {

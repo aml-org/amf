@@ -1387,14 +1387,22 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document#references": [
@@ -1493,14 +1501,22 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1673,14 +1689,22 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1917,14 +1941,22 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -2677,14 +2709,22 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/references/fragments/security-scheme.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#9",
+        "@id": "#10",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -34,26 +34,39 @@
         "apiContract:endpoint": [],
         "smaps": {
           "source-vendor": {
-            "#9": "OAS 3.0"
+            "#10": "OAS 3.0"
           },
           "lexical": {
             "apiContract:endpoint": "[(8,2)-(8,13)]",
             "core:description": "[(6,4)-(6,120)]",
-            "#9": "[(1,0)-(34,1)]",
+            "#10": "[(1,0)-(34,1)]",
             "core:name": "[(5,4)-(5,38)]",
             "core:version": "[(4,4)-(4,20)]"
           }
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#9",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ]
       }
     ],
     "doc:declares": [

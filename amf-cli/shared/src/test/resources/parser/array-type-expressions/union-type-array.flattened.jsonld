@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -74,8 +81,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml/BaseUnitProcessingData"
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myArray",

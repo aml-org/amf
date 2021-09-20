@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.document
 
 import amf.aml.internal.parse.common.DeclarationKey
-import amf.apicontract.client.scala.model.document.{Extension, Overlay}
+import amf.apicontract.client.scala.model.document.{APIContractProcessingData, Extension, Overlay}
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Response, Tag}
@@ -156,7 +156,7 @@ case class Raml10DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContext) extends RamlBaseDocumentParser {
 
   def parseDocument[T <: Document](document: T): T = {
-    document.adopted(root.location).withLocation(root.location)
+    document.adopted(root.location).withLocation(root.location).withProcessingData(APIContractProcessingData())
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
@@ -279,7 +279,10 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
             }
           case YType.Null =>
           case t =>
-            ctx.eh.violation(InvalidSecuredByType, parent, s"Invalid type $t for 'securitySchemes' node.", e.value.location)
+            ctx.eh.violation(InvalidSecuredByType,
+                             parent,
+                             s"Invalid type $t for 'securitySchemes' node.",
+                             e.value.location)
         }
       }
     )
@@ -404,7 +407,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
               case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
                 ctx.declarations += shape.add(DeclaredElement())
-              case None => ctx.eh.violation(UnableToParseShape, parent, s"Error parsing shape '$entry'", entry.location)
+              case None =>
+                ctx.eh.violation(UnableToParseShape, parent, s"Error parsing shape '$entry'", entry.location)
             }
 
           }
@@ -423,7 +427,10 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       _ <- types
       s <- schemas
     } {
-      ctx.eh.violation(ExclusiveSchemasType, "", "'schemas' and 'types' properties are mutually exclusive", s.key.location)
+      ctx.eh.violation(ExclusiveSchemasType,
+                       "",
+                       "'schemas' and 'types' properties are mutually exclusive",
+                       s.key.location)
     }
 
     schemas.foreach(

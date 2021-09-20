@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-cli/shared/src/test/resources/resolution/08/included-schema-and-example/api.raml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0",
+      "http://a.ml/vocabularies/document#transformed": true
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/resolution/08/included-schema-and-example/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -303,8 +311,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/resolution/08/included-schema-and-example/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/resolution/08/included-schema-and-example/api.raml/BaseUnitProcessingData"
+      }
     }
   ]
 }

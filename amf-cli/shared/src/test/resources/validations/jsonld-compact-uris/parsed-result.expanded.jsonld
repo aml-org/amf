@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#23",
+            "@id": "#24",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#24",
+                "@id": "#25",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#25",
+                    "@id": "#26",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -93,7 +93,7 @@
                 ]
               },
               {
-                "@id": "#26",
+                "@id": "#27",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -105,7 +105,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#27",
+                    "@id": "#28",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -155,14 +155,27 @@
         ]
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#22",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ]
       }
     ],
     "doc:declares": [

@@ -74,14 +74,22 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/libraries/api.raml/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -539,11 +547,6 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#usage": [
           {
             "@value": "Data types and annotation types"
@@ -552,6 +555,19 @@
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/libraries/lib/lib.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

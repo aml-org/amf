@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#3",
+        "@id": "#4",
         "@type": [
           "apiContract:AsyncAPI",
           "apiContract:API",
@@ -29,25 +29,38 @@
         "apiContract:endpoint": [],
         "smaps": {
           "source-vendor": {
-            "#3": "ASYNC 2.0"
+            "#4": "ASYNC 2.0"
           },
           "lexical": {
             "apiContract:endpoint": "[(5,0)-(6,0)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#3": "[(1,0)-(13,0)]",
+            "#4": "[(1,0)-(13,0)]",
             "core:version": "[(4,2)-(5,0)]"
           }
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#3",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ]
       }
     ],
     "doc:declares": [

@@ -3687,14 +3687,22 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document#references": [
@@ -4839,14 +4847,22 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -4922,14 +4938,22 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -5005,14 +5029,22 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

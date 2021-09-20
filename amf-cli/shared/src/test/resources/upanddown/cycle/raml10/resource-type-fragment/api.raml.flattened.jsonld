@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/api.raml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -61,8 +68,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/api.raml/BaseUnitProcessingData"
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/resource-type.raml#",
@@ -74,8 +83,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/resource-type.raml#/resourceType/default-abstract"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/resource-type.raml#/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/resource-type.raml#/source-map"
@@ -122,6 +133,13 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/resource-type.raml#/resourceType/default-abstract/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/resource-type.raml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/resource-type-fragment/resource-type.raml#/source-map",

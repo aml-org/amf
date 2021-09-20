@@ -3,6 +3,14 @@
     {
       "@id": "#1",
       "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.1.0",
+      "doc:transformed": true
+    },
+    {
+      "@id": "#2",
+      "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -11,32 +19,32 @@
       "core:name": "aq-1463",
       "apiContract:server": [
         {
-          "@id": "#13"
+          "@id": "#14"
         }
       ],
       "core:version": "1.0",
       "apiContract:endpoint": [
         {
-          "@id": "#2"
+          "@id": "#3"
         },
         {
-          "@id": "#3"
+          "@id": "#4"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#1": "RAML 1.0"
+          "#2": "RAML 1.0"
         },
         "lexical": {
           "core:version": "[(3,0)-(5,0)]",
           "core:name": "[(2,0)-(3,0)]",
-          "#1": "[(2,0)-(24,0)]",
+          "#2": "[(2,0)-(24,0)]",
           "apiContract:server": "[(5,0)-(7,0)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -47,21 +55,7 @@
           "core:urlTemplate": "[(5,0)-(7,0)]"
         },
         "synthesized-field": {
-          "#13": "true"
-        }
-      }
-    },
-    {
-      "@id": "#2",
-      "@type": [
-        "apiContract:EndPoint",
-        "doc:DomainElement"
-      ],
-      "apiContract:path": "/customers",
-      "smaps": {
-        "lexical": {
-          "apiContract:path": "[(7,0)-(7,10)]",
-          "#2": "[(7,0)-(24,0)]"
+          "#14": "true"
         }
       }
     },
@@ -71,24 +65,38 @@
         "apiContract:EndPoint",
         "doc:DomainElement"
       ],
-      "apiContract:path": "/customers/endpoint",
-      "apiContract:supportedOperation": [
-        {
-          "@id": "#4"
-        }
-      ],
+      "apiContract:path": "/customers",
       "smaps": {
-        "parent-end-point": {
-          "#3": "file://amf-cli/shared/src/test/resources/resolution/raml-query-and-header-params/api.raml#/web-api/end-points/%2Fcustomers"
-        },
         "lexical": {
-          "apiContract:path": "[(8,2)-(8,11)]",
-          "#3": "[(8,2)-(24,0)]"
+          "apiContract:path": "[(7,0)-(7,10)]",
+          "#3": "[(7,0)-(24,0)]"
         }
       }
     },
     {
       "@id": "#4",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/customers/endpoint",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#5"
+        }
+      ],
+      "smaps": {
+        "parent-end-point": {
+          "#4": "file://amf-cli/shared/src/test/resources/resolution/raml-query-and-header-params/api.raml#/web-api/end-points/%2Fcustomers"
+        },
+        "lexical": {
+          "apiContract:path": "[(8,2)-(8,11)]",
+          "#4": "[(8,2)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -97,24 +105,24 @@
       "core:description": "Returns Customer data",
       "apiContract:expects": [
         {
-          "@id": "#5"
+          "@id": "#6"
         }
       ],
       "apiContract:returns": [
         {
-          "@id": "#10"
+          "@id": "#11"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(19,6)-(24,0)]",
-          "#4": "[(9,4)-(24,0)]",
+          "#5": "[(9,4)-(24,0)]",
           "core:description": "[(18,6)-(19,0)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#6",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -122,12 +130,12 @@
       ],
       "apiContract:parameter": [
         {
-          "@id": "#6"
+          "@id": "#7"
         }
       ],
       "apiContract:header": [
         {
-          "@id": "#8"
+          "@id": "#9"
         }
       ],
       "smaps": {
@@ -138,7 +146,7 @@
       }
     },
     {
-      "@id": "#10",
+      "@id": "#11",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -148,18 +156,18 @@
       "core:name": "200",
       "apiContract:payload": [
         {
-          "@id": "#11"
+          "@id": "#12"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(21,10)-(24,0)]",
-          "#10": "[(20,8)-(24,0)]"
+          "#11": "[(20,8)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#7",
       "@type": [
         "apiContract:Parameter",
         "doc:DomainElement"
@@ -169,7 +177,7 @@
       "apiContract:required": true,
       "apiContract:binding": "query",
       "raml-shapes:schema": {
-        "@id": "#7"
+        "@id": "#8"
       },
       "smaps": {
         "synthesized-field": {
@@ -177,13 +185,13 @@
         },
         "lexical": {
           "raml-shapes:schema": "[(11,8)-(14,0)]",
-          "#6": "[(11,8)-(14,0)]",
+          "#7": "[(11,8)-(14,0)]",
           "apiContract:required": "[(12,10)-(13,0)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#9",
       "@type": [
         "apiContract:Parameter",
         "doc:DomainElement"
@@ -193,7 +201,7 @@
       "apiContract:required": false,
       "apiContract:binding": "header",
       "raml-shapes:schema": {
-        "@id": "#9"
+        "@id": "#10"
       },
       "smaps": {
         "synthesized-field": {
@@ -201,29 +209,29 @@
         },
         "lexical": {
           "raml-shapes:schema": "[(15,8)-(18,0)]",
-          "#8": "[(15,8)-(18,0)]",
+          "#9": "[(15,8)-(18,0)]",
           "apiContract:required": "[(16,10)-(17,0)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#12"
+        "@id": "#13"
       },
       "smaps": {
         "lexical": {
-          "#11": "[(22,12)-(24,0)]"
+          "#12": "[(22,12)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#8",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -239,16 +247,16 @@
       "shacl:name": "schema",
       "smaps": {
         "type-property-lexical-info": {
-          "#7": "[(13,10)-(13,14)]"
+          "#8": "[(13,10)-(13,14)]"
         },
         "lexical": {
           "shacl:datatype": "[(13,10)-(14,0)]",
-          "#7": "[(11,8)-(14,0)]"
+          "#8": "[(11,8)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#10",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -264,16 +272,16 @@
       "shacl:name": "schema",
       "smaps": {
         "type-property-lexical-info": {
-          "#9": "[(17,10)-(17,14)]"
+          "#10": "[(17,10)-(17,14)]"
         },
         "lexical": {
           "shacl:datatype": "[(17,10)-(18,0)]",
-          "#9": "[(15,8)-(18,0)]"
+          "#10": "[(15,8)-(18,0)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -289,14 +297,14 @@
       "shacl:name": "schema",
       "smaps": {
         "auto-generated-name": {
-          "#12": ""
+          "#13": ""
         },
         "lexical": {
           "shacl:datatype": "[(23,14)-(24,0)]",
-          "#12": "[(22,12)-(24,0)]"
+          "#13": "[(22,12)-(24,0)]"
         },
         "type-property-lexical-info": {
-          "#12": "[(23,14)-(23,18)]"
+          "#13": "[(23,14)-(23,18)]"
         }
       }
     },
@@ -309,10 +317,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#1"
+        "@id": "#2"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#1"
+      }
     }
   ],
   "@context": {

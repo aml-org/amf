@@ -73,6 +73,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
     fragment
       .withLocation(root.location)
       .add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
+      .withProcessingData(APIContractProcessingData())
 
     UsageParser(map, fragment).parse()
 

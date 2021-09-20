@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.oas.parser.document
 
 import amf.aml.internal.parse.common.DeclarationKey
-import amf.apicontract.client.scala.model.document.{Extension, Overlay}
+import amf.apicontract.client.scala.model.document.{APIContractProcessingData, Extension, Overlay}
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.security.{SecurityRequirement, SecurityScheme}
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
@@ -94,7 +94,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   def parseDocument(): Document = parseDocument(Document())
 
   private def parseDocument[T <: Document](document: T): T = {
-    document.adopted(root.location).withLocation(root.location)
+    document.adopted(root.location).withLocation(root.location).withProcessingData(APIContractProcessingData())
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     ctx.setJsonSchemaAST(map)

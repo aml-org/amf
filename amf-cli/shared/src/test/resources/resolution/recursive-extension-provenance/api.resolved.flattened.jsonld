@@ -3,6 +3,14 @@
     {
       "@id": "#23",
       "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.1.0",
+      "doc:transformed": true
+    },
+    {
+      "@id": "#24",
+      "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -11,21 +19,21 @@
       "core:name": "test",
       "apiContract:endpoint": [
         {
-          "@id": "#24"
+          "@id": "#25"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#23": "RAML 1.0"
+          "#24": "RAML 1.0"
         },
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#23": "[(2,0)-(28,24)]"
+          "#24": "[(2,0)-(28,24)]"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#25",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -33,23 +41,23 @@
       "apiContract:path": "/CodeableConcept",
       "apiContract:supportedOperation": [
         {
-          "@id": "#26"
+          "@id": "#27"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#25"
+          "@id": "#26"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(27,0)-(27,16)]",
-          "#24": "[(27,0)-(28,24)]"
+          "#25": "[(27,0)-(28,24)]"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#27",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -57,17 +65,17 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#27"
+          "@id": "#28"
         }
       ],
       "smaps": {
         "lexical": {
-          "#26": "[(22,4)-(25,36)]"
+          "#27": "[(22,4)-(25,36)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#26",
       "@type": [
         "apiContract:ParametrizedResourceType",
         "doc:ParametrizedDeclaration",
@@ -80,12 +88,12 @@
       "smaps": {
         "lexical": {
           "core:name": "[(28,8)-(28,24)]",
-          "#25": "[(28,8)-(28,24)]"
+          "#26": "[(28,8)-(28,24)]"
         }
       }
     },
     {
-      "@id": "#27",
+      "@id": "#28",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -93,7 +101,7 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#28"
+          "@id": "#29"
         }
       ],
       "smaps": {
@@ -135,7 +143,7 @@
       }
     },
     {
-      "@id": "#28",
+      "@id": "#29",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -146,7 +154,7 @@
       },
       "smaps": {
         "lexical": {
-          "#28": "[(24,8)-(25,36)]"
+          "#29": "[(24,8)-(25,36)]"
         }
       }
     },
@@ -459,10 +467,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#23"
+        "@id": "#24"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#23"
+      }
     },
     {
       "@id": "#1",

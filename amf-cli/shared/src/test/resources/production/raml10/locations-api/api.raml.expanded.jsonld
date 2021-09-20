@@ -3727,14 +3727,22 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/api.raml/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -5380,11 +5388,6 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#references": [
           {
             "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml",
@@ -6233,11 +6236,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Location Type"
@@ -6246,6 +6244,19 @@
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#processingData": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml/BaseUnitProcessingData",
+                "@type": [
+                  "http://a.ml/vocabularies/document#APIContractProcessingData"
+                ],
+                "http://a.ml/vocabularies/apiContract#modelVersion": [
+                  {
+                    "@value": "3.1.0"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -6309,6 +6320,19 @@
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -6442,14 +6466,22 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

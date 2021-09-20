@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#5",
+        "@id": "#6",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#6",
+            "@id": "#7",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#7",
+                "@id": "#8",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#8",
+                    "@id": "#9",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -55,7 +55,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#9",
+                        "@id": "#10",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -67,7 +67,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#10",
+                            "@id": "#11",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -82,7 +82,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#11",
+                                "@id": "#12",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -139,15 +139,15 @@
                                   },
                                   "lexical": {
                                     "raml-shapes:range": "[(6,12)-(6,18)]",
-                                    "#11": "[(6,6)-(7,0)]"
+                                    "#12": "[(6,6)-(7,0)]"
                                   },
                                   "inheritance-provenance": {
-                                    "#11": "amf://id#1"
+                                    "#12": "amf://id#1"
                                   }
                                 }
                               },
                               {
-                                "@id": "#12",
+                                "@id": "#13",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -161,7 +161,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#13",
+                                    "@id": "#14",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "raml-shapes:AnyShape",
@@ -182,7 +182,7 @@
                                     "smaps": {
                                       "lexical": {
                                         "shacl:datatype": "[(13,26)-(13,33)]",
-                                        "#13": "[(13,10)-(14,0)]"
+                                        "#14": "[(13,10)-(14,0)]"
                                       }
                                     }
                                   }
@@ -204,7 +204,7 @@
                                   },
                                   "lexical": {
                                     "raml-shapes:range": "[(13,26)-(13,33)]",
-                                    "#12": "[(13,10)-(14,0)]"
+                                    "#13": "[(13,10)-(14,0)]"
                                   }
                                 }
                               }
@@ -219,13 +219,13 @@
                                 "shacl:name": "amf://id#1"
                               },
                               "inherited-shapes": {
-                                "#10": "amf://id#14"
+                                "#11": "amf://id#15"
                               },
                               "lexical": {
-                                "#10": "[(10,6)-(14,0)]"
+                                "#11": "[(10,6)-(14,0)]"
                               },
                               "type-property-lexical-info": {
-                                "#10": "[(11,8)-(11,12)]"
+                                "#11": "[(11,8)-(11,12)]"
                               },
                               "synthesized-field": {
                                 "shacl:closed": "true"
@@ -235,7 +235,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#9": "[(10,6)-(14,0)]"
+                            "#10": "[(10,6)-(14,0)]"
                           }
                         }
                       }
@@ -249,7 +249,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#7": "[(8,2)-(14,0)]"
+                    "#8": "[(8,2)-(14,0)]"
                   }
                 }
               }
@@ -257,30 +257,43 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(7,0)-(7,9)]",
-                "#6": "[(7,0)-(14,0)]"
+                "#7": "[(7,0)-(14,0)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#5": "RAML 1.0"
+            "#6": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#5": "[(2,0)-(14,0)]"
+            "#6": "[(2,0)-(14,0)]"
           }
         }
-      }
-    ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
       }
     ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#5",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ]
       }
     ],
     "doc:declares": [

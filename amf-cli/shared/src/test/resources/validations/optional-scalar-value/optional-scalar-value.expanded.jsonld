@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#3",
+        "@id": "#4",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#4",
+            "@id": "#5",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -38,7 +38,7 @@
                 "@value": ""
               }
             ],
-            "amf://id#4/scalar-valued/1/a": {
+            "amf://id#5/scalar-valued/1/a": {
               "core:extensionName": [
                 {
                   "@value": "a"
@@ -49,7 +49,7 @@
                   "@value": "http://a.ml/vocabularies/core#description"
                 }
               ],
-              "@id": "#4/scalar-valued/1/a/scalar_1",
+              "@id": "#5/scalar-valued/1/a/scalar_1",
               "@type": [
                 "data:Scalar",
                 "data:Node",
@@ -76,19 +76,19 @@
                   "shacl:datatype": "true"
                 },
                 "lexical": {
-                  "#4/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
+                  "#5/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
                 }
               }
             },
             "doc:customDomainProperties": [
               {
-                "@id": "#4/scalar-valued/1/a"
+                "@id": "#5/scalar-valued/1/a"
               }
             ],
             "smaps": {
               "lexical": {
                 "core:description": "[(8,2)-(9,13)]",
-                "#4": "[(7,0)-(9,13)]",
+                "#5": "[(7,0)-(9,13)]",
                 "apiContract:path": "[(7,0)-(7,9)]"
               }
             }
@@ -96,23 +96,36 @@
         ],
         "smaps": {
           "source-vendor": {
-            "#3": "RAML 1.0"
+            "#4": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(4,0)]",
-            "#3": "[(2,0)-(9,13)]"
+            "#4": "[(2,0)-(9,13)]"
           }
         }
-      }
-    ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
       }
     ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#3",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ]
       }
     ],
     "doc:declares": [

@@ -70,7 +70,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         Annotations(usage.value)
       )
     })
-    fragment.withLocation(root.location)
+    fragment.withLocation(root.location).withProcessingData(APIContractProcessingData())
     UsageParser(rootMap, fragment).parse()
     fragment.add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
     if (aliases.isDefined) fragment.annotations += aliases.get

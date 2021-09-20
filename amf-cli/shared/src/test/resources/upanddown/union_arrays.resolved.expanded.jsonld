@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#15",
+        "@id": "#16",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,23 +23,36 @@
         ],
         "smaps": {
           "source-vendor": {
-            "#15": "RAML 1.0"
+            "#16": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#15": "[(2,0)-(13,39)]"
+            "#16": "[(2,0)-(13,39)]"
           }
         }
-      }
-    ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
       }
     ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#15",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ]
       }
     ],
     "doc:declares": [

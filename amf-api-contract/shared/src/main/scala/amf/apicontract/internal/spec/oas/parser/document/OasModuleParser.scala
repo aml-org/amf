@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.document
 
+import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.internal.spec.common.parser.{ReferencesParser, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.document.Module
@@ -21,6 +22,7 @@ case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext)
     val sourceVendor = SourceSpec(ctx.spec)
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
+      .withProcessingData(APIContractProcessingData())
       .adopted(root.location)
       .add(sourceVendor)
     module.set(BaseUnitModel.Location, root.location)

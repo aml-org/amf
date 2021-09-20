@@ -3,6 +3,14 @@
     {
       "@id": "#13",
       "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.1.0",
+      "doc:transformed": true
+    },
+    {
+      "@id": "#14",
+      "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -12,26 +20,26 @@
       "core:version": "1.4.0",
       "apiContract:endpoint": [
         {
-          "@id": "#14"
+          "@id": "#15"
         },
         {
-          "@id": "#17"
+          "@id": "#18"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#13": "OAS 3.0"
+          "#14": "OAS 3.0"
         },
         "lexical": {
           "apiContract:endpoint": "[(5,0)-(16,0)]",
           "core:name": "[(4,2)-(5,0)]",
-          "#13": "[(1,0)-(35,0)]",
+          "#14": "[(1,0)-(35,0)]",
           "core:version": "[(3,2)-(4,0)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,17 +47,17 @@
       "apiContract:path": "/echo",
       "apiContract:supportedOperation": [
         {
-          "@id": "#15"
+          "@id": "#16"
         }
       ],
       "smaps": {
         "lexical": {
-          "#14": "[(6,2)-(11,0)]"
+          "#15": "[(6,2)-(11,0)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#18",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -57,17 +65,17 @@
       "apiContract:path": "/users",
       "apiContract:supportedOperation": [
         {
-          "@id": "#18"
+          "@id": "#19"
         }
       ],
       "smaps": {
         "lexical": {
-          "#17": "[(11,2)-(16,0)]"
+          "#18": "[(11,2)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#16",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -75,18 +83,18 @@
       "apiContract:method": "post",
       "apiContract:returns": [
         {
-          "@id": "#16"
+          "@id": "#17"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(8,6)-(11,0)]",
-          "#15": "[(7,4)-(11,0)]"
+          "#16": "[(7,4)-(11,0)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#19",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -94,18 +102,18 @@
       "apiContract:method": "delete",
       "apiContract:returns": [
         {
-          "@id": "#19"
+          "@id": "#20"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(13,6)-(16,0)]",
-          "#18": "[(12,4)-(16,0)]"
+          "#19": "[(12,4)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#17",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -121,23 +129,23 @@
       ],
       "smaps": {
         "resolved-link-target": {
-          "#16": "amf://id#12"
+          "#17": "amf://id#12"
         },
         "lexical": {
           "apiContract:payload": "[(28,6)-(35,0)]",
-          "#16": "[(26,4)-(35,0)]",
+          "#17": "[(26,4)-(35,0)]",
           "core:description": "[(27,6)-(28,0)]"
         },
         "declared-element": {
-          "#16": ""
+          "#17": ""
         },
         "resolved-link": {
-          "#16": "amf://id#16"
+          "#17": "amf://id#17"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#20",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -153,18 +161,18 @@
       ],
       "smaps": {
         "resolved-link-target": {
-          "#19": "amf://id#12"
+          "#20": "amf://id#12"
         },
         "lexical": {
           "apiContract:payload": "[(28,6)-(35,0)]",
-          "#19": "[(26,4)-(35,0)]",
+          "#20": "[(26,4)-(35,0)]",
           "core:description": "[(27,6)-(28,0)]"
         },
         "declared-element": {
-          "#19": ""
+          "#20": ""
         },
         "resolved-link": {
-          "#19": "amf://id#19"
+          "#20": "amf://id#20"
         }
       }
     },
@@ -454,10 +462,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#13"
+        "@id": "#14"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#13"
+      }
     },
     {
       "@id": "#12",

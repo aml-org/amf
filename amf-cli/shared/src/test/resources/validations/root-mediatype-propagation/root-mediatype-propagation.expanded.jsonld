@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#11",
+        "@id": "#12",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -39,7 +39,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#12",
+            "@id": "#13",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -51,7 +51,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#13",
+                "@id": "#14",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -63,7 +63,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#14",
+                    "@id": "#15",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -153,7 +153,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#13": "[(14,2)-(17,22)]"
+                    "#14": "[(14,2)-(17,22)]"
                   }
                 }
               }
@@ -161,32 +161,45 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(13,0)-(13,6)]",
-                "#12": "[(13,0)-(17,22)]"
+                "#13": "[(13,0)-(17,22)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#11": "RAML 1.0"
+            "#12": "RAML 1.0"
           },
           "lexical": {
             "apiContract:contentType": "[(4,0)-(6,0)]",
             "core:name": "[(2,0)-(4,0)]",
-            "#11": "[(2,0)-(17,22)]",
+            "#12": "[(2,0)-(17,22)]",
             "apiContract:accepts": "[(4,0)-(6,0)]"
           }
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#11",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ]
       }
     ],
     "doc:declares": [

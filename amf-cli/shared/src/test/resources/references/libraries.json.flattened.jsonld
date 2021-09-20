@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -83,8 +90,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/references/libraries.json#/source-map"
@@ -102,9 +111,11 @@
           "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib.json#/declarations/types/ObjectType"
         }
       ],
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#usage": "Data types and annotation types",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib.json#/source-map"
@@ -146,6 +157,13 @@
           "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib.json#/declarations/types/ObjectType/source-map"
         }
       ]
+    },
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.1.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib.json#/source-map",

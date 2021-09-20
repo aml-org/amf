@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
       "@id": "#/web-api",
       "@type": [
         "apiContract:WebAPI",
@@ -65,7 +72,10 @@
         "@id": "#/web-api"
       },
       "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
     },
     {
       "@id": "#/declarations/annotations/paginated",
