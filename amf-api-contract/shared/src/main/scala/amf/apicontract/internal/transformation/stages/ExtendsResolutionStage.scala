@@ -14,6 +14,7 @@ import amf.apicontract.internal.spec.common.transformation.stage.DomainElementMe
 import amf.apicontract.internal.spec.raml.emitter.context.Raml10SpecEmitterContext
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DataNode, DomainElement, ElementTree}
@@ -27,7 +28,7 @@ import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExceededMaxYamlReferences
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model._
@@ -45,8 +46,10 @@ import scala.collection.mutable.ListBuffer
 class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean, val fromOverlay: Boolean = false)
     extends TransformationStep()
     with PlatformSecrets {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
-    new ExtendsResolution(profile, keepEditingInfo, fromOverlay)(errorHandler).resolve(model)
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit =
+    new ExtendsResolution(profile, keepEditingInfo, fromOverlay)(errorHandler).transform(model, configuration)
 
   class ExtendsResolution(profile: ProfileName,
                           val keepEditingInfo: Boolean,
@@ -60,29 +63,31 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       case _ => new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler)))
     }
 
-    def resolve[T <: BaseUnit](model: T): T =
-      model.transform(findExtendsPredicate, transform(model)).asInstanceOf[T]
+    def transform[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T =
+      model.transform(findExtendsPredicate, transform(model)(_, _, configuration)).asInstanceOf[T]
 
     def asEndPoint(r: ParametrizedResourceType,
                    context: Context,
                    apiContext: RamlWebApiContext,
-                   tree: ElementTree): EndPoint = {
+                   tree: ElementTree,
+                   configuration: AMFGraphConfiguration): EndPoint = {
       Option(r.target) match {
         case Some(rt: ResourceType) =>
           val node = rt.dataNode.copyNode()
           node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
-            apiContext.eh.violation(ResolutionValidation, r.id, None, message, r.position(), r.location()))
+            apiContext.eh.violation(TransformationValidation, r.id, None, message, r.position(), r.location()))
           val extendsHelper = ExtendsHelper(profile, keepEditingInfo = keepEditingInfo, errorHandler, Some(apiContext))
           extendsHelper.asEndpoint(
             context.model,
             node,
             rt.annotations,
             r.name.value(),
-            r.id
+            r.id,
+            configuration
           )
 
         case _ =>
-          apiContext.eh.violation(ResolutionValidation,
+          apiContext.eh.violation(TransformationValidation,
                                   r.id,
                                   None,
                                   s"Cannot find target for parametrized resource type ${r.id}",
@@ -92,19 +97,22 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       }
     }
 
-    private def transform(model: BaseUnit)(element: DomainElement, isCycle: Boolean): Option[DomainElement] =
+    private def transform(model: BaseUnit)(element: DomainElement,
+                                           isCycle: Boolean,
+                                           configuration: AMFGraphConfiguration): Option[DomainElement] =
       element match {
-        case e: EndPoint => Some(convert(model, e))
+        case e: EndPoint => Some(convert(model, e, configuration))
         case other       => Some(other)
       }
 
     private def collectResourceTypes(endpoint: EndPoint,
                                      context: Context,
                                      apiContext: RamlWebApiContext,
-                                     tree: ElementTree): ListBuffer[EndPoint] = {
+                                     tree: ElementTree,
+                                     configuration: AMFGraphConfiguration): ListBuffer[EndPoint] = {
       val result = ListBuffer[EndPoint]()
 
-      collectResourceTypes(result, endpoint, context, apiContext, tree)
+      collectResourceTypes(result, endpoint, context, apiContext, tree, configuration)
       result
     }
 
@@ -112,14 +120,15 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
                                      endpoint: EndPoint,
                                      initial: Context,
                                      apiContext: RamlWebApiContext,
-                                     tree: ElementTree): Unit = {
+                                     tree: ElementTree,
+                                     configuration: AMFGraphConfiguration): Unit = {
       endpoint.resourceType.foreach { resourceType =>
         val context = initial.add(resourceType.variables)
 
-        val resolved = asEndPoint(resourceType, context, apiContext, tree)
+        val resolved = asEndPoint(resourceType, context, apiContext, tree, configuration)
         collector += resolved
 
-        collectResourceTypes(collector, resolved, context, apiContext, tree)
+        collectResourceTypes(collector, resolved, context, apiContext, tree, configuration)
       }
     }
 
@@ -130,7 +139,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       }
     }
 
-    private def convert(model: BaseUnit, endpoint: EndPoint): EndPoint = {
+    private def convert(model: BaseUnit, endpoint: EndPoint, configuration: AMFGraphConfiguration): EndPoint = {
 
       val context = Context(model)
         .add("resourcePath", resourcePath(endpoint))
@@ -138,10 +147,10 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
       val tree           = EndPointTreeBuilder(endpoint).build()
       val extendsContext = ctx()
-      val resourceTypes  = collectResourceTypes(endpoint, context, extendsContext, tree)
+      val resourceTypes  = collectResourceTypes(endpoint, context, extendsContext, tree, configuration)
       apply(endpoint, resourceTypes)(extendsContext) // Apply ResourceTypes to EndPoint
 
-      val resolver = TraitResolver()
+      val resolver = TraitTransformer()
 
       // Iterate operations and resolve extends with inherited traits.
       val traitList = endpoint.operations.flatMap { operation =>
@@ -154,14 +163,14 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
         val branchesObj = Branches()(extendsContext)
 
         // Method branch
-        branches += branchesObj.method(resolver, operation, local, operationTree)
+        branches += branchesObj.method(resolver, operation, local, operationTree, configuration)
 
         // EndPoint branch
-        branches += branchesObj.endpoint(resolver, endpoint, local, tree)
+        branches += branchesObj.endpoint(resolver, endpoint, local, tree, configuration)
 
         // ResourceType branches
         resourceTypes.foreach { rt =>
-          branches += branchesObj.resourceType(resolver, rt, local, operation.method.value(), tree)
+          branches += branchesObj.resourceType(resolver, rt, local, operation.method.value(), tree, configuration)
         }
 
         // Compute final traits
@@ -187,7 +196,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       extendsContext.futureDeclarations.resolve()
       if (resourceTypes.nonEmpty || traitList.nonEmpty)
         new ReferenceResolutionStage(keepEditingInfo)
-          .resolveDomainElement(endpoint, errorHandler) // TODO revise why this is not working
+          .resolveDomainElement(endpoint, errorHandler, configuration) // TODO revise why this is not working
       else
         endpoint
     }
@@ -214,15 +223,20 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
     case class Branches()(implicit extendsContext: RamlWebApiContext) {
       def apply(branches: Seq[Branch]): BranchContainer = BranchContainer(branches)
 
-      def endpoint(resolver: TraitResolver, endpoint: EndPoint, context: Context, tree: ElementTree): BranchContainer = {
-        BranchContainer(resolveTraits(resolver, endpoint.traits, context, tree.subtrees))
+      def endpoint(resolver: TraitTransformer,
+                   endpoint: EndPoint,
+                   context: Context,
+                   tree: ElementTree,
+                   configuration: AMFGraphConfiguration): BranchContainer = {
+        BranchContainer(transformTraits(resolver, endpoint.traits, context, tree.subtrees, configuration))
       }
 
-      def resourceType(traits: TraitResolver,
+      def resourceType(traits: TraitTransformer,
                        resourceType: EndPoint,
                        context: Context,
                        operation: String,
-                       tree: ElementTree): BranchContainer = {
+                       tree: ElementTree,
+                       configuration: AMFGraphConfiguration): BranchContainer = {
 
         // Resolve resource type method traits
         val o = resourceType.operations
@@ -231,55 +245,63 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
             method(traits,
                    op,
                    context,
-                   tree.subtrees.find(_.key.equals(operation)).getOrElse(ElementTree(operation, Nil))).flatten()
+                   tree.subtrees.find(_.key.equals(operation)).getOrElse(ElementTree(operation, Nil)),
+                   configuration).flatten()
           })
           .getOrElse(Seq())
 
         // Resolve resource type traits
-        val e = endpoint(traits, resourceType, context, tree).flatten()
+        val e = endpoint(traits, resourceType, context, tree, configuration).flatten()
 
         BranchContainer(BranchContainer.merge(o, e))
       }
 
-      def method(resolver: TraitResolver, operation: Operation, context: Context, tree: ElementTree): BranchContainer = {
-        BranchContainer(resolveTraits(resolver, operation.traits, context, tree.subtrees))
+      def method(transformer: TraitTransformer,
+                 operation: Operation,
+                 context: Context,
+                 tree: ElementTree,
+                 configuration: AMFGraphConfiguration): BranchContainer = {
+        BranchContainer(transformTraits(transformer, operation.traits, context, tree.subtrees, configuration))
       }
 
-      private def resolveTraits(resolver: TraitResolver,
-                                parameterized: Seq[ParametrizedTrait],
-                                context: Context,
-                                subTree: Seq[ElementTree]) = {
-        parameterized.flatMap(resolver.resolve(_, context, extendsContext, subTree))
+      private def transformTraits(resolver: TraitTransformer,
+                                  parameterized: Seq[ParametrizedTrait],
+                                  context: Context,
+                                  subTree: Seq[ElementTree],
+                                  configuration: AMFGraphConfiguration) = {
+        parameterized.flatMap(resolver.transform(_, context, extendsContext, subTree, configuration))
       }
     }
 
-    case class ResourceTypeResolver(model: BaseUnit) {
-      val resolved: mutable.Map[Key, TraitBranch] = mutable.Map()
+    case class ResourceTypeTransformer(model: BaseUnit) {
+      val transformed: mutable.Map[Key, TraitBranch] = mutable.Map()
     }
 
-    case class TraitResolver() {
+    case class TraitTransformer() {
 
-      val resolved: mutable.Map[Key, TraitBranch] = mutable.Map()
+      val transformed: mutable.Map[Key, TraitBranch] = mutable.Map()
 
-      def resolve(t: ParametrizedTrait,
-                  context: Context,
-                  apiContext: RamlWebApiContext,
-                  subTree: Seq[ElementTree]): Option[TraitBranch] = {
+      def transform(t: ParametrizedTrait,
+                    context: Context,
+                    apiContext: RamlWebApiContext,
+                    subTree: Seq[ElementTree],
+                    configuration: AMFGraphConfiguration): Option[TraitBranch] = {
         val local = context.add(t.variables)
         val key   = Key(t.target.id, local)
-        resolveOperation(key, t, context, apiContext, subTree) match {
-          case Some(ro) => Some(resolved.getOrElseUpdate(key, ro))
+        transformOperation(key, t, context, apiContext, subTree, configuration) match {
+          case Some(ro) => Some(transformed.getOrElseUpdate(key, ro))
           case _ =>
-            resolved -= key
+            transformed -= key
             None
         }
       }
 
-      private def resolveOperation(key: Key,
-                                   parameterized: ParametrizedTrait,
-                                   context: Context,
-                                   apiContext: RamlWebApiContext,
-                                   subTree: Seq[ElementTree]): Option[TraitBranch] = {
+      private def transformOperation(key: Key,
+                                     parameterized: ParametrizedTrait,
+                                     context: Context,
+                                     apiContext: RamlWebApiContext,
+                                     subTree: Seq[ElementTree],
+                                     configuration: AMFGraphConfiguration): Option[TraitBranch] = {
         val local = context.add(parameterized.variables)
 
         Option(parameterized.target) match {
@@ -291,7 +313,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
               case t: Trait =>
                 val node: DataNode = t.dataNode.copyNode()
                 node.replaceVariables(local.variables, subTree)((message: String) => {
-                  apiContext.eh.violation(ResolutionValidation,
+                  apiContext.eh.violation(TransformationValidation,
                                           t.id,
                                           None,
                                           message,
@@ -305,16 +327,17 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
                   context.model,
                   parameterized.name.option().getOrElse(""),
                   parameterized.annotations,
-                  t.id
+                  t.id,
+                  configuration
                 )
 
-                val children = op.traits.flatMap(resolve(_, context, apiContext, subTree))
+                val children = op.traits.flatMap(transform(_, context, apiContext, subTree, configuration))
 
                 Some(TraitBranch(key, op, children))
             }
           case m =>
             errorHandler.violation(
-              ResolutionValidation,
+              TransformationValidation,
               parameterized.id,
               s"Looking for trait but $m was found on model ${context.model}",
               parameterized.annotations

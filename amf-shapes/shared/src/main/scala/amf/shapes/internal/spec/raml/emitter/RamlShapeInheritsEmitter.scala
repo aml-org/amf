@@ -8,7 +8,7 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{pos, raw}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{AnyShape, ShapeHelpers, UnionShape}
 import amf.shapes.internal.spec.common.emitter.RamlShapeEmitterContext
@@ -41,7 +41,7 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
     case s: AnyShape =>
       Raml10TypePartEmitter(s, ordering, None, references = references).emit(b)
     case other =>
-      spec.eh.violation(ResolutionValidation,
+      spec.eh.violation(TransformationValidation,
                         other.id,
                         None,
                         "Cannot emit for type shapes without WebAPI Shape support",

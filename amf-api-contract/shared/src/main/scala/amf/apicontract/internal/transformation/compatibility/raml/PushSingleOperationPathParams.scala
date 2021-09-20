@@ -2,6 +2,7 @@ package amf.apicontract.internal.transformation.compatibility.raml
 
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.internal.metamodel.domain.RequestModel
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationStep
@@ -21,7 +22,9 @@ class PushSingleOperationPathParams() extends TransformationStep {
     } else endpoint
   }
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     try {
       model.iterator().foreach {
         case endpoint: EndPoint =>

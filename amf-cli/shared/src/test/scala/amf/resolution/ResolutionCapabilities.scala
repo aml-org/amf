@@ -13,7 +13,8 @@ trait ResolutionCapabilities {
     spec match {
       case AsyncApi | AsyncApi20 | Raml08 | Raml10 | Oas20 | Oas30 =>
         amfConfig.baseUnitClient().transform(unit, pipeline).baseUnit
-      case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, UnhandledAmfPipeline(pipeline))
+      case Amf =>
+        TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(unit, UnhandledAmfPipeline(pipeline))
       case target => throw new Exception(s"Cannot resolve $target")
     }
   }

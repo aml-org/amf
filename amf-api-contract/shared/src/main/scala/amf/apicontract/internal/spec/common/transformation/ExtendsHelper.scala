@@ -7,6 +7,7 @@ import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.ParseResourceTypeFail
 import amf.core.client.common.validation.{ProfileName, Raml08Profile}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.client.scala.model.domain.{AmfElement, DataNode, DomainElement, NamedDomainElement}
@@ -39,14 +40,15 @@ case class ExtendsHelper(profile: ProfileName,
                                  unit: T,
                                  name: String,
                                  trAnnotations: Annotations,
-                                 extensionId: String): Operation = {
+                                 extensionId: String,
+                                 configuration: AMFGraphConfiguration): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
     val entry               = emitDataNode(node, trAnnotations, name, referencesCollector)(ctx)
 
     context.map(_.nodeRefIds ++= ctx.nodeRefIds)
-    entryAsOperation(unit, name, extensionId, entry, referencesCollector)
+    entryAsOperation(unit, name, extensionId, entry, configuration, referencesCollector)
   }
 
   def parseOperation[T <: BaseUnit](unit: T,
@@ -83,18 +85,20 @@ case class ExtendsHelper(profile: ProfileName,
                                       name: String,
                                       extensionId: String,
                                       entry: YMapEntry,
+                                      configuration: AMFGraphConfiguration,
                                       referencesCollector: mutable.Map[String, DomainElement] =
                                         mutable.Map[String, DomainElement]()): Operation = {
 
     val operation = parseOperation(unit, name, extensionId, entry, referencesCollector)
-    new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(operation, errorHandler)
+    new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(operation, errorHandler, configuration)
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
                                 node: DataNode,
                                 rtAnnotations: Annotations,
                                 name: String,
-                                extensionId: String): EndPoint = {
+                                extensionId: String,
+                                configuration: AMFGraphConfiguration): EndPoint = {
 
     val ctx = context.getOrElse(custom(profile))
 
@@ -102,7 +106,7 @@ case class ExtendsHelper(profile: ProfileName,
     val entry: YMapEntry    = emitDataNode(node, rtAnnotations, name, referencesCollector)(ctx)
 
     context.map(_.nodeRefIds ++= ctx.nodeRefIds)
-    entryAsEndpoint(unit, node, name, extensionId, entry, referencesCollector)
+    entryAsEndpoint(unit, node, name, extensionId, entry, configuration, referencesCollector)
   }
 
   private def emitDataNode[T <: BaseUnit](
@@ -149,6 +153,7 @@ case class ExtendsHelper(profile: ProfileName,
                                      name: String,
                                      extensionId: String,
                                      entry: YMapEntry,
+                                     configuration: AMFGraphConfiguration,
                                      referencesCollector: mutable.Map[String, DomainElement] =
                                        mutable.Map[String, DomainElement]()): EndPoint = {
     val ctx       = context.getOrElse(custom(profile))
@@ -173,7 +178,7 @@ case class ExtendsHelper(profile: ProfileName,
 
     collector.toList match {
       case element :: _ =>
-        new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(element, errorHandler)
+        new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(element, errorHandler, configuration)
       case Nil =>
         errorHandler.violation(
           ParseResourceTypeFail,
@@ -252,7 +257,7 @@ case class ExtendsHelper(profile: ProfileName,
       case _: Fragment => // Trait or RT, nothing to do
       case other =>
         ctx.eh.violation(
-          CoreValidations.ResolutionValidation,
+          CoreValidations.TransformationValidation,
           other,
           None,
           "Error resolving nested declaration, found something that is not a library or a fragment"

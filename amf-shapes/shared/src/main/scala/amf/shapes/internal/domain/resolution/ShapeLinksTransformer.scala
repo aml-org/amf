@@ -1,5 +1,6 @@
 package amf.shapes.internal.domain.resolution
 
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.domain.{AmfArray, Shape}
 import amf.core.internal.transform.stages.elements.resolution.ElementStageTransformer
 import amf.core.internal.metamodel.domain.ShapeModel
@@ -10,7 +11,7 @@ import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, UnionShape}
 
 abstract class ShapeLinksTransformer extends ElementStageTransformer[Shape] {
-  override def transform(element: Shape): Option[Shape] = {
+  override def transform(element: Shape, configuration: AMFGraphConfiguration): Option[Shape] = {
     Some(resolveLink(element, Seq.empty))
   }
 
@@ -19,10 +20,10 @@ abstract class ShapeLinksTransformer extends ElementStageTransformer[Shape] {
   private def resolveInherits(s: Shape, traversed: Seq[String]) = {
     s.fields.getValueAsOption(ShapeModel.Inherits) match {
       case Some(Value(arr: AmfArray, ann)) =>
-        val newInhetirs: Seq[Shape] = arr.values.collect({ case s: Shape => s }).map { i =>
+        val newInherits: Seq[Shape] = arr.values.collect({ case s: Shape => s }).map { i =>
           resolveLink(i, s.id +: traversed)
         }
-        s.set(ShapeModel.Inherits, AmfArray(newInhetirs, arr.annotations), ann)
+        s.set(ShapeModel.Inherits, AmfArray(newInherits, arr.annotations), ann)
       case _ => // ignore
     }
   }

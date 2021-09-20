@@ -1,12 +1,15 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationStep
 import amf.shapes.client.scala.model.domain.CreativeWork
 
 class MandatoryCreativeWorkFields() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     try {
       model.iterator().foreach {
         case work: CreativeWork => fillMandatoryFields(work)

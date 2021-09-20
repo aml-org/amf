@@ -6,6 +6,7 @@ import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel, PayloadModel, RequestModel}
 import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.InvalidConsumesWithFileParameter
 import amf.core.client.common.validation.{Oas20Profile, ProfileName}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -25,7 +26,9 @@ class MediaTypeResolutionStage(profile: ProfileName,
                                isValidation: Boolean = false,
                                val keepEditingInfo: Boolean = false)
     extends TransformationStep() {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         propagatePayloads(doc.encodes.asInstanceOf[Api])

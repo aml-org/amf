@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 import amf.apicontract.client.scala.model.domain.Response
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
@@ -10,16 +11,20 @@ import amf.core.internal.transform.stages.selectors.{LinkSelector, MetaModelSele
 import amf.core.client.scala.vocabulary.Namespace.ApiContract
 
 object ResolveRamlCompatibleDeclarationsStage extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
-    new ResolveRamlCompatibleDeclarations(errorHandler).resolve(model)
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit =
+    new ResolveRamlCompatibleDeclarations(errorHandler).resolve(model, configuration)
 }
 
 private class ResolveRamlCompatibleDeclarations(val errorHandler: AMFErrorHandler) {
   val domainSelector
     : Selector = ResponseSelector || ParameterSelector || PayloadSelector || CallbackSelector || ExampleSelector
 
-  def resolve[T <: BaseUnit](model: T): T = {
-    val result = model.transform(LinkSelector && domainSelector, transformation)(errorHandler).asInstanceOf[T]
+  def resolve[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T = {
+    val result = model
+      .transform(LinkSelector && domainSelector, transformation(_, _, configuration))(errorHandler)
+      .asInstanceOf[T]
     model match {
       case d: Document =>
         val filteredDeclarations = d.declares.filterNot(domainSelector)
@@ -28,10 +33,12 @@ private class ResolveRamlCompatibleDeclarations(val errorHandler: AMFErrorHandle
     result
   }
 
-  private def transformation(e: DomainElement, isCycle: Boolean): Option[DomainElement] = {
+  private def transformation(e: DomainElement,
+                             isCycle: Boolean,
+                             configuration: AMFGraphConfiguration): Option[DomainElement] = {
     val referenceResolution =
       new ReferenceResolution(errorHandler, customDomainElementTransformation = customDomainElementTransformation)
-    referenceResolution.transform(e, conditions = Seq(ASSERT_DIFFERENT))
+    referenceResolution.transform(e, conditions = Seq(ASSERT_DIFFERENT), configuration)
   }
 
   private def customDomainElementTransformation(resolved: DomainElement, link: Linkable): DomainElement = {

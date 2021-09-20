@@ -96,8 +96,8 @@ class ProductionServiceTest extends RamlResolutionTest {
       "api.raml.jsonld.resolved.raml",
       AmfJsonHint,
       target = Raml10YamlHint,
-      tFn = (u: BaseUnit, _: CycleConfig, _: AMFConfiguration) => {
-        val resolved = new ReferenceResolutionStage(false).transform(u, UnhandledErrorHandler)
+      tFn = (u: BaseUnit, _: CycleConfig, amfConfig: AMFConfiguration) => {
+        val resolved = new ReferenceResolutionStage(false).transform(u, UnhandledErrorHandler, amfConfig)
         resolved.fields.removeField(DocumentModel.Declares)
         resolved
       }

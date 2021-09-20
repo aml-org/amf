@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.common.transformation.stage
 
 import amf.apicontract.client.scala.model.domain.Request
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
@@ -9,19 +10,25 @@ import amf.core.internal.transform.stages.elements.resolution.ReferenceResolutio
 import amf.core.internal.transform.stages.selectors.{LinkSelector, Selector}
 
 object RequestParamsLinkStage extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
-    new RequestParamsLinkStage(errorHandler).resolve(model)
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit =
+    new RequestParamsLinkStage(errorHandler).resolve(model, configuration)
 }
 
 private class RequestParamsLinkStage(val errorHandler: AMFErrorHandler) {
-  def resolve[T <: BaseUnit](model: T): T = {
-    model.transform(LinkSelector && ReqWithParametersSelector, transform)(errorHandler).asInstanceOf[T]
+  def resolve[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T = {
+    model
+      .transform(LinkSelector && ReqWithParametersSelector, transform(_, _, configuration))(errorHandler)
+      .asInstanceOf[T]
   }
 
-  private def transform(e: DomainElement, isCycle: Boolean): Option[DomainElement] = {
+  private def transform(e: DomainElement,
+                        isCycle: Boolean,
+                        configuration: AMFGraphConfiguration): Option[DomainElement] = {
     val referenceResolution =
       new ReferenceResolution(errorHandler, customDomainElementTransformation = customDomainElementTransformation)
-    referenceResolution.transform(e, conditions = Seq(ReferenceResolution.ASSERT_DIFFERENT))
+    referenceResolution.transform(e, conditions = Seq(ReferenceResolution.ASSERT_DIFFERENT), configuration)
   }
 
   private def customDomainElementTransformation(resolved: DomainElement, link: Linkable): DomainElement = {

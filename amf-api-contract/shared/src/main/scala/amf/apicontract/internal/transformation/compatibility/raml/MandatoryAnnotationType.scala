@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
@@ -10,7 +11,9 @@ class MandatoryAnnotationType() extends TransformationStep {
 
   var annotationCounter = 0
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     try {
       model match {
         case doc: Document =>

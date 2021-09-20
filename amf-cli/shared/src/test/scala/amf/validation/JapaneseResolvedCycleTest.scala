@@ -77,7 +77,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
           .baseUnitClient()
           .transform(unit, PipelineId.Editing)
           .baseUnit
-      case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
+      case Amf    => TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
     }
 }

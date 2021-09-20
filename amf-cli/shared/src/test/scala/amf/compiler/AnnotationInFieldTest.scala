@@ -177,7 +177,9 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
                     Raml10YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
-      val point    = AbstractElementTransformer.asEndpoint(document, document.declares.head.asInstanceOf[ResourceType])
+      val point = AbstractElementTransformer.asEndpoint(document,
+                                                        document.declares.head.asInstanceOf[ResourceType],
+                                                        defaultConfig)
       assertRange(point.annotations.find(classOf[LexicalInformation]).get.range, Range((6, 2), (9, 12)))
       assertRange(point.path.annotations().find(classOf[LexicalInformation]).get.range, Range((6, 2), (6, 5)))
       succeed

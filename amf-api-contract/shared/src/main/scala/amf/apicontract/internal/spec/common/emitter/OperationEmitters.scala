@@ -18,7 +18,7 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork}
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
@@ -96,7 +96,7 @@ case class Raml10OperationPartEmitter(operation: Operation, ordering: SpecOrderi
             case Some(shape: AnyShape) =>
               results += RamlNamedTypeEmitter(shape, ordering, references, Raml10TypePartEmitter.apply)
             case Some(other) =>
-              spec.eh.violation(ResolutionValidation,
+              spec.eh.violation(TransformationValidation,
                                 req.id,
                                 None,
                                 "Cannot emit non WebApi Shape",

@@ -12,7 +12,7 @@ trait ModelResolution {
       withResolved: (BaseUnit, Option[AMFValidationReport]) => T): T = {
     if (unit.resolved) withResolved(unit, None)
     else {
-      val resolvedUnit = ValidationTransformationPipeline(profile, unit, conf.eh)
+      val resolvedUnit = ValidationTransformationPipeline(profile, unit, conf)
       withResolved(resolvedUnit, Some(AMFValidationReport(resolvedUnit.id, profile, conf.eh.getResults)))
     }
   }

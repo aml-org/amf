@@ -14,7 +14,7 @@ import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.annotations.ParsedJSONSchema
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
@@ -54,7 +54,7 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
             )
           })
       case Some(other) =>
-        spec.eh.violation(ResolutionValidation,
+        spec.eh.violation(TransformationValidation,
                           other.id,
                           None,
                           "Cannot emit a non WebAPI Shape",
@@ -144,7 +144,7 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
                     case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
                       p.obj(traverse(ordering.sorted(es.collect { case e: EntryEmitter => e }), _))
                     case other =>
-                      spec.eh.violation(ResolutionValidation,
+                      spec.eh.violation(TransformationValidation,
                                         payload.id,
                                         None,
                                         s"IllegalTypeDeclarations found: $other",
@@ -270,7 +270,7 @@ case class Raml10Payloads(payload: Payload, ordering: SpecOrdering, references: 
       Option(payload.schema) match {
         case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = references).emitters()
         case Some(other) =>
-          spec.eh.violation(ResolutionValidation,
+          spec.eh.violation(TransformationValidation,
                             other.id,
                             None,
                             "Cannot emit a non WebAPI shape",

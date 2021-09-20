@@ -13,7 +13,7 @@ import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.{Field, Obj, Type}
 import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.domain.metamodel.{ExampleModel, ScalarShapeModel}
 
 import scala.language.postfixOps
@@ -70,7 +70,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
             merge(existing.domainElement, entry.domainElement, idTracker)
           case _ =>
             errorHandler.violation(
-              ResolutionValidation,
+              TransformationValidation,
               field.toString,
               s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)",
               entry.element.annotations
@@ -79,7 +79,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       case Some(existing) => // cannot be override
         if (!isInferred(value) && !isSameValue(existing, entry))
           errorHandler.violation(
-            ResolutionValidation,
+            TransformationValidation,
             field.toString,
             s"Property '${existing.field.toString}' in '${master.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
             value.annotations
@@ -109,7 +109,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
     }
 
     errorHandler.violation(
-      ResolutionValidation,
+      TransformationValidation,
       node,
       s"Property '$node' of type '${entry.element.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
       annotations
@@ -151,7 +151,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       case _: DomainElementModel =>
         domainElementArrayMergeStrategy.merge(target, field, other, extensionId, extensionLocation)
       case _ =>
-        errorHandler.violation(ResolutionValidation,
+        errorHandler.violation(TransformationValidation,
                                extensionId,
                                s"Cannot merge '$element': not a KeyField nor a Scalar",
                                target.annotations)
@@ -233,7 +233,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), idTracker)
       case None if !(restrictions allowsNodeInsertionIn field) =>
         errorHandler.violation(
-          ResolutionValidation,
+          TransformationValidation,
           obj.id,
           s"Property of key '${obj.id}' of class '${obj.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
           obj.annotations

@@ -107,7 +107,7 @@ trait ModelResolutionTest extends ModelValidationTest {
     val res = config.renderTarget.spec match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         configFor(config.renderTarget.spec).baseUnitClient().transform(unit, PipelineId.Editing).baseUnit
-      case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
+      case Amf    => TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
     }
     res

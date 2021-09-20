@@ -2,6 +2,7 @@ package amf.apicontract.internal.transformation.compatibility.raml
 
 import amf.apicontract.client.scala.model.domain.security.{ApiKeySettings, OAuth2Settings, SecurityScheme}
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.transform.TransformationStep
@@ -40,7 +41,9 @@ class SecuritySettingsMapper() extends TransformationStep {
     case _                        => // ignore
   }
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = model match {
     case d: DeclaresModel =>
       try {
         fixSettings(d)

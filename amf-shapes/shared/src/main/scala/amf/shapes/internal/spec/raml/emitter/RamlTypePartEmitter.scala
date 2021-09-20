@@ -9,7 +9,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.render.BaseEmitters.{raw, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.YDocument.PartBuilder
@@ -41,7 +41,7 @@ abstract class RamlTypePartEmitter(shape: Shape,
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other =>
-      spec.eh.violation(ResolutionValidation,
+      spec.eh.violation(TransformationValidation,
                         shape.id,
                         None,
                         s"IllegalTypeDeclarations found: $other",

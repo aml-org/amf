@@ -96,7 +96,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         amfConfig.baseUnitClient().transform(unit, PipelineId.Default).baseUnit
       case Amf =>
-        TransformationPipelineRunner(amfConfig.errorHandlerProvider.errorHandler())
+        TransformationPipelineRunner(amfConfig.errorHandlerProvider.errorHandler(), amfConfig)
           .run(unit, AmfTransformationPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit

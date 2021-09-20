@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 import amf.apicontract.client.scala.model.domain.api.Api
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{Linkable, Shape}
@@ -11,7 +12,9 @@ import amf.shapes.internal.spec.{RamlTypeDefMatcher, TypeName}
 import scala.collection.mutable
 
 class EscapeTypeNames() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val replacedNames: mutable.Map[String, String] = mutable.Map.empty

@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -11,7 +12,9 @@ import scala.collection.mutable.ListBuffer
 
 class RecursionDetection() extends TransformationStep {
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     model match {
       case doc: Document => doc.fields.fields().foreach(f => advance(f.element, ListBuffer[String](), Set.empty))
       case _             => // Nothing

@@ -5,6 +5,7 @@ import amf.apicontract.client.scala.model.domain.{Message, Operation, Payload}
 import amf.apicontract.internal.metamodel.domain.MessageModel
 import amf.apicontract.internal.metamodel.domain.PayloadModel.{MediaType, SchemaMediaType}
 import amf.apicontract.internal.spec.common.transformation.stage.CustomMerge
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DomainElement}
@@ -16,7 +17,9 @@ class JsonMergePatchStage(isEditing: Boolean) extends TransformationStep() {
 
   private lazy val merger = AsyncJsonMergePatch()
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
       resolve(webApi)

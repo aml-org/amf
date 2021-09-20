@@ -1,6 +1,7 @@
 package amf.apicontract.internal.transformation.compatibility.common
 
 import amf.apicontract.client.scala.model.domain.security._
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.transform.TransformationStep
@@ -52,7 +53,9 @@ abstract class SecuritySettingsMapper() extends TransformationStep {
     d.withDeclares(filteredDeclarations)
   }
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = model match {
     case d: DeclaresModel =>
       try {
         fixSettings(d)

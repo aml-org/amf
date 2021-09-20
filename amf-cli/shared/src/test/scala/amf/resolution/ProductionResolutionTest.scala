@@ -211,10 +211,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
     val amfConfig                 = buildConfig(None, None)
     for {
       simpleModel <- build(config, amfConfig).map(
-        TransformationPipelineRunner(UnhandledErrorHandler).run(_, AmfEditingPipeline()))
+        TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(_, AmfEditingPipeline()))
       a <- Future.successful(render(simpleModel, config, amfConfig))
       doubleModel <- build(config, amfConfig).map(
-        TransformationPipelineRunner(UnhandledErrorHandler).run(_, AmfEditingPipeline()))
+        TransformationPipelineRunner(UnhandledErrorHandler, amfConfig).run(_, AmfEditingPipeline()))
       _ <- Future.successful(render(doubleModel, config, amfConfig))
       b <- Future.successful(render(doubleModel, config, amfConfig))
     } yield {

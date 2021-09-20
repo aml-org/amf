@@ -2,6 +2,7 @@ package amf.apicontract.internal.transformation.compatibility.raml
 
 import amf.apicontract.client.scala.model.domain.Tag
 import amf.apicontract.client.scala.model.domain.api.Api
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.TransformationStep
@@ -13,7 +14,9 @@ class MandatoryDocumentationTitle() extends TransformationStep {
 
   var tagCounter = 0
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     // Have to filter for null documentations as the documentation method of domainElements does not return Option. It can return null
     // TODO: keeping separate treatment for Tags to keep backwards compatibility.
     extractDocumentedElements(model).foreach {

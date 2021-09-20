@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation.compatibility.raml
 
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationStep
@@ -10,7 +11,9 @@ import amf.shapes.internal.domain.parser.TypeDefXsdMapping
 
 // TODO this is a bug, it's just adjusted to emit correctly for now.....
 class ShapeFormatAdjuster() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     try {
       model.iterator().foreach {
         case shape: ScalarShape if shape.format.nonEmpty =>

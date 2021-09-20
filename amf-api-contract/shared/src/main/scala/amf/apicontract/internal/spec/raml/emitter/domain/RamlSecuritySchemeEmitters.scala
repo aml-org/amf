@@ -16,7 +16,7 @@ import amf.core.internal.parser.domain.{FieldEntry, Fields}
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.core.internal.validation.CoreValidations.ResolutionValidation
+import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
@@ -295,7 +295,7 @@ case class Raml08DescribedByEmitter(key: String,
   override def entries(fs: Fields): Seq[EntryEmitter] = {
     fs.entry(SecuritySchemeModel.QueryString)
       .foreach { _ =>
-        spec.eh.violation(ResolutionValidation,
+        spec.eh.violation(TransformationValidation,
                           securityScheme.id,
                           None,
                           "Cannot emit query string in raml 08 spec",

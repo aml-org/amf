@@ -3,6 +3,7 @@ package amf.apicontract.internal.spec.common.transformation.stage
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.common.validation._
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.AmfObject
@@ -20,7 +21,9 @@ class PayloadAndParameterResolutionStage(profile: ProfileName) extends Transform
 
   private type SchemaContainerWithId = SchemaContainer with AmfObject
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit =
     if (appliesTo(profile)) resolveExamples(model)
     else model
 
