@@ -19,7 +19,7 @@ import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.metamodel.document.FragmentModel
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.remote.Raml10
+import amf.core.internal.remote.{Raml10, Spec}
 import amf.shapes.internal.spec.common.parser.{RamlCreativeWorkParser, YMapEntryLike}
 import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, StringDefaultType}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
@@ -28,7 +28,7 @@ import org.yaml.model.{YMap, YScalar}
 /**
   *
   */
-case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit val ctx: RamlWebApiContext)
+case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment)(implicit val ctx: RamlWebApiContext)
     extends RamlSpecParser {
 
   def parseFragment(): Fragment = {
@@ -70,7 +70,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         Annotations(usage.value)
       )
     })
-    fragment.withLocation(root.location).withProcessingData(APIContractProcessingData())
+    fragment.withLocation(root.location).withProcessingData(APIContractProcessingData().withSourceSpec(spec))
     UsageParser(rootMap, fragment).parse()
     fragment.add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
     if (aliases.isDefined) fragment.annotations += aliases.get

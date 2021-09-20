@@ -9,20 +9,21 @@ import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.parser.{Root, YNodeLikeOps}
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.remote.Spec
 import org.yaml.model.YMap
 import amf.core.internal.utils._
 
 /**
   *
   */
-case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext)
+case class OasModuleParser(root: Root, spec: Spec)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx)) {
 
   def parseModule(): Module = {
     val sourceVendor = SourceSpec(ctx.spec)
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
-      .withProcessingData(APIContractProcessingData())
+      .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
       .adopted(root.location)
       .add(sourceVendor)
     module.set(BaseUnitModel.Location, root.location)

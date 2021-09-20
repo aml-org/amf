@@ -77,7 +77,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
         .withId("file://amf-cli/shared/src/test/resources/references/fragments/" + fragmentFile)
         .withEncodes(person)
         .withRoot(false)
-        .withProcessingData(APIContractProcessingData())
+        .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
     }
 
     val usesDataType: Document = {
@@ -96,7 +96,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
         .withReferences(Seq(dataTypeFragment))
         .withDeclares(Seq(personLink))
         .withRoot(true)
-        .withProcessingData(APIContractProcessingData())
+        .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
     }
   }
 }

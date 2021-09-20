@@ -31,6 +31,7 @@ import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel, Exten
 import amf.core.internal.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.internal.parser.domain.{Annotations, ArrayNode, ScalarNode, SearchScope}
 import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.remote.Spec
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
@@ -52,7 +53,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Oas spec parser
   */
-abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
+abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
     with OasLikeDeclarationsHelper {
 
@@ -94,7 +95,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   def parseDocument(): Document = parseDocument(Document())
 
   private def parseDocument[T <: Document](document: T): T = {
-    document.adopted(root.location).withLocation(root.location).withProcessingData(APIContractProcessingData())
+    document
+      .adopted(root.location)
+      .withLocation(root.location)
+      .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     ctx.setJsonSchemaAST(map)

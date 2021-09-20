@@ -18,6 +18,7 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
+import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils._
 import amf.shapes.client.scala.model.domain.Example
@@ -32,7 +33,8 @@ import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
-case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: OasWebApiContext)
+case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader] = None)(
+    implicit val ctx: OasWebApiContext)
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
     with PlatformSecrets {
 
@@ -73,7 +75,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
     fragment
       .withLocation(root.location)
       .add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
-      .withProcessingData(APIContractProcessingData())
+      .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
 
     UsageParser(map, fragment).parse()
 

@@ -30,7 +30,7 @@ trait RamlParsePlugin extends ApiParsePlugin {
 
     validateReferences(root.references, ctx)
     RamlHeader(root) match { // todo review this, should we use the raml web api context for get the version parser?
-      case Some(f: RamlFragment) => document.RamlFragmentParser(root, f)(updated).parseFragment()
+      case Some(f: RamlFragment) => document.RamlFragmentParser(root, spec, f)(updated).parseFragment()
       case Some(header)          => parseSpecificVersion(root, updated, header)
       case _ => // unreachable as it is covered in canParse()
         throw new InvalidDocumentHeaderException(spec.id)
@@ -53,8 +53,9 @@ trait RamlParsePlugin extends ApiParsePlugin {
   private def validateJsonPointersToFragments(reference: ParsedReference, ctx: ParserContext): Unit = {
     reference.unit.sourceSpec match {
       case Some(v) if v.isRaml =>
-        reference.origin.refs.filter(_.uriFragment.isDefined).foreach { case r: ASTRefContainer =>
-          ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.pos)
+        reference.origin.refs.filter(_.uriFragment.isDefined).foreach {
+          case r: ASTRefContainer =>
+            ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.pos)
         }
       case _ => // Nothing to do
     }
@@ -100,16 +101,17 @@ trait RamlParsePlugin extends ApiParsePlugin {
                              encodes: ExternalDomainElement,
                              elementRef: Seq[BaseUnit],
                              ctx: ParserContext): Unit = {
-    origins.foreach { case refContainer: SYamlRefContainer =>
-      refContainer.node match {
-        case mut: MutRef =>
-          elementRef.foreach(u => ctx.addSonRef(u))
-          document match {
-            case None => mut.target = Some(YNode(encodes.raw.value()))
-            case _    => mut.target = document
-          }
-        case _ =>
-      }
+    origins.foreach {
+      case refContainer: SYamlRefContainer =>
+        refContainer.node match {
+          case mut: MutRef =>
+            elementRef.foreach(u => ctx.addSonRef(u))
+            document match {
+              case None => mut.target = Some(YNode(encodes.raw.value()))
+              case _    => mut.target = document
+            }
+          case _ =>
+        }
     }
   }
 

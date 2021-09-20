@@ -12,6 +12,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AmfStrings, UriUtils}
 import amf.shapes.internal.spec.RamlTypeDefMatcher
@@ -23,7 +24,7 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
   * Raml 0.8 spec parser
   */
 case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebApiContext)
-    extends RamlDocumentParser(root)
+    extends RamlDocumentParser(root, Spec.RAML08)
     with PlatformSecrets {
 
   override protected def parseDeclarations(root: Root, map: YMap): Unit = {
@@ -92,7 +93,10 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
           case YType.Map  => parseEntries(e.value.as[YMap].entries, parent)
           case YType.Null =>
           case t =>
-            ctx.eh.violation(InvalidSecuredByType, parent, s"Invalid type $t for 'securitySchemes' node.", e.value.location)
+            ctx.eh.violation(InvalidSecuredByType,
+                             parent,
+                             s"Invalid type $t for 'securitySchemes' node.",
+                             e.value.location)
         }
       }
     )

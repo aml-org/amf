@@ -8,6 +8,7 @@ import amf.core.client.scala.model.document.{DeclaresModel, Document}
 import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.Root
+import amf.core.internal.remote.Spec
 import amf.grpc.internal.spec.parser.context.GrpcWebApiContext
 import amf.grpc.internal.spec.parser.domain.{
   GrpcEnumParser,
@@ -56,7 +57,7 @@ case class GrpcDocumentParser(root: Root)(implicit val ctx: GrpcWebApiContext) e
         ctx.declarations.shapes.values.toList ++
           ctx.declarations.annotations.values.toList
       )
-      .withProcessingData(APIContractProcessingData())
+      .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRPC))
   }
 
   def parseWebAPI(node: Node): Unit = {

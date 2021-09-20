@@ -7,6 +7,7 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.model.document.Document
 import amf.core.internal.parser.Root
+import amf.core.internal.remote.Spec
 import amf.graphql.internal.spec.context
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
@@ -39,7 +40,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
         ctx.declarations.shapes.values.toList ++
           ctx.declarations.annotations.values.toList
       )
-      .withProcessingData(APIContractProcessingData())
+      .withProcessingData(APIContractProcessingData().withSourceSpec("GRAPH QL")) // TODO replace this string
   }
 
   private def parseWebAPI(): Unit = {

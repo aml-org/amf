@@ -13,9 +13,18 @@ object APIContractProcessingDataModel extends BaseUnitProcessingDataModel {
           ApiContract + "modelVersion",
           ModelDoc(ModelVocabularies.AmlDoc, "modelVersion", "Version of the API contract model"))
 
+  val SourceSpec: Field =
+    Field(
+      Str,
+      ApiContract + "sourceSpec",
+      ModelDoc(ModelVocabularies.AmlDoc,
+               "sourceSpec",
+               "Standard of the original API Specification file (e.g. RAML 1.0, OAS 3.0)")
+    )
+
   override def modelInstance: APIContractProcessingData = APIContractProcessingData()
 
-  override def fields: List[Field] = List(APIContractModelVersion, Transformed)
+  override def fields: List[Field] = List(APIContractModelVersion, Transformed, SourceSpec)
 
   override val `type`: List[ValueType] = List(Document + "APIContractProcessingData")
 

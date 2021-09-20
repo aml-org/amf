@@ -22,7 +22,7 @@ object Oas30ParsePlugin extends OasParsePlugin {
   override protected def parseSpecificVersion(root: Root)(implicit ctx: OasWebApiContext): BaseUnit =
     OasHeader(root) match {
       case Some(Oas30Header) => Oas3DocumentParser(root).parseDocument()
-      case Some(f)           => OasFragmentParser(root, Some(f)).parseFragment()
+      case Some(f)           => OasFragmentParser(root, Spec.OAS30, Some(f)).parseFragment()
       case _ => // unreachable as it is covered in canParse()
         throw new InvalidDocumentHeaderException(spec.id)
     }
