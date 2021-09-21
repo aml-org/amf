@@ -12,7 +12,7 @@ class RamlInterSpecRefsReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Raml refs json schema Oas API") {
-    validate("raml-oas-jsonpointer/api.raml", None)
+    validate("raml-oas-jsonpointer/api.raml", Some("raml-oas-jsonpointer.report"))
   }
 
   test("Raml 0.8 refs Raml 1.0 datatype fragment") {

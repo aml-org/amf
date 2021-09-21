@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/configuration/validation/unrecognized-guess-root-fallback/api.raml
+Profile: AMF Graph
+Conforms: true
+Number of results: 1
+
+Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/parser#couldnt-guess-root
+  Message: Couldn't guess spec for root file
+  Severity: Warning
+  Target: 
+  Property: 
+  Range: 
+  Location: file://amf-cli/shared/src/test/resources/configuration/validation/unrecognized-guess-root-fallback/api.raml

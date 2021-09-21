@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/raml-oas-jsonpointer/api.raml
+Profile: RAML 1.0
+Conforms: true
+Number of results: 1
+
+Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/parser#cant-reference-spec-in-file-tree
+  Message: Document identified as OAS 2.0 is of different spec from root
+  Severity: Warning
+  Target: 
+  Property: 
+  Range: 
+  Location: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/raml-oas-jsonpointer/api.json

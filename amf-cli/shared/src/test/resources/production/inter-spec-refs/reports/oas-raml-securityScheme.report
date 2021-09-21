@@ -1,7 +1,7 @@
 ModelId: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json
 Profile: 
 Conforms: false
-Number of results: 3
+Number of results: 4
 
 Level: Violation
 
@@ -22,6 +22,14 @@ Level: Violation
   Location: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/securityScheme.raml
 
 Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/parser#cant-reference-spec-in-file-tree
+  Message: Document identified as RAML 1.0 is of different spec from root
+  Severity: Warning
+  Target: 
+  Property: 
+  Range: 
+  Location: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/securityScheme.raml
 
 - Constraint: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: RAML 1.0 security scheme type detected in OAS 2.0 spec
