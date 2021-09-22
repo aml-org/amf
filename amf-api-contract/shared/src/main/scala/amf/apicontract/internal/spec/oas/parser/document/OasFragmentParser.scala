@@ -59,8 +59,9 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
       case Oas20AnnotationTypeDeclaration => Some(AnnotationFragmentParser(map).parse())
       case Oas20SecurityScheme            => Some(SecuritySchemeFragmentParser(map).parse())
       case Oas20NamedExample              => Some(NamedExampleFragmentParser(map).parse())
-      case Oas20Header | Oas30Header      => Some(ApiContractFallbackPlugin(false).plugin(parsed).parse(root, ctx))
-      case _                              => None
+      case Oas20Header | Oas30Header =>
+        Some(ApiContractFallbackPlugin(false, skipWarnings = true).plugin(parsed).parse(root, ctx))
+      case _ => None
     }).getOrElse {
       val fragment = ExternalFragment()
         .withLocation(root.location)

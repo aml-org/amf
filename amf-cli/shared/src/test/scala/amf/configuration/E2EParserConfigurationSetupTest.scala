@@ -56,7 +56,7 @@ class E2EParserConfigurationSetupTest extends ConfigurationSetupTest {
           result   <- client.parse(f.apiPath)
           document <- Future.successful { result.baseUnit }
         } yield {
-          result.results should have length 0
+          result.conforms shouldBe true
           f.expectation(document, result.sourceSpec)
         }
       }

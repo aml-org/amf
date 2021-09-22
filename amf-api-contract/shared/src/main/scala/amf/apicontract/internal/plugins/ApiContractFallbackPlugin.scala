@@ -14,28 +14,30 @@ import amf.core.internal.plugins.parse.{DomainParsingFallback, ExternalFragmentD
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{JSONRefs, Spec}
 import amf.core.internal.utils.MediaTypeMatcher
+import amf.core.internal.validation.CoreParserValidations.{CantReferenceSpecInFileTree, CouldntGuessRoot}
 
 // TODO ARM: change this, refactor to have different options based on the configuration (Raml strict, WebApi Relaxed).
 // TODO ARM: Export withFallback and this object to the user. User cannot create instance or implement interface? yes? no?
-case class ApiContractFallbackPlugin(strict:Boolean = true) extends DomainParsingFallback {
+case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boolean = false) extends DomainParsingFallback {
 
   private def docMediaType(doc: Root) = if (doc.raw.isJson) `application/json` else `application/yaml`
 
   override def chooseFallback(root: Root, availablePlugins: Seq[AMFParsePlugin], isRoot: Boolean): AMFParsePlugin = {
     if (strict && isRoot) throw UnsupportedDomainForDocumentException(root.location)
     root.parsed match {
-      case parsed: SyamlParsedDocument if !root.raw.isXml => ApiContractDomainFallbackPlugin(parsed)
+      case parsed: SyamlParsedDocument if !root.raw.isXml => ApiContractDomainFallbackPlugin(parsed, isRoot)
       case _ => ExternalFragmentDomainFallback(strict).chooseFallback(root, availablePlugins, isRoot)
     }
   }
 
   def plugin(parsed: SyamlParsedDocument): ApiContractDomainFallbackPlugin = ApiContractDomainFallbackPlugin(parsed)
 
-  case class ApiContractDomainFallbackPlugin(parsed: SyamlParsedDocument) extends AMFParsePlugin {
+  case class ApiContractDomainFallbackPlugin(parsed: SyamlParsedDocument, isRoot: Boolean = false) extends AMFParsePlugin {
     override def spec: Spec = JSONRefs
 
     override def validSpecsToReference: Seq[Spec] = Seq(JSONRefs)
     override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+      throwUserFriendlyWarnings(document, ctx)
       val result =
         ExternalDomainElement(Annotations(parsed.document))
           .withId(document.location + "#/")
@@ -50,6 +52,19 @@ case class ApiContractFallbackPlugin(strict:Boolean = true) extends DomainParsin
         .withLocation(document.location)
       if (references.nonEmpty) fragment.withReferences(references)
       fragment
+    }
+
+    private def throwUserFriendlyWarnings(document: Root, ctx: ParserContext) = {
+      if (isRoot) ctx.eh.warning(CouldntGuessRoot, "", None, s"Couldn't guess spec for root file", None, Some(document.location))
+      else if (!skipWarnings){
+        pluginThatMatches(document, ctx.config.sortedParsePlugins).foreach { spec =>
+          ctx.eh.warning(CantReferenceSpecInFileTree, "", None, s"Document identified as ${spec.id} is of different spec from root", None, Some(document.location))
+        }
+      }
+    }
+
+    private def pluginThatMatches(document: Root, plugins: Seq[AMFParsePlugin]): Option[Spec] = {
+      plugins.find(_.applies(document)).map(_.spec)
     }
 
     override val priority: PluginPriority = LowPriority
