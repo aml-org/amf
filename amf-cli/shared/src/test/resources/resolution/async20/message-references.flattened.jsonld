@@ -3,6 +3,15 @@
     {
       "@id": "#7",
       "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "apiContract:sourceSpec": "ASYNC 2.0"
+    },
+    {
+      "@id": "#8",
+      "@type": [
         "apiContract:AsyncAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -12,26 +21,26 @@
       "core:version": "1.0.0",
       "apiContract:endpoint": [
         {
-          "@id": "#8"
+          "@id": "#9"
         },
         {
-          "@id": "#11"
+          "@id": "#12"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#7": "ASYNC 2.0"
+          "#8": "ASYNC 2.0"
         },
         "lexical": {
           "apiContract:endpoint": "[(22,0)-(31,49)]",
           "core:name": "[(3,2)-(4,0)]",
-          "#7": "[(1,0)-(31,49)]",
+          "#8": "[(1,0)-(31,49)]",
           "core:version": "[(4,2)-(6,0)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#9",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,18 +48,18 @@
       "apiContract:path": "subscribe/channel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#9"
+          "@id": "#10"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:supportedOperation": "[(24,0)-(28,0)]",
-          "#8": "[(23,2)-(28,0)]"
+          "#9": "[(23,2)-(28,0)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -58,18 +67,18 @@
       "apiContract:path": "publish/channel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#12"
+          "@id": "#13"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:supportedOperation": "[(29,0)-(31,49)]",
-          "#11": "[(28,2)-(31,49)]"
+          "#12": "[(28,2)-(31,49)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#10",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -77,18 +86,18 @@
       "apiContract:method": "subscribe",
       "apiContract:returns": [
         {
-          "@id": "#10"
+          "@id": "#11"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(25,6)-(28,0)]",
-          "#9": "[(24,4)-(28,0)]"
+          "#10": "[(24,4)-(28,0)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -96,18 +105,18 @@
       "apiContract:method": "publish",
       "apiContract:expects": [
         {
-          "@id": "#13"
+          "@id": "#14"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(30,6)-(31,49)]",
-          "#12": "[(29,4)-(31,49)]"
+          "#13": "[(29,4)-(31,49)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#11",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -126,25 +135,25 @@
       },
       "smaps": {
         "resolved-link-target": {
-          "#10": "amf://id#1"
+          "#11": "amf://id#1"
         },
         "declared-element": {
-          "#10": ""
+          "#11": ""
         },
         "lexical": {
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
           "core:displayName": "[(19,6)-(20,0)]",
-          "#10": "[(9,4)-(22,0)]",
+          "#11": "[(9,4)-(22,0)]",
           "core:name": "[(9,4)-(9,15)]",
           "core:title": "[(20,6)-(22,0)]"
         },
         "resolved-link": {
-          "#10": "amf://id#10"
+          "#11": "amf://id#11"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -163,20 +172,20 @@
       },
       "smaps": {
         "resolved-link-target": {
-          "#13": "amf://id#1"
+          "#14": "amf://id#1"
         },
         "declared-element": {
-          "#13": ""
+          "#14": ""
         },
         "lexical": {
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
           "core:displayName": "[(19,6)-(20,0)]",
-          "#13": "[(9,4)-(22,0)]",
+          "#14": "[(9,4)-(22,0)]",
           "core:name": "[(9,4)-(9,15)]",
           "core:title": "[(20,6)-(22,0)]"
         },
         "resolved-link": {
-          "#13": "amf://id#13"
+          "#14": "amf://id#14"
         }
       }
     },
@@ -319,10 +328,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#7"
+        "@id": "#8"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#7"
+      }
     },
     {
       "@id": "#1",

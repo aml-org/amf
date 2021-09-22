@@ -1,7 +1,16 @@
 {
   "@graph": [
     {
-      "@id": "#8",
+      "@id": "#9",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "apiContract:sourceSpec": "RAML 1.0"
+    },
+    {
+      "@id": "#10",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -11,21 +20,21 @@
       "core:name": "test",
       "apiContract:endpoint": [
         {
-          "@id": "#9"
+          "@id": "#11"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#8": "RAML 1.0"
+          "#10": "RAML 1.0"
         },
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
-          "#8": "[(2,0)-(8,14)]"
+          "#10": "[(2,0)-(8,14)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#11",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -33,23 +42,23 @@
       "apiContract:path": "/resource",
       "apiContract:supportedOperation": [
         {
-          "@id": "#11"
+          "@id": "#13"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#10"
+          "@id": "#12"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(7,0)-(7,9)]",
-          "#9": "[(7,0)-(8,14)]"
+          "#11": "[(7,0)-(8,14)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#13",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -57,17 +66,17 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#12"
+          "@id": "#14"
         }
       ],
       "smaps": {
         "lexical": {
-          "#11": "[(4,4)-(6,12)]"
+          "#13": "[(4,4)-(6,12)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#12",
       "@type": [
         "apiContract:ParametrizedResourceType",
         "doc:ParametrizedDeclaration",
@@ -80,12 +89,12 @@
       "smaps": {
         "lexical": {
           "core:name": "[(8,8)-(8,14)]",
-          "#10": "[(8,8)-(8,14)]"
+          "#12": "[(8,8)-(8,14)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#14",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -93,7 +102,7 @@
       ],
       "apiContract:parameter": [
         {
-          "@id": "#13"
+          "@id": "#15"
         }
       ],
       "smaps": {
@@ -131,7 +140,7 @@
       }
     },
     {
-      "@id": "#13",
+      "@id": "#15",
       "@type": [
         "apiContract:Parameter",
         "doc:DomainElement"
@@ -141,7 +150,7 @@
       "apiContract:required": true,
       "apiContract:binding": "query",
       "raml-shapes:schema": {
-        "@id": "#14"
+        "@id": "#16"
       },
       "smaps": {
         "synthesized-field": {
@@ -149,7 +158,7 @@
         },
         "lexical": {
           "raml-shapes:schema": "[(6,8)-(6,12)]",
-          "#13": "[(6,8)-(6,12)]"
+          "#15": "[(6,8)-(6,12)]"
         }
       }
     },
@@ -175,7 +184,7 @@
       }
     },
     {
-      "@id": "#14",
+      "@id": "#16",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -191,7 +200,7 @@
       "shacl:name": "schema",
       "smaps": {
         "lexical": {
-          "#14": "[(6,8)-(6,12)]"
+          "#16": "[(6,8)-(6,12)]"
         }
       }
     },
@@ -275,10 +284,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#8"
+        "@id": "#10"
       },
-      "doc:version": "3.1.0",
       "doc:root": true,
+      "doc:processingData": {
+        "@id": "#9"
+      },
       "smaps": {
         "aliases-array": {
           "": "lib->amf://id#1::lib.raml"
@@ -296,8 +307,10 @@
           "@id": "#2"
         }
       ],
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "doc:processingData": {
+        "@id": "#8"
+      },
       "smaps": {
         "source-vendor": {
           "#1": "RAML 1.0"
@@ -306,6 +319,14 @@
           "#1": "[(1,0)-(6,12)]"
         }
       }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "apiContract:sourceSpec": "RAML 1.0"
     }
   ],
   "@context": {

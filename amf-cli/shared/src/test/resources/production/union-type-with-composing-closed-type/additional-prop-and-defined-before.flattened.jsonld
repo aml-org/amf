@@ -3,6 +3,15 @@
     {
       "@id": "#13",
       "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "apiContract:sourceSpec": "RAML 1.0"
+    },
+    {
+      "@id": "#14",
+      "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -12,22 +21,22 @@
       "core:version": "v1",
       "apiContract:endpoint": [
         {
-          "@id": "#14"
+          "@id": "#15"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#13": "RAML 1.0"
+          "#14": "RAML 1.0"
         },
         "lexical": {
           "core:version": "[(3,0)-(5,0)]",
-          "#13": "[(2,0)-(27,24)]",
+          "#14": "[(2,0)-(27,24)]",
           "core:name": "[(2,0)-(3,0)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -35,18 +44,18 @@
       "apiContract:path": "/events",
       "apiContract:supportedOperation": [
         {
-          "@id": "#15"
+          "@id": "#16"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(23,0)-(23,7)]",
-          "#14": "[(23,0)-(27,24)]"
+          "#15": "[(23,0)-(27,24)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#16",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -54,17 +63,17 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#16"
+          "@id": "#17"
         }
       ],
       "smaps": {
         "lexical": {
-          "#15": "[(24,2)-(27,24)]"
+          "#16": "[(24,2)-(27,24)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#17",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -72,7 +81,7 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#17"
+          "@id": "#18"
         }
       ],
       "smaps": {
@@ -82,7 +91,7 @@
       }
     },
     {
-      "@id": "#17",
+      "@id": "#18",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -93,7 +102,7 @@
       },
       "smaps": {
         "lexical": {
-          "#17": "[(26,6)-(27,24)]"
+          "#18": "[(26,6)-(27,24)]"
         }
       }
     },
@@ -325,10 +334,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#13"
+        "@id": "#14"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#13"
+      }
     },
     {
       "@id": "#6",

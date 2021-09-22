@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.async.parser.document
 
 import amf.aml.internal.parse.common.DeclarationKey
+import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
 import amf.apicontract.client.scala.model.domain.bindings.{
   ChannelBindings,
@@ -40,6 +41,7 @@ import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser, YMapEntryLike}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
@@ -50,7 +52,10 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
   def parseDocument(): Document = parseDocument(Document())
 
   private def parseDocument[T <: Document](document: T): T = {
-    document.adopted(root.location).withLocation(root.location)
+    document
+      .adopted(root.location)
+      .withLocation(root.location)
+      .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.ASYNC20))
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     ctx.setJsonSchemaAST(map)

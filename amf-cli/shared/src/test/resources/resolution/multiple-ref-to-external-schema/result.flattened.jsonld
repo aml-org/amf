@@ -1,7 +1,16 @@
 {
   "@graph": [
     {
-      "@id": "#3",
+      "@id": "#4",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "apiContract:sourceSpec": "OAS 2.0"
+    },
+    {
+      "@id": "#5",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -15,27 +24,27 @@
       "core:version": "v1",
       "apiContract:endpoint": [
         {
-          "@id": "#4"
+          "@id": "#6"
         },
         {
-          "@id": "#17"
+          "@id": "#19"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#3": "OAS 2.0"
+          "#5": "OAS 2.0"
         },
         "lexical": {
           "apiContract:endpoint": "[(10,2)-(43,3)]",
           "apiContract:scheme": "[(7,2)-(9,3)]",
-          "#3": "[(1,0)-(44,1)]",
+          "#5": "[(1,0)-(44,1)]",
           "core:name": "[(4,4)-(4,30)]",
           "core:version": "[(5,4)-(5,19)]"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#6",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -43,17 +52,17 @@
       "apiContract:path": "/envios/{envio}",
       "apiContract:supportedOperation": [
         {
-          "@id": "#5"
+          "@id": "#7"
         }
       ],
       "smaps": {
         "lexical": {
-          "#4": "[(11,4)-(26,5)]"
+          "#6": "[(11,4)-(26,5)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#19",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -61,17 +70,17 @@
       "apiContract:path": "/citypaq",
       "apiContract:supportedOperation": [
         {
-          "@id": "#18"
+          "@id": "#20"
         }
       ],
       "smaps": {
         "lexical": {
-          "#17": "[(27,4)-(42,5)]"
+          "#19": "[(27,4)-(42,5)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#7",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -83,19 +92,19 @@
       ],
       "apiContract:returns": [
         {
-          "@id": "#6"
+          "@id": "#8"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(14,8)-(21,9)]",
-          "#5": "[(12,6)-(25,7)]",
+          "#7": "[(12,6)-(25,7)]",
           "core:description": "[(13,8)-(13,101)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#20",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -107,19 +116,19 @@
       ],
       "apiContract:returns": [
         {
-          "@id": "#19"
+          "@id": "#21"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(30,8)-(37,9)]",
-          "#18": "[(28,6)-(41,7)]",
+          "#20": "[(28,6)-(41,7)]",
           "core:description": "[(29,8)-(29,273)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#8",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -130,19 +139,19 @@
       "core:description": "Cuando el parametro template envio no se env\u00EDa.",
       "apiContract:payload": [
         {
-          "@id": "#7"
+          "@id": "#9"
         }
       ],
       "smaps": {
         "lexical": {
           "core:description": "[(16,12)-(16,76)]",
-          "#6": "[(15,10)-(20,11)]",
+          "#8": "[(15,10)-(20,11)]",
           "core:name": "[(15,10)-(15,15)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#21",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -153,191 +162,150 @@
       "core:description": "Cuando uno o ambos par\u00E1metros (coordenadas y distancia) siendo requeridos no se env\u00EDan.",
       "apiContract:payload": [
         {
-          "@id": "#20"
+          "@id": "#22"
         }
       ],
       "smaps": {
         "lexical": {
           "core:description": "[(32,12)-(32,116)]",
-          "#19": "[(31,10)-(36,11)]",
+          "#21": "[(31,10)-(36,11)]",
           "core:name": "[(31,10)-(31,15)]"
-        }
-      }
-    },
-    {
-      "@id": "#7",
-      "@type": [
-        "apiContract:Payload",
-        "doc:DomainElement"
-      ],
-      "core:mediaType": "application/json",
-      "raml-shapes:schema": {
-        "@id": "#8"
-      }
-    },
-    {
-      "@id": "#20",
-      "@type": [
-        "apiContract:Payload",
-        "doc:DomainElement"
-      ],
-      "core:mediaType": "application/json",
-      "raml-shapes:schema": {
-        "@id": "#21"
-      }
-    },
-    {
-      "@id": "#8",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": false,
-      "shacl:property": [],
-      "shacl:name": "default",
-      "apiContract:examples": [
-        {
-          "@id": "#9"
-        }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "type-property-lexical-info": {
-          "#8": "[(4,6)-(4,12)]"
-        },
-        "lexical": {
-          "apiContract:examples": "[(5,6)-(14,7)]",
-          "#8": "[(3,4)-(15,5)]"
-        },
-        "auto-generated-name": {
-          "#8": ""
-        }
-      }
-    },
-    {
-      "@id": "#21",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": false,
-      "shacl:property": [],
-      "shacl:name": "default",
-      "apiContract:examples": [
-        {
-          "@id": "#22"
-        }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "type-property-lexical-info": {
-          "#21": "[(4,6)-(4,12)]"
-        },
-        "lexical": {
-          "apiContract:examples": "[(5,6)-(14,7)]",
-          "#21": "[(3,4)-(15,5)]"
-        },
-        "auto-generated-name": {
-          "#21": ""
         }
       }
     },
     {
       "@id": "#9",
       "@type": [
-        "apiContract:Example",
+        "apiContract:Payload",
         "doc:DomainElement"
       ],
-      "doc:strict": true,
-      "doc:structuredValue": {
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
         "@id": "#10"
-      },
-      "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
-      "smaps": {
-        "synthesized-field": {
-          "doc:raw": "true",
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "#9": "[(5,6)-(14,7)]"
-        },
-        "tracked-element": {
-          "#9": "amf://id#7"
-        }
       }
     },
     {
       "@id": "#22",
       "@type": [
-        "apiContract:Example",
+        "apiContract:Payload",
         "doc:DomainElement"
       ],
-      "doc:strict": true,
-      "doc:structuredValue": {
-        "@id": "#10"
-      },
-      "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
-      "smaps": {
-        "synthesized-field": {
-          "doc:raw": "true",
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "#22": "[(5,6)-(14,7)]"
-        },
-        "tracked-element": {
-          "#22": "amf://id#20"
-        }
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#23"
       }
     },
     {
       "@id": "#10",
       "@type": [
-        "data:Object",
-        "data:Node",
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "data:errors": {
-        "@id": "#11"
-      },
-      "core:name": "object_1",
+      "shacl:closed": false,
+      "shacl:property": [],
+      "shacl:name": "default",
+      "apiContract:examples": [
+        {
+          "@id": "#11"
+        }
+      ],
       "smaps": {
         "synthesized-field": {
-          "core:name": "true"
+          "shacl:closed": "true"
+        },
+        "type-property-lexical-info": {
+          "#10": "[(4,6)-(4,12)]"
         },
         "lexical": {
-          "data:errors": "[(6,8)-(13,9)]",
-          "#10": "[(5,17)-(14,7)]"
+          "apiContract:examples": "[(5,6)-(14,7)]",
+          "#10": "[(3,4)-(15,5)]"
+        },
+        "auto-generated-name": {
+          "#10": ""
+        }
+      }
+    },
+    {
+      "@id": "#23",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [],
+      "shacl:name": "default",
+      "apiContract:examples": [
+        {
+          "@id": "#24"
+        }
+      ],
+      "smaps": {
+        "synthesized-field": {
+          "shacl:closed": "true"
+        },
+        "type-property-lexical-info": {
+          "#23": "[(4,6)-(4,12)]"
+        },
+        "lexical": {
+          "apiContract:examples": "[(5,6)-(14,7)]",
+          "#23": "[(3,4)-(15,5)]"
+        },
+        "auto-generated-name": {
+          "#23": ""
         }
       }
     },
     {
       "@id": "#11",
       "@type": [
-        "data:Array",
-        "rdf:Seq",
-        "data:Node",
+        "apiContract:Example",
         "doc:DomainElement"
       ],
-      "rdfs:member": [
-        {
-          "@id": "#12"
-        }
-      ],
-      "core:name": "errors",
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#12"
+      },
+      "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
       "smaps": {
+        "synthesized-field": {
+          "doc:raw": "true",
+          "doc:strict": "true"
+        },
         "lexical": {
-          "#11": "[(6,18)-(13,9)]"
+          "#11": "[(5,6)-(14,7)]"
+        },
+        "tracked-element": {
+          "#11": "amf://id#9"
+        }
+      }
+    },
+    {
+      "@id": "#24",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#12"
+      },
+      "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
+      "smaps": {
+        "synthesized-field": {
+          "doc:raw": "true",
+          "doc:strict": "true"
+        },
+        "lexical": {
+          "#24": "[(5,6)-(14,7)]"
+        },
+        "tracked-element": {
+          "#24": "amf://id#22"
         }
       }
     },
@@ -348,17 +316,58 @@
         "data:Node",
         "doc:DomainElement"
       ],
-      "data:code": {
+      "data:errors": {
         "@id": "#13"
       },
-      "data:message": {
-        "@id": "#14"
-      },
-      "data:more_info": {
+      "core:name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
+        "lexical": {
+          "data:errors": "[(6,8)-(13,9)]",
+          "#12": "[(5,17)-(14,7)]"
+        }
+      }
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#14"
+        }
+      ],
+      "core:name": "errors",
+      "smaps": {
+        "lexical": {
+          "#13": "[(6,18)-(13,9)]"
+        }
+      }
+    },
+    {
+      "@id": "#14",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:code": {
         "@id": "#15"
       },
-      "data:help": {
+      "data:message": {
         "@id": "#16"
+      },
+      "data:more_info": {
+        "@id": "#17"
+      },
+      "data:help": {
+        "@id": "#18"
       },
       "core:name": "object_3",
       "smaps": {
@@ -368,14 +377,14 @@
         "lexical": {
           "data:help": "[(11,12)-(11,63)]",
           "data:message": "[(9,12)-(9,36)]",
-          "#12": "[(7,10)-(12,11)]",
+          "#14": "[(7,10)-(12,11)]",
           "data:code": "[(8,12)-(8,23)]",
           "data:more_info": "[(10,12)-(10,116)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#15",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -394,12 +403,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#13": "[(8,20)-(8,23)]"
+          "#15": "[(8,20)-(8,23)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#16",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -418,12 +427,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#14": "[(9,23)-(9,36)]"
+          "#16": "[(9,23)-(9,36)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#17",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -442,12 +451,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#15": "[(10,25)-(10,116)]"
+          "#17": "[(10,25)-(10,116)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#18",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -466,7 +475,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#16": "[(11,20)-(11,63)]"
+          "#18": "[(11,20)-(11,63)]"
         }
       }
     },
@@ -484,10 +493,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#3"
+        "@id": "#5"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#4"
+      }
     },
     {
       "@id": "#1",
@@ -497,13 +508,15 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#2"
+        "@id": "#3"
       },
-      "doc:version": "3.1.0",
-      "doc:root": false
+      "doc:root": false,
+      "doc:processingData": {
+        "@id": "#2"
+      }
     },
     {
-      "@id": "#2",
+      "@id": "#3",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"
@@ -512,9 +525,16 @@
       "core:mediaType": "application/json",
       "smaps": {
         "lexical": {
-          "#2": "[(1,0)-(18,0)]"
+          "#3": "[(1,0)-(18,0)]"
         }
       }
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
     }
   ],
   "@context": {

@@ -1,7 +1,16 @@
 {
   "@graph": [
     {
-      "@id": "#39",
+      "@id": "#40",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "apiContract:sourceSpec": "RAML 1.0"
+    },
+    {
+      "@id": "#41",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -12,7 +21,7 @@
       "core:description": "some description",
       "apiContract:server": [
         {
-          "@id": "#40"
+          "@id": "#42"
         }
       ],
       "apiContract:accepts": [
@@ -31,18 +40,18 @@
           "core:version": "[(5,0)-(6,0)]",
           "apiContract:accepts": "[(6,0)-(7,0)]",
           "core:description": "[(7,0)-(9,0)]",
-          "#39": "[(2,0)-(16,0)]",
+          "#41": "[(2,0)-(16,0)]",
           "core:name": "[(4,0)-(5,0)]",
           "apiContract:server": "[(2,0)-(4,0)]",
           "apiContract:contentType": "[(6,0)-(7,0)]"
         },
         "source-vendor": {
-          "#39": "RAML 1.0"
+          "#41": "RAML 1.0"
         }
       }
     },
     {
-      "@id": "#40",
+      "@id": "#42",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -53,7 +62,7 @@
           "core:urlTemplate": "[(2,0)-(4,0)]"
         },
         "synthesized-field": {
-          "#40": "true"
+          "#42": "true"
         }
       }
     },
@@ -64,12 +73,12 @@
           "@id": "#1"
         },
         {
-          "@id": "#5"
+          "@id": "#6"
         }
       ],
       "doc:declares": [
         {
-          "@id": "#7"
+          "@id": "#8"
         }
       ],
       "@type": [
@@ -79,10 +88,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#39"
+        "@id": "#41"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#40"
+      }
     },
     {
       "@id": "#1",
@@ -92,31 +103,35 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#4"
+        "@id": "#5"
       },
-      "doc:version": "3.1.0",
       "doc:references": [
         {
           "@id": "#2"
         }
       ],
-      "doc:root": false
+      "doc:root": false,
+      "doc:processingData": {
+        "@id": "#3"
+      }
     },
     {
-      "@id": "#5",
+      "@id": "#6",
       "@type": [
         "doc:ExternalFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#6"
+        "@id": "#7"
       },
-      "doc:version": "3.1.0",
-      "doc:root": false
+      "doc:root": false,
+      "doc:processingData": {
+        "@id": "#3"
+      }
     },
     {
-      "@id": "#7",
+      "@id": "#8",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -127,47 +142,47 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#18"
+          "@id": "#19"
         },
         {
-          "@id": "#28"
+          "@id": "#29"
         },
         {
-          "@id": "#34"
+          "@id": "#35"
         },
         {
-          "@id": "#36"
+          "@id": "#37"
         }
       ],
       "shacl:name": "someType",
       "apiContract:examples": [
         {
-          "@id": "#8"
+          "@id": "#9"
         }
       ],
       "doc:reference-id": [
         {
-          "@id": "#4"
+          "@id": "#5"
         }
       ],
       "smaps": {
         "inheritance-provenance": {
-          "doc:reference-id": "amf://id#17"
+          "doc:reference-id": "amf://id#18"
         },
         "declared-element": {
-          "#7": ""
+          "#8": ""
         },
         "lexical": {
           "apiContract:examples": "[(12,4)-(16,0)]",
-          "#7": "[(10,11)-(16,0)]"
+          "#8": "[(10,11)-(16,0)]"
         },
         "inherited-shapes": {
-          "#7": "amf://id#38"
+          "#8": "amf://id#39"
         }
       }
     },
     {
-      "@id": "#4",
+      "@id": "#5",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"
@@ -176,7 +191,7 @@
       "core:mediaType": "application/json",
       "smaps": {
         "lexical": {
-          "#4": "[(1,0)-(24,1)]"
+          "#5": "[(1,0)-(24,1)]"
         }
       }
     },
@@ -188,13 +203,22 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#3"
+        "@id": "#4"
       },
-      "doc:version": "3.1.0",
-      "doc:root": false
+      "doc:root": false,
+      "doc:processingData": {
+        "@id": "#3"
+      }
     },
     {
-      "@id": "#6",
+      "@id": "#3",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
+      "@id": "#7",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"
@@ -203,12 +227,12 @@
       "core:mediaType": "application/json",
       "smaps": {
         "lexical": {
-          "#6": "[(1,0)-(12,1)]"
+          "#7": "[(1,0)-(12,1)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#19",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -221,7 +245,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#19"
+        "@id": "#20"
       },
       "shacl:minCount": 0,
       "shacl:name": "primaryApplicant",
@@ -230,15 +254,15 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#18": "[(13,4)-(15,5)]"
+          "#19": "[(13,4)-(15,5)]"
         },
         "inheritance-provenance": {
-          "#18": "amf://id#17"
+          "#19": "amf://id#18"
         }
       }
     },
     {
-      "@id": "#28",
+      "@id": "#29",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -251,7 +275,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#29"
+        "@id": "#30"
       },
       "shacl:minCount": 0,
       "shacl:name": "additionalApplicants",
@@ -260,15 +284,15 @@
           "shacl:minCount": "true"
         },
         "lexical": {
-          "#28": "[(16,4)-(18,5)]"
+          "#29": "[(16,4)-(18,5)]"
         },
         "inheritance-provenance": {
-          "#28": "amf://id#17"
+          "#29": "amf://id#18"
         }
       }
     },
     {
-      "@id": "#34",
+      "@id": "#35",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -281,22 +305,22 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#35"
+        "@id": "#36"
       },
       "shacl:minCount": 1,
       "shacl:name": "merchant",
       "smaps": {
         "inheritance-provenance": {
-          "#34": "amf://id#17"
+          "#35": "amf://id#18"
         },
         "lexical": {
           "shacl:minCount": "[(21,4)-(21,14)]",
-          "#34": "[(6,4)-(8,5)]"
+          "#35": "[(6,4)-(8,5)]"
         }
       }
     },
     {
-      "@id": "#36",
+      "@id": "#37",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -309,33 +333,33 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#37"
+        "@id": "#38"
       },
       "shacl:minCount": 1,
       "shacl:name": "operator",
       "smaps": {
         "inheritance-provenance": {
-          "#36": "amf://id#17"
+          "#37": "amf://id#18"
         },
         "lexical": {
           "shacl:minCount": "[(22,4)-(22,14)]",
-          "#36": "[(9,4)-(11,5)]"
+          "#37": "[(9,4)-(11,5)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#9",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
       ],
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#9"
+        "@id": "#10"
       },
       "doc:reference-id": [
         {
-          "@id": "#6"
+          "@id": "#7"
         }
       ],
       "doc:location": "file://amf-cli/shared/src/test/resources/validations/json-schema-nested-refs/examples/CreateApplicationRequest.json",
@@ -344,12 +368,12 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "#8": "[(1,0)-(1,0)]"
+          "#9": "[(1,0)-(1,0)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#4",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"
@@ -358,12 +382,12 @@
       "core:mediaType": "application/json",
       "smaps": {
         "lexical": {
-          "#3": "[(1,0)-(29,1)]"
+          "#4": "[(1,0)-(29,1)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#20",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -374,10 +398,10 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#20"
+          "@id": "#21"
         },
         {
-          "@id": "#24"
+          "@id": "#25"
         }
       ],
       "shacl:name": "applicant",
@@ -386,15 +410,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#19": "[(10,2)-(28,3)]"
+          "#20": "[(10,2)-(28,3)]"
         },
         "type-property-lexical-info": {
-          "#19": "[(11,4)-(11,10)]"
+          "#20": "[(11,4)-(11,10)]"
         }
       }
     },
     {
-      "@id": "#29",
+      "@id": "#30",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -405,10 +429,10 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#30"
+          "@id": "#31"
         },
         {
-          "@id": "#32"
+          "@id": "#33"
         }
       ],
       "shacl:name": "applicant",
@@ -417,15 +441,15 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#29": "[(10,2)-(28,3)]"
+          "#30": "[(10,2)-(28,3)]"
         },
         "type-property-lexical-info": {
-          "#29": "[(11,4)-(11,10)]"
+          "#30": "[(11,4)-(11,10)]"
         }
       }
     },
     {
-      "@id": "#35",
+      "@id": "#36",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -441,16 +465,16 @@
       "shacl:name": "merchant",
       "smaps": {
         "type-property-lexical-info": {
-          "#35": "[(7,6)-(7,12)]"
+          "#36": "[(7,6)-(7,12)]"
         },
         "lexical": {
           "shacl:datatype": "[(7,6)-(7,22)]",
-          "#35": "[(6,4)-(8,5)]"
+          "#36": "[(6,4)-(8,5)]"
         }
       }
     },
     {
-      "@id": "#37",
+      "@id": "#38",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -466,151 +490,11 @@
       "shacl:name": "operator",
       "smaps": {
         "type-property-lexical-info": {
-          "#37": "[(10,6)-(10,12)]"
+          "#38": "[(10,6)-(10,12)]"
         },
         "lexical": {
           "shacl:datatype": "[(10,6)-(10,22)]",
-          "#37": "[(9,4)-(11,5)]"
-        }
-      }
-    },
-    {
-      "@id": "#9",
-      "@type": [
-        "data:Object",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:additionalApplicants": {
-        "@id": "#10"
-      },
-      "data:merchant": {
-        "@id": "#15"
-      },
-      "data:operator": {
-        "@id": "#16"
-      },
-      "core:name": "object_1",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:operator": "[(11,2)-(11,31)]",
-          "data:additionalApplicants": "[(2,2)-(9,3)]",
-          "#9": "[(1,0)-(12,1)]",
-          "data:merchant": "[(10,2)-(10,30)]"
-        },
-        "parsed-json-example": {
-          "#9": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
-        }
-      }
-    },
-    {
-      "@id": "#20",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#addresses"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#21"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "addresses",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#20": "[(13,6)-(19,7)]"
-        }
-      }
-    },
-    {
-      "@id": "#24",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#expenses"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#25"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "expenses",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#24": "[(20,6)-(26,7)]"
-        }
-      }
-    },
-    {
-      "@id": "#30",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#addresses"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#31"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "addresses",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#30": "[(13,6)-(19,7)]"
-        }
-      }
-    },
-    {
-      "@id": "#32",
-      "@type": [
-        "shacl:PropertyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "http://a.ml/vocabularies/data#expenses"
-        }
-      ],
-      "raml-shapes:range": {
-        "@id": "#33"
-      },
-      "shacl:minCount": 0,
-      "shacl:name": "expenses",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#32": "[(20,6)-(26,7)]"
+          "#38": "[(9,4)-(11,5)]"
         }
       }
     },
@@ -621,11 +505,151 @@
         "data:Node",
         "doc:DomainElement"
       ],
-      "data:addresses": {
+      "data:additionalApplicants": {
         "@id": "#11"
       },
+      "data:merchant": {
+        "@id": "#16"
+      },
+      "data:operator": {
+        "@id": "#17"
+      },
+      "core:name": "object_1",
+      "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
+        "lexical": {
+          "data:operator": "[(11,2)-(11,31)]",
+          "data:additionalApplicants": "[(2,2)-(9,3)]",
+          "#10": "[(1,0)-(12,1)]",
+          "data:merchant": "[(10,2)-(10,30)]"
+        },
+        "parsed-json-example": {
+          "#10": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+        }
+      }
+    },
+    {
+      "@id": "#21",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#addresses"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#22"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "addresses",
+      "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
+        "lexical": {
+          "#21": "[(13,6)-(19,7)]"
+        }
+      }
+    },
+    {
+      "@id": "#25",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#expenses"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#26"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "expenses",
+      "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
+        "lexical": {
+          "#25": "[(20,6)-(26,7)]"
+        }
+      }
+    },
+    {
+      "@id": "#31",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#addresses"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#32"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "addresses",
+      "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
+        "lexical": {
+          "#31": "[(13,6)-(19,7)]"
+        }
+      }
+    },
+    {
+      "@id": "#33",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#expenses"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#34"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "expenses",
+      "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
+        "lexical": {
+          "#33": "[(20,6)-(26,7)]"
+        }
+      }
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:addresses": {
+        "@id": "#12"
+      },
       "data:expenses": {
-        "@id": "#13"
+        "@id": "#14"
       },
       "core:name": "additionalApplicants",
       "smaps": {
@@ -634,13 +658,13 @@
         },
         "lexical": {
           "data:expenses": "[(6,4)-(8,5)]",
-          "#10": "[(2,26)-(9,3)]",
+          "#11": "[(2,26)-(9,3)]",
           "data:addresses": "[(3,4)-(5,5)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#16",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -659,12 +683,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#15": "[(10,14)-(10,30)]"
+          "#16": "[(10,14)-(10,30)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#17",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -683,12 +707,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#16": "[(11,14)-(11,31)]"
+          "#17": "[(11,14)-(11,31)]"
         }
       }
     },
     {
-      "@id": "#21",
+      "@id": "#22",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -698,18 +722,18 @@
       "shacl:name": "addresses",
       "shacl:and": [
         {
-          "@id": "#22"
+          "@id": "#23"
         }
       ],
       "smaps": {
         "lexical": {
           "shacl:and": "[(14,8)-(18,9)]",
-          "#21": "[(13,6)-(19,7)]"
+          "#22": "[(13,6)-(19,7)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#26",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -719,18 +743,18 @@
       "shacl:name": "expenses",
       "shacl:or": [
         {
-          "@id": "#26"
+          "@id": "#27"
         }
       ],
       "smaps": {
         "lexical": {
           "shacl:or": "[(21,8)-(25,9)]",
-          "#25": "[(20,6)-(26,7)]"
+          "#26": "[(20,6)-(26,7)]"
         }
       }
     },
     {
-      "@id": "#31",
+      "@id": "#32",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -740,18 +764,18 @@
       "shacl:name": "addresses",
       "shacl:and": [
         {
-          "@id": "#22"
+          "@id": "#23"
         }
       ],
       "smaps": {
         "lexical": {
           "shacl:and": "[(14,8)-(18,9)]",
-          "#31": "[(13,6)-(19,7)]"
+          "#32": "[(13,6)-(19,7)]"
         }
       }
     },
     {
-      "@id": "#33",
+      "@id": "#34",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -761,25 +785,25 @@
       "shacl:name": "expenses",
       "shacl:or": [
         {
-          "@id": "#26"
+          "@id": "#27"
         }
       ],
       "smaps": {
         "lexical": {
           "shacl:or": "[(21,8)-(25,9)]",
-          "#33": "[(20,6)-(26,7)]"
+          "#34": "[(20,6)-(26,7)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:randomKey": {
-        "@id": "#12"
+        "@id": "#13"
       },
       "core:name": "addresses",
       "smaps": {
@@ -788,19 +812,19 @@
         },
         "lexical": {
           "data:randomKey": "[(4,6)-(4,28)]",
-          "#11": "[(3,17)-(5,5)]"
+          "#12": "[(3,17)-(5,5)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:otherRandomKey": {
-        "@id": "#14"
+        "@id": "#15"
       },
       "core:name": "expenses",
       "smaps": {
@@ -809,12 +833,12 @@
         },
         "lexical": {
           "data:otherRandomKey": "[(7,6)-(7,31)]",
-          "#13": "[(6,16)-(8,5)]"
+          "#14": "[(6,16)-(8,5)]"
         }
       }
     },
     {
-      "@id": "#22",
+      "@id": "#23",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -832,21 +856,21 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#22": "amf://id#23"
+          "#23": "amf://id#24"
         },
         "lexical": {
-          "#22": "[(7,2)-(9,3)]"
+          "#23": "[(7,2)-(9,3)]"
         },
         "type-property-lexical-info": {
-          "#22": "[(8,4)-(8,10)]"
+          "#23": "[(8,4)-(8,10)]"
         },
         "resolved-link-target": {
-          "#22": "amf://id#22"
+          "#23": "amf://id#23"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#27",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -864,21 +888,21 @@
           "shacl:closed": "true"
         },
         "resolved-link": {
-          "#26": "amf://id#27"
+          "#27": "amf://id#28"
         },
         "lexical": {
-          "#26": "[(4,2)-(6,3)]"
+          "#27": "[(4,2)-(6,3)]"
         },
         "type-property-lexical-info": {
-          "#26": "[(5,4)-(5,10)]"
+          "#27": "[(5,4)-(5,10)]"
         },
         "resolved-link-target": {
-          "#26": "amf://id#26"
+          "#27": "amf://id#27"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -897,12 +921,12 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#12": "[(4,19)-(4,28)]"
+          "#13": "[(4,19)-(4,28)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -921,7 +945,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#14": "[(7,24)-(7,31)]"
+          "#15": "[(7,24)-(7,31)]"
         }
       }
     }

@@ -3,6 +3,15 @@
     {
       "@id": "#14",
       "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "apiContract:sourceSpec": "RAML 1.0"
+    },
+    {
+      "@id": "#15",
+      "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -11,21 +20,21 @@
       "core:name": "API",
       "apiContract:endpoint": [
         {
-          "@id": "#15"
+          "@id": "#16"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#14": "RAML 1.0"
+          "#15": "RAML 1.0"
         },
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#14": "[(2,0)-(16,0)]"
+          "#15": "[(2,0)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#16",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -33,18 +42,18 @@
       "apiContract:path": "/test",
       "apiContract:supportedOperation": [
         {
-          "@id": "#16"
+          "@id": "#17"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(11,0)-(11,5)]",
-          "#15": "[(11,0)-(16,0)]"
+          "#16": "[(11,0)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#17",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -52,17 +61,17 @@
       "apiContract:method": "get",
       "apiContract:expects": [
         {
-          "@id": "#17"
+          "@id": "#18"
         }
       ],
       "smaps": {
         "lexical": {
-          "#16": "[(12,2)-(16,0)]"
+          "#17": "[(12,2)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#18",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -70,7 +79,7 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#18"
+          "@id": "#19"
         }
       ],
       "smaps": {
@@ -80,7 +89,7 @@
       }
     },
     {
-      "@id": "#18",
+      "@id": "#19",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -91,7 +100,7 @@
       },
       "smaps": {
         "lexical": {
-          "#18": "[(14,6)-(16,0)]"
+          "#19": "[(14,6)-(16,0)]"
         }
       }
     },
@@ -312,10 +321,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#14"
+        "@id": "#15"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#14"
+      }
     },
     {
       "@id": "#6",

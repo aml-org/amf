@@ -48,7 +48,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     val customProfileLoaded: Future[(ProfileName, AMFConfiguration)] = Future {
       model match {
         case dialectInstance: DialectInstance =>
-          findDialect(configuration, dialectInstance.definedBy().value()) match {
+          findDialect(configuration, dialectInstance.processingData.definedBy().value()) match {
             case Some(dialect) =>
               (ProfileName(dialect.nameAndVersion()), configuration)
             case _ =>

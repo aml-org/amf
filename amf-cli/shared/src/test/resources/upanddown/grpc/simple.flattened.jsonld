@@ -42,6 +42,14 @@
       ]
     },
     {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.2.0",
+      "http://a.ml/vocabularies/apiContract#sourceSpec": "Grpc"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/end-points/Greeter",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
@@ -1018,9 +1026,11 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
-      "http://a.ml/vocabularies/document#package": "helloworld"
+      "http://a.ml/vocabularies/document#package": "helloworld",
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/BaseUnitProcessingData"
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto",
@@ -1038,10 +1048,12 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus"
         }
       ],
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [],
       "http://a.ml/vocabularies/document#root": false,
-      "http://a.ml/vocabularies/document#package": "library"
+      "http://a.ml/vocabularies/document#package": "library",
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto/BaseUnitProcessingData"
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/scalar/.helloworld.Corpus",
@@ -1282,6 +1294,14 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto#/web-api/types/.library.Wadus/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/library.proto/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.2.0",
+      "http://a.ml/vocabularies/apiContract#sourceSpec": "Grpc"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto#/web-api/types/scalar/.helloworld.Corpus/list",

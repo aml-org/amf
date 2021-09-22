@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#3",
+        "@id": "#5",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#4",
+            "@id": "#6",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#5",
+                "@id": "#7",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#5": "[(5,2)-(6,0)]"
+                    "#7": "[(5,2)-(6,0)]"
                   }
                 }
               }
@@ -55,12 +55,12 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(4,0)-(4,6)]",
-                "#4": "[(4,0)-(16,56)]"
+                "#6": "[(4,0)-(16,56)]"
               }
             }
           },
           {
-            "@id": "#6",
+            "@id": "#8",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -72,16 +72,16 @@
             ],
             "smaps": {
               "parent-end-point": {
-                "#6": "file://amf-cli/shared/src/test/resources/resolution/binary-fragment/api.raml#/web-api/end-points/%2Fsongs"
+                "#8": "file://amf-cli/shared/src/test/resources/resolution/binary-fragment/api.raml#/web-api/end-points/%2Fsongs"
               },
               "lexical": {
                 "apiContract:path": "[(6,2)-(6,11)]",
-                "#6": "[(6,2)-(16,56)]"
+                "#8": "[(6,2)-(16,56)]"
               }
             }
           },
           {
-            "@id": "#7",
+            "@id": "#9",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -98,7 +98,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#8",
+                "@id": "#10",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -115,7 +115,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#14",
+                    "@id": "#16",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -123,7 +123,7 @@
                     ],
                     "apiContract:uriParameter": [
                       {
-                        "@id": "#15",
+                        "@id": "#17",
                         "@type": [
                           "apiContract:Parameter",
                           "doc:DomainElement"
@@ -150,7 +150,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#16",
+                            "@id": "#18",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "raml-shapes:AnyShape",
@@ -184,7 +184,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#9",
+                    "@id": "#11",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -202,7 +202,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#10",
+                        "@id": "#12",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -214,7 +214,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#11",
+                            "@id": "#13",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "raml-shapes:AnyShape",
@@ -234,7 +234,7 @@
                             ],
                             "apiContract:examples": [
                               {
-                                "@id": "#12",
+                                "@id": "#14",
                                 "@type": [
                                   "apiContract:Example",
                                   "doc:DomainElement"
@@ -246,7 +246,7 @@
                                 ],
                                 "doc:structuredValue": [
                                   {
-                                    "@id": "#13",
+                                    "@id": "#15",
                                     "@type": [
                                       "data:Scalar",
                                       "data:Node",
@@ -273,14 +273,14 @@
                                         "shacl:datatype": "true"
                                       },
                                       "lexical": {
-                                        "#13": "[(1,0)-(1,0)]"
+                                        "#15": "[(1,0)-(1,0)]"
                                       }
                                     }
                                   }
                                 ],
                                 "doc:reference-id": [
                                   {
-                                    "@id": "#2"
+                                    "@id": "#3"
                                   }
                                 ],
                                 "doc:location": [
@@ -293,32 +293,32 @@
                                     "doc:strict": "true"
                                   },
                                   "lexical": {
-                                    "#12": "[(1,0)-(1,0)]"
+                                    "#14": "[(1,0)-(1,0)]"
                                   },
                                   "tracked-element": {
-                                    "#12": "amf://id#10"
+                                    "#14": "amf://id#12"
                                   }
                                 }
                               }
                             ],
                             "smaps": {
                               "auto-generated-name": {
-                                "#11": ""
+                                "#13": ""
                               },
                               "lexical": {
                                 "apiContract:examples": "[(16,16)-(16,56)]",
-                                "#11": "[(14,14)-(16,56)]",
+                                "#13": "[(14,14)-(16,56)]",
                                 "shacl:datatype": "[(15,16)-(16,0)]"
                               },
                               "type-property-lexical-info": {
-                                "#11": "[(15,16)-(15,20)]"
+                                "#13": "[(15,16)-(15,20)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#10": "[(14,14)-(16,56)]"
+                            "#12": "[(14,14)-(16,56)]"
                           }
                         }
                       }
@@ -326,7 +326,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(13,12)-(16,56)]",
-                        "#9": "[(12,10)-(16,56)]"
+                        "#11": "[(12,10)-(16,56)]"
                       }
                     }
                   }
@@ -334,7 +334,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(11,8)-(16,56)]",
-                    "#8": "[(9,6)-(16,56)]",
+                    "#10": "[(9,6)-(16,56)]",
                     "core:description": "[(10,8)-(11,0)]"
                   }
                 }
@@ -342,11 +342,11 @@
             ],
             "smaps": {
               "parent-end-point": {
-                "#7": "file://amf-cli/shared/src/test/resources/resolution/binary-fragment/api.raml#/web-api/end-points/%2Fsongs%2F%7BsongId%7D"
+                "#9": "file://amf-cli/shared/src/test/resources/resolution/binary-fragment/api.raml#/web-api/end-points/%2Fsongs%2F%7BsongId%7D"
               },
               "lexical": {
                 "core:description": "[(8,6)-(9,0)]",
-                "#7": "[(7,4)-(16,56)]",
+                "#9": "[(7,4)-(16,56)]",
                 "apiContract:path": "[(7,4)-(7,17)]"
               }
             }
@@ -354,23 +354,41 @@
         ],
         "smaps": {
           "source-vendor": {
-            "#3": "RAML 1.0"
+            "#5": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(3,0)-(4,0)]",
-            "#3": "[(3,0)-(16,56)]"
+            "#5": "[(3,0)-(16,56)]"
           }
         }
-      }
-    ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
       }
     ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#4",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.2.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:sourceSpec": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ]
       }
     ],
     "doc:references": [
@@ -383,7 +401,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#2",
+            "@id": "#3",
             "@type": [
               "doc:ExternalDomainElement",
               "doc:DomainElement"
@@ -395,14 +413,22 @@
             ]
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "doc:processingData": [
+          {
+            "@id": "#2",
+            "@type": [
+              "doc:BaseUnitProcessingData"
+            ],
+            "doc:transformed": [
+              {
+                "@value": false
+              }
+            ]
           }
         ]
       }

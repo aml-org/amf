@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#10",
+        "@id": "#12",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#11",
+            "@id": "#13",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#12",
+                "@id": "#14",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#13",
+                    "@id": "#15",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -65,7 +65,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#14",
+                        "@id": "#16",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -99,7 +99,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#14": "[(12,10)-(13,30)]"
+                            "#16": "[(12,10)-(13,30)]"
                           }
                         }
                       }
@@ -107,7 +107,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(11,8)-(13,30)]",
-                        "#13": "[(10,6)-(13,30)]"
+                        "#15": "[(10,6)-(13,30)]"
                       }
                     }
                   }
@@ -115,7 +115,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(9,4)-(13,30)]",
-                    "#12": "[(8,2)-(13,30)]"
+                    "#14": "[(8,2)-(13,30)]"
                   }
                 }
               }
@@ -123,30 +123,48 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(7,0)-(7,9)]",
-                "#11": "[(7,0)-(13,30)]"
+                "#13": "[(7,0)-(13,30)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#10": "RAML 1.0"
+            "#12": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(4,0)]",
-            "#10": "[(2,0)-(13,30)]"
+            "#12": "[(2,0)-(13,30)]"
           }
         }
-      }
-    ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
       }
     ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#11",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.2.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:sourceSpec": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ]
       }
     ],
     "smaps": {
@@ -528,14 +546,27 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "doc:processingData": [
+          {
+            "@id": "#10",
+            "@type": [
+              "doc:APIContractProcessingData"
+            ],
+            "apiContract:modelVersion": [
+              {
+                "@value": "3.2.0"
+              }
+            ],
+            "apiContract:sourceSpec": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "smaps": {

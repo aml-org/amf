@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.2.0",
+      "http://a.ml/vocabularies/apiContract#sourceSpec": "RAML 1.0"
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -70,8 +78,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml/BaseUnitProcessingData"
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema/schema-lib.json",
@@ -83,8 +93,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema/schema-lib.json#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
     },
     {
       "@id": "file://../jsonschema/schema-lib.json/#/definitions/address",
@@ -132,6 +144,13 @@
           "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema/schema-lib.json#/external/source-map"
         }
       ]
+    },
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
     },
     {
       "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/street",

@@ -21,11 +21,12 @@ import amf.apicontract.internal.spec.oas.parser.domain.{
 }
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.Oas3NamedExamplesParser
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
-    extends OasDocumentParser(root) {
+    extends OasDocumentParser(root, Spec.OAS30) {
 
   override def parseWebApi(map: YMap): WebApi = {
     YamlTagValidator.validate(root)

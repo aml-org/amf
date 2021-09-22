@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#7",
+        "@id": "#9",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,23 +23,41 @@
         ],
         "smaps": {
           "source-vendor": {
-            "#7": "RAML 1.0"
+            "#9": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#7": "[(2,0)-(5,27)]"
+            "#9": "[(2,0)-(5,27)]"
           }
         }
-      }
-    ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
       }
     ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#8",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.2.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:sourceSpec": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ]
       }
     ],
     "doc:references": [
@@ -147,14 +165,27 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "doc:processingData": [
+          {
+            "@id": "#5",
+            "@type": [
+              "doc:APIContractProcessingData"
+            ],
+            "apiContract:modelVersion": [
+              {
+                "@value": "3.2.0"
+              }
+            ],
+            "apiContract:sourceSpec": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "smaps": {
@@ -166,7 +197,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#5",
+        "@id": "#6",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -253,24 +284,24 @@
             "shacl:closed": "true"
           },
           "resolved-link-target": {
-            "#5": "amf://id#2"
+            "#6": "amf://id#2"
           },
           "source-vendor": {
-            "#5": "RAML 1.0"
+            "#6": "RAML 1.0"
           },
           "lexical": {
-            "#5": "[(2,0)-(3,11)]"
+            "#6": "[(2,0)-(3,11)]"
           },
           "resolved-link": {
-            "#5": "amf://id#5"
+            "#6": "amf://id#6"
           },
           "declared-element": {
-            "#5": ""
+            "#6": ""
           }
         }
       },
       {
-        "@id": "#6",
+        "@id": "#7",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -357,19 +388,19 @@
             "shacl:closed": "true"
           },
           "resolved-link-target": {
-            "#6": "amf://id#2"
+            "#7": "amf://id#2"
           },
           "source-vendor": {
-            "#6": "RAML 1.0"
+            "#7": "RAML 1.0"
           },
           "lexical": {
-            "#6": "[(2,0)-(3,11)]"
+            "#7": "[(2,0)-(3,11)]"
           },
           "resolved-link": {
-            "#6": "amf://id#6"
+            "#7": "amf://id#7"
           },
           "declared-element": {
-            "#6": ""
+            "#7": ""
           }
         }
       }

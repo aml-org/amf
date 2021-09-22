@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.raml.parser.document
 
 import amf.aml.internal.parse.common.DeclarationKey
-import amf.apicontract.client.scala.model.document.{Extension, Overlay}
+import amf.apicontract.client.scala.model.document.{APIContractProcessingData, Extension, Overlay}
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Response, Tag}
@@ -31,6 +31,7 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.internal.parser.domain.{Annotations, ArrayNode, ScalarNode, SearchScope}
 import amf.core.internal.parser.{Root, YMapOps, YScalarYRead}
+import amf.core.internal.remote.Spec
 import amf.core.internal.utils._
 import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
@@ -52,8 +53,8 @@ import scala.collection.mutable.ListBuffer
 /**
   * Extension and Overlay parser
   */
-case class ExtensionLikeParser(root: Root)(implicit override val ctx: ExtensionLikeWebApiContext)
-    extends RamlDocumentParser(root)
+case class ExtensionLikeParser(root: Root, spec: Spec)(implicit override val ctx: ExtensionLikeWebApiContext)
+    extends RamlDocumentParser(root, spec)
     with Raml10BaseSpecParser {
 
   def parseExtension(): Extension = {
@@ -132,7 +133,7 @@ case class ExtensionLikeParser(root: Root)(implicit override val ctx: ExtensionL
 }
 
 object ExtensionLikeParser {
-  def apply(root: Root, baseCtx: RamlWebApiContext): ExtensionLikeParser = {
+  def apply(root: Root, spec: Spec, baseCtx: RamlWebApiContext): ExtensionLikeParser = {
     val parentDeclarations = new RamlWebApiDeclarations(alias = None,
                                                         errorHandler = baseCtx.eh,
                                                         futureDeclarations = baseCtx.futureDeclarations)
@@ -142,7 +143,7 @@ object ExtensionLikeParser {
                                                                                Some(baseCtx.declarations),
                                                                                parentDeclarations,
                                                                                options = baseCtx.options)
-    new ExtensionLikeParser(root)(exLikeCtx)
+    new ExtensionLikeParser(root, spec)(exLikeCtx)
   }
 }
 
@@ -150,13 +151,17 @@ object ExtensionLikeParser {
   * Raml 1.0 spec parser
   */
 case class Raml10DocumentParser(root: Root)(implicit override val ctx: RamlWebApiContext)
-    extends RamlDocumentParser(root)
+    extends RamlDocumentParser(root, Spec.RAML10)
     with Raml10BaseSpecParser {}
 
-abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContext) extends RamlBaseDocumentParser {
+abstract class RamlDocumentParser(root: Root, spec: Spec)(implicit val ctx: RamlWebApiContext)
+    extends RamlBaseDocumentParser {
 
   def parseDocument[T <: Document](document: T): T = {
-    document.adopted(root.location).withLocation(root.location)
+    document
+      .adopted(root.location)
+      .withLocation(root.location)
+      .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
@@ -279,7 +284,10 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
             }
           case YType.Null =>
           case t =>
-            ctx.eh.violation(InvalidSecuredByType, parent, s"Invalid type $t for 'securitySchemes' node.", e.value.location)
+            ctx.eh.violation(InvalidSecuredByType,
+                             parent,
+                             s"Invalid type $t for 'securitySchemes' node.",
+                             e.value.location)
         }
       }
     )
@@ -404,7 +412,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
               case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
                 ctx.declarations += shape.add(DeclaredElement())
-              case None => ctx.eh.violation(UnableToParseShape, parent, s"Error parsing shape '$entry'", entry.location)
+              case None =>
+                ctx.eh.violation(UnableToParseShape, parent, s"Error parsing shape '$entry'", entry.location)
             }
 
           }
@@ -423,7 +432,10 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       _ <- types
       s <- schemas
     } {
-      ctx.eh.violation(ExclusiveSchemasType, "", "'schemas' and 'types' properties are mutually exclusive", s.key.location)
+      ctx.eh.violation(ExclusiveSchemasType,
+                       "",
+                       "'schemas' and 'types' properties are mutually exclusive",
+                       s.key.location)
     }
 
     schemas.foreach(

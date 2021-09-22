@@ -5098,7 +5098,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#raw": [
                                   {
-                                    "@value": "vocabulary: Eng Demos\nusage: Engineering Demonstrations @ MuleSoft # Namespace for the vocabulary (must be a URI prefix)\n  # All terms in the vocabulary will be URIs in this namespace\nbase: http://mulesoft.com/vocabularies/eng-demos#\nexternal:\n  schema-org: http://schema.org/\nclassTerms: # URI for this term: http://mulesoft.com/vocabularies/eng-demos#Presentation\n  Presentation:\n    displayName: Presentation\n    description: Product demonstrations\n    properties:\n      - showcases\n      - speakers\n      - demoDate\n  Speaker:\n    displayName: Speaker\n    description: Product demonstration presenter\n    extends: schema-org.Person\n    properties:\n      - nickName\n  schema-org.Product:\n    displayName: Product\n    description: The product being showcased\n    properties:\n      - resources\npropertyTerms: # scalar range, datatype property\n# URI for this term: http://mulesoft.com/vocabularies/eng-demos#nickName\n  nickName:\n    displayName: nick\n    description: nick name of the speaker\n    range: string\n    extends: schema-org.alternateName\n  showcases:\n    displayName: showcases\n    description: Product being showcased in a presentation\n    range: schema-org.Product\n  speakers:\n    displayName: speakers\n    description: list of speakers\n    range: Speaker\n  resources:\n    displayName: resources\n    description: list of materials about the showcased product\n    range: string\n  semantic-version:\n    displayName: semantic version\n    description: \"semantic version standard: M.m.r\"\n    extends: schema-org.version\n    range: string\n  demoDate:\n    displayName: demo date\n    description: day the demo took place\n    extends: schema-org.dateCreated\n    range: date\n  isRecorded:\n    displayName: is recorded\n    description: notifies if this demo was recorded\n    range: boolean\n  code:\n    displayName: code\n    description: product code\n    range: string\n    extends: schema-org.name"
+                                    "@value": "vocabulary: Eng Demos\nusage: Engineering Demonstrations @ MuleSoft # Namespace for the vocabulary (must be a URI prefix)\n# All terms in the vocabulary will be URIs in this namespace\nbase: http://mulesoft.com/vocabularies/eng-demos#\nexternal:\n  schema-org: http://schema.org/\nclassTerms: # URI for this term: http://mulesoft.com/vocabularies/eng-demos#Presentation\n  Presentation:\n    displayName: Presentation\n    description: Product demonstrations\n    properties:\n      - showcases\n      - speakers\n      - demoDate\n  Speaker:\n    displayName: Speaker\n    description: Product demonstration presenter\n    extends: schema-org.Person\n    properties:\n      - nickName\n  schema-org.Product:\n    displayName: Product\n    description: The product being showcased\n    properties:\n      - resources\npropertyTerms: # scalar range, datatype property\n# URI for this term: http://mulesoft.com/vocabularies/eng-demos#nickName\n  nickName:\n    displayName: nick\n    description: nick name of the speaker\n    range: string\n    extends: schema-org.alternateName\n  showcases:\n    displayName: showcases\n    description: Product being showcased in a presentation\n    range: schema-org.Product\n  speakers:\n    displayName: speakers\n    description: list of speakers\n    range: Speaker\n  resources:\n    displayName: resources\n    description: list of materials about the showcased product\n    range: string\n  semantic-version:\n    displayName: semantic version\n    description: \"semantic version standard: M.m.r\"\n    extends: schema-org.version\n    range: string\n  demoDate:\n    displayName: demo date\n    description: day the demo took place\n    extends: schema-org.dateCreated\n    range: date\n  isRecorded:\n    displayName: is recorded\n    description: notifies if this demo was recorded\n    range: boolean\n  code:\n    displayName: code\n    description: product code\n    range: string\n    extends: schema-org.name"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#location": [
@@ -5458,14 +5458,32 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/validations/examples/vocabulary-fragment/api.raml/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.2.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#transformed": [
+          {
+            "@value": true
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#sourceSpec": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ]
       }
     ]
   }

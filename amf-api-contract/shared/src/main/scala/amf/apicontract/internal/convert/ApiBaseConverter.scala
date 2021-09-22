@@ -2,6 +2,7 @@ package amf.apicontract.internal.convert
 
 import amf.apicontract.client.platform
 import amf.apicontract.client.platform.model.domain
+import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.{
   Callback,
   CorrelationId,
@@ -116,6 +117,7 @@ trait ApiBaseConverter
     with AMFConfigurationConverter
     with AMFDocumentResultConverter
     with AMFLibraryResultConverter
+    with APIContractProcessingDataConverter
 
 trait ChannelBindingConverter extends PlatformSecrets {
   implicit object ChannelBindingMatcher extends BidirectionalMatcher[ChannelBinding, domain.bindings.ChannelBinding] {
@@ -559,5 +561,15 @@ trait AMFDocumentResultConverter {
       extends BidirectionalMatcher[AMFDocumentResult, platform.AMFDocumentResult] {
     override def asClient(from: AMFDocumentResult): platform.AMFDocumentResult   = new platform.AMFDocumentResult(from)
     override def asInternal(from: platform.AMFDocumentResult): AMFDocumentResult = from._internal
+  }
+}
+
+trait APIContractProcessingDataConverter {
+  implicit object APIContractProcessingDataMatcher
+      extends BidirectionalMatcher[APIContractProcessingData, platform.model.document.APIContractProcessingData] {
+    override def asClient(from: APIContractProcessingData): platform.model.document.APIContractProcessingData =
+      new platform.model.document.APIContractProcessingData(from)
+    override def asInternal(from: platform.model.document.APIContractProcessingData): APIContractProcessingData =
+      from._internal
   }
 }

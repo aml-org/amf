@@ -1,38 +1,72 @@
 package amf.apicontract.internal.convert
 
+import amf.aml.internal.utils.VocabulariesRegister
 import amf.apicontract.client.platform.model.document._
 import amf.apicontract.client.platform.model.domain.api.{AsyncApi, WebApi}
-import amf.apicontract.client.platform.model.domain.bindings.amqp.{Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091MessageBinding, Amqp091OperationBinding, Amqp091Queue}
+import amf.apicontract.client.platform.model.domain.bindings.amqp.{
+  Amqp091ChannelBinding,
+  Amqp091ChannelExchange,
+  Amqp091MessageBinding,
+  Amqp091OperationBinding,
+  Amqp091Queue
+}
 import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
 import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
-import amf.apicontract.client.platform.model.domain.bindings.mqtt.{MqttMessageBinding, MqttOperationBinding, MqttServerBinding, MqttServerLastWill}
-import amf.apicontract.client.platform.model.domain.bindings.{ChannelBindings, EmptyBinding, MessageBindings, OperationBindings, ServerBindings}
+import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
+  MqttMessageBinding,
+  MqttOperationBinding,
+  MqttServerBinding,
+  MqttServerLastWill
+}
+import amf.apicontract.client.platform.model.domain.bindings.{
+  ChannelBindings,
+  EmptyBinding,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
 import amf.apicontract.client.platform.model.domain.security._
-import amf.apicontract.client.platform.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
+import amf.apicontract.client.platform.model.domain.templates.{
+  ParametrizedResourceType,
+  ParametrizedTrait,
+  ResourceType,
+  Trait
+}
 import amf.apicontract.client.platform.model.domain._
 import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
-import amf.apicontract.client.scala.model.document.{AnnotationTypeDeclarationFragment, DataTypeFragment, DocumentationItemFragment, NamedExampleFragment}
+import amf.apicontract.client.scala.model.document.{
+  AnnotationTypeDeclarationFragment,
+  DataTypeFragment,
+  DocumentationItemFragment,
+  NamedExampleFragment
+}
 import amf.apicontract.client.platform.model.domain.Message
 import amf.apicontract.client.scala.model.{document, domain}
 import amf.apicontract.internal.metamodel.document.FragmentsTypesModels._
-import amf.apicontract.internal.metamodel.document.{ExtensionModel, OverlayModel}
+import amf.apicontract.internal.metamodel.document.{APIContractProcessingDataModel, ExtensionModel, OverlayModel}
 import amf.apicontract.internal.metamodel.domain.bindings._
-import amf.apicontract.internal.metamodel.domain._
-import amf.shapes.internal.domain.metamodel._
-import amf.shapes.client.platform.model.domain._
 import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.metamodel.domain.api._
-import amf.apicontract.internal.metamodel.domain.templates.{ParametrizedResourceTypeModel, ParametrizedTraitModel, ResourceTypeModel, TraitModel}
+import amf.apicontract.internal.metamodel.domain.templates.{
+  ParametrizedResourceTypeModel,
+  ParametrizedTraitModel,
+  ResourceTypeModel,
+  TraitModel
+}
 import amf.apicontract.internal.metamodel.domain._
-import amf.apicontract.internal.metamodel.domain.security.{ParametrizedSecuritySchemeModel, ScopeModel, SecurityRequirementModel, SecuritySchemeModel}
+import amf.apicontract.internal.metamodel.domain.security.{
+  ParametrizedSecuritySchemeModel,
+  ScopeModel,
+  SecurityRequirementModel,
+  SecuritySchemeModel
+}
 import amf.core.client.platform.model.document.PayloadFragment
-import amf.core.client.platform.model.domain.RecursiveShape
 import amf.core.internal.metamodel.document.PayloadFragmentModel
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.client.platform.model.domain.NilShape
-import amf.shapes.client.scala.model
 import amf.shapes.internal.convert.ShapesRegister
+import amf.apicontract.client.platform.model.document.APIContractProcessingData
+import amf.core.internal.convert.CoreRegister
 
 /** Shared WebApi registrations. */
 private[amf] object ApiRegister extends PlatformSecrets {
@@ -44,6 +78,7 @@ private[amf] object ApiRegister extends PlatformSecrets {
 
     // shapes (domain)
     ShapesRegister.register(platform)
+    VocabulariesRegister.register(platform)
 
     // Api (document)
     platform.registerWrapper(AnnotationTypeDeclarationFragmentModel) {
@@ -239,6 +274,9 @@ private[amf] object ApiRegister extends PlatformSecrets {
     }
     platform.registerWrapper(EmptyBindingModel) {
       case s: amf.apicontract.client.scala.model.domain.bindings.EmptyBinding => EmptyBinding(s)
+    }
+    platform.registerWrapper(APIContractProcessingDataModel) {
+      case s: amf.apicontract.client.scala.model.document.APIContractProcessingData => APIContractProcessingData(s)
     }
   }
 

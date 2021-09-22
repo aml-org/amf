@@ -17,6 +17,9 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 name := "amf"
 
 ThisBuild / version := versions("amf.apicontract")
+ThisBuild / scalaVersion := "2.12.11"
+
+val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model")
 
 publish := {}
 
@@ -43,7 +46,7 @@ sonarProperties ++= Map(
 
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
-  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
+  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral),
   resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   assembly / aggregate := false,
@@ -109,12 +112,17 @@ lazy val shapesJS =
   * AMF-Api-contract
   * ********************************************* */
 lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
+  .enablePlugins(BuildInfoPlugin)
   .settings(
     Seq(
       name := "amf-api-contract"
     ))
   .in(file("./amf-api-contract"))
-  .settings(commonSettings)
+  .settings(commonSettings ++ Seq(
+    apiContractModelVersion := versions("amf.model"),
+    buildInfoKeys := Seq[BuildInfoKey](apiContractModelVersion),
+    buildInfoPackage := "amf.apicontract.internal.unsafe"
+  ))
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
@@ -305,4 +313,9 @@ buildJS := {
 addCommandAlias(
   "buildCommandLine",
   "; clean; cliJVM/assembly"
+)
+
+ThisBuild / libraryDependencies ++= Seq(
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.1" cross CrossVersion.constant("2.12.11")),
+  "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.constant("2.12.11")
 )

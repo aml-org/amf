@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#3",
+        "@id": "#4",
         "@type": [
           "apiContract:AsyncAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#4",
+            "@id": "#5",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -40,7 +40,7 @@
             ],
             "apiContract:parameter": [
               {
-                "@id": "#5",
+                "@id": "#6",
                 "@type": [
                   "apiContract:Parameter",
                   "doc:DomainElement"
@@ -93,19 +93,19 @@
                 ],
                 "smaps": {
                   "resolved-link-target": {
-                    "#5": "amf://id#1"
+                    "#6": "amf://id#1"
                   },
                   "declared-element": {
-                    "#5": ""
+                    "#6": ""
                   },
                   "lexical": {
                     "raml-shapes:schema": "[(11,6)-(15,0)]",
                     "core:description": "[(9,6)-(10,0)]",
-                    "#5": "[(8,4)-(15,0)]",
+                    "#6": "[(8,4)-(15,0)]",
                     "apiContract:binding": "[(10,6)-(11,0)]"
                   },
                   "resolved-link": {
-                    "#5": "amf://id#5"
+                    "#6": "amf://id#6"
                   }
                 }
               }
@@ -113,32 +113,50 @@
             "smaps": {
               "lexical": {
                 "apiContract:parameter": "[(17,4)-(19,46)]",
-                "#4": "[(16,2)-(19,46)]"
+                "#5": "[(16,2)-(19,46)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#3": "ASYNC 2.0"
+            "#4": "ASYNC 2.0"
           },
           "lexical": {
             "apiContract:endpoint": "[(15,0)-(19,46)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#3": "[(1,0)-(19,46)]",
+            "#4": "[(1,0)-(19,46)]",
             "core:version": "[(4,2)-(6,0)]"
           }
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#3",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.2.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:sourceSpec": [
+          {
+            "@value": "ASYNC 2.0"
+          }
+        ]
       }
     ],
     "doc:declares": [

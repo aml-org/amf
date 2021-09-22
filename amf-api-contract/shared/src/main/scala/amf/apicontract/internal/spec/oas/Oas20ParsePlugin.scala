@@ -25,7 +25,7 @@ object Oas20ParsePlugin extends OasParsePlugin {
       case Some(Oas20Overlay)   => document.Oas2DocumentParser(root).parseOverlay()
       case Some(Oas20Extension) => Oas2DocumentParser(root).parseExtension()
       case Some(Oas20Header)    => document.Oas2DocumentParser(root).parseDocument()
-      case Some(f)              => OasFragmentParser(root, Some(f)).parseFragment()
+      case Some(f)              => OasFragmentParser(root, Spec.OAS20, Some(f)).parseFragment()
       case _ => // unreachable as it is covered in canParse()
         throw new InvalidDocumentHeaderException(spec.id)
     }

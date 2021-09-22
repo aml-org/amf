@@ -1,6 +1,7 @@
 package amf.maker
 
 import amf.apicontract.client.scala.WebAPIConfiguration
+import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -111,11 +112,11 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    document().withDeclares(Seq(person))
+    document(spec).withDeclares(Seq(person))
 
   }
 
-  private def document(): Document = {
+  private def document(spec: Spec): Document = {
     amf.core.client.scala.model.domain.extensions.PropertyShape().withScalarSchema("hey")
     val api = WebApi()
       .withName("test types")
@@ -124,6 +125,7 @@ class DocumentMakerTest extends WebApiMakerTest {
     val document = Document()
       .withEncodes(api)
       .withRoot(true)
+      .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
     document
   }
 
@@ -199,7 +201,7 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    document().withDeclares(Seq(human, person))
+    document(spec).withDeclares(Seq(human, person))
 
   }
 }

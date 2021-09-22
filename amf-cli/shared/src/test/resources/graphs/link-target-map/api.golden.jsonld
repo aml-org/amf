@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
+    },
+    {
       "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -33,7 +40,10 @@
         "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/web-api"
       },
       "http://a.ml/vocabularies/document#version": "3.0.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/parser/array-type-expressions/base-type-array.raml#/declarations/types/array/myArray",

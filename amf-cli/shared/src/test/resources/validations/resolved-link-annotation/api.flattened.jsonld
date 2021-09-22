@@ -3,6 +3,15 @@
     {
       "@id": "#9",
       "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "apiContract:sourceSpec": "RAML 1.0"
+    },
+    {
+      "@id": "#10",
+      "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -17,7 +26,7 @@
       ],
       "apiContract:endpoint": [
         {
-          "@id": "#10"
+          "@id": "#11"
         }
       ],
       "smaps": {
@@ -28,16 +37,16 @@
         "lexical": {
           "apiContract:contentType": "[(3,0)-(4,0)]",
           "core:name": "[(2,0)-(3,0)]",
-          "#9": "[(2,0)-(17,17)]",
+          "#10": "[(2,0)-(17,17)]",
           "apiContract:accepts": "[(3,0)-(4,0)]"
         },
         "source-vendor": {
-          "#9": "RAML 1.0"
+          "#10": "RAML 1.0"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#11",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -45,21 +54,21 @@
       "apiContract:path": "/endpoint",
       "apiContract:supportedOperation": [
         {
-          "@id": "#11"
+          "@id": "#12"
         },
         {
-          "@id": "#14"
+          "@id": "#15"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(11,0)-(11,9)]",
-          "#10": "[(11,0)-(17,17)]"
+          "#11": "[(11,0)-(17,17)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -67,17 +76,17 @@
       "apiContract:method": "get",
       "apiContract:expects": [
         {
-          "@id": "#12"
+          "@id": "#13"
         }
       ],
       "smaps": {
         "lexical": {
-          "#11": "[(12,2)-(15,0)]"
+          "#12": "[(12,2)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -85,43 +94,43 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#15"
+          "@id": "#16"
         }
       ],
       "smaps": {
         "lexical": {
-          "#14": "[(15,2)-(17,17)]"
+          "#15": "[(15,2)-(17,17)]"
         }
       }
     },
     {
-      "@id": "#12",
-      "@type": [
-        "apiContract:Request",
-        "apiContract:Message",
-        "doc:DomainElement"
-      ],
-      "apiContract:payload": [
-        {
-          "@id": "#13"
-        }
-      ]
-    },
-    {
-      "@id": "#15",
-      "@type": [
-        "apiContract:Request",
-        "apiContract:Message",
-        "doc:DomainElement"
-      ],
-      "apiContract:payload": [
-        {
-          "@id": "#16"
-        }
-      ]
-    },
-    {
       "@id": "#13",
+      "@type": [
+        "apiContract:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#14"
+        }
+      ]
+    },
+    {
+      "@id": "#16",
+      "@type": [
+        "apiContract:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#17"
+        }
+      ]
+    },
+    {
+      "@id": "#14",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -132,12 +141,12 @@
       },
       "smaps": {
         "lexical": {
-          "#13": "[(13,4)-(15,0)]"
+          "#14": "[(13,4)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#17",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -148,7 +157,7 @@
       },
       "smaps": {
         "lexical": {
-          "#16": "[(16,4)-(17,17)]"
+          "#17": "[(16,4)-(17,17)]"
         }
       }
     },
@@ -341,10 +350,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#9"
+        "@id": "#10"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#9"
+      }
     }
   ],
   "@context": {

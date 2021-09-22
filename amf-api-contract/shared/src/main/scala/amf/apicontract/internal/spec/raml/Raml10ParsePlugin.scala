@@ -40,9 +40,9 @@ object Raml10ParsePlugin extends RamlParsePlugin {
     val clean = cleanContext(ctx, root, ctx.parsingOptions)
     header match {
       case Raml10          => Raml10DocumentParser(root)(ctx).parseDocument()
-      case Raml10Overlay   => ExtensionLikeParser(root, ctx).parseOverlay()
-      case Raml10Extension => ExtensionLikeParser(root, ctx).parseExtension()
-      case Raml10Library   => RamlModuleParser(root)(clean).parseModule()
+      case Raml10Overlay   => ExtensionLikeParser(root, Spec.RAML10, ctx).parseOverlay()
+      case Raml10Extension => ExtensionLikeParser(root, Spec.RAML10, ctx).parseExtension()
+      case Raml10Library   => RamlModuleParser(root, Spec.RAML10)(clean).parseModule()
       case _ => // unreachable as it is covered in canParse()
         throw new InvalidDocumentHeaderException(spec.id)
     }

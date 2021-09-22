@@ -3,6 +3,15 @@
     {
       "@id": "#10",
       "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "apiContract:sourceSpec": "RAML 1.0"
+    },
+    {
+      "@id": "#11",
+      "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -12,20 +21,20 @@
       "core:description": "some overlaid description",
       "apiContract:endpoint": [
         {
-          "@id": "#11"
+          "@id": "#12"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#10": "RAML 1.0"
+          "#11": "RAML 1.0"
         },
         "lexical": {
-          "#10": "[(2,0)-(10,6)]"
+          "#11": "[(2,0)-(10,6)]"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -33,23 +42,23 @@
       "apiContract:path": "/master",
       "apiContract:supportedOperation": [
         {
-          "@id": "#13"
+          "@id": "#14"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#12"
+          "@id": "#13"
         }
       ],
       "smaps": {
         "lexical": {
           "doc:extends": "[(9,2)-(10,0)]",
-          "#11": "[(8,0)-(10,6)]"
+          "#12": "[(8,0)-(10,6)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -58,17 +67,17 @@
       "core:description": "Master description",
       "doc:extends": [
         {
-          "@id": "#14"
+          "@id": "#15"
         }
       ],
       "smaps": {
         "lexical": {
-          "#13": "[(10,2)-(10,6)]"
+          "#14": "[(10,2)-(10,6)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "apiContract:ParametrizedTrait",
         "doc:ParametrizedDeclaration",
@@ -81,12 +90,12 @@
       "smaps": {
         "lexical": {
           "core:name": "[(9,7)-(9,13)]",
-          "#12": "[(9,7)-(9,13)]"
+          "#13": "[(9,7)-(9,13)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "apiContract:ParametrizedTrait",
         "doc:ParametrizedDeclaration",
@@ -99,7 +108,7 @@
       "smaps": {
         "lexical": {
           "core:name": "[(12,9)-(12,14)]",
-          "#14": "[(12,9)-(12,14)]"
+          "#15": "[(12,9)-(12,14)]"
         }
       }
     },
@@ -264,10 +273,12 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#10"
+        "@id": "#11"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#10"
+      }
     }
   ],
   "@context": {

@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#15",
+        "@id": "#16",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -33,7 +33,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#16",
+            "@id": "#17",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -45,7 +45,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#17",
+                "@id": "#18",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -62,7 +62,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#18",
+                    "@id": "#19",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -121,17 +121,17 @@
                     ],
                     "smaps": {
                       "resolved-link-target": {
-                        "#18": "amf://id#10"
+                        "#19": "amf://id#10"
                       },
                       "lexical": {
                         "core:description": "[(28,4)-(29,0)]",
-                        "#18": "[(27,2)-(34,21)]"
+                        "#19": "[(27,2)-(34,21)]"
                       },
                       "declared-element": {
-                        "#18": ""
+                        "#19": ""
                       },
                       "resolved-link": {
-                        "#18": "amf://id#18"
+                        "#19": "amf://id#19"
                       }
                     }
                   }
@@ -139,19 +139,19 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(10,6)-(13,0)]",
-                    "#17": "[(9,4)-(13,0)]"
+                    "#18": "[(9,4)-(13,0)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#16": "[(8,2)-(13,0)]"
+                "#17": "[(8,2)-(13,0)]"
               }
             }
           },
           {
-            "@id": "#19",
+            "@id": "#20",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -163,7 +163,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#20",
+                "@id": "#21",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -180,7 +180,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#21",
+                    "@id": "#22",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -239,17 +239,17 @@
                     ],
                     "smaps": {
                       "resolved-link-target": {
-                        "#21": "amf://id#10"
+                        "#22": "amf://id#10"
                       },
                       "lexical": {
                         "core:description": "[(28,4)-(29,0)]",
-                        "#21": "[(27,2)-(34,21)]"
+                        "#22": "[(27,2)-(34,21)]"
                       },
                       "declared-element": {
-                        "#21": ""
+                        "#22": ""
                       },
                       "resolved-link": {
-                        "#21": "amf://id#21"
+                        "#22": "amf://id#22"
                       }
                     }
                   }
@@ -257,40 +257,58 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(15,6)-(18,0)]",
-                    "#20": "[(14,4)-(18,0)]"
+                    "#21": "[(14,4)-(18,0)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#19": "[(13,2)-(18,0)]"
+                "#20": "[(13,2)-(18,0)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#15": "OAS 2.0"
+            "#16": "OAS 2.0"
           },
           "lexical": {
             "apiContract:endpoint": "[(7,0)-(18,0)]",
             "apiContract:contentType": "[(5,0)-(7,0)]",
-            "#15": "[(1,0)-(34,21)]",
+            "#16": "[(1,0)-(34,21)]",
             "core:name": "[(4,2)-(5,0)]",
             "core:version": "[(3,2)-(4,0)]"
           }
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#15",
+        "@type": [
+          "doc:APIContractProcessingData"
+        ],
+        "apiContract:modelVersion": [
+          {
+            "@value": "3.2.0"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": true
+          }
+        ],
+        "apiContract:sourceSpec": [
+          {
+            "@value": "OAS 2.0"
+          }
+        ]
       }
     ],
     "doc:declares": [

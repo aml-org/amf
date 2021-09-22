@@ -10128,14 +10128,27 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/api.raml/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.2.0"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#sourceSpec": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -35062,11 +35075,6 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#usage": [
           {
             "@value": "Data shapes for the HTTP API"
@@ -35075,6 +35083,24 @@
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.2.0"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#sourceSpec": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -35551,11 +35577,6 @@
                 ]
               }
             ]
-          }
-        ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
           }
         ],
         "http://a.ml/vocabularies/document#references": [
@@ -37012,11 +37033,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this trait to a GET method that supports pagination."
@@ -37025,6 +37041,24 @@
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#processingData": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/BaseUnitProcessingData",
+                "@type": [
+                  "http://a.ml/vocabularies/document#APIContractProcessingData"
+                ],
+                "http://a.ml/vocabularies/apiContract#modelVersion": [
+                  {
+                    "@value": "3.2.0"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#sourceSpec": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -37495,11 +37529,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this to a method that support sorting."
@@ -37508,6 +37537,24 @@
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#processingData": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/BaseUnitProcessingData",
+                "@type": [
+                  "http://a.ml/vocabularies/document#APIContractProcessingData"
+                ],
+                "http://a.ml/vocabularies/apiContract#modelVersion": [
+                  {
+                    "@value": "3.2.0"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#sourceSpec": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -39551,11 +39598,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this trait to a GET method that supports content-based caching using ETags"
@@ -39564,6 +39606,24 @@
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#processingData": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/BaseUnitProcessingData",
+                "@type": [
+                  "http://a.ml/vocabularies/document#APIContractProcessingData"
+                ],
+                "http://a.ml/vocabularies/apiContract#modelVersion": [
+                  {
+                    "@value": "3.2.0"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#sourceSpec": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -40123,11 +40183,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this trait to a metheod that supports returning only specific attributes of the response"
@@ -40136,6 +40191,24 @@
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#processingData": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/BaseUnitProcessingData",
+                "@type": [
+                  "http://a.ml/vocabularies/document#APIContractProcessingData"
+                ],
+                "http://a.ml/vocabularies/apiContract#modelVersion": [
+                  {
+                    "@value": "3.2.0"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#sourceSpec": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -40184,6 +40257,24 @@
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.2.0"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#sourceSpec": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -41012,14 +41103,27 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.2.0"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#sourceSpec": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -43050,11 +43154,6 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#usage": [
           {
             "@value": "Apply this trait to a GET method that supports content-based caching using ETags"
@@ -43063,6 +43162,24 @@
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": [
+              {
+                "@value": "3.2.0"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#sourceSpec": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

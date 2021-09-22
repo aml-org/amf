@@ -24,6 +24,13 @@
       ]
     },
     {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
       "@id": "#21",
       "@type": [
         "apiContract:Server",
@@ -291,7 +298,10 @@
         "@id": "#9"
       },
       "doc:version": "2.1.2",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
     }
   ],
   "@context": {

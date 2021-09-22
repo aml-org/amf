@@ -5,11 +5,6 @@
 "http://a.ml/vocabularies/document#Module",
 "http://a.ml/vocabularies/document#Unit"
 ],
-"http://a.ml/vocabularies/document#version": [
-{
-"@value": "3.1.0"
-}
-],
 "http://a.ml/vocabularies/document#usage": [
 {
 "@value": "Data types and annotation types"
@@ -18,6 +13,24 @@
 "http://a.ml/vocabularies/document#root": [
 {
 "@value": false
+}
+],
+"http://a.ml/vocabularies/document#processingData": [
+{
+"@id": "null/BaseUnitProcessingData",
+"@type": [
+"http://a.ml/vocabularies/document#APIContractProcessingData"
+],
+"http://a.ml/vocabularies/apiContract#modelVersion": [
+{
+"@value": "3.2.0"
+}
+],
+"http://a.ml/vocabularies/apiContract#sourceSpec": [
+{
+"@value": "OAS 2.0"
+}
+]
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#sources": [

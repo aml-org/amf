@@ -15,8 +15,8 @@ trait OasParsePlugin extends OasLikeParsePlugin {
     implicit val newCtx: OasWebApiContext = context(document.location, document.references, ctx.parsingOptions, ctx)
     restrictCrossSpecReferences(document, ctx)
     val parsed = document.referenceKind match {
-      case LibraryReference => OasModuleParser(document).parseModule()
-      case LinkReference    => OasFragmentParser(document).parseFragment()
+      case LibraryReference => OasModuleParser(document, spec).parseModule()
+      case LinkReference    => OasFragmentParser(document, spec).parseFragment()
       case _                => parseSpecificVersion(document)
     }
     promoteFragments(parsed, newCtx)

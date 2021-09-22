@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
       "@id": "/any/schema",
       "@type": [
         "raml-shapes:AnyShape",
@@ -87,8 +94,10 @@
       "doc:encodes": {
         "@id": "/any/schema"
       },
-      "doc:version": "3.1.0",
-      "doc:root": false
+      "doc:root": false,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
     }
   ],
   "@context": {
