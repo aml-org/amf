@@ -1,0 +1,17 @@
+#%RAML 1.0 Library
+
+types:
+  ManagementCompanyCode:
+    description: FundSERV code for the Fund Company.
+    enum: [ MFC, MGW, MAX, CGF, CPS, IGS, IGI, LON, GWL, CAN, MML ]
+
+  ClientBusinessPartnerNumber:
+    description: This uniquely identifies the client in the SAP Financial Services – Business Partner application (aka Customer Information File; aka CIF).
+    type: string
+    pattern:
+
+  SocialInsuranceNumber:
+    type: string
+    minLength: 9
+    maxLength: 9
+    pattern: "[0-9]{9}"

@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: IGM Client Servicing API
+version: 1.0
+
+baseUri:
+
+uses:
+  common: common.raml
+
+
+/{mgmtCode}/clients:
+  description: Client Information based on client name
+  uriParameters:
+    mgmtCode:
+      example: IGS
+      type: common.ManagementCompanyCode
+  /{clientBPNum}:
+      uriParameters:
+        clientBPNum:
+          type: common.ClientBusinessPartnerNumber
+  /{sin}:
+    uriParameters:
+      sin:
+        type: common.SocialInsuranceNumber
