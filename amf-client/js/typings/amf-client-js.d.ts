@@ -196,7 +196,17 @@ declare module 'amf-client-js' {
     abstract fetch(resource: string): Promise<client.remote.Content>
   }
 
+  export abstract class BaseFileResourceLoader implements resource.ResourceLoader {
+    accepts(resource: string): boolean
+
+    abstract fetch(resource: string): Promise<client.remote.Content>
+  }
+
   export class JsBrowserHttpResourceLoader extends BaseHttpResourceLoader {
+    fetch(resource: string): Promise<client.remote.Content>
+  }
+
+  export class JsServerFileResourceLoader extends BaseFileResourceLoader {
     fetch(resource: string): Promise<client.remote.Content>
   }
 

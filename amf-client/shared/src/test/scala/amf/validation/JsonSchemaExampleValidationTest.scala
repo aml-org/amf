@@ -176,5 +176,13 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
     validate("/dependencies/schema-dependencies.raml", Some("/dependencies/schema-dependencies.report"))
   }
 
+  test("JSON Schema 7 type array with examples") {
+    validate("/type/type-array.raml")
+  }
+
+  test("JSON Schema 7 invalid example in type array") {
+    validate("/type/invalid-type-array.raml", Some("/type/invalid-type-array.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }
