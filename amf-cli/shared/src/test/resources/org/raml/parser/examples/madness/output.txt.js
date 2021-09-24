@@ -14,7 +14,7 @@ should have required property 'livesOutside'
 should match some schema in anyOf
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/madness/input.raml#/declarations/types/HomeAnimal/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/madness/input.raml#/declarations/types/HomeAnimal/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/madness/input.raml#/declares/shape/HomeAnimal/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/madness/input.raml#/declares/shape/HomeAnimal/example/default-example
   Range: [(36,0)-(39,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/examples/madness/input.raml

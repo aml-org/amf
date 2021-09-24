@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'anyOf' not supported in a RAML 0.8 stringScalarShape node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas2/base-uri-annotation.json#/web-api/end-points/%2Fapi%2Frequests%2Fbatch%2F%7BbatchId%7D/get/request/parameter/path/batchId/scalar/batchId
+  Target: file://amf-cli/shared/src/test/resources/validations/oas2/base-uri-annotation.json#/web-api/endpoint/%2Fapi%2Frequests%2Fbatch%2F%7BbatchId%7D/supportedOperation/get/expects/request/uri%20parameter/parameter/path/batchId/scalar/batchId
   Property: 
   Range: [(12,12)-(19,13)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas2/base-uri-annotation.json

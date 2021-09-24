@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'conterparty.raml'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/missing-includes/in-type-def.raml#/declarations/types/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/missing-includes/in-type-def.raml#/declares/shape/Conterparty/unresolved
   Property: 
   Range: [(6,15)-(6,40)]
   Location: file://amf-cli/shared/src/test/resources/validations/missing-includes/in-type-def.raml

@@ -8,15 +8,15 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: subject must not be valid against schema {"anyOf":[{"type":"integer"},{"type":"boolean"}]}
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/endpoint/%2Fep2/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/endpoint/%2Fep2/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example
   Range: [(26,21)-(26,22)]
   Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml
 
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: subject must not be valid against schema {"anyOf":[{"type":"integer"},{"type":"boolean"}]}
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/endpoint/%2Fep3/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/endpoint/%2Fep3/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/examples/example/default-example
   Range: [(35,21)-(35,25)]
   Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/not/api2.raml

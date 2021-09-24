@@ -5,18 +5,18 @@ Number of results: 2
 
 Level: Violation
 
-- Constraint: http://a.ml/vocabularies/amf/core#expected-module
-  Message: Libraries must be applied by using 'uses'
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'library.raml'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/library.raml
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml#/declares/shape/lib/unresolved
   Property: 
   Range: [(5,7)-(5,28)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml
 
-- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
-  Message: Unresolved reference 'library.raml'
+- Constraint: http://a.ml/vocabularies/amf/core#expected-module
+  Message: Libraries must be applied by using 'uses'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml#/declarations/types/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml#/references/0
   Property: 
   Range: [(5,7)-(5,28)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-references-to-library/using-types.raml

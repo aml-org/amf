@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
   Message: Status code for a Response must be a value between 100 and 599
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/optional-responses/optional-responses-10.raml#/web-api/end-points/%2Ftest/get/200%3F
+  Target: file://amf-cli/shared/src/test/resources/validations/optional-responses/optional-responses-10.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/resp/200%3F
   Property: http://a.ml/vocabularies/apiContract#statusCode
   Range: [(7,6)-(7,10)]
   Location: file://amf-cli/shared/src/test/resources/validations/optional-responses/optional-responses-10.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
   Message: Status code for a Response must be a value between 100 and 599
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/optional-responses/optional-responses-10.raml#/web-api/end-points/%2Ftest/get/201%3F
+  Target: file://amf-cli/shared/src/test/resources/validations/optional-responses/optional-responses-10.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/resp/201%3F
   Property: http://a.ml/vocabularies/apiContract#statusCode
   Range: [(9,6)-(9,10)]
   Location: file://amf-cli/shared/src/test/resources/validations/optional-responses/optional-responses-10.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
   Message: Status code for a Response must be a value between 100 and 599
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/optional-responses/optional-responses-10.raml#/web-api/end-points/%2Ftest/get/204%3F
+  Target: file://amf-cli/shared/src/test/resources/validations/optional-responses/optional-responses-10.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/resp/204%3F
   Property: http://a.ml/vocabularies/apiContract#statusCode
   Range: [(11,6)-(11,10)]
   Location: file://amf-cli/shared/src/test/resources/validations/optional-responses/optional-responses-10.raml

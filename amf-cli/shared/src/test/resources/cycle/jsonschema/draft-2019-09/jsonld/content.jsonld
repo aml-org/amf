@@ -1,14 +1,14 @@
 {
   "@graph": [
     {
-      "@id": "null/BaseUnitProcessingData",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
       "doc:transformed": false
     },
     {
-      "@id": "/any/schema",
+      "@id": "#/any/schema",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -18,12 +18,12 @@
       "shacl:name": "schema",
       "shacl:and": [
         {
-          "@id": "/any/schema/and/scalar/main"
+          "@id": "#/any/schema/and/scalar/main"
         }
       ]
     },
     {
-      "@id": "/any/schema/and/scalar/main",
+      "@id": "#/any/schema/and/scalar/main",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -39,12 +39,12 @@
       "raml-shapes:encoding": "base64",
       "raml-shapes:mediaType": "application/jwt",
       "raml-shapes:contentSchema": {
-        "@id": "/any/schema/and/scalar/main/array/contentSchema"
+        "@id": "#/any/schema/and/scalar/main/array/contentSchema"
       },
       "shacl:name": "main"
     },
     {
-      "@id": "/any/schema/and/scalar/main/array/contentSchema",
+      "@id": "#/any/schema/and/scalar/main/array/contentSchema",
       "@type": [
         "raml-shapes:ArrayShape",
         "raml-shapes:AnyShape",
@@ -53,14 +53,14 @@
         "doc:DomainElement"
       ],
       "raml-shapes:items": {
-        "@id": "/any/schema/and/scalar/main/array/contentSchema/any/items"
+        "@id": "#/any/schema/and/scalar/main/array/contentSchema/any/items"
       },
       "shacl:minCount": 2,
       "raml-shapes:unevaluatedItems": false,
       "shacl:name": "contentSchema"
     },
     {
-      "@id": "/any/schema/and/scalar/main/array/contentSchema/any/items",
+      "@id": "#/any/schema/and/scalar/main/array/contentSchema/any/items",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -77,11 +77,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/any/schema"
+        "@id": "#/any/schema"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],

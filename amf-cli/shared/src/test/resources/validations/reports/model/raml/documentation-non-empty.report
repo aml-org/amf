@@ -8,7 +8,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#CreativeWork-title-minLength
   Message: Documentation title MUST be a non-empty string
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/raml/documentation-non-empty.raml#/web-api/creative-work/
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/documentation-non-empty.raml#/web-api/documentation/creative-work/
   Property: http://a.ml/vocabularies/core#title
   Range: [(4,9)-(4,9)]
   Location: file://amf-cli/shared/src/test/resources/validations/raml/documentation-non-empty.raml
@@ -16,7 +16,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#CreativeWork-description-minLength
   Message: Documentation content MUST be a non-empty string
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/raml/documentation-non-empty.raml#/web-api/creative-work/
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/documentation-non-empty.raml#/web-api/documentation/creative-work/
   Property: http://a.ml/vocabularies/core#description
   Range: [(5,11)-(5,11)]
   Location: file://amf-cli/shared/src/test/resources/validations/raml/documentation-non-empty.raml

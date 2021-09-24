@@ -81,7 +81,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema/api.raml/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema/api.raml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -154,7 +154,7 @@
         ],
         "http://a.ml/vocabularies/document#processingData": [
           {
-            "@id": "null/BaseUnitProcessingData",
+            "@id": "file://amf-cli/shared/src/test/resources/production/raml10/jsonschema/api.raml#/references/0/BaseUnitProcessingData",
             "@type": [
               "http://a.ml/vocabularies/document#BaseUnitProcessingData"
             ],

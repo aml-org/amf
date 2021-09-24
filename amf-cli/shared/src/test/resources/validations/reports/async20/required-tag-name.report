@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Tag-name-minCount
   Message: Tag object must have a name property
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-tag-name.yaml#/async-api/end-points/myChannel/publish/tag/default-type
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-tag-name.yaml#/async-api/endpoint/myChannel/supportedOperation/publish/tag/tag/default-type
   Property: http://a.ml/vocabularies/core#name
   Range: [(9,10)-(9,38)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-tag-name.yaml

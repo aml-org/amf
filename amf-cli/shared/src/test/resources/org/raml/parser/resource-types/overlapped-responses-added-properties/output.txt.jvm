@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'collectionSchema'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/overlapped-responses-added-properties/input.raml#/web-api/end-points/%2Fusers/get/200/application%2Fjson/any/schema/unresolved
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/overlapped-responses-added-properties/input.raml#/web-api/endpoint/%2Fusers/supportedOperation/get/returns/resp/200/payload/application%2Fjson/any/schema/inherits/unresolved
   Property: 
   Range: [(23,20)-(23,36)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/resource-types/overlapped-responses-added-properties/input.raml

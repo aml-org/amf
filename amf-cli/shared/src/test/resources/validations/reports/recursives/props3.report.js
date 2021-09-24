@@ -14,8 +14,8 @@ c.b.b should be string
 c.c should be string
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declarations/types/A/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declarations/types/A/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declares/shape/A/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declares/shape/A/examples/example/invalid
   Range: [(23,0)-(34,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml
 
@@ -27,8 +27,8 @@ a.c.c should be string
 b should be string
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declarations/types/B/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declarations/types/B/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declares/shape/B/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declares/shape/B/examples/example/invalid
   Range: [(46,0)-(55,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml
 
@@ -37,7 +37,7 @@ b should be string
 c should be string
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declarations/types/C/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declarations/types/C/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declares/shape/C/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml#/declares/shape/C/examples/example/invalid
   Range: [(67,0)-(71,17)]
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/props3.raml

@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: sub type has a weaker constraint for minItems than base type for minItems
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/required-override/input.raml#/declarations/types/Type2/property/p2
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/required-override/input.raml#/declares/shape/Type2/property/property/p2
   Property: http://www.w3.org/ns/shacl#minCount
   Range: [(13,6)-(14,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/required-override/input.raml

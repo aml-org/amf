@@ -24,7 +24,7 @@ testProperty[9] should match some schema in anyOf
 testProperty[9].theProperty should be equal to one of the allowed values
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declares/shape/Item/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declares/shape/Item/examples/example/default-example
   Range: [(20,0)-(38,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml

@@ -8,7 +8,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: RAML 1.0 extension security scheme type 'x-{other}' detected in OAS 2.0 spec
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/raml-security-in-oas.json#/declarations/securitySchemes/custom
+  Target: file://amf-cli/shared/src/test/resources/validations/raml-security-in-oas.json#/declares/scheme/custom
   Property: http://a.ml/vocabularies/security#type
   Range: [(25,14)-(25,25)]
   Location: file://amf-cli/shared/src/test/resources/validations/raml-security-in-oas.json

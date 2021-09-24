@@ -8,23 +8,23 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'properties' not supported in a RAML 1.0 module node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml#/references/0
   Property: 
   Range: [(3,0)-(5,16)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
 
-- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
-  Message: Unresolved reference 'financeDetail.raml'
+- Constraint: http://a.ml/vocabularies/amf/core#expected-module
+  Message: Libraries must be applied by using 'uses'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml#/web-api/end-points/%2Fclaims%2F%7Bclaim-id%7D/patch/request/application%2Fjson/any/schema/unresolved
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml#/references/0
   Property: 
   Range: [(8,16)-(8,43)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml
 
-- Constraint: http://a.ml/vocabularies/amf/core#expected-module
-  Message: Libraries must be applied by using 'uses'
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'financeDetail.raml'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml#/web-api/endpoint/%2Fclaims%2F%7Bclaim-id%7D/supportedOperation/patch/expects/request/payload/application%2Fjson/any/schema/inherits/unresolved
   Property: 
   Range: [(8,16)-(8,43)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-library-include/api.raml

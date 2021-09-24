@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#SecurityScheme-type-pattern
   Message: Security scheme type should be one of the supported ones
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-valid-types.yaml#/declarations/securitySchemes/withInvalidType
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-valid-types.yaml#/declares/scheme/withInvalidType
   Property: http://a.ml/vocabularies/security#type
   Range: [(11,12)-(11,27)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-valid-types.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#SecurityScheme-type-pattern
   Message: Security scheme type should be one of the supported ones
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-valid-types.yaml#/declarations/securitySchemes/invaldFromOas
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-valid-types.yaml#/declares/scheme/invaldFromOas
   Property: http://a.ml/vocabularies/security#type
   Range: [(13,12)-(13,17)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/security-scheme-valid-types.yaml

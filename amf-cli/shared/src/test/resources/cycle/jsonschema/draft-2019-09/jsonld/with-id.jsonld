@@ -1,14 +1,14 @@
 {
   "@graph": [
     {
-      "@id": "null/BaseUnitProcessingData",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
       "doc:transformed": false
     },
     {
-      "@id": "/any/schema",
+      "@id": "#/any/schema",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -18,24 +18,24 @@
       "shacl:name": "schema",
       "shacl:xone": [
         {
-          "@id": "/any/schema/exclusiveOr/any/A"
+          "@id": "#/any/schema/exclusiveOr/any/A"
         },
         {
-          "@id": "/any/schema/exclusiveOr/any/B"
+          "@id": "#/any/schema/exclusiveOr/any/B"
         },
         {
-          "@id": "/any/schema/exclusiveOr/any/X"
+          "@id": "#/any/schema/exclusiveOr/any/X"
         },
         {
-          "@id": "/any/schema/exclusiveOr/any/Y"
+          "@id": "#/any/schema/exclusiveOr/any/Y"
         },
         {
-          "@id": "/any/schema/exclusiveOr/any/C"
+          "@id": "#/any/schema/exclusiveOr/any/C"
         }
       ]
     },
     {
-      "@id": "/any/schema/exclusiveOr/any/A",
+      "@id": "#/any/schema/exclusiveOr/any/A",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -45,7 +45,7 @@
       "shacl:name": "A"
     },
     {
-      "@id": "/any/schema/exclusiveOr/any/B",
+      "@id": "#/any/schema/exclusiveOr/any/B",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -55,7 +55,7 @@
       "shacl:name": "B"
     },
     {
-      "@id": "/any/schema/exclusiveOr/any/X",
+      "@id": "#/any/schema/exclusiveOr/any/X",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -65,7 +65,7 @@
       "shacl:name": "X"
     },
     {
-      "@id": "/any/schema/exclusiveOr/any/Y",
+      "@id": "#/any/schema/exclusiveOr/any/Y",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -75,7 +75,7 @@
       "shacl:name": "Y"
     },
     {
-      "@id": "/any/schema/exclusiveOr/any/C",
+      "@id": "#/any/schema/exclusiveOr/any/C",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -92,11 +92,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/any/schema"
+        "@id": "#/any/schema"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],

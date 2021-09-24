@@ -6,9 +6,9 @@ Number of results: 2
 Level: Warning
 
 - Constraint: http://a.ml/vocabularies/amf/validation#unsupported-example-media-type-warning
-  Message: Unsupported validation for mediatype: application/xml and shape file://amf-cli/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml#/declarations/types/schema/Office
+  Message: Unsupported validation for mediatype: application/xml and shape file://amf-cli/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml#/declares/schema/Office
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml#/declarations/types/schema/Office/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml#/declares/schema/Office/examples/example/default-example
   Property: http://a.ml/vocabularies/document#value
   Range: [(1,0)-(1,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/xmlexample/office_example.xml

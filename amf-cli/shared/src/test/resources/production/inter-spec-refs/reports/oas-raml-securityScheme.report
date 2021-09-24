@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'settings' not supported in a OAS 2.0 securityScheme node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json#/declarations/securitySchemes/oauth20
+  Target: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json#/declares/scheme/oauth20
   Property: 
   Range: [(3,0)-(12,0)]
   Location: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/securityScheme.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'describedBy' not supported in a OAS 2.0 securityScheme node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json#/declarations/securitySchemes/oauth20
+  Target: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json#/declares/scheme/oauth20
   Property: 
   Range: [(12,0)-(22,39)]
   Location: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/securityScheme.raml
@@ -34,7 +34,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: RAML 1.0 security scheme type detected in OAS 2.0 spec
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json#/declarations/securitySchemes/oauth20
+  Target: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json#/declares/scheme/oauth20
   Property: http://a.ml/vocabularies/security#type
   Range: [(2,6)-(2,15)]
   Location: file://amf-cli/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json

@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml/BaseUnitProcessingData",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
@@ -19,7 +19,7 @@
       "http://a.ml/vocabularies/core#name": "Mqtt channel binding",
       "http://a.ml/vocabularies/apiContract#server": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com"
         }
       ],
       "http://a.ml/vocabularies/core#version": "1.0.0",
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Server",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -40,11 +40,11 @@
       "http://a.ml/vocabularies/core#urlTemplate": "http://some.com",
       "http://a.ml/vocabularies/apiContract#protocol": "amqp",
       "http://a.ml/vocabularies/apiBinding#binding": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map"
         }
       ]
     },
@@ -77,39 +77,39 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings",
       "@type": [
         "http://a.ml/vocabularies/apiBinding#ServerBindings",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiBinding#bindings": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map/lexical/element_2"
         }
       ]
     },
@@ -144,7 +144,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server",
       "@type": [
         "http://a.ml/vocabularies/apiBinding#MqttServerBinding",
         "http://a.ml/vocabularies/apiBinding#ServerBinding",
@@ -153,53 +153,53 @@
       "http://a.ml/vocabularies/apiBinding#clientId": "someid",
       "http://a.ml/vocabularies/apiBinding#cleanSession": true,
       "http://a.ml/vocabularies/apiBinding#lastWill": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will"
       },
       "http://a.ml/vocabularies/apiBinding#keepAlive": 12,
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "3.4.3",
       "http://a.ml/vocabularies/apiBinding#type": "mqtt",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#protocol",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(10,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(9,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#binding",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,4)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will",
       "@type": [
         "http://a.ml/vocabularies/apiBinding#MqttServerLastWill",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -210,129 +210,129 @@
       "http://a.ml/vocabularies/apiBinding#message": "Connection failure",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_6"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_6"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_4"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_5"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_5"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,0)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,0)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_4"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_4"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_3"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_6",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_6",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,8)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_4",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#clientId",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(13,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#cleanSession",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,8)-(14,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,6)-(11,10)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#keepAlive",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,8)-(20,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,6)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/source-map/lexical/element_5",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#lastWill",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,8)-(19,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_4",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#retain",
       "http://a.ml/vocabularies/document-source-maps#value": "[(17,10)-(18,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,17)-(19,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#message",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,10)-(19,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#qos",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,10)-(17,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/server/http%3A%2F%2Fsome.com/server-bindings/bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#topic",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,10)-(16,0)]"
     },
@@ -349,7 +349,7 @@
       },
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml/BaseUnitProcessingData"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/BaseUnitProcessingData"
       }
     }
   ]

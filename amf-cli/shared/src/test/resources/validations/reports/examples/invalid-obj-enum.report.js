@@ -10,7 +10,7 @@ Level: Violation
 should have required property 'value2'
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/enums/invalid-obj-enum.raml#/declarations/types/A/enum/object_1
-  Property: file://amf-cli/shared/src/test/resources/validations/enums/invalid-obj-enum.raml#/declarations/types/A/enum/object_1
+  Target: file://amf-cli/shared/src/test/resources/validations/enums/invalid-obj-enum.raml#/declares/shape/A/in/object_1
+  Property: file://amf-cli/shared/src/test/resources/validations/enums/invalid-obj-enum.raml#/declares/shape/A/in/object_1
   Range: [(9,8)-(9,13)]
   Location: file://amf-cli/shared/src/test/resources/validations/enums/invalid-obj-enum.raml

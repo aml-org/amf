@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml/BaseUnitProcessingData",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
@@ -19,7 +19,7 @@
       "http://a.ml/vocabularies/core#name": "Swagger Sample API",
       "http://a.ml/vocabularies/apiContract#server": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1"
         }
       ],
       "http://a.ml/vocabularies/apiContract#accepts": [
@@ -34,7 +34,7 @@
       "http://a.ml/vocabularies/core#version": "1.0.9-abcd",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Server",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -52,12 +52,12 @@
       "http://a.ml/vocabularies/core#urlTemplate": "my.api.com/v1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -65,12 +65,12 @@
       "http://a.ml/vocabularies/apiContract#path": "/pets/{id}",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/source-map"
         }
       ]
     },
@@ -109,28 +109,28 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#host-lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1/source-map/host-lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1/source-map/host-lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#base-path-lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1/source-map/base-path-lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1/source-map/base-path-lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -138,23 +138,23 @@
       "http://a.ml/vocabularies/apiContract#method": "get",
       "http://a.ml/vocabularies/apiContract#expects": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/source-map/lexical/element_0"
         }
       ]
     },
@@ -199,22 +199,22 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,0)-(13,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1/source-map/host-lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1/source-map/host-lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(6,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1/source-map/base-path-lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/server/my.api.com%2Fv1/source-map/base-path-lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(7,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -222,95 +222,95 @@
       ],
       "http://a.ml/vocabularies/apiContract#payload": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(23,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "bodyParam1",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "formData",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,4)-(23,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,0)-(23,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -322,34 +322,34 @@
       "http://www.w3.org/ns/shacl#name": "bodyParam1",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#body-parameter": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map/body-parameter/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map/body-parameter/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -359,83 +359,83 @@
       ],
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "formData"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#form-body-parameter": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/source-map/form-body-parameter/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/source-map/form-body-parameter/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,0)-(23,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,6)-(23,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/parameter-binding-in-body-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/parameter-binding-in-body-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map/body-parameter/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map/body-parameter/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(17,10)-(18,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,10)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(17,10)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2",
       "@type": [
         "http://www.w3.org/ns/shacl#PropertyShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -443,43 +443,43 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#range": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
       "http://www.w3.org/ns/shacl#name": "bodyParam2"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/source-map/form-body-parameter/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/source-map/form-body-parameter/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,12)-(20,16)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(19,10)-(21,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(17,10)-(18,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/parameter-binding-in-body-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1/source-map/parameter-binding-in-body-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/bodyParam1/shape/bodyParam1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,10)-(19,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2",
       "@type": [
         "http://www.w3.org/ns/shacl#NodeShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -491,52 +491,52 @@
       "http://www.w3.org/ns/shacl#name": "bodyParam2",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/synthesized-field/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map/lexical/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/synthesized-field/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map/synthesized-field/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,10)-(23,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,10)-(22,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/get/expects/request/payload/formData/shape/formData/property/property/bodyParam2/shape/bodyParam2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,10)-(23,14)]"
     },
     {
@@ -552,7 +552,7 @@
       },
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml/BaseUnitProcessingData"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/BaseUnitProcessingData"
       }
     }
   ]

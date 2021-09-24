@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
   Message: Security scheme '<<missingParameterInValue>>' not found in declarations.
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml#/declarations/traits/trait/t1/applied/t1/default-requirement_1/%3C%3CmissingParameterInValue%3E%3E
+  Target: 
   Property: 
   Range: [(6,15)-(6,42)]
   Location: file://amf-cli/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/core#transformation-validation
   Message: Cannot find variable 'missingParameterInValue'.
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml#/declarations/traits/trait/t1
+  Target: file://amf-cli/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml#/declares/trait/t1
   Property: 
   Range: [(11,6)-(12,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml

@@ -1,14 +1,14 @@
 {
   "@graph": [
     {
-      "@id": "null/BaseUnitProcessingData",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
       "doc:transformed": false
     },
     {
-      "@id": "/scalar/main",
+      "@id": "#/scalar/main",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -33,11 +33,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/scalar/main"
+        "@id": "#/scalar/main"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],

@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#description-is-required-in-response
   Message: Response must have a 'description' field
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/parameter-without-shape/parameter-without-shape.json#/web-api/end-points/%2Fwildcards/post/205
+  Target: file://amf-cli/shared/src/test/resources/validations/parameter-without-shape/parameter-without-shape.json#/web-api/endpoint/%2Fwildcards/supportedOperation/post/returns/resp/205
   Property: http://a.ml/vocabularies/core#description
   Range: [(12,10)-(18,11)]
   Location: file://amf-cli/shared/src/test/resources/validations/parameter-without-shape/parameter-without-shape.json
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Parameter-schema-minCount
   Message: Schema/type information required for Parameter objects
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/parameter-without-shape/parameter-without-shape.json#/web-api/end-points/%2Fwildcards/post/205/parameter/header/H
+  Target: file://amf-cli/shared/src/test/resources/validations/parameter-without-shape/parameter-without-shape.json#/web-api/endpoint/%2Fwildcards/supportedOperation/post/returns/resp/205/header/parameter/header/H
   Property: http://a.ml/vocabularies/shapes#schema
   Range: [(14,14)-(16,15)]
   Location: file://amf-cli/shared/src/test/resources/validations/parameter-without-shape/parameter-without-shape.json

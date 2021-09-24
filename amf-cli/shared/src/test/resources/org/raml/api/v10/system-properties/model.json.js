@@ -8,8 +8,8 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: startDate should match format "date"
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/system-properties/input.raml#/web-api/end-points/%2Fsubscription/post/request/application%2Fjson/application%2Fjson/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/system-properties/input.raml#/web-api/end-points/%2Fsubscription/post/request/application%2Fjson/application%2Fjson/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/api/v10/system-properties/input.raml#/web-api/endpoint/%2Fsubscription/supportedOperation/post/expects/request/payload/application%2Fjson/shape/application%2Fjson/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/api/v10/system-properties/input.raml#/web-api/endpoint/%2Fsubscription/supportedOperation/post/expects/request/payload/application%2Fjson/shape/application%2Fjson/examples/example/default-example
   Range: [(1,0)-(4,1)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/api/v10/system-properties/example.json
 

@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: age should be >= 0
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declarations/types/Office/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declarations/types/Office/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declares/shape/Office/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declares/shape/Office/examples/example/default-example
   Range: [(16,12)-(20,13)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml

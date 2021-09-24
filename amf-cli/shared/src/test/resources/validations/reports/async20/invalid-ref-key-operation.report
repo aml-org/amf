@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property '$ref' not supported in a ASYNC 2.0 operation node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-key-operation.yaml#/async-api/end-points/%2Fa/publish
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-key-operation.yaml#/async-api/endpoint/%2Fa/supportedOperation/publish
   Property: 
   Range: [(12,6)-(16,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-ref-key-operation.yaml

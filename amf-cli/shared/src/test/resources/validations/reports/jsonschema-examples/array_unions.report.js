@@ -11,7 +11,7 @@ Values[2] should match some schema in anyOf
 Values[2].a should be string
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/endpoint/%2Fep1/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/endpoint/%2Fep1/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
   Range: [(50,20)-(57,21)]
   Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/array_unions.raml

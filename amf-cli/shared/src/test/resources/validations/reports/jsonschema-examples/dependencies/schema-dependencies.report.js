@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: restrictedProperty should be equal to one of the allowed values
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/dependencies/schema-dependencies.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/dependencies/schema-dependencies.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/dependencies/schema-dependencies.raml#/web-api/endpoint/%2Fep1/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/dependencies/schema-dependencies.raml#/web-api/endpoint/%2Fep1/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/examples/example/default-example
   Range: [(32,0)-(35,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/dependencies/schema-dependencies.raml

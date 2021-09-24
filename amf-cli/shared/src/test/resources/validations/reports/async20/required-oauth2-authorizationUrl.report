@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
   Message: Missing authorizationUrl for authorizationCode flow
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-authorizationUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/authorizationCode
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-authorizationUrl.yaml#/declares/scheme/some/settings/oauth2/flows/authorizationCode
   Property: 
   Range: [(10,6)-(21,29)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-authorizationUrl.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
   Message: Missing authorizationUrl for implicit flow
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-authorizationUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/implicit
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-authorizationUrl.yaml#/declares/scheme/some/settings/oauth2/flows/implicit
   Property: 
   Range: [(10,6)-(21,29)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/required-oauth2-authorizationUrl.yaml

@@ -13,8 +13,8 @@ Level: Violation
 [1].c.c should be string
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declarations/types/array/A/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declarations/types/array/A/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declares/array/A/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declares/array/A/examples/example/invalid
   Range: [(18,0)-(26,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml
 
@@ -24,8 +24,8 @@ c.a[0].b should be string
 c.c should be string
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declarations/types/B/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declarations/types/B/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declares/shape/B/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declares/shape/B/examples/example/invalid
   Range: [(39,0)-(44,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml
 
@@ -36,7 +36,7 @@ a[1].c.c should be string
 c should be string
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declarations/types/C/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declarations/types/C/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declares/shape/C/examples/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml#/declares/shape/C/examples/example/invalid
   Range: [(57,0)-(63,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/items1.raml

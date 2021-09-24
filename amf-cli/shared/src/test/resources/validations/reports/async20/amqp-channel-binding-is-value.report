@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Amqp091ChannelBinding-is-in
   Message: 'is' for amqp 0.9.1 channel binding object must be one of 'queue' or 'routingKey'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-is-value.yaml#/async-api/end-points/%2Finvalid/channel-bindings/amqp091-channel
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-is-value.yaml#/async-api/endpoint/%2Finvalid/channel-bindings/bindings/amqp091-channel
   Property: http://a.ml/vocabularies/apiBinding#is
   Range: [(17,12)-(17,19)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/amqp-channel-binding-is-value.yaml

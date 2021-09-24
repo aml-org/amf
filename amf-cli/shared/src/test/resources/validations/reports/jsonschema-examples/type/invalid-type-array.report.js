@@ -11,7 +11,7 @@ should be string
 should match some schema in anyOf
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/type/invalid-type-array.raml#/declarations/types/testType/property/testProp/union/testProp/example/default-example_2
-  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/type/invalid-type-array.raml#/declarations/types/testType/property/testProp/union/testProp/example/default-example_2
+  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/type/invalid-type-array.raml#/declares/shape/testType/property/property/testProp/union/testProp/examples/example/default-example_2
+  Property: file://amf-cli/shared/src/test/resources/validations/jsonschema/type/invalid-type-array.raml#/declares/shape/testType/property/property/testProp/union/testProp/examples/example/default-example_2
   Range: [(17,19)-(17,22)]
   Location: file://amf-cli/shared/src/test/resources/validations/jsonschema/type/invalid-type-array.raml

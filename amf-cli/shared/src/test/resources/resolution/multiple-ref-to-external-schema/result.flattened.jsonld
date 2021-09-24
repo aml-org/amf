@@ -27,7 +27,7 @@
           "@id": "#6"
         },
         {
-          "@id": "#19"
+          "@id": "#20"
         }
       ],
       "smaps": {
@@ -62,7 +62,7 @@
       }
     },
     {
-      "@id": "#19",
+      "@id": "#20",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -70,12 +70,12 @@
       "apiContract:path": "/citypaq",
       "apiContract:supportedOperation": [
         {
-          "@id": "#20"
+          "@id": "#21"
         }
       ],
       "smaps": {
         "lexical": {
-          "#19": "[(27,4)-(42,5)]"
+          "#20": "[(27,4)-(42,5)]"
         }
       }
     },
@@ -104,7 +104,7 @@
       }
     },
     {
-      "@id": "#20",
+      "@id": "#21",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -116,13 +116,13 @@
       ],
       "apiContract:returns": [
         {
-          "@id": "#21"
+          "@id": "#22"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(30,8)-(37,9)]",
-          "#20": "[(28,6)-(41,7)]",
+          "#21": "[(28,6)-(41,7)]",
           "core:description": "[(29,8)-(29,273)]"
         }
       }
@@ -151,7 +151,7 @@
       }
     },
     {
-      "@id": "#21",
+      "@id": "#22",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -162,13 +162,13 @@
       "core:description": "Cuando uno o ambos par\u00E1metros (coordenadas y distancia) siendo requeridos no se env\u00EDan.",
       "apiContract:payload": [
         {
-          "@id": "#22"
+          "@id": "#23"
         }
       ],
       "smaps": {
         "lexical": {
           "core:description": "[(32,12)-(32,116)]",
-          "#21": "[(31,10)-(36,11)]",
+          "#22": "[(31,10)-(36,11)]",
           "core:name": "[(31,10)-(31,15)]"
         }
       }
@@ -185,14 +185,14 @@
       }
     },
     {
-      "@id": "#22",
+      "@id": "#23",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#23"
+        "@id": "#10"
       }
     },
     {
@@ -206,6 +206,7 @@
       ],
       "shacl:closed": false,
       "shacl:property": [],
+      "doc:recursive": true,
       "shacl:name": "default",
       "apiContract:examples": [
         {
@@ -214,7 +215,11 @@
       ],
       "smaps": {
         "synthesized-field": {
+          "doc:recursive": "true",
           "shacl:closed": "true"
+        },
+        "resolved-link": {
+          "#10": "amf://id#19"
         },
         "type-property-lexical-info": {
           "#10": "[(4,6)-(4,12)]"
@@ -225,39 +230,9 @@
         },
         "auto-generated-name": {
           "#10": ""
-        }
-      }
-    },
-    {
-      "@id": "#23",
-      "@type": [
-        "shacl:NodeShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:closed": false,
-      "shacl:property": [],
-      "shacl:name": "default",
-      "apiContract:examples": [
-        {
-          "@id": "#24"
-        }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#23": "[(4,6)-(4,12)]"
-        },
-        "lexical": {
-          "apiContract:examples": "[(5,6)-(14,7)]",
-          "#23": "[(3,4)-(15,5)]"
-        },
-        "auto-generated-name": {
-          "#23": ""
+        "resolved-link-target": {
+          "#10": "amf://id#10"
         }
       }
     },
@@ -282,30 +257,6 @@
         },
         "tracked-element": {
           "#11": "amf://id#9"
-        }
-      }
-    },
-    {
-      "@id": "#24",
-      "@type": [
-        "apiContract:Example",
-        "doc:DomainElement"
-      ],
-      "doc:strict": true,
-      "doc:structuredValue": {
-        "@id": "#12"
-      },
-      "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
-      "smaps": {
-        "synthesized-field": {
-          "doc:raw": "true",
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "#24": "[(5,6)-(14,7)]"
-        },
-        "tracked-element": {
-          "#24": "amf://id#22"
         }
       }
     },

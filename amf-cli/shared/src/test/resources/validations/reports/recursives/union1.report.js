@@ -13,7 +13,7 @@ c should be string
 should match some schema in anyOf
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/recursives/union1.raml#/declarations/types/any/A/example/invalid
-  Property: file://amf-cli/shared/src/test/resources/validations/recursives/union1.raml#/declarations/types/any/A/example/invalid
+  Target: file://amf-cli/shared/src/test/resources/validations/recursives/union1.raml#/declares/any/A/example/invalid
+  Property: file://amf-cli/shared/src/test/resources/validations/recursives/union1.raml#/declares/any/A/example/invalid
   Range: [(12,0)-(15,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/recursives/union1.raml

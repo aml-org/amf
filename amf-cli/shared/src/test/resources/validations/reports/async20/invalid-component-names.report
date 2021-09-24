@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name user#Password does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/securitySchemes/user%2523Password
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/scheme/user%23Password
   Property: 
   Range: [(11,4)-(14,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name simple#obj does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/types/simple%23obj
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/shape/simple%23obj
   Property: 
   Range: [(19,4)-(21,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name user#Id does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/parameters/parameter/default-binding/user%23Id
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/parameter/%24message.payload%23%2Fuser%2Fid/user%23Id
   Property: 
   Range: [(29,4)-(34,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -32,7 +32,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name some#Message does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/messages/some%23Message
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/msg/some%23Message
   Property: 
   Range: [(41,4)-(52,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -40,7 +40,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name some#Id does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/correlationIds/some#Id
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/correlation-id/some#Id
   Property: 
   Range: [(65,4)-(68,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -48,7 +48,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name s#omeName does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/messageBindings/s%23omeName
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/s%23omeName
   Property: 
   Range: [(73,4)-(77,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -56,7 +56,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name some#ServerBinding does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/serverBindings/some%23ServerBinding
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/some%23ServerBinding
   Property: 
   Range: [(82,4)-(88,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -64,7 +64,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name some#OperationBinding does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/operationBindings/some%23OperationBinding
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/some%23OperationBinding
   Property: 
   Range: [(96,4)-(105,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -72,7 +72,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name some#ChannelBinding does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/channelBindings/some%23ChannelBinding
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/some%23ChannelBinding
   Property: 
   Range: [(116,4)-(119,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -80,7 +80,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name first#Trait does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/operationTraits/first%23Trait
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/first%23Trait
   Property: 
   Range: [(124,4)-(126,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
@@ -88,7 +88,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name message#trait does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/messageTraits/message%23trait
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declares/msg/message%23trait
   Property: 
   Range: [(130,4)-(132,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml

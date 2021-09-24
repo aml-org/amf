@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'a' not supported in a RAML 1.0 webApi node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml/web-api
   Property: 
   Range: [(10,0)-(11,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'b' not supported in a RAML 1.0 endPoint node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/endpoint/%2Fnested
   Property: 
   Range: [(13,2)-(14,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'c' not supported in a RAML 1.0 operation node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/endpoint/%2Fnested/supportedOperation/get
   Property: 
   Range: [(16,4)-(17,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
@@ -32,7 +32,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'd' not supported in a RAML 1.0 response node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/endpoint/%2Fnested/supportedOperation/get/returns/resp/200
   Property: 
   Range: [(20,8)-(21,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
@@ -40,7 +40,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'e' not supported in a RAML 1.0 object node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200/application%2Fjson/schema
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/endpoint/%2Fnested/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema
   Property: 
   Range: [(24,12)-(25,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml
@@ -48,7 +48,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'f' not supported in a RAML 1.0 string node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200/application%2Fjson/schema/property/a/scalar/a
+  Target: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/endpoint/%2Fnested/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/property/property/a/scalar/a
   Property: 
   Range: [(30,16)-(30,24)]
   Location: file://amf-cli/shared/src/test/resources/validations/closed_nodes/api.raml

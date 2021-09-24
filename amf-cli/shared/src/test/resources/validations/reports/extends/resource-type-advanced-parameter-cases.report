@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'null' not supported in a RAML 1.0 resourceType node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/resource-type-advanced-parameter-cases.raml#/web-api/end-points/%2FexplicitNull/rt1/applied
+  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/resource-type-advanced-parameter-cases.raml#/web-api/endpoint/%2FexplicitNull/extends/rt1/applied
   Property: 
   Range: [(6,4)-(6,15)]
   Location: file://amf-cli/shared/src/test/resources/validations/resource_types/resource-type-advanced-parameter-cases.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/core#transformation-validation
   Message: Variable 'method' cannot have an empty value
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/resource-type-advanced-parameter-cases.raml#/web-api/end-points/%2FinferredNull/rt1
+  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/resource-type-advanced-parameter-cases.raml#/web-api/endpoint/%2FinferredNull/extends/rt1
   Property: 
   Range: [(9,4)-(11,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/resource_types/resource-type-advanced-parameter-cases.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/core#transformation-validation
   Message: Variable 'method' cannot have an empty value
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/resource-type-advanced-parameter-cases.raml#/web-api/end-points/%2FemptyString/rt1
+  Target: file://amf-cli/shared/src/test/resources/validations/resource_types/resource-type-advanced-parameter-cases.raml#/web-api/endpoint/%2FemptyString/extends/rt1
   Property: 
   Range: [(13,4)-(15,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/resource_types/resource-type-advanced-parameter-cases.raml

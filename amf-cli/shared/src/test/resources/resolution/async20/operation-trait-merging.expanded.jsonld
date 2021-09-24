@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#5",
+        "@id": "#6",
         "@type": [
           "apiContract:AsyncAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#6",
+            "@id": "#7",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -40,7 +40,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#7",
+                "@id": "#8",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -168,7 +168,7 @@
                 "smaps": {
                   "lexical": {
                     "doc:extends": "[(11,6)-(14,0)]",
-                    "#7": "[(7,4)-(14,0)]",
+                    "#8": "[(7,4)-(14,0)]",
                     "apiContract:operationId": "[(8,6)-(9,0)]"
                   }
                 }
@@ -177,19 +177,19 @@
             "smaps": {
               "lexical": {
                 "apiContract:supportedOperation": "[(7,0)-(14,0)]",
-                "#6": "[(6,2)-(14,0)]"
+                "#7": "[(6,2)-(14,0)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#5": "ASYNC 2.0"
+            "#6": "ASYNC 2.0"
           },
           "lexical": {
             "apiContract:endpoint": "[(5,0)-(14,0)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#5": "[(1,0)-(20,36)]",
+            "#6": "[(1,0)-(20,36)]",
             "core:version": "[(4,2)-(5,0)]"
           }
         }
@@ -202,7 +202,7 @@
     ],
     "doc:processingData": [
       {
-        "@id": "#4",
+        "@id": "#5",
         "@type": [
           "doc:APIContractProcessingData"
         ],
