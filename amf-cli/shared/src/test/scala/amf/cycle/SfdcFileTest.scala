@@ -15,11 +15,11 @@ class SfdcFileTest extends AsyncFlatSpec {
 
     SFDCConfiguration.SFDC().baseUnitClient().parse("file://amf-cli/shared/src/test/resources/upanddown/sfdc/sfdc.json") map
       { parseResult =>
-        val transformResult = oasClient.transform(parseResult.baseUnit)
-        val renderResult = oasClient.render(transformResult.baseUnit)
-        val fileOut = new File("amf-cli/shared/src/test/resources/upanddown/sfdc/sfdc.oas")
+        val transformResult = oasClient.render(parseResult.baseUnit, "application/yaml")
+        // val renderResult = oasClient.render(transformResult.baseUnit)
+        val fileOut = new File("amf-cli/shared/src/test/resources/upanddown/sfdc/sfdc.yaml")
         val bw = new BufferedWriter(new FileWriter(fileOut))
-        bw.write(renderResult)
+        bw.write(transformResult)
         bw.flush()
         bw.close()
         // println(renderResult)
