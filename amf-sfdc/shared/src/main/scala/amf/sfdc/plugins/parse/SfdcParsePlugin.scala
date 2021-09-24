@@ -1,20 +1,20 @@
 package amf.sfdc.plugins.parse
 
-import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.apicontract.internal.plugins.ApiParsePlugin
 import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.parse.document.{CompilerReferenceCollector, ParsedDocument, ParserContext, ReferenceHandler}
+import amf.core.client.scala.parse.document.{
+  CompilerReferenceCollector,
+  ParsedDocument,
+  ParserContext,
+  ReferenceHandler
+}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Syntax.Json
-import amf.core.internal.remote.{GraphQL, Hint, Spec, Syntax}
-import amf.sfdc.internal.spec.context.GraphQLWebApiContext
-import amf.sfdc.internal.spec.document.GraphQLDocumentParser
-import amf.sfdc.internal.spec.parser.syntax.GraphQLASTParserHelper
-import amf.sfdc.internal.spec.parser.syntax.TokenTypes.{DEFINITION, DOCUMENT, TYPE_SYSTEM_DEFINITION}
-import amf.sfdc.internal.spec.context.GraphQLWebApiContext
-import org.mulesoft.antlrast.ast.Node
+import amf.core.internal.remote.{Hint, Spec}
+import amf.sfdc.internal.spec.context.SfdcWebApiContext
+import amf.sfdc.internal.spec.document.SfdcDocumentParser
 
 private[amf] case object Sfdc extends Spec {
   override val id: String        = "Sfdc"
@@ -23,21 +23,19 @@ private[amf] case object Sfdc extends Spec {
 
 object SfdcHint extends Hint(Sfdc, Json)
 
-object SfdcParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
+object SfdcParsePlugin extends ApiParsePlugin {
   override def spec: Spec = Sfdc
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    val foobar = GraphQLDocumentParser(document)(context(document, ctx)).parseDocument()
-    println("foobar")
+    val foobar = SfdcDocumentParser(document)(context(document, ctx)).parseDocument()
     foobar
   }
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
-    (_: ParsedDocument, _: ParserContext) =>
-      CompilerReferenceCollector()
+    (_: ParsedDocument, _: ParserContext) => CompilerReferenceCollector()
 
-  private def context(document: Root, ctx: ParserContext): GraphQLWebApiContext = {
-    new GraphQLWebApiContext(
+  private def context(document: Root, ctx: ParserContext): SfdcWebApiContext = {
+    new SfdcWebApiContext(
       ctx.rootContextDocument,
       ctx.refs,
       ctx.parsingOptions,
@@ -51,23 +49,5 @@ object SfdcParsePlugin extends ApiParsePlugin with GraphQLASTParserHelper {
     */
   override def mediaTypes: Seq[String] = Set("application/json").toSeq
 
-  override def applies(element: Root): Boolean = {
-    true
-    /*
-    element.parsed match {
-      case antlrDoc: AntlrParsedDocument =>
-        isGraphQL(antlrDoc)
-      case _ =>
-        false
-    }
-
-     */
-  }
-
-  private def isGraphQL(doc: AntlrParsedDocument): Boolean = {
-    path(doc.ast.root(), Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION)) match {
-      case Some(_: Node) => true
-      case _             => false
-    }
-  }
+  override def applies(element: Root): Boolean = true
 }

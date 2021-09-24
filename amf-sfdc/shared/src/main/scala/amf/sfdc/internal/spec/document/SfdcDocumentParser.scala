@@ -1,45 +1,26 @@
 package amf.sfdc.internal.spec.document
 
-import amf.antlr.client.scala.parse.document.AntlrParsedDocument
-import amf.apicontract.client.scala.model.domain.{Encoding, EndPoint, Operation, Parameter, Payload, Request, Response}
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.internal.metamodel.domain.api.WebApiModel
+import amf.apicontract.client.scala.model.domain._
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.Root
-import amf.sfdc.internal.spec.context
-import amf.sfdc.internal.spec.context.GraphQLWebApiContext
-import amf.sfdc.internal.spec.domain.GraphQLRootTypeParser
-import amf.sfdc.internal.spec.parser.syntax.GraphQLASTParserHelper
-import amf.sfdc.internal.spec.parser.syntax.TokenTypes._
-import amf.sfdc.internal.spec.context.GraphQLWebApiContext
-import amf.sfdc.internal.spec.context.GraphQLWebApiContext.RootTypes
-import amf.sfdc.internal.spec.domain.GraphQLRootTypeParser
-import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
-import amf.core.internal.parser.domain.{SearchScope, Value}
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape, SchemaShape, UnresolvedShape}
+import amf.core.internal.parser.domain.SearchScope
+import amf.sfdc.internal.spec.context.SfdcWebApiContext
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, UnresolvedShape}
 import org.mulesoft.lexer.SourceLocation
 import org.yaml.model.YNodeLike.toString
-import org.yaml.model.{YMap, YNode, YNodePlain, YScalar, YSequence, YValue}
-
-import java.awt.Shape
-import scala.:+
+import org.yaml.model._
 
 
-case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
-
-  // default values, can be changed through a schema declaration
-  var QUERY_TYPE = "Query"
-  var SUBSCRIPTION_TYPE = "Subscription"
-  var MUTATION_TYPE = "Mutation"
+case class SfdcDocumentParser(root: Root)(implicit val ctx: SfdcWebApiContext) {
 
   val doc: Document = Document()
   def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
 
-  protected def parseObjectRange(n: YNode, literalReference: String)(implicit ctx: GraphQLWebApiContext): AnyShape = {
+  protected def parseObjectRange(n: YNode, literalReference: String)(implicit ctx: SfdcWebApiContext): AnyShape = {
     // val topLevelAlias = ctx.topLevelPackageRef(literalReference).map(alias => Seq(alias)).getOrElse(Nil)
     // val qualifiedReference = ctx.fullMessagePath(literalReference)
     val externalReference = s".${literalReference}" // absolute reference based on the assumption the reference is for an external package imported in the file
@@ -102,7 +83,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
               props :+ PropertyShape().withName(propName).withRange(ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#double"))
             }
             case "int" | "long" => {
-              props :+ PropertyShape().withName(propName).withRange(ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#int"))
+              props :+ PropertyShape().withName(propName).withRange(ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#integer"))
             }
             case "percent" => {
               props :+ PropertyShape().withName(propName).withRange(ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#decimal"))
@@ -184,76 +165,4 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     webApi.withName(root.location.split("/").last).withDefaultServer("https://salesforce.com/" + baseUrl)
     doc.adopted(root.location).withLocation(root.location).withEncodes(webApi)
   }
-
-  def parseNestedType(objTypeDef: Node): Unit = {}
-
-  private def processTypes(node: Node) = {
-    this.path(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, SCHEMA_DEFINITION)) match {
-      case Some(schemaNode: Node) => parseSchemaNode(schemaNode)
-      case _                      => // ignore
-    }
-
-    // no schema node, let's look for the default top-level types (query, subscription, mutation)
-    this.collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, OBJECT_TYPE_DEFINITION)) foreach   { case objTypeDef: Node =>
-      find(objTypeDef, NAME) match {
-        case Seq(terminal: Terminal) if terminal.value == QUERY_TYPE => {
-          parseTopLevelType(objTypeDef, RootTypes.Query)
-        }
-
-        case Seq(terminal: Terminal) if terminal.value == SUBSCRIPTION_TYPE => {
-          parseTopLevelType(objTypeDef, RootTypes.Subscription)
-        }
-
-        case Seq(terminal: Terminal) if terminal.value == MUTATION_TYPE => {
-          parseTopLevelType(objTypeDef, RootTypes.Mutation)
-        }
-
-        case _ => // ignore
-          parseNestedType(objTypeDef)
-      }
-    }
-  }
-
-  private def parseSchemaNode(schemaNode: ASTElement): Unit = {
-    findDescription(schemaNode) match {
-      case Some(terminal: Terminal) => // the description of the schema is set at the API level
-        webapi.set(WebApiModel.Description, (terminal.value), toAnnotations(terminal))
-      case _                        => // ignore
-    }
-
-    // let's setup the names of the top level types
-    collect(schemaNode, Seq(ROOT_OPERATION_TYPE_DEFINITION)).foreach { case typeDef: Node =>
-      val targetType: String = path(typeDef, Seq(NAMED_TYPE, NAME)) match {
-        case Some(t: Terminal) => t.value
-        case _                 =>
-          astError(webapi.id, "Cannot find operation type for top-level schema root operation named type", toAnnotations(typeDef))
-          ""
-      }
-      find(typeDef, OPERATION_TYPE).headOption match {
-        case Some(t: Terminal) =>
-          t.value match {
-            case "query"        => QUERY_TYPE = targetType
-            case "mutation"     => MUTATION_TYPE = targetType
-            case "subscription" => SUBSCRIPTION_TYPE = targetType
-            case v              => astError(webapi.id, s"Unknown root-level operation type ${v}", toAnnotations(t))
-          }
-        case _                 =>
-          astError(webapi.id, "Cannot find operation type for top-level schema root operation type definition", toAnnotations(typeDef))
-      }
-    }
-
-    if (Set(QUERY_TYPE, MUTATION_TYPE, SUBSCRIPTION_TYPE).size != 3) {
-      astError(webapi.id, "Root types cannot have duplicated names", toAnnotations(schemaNode))
-    }
-  }
-
-
-  private def parseTopLevelType(objTypeDef: Node, queryType: RootTypes.Value): Seq[EndPoint] = {
-    GraphQLRootTypeParser(objTypeDef, queryType).parse { ep: EndPoint =>
-      ep.adopted(webapi.id)
-      val oldEndpoints = webapi.endPoints
-      webapi.withEndPoints(oldEndpoints ++ Seq(ep))
-    }
-  }
-
 }

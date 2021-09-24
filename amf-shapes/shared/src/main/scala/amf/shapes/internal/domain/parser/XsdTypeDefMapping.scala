@@ -83,6 +83,7 @@ object TypeDefXsdMapping {
   def typeDef(iri: String): TypeDef =
     iri match {
       case s if s == DataType.String       => StrType
+      case s if s == DataType.Decimal      => FloatType
       case s if s == DataType.Integer      => IntType
       case s if s == DataType.Long         => LongType
       case s if s == DataType.Float        => FloatType
