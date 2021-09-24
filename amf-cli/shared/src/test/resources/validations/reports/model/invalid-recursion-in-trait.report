@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/core#recursive-shape
   Message: Error recursive shape
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-recursion-in-trait.raml#/declarations/types/DirectRecursionCompanion
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-recursion-in-trait.raml#/declares/trait/conformance/applied/returns/resp/200/payload/application%2Fjson/shape/schema/inherits/shape/DirectRecursion/shape/DirectRecursion/property/property/telecom/shape/DirectRecursionCompanion
   Property: 
   Range: [(7,2)-(11,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-recursion-in-trait.raml

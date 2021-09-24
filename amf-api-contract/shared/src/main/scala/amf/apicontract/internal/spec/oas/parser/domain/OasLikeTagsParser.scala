@@ -10,7 +10,7 @@ case class OasLikeTagsParser(parentId: String, entry: YMapEntry)(implicit val ct
     extends SpecParserOps {
 
   def parse(): Seq[Tag] = {
-    val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(parentId)).parse())
+    val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag).parse())
     validateDuplicated(tags, entry)
     tags
   }
@@ -24,7 +24,7 @@ case class OasLikeTagsParser(parentId: String, entry: YMapEntry)(implicit val ct
     val namesWithTag = groupedByName.collect { case (_, ys) if ys.lengthCompare(1) > 0 => ys.tail }.flatten
     namesWithTag.foreach {
       case (name, tag) =>
-        ctx.eh.violation(DuplicatedTags, tag.id, s"Tag with name '$name' was found duplicated", tag.annotations)
+        ctx.eh.violation(DuplicatedTags, tag, s"Tag with name '$name' was found duplicated", tag.annotations)
     }
   }
 

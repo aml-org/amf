@@ -16,15 +16,15 @@ import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
-case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
-    extends AsyncBindingsParser(entryLike, parent) {
+case class AsyncMessageBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)
+    extends AsyncBindingsParser(entryLike) {
 
   override type Binding  = MessageBinding
   override type Bindings = MessageBindings
   override protected val bindingsField: Field = MessageBindingsModel.Bindings
 
   override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
-    AsyncMessageBindingsParser(entryLike, parent)
+    AsyncMessageBindingsParser(entryLike)
 
   override protected def createBindings(): MessageBindings = MessageBindings()
 
@@ -35,7 +35,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
       .map(messageBindings =>
         nameAndAdopt(messageBindings.link(AmfScalar(label), entryLike.annotations, Annotations.synthesized()),
                      entryLike.key))
-      .getOrElse(remote(fullRef, entryLike, parent))
+      .getOrElse(remote(fullRef, entryLike))
   }
 
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): MessageBindings =
@@ -43,53 +43,53 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
   override protected def parseAmqp(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): MessageBinding = {
-    val binding = Amqp091MessageBinding(Annotations(entry)).adopted(parent)
+    val binding = Amqp091MessageBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("contentEncoding", Amqp091MessageBindingModel.ContentEncoding in binding)
     map.key("messageType", Amqp091MessageBindingModel.MessageType in binding)
     parseBindingVersion(binding, Amqp091MessageBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "amqpMessageBinding")
+    ctx.closedShape(binding, map, "amqpMessageBinding")
 
     binding
   }
 
   override protected def parseHttp(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): MessageBinding = {
-    val binding = HttpMessageBinding(Annotations(entry)).adopted(parent)
+    val binding = HttpMessageBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("headers", parseSchema(HttpMessageBindingModel.Headers, binding, _, binding.id))
     parseBindingVersion(binding, HttpMessageBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "httpMessageBinding")
+    ctx.closedShape(binding, map, "httpMessageBinding")
 
     binding
   }
 
   override protected def parseKafka(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): MessageBinding = {
-    val binding = KafkaMessageBinding(Annotations(entry)).adopted(parent)
+    val binding = KafkaMessageBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("key", entry => parseSchema(KafkaMessageBindingModel.MessageKey, binding, entry, binding.id + "/key"))
     parseBindingVersion(binding, KafkaMessageBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "kafkaMessageBinding")
+    ctx.closedShape(binding, map, "kafkaMessageBinding")
 
     binding
   }
 
   override protected def parseMqtt(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): MessageBinding = {
-    val binding = MqttMessageBinding(Annotations(entry)).adopted(parent)
+    val binding = MqttMessageBinding(Annotations(entry))
 
     val map = entry.value.as[YMap]
 
     parseBindingVersion(binding, MqttMessageBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "mqttMessageBinding")
+    ctx.closedShape(binding, map, "mqttMessageBinding")
 
     binding
   }

@@ -16,7 +16,7 @@ import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
-abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
+abstract class AsyncBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)
     extends SpecParserOps {
 
   protected type Binding <: DomainElement
@@ -37,13 +37,13 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
     val map: YMap          = entryLike.asMap
     val bindings: Bindings = createBindings()
     nameAndAdopt(bindings, entryLike.key)
-    ctx.closedShape(bindings.id, map, "bindings")
+    ctx.closedShape(bindings, map, "bindings")
     parseBindings(bindings, map)
   }
 
   protected def parseBindings(obj: Bindings, map: YMap): Bindings = {
     val bindings: Seq[Binding] = parseElements(map, obj.id)
-    obj.set(bindingsField, AmfArray(bindings, Annotations(map)), Annotations(map))
+    obj.setWithoutId(bindingsField, AmfArray(bindings, Annotations(map)), Annotations(map))
   }
 
   protected def createBindings(): Bindings
@@ -54,12 +54,12 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
     key foreach { k =>
       m.withName(k.as[YScalar].text, Annotations(k))
     }
-    m.adopted(parent).add(entryLike.annotations)
+    m.add(entryLike.annotations)
   }
 
   protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): Bindings
 
-  protected def remote(fullRef: String, entryLike: YMapEntryLike, parent: String)(
+  protected def remote(fullRef: String, entryLike: YMapEntryLike)(
       implicit ctx: AsyncWebApiContext): Bindings = {
     ctx.obtainRemoteYNode(fullRef) match {
       case Some(bindingsNode) =>
@@ -130,12 +130,12 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
   protected def parseEmptyBinding(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding = {
     val binding = EmptyBinding(Annotations(entry))
 
-    validateEmptyMap(entry.value, binding.id, entry.key.as[String])
+    validateEmptyMap(entry.value, binding, entry.key.as[String])
 
     binding.asInstanceOf[Binding]
   }
 
-  private def validateEmptyMap(value: YNode, node: String, `type`: String)(implicit ctx: AsyncWebApiContext): Unit =
+  private def validateEmptyMap(value: YNode, node: AmfObject, `type`: String)(implicit ctx: AsyncWebApiContext): Unit =
     if (value.as[YMap].entries.nonEmpty) {
       ctx.eh.violation(ParserSideValidations.NonEmptyBindingMap,
                        node,
@@ -151,7 +151,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
   }
 
   private def setDefaultBindingVersionValue(binding: BindingVersion, field: Field) = {
-    binding.set(field, AmfScalar("latest"), Annotations.synthesized())
+    binding.setWithoutId(field, AmfScalar("latest"), Annotations.synthesized())
   }
 
   private def bindingVersionIsEmpty(binding: BindingVersion) = {
@@ -166,14 +166,14 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
                   JSONSchemaDraft7SchemaVersion)(WebApiShapeParserContextAdapter(ctx))
       .parse()
       .foreach { shape =>
-        binding.set(field, shape, Annotations(entry))
-        shape.adopted(parent)
+        binding.setWithoutId(field, shape, Annotations(entry))
+        shape
       }
   }
 
   private def setBindingType(entry: YMapEntry, binding: Binding): Binding = {
     val node = ScalarNode(entry.key)
-    binding.set(BindingType.Type, node.string(), Annotations(entry.key))
+    binding.setWithoutId(BindingType.Type, node.string(), Annotations(entry.key))
   }
 }
 

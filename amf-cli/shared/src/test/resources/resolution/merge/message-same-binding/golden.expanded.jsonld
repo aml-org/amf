@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "testId/message",
+        "@id": "testId/resp/message",
         "@type": [
           "http://a.ml/vocabularies/apiContract#Response",
           "http://a.ml/vocabularies/apiContract#Message",
@@ -22,14 +22,14 @@
         ],
         "http://a.ml/vocabularies/apiBinding#binding": [
           {
-            "@id": "target/message/message-bindings",
+            "@id": "target/message-bindings",
             "@type": [
               "http://a.ml/vocabularies/apiBinding#MessageBindings",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/apiBinding#bindings": [
               {
-                "@id": "target/message/message-bindings/kafka-message",
+                "@id": "target/message-bindings/kafka-message",
                 "@type": [
                   "http://a.ml/vocabularies/apiBinding#KafkaMessageBinding",
                   "http://a.ml/vocabularies/apiBinding#MessageBinding",
@@ -37,7 +37,7 @@
                 ],
                 "http://a.ml/vocabularies/apiBinding#messageKey": [
                   {
-                    "@id": "target/message/message-bindings/kafka-message/scalar/schema",
+                    "@id": "target/message-bindings/bindings/kafka-message/scalar/schema",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -57,11 +57,11 @@
                     ],
                     "http://www.w3.org/ns/shacl#in": [
                       {
-                        "@id": "target/message/message-bindings/kafka-message/scalar/schema/list",
+                        "@id": "target/message-bindings/bindings/kafka-message/scalar/schema/list",
                         "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                         "http://www.w3.org/2000/01/rdf-schema#_1": [
                           {
-                            "@id": "null/enum/scalar_1",
+                            "@id": "patch/message-bindings/bindings/kafka-message/scalar/schema/in/scalar_1",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",

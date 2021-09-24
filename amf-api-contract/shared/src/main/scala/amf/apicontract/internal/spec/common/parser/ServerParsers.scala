@@ -31,9 +31,9 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
         (ServerModel.Url in server).allowingAnnotations(entry)
 
-        checkBalancedParams(value, entry.value, server.id, ServerModel.Url.value.iri(), ctx)
+        checkBalancedParams(value, entry.value, server, ServerModel.Url.value.iri(), ctx)
         if (!TemplateUri.isValid(value))
-          ctx.eh.violation(InvalidServerPath, api.id, TemplateUri.invalidMsg(value), entry.value.location)
+          ctx.eh.violation(InvalidServerPath, api, TemplateUri.invalidMsg(value), entry.value.location)
 
         map.key("serverDescription".asRamlAnnotation, ServerModel.Description in server)
 
@@ -41,7 +41,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         checkForUndefinedVersion(entry, variables)
         parseBaseUriParameters(server, TemplateUri.variables(value))
 
-        api.set(WebApiModel.Servers,
+        api.setWithoutId(WebApiModel.Servers,
                 AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
                 Annotations(entry))
       case None =>
@@ -49,14 +49,14 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
           .key("baseUriParameters")
           .foreach { entry =>
             ctx.eh.violation(ParametersWithoutBaseUri,
-                             api.id,
+                             api,
                              "'baseUri' not defined and 'baseUriParameters' defined.",
                              entry.location)
 
-            val server = Server().adopted(api.id)
+            val server = Server()
             parseBaseUriParameters(server, Nil)
 
-            api.set(WebApiModel.Servers,
+            api.setWithoutId(WebApiModel.Servers,
                     AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
                     Annotations(entry))
           }
@@ -81,17 +81,17 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         val flatten: Seq[Parameter] = getOrCreateVariableParams(orderedVariables, parameters, server)
         val (_, unused)             = parameters.partition(flatten.contains(_))
         val finalParams             = flatten ++ unused
-        server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
+        server.setWithoutId(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
         unused.foreach { p =>
           ctx.eh.warning(UnusedBaseUriParameter,
-                         p.id,
+                         p,
                          None,
                          s"Unused base uri parameter ${p.name.value()}",
                          p.position(),
                          p.location())
         }
       case None if orderedVariables.nonEmpty =>
-        server.set(ServerModel.Variables, AmfArray(orderedVariables.map(buildParamFromVar(_, server.id))))
+        server.setWithoutId(ServerModel.Variables, AmfArray(orderedVariables.map(buildParamFromVar(_, server.id))))
       case _ => // ignore
     }
 
@@ -109,7 +109,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   private def parseExplicitParameters(entry: YMapEntry, server: Server) = {
     entry.value.tagType match {
       case YType.Map =>
-        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id), binding = "path")
+        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "path")
           .parse()
       case YType.Null => Nil
       case _ =>
@@ -120,7 +120,6 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
   private def buildParamFromVar(v: String, serverId: String) = {
     val param = Parameter().withName(v).syntheticBinding("path").withRequired(true)
-    param.adopted(serverId)
     param.withScalarSchema(v).withDataType(DataType.String)
     param.annotations += SynthesizedField()
     param
@@ -130,7 +129,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     val webapiHasVersion = map.key("version").isDefined
     if (variables.contains("version") && !webapiHasVersion) {
       ctx.eh.warning(ImplicitVersionParameterWithoutApiVersion,
-                     api.id,
+                     api,
                      "'baseUri' defines 'version' variable without the API defining one",
                      entry.location)
     }
@@ -143,7 +142,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     val versionParameterExists = parameters.exists(_.name.option().exists(name => name.equals("version")))
     if (orderedVariables.contains("version") && versionParameterExists && apiHasVersion) {
       ctx.eh.warning(InvalidVersionBaseUriParameterDefinition,
-                     api.id,
+                     api,
                      "'version' baseUriParameter can't be defined if present in baseUri as variable",
                      entry.location)
     }
@@ -171,7 +170,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         basePath = entry.value.as[String]
 
         if (!basePath.startsWith("/")) {
-          ctx.eh.violation(InvalidBasePath, api.id, "'basePath' property must start with '/'", entry.value.location)
+          ctx.eh.violation(InvalidBasePath, api, "'basePath' property must start with '/'", entry.value.location)
           basePath = "/" + basePath
         }
       }
@@ -188,7 +187,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         "baseUriParameters".asOasExtension,
         entry => {
           val uriParameters =
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id), binding = "path")(
+            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "path")(
               toRaml(ctx)).parse()
 
           server.set(ServerModel.Variables, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))

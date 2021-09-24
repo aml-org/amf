@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#SecurityScheme-type-pattern
   Message: Security scheme type should be one of the supported ones
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-unknown
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declares/scheme/invalid-unknown
   Property: http://a.ml/vocabularies/security#type
   Range: [(19,12)-(19,20)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml
@@ -18,7 +18,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: OAS security scheme type detected in RAML spec
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-type-open-id
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declares/scheme/invalid-type-open-id
   Property: http://a.ml/vocabularies/security#type
   Range: [(7,10)-(7,23)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml
@@ -26,7 +26,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: OAS security scheme type detected in RAML spec
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-type-http
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declares/scheme/invalid-type-http
   Property: http://a.ml/vocabularies/security#type
   Range: [(11,10)-(11,14)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml
@@ -34,7 +34,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#cross-security-warning
   Message: OAS security scheme type detected in RAML spec
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declarations/securitySchemes/invalid-api-key
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml#/declares/scheme/invalid-api-key
   Property: http://a.ml/vocabularies/security#type
   Range: [(15,10)-(15,16)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-security.raml

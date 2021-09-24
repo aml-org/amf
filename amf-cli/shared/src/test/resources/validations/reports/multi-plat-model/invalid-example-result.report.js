@@ -10,7 +10,7 @@ Level: Violation
 should have required property 'B'
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/raml/nested-json-schema-external-fragment/api.raml#/web-api/end-points/%2FsomeEndpoint/get/200/application%2Fjson/application%2Fjson/example/default-example
-  Property: file://amf-cli/shared/src/test/resources/validations/raml/nested-json-schema-external-fragment/api.raml#/web-api/end-points/%2FsomeEndpoint/get/200/application%2Fjson/application%2Fjson/example/default-example
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/nested-json-schema-external-fragment/api.raml#/web-api/endpoint/%2FsomeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/examples/example/default-example
+  Property: file://amf-cli/shared/src/test/resources/validations/raml/nested-json-schema-external-fragment/api.raml#/web-api/endpoint/%2FsomeEndpoint/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/application%2Fjson/examples/example/default-example
   Range: [(13,24)-(15,25)]
   Location: file://amf-cli/shared/src/test/resources/validations/raml/nested-json-schema-external-fragment/api.raml

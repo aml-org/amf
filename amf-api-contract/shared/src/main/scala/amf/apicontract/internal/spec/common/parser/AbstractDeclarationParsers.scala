@@ -74,18 +74,17 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
                      entryValue.location)
 
     ctx.link(entryValue) match {
-      case Left(link) => parseReferenced(declaration, link, entryValue, map.annotations).adopted(parent)
+      case Left(link) => parseReferenced(declaration, link, entryValue, map.annotations)
       case Right(value) =>
         val variables = AbstractVariables()
         named(declaration)
-        declaration.adopted(parent)
         val filteredNode: YNode = value.tagType match {
           case YType.Map =>
             value
               .as[YMap]
               .key("usage", { entry =>
                 val usage = ScalarNode(entry.value)
-                declaration.set(AbstractDeclarationModel.Description, usage.string(), Annotations(entry))
+                declaration.setWithoutId(AbstractDeclarationModel.Description, usage.string(), Annotations(entry))
               })
             val fields = value.as[YMap].entries.filter(_.key.as[YScalar].text != "usage")
             YMap(fields, fields.headOption.map(_.sourceName).getOrElse(""))
@@ -93,13 +92,13 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
             value
         }
         val dataNode =
-          DataNodeParser(filteredNode, variables, Some(declaration.id))(WebApiShapeParserContextAdapter(ctx)).parse()
-        declaration.set(AbstractDeclarationModel.DataNode, dataNode, Annotations(filteredNode))
+          DataNodeParser(filteredNode, variables)(WebApiShapeParserContextAdapter(ctx)).parse()
+        declaration.setWithoutId(AbstractDeclarationModel.DataNode, dataNode, Annotations(filteredNode))
 
         variables.ifNonEmpty(
           p =>
             declaration
-              .set(AbstractDeclarationModel.Variables, AmfArray(p, Annotations(value.value)), Annotations(value)))
+              .setWithoutId(AbstractDeclarationModel.Variables, AmfArray(p, Annotations(value.value)), Annotations(value)))
 
         declaration
     }
@@ -108,7 +107,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
   private def named(declaration: AbstractDeclaration): Unit = {
     map.key.foreach { key =>
       val element = ScalarNode(key).text()
-      declaration.set(AbstractDeclarationModel.Name, element, element.annotations)
+      declaration.setWithoutId(AbstractDeclarationModel.Name, element, element.annotations)
     }
   }
 

@@ -53,7 +53,7 @@ class Request(override val fields: Fields, override val annotations: Annotations
   override def meta: RequestModel.type = RequestModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/" + name.option().getOrElse("request").urlComponentEncoded
+  private[amf] override def componentId: String = "/request" + name.option().map("/" + _).getOrElse("").urlComponentEncoded
 
   override def linkCopy(): Request = Request().withId(id)
 

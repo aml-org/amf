@@ -18,7 +18,7 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
   private val node = entryLike.value
   def parse(): Example = {
     if (example.fields.entry(ExampleModel.Strict).isEmpty) {
-      example.set(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations.synthesized())
+      example.setWithoutId(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations.synthesized())
     }
 
     val (targetNode, mutTarget) = node match {
@@ -28,7 +28,7 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
           .get(refUrl)
           .foreach { e =>
             example.add(ExternalReferenceUrl(refUrl))
-            example.withReference(e.encoded.id)
+            example.callAfterAdoption{() => example.withReference(e.encoded.id)}
             example.set(ExternalSourceElementModel.Location, e.location.getOrElse(ctx.loc))
           }
         (mut.target.getOrElse(node), true)
@@ -39,9 +39,9 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
 
     node.toOption[YScalar] match {
       case Some(_) if node.tagType == YType.Null =>
-        example.set(ExampleModel.Raw, AmfScalar("null"), Annotations.synthesized())
+        example.setWithoutId(ExampleModel.Raw, AmfScalar("null"), Annotations.synthesized())
       case Some(scalar) =>
-        example.set(ExampleModel.Raw, AmfScalar(scalar.text), Annotations.synthesized())
+        example.setWithoutId(ExampleModel.Raw, AmfScalar(scalar.text), Annotations.synthesized())
       case _ =>
         example.set(ExampleModel.Raw, AmfScalar(YamlRender.render(targetNode)), Annotations.synthesized())
     }
@@ -63,7 +63,6 @@ case class ExamplesDataParser(seq: YSequence, options: ExampleOptions, parentId:
     val counter = new IdCounter()
     seq.nodes.map { n =>
       val exa = Example(n).withName(counter.genId("default-example"))
-      exa.adopted(parentId)
       ExampleDataParser(YMapEntryLike(n), exa, options).parse()
     }
   }

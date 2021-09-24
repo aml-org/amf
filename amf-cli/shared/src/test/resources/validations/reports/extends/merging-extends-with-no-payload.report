@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Payload-mediaType-minCount
   Message: Payload media type is mandatory
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/merging-extends-with-no-payload.raml#/web-api/end-points/%2Fendpoint1/post/request/default
+  Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/merging-extends-with-no-payload.raml#/web-api/endpoint/%2Fendpoint1/supportedOperation/post/expects/request/payload/default
   Property: http://a.ml/vocabularies/core#mediaType
   Range: [(15,4)-(16,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/merging-extends-with-no-payload.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Payload-mediaType-minCount
   Message: Payload media type is mandatory
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/merging-extends-with-no-payload.raml#/web-api/end-points/%2Fendpoint2/post/request/default
+  Target: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/merging-extends-with-no-payload.raml#/web-api/endpoint/%2Fendpoint2/supportedOperation/post/expects/request/payload/default
   Property: http://a.ml/vocabularies/core#mediaType
   Range: [(19,4)-(20,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/extends/merging-payloads/merging-extends-with-no-payload.raml

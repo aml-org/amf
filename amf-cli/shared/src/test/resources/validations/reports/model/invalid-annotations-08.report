@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property '(someAnnotation)' not supported in a RAML 0.8 webApi node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml/web-api
   Property: 
   Range: [(3,0)-(4,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property '(thisOtherOne)' not supported in a RAML 0.8 endPoint node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api/end-points/%2Fthis-one
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api/endpoint/%2Fthis-one
   Property: 
   Range: [(5,2)-(7,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property '(why)' not supported in a RAML 0.8 operation node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api/end-points/%2Fthis-one/get
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api/endpoint/%2Fthis-one/supportedOperation/get
   Property: 
   Range: [(8,4)-(11,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml
@@ -32,7 +32,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'annotationTypes' not supported in a RAML 0.8 webApi node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml/web-api
   Property: 
   Range: [(11,0)-(12,24)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml

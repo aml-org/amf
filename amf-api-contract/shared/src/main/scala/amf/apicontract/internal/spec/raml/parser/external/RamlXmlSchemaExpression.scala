@@ -36,18 +36,6 @@ case class RamlXmlSchemaExpression(key: YNode,
   override val shapeCtx: ShapeParserContext = WebApiShapeParserContextAdapter(ctx)
 
   override def parseValue(origin: ValueAndOrigin): SchemaShape = {
-    val (maybeReferenceId, maybeLocation, maybeFragmentLabel): (Option[String], Option[String], Option[String]) =
-      origin.originalUrlText.map(ReferenceFragmentPartition.apply) match {
-        case Some((uriWithoutFragment, fragment)) =>
-          val optionalReference = ctx.declarations.fragments.get(uriWithoutFragment)
-          val optionalReferenceId =
-            optionalReference.map(
-              _.encoded.id + fragment.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse(""))
-          val optionalLocation = optionalReference.flatMap(_.location)
-          (optionalReferenceId, optionalLocation, fragment)
-        case None => (None, None, None)
-      }
-
     val parsed = value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
@@ -68,10 +56,26 @@ case class RamlXmlSchemaExpression(key: YNode,
         val scalar = value.as[YScalar]
         buildSchemaShapeFrom(scalar)
     }
-    maybeReferenceId match {
-      case Some(r) => parsed.withReference(r)
-      case _       => parsed.annotations ++= Annotations(value)
-    }
+
+    val (maybeLocation, maybeFragmentLabel): (Option[String], Option[String]) =
+      origin.originalUrlText.map(ReferenceFragmentPartition.apply) match {
+        case Some((uriWithoutFragment, fragment)) =>
+          val optionalReference = ctx.declarations.fragments.get(uriWithoutFragment)
+          optionalReference match {
+            case Some(ref) =>
+              parsed.callAfterAdoption{() =>
+                val refId = ref.encoded.id + fragment.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse("")
+                parsed.withReference(refId)
+              }
+            case None => parsed.annotations ++= Annotations(value)
+          }
+          val optionalLocation = optionalReference.flatMap(_.location)
+          (optionalLocation, fragment)
+        case None =>
+          parsed.annotations ++= Annotations(value)
+          (None, None)
+      }
+
     origin.originalUrlText.foreach(url => parsed.annotations += ExternalReferenceUrl(url))
     parsed.set(SchemaShapeModel.Location, maybeLocation.getOrElse(ctx.loc), Annotations.synthesized())
     maybeFragmentLabel.foreach { parsed.annotations += ExternalFragmentRef(_) }
@@ -80,7 +84,7 @@ case class RamlXmlSchemaExpression(key: YNode,
 
   private def buildSchemaShapeFrom(scalar: YScalar) = {
     val shape = SchemaShape()
-      .set(ExternalSourceElementModel.Raw, AmfScalar(scalar.text, Annotations(scalar)), Annotations.inferred())
+      .setWithoutId(ExternalSourceElementModel.Raw, AmfScalar(scalar.text, Annotations(scalar)), Annotations.inferred())
       .set(SchemaShapeModel.MediaType, `application/xml`, Annotations.synthesized())
     shape.withName(key.as[String])
     adopt(shape)
@@ -97,7 +101,7 @@ case class RamlXmlSchemaExpression(key: YNode,
           NodeDataNodeParser(entry.value, parsedSchema.id, quiet = false)(WebApiShapeParserContextAdapter(ctx)).parse()
         parsedSchema.setDefaultStrValue(entry)
         dataNodeResult.dataNode.foreach { dataNode =>
-          parsedSchema.set(ShapeModel.Default, dataNode, Annotations(entry))
+          parsedSchema.setWithoutId(ShapeModel.Default, dataNode, Annotations(entry))
         }
       }
     )
@@ -118,7 +122,7 @@ case class RamlXmlSchemaExpression(key: YNode,
 
   private def throwInvalidXmlSchemaFormat(shape: SchemaShape) = {
     ctx.eh.violation(InvalidXmlSchemaType,
-                     shape.id,
+                     shape,
                      "Cannot parse XML Schema expression out of a non string value",
                      value.location)
   }

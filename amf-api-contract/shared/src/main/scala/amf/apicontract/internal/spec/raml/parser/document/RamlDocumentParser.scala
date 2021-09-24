@@ -5,24 +5,20 @@ import amf.apicontract.client.scala.model.document.{APIContractProcessingData, E
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Response, Tag}
+import amf.apicontract.internal.annotations.ExtendsReference
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
 import amf.apicontract.internal.metamodel.domain.templates.{ResourceTypeModel, TraitModel}
 import amf.apicontract.internal.spec.common.parser.{WebApiShapeParserContextAdapter, _}
 import amf.apicontract.internal.spec.common.{OasParameter, RamlWebApiDeclarations, WebApiDeclarations}
-import amf.apicontract.internal.spec.oas.parser.domain.{
-  LicenseParser,
-  OasResponseParser,
-  OrganizationParser,
-  TagsParser
-}
+import amf.apicontract.internal.spec.oas.parser.domain.{LicenseParser, OasResponseParser, OrganizationParser, TagsParser}
 import amf.apicontract.internal.spec.raml.parser.context.{ExtensionLikeWebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.document.RamlAnnotationTargets.targetsFor
 import amf.apicontract.internal.spec.spec.toOas
 import amf.apicontract.internal.validation.definitions.ParserSideValidations._
 import amf.core.client.scala.model.document.{BaseUnit, Document, ExtensionLike, Module}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.annotations._
 import amf.core.internal.metamodel.Field
@@ -39,11 +35,7 @@ import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.RamlWebApiContextType
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, RamlCreativeWorkParser, RamlScalarNode, YMapEntryLike}
 import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, RamlTypeEntryParser, RamlTypeSyntax, StringDefaultType}
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
-  ExclusiveSchemasType,
-  InvalidFragmentType,
-  InvalidTypeDefinition
-}
+import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{ExclusiveSchemasType, InvalidFragmentType, InvalidTypeDefinition}
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 
@@ -103,7 +95,7 @@ case class ExtensionLikeParser(root: Root, spec: Spec)(implicit override val ctx
     reference.annotations
       .find(classOf[Aliases])
       .foreach(_.aliases.foreach { alias =>
-        val fullUrl = alias._2._1
+        val fullUrl = alias._2.fullUrl
         otherReferences.find(_.location().exists(_.equals(fullUrl))) match {
           case Some(library: Module) =>
             val libraryDeclarations = collector.getOrCreateLibrary(alias._1)
@@ -115,7 +107,7 @@ case class ExtensionLikeParser(root: Root, spec: Spec)(implicit override val ctx
     exLikeOrDocument.foreach(collectAncestorsDeclarationsAndReferences(_, collector))
   }
 
-  private def parseExtension(document: Document, field: Field): Unit = {
+  private def parseExtension(document: ExtensionLike[_], field: Field): Unit = {
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
     UsageParser(map, document).parse()
@@ -125,9 +117,10 @@ case class ExtensionLikeParser(root: Root, spec: Spec)(implicit override val ctx
       .foreach(e => {
         root.references
           .find(_.origin.url == e.value.as[String])
-          .foreach(extend =>
-            document
-              .set(field, AmfScalar(extend.unit.id, Annotations(e.value)), Annotations(e)))
+          .foreach{ extend =>
+            document.callAfterAdoption{() =>
+              document.setWithoutId(field, AmfScalar(extend.unit.id, Annotations(e.value)), Annotations(e) += ExtendsReference(extend.origin.url))}
+          }
       })
   }
 }
@@ -158,17 +151,14 @@ abstract class RamlDocumentParser(root: Root, spec: Spec)(implicit val ctx: Raml
     extends RamlBaseDocumentParser {
 
   def parseDocument[T <: Document](document: T): T = {
-    document
-      .adopted(root.location)
-      .withLocation(root.location)
-      .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
+    document.withLocation(root.location).withProcessingData(APIContractProcessingData().withSourceSpec(spec))
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
     val references = ReferencesParser(document, root.location, "uses", map, root.references).parse()
     parseDeclarations(root, map)
     val api = parseWebApi(map).add(SourceSpec(ctx.spec))
-    document.set(DocumentModel.Encodes, api, Annotations.inferred())
+    document.setWithoutId(DocumentModel.Encodes, api, Annotations.inferred())
 
     addDeclarationsToModel(document)
     if (references.nonEmpty)
@@ -184,9 +174,9 @@ abstract class RamlDocumentParser(root: Root, spec: Spec)(implicit val ctx: Raml
 
   protected def parseWebApi(map: YMap): WebApi = {
 
-    val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
+    val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node)
 
-    ctx.closedShape(api.id, map, "webApi")
+    ctx.closedShape(api, map, "webApi")
 
     map.key("title", (WebApiModel.Name in api).allowingAnnotations)
 
@@ -205,8 +195,8 @@ abstract class RamlDocumentParser(root: Root, spec: Spec)(implicit val ctx: Raml
             AmfArray(Seq(RamlScalarNode(entry.value).text()), Annotations(entry.value))
         }
 
-        api.set(WebApiModel.ContentType, value, annotations)
-        api.set(WebApiModel.Accepts, value, annotations)
+        api.setWithoutId(WebApiModel.ContentType, value, annotations)
+        api.setWithoutId(WebApiModel.Accepts, value, annotations)
       }
     )
 
@@ -219,8 +209,8 @@ abstract class RamlDocumentParser(root: Root, spec: Spec)(implicit val ctx: Raml
     map.key(
       "tags".asRamlAnnotation,
       entry => {
-        val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
-        api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+        val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag).parse())
+        api.setWithoutId(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
       }
     )
 
@@ -229,7 +219,7 @@ abstract class RamlDocumentParser(root: Root, spec: Spec)(implicit val ctx: Raml
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
         entries.foreach(entry => ctx.factory.endPointParser(entry, api.withEndPoint, None, endpoints, false).parse())
-        api.set(WebApiModel.EndPoints, AmfArray(endpoints, Annotations.virtual()), Annotations.inferred())
+        api.setWithoutId(WebApiModel.EndPoints, AmfArray(endpoints, Annotations.virtual()), Annotations.inferred())
         ctx.mergeAllOperationContexts()
       }
     )
@@ -240,7 +230,7 @@ abstract class RamlDocumentParser(root: Root, spec: Spec)(implicit val ctx: Raml
     map.key(
       "documentation",
       entry => {
-        api.set(
+        api.setWithoutId(
           WebApiModel.Documentations,
           AmfArray(UserDocumentationsParser(entry.value.as[Seq[YNode]], ctx.declarations, api.id).parse(),
                    Annotations(entry.value)),
@@ -273,10 +263,10 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
                   entry,
                   scheme => {
                     val name = entry.key.as[YScalar].text
-                    scheme.set(SecuritySchemeModel.Name,
+                    scheme.setWithoutId(SecuritySchemeModel.Name,
                                AmfScalar(name, Annotations(entry.key.value)),
                                Annotations(entry.key))
-                    scheme.adopted(parent)
+                    scheme
                   }
                 )
                 .parse()
@@ -341,7 +331,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
           .foreach { e =>
             val node = ScalarNode(e.key)
             val res = OasResponseParser(e.value.as[YMap], { r: Response =>
-              r.withName(node).adopted(parentPath)
+              r.withName(node)
               r.annotations ++= Annotations(e)
             })(toOas(ctx))
               .parse()
@@ -367,10 +357,9 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
                 val customProperty = AnnotationTypesParser(
                   entry,
                   customProperty => {
-                    customProperty.set(CustomDomainPropertyModel.Name,
+                    customProperty.setWithoutId(CustomDomainPropertyModel.Name,
                                        AmfScalar(typeName, Annotations(entry.key.value)),
                                        Annotations(entry.key))
-                    customProperty.adopted(customProperties)
                   }
                 )
                 ctx.declarations += customProperty.add(DeclaredElement())
@@ -404,8 +393,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
             val parser = Raml10TypeParser(
               entry,
               shape => {
-                shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(entry.key.value)), Annotations(entry.key))
-                shape.adopted(parent)
+                shape.setWithoutId(ShapeModel.Name, AmfScalar(typeName, Annotations(entry.key.value)), Annotations(entry.key))
               }
             )(WebApiShapeParserContextAdapter(ctx))
             parser.parse() match {
@@ -468,7 +456,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
                     .parse() // todo: links??
 
                 ctx.eh.violation(InvalidParameterType,
-                                 parameter.domainElement.id,
+                                 parameter.domainElement,
                                  "Map needed to parse a parameter declaration",
                                  e.location)
                 parameter
@@ -491,7 +479,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
           entry.value.tagType match {
             case YType.Str =>
               val value = ScalarNode(entry.value)
-              baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
+              baseUnit.setWithoutId(BaseUnitModel.Usage, value.string(), Annotations(entry))
             case _ =>
           }
         }
@@ -541,7 +529,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
           val domainProp = CustomDomainProperty(ast)
           adopt(domainProp)
           ctx.eh.violation(InvalidAnnotationType,
-                           domainProp.id,
+                           domainProp,
                            "Invalid value type for annotation types parser, expected map or scalar reference",
                            ast.value.location)
           domainProp
@@ -562,16 +550,16 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
             case _ =>
               Raml10TypeParser(YMapEntryLike(ast.value),
                                ast.key.as[YScalar].text,
-                               shape => shape.adopted(domainProp.id),
+                               shape => Unit,
                                isAnnotation = true,
                                StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
                 .parse() match {
                 case Some(schema) =>
-                  tracking(schema, domainProp.id)
-                  domainProp.set(CustomDomainPropertyModel.Schema, schema, Annotations.inferred())
+                  tracking(schema, domainProp)
+                  domainProp.setWithoutId(CustomDomainPropertyModel.Schema, schema, Annotations.inferred())
                 case _ =>
                   ctx.eh.violation(DeclarationNotFound,
-                                   domainProp.id,
+                                   domainProp,
                                    "Could not find declared annotation link in references",
                                    scalar.location)
                   domainProp
@@ -582,7 +570,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
   case class AnnotationTypesParser(ast: YPart, annotationName: String, map: YMap, adopt: CustomDomainProperty => Unit) {
 
-    def checkValidTarget(entry: YMapEntry, nodeId: String): Unit = {
+    def checkValidTarget(entry: YMapEntry, node: AmfObject): Unit = {
       val targets = entry.value.value match {
         case value: YScalar =>
           Seq(value.text)
@@ -614,7 +602,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
         if (!validTargets.contains(target))
           ctx.eh.warning(
             InvalidAllowedTargets,
-            nodeId,
+            node,
             s"$target is not a valid target",
             entry.value.location
           )
@@ -641,13 +629,13 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
         case Some(annotationType) =>
           Raml10TypeParser(YMapEntryLike(annotationType),
                            name.getOrElse("schema"),
-                           shape => shape.withName("schema").adopted(custom.id),
+                           shape => shape.withName("schema"),
                            isAnnotation = true,
                            StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
             .parse()
             .foreach({ shape =>
-              tracking(shape, custom.id)
-              custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(annotationType))
+              tracking(shape, custom)
+              custom.setWithoutId(CustomDomainPropertyModel.Schema, shape, Annotations(annotationType))
             })
 
           map.key(
@@ -656,18 +644,18 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
               val annotations = Annotations(entry)
               val targets: AmfArray = entry.value.tagType match {
                 case YType.Seq =>
-                  checkValidTarget(entry, custom.id)
+                  checkValidTarget(entry, custom)
                   ArrayNode(entry.value).string()
                 case YType.Map =>
                   ctx.eh.violation(
                     InvalidAllowedTargetsType,
-                    custom.id,
+                    custom,
                     "Property 'allowedTargets' in a RAML annotation can only be a valid scalar or an array of valid scalars",
                     entry.value.location
                   )
                   AmfArray(Seq())
                 case _ =>
-                  checkValidTarget(entry, custom.id)
+                  checkValidTarget(entry, custom)
                   annotations += SingleValueArray()
                   AmfArray(Seq(ScalarNode(entry.value).string()))
               }
@@ -681,13 +669,13 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                 case nodeType => AmfScalar(nodeType.toString, nodeType.annotations)
               })
 
-              custom.set(CustomDomainPropertyModel.Domain, AmfArray(targetUris, targets.annotations), annotations)
+              custom.setWithoutId(CustomDomainPropertyModel.Domain, AmfArray(targetUris, targets.annotations), annotations)
             }
           )
 
           map.key("description", entry => {
             val value = ScalarNode(entry.value)
-            custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
+            custom.setWithoutId(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
           })
 
           AnnotationParser(custom, map)(WebApiShapeParserContextAdapter(ctx)).parse()
@@ -695,7 +683,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
           custom
         case None =>
           ctx.eh.violation(InvalidAnnotationType,
-                           custom.id,
+                           custom,
                            "Cannot parse annotation type fragment, cannot find information map",
                            ast.location)
           custom

@@ -1,8 +1,9 @@
-oneOf:
-  -
-    $ref: "#/components/schemas/APIResponse"
-  -
-    not:
-      type: string
-  -
-    $ref: external.json#/first
+
+  oneOf:
+    -
+      $ref: "#/components/schemas/APIResponse"
+    -
+      not:
+        type: string
+    -
+      $ref: external.json#/first

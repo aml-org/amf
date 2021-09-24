@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#missing-security-scheme-type
   Message: Security Scheme must have a mandatory value from 'OAuth 1.0', 'OAuth 2.0', 'Basic Authentication', 'Digest Authentication', 'Pass Through', x-<other>'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/security-schemes/empty-type.raml#/declarations/securitySchemes/oauth_2_0
+  Target: file://amf-cli/shared/src/test/resources/validations/security-schemes/empty-type.raml#/declares/scheme/oauth_2_0
   Property: http://a.ml/vocabularies/security#type
   Range: [(7,0)-(9,9)]
   Location: file://amf-cli/shared/src/test/resources/validations/security-schemes/empty-type.raml

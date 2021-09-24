@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#4",
+      "@id": "#5",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "apiContract:sourceSpec": "ASYNC 2.0"
     },
     {
-      "@id": "#5",
+      "@id": "#6",
       "@type": [
         "apiContract:AsyncAPI",
         "apiContract:API",
@@ -21,23 +21,23 @@
       "core:version": "aversion",
       "apiContract:endpoint": [
         {
-          "@id": "#6"
+          "@id": "#7"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#5": "ASYNC 2.0"
+          "#6": "ASYNC 2.0"
         },
         "lexical": {
           "apiContract:endpoint": "[(5,0)-(15,0)]",
           "core:name": "[(3,2)-(4,0)]",
-          "#5": "[(1,0)-(22,24)]",
+          "#6": "[(1,0)-(22,24)]",
           "core:version": "[(4,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#7",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -45,18 +45,18 @@
       "apiContract:path": "aChannel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#7"
+          "@id": "#8"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:supportedOperation": "[(7,0)-(15,0)]",
-          "#6": "[(6,2)-(15,0)]"
+          "#7": "[(6,2)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#7",
+      "@id": "#8",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -64,18 +64,18 @@
       "apiContract:method": "publish",
       "apiContract:expects": [
         {
-          "@id": "#8"
+          "@id": "#9"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(8,6)-(15,0)]",
-          "#7": "[(7,4)-(15,0)]"
+          "#8": "[(7,4)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#9",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -83,7 +83,7 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#9"
+          "@id": "#10"
         }
       ],
       "core:displayName": "secondMessage",
@@ -100,12 +100,12 @@
       "smaps": {
         "lexical": {
           "doc:extends": "[(12,8)-(15,0)]",
-          "#8": "[(9,0)-(15,0)]"
+          "#9": "[(9,0)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#10",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -114,7 +114,7 @@
       "smaps": {
         "lexical": {
           "core:mediaType": "[(11,8)-(12,0)]",
-          "#9": "[(9,0)-(15,0)]"
+          "#10": "[(9,0)-(15,0)]"
         }
       }
     },
@@ -164,7 +164,7 @@
           "apiContract:isAbstract": "true"
         },
         "resolved-link": {
-          "#3": "amf://id#2"
+          "#3": "amf://id#4"
         },
         "lexical": {
           "core:title": "[(22,6)-(22,24)]",
@@ -197,11 +197,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#5"
+        "@id": "#6"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "#4"
+        "@id": "#5"
       }
     }
   ],

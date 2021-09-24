@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name some$Link does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/components/invalid-component-keys.json#/declarations/links/templatedLink/some%24Link
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/components/invalid-component-keys.json#/declares/templatedLink/some%24Link
   Property: 
   Range: [(9,6)-(11,7)]
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/components/invalid-component-keys.json

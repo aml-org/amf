@@ -8,7 +8,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#OAuth1Settings-authorizationUri-minCount
   Message: authorizationUri is required when security type is OAuth 1.0
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/raml/oauth1/missing-authorizationUri-oauth1.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1
+  Target: file://amf-cli/shared/src/test/resources/validations/raml/oauth1/missing-authorizationUri-oauth1.raml#/declares/scheme/oauth_1_0/settings/oauth1
   Property: http://a.ml/vocabularies/security#authorizationUri
   Range: [(9,13)-(13,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/raml/oauth1/missing-authorizationUri-oauth1.raml

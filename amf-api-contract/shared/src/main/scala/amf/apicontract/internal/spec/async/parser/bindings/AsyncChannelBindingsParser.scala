@@ -18,8 +18,8 @@ import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import org.yaml.model.{YMap, YMapEntry}
 
-case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
-    extends AsyncBindingsParser(entryLike, parent) {
+case class AsyncChannelBindingsParser(entryLike: YMapEntryLike)(implicit ctx: AsyncWebApiContext)
+    extends AsyncBindingsParser(entryLike) {
 
   override type Binding            = ChannelBinding
   override protected type Bindings = ChannelBindings
@@ -28,7 +28,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
   override protected def createBindings(): ChannelBindings = ChannelBindings()
 
   override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
-    AsyncChannelBindingsParser(entryLike, parent)
+    AsyncChannelBindingsParser(entryLike)
 
   def handleRef(fullRef: String): ChannelBindings = {
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "channelBindings")
@@ -37,7 +37,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
       .map(channelBindings =>
         nameAndAdopt(channelBindings.link(AmfScalar(label), entryLike.annotations, Annotations.synthesized()),
                      entryLike.key))
-      .getOrElse(remote(fullRef, entryLike, parent))
+      .getOrElse(remote(fullRef, entryLike))
   }
 
   override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): ChannelBindings =
@@ -45,27 +45,27 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
   override protected def parseAmqp(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): ChannelBinding = {
-    val binding = Amqp091ChannelBinding(Annotations(entry)).adopted(parent)
+    val binding = Amqp091ChannelBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("is", Amqp091ChannelBindingModel.Is in binding)
 
     // Default channel type is 'routingKey'.
     if (binding.is.isNullOrEmpty) {
-      binding.set(Amqp091ChannelBindingModel.Is, AmfScalar("routingKey"), Annotations.synthesized())
+      binding.setWithoutId(Amqp091ChannelBindingModel.Is, AmfScalar("routingKey"), Annotations.synthesized())
     }
     parseQueue(binding, map)
     parseExchange(binding, map)
 
     parseBindingVersion(binding, WebSocketsChannelBindingModel.BindingVersion, map)
-    ctx.closedShape(binding.id, map, "amqpChannelBinding")
+    ctx.closedShape(binding, map, "amqpChannelBinding")
     binding
   }
 
   private def parseExchange(binding: Amqp091ChannelBinding, map: YMap)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key(
       "exchange", { entry =>
-        val exchange    = Amqp091ChannelExchange(Annotations(entry.value)).adopted(binding.id)
+        val exchange    = Amqp091ChannelExchange(Annotations(entry.value))
         val exchangeMap = entry.value.as[YMap]
 
         exchangeMap.key("name", Amqp091ChannelExchangeModel.Name in exchange) // TODO validate maxlength 255
@@ -75,9 +75,9 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
         parseVHost(exchange, Amqp091ChannelExchangeModel.VHost, exchangeMap)
 
-        ctx.closedShape(exchange.id, exchangeMap, "amqpExchangeChannelBinding")
+        ctx.closedShape(exchange, exchangeMap, "amqpExchangeChannelBinding")
 
-        binding.set(Amqp091ChannelBindingModel.Exchange, exchange, Annotations(entry))
+        binding.setWithoutId(Amqp091ChannelBindingModel.Exchange, exchange, Annotations(entry))
       }
     )
   }
@@ -85,7 +85,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
   private def parseQueue(binding: Amqp091ChannelBinding, map: YMap)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key(
       "queue", { entry =>
-        val queue    = Amqp091Queue(Annotations(entry.value)).adopted(binding.id)
+        val queue    = Amqp091Queue(Annotations(entry.value))
         val queueMap = entry.value.as[YMap]
 
         queueMap.key("name", Amqp091QueueModel.Name in queue) // TODO validate maxlength 255
@@ -95,9 +95,9 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
         parseVHost(queue, Amqp091QueueModel.VHost, queueMap)
 
-        ctx.closedShape(queue.id, queueMap, "amqpQueueChannelBinding")
+        ctx.closedShape(queue, queueMap, "amqpQueueChannelBinding")
 
-        binding.set(Amqp091ChannelBindingModel.Queue, queue, Annotations(entry))
+        binding.setWithoutId(Amqp091ChannelBindingModel.Queue, queue, Annotations(entry))
       }
     )
   }
@@ -107,12 +107,12 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
     // Default vhost is '/'.
     if (!element.fields.exists(field)) {
-      element.set(field, AmfScalar("/"), Annotations.synthesized())
+      element.setWithoutId(field, AmfScalar("/"), Annotations.synthesized())
     }
   }
 
   override protected def parseWs(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): ChannelBinding = {
-    val binding = WebSocketsChannelBinding(Annotations(entry)).adopted(parent)
+    val binding = WebSocketsChannelBinding(Annotations(entry))
     val map     = entry.value.as[YMap]
 
     map.key("method", WebSocketsChannelBindingModel.Method in binding)
@@ -121,7 +121,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
             entry => parseSchema(WebSocketsChannelBindingModel.Headers, binding, entry, binding.id + "/headers"))
     parseBindingVersion(binding, WebSocketsChannelBindingModel.BindingVersion, map)
 
-    ctx.closedShape(binding.id, map, "wsChannelBinding")
+    ctx.closedShape(binding, map, "wsChannelBinding")
 
     binding
   }

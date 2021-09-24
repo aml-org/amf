@@ -8,6 +8,8 @@ import amf.core.client.scala.model.document.{Document, Fragment}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.remote._
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.internal.adoption.IdAdopter
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
@@ -74,7 +76,6 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
     private val dataTypeFragment: Fragment = {
       DataTypeFragment()
         .withLocation("file://amf-cli/shared/src/test/resources/references/fragments/" + fragmentFile)
-        .withId("file://amf-cli/shared/src/test/resources/references/fragments/" + fragmentFile)
         .withEncodes(person)
         .withRoot(false)
         .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
@@ -85,18 +86,18 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
       val personLink = person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")
       if (recursive) personLink.withSupportsRecursion(true)
       val api = WebApi()
-        .withId("amf-cli/shared/src/test/resources/references/" + file + "#/web-api")
         .withName("API")
         .withVersion("1.0")
       if (spec == Oas20 || spec == Oas30) api.withEndPoints(Nil)
-      Document()
-        .withId("amf-cli/shared/src/test/resources/references/" + file)
+      val result = Document()
         .withLocation("amf-cli/shared/src/test/resources/references/" + file)
         .withEncodes(api)
         .withReferences(Seq(dataTypeFragment))
         .withDeclares(Seq(personLink))
         .withRoot(true)
         .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
+      AMFGraphConfiguration.predefined().baseUnitClient().setBaseUri(result, "file://amf-cli/shared/src/test/resources/references/" + file)
+      result
     }
   }
 }

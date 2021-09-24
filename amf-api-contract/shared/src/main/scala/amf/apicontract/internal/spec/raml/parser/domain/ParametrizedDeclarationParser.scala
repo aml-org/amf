@@ -43,13 +43,13 @@ case class ParametrizedDeclarationParser(
               .zipWithIndex
               .map {
                 case (variableEntry, index) =>
-                  val node = DataNodeParser(variableEntry.value, parent = Some(s"${declaration.id}_$index"))(
+                  val node = DataNodeParser(variableEntry.value)(
                     WebApiShapeParserContextAdapter(ctx)).parse()
                   VariableValue(variableEntry)
                     .withName(variableEntry.key)
-                    .set(VariableValueModel.Value, node, Annotations(variableEntry.value))
+                    .setWithoutId(VariableValueModel.Value, node, Annotations(variableEntry.value))
               }
-            declaration.set(ParametrizedDeclarationModel.Variables,
+            declaration.setWithoutId(ParametrizedDeclarationModel.Variables,
                             AmfArray(variables, Annotations(entry.value)),
                             Annotations.inferred())
         }
@@ -59,7 +59,7 @@ case class ParametrizedDeclarationParser(
       case _ =>
         val declaration = producer("")
         declaration.add(Annotations(node))
-        ctx.eh.violation(InvalidAbstractDeclarationType, declaration.id, "Invalid model extension.", node.location)
+        ctx.eh.violation(InvalidAbstractDeclarationType, declaration, "Invalid model extension.", node.location)
         declaration
     }
   }
@@ -68,7 +68,7 @@ case class ParametrizedDeclarationParser(
     ctx.link(node) match {
       case Left(value) => // in oas links $ref always are maps
         producer(value)
-          .set(
+          .setWithoutId(
             ParametrizedDeclarationModel.Target,
             declarations(value, SearchScope.Fragments)
               .link(ScalarNode(value), Annotations(node))
@@ -81,10 +81,10 @@ case class ParametrizedDeclarationParser(
         val parametrized = producer(text)
         setName(parametrized, text, n)
         parametrized
-          .set(ParametrizedDeclarationModel.Target, target, Annotations.inferred())
+          .setWithoutId(ParametrizedDeclarationModel.Target, target, Annotations.inferred())
     }
   }
 
   def setName(declaration: ParametrizedDeclaration, name: String, key: YNode): Unit =
-    declaration.set(ParametrizedDeclarationModel.Name, AmfScalar(name, Annotations(key)), Annotations(key))
+    declaration.setWithoutId(ParametrizedDeclarationModel.Name, AmfScalar(name, Annotations(key)), Annotations(key))
 }

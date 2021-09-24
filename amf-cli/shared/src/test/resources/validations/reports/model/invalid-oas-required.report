@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#description-is-required-in-response
   Message: Response must have a 'description' field
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json#/web-api/end-points/%2Fa/get/200
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json#/web-api/endpoint/%2Fa/supportedOperation/get/returns/resp/200
   Property: http://a.ml/vocabularies/core#description
   Range: [(19,10)-(23,11)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json
@@ -18,7 +18,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-required-boolean-for-schema-version
   Message: Required property boolean value is only supported in JSON Schema draft-3
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json#/declarations/types/One/property/some
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json#/declares/shape/One/property/property/some
   Property: 
   Range: [(33,10)-(33,27)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json
@@ -26,7 +26,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#invalid-required-boolean-for-schema-version
   Message: Required property boolean value is only supported in JSON Schema draft-3
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json#/declarations/types/One/property/api
+  Target: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json#/declares/shape/One/property/property/api
   Property: 
   Range: [(38,10)-(38,26)]
   Location: file://amf-cli/shared/src/test/resources/validations/invalid-oas-required/invalid-oas-required.json

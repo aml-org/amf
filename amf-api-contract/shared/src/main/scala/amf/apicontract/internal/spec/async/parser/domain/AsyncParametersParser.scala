@@ -26,8 +26,8 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     extends SpecParserOps {
 
   private def nameAndAdopt(param: Parameter): Parameter = {
-    entryLike.key.foreach(k => param.set(ParameterModel.Name, ScalarNode(k).string(), Annotations(k)))
-    param.adopted(parentId).add(entryLike.annotations)
+    entryLike.key.foreach(k => param.setWithoutId(ParameterModel.Name, ScalarNode(k).string(), Annotations(k)))
+    param.add(entryLike.annotations)
   }
 
   def parse(): Parameter = {
@@ -52,23 +52,23 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     }
 
     AnnotationParser(param, map)(WebApiShapeParserContextAdapter(ctx)).parse()
-    ctx.closedShape(param.id, map, "parameter")
+    ctx.closedShape(param, map, "parameter")
     param
   }
 
   private def inferAsUriParameter(param: Parameter) = {
-    param.set(ParameterModel.Binding, AmfScalar("path"), Annotations.synthesized())
+    param.setWithoutId(ParameterModel.Binding, AmfScalar("path"), Annotations.synthesized())
   }
 
   def parseSchema(map: YMap, param: Parameter): Unit = {
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)(
+        OasTypeParser(entry, shape => shape.withName("schema"), JSONSchemaDraft7SchemaVersion)(
           WebApiShapeParserContextAdapter(ctx))
           .parse()
           .foreach { schema =>
-            param.set(ParameterModel.Schema, schema, Annotations(entry))
+            param.setWithoutId(ParameterModel.Schema, schema, Annotations(entry))
           }
       }
     )

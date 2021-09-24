@@ -50,7 +50,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
         AMFValidationResult(
           "Security scheme 'oauth_2_0' not found in declarations.",
           SeverityLevels.VIOLATION,
-          "file://amf-cli/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection/applied/get/default-requirement_1/oauth_2_0",
+          "",
           None,
           UnknownSecuritySchemeErrorSpecification.id,
           None,

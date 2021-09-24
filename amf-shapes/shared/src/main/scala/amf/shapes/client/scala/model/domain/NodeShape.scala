@@ -103,7 +103,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   override val meta: AnyShapeModel = NodeShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/" + name.option().getOrElse("default-node").urlComponentEncoded
+  private[amf] override def componentId: String = "/shape/" + name.option().getOrElse("default-node").urlComponentEncoded
 
   private[amf] override val ramlSyntaxKey: String = "nodeShape"
 

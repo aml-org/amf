@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "/BaseUnitProcessingData",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -21,7 +21,7 @@
       "core:version": "asdasd",
       "apiContract:endpoint": [
         {
-          "@id": "#/async-api/end-points/someChannel"
+          "@id": "#/async-api/endpoint/someChannel"
         }
       ],
       "smaps": {
@@ -37,7 +37,7 @@
       }
     },
     {
-      "@id": "#/async-api/end-points/someChannel",
+      "@id": "#/async-api/endpoint/someChannel",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -45,18 +45,18 @@
       "apiContract:path": "someChannel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#/async-api/end-points/someChannel/baseId"
+          "@id": "#/async-api/endpoint/someChannel/supportedOperation/publish/baseId"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:supportedOperation": "[(7,0)-(14,0)]",
-          "#/async-api/end-points/someChannel": "[(6,2)-(14,0)]"
+          "#/async-api/endpoint/someChannel": "[(6,2)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#/async-api/end-points/someChannel/baseId",
+      "@id": "#/async-api/endpoint/someChannel/supportedOperation/publish/baseId",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -68,7 +68,7 @@
       "smaps": {
         "lexical": {
           "apiContract:operationId": "[(8,6)-(9,0)]",
-          "#/async-api/end-points/someChannel/baseId": "[(7,4)-(14,0)]"
+          "#/async-api/endpoint/someChannel/supportedOperation/publish/baseId": "[(7,4)-(14,0)]"
         }
       }
     },
@@ -85,7 +85,7 @@
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "/BaseUnitProcessingData"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],

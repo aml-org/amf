@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.oas.emitter
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.document.{BaseUnit, Module}
-import amf.core.internal.annotations.Aliases
+import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
@@ -21,13 +21,13 @@ class OasSpecEmitter {
         var modulesEmitted = Map[String, Module]()
         val idCounter      = new IdCounter()
         val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map {
-          case (alias, (fullUrl, localUrl)) =>
-            modules.find(_.id == fullUrl) match {
+          case (alias, refInfo) =>
+            modules.find(_.id == refInfo.id) match {
               case Some(module) =>
                 modulesEmitted += (module.id -> module)
                 Some(
                   ReferenceEmitter(module,
-                                   Some(Aliases(Set(alias -> (fullUrl, localUrl)))),
+                                   Some(Aliases(Set(alias -> refInfo))),
                                    ordering,
                                    () => idCounter.genId("uses")))
               case _ => None
@@ -54,7 +54,8 @@ class OasSpecEmitter {
 
     override def emit(b: EntryBuilder): Unit = {
       val aliasesMap = aliases.getOrElse(Aliases(Set())).aliases
-      val effectiveAlias = aliasesMap.find { case (_, (f, _)) => f == reference.id } map { case (a, (_, r)) => (a, r) } getOrElse {
+      val effectiveAlias = aliasesMap
+        .find { case (_, refInfo) => refInfo.id == reference.id } map { case (a, refInfo) => (a, refInfo.relativeUrl) } getOrElse {
         (aliasGenerator(), name)
       }
       MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)

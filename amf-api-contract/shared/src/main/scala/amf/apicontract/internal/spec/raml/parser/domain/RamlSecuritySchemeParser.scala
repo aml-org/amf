@@ -42,7 +42,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
         val scheme = adopt(SecurityScheme(part))
 
         val map = value.as[YMap]
-        ctx.closedShape(scheme.id, map, "securitySchema")
+        ctx.closedShape(scheme, map, "securitySchema")
 
         map.key("type", (SecuritySchemeModel.Type in scheme).allowingAnnotations)
 
@@ -50,7 +50,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
           case Some("oauth2" | "basic" | "apiKey" | "http" | "openIdConnect") =>
             ctx.eh.warning(
               CrossSecurityWarningSpecification,
-              scheme.id,
+              scheme,
               Some(SecuritySchemeModel.Type.value.iri()),
               "OAS security scheme type detected in RAML spec",
               scheme.`type`.annotations().find(classOf[LexicalInformation]),
@@ -65,7 +65,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
             if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
               ctx.eh.violation(
                 MissingSecuritySchemeErrorSpecification,
-                scheme.id,
+                scheme,
                 Some(SecuritySchemeModel.Type.value.iri()),
                 "Security Scheme must have a mandatory value from 'OAuth 1.0', 'OAuth 2.0', 'Basic Authentication', 'Digest Authentication', 'Pass Through', x-<other>'",
                 Some(LexicalInformation(Range(map.range))),
@@ -102,7 +102,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
     adopt(copied)
     copied.add(ExternalFragmentRef(parsedUrl))
     val keyAnn = partKey.map(k => Annotations(k)).getOrElse(Annotations())
-    copied.set(SecuritySchemeModel.Name, AmfScalar(name, keyAnn), keyAnn)
+    copied.setWithoutId(SecuritySchemeModel.Name, AmfScalar(name, keyAnn), keyAnn)
   }
 }
 
@@ -114,17 +114,17 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
         entry.value.tagType match {
           case YType.Map =>
             val value = entry.value.as[YMap]
-            ctx.closedShape(scheme.id, value, "describedBy")
+            ctx.closedShape(scheme, value, "describedBy")
 
             value.key(
               "headers",
               entry => {
                 val parameters: Seq[Parameter] =
                   RamlParametersParser(entry.value.as[YMap],
-                                       (p: Parameter) => p.adopted(scheme.id),
+                                       (p: Parameter) => Unit,
                                        binding = "header") // todo replace in separation
                     .parse()
-                scheme.set(SecuritySchemeModel.Headers,
+                scheme.setWithoutId(SecuritySchemeModel.Headers,
                            AmfArray(parameters, Annotations(entry.value)),
                            Annotations(entry))
               }
@@ -133,7 +133,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
             if (value.key("queryParameters").isDefined && value.key("queryString").isDefined) {
               ctx.eh.violation(
                 ExclusivePropertiesSpecification,
-                scheme.id,
+                scheme,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
                 value.location
               )
@@ -143,9 +143,9 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
               "queryParameters",
               entry => {
                 val parameters: Seq[Parameter] =
-                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(scheme.id), binding = "query") // todo replace in separation
+                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "query") // todo replace in separation
                     .parse()
-                scheme.set(SecuritySchemeModel.QueryParameters,
+                scheme.setWithoutId(SecuritySchemeModel.QueryParameters,
                            AmfArray(parameters, Annotations(entry.value)),
                            Annotations(entry))
               }
@@ -154,9 +154,9 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
             value.key(
               "queryString",
               queryEntry => {
-                Raml10TypeParser(queryEntry, shape => shape.adopted(scheme.id))(WebApiShapeParserContextAdapter(ctx))
+                Raml10TypeParser(queryEntry, shape => Unit)(WebApiShapeParserContextAdapter(ctx))
                   .parse()
-                  .foreach(s => scheme.withQueryString(tracking(s, scheme.id)))
+                  .foreach(s => scheme.withQueryString(tracking(s, scheme)))
               }
             )
             value.key(
@@ -173,11 +173,11 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
 
                     entries.foreach(entry => {
                       responses += ctx.factory
-                        .responseParser(entry, (r: Response) => r.adopted(scheme.id), false)
+                        .responseParser(entry, (r: Response) => Unit, false)
                         .parse() // todo replace in separation
                     })
                 }
-                scheme.set(SecuritySchemeModel.Responses,
+                scheme.setWithoutId(SecuritySchemeModel.Responses,
                            AmfArray(responses, Annotations(entry.value)),
                            Annotations(entry))
               }
@@ -186,7 +186,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
           case YType.Null =>
           case _ =>
             ctx.eh.violation(InvalidSecuritySchemeDescribedByType,
-                             scheme.id,
+                             scheme,
                              s"Invalid 'describedBy' type, map expected",
                              entry.value.location)
         }

@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Parameter-binding-validParameterLocation
   Message: Does not comply with runtime expression ABNF syntax
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml#/async-api/end-points/%2Fuser%2F%7BuserId%7D%2Fsignup/parameter/somewhere%20else/userId
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml#/async-api/endpoint/%2Fuser%2F%7BuserId%7D%2Fsignup/parameter/parameter/somewhere%20else/userId
   Property: http://a.ml/vocabularies/apiContract#binding
   Range: [(14,18)-(14,32)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#CorrelationId-location-validCorrelationIdLocation
   Message: Does not comply with runtime expression ABNF syntax
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml#/async-api/end-points/%2Fuser%2F%7BuserId%7D%2Fsignup/subscribe/default-response/default-id
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml#/async-api/endpoint/%2Fuser%2F%7BuserId%7D%2Fsignup/supportedOperation/subscribe/userSignedUp/returns/resp/default-response/correlation-id/default-id
   Property: http://a.ml/vocabularies/core#location
   Range: [(28,20)-(28,50)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-runtime-expressions.yaml

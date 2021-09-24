@@ -1,14 +1,14 @@
 {
   "@graph": [
     {
-      "@id": "null/BaseUnitProcessingData",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
       "doc:transformed": false
     },
     {
-      "@id": "/scalar/main",
+      "@id": "#/scalar/main",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -33,16 +33,16 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/scalar/main"
+        "@id": "#/scalar/main"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/cycle/jsonschema/draft-7/content.json",
+    "@base": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-7/content.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#"

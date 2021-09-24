@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json/BaseUnitProcessingData",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
@@ -20,15 +20,15 @@
       "http://a.ml/vocabularies/core#version": "1.0",
       "http://a.ml/vocabularies/apiContract#endpoint": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets"
         }
       ],
       "http://a.ml/vocabularies/security#security": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets",
       "@type": [
         "http://a.ml/vocabularies/apiContract#EndPoint",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -46,49 +46,49 @@
       "http://a.ml/vocabularies/apiContract#path": "/pets",
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1",
       "@type": [
         "http://a.ml/vocabularies/security#SecurityRequirement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/security#schemes": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/api_key"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/api_key"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2",
       "@type": [
         "http://a.ml/vocabularies/security#SecurityRequirement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/security#schemes": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/schemes/api_key"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/source-map"
         }
       ]
     },
@@ -121,7 +121,7 @@
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -129,96 +129,96 @@
       "http://a.ml/vocabularies/apiContract#method": "get",
       "http://a.ml/vocabularies/apiContract#returns": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/api_key",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/api_key",
       "@type": [
         "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "api_key",
       "http://a.ml/vocabularies/security#scheme": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/api_key/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/api_key/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth",
       "@type": [
         "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "petstore_auth",
       "http://a.ml/vocabularies/security#scheme": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth"
       },
       "http://a.ml/vocabularies/security#settings": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/schemes/api_key",
       "@type": [
         "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "api_key",
       "http://a.ml/vocabularies/security#scheme": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/schemes/api_key/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/source-map/lexical/element_0"
         }
       ]
     },
@@ -253,7 +253,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(4,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
         "http://a.ml/vocabularies/apiContract#Message",
@@ -264,31 +264,31 @@
       "http://a.ml/vocabularies/core#description": "Success!",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,4)-(28,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key",
       "@type": [
         "http://a.ml/vocabularies/security#SecurityScheme",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -296,27 +296,27 @@
       "http://a.ml/vocabularies/core#name": "api_key",
       "http://a.ml/vocabularies/security#type": "Api Key",
       "http://a.ml/vocabularies/security#settings": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/api_key/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/api_key/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/api_key/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/api_key/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth",
       "@type": [
         "http://a.ml/vocabularies/security#SecurityScheme",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -324,16 +324,16 @@
       "http://a.ml/vocabularies/core#name": "petstore_auth",
       "http://a.ml/vocabularies/security#type": "OAuth 2.0",
       "http://a.ml/vocabularies/security#settings": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2",
       "@type": [
         "http://a.ml/vocabularies/security#OAuth2Settings",
         "http://a.ml/vocabularies/security#Settings",
@@ -341,76 +341,76 @@
       ],
       "http://a.ml/vocabularies/security#flows": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(14,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/schemes/api_key/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/schemes/api_key/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,4)-(17,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(27,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
       "http://a.ml/vocabularies/document-source-maps#value": "[(22,8)-(26,9)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key",
       "@type": [
         "http://a.ml/vocabularies/security#ApiKeySettings",
         "http://a.ml/vocabularies/security#Settings",
@@ -420,42 +420,42 @@
       "http://a.ml/vocabularies/security#in": "header",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/api_key/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/api_key",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/api_key/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/api_key",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(9,19)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2",
       "@type": [
         "http://a.ml/vocabularies/security#OAuth2Settings",
         "http://a.ml/vocabularies/security#Settings",
@@ -463,140 +463,140 @@
       ],
       "http://a.ml/vocabularies/security#flows": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow",
       "@type": [
         "http://a.ml/vocabularies/security#OAuth2Flow",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/security#scope": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/write%3Apets"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/write%3Apets"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/read%3Apets"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/read%3Apets"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(13,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/schemes/api_key/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_2/schemes/api_key",
       "http://a.ml/vocabularies/document-source-maps#value": "[(16,6)-(16,19)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,10)-(23,15)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(24,12)-(24,37)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/endpoint/%2Fpets/supportedOperation/get/returns/resp/200",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,10)-(25,11)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(32,6)-(32,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(31,4)-(31,13)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#settings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(31,15)-(35,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key",
       "http://a.ml/vocabularies/document-source-maps#value": "[(31,4)-(35,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit",
       "@type": [
         "http://a.ml/vocabularies/security#OAuth2Flow",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -605,56 +605,56 @@
       "http://a.ml/vocabularies/security#flow": "implicit",
       "http://a.ml/vocabularies/security#scope": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/write%3Apets"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/write%3Apets"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/read%3Apets"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/read%3Apets"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(37,6)-(37,22)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(36,4)-(36,19)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#settings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(36,21)-(44,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth",
       "http://a.ml/vocabularies/document-source-maps#value": "[(36,4)-(44,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/write%3Apets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/write%3Apets",
       "@type": [
         "http://a.ml/vocabularies/security#Scope",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -662,12 +662,12 @@
       "http://a.ml/vocabularies/core#name": "write:pets",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/write%3Apets/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/write%3Apets/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/read%3Apets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/read%3Apets",
       "@type": [
         "http://a.ml/vocabularies/security#Scope",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -675,43 +675,43 @@
       "http://a.ml/vocabularies/core#name": "read:pets",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/read%3Apets/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/read%3Apets/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(13,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key/source-map/lexical/element_2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(33,6)-(33,23)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#in",
       "http://a.ml/vocabularies/document-source-maps#value": "[(34,6)-(34,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/api_key/settings/api-key",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key/settings/api-key",
       "http://a.ml/vocabularies/document-source-maps#value": "[(31,15)-(35,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/write%3Apets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/write%3Apets",
       "@type": [
         "http://a.ml/vocabularies/security#Scope",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -720,12 +720,12 @@
       "http://a.ml/vocabularies/core#description": "modify pets in your account",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/write%3Apets/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/write%3Apets/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/read%3Apets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/read%3Apets",
       "@type": [
         "http://a.ml/vocabularies/security#Scope",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -734,132 +734,132 @@
       "http://a.ml/vocabularies/core#description": "read your pets",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/read%3Apets/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/read%3Apets/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map/lexical/element_3"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map/lexical/element_3"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map/lexical/element_2"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(36,21)-(44,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/write%3Apets/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/write%3Apets/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/write%3Apets/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/write%3Apets/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/read%3Apets/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/read%3Apets/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/read%3Apets/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/read%3Apets/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(13,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/write%3Apets/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/write%3Apets/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/write%3Apets/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/write%3Apets/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/read%3Apets/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/read%3Apets/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/read%3Apets/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/read%3Apets/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map/lexical/element_3",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#flow",
       "http://a.ml/vocabularies/document-source-maps#value": "[(39,6)-(39,24)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map/lexical/element_1",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#authorizationUri",
       "http://a.ml/vocabularies/document-source-maps#value": "[(38,26)-(38,62)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
       "http://a.ml/vocabularies/document-source-maps#value": "[(40,6)-(43,7)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/implicit",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit",
       "http://a.ml/vocabularies/document-source-maps#value": "[(36,21)-(44,5)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/write%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/write%3Apets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/write%3Apets/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/write%3Apets",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,8)-(11,20)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/read%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/settings/oauth2/default-flow/read%3Apets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/read%3Apets/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/security/requirement_1/schemes/petstore_auth/settings/oauth2/flows/default-flow/scope/read%3Apets",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(12,19)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/write%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/write%3Apets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/write%3Apets/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/write%3Apets",
       "http://a.ml/vocabularies/document-source-maps#value": "[(41,8)-(41,51)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/read%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declarations/securitySchemes/petstore_auth/settings/oauth2/default-flow/read%3Apets",
+      "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/read%3Apets/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth/settings/oauth2/flows/implicit/scope/read%3Apets",
       "http://a.ml/vocabularies/document-source-maps#value": "[(42,8)-(42,37)]"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/api_key/api_key"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/api_key"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/petstore_auth/petstore_auth"
+          "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/declares/scheme/petstore_auth"
         }
       ],
       "@type": [
@@ -873,7 +873,7 @@
       },
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json/BaseUnitProcessingData"
+        "@id": "file://amf-cli/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/BaseUnitProcessingData"
       }
     }
   ]

@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#description-is-required-in-response
   Message: Response must have a 'description' field
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/response-no-description.json#/web-api/end-points/%2Ftest/get/200
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/response-no-description.json#/web-api/endpoint/%2Ftest/supportedOperation/get/test/returns/resp/200
   Property: http://a.ml/vocabularies/core#description
   Range: [(13,10)-(26,11)]
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/response-no-description.json

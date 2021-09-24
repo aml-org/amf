@@ -36,10 +36,9 @@ trait ShapeHelpers { this: Shape =>
                  cloneExamples: Boolean = false): this.type = {
     if (traversal.isInCurrentPath(this.id)) {
       buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler).asInstanceOf[this.type]
-    } else {
+    } else if (this.isLink) this
+    else {
       val cloned: Shape = this match {
-        case _: Linkable if this.isLink =>
-          buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler)
         case _: UnionShape                                       => UnionShape(annotations)
         case _: ScalarShape                                      => ScalarShape(annotations)
         case _: ArrayShape                                       => ArrayShape(annotations)

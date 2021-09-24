@@ -10,7 +10,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Shape}
+import amf.core.client.scala.model.domain.{AmfObject, AmfScalar, DomainElement, Shape}
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.Field
 import amf.shapes.client.scala.model.domain.NodeShape
@@ -115,7 +115,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
           payload.name.option().foreach(name => parsedPayload.withName(name))
           if (Option(payload.schema).isDefined)
             parsedPayload.fields
-              .setWithoutId(PayloadModel.Schema, replaceTrackedAnnotation(payload, parsedPayload.id))
+              .setWithoutId(PayloadModel.Schema, replaceTrackedAnnotation(payload, parsedPayload))
           parsedPayload
         }
       }
@@ -133,8 +133,9 @@ class MediaTypeResolutionStage(profile: ProfileName,
     ExampleTracking.removeTracking(p.schema, idToRemove)
 
   /** Add tracked annotation only to examples that tracked the old payload with no media type. */
-  private def replaceTrackedAnnotation(payload: Payload, newPayloadId: String): Shape =
-    ExampleTracking.replaceTracking(payload.schema, newPayloadId, payload.id)
+  private def replaceTrackedAnnotation(payload: Payload, newPayloadId: AmfObject): Shape =
+  // originally was defined as replace but renamed method to actual behaviour
+    ExampleTracking.trackIfExists(payload.schema, newPayloadId, payload.id)
 
   def overrideWith(root: Option[Seq[String]], overrider: Option[Seq[String]]): Option[Seq[String]] =
     overrider.orElse(root).filter(_.nonEmpty)

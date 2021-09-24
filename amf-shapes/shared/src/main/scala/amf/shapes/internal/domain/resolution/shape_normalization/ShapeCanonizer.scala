@@ -135,7 +135,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       normalize(referencedShape)
     } else {
       val superTypes = shape.inherits
-      val oldInherits: Seq[Shape] = if (context.keepEditingInfo) shape.inherits.collect {
+      val oldInheritsIds: Seq[Shape] = if (context.keepEditingInfo) shape.inherits.collect {
         case rec: RecursiveShape => rec
         case shape: Shape        => shape.link(shape.name.value()).asInstanceOf[Shape]
       } else Nil
@@ -159,7 +159,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
         val newMinShape = context.minShape(accShape, canonicalSuperNode)
         accShape = actionWithoutCaching(newMinShape)
       }
-      if (context.keepEditingInfo) accShape.annotations += InheritedShapes(oldInherits.map(_.id))
+      if (context.keepEditingInfo) accShape.annotations += InheritedShapes(oldInheritsIds.map(_.id))
       if (!shape.id.equals(accShape.id)) {
         context.cache.registerMapping(shape.id, accShape.id)
         accShape.withId(shape.id) // i need to override id, if not i will override the father catched shape

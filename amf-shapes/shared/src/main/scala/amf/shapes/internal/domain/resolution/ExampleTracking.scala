@@ -1,6 +1,6 @@
 package amf.shapes.internal.domain.resolution
 
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.internal.annotations.TrackedElement
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 
@@ -18,7 +18,7 @@ object ExampleTracking {
     case _ => // ignore
   }
 
-  def replaceTracking(shape: Shape, newId: String, mustExistId: String): Shape = {
+  def trackIfExists(shape: Shape, newId: AmfObject, mustExistId: String): Shape = {
     shape match {
       case a: AnyShape =>
         a.examples.foreach {
@@ -37,7 +37,22 @@ object ExampleTracking {
     shape
   }
 
-  def tracking(shape: Shape, parent: String, remove: Option[String] = None): Shape = {
+  def replaceTracking(shape: Shape, newId: AmfObject, mustExistId: String): Shape = {
+    shape match {
+      case a: AnyShape =>
+        a.examples.foreach {
+          example =>
+            example.annotations
+              .find(classOf[TrackedElement])
+              .filter(_.parents.contains(mustExistId))
+              .foreach { _ => example.annotations += tracked(newId, example, Some(mustExistId)) }
+        }
+      case _ => // ignore
+    }
+    shape
+  }
+
+  def tracking(shape: Shape, parent: AmfObject, remove: Option[String] = None): Shape = {
     shape match {
       case a: AnyShape => a.examples.foreach(e => e.annotations += tracked(parent, e, remove))
       case _           => // ignore
@@ -45,11 +60,12 @@ object ExampleTracking {
     shape
   }
 
-  def tracked(parent: String, e: Example, remove: Option[String]): TrackedElement =
+  def tracked(parent: AmfObject, e: Example, remove: Option[String]): TrackedElement =
     e.annotations
       .find(classOf[TrackedElement])
-      .fold(TrackedElement(parent)) { t =>
+      .fold(TrackedElement.fromInstance(parent)) { t =>
         e.annotations.reject(_.isInstanceOf[TrackedElement])
-        TrackedElement(t.parents + parent -- remove)
+        val withElement = t.addElement(parent)
+        remove.map(withElement.removeId).getOrElse(withElement)
       }
 }

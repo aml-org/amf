@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
   Message: Status code for a Response must be a value between 100 and 599, a [1-5]XX wildcard, or 'default'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json#/web-api/end-points/%2Ftest/get/6XX
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json#/web-api/endpoint/%2Ftest/supportedOperation/get/test/returns/resp/6XX
   Property: http://a.ml/vocabularies/apiContract#statusCode
   Range: [(42,10)-(42,15)]
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
   Message: Status code for a Response must be a value between 100 and 599, a [1-5]XX wildcard, or 'default'
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json#/web-api/end-points/%2Ftest/get/2X1
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json#/web-api/endpoint/%2Ftest/supportedOperation/get/test/returns/resp/2X1
   Property: http://a.ml/vocabularies/apiContract#statusCode
   Range: [(52,10)-(52,15)]
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json

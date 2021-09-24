@@ -23,7 +23,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -52,7 +52,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -60,7 +60,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -87,7 +87,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -107,11 +107,11 @@
                             ],
                             "http://www.w3.org/ns/shacl#in": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/list",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/list",
                                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_1",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -134,13 +134,13 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_1/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_1/source-map/synthesized-field/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_1/source-map/synthesized-field/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -153,7 +153,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_1/source-map/synthesized-field/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_1/source-map/synthesized-field/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -168,10 +168,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_1/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_1/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_1"
+                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -187,7 +187,7 @@
                                 ],
                                 "http://www.w3.org/2000/01/rdf-schema#_2": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_2",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -210,13 +210,13 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_2/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_2/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_2/source-map/synthesized-field/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_2/source-map/synthesized-field/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -229,7 +229,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_2/source-map/synthesized-field/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_2/source-map/synthesized-field/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -244,10 +244,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_2/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_2/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/enum/scalar_2"
+                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/in/scalar_2"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -265,16 +265,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -286,7 +286,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -299,7 +299,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#in"
@@ -312,10 +312,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -331,13 +331,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -352,10 +352,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -365,7 +365,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/query/type/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/parameter/parameter/query/type/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -384,7 +384,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#header": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -411,7 +411,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -431,11 +431,11 @@
                             ],
                             "http://www.w3.org/ns/shacl#in": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/list",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/list",
                                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_1",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -458,13 +458,13 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_1/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_1/source-map/synthesized-field/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_1/source-map/synthesized-field/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -477,7 +477,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_1/source-map/synthesized-field/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_1/source-map/synthesized-field/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -492,10 +492,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_1/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_1/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_1"
+                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -511,7 +511,7 @@
                                 ],
                                 "http://www.w3.org/2000/01/rdf-schema#_2": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_2",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -534,13 +534,13 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_2/source-map",
+                                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_2/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_2/source-map/synthesized-field/element_1",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_2/source-map/synthesized-field/element_1",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -553,7 +553,7 @@
                                             ]
                                           },
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_2/source-map/synthesized-field/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_2/source-map/synthesized-field/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
                                                 "@value": "http://a.ml/vocabularies/core#name"
@@ -568,10 +568,10 @@
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_2/source-map/lexical/element_0",
+                                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_2/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/enum/scalar_2"
+                                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/in/scalar_2"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -589,16 +589,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -610,7 +610,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/source-map/lexical/element_2",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/source-map/lexical/element_2",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -623,7 +623,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#in"
@@ -636,10 +636,10 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/scalar/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -655,13 +655,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -676,10 +676,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/source-map/lexical/element_1",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -689,7 +689,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/parameter/header/type/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/header/parameter/header/type/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -708,13 +708,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#parameter"
@@ -727,7 +727,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/request/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/expects/request/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#header"
@@ -746,7 +746,7 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
@@ -764,7 +764,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -776,7 +776,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/schema",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -796,13 +796,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/schema/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/schema/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#closed"
@@ -817,10 +817,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -832,10 +832,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -847,10 +847,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/schema/source-map/auto-generated-name/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema/source-map/auto-generated-name/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/schema"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/shape/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -866,16 +866,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/source-map",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson/source-map/lexical/element_0",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/application%2Fjson"
+                                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -891,16 +891,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -910,7 +910,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/200/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#payload"
@@ -929,13 +929,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/source-map/lexical/element_2",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -948,7 +948,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#returns"
@@ -961,10 +961,10 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/get"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/supportedOperation/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -980,7 +980,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#parameter": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -1007,7 +1007,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1027,11 +1027,11 @@
                     ],
                     "http://www.w3.org/ns/shacl#in": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/list",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/list",
                         "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                         "http://www.w3.org/2000/01/rdf-schema#_1": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_1",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -1054,13 +1054,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_1/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_1/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_1/source-map/synthesized-field/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_1/source-map/synthesized-field/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -1073,7 +1073,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_1/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_1/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -1088,10 +1088,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_1/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_1/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_1"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_1"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1107,7 +1107,7 @@
                         ],
                         "http://www.w3.org/2000/01/rdf-schema#_2": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_2",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_2",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -1130,13 +1130,13 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_2/source-map",
+                                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_2/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_2/source-map/synthesized-field/element_1",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_2/source-map/synthesized-field/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -1149,7 +1149,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_2/source-map/synthesized-field/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_2/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -1164,10 +1164,10 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_2/source-map/lexical/element_0",
+                                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_2/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/enum/scalar_2"
+                                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/in/scalar_2"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1185,13 +1185,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/source-map",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/source-map/synthesized-field/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/source-map/synthesized-field/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -1206,10 +1206,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/source-map/lexical/element_1",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1219,7 +1219,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/source-map/lexical/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#in"
@@ -1234,10 +1234,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#default-node": [
                           {
-                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema/source-map/default-node/element_0",
+                            "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema/source-map/default-node/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/scalar/schema"
+                                "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/scalar/schema"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1253,13 +1253,13 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/source-map",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/source-map/synthesized-field/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#binding"
@@ -1274,10 +1274,10 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/source-map/lexical/element_1",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type"
+                            "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1287,7 +1287,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/parameter/path/type/source-map/lexical/element_0",
+                        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/parameter/parameter/path/type/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -1306,13 +1306,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -1325,7 +1325,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#parameter"
@@ -1338,10 +1338,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/end-points/%2Ftests%2F%7Btype%7D"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/web-api/endpoint/%2Ftests%2F%7Btype%7D"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1415,7 +1415,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/duplicate-id-in-param-types/api.raml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],

@@ -1,10 +1,11 @@
 package amf.apicontract.internal.spec.raml.parser.context
 
+import amf.apicontract.client.scala.model.domain.Operation
 import amf.apicontract.internal.spec.common.RamlWebApiDeclarations
 import amf.apicontract.internal.spec.common.parser.{ParsingHelpers, WebApiContext}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.ClosedShapeSpecification
 import amf.core.client.scala.config.ParsingOptions
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Spec
@@ -26,10 +27,10 @@ abstract class RamlWebApiContext(override val loc: String,
     extends WebApiContext(loc, refs, options, wrapped, ds)
     with RamlSpecAwareContext {
 
-  var globalMediatype: Boolean                                  = false
-  val operationContexts: mutable.Map[String, RamlWebApiContext] = mutable.Map()
+  var globalMediatype: Boolean                                     = false
+  val operationContexts: mutable.Map[AmfObject, RamlWebApiContext] = mutable.Map()
 
-  def mergeOperationContext(operation: String): Unit = {
+  def mergeOperationContext(operation: AmfObject): Unit = {
     val contextOption = operationContexts.get(operation)
     contextOption.foreach(mergeContext)
     operationContexts.remove(operation)
@@ -121,7 +122,6 @@ abstract class RamlWebApiContext(override val loc: String,
 
     implicit val errorHandler: IllegalTypeHandler = new SYamlAMFParserErrorHandler(eh)
 
-    val node       = shape.id
     val facets     = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
     val shapeLabel = RamlShapeTypeBeautifier.beautify(shapeType)
 
@@ -150,7 +150,7 @@ abstract class RamlWebApiContext(override val loc: String,
             val subject = if (errors.size > 1) "Properties" else "Property"
             eh.violation(
               ClosedShapeSpecification,
-              node,
+              shape,
               s"$subject ${errors.map(_.key.as[YScalar].text).map(e => s"'$e'").mkString(",")} not supported in a $spec $shapeLabel node",
               errors.head.location
             ) // pointing only to the first failed error
@@ -159,7 +159,7 @@ abstract class RamlWebApiContext(override val loc: String,
       case None =>
         eh.violation(
           ClosedShapeSpecification,
-          node,
+          shape.id,
           s"Cannot validate unknown node type $shapeType for $spec",
           shape.annotations
         )

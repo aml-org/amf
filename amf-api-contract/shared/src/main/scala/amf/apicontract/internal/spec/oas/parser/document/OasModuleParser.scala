@@ -24,14 +24,13 @@ case class OasModuleParser(root: Root, spec: Spec)(implicit val ctx: OasWebApiCo
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
       .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
-      .adopted(root.location)
       .add(sourceVendor)
     module.set(BaseUnitModel.Location, root.location)
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
       val references = ReferencesParser(module, root.location, "uses".asOasExtension, rootMap, root.references).parse()
 
-      Oas2DocumentParser(root).parseDeclarations(root, rootMap)
+      Oas2DocumentParser(root).parseDeclarations(root, rootMap, module)
       UsageParser(rootMap, module).parse()
 
       addDeclarationsToModel(module)

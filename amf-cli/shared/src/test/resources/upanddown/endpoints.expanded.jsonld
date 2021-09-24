@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld",
+    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,7 +9,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/apiContract#API",
@@ -56,7 +56,7 @@
         ],
         "http://a.ml/vocabularies/core#provider": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/organization",
             "@type": [
               "http://a.ml/vocabularies/core#Organization",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -78,13 +78,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/organization/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization/source-map/lexical/element_3",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/organization/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -97,7 +97,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/organization/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#url"
@@ -110,7 +110,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/organization/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#email"
@@ -123,10 +123,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/organization/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/organization"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -142,7 +142,7 @@
         ],
         "http://a.ml/vocabularies/core#license": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/license",
             "@type": [
               "http://a.ml/vocabularies/core#License",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -159,13 +159,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/license/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/license/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#url"
@@ -178,7 +178,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/license/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -191,10 +191,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/license/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/license"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -210,7 +210,7 @@
         ],
         "http://a.ml/vocabularies/core#documentation": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/externalDocsUrl",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/documentation/creative-work/externalDocsUrl",
             "@type": [
               "http://a.ml/vocabularies/core#CreativeWork",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -227,13 +227,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/externalDocsUrl/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/documentation/creative-work/externalDocsUrl/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/externalDocsUrl/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/documentation/creative-work/externalDocsUrl/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#url"
@@ -246,7 +246,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/externalDocsUrl/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/documentation/creative-work/externalDocsUrl/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#description"
@@ -259,10 +259,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/externalDocsUrl/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/documentation/creative-work/externalDocsUrl/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/externalDocsUrl"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/documentation/creative-work/externalDocsUrl"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -278,7 +278,7 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -295,13 +295,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -314,7 +314,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -327,10 +327,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -344,7 +344,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Flevel-one",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -366,13 +366,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Flevel-one/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one/source-map/lexical/element_3",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Flevel-one/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -385,7 +385,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Flevel-one/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -398,7 +398,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Flevel-one/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#description"
@@ -411,10 +411,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Flevel-one/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Flevel-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -426,15 +426,15 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one/source-map/parent-end-point/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Flevel-one/source-map/parent-end-point/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Flevel-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero"
                       }
                     ]
                   }
@@ -443,7 +443,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Fanother-level-one",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -460,13 +460,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Fanother-level-one/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Fanother-level-one/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -479,7 +479,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Fanother-level-one/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -492,10 +492,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Fanother-level-one/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Fanother-level-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -507,15 +507,15 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one/source-map/parent-end-point/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Fanother-level-one/source-map/parent-end-point/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero%2Fanother-level-one"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Flevel-zero"
                       }
                     ]
                   }
@@ -524,7 +524,7 @@
             ]
           },
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Fanother-level-zero",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -541,13 +541,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Fanother-level-zero/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero/source-map/lexical/element_2",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Fanother-level-zero/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiContract#path"
@@ -560,7 +560,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Fanother-level-zero/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -573,10 +573,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero/source-map/lexical/element_1",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Fanother-level-zero/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero"
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/endpoint/end-points/%2Fanother-level-zero"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -592,13 +592,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/source-map/lexical/element_4",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/source-map/lexical/element_4",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#version"
@@ -611,10 +611,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -624,7 +624,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#termsOfService"
@@ -637,7 +637,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#description"
@@ -650,7 +650,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/source-map/lexical/element_3",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/endpoints.expanded.jsonld/#/web-api/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"

@@ -20,7 +20,7 @@ import org.yaml.model._
 case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(
     implicit val ctx: ShapeParserContext) {
   def parse(): Unit = {
-    val extensions = parseExtensions(element.id, map, target)
+    val extensions = parseExtensions(Some(element), map, target)
     setExtensions(extensions)
   }
 
@@ -31,7 +31,7 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
   def parseOrphanNode(orphanNodeName: String): Unit = {
     map.key(orphanNodeName) match {
       case Some(orphanMapEntry) if orphanMapEntry.value.tagType == YType.Map =>
-        val extensions = parseExtensions(element.id, orphanMapEntry.value.as[YMap])
+        val extensions = parseExtensions(Some(element), orphanMapEntry.value.as[YMap])
         extensions.foreach { extension =>
           Option(extension.extension).foreach(_.annotations += OrphanOasExtension(orphanNodeName))
         }
@@ -43,14 +43,14 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
   private def setExtensions(extensions: Seq[DomainExtension]): Unit = {
     val oldExtensions = customDomainPropertiesFrom(element)
     if (extensions.nonEmpty)
-      element.set(DomainElementModel.CustomDomainProperties,
+      element.setWithoutId(DomainElementModel.CustomDomainProperties,
                   AmfArray(oldExtensions ++ extensions, Annotations.inferred()),
                   Annotations.inferred())
   }
 }
 
 object AnnotationParser {
-  def parseExtensions(parent: String, map: YMap, target: List[String] = Nil)(
+  def parseExtensions(parent: Option[AmfObject], map: YMap, target: List[String] = Nil)(
       implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler): Seq[DomainExtension] =
     map.entries.flatMap { entry =>
       resolveAnnotation(entryKey(entry)).map(ExtensionParser(_, parent, entry, target).parse().add(Annotations(entry)))
@@ -61,23 +61,20 @@ object AnnotationParser {
   }
 }
 
-private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry, target: List[String] = Nil)(
+private case class ExtensionParser(annotation: String, parent: Option[AmfObject], entry: YMapEntry, target: List[String] = Nil)(
     implicit val ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler) {
   def parse(): DomainExtension = {
-    val id              = s"$parent/extension/$annotation"
-    val propertyId      = s"$parent/$annotation"
-    val domainExtension = DomainExtension(Annotations(entry)).withId(id)
-    val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId)).parse()
+    val domainExtension = DomainExtension(Annotations(entry))
+    val dataNode        = DataNodeParser(entry.value).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
     val customDomainProperty = ctx
       .findAnnotation(annotation, SearchScope.All)
       .getOrElse(
-        CustomDomainProperty(Annotations(entry)).withId(propertyId).withName(annotation, Annotations(entry.key)))
+        CustomDomainProperty(Annotations(entry)).withName(annotation, Annotations(entry.key)))
     validateAllowedTargets(customDomainProperty)
-    domainExtension.adopted(parent)
     domainExtension
-      .set(DomainExtensionModel.Extension, dataNode, Annotations.inferred())
+      .setWithoutId(DomainExtensionModel.Extension, dataNode, Annotations.inferred())
       .withName(annotation, Annotations(entry.key))
     domainExtension.fields.setWithoutId(DomainExtensionModel.DefinedBy, customDomainProperty, Annotations.inferred())
     domainExtension
@@ -89,13 +86,14 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
         if (allowedTargets.map(_.value()).intersect(target).isEmpty) {
           val ramlTarget         = VocabularyMappings.uriToRaml.get(target.head)
           val ramlAllowedTargets = allowedTargets.flatMap(uri => VocabularyMappings.uriToRaml.get(uri.value()))
-          ctx.eh.violation(
-            InvalidAnnotationTarget,
-            parent,
-            s"Annotation $annotation not allowed in target ${ramlTarget
-              .getOrElse("")}, allowed targets: ${ramlAllowedTargets.mkString(", ")}",
-            entry.location
-          )
+          val msg = s"Annotation $annotation not allowed in target ${
+            ramlTarget
+              .getOrElse("")
+          }, allowed targets: ${ramlAllowedTargets.mkString(", ")}"
+          parent match {
+            case Some(obj) => ctx.eh.violation(InvalidAnnotationTarget, obj, msg, entry.location)
+            case None => ctx.eh.violation(InvalidAnnotationTarget, "", msg, entry.location)
+          }
         }
       case _ =>
     }

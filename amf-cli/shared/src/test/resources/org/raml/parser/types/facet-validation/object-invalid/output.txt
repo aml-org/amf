@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#min-max-inclusive
   Message: Maximum must be greater than or equal to minimum
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declarations/types/scalar/invalid-range
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declares/scalar/invalid-range
   Property: 
   Range: [(8,4)-(12,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#min-max-inclusive
   Message: Maximum must be greater than or equal to minimum
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declarations/types/object-range/property/range-invalid-through-extension/scalar/range-invalid-through-extension
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declares/shape/object-range/property/property/range-invalid-through-extension/scalar/range-invalid-through-extension
   Property: 
   Range: [(15,12)-(18,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#min-max-properties
   Message: MaxProperties must be greater than or equal to minProperties
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declarations/types/object-props1
+  Target: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declares/shape/object-props1
   Property: 
   Range: [(18,4)-(23,0)]
   Location: file://amf-cli/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml

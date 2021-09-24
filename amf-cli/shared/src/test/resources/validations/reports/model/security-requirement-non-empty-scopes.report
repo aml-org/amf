@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#scope-names-must-be-empty
   Message: Scopes array must be empty for security scheme type Api Key
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/security-definition-non-empty-scopes.json#/web-api/requirement_2/apiKeyType
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/security-definition-non-empty-scopes.json#/web-api/security/requirement_2/schemes/apiKeyType
   Property: 
   Range: [(54,4)-(56,5)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/security-definition-non-empty-scopes.json
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#scope-names-must-be-empty
   Message: Scopes array must be empty for security scheme type http
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas3/security-definition-non-empty-scopes.json#/web-api/requirement_3/httpType
+  Target: file://amf-cli/shared/src/test/resources/validations/oas3/security-definition-non-empty-scopes.json#/web-api/security/requirement_3/schemes/httpType
   Property: 
   Range: [(57,4)-(59,5)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas3/security-definition-non-empty-scopes.json

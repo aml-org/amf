@@ -1,14 +1,14 @@
 {
   "@graph": [
     {
-      "@id": "null/BaseUnitProcessingData",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:BaseUnitProcessingData"
       ],
       "doc:transformed": false
     },
     {
-      "@id": "/any/schema",
+      "@id": "#/any/schema",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -18,24 +18,24 @@
       "shacl:name": "schema",
       "shacl:xone": [
         {
-          "@id": "#/xone/0/scalar/A"
+          "@id": "#/any/schema/exclusiveOr/scalar/A"
         },
         {
-          "@id": "#/xone/1/scalar/B"
+          "@id": "#/any/schema/exclusiveOr/scalar/B"
         },
         {
-          "@id": "#/xone/2/scalar/X"
+          "@id": "#/any/schema/exclusiveOr/scalar/X"
         },
         {
-          "@id": "#/xone/3/scalar/Y"
+          "@id": "#/any/schema/exclusiveOr/scalar/Y"
         },
         {
-          "@id": "#/xone/4/scalar/C"
+          "@id": "#/any/schema/exclusiveOr/scalar/C"
         }
       ]
     },
     {
-      "@id": "#/xone/0/scalar/A",
+      "@id": "#/any/schema/exclusiveOr/scalar/A",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -51,7 +51,7 @@
       "shacl:name": "A"
     },
     {
-      "@id": "#/xone/1/scalar/B",
+      "@id": "#/any/schema/exclusiveOr/scalar/B",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -67,7 +67,7 @@
       "shacl:name": "B"
     },
     {
-      "@id": "#/xone/2/scalar/X",
+      "@id": "#/any/schema/exclusiveOr/scalar/X",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -83,7 +83,7 @@
       "shacl:name": "X"
     },
     {
-      "@id": "#/xone/3/scalar/Y",
+      "@id": "#/any/schema/exclusiveOr/scalar/Y",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -99,7 +99,7 @@
       "shacl:name": "Y"
     },
     {
-      "@id": "#/xone/4/scalar/C",
+      "@id": "#/any/schema/exclusiveOr/scalar/C",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -122,16 +122,16 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/any/schema"
+        "@id": "#/any/schema"
       },
       "doc:root": false,
       "doc:processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/cycle/jsonschema/draft-7/with-id.json",
+    "@base": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-7/with-id.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#"

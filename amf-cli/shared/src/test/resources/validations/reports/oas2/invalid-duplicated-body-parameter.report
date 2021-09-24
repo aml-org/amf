@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#oas-invalid-body-parameter
   Message: Cannot declare more than one 'body' parameter for a request or a resource
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-duplicated-body-parameter.json#/web-api/end-points/%2F/body%20parameter%202
+  Target: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-duplicated-body-parameter.json#/web-api/endpoint/%2F/supportedOperation/get/request/body%20parameter%202
   Property: 
   Range: [(15,8)-(19,9)]
   Location: file://amf-cli/shared/src/test/resources/validations/oas2/invalid-duplicated-body-parameter.json

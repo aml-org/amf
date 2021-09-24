@@ -27,10 +27,9 @@ case class OasLikeCreativeWorkParser(node: YNode, parentId: String)(implicit val
     map.key("description", CreativeWorkModel.Description in creativeWork)
     map.key("title".asOasExtension, CreativeWorkModel.Title in creativeWork)
 
-    creativeWork.adopted(parentId)
     AnnotationParser(creativeWork, map).parse()
     if (ctx.isOas2Syntax || ctx.isOas3Context)
-      ctx.closedShape(creativeWork.id, map, "externalDoc")
+      ctx.closedShape(creativeWork, map, "externalDoc")
     creativeWork
   }
 }

@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property '$ref' not supported in a RAML 1.0 string node
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/invalid-inlined-ref.yaml#/async-api/end-points/users%2Fsignup/subscribe/default-response/default/schema/property/user/scalar/user
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/invalid-inlined-ref.yaml#/async-api/endpoint/users%2Fsignup/supportedOperation/subscribe/returns/resp/default-response/payload/default/shape/schema/property/property/user/scalar/user
   Property: 
   Range: [(14,14)-(15,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/raml-data-type-references/invalid-inlined-ref.yaml

@@ -73,55 +73,145 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     val endpoint = producer(path).add(Annotations(entry))
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
-    checkBalancedParams(path, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
-    endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)), Annotations(entry.key))
+    checkBalancedParams(path, entry.value, endpoint, EndPointModel.Path.value.iri(), ctx)
+    endpoint.setWithoutId(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)), Annotations(entry.key))
 
     if (!TemplateUri.isValid(path))
-      ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value.location)
+      ctx.eh.violation(InvalidEndpointPath, endpoint, TemplateUri.invalidMsg(path), entry.value.location)
 
-    if (collector.exists(e => e.path.is(path)))
-      ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry.location)
-    else {
-      entry.value.tagType match {
-        case YType.Null => collector += endpoint
-        case _ =>
-          val map = entry.value.as[YMap]
-          parseEndpoint(endpoint, map)
-      }
+    val duplicated = collector.find(e => e.path.is(path))
+    duplicated match {
+      case None =>
+        entry.value.tagType match {
+          case YType.Null => collector += endpoint
+          case _ =>
+            val map = entry.value.as[YMap]
+            parseEndpoint(endpoint, map)
+        }
+      case Some(alreadyDefined) =>
+        ctx.eh.violation(DuplicatedEndpointPath, alreadyDefined, "Duplicated resource path " + path, entry.location)
     }
   }
 
   protected def parseEndpoint(endpoint: EndPoint, map: YMap): Unit = {
     val isResourceType = ctx.contextType == RamlWebApiContextType.RESOURCE_TYPE
-    ctx.closedShape(endpoint.id, map, if (isResourceType) "resourceType" else "endPoint")
+    ctx.closedShape(endpoint, map, if (isResourceType) "resourceType" else "endPoint")
 
     map.key("displayName", (EndPointModel.Name in endpoint).allowingAnnotations)
     map.key("description", (EndPointModel.Description in endpoint).allowingAnnotations)
 
-    map.key(
-      "is",
-      (e: YMapEntry) => {
-        endpoint.annotations += EndPointTraitEntry(Range(e.range))
-        (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
-          .parse(endpoint.withTrait)).allowingSingleValue.optional(e)
+    parseTraitUsages(map, endpoint)
+    parseResourceTypeUsages(map, endpoint)
+    parseOperations(map, endpoint)
+    parseRequirements(map, endpoint)
+    parseParameters(endpoint, map, uriParametersKey, isResourceType)
+    parseForeignPayloads(map, endpoint)
+
+    collector += endpoint
+
+    AnnotationParser(endpoint,
+                     map,
+                     if (isResourceType) List(VocabularyMappings.resourceType)
+                     else List(VocabularyMappings.endpoint))(WebApiShapeParserContextAdapter(ctx)).parse()
+
+    parseNestedEndPoints(endpoint, map, isResourceType)
+  }
+
+  private def parseNestedEndPoints(endpoint: EndPoint, map: YMap, isResourceType: Boolean) = {
+    val nestedEndpointRegex = "^/.*"
+    map.regex(
+      nestedEndpointRegex,
+      entries => {
+        if (isResourceType) {
+          entries.foreach { entry =>
+            val nestedEndpointName = entry.key.toString()
+            ctx.eh.violation(
+              NestedEndpoint,
+              endpoint,
+              None,
+              s"Nested endpoint in resourceType: '$nestedEndpointName'",
+              Some(LexicalInformation(Range(entry.key.range))),
+              Some(map.sourceName)
+            )
+          }
+        } else {
+          entries.foreach(ctx.factory.endPointParser(_, producer, Some(endpoint), collector, false).parse())
+        }
       }
     )
+  }
 
+  private def parseForeignPayloads(map: YMap, endpoint: EndPoint): EndPoint = {
     map.key(
-      "type",
+      "payloads".asRamlAnnotation,
       entry => {
-        endpoint.annotations += EndPointResourceTypeEntry(Range(entry.range))
-        val declaration = ParametrizedDeclarationParser(
-          entry.value,
-          (name: String) => ParametrizedResourceType().withName(name).adopted(endpoint.id),
-          ctx.declarations.findResourceTypeOrError(entry.value))
-          .parse()
-        endpoint.set(EndPointModel.Extends,
-                     AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(Annotations.virtual())),
-                     Annotations(Annotations.inferred()))
+        endpoint.setWithoutId(EndPointModel.Payloads,
+                              AmfArray(Seq(Raml10PayloadParser(entry, endpoint.id).parse()), Annotations(entry.value)),
+                              Annotations(entry))
+      }
+    )
+    endpoint
+  }
+
+  private def parseParameters(endpoint: EndPoint,
+                              map: YMap,
+                              uriParametersKey: String,
+                              isResourceType: Boolean): EndPoint = {
+    var parameters               = Parameters()
+    var annotations: Annotations = Annotations()
+
+    val entries = map.regex(uriParametersKey)
+    val implicitExplicitPathParams = entries.collectFirst({ case e if e.value.tagType == YType.Map => e }) match {
+      case None =>
+        implicitPathParamsOrdered(endpoint, isResourceType)
+
+      case Some(e) =>
+        annotations = Annotations(e.value)
+
+        val explicitParameters = e.value
+          .as[YMap]
+          .entries
+          .map(entry => {
+            val param = ctx.factory
+              .parameterParser(entry, (_: Parameter) => Unit, false, "path")
+              .parse()
+            param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashsInSchema(schema, entry))
+            param
+          })
+
+        implicitPathParamsOrdered(endpoint,
+                                  isResourceType,
+                                  variable => !explicitParameters.exists(_.name.is(variable)),
+                                  explicitParameters)
+    }
+
+    parameters = parameters.add(Parameters(path = implicitExplicitPathParams))
+
+    map.key(
+      "parameters".asRamlAnnotation,
+      entry => {
+        parameters =
+          parameters.add(OasParametersParser(entry.value.as[Seq[YNode]], endpoint.id)(spec.toOas(ctx)).parse())
+        annotations = Annotations(entry.value)
       }
     )
 
+    parameters match {
+      case Parameters(query, path, header, _, _, _) if parameters.nonEmpty =>
+        endpoint.setWithoutId(EndPointModel.Parameters, AmfArray(query ++ path ++ header, annotations), annotations)
+      case _ =>
+    }
+
+    endpoint
+  }
+
+  private def parseRequirements(map: YMap, endpoint: EndPoint) = {
+    val idCounter         = new IdCounter()
+    val RequirementParser = RamlSecurityRequirementParser.parse(endpoint.id, idCounter) _
+    map.key("securedBy", (EndPointModel.Security in endpoint using RequirementParser).allowingSingleValue)
+  }
+
+  private def parseOperations(map: YMap, endpoint: EndPoint) = {
     val optionalMethod = if (parseOptionalOperations) "\\??" else ""
 
     map.regex(
@@ -150,98 +240,42 @@ abstract class RamlEndpointParser(entry: YMapEntry,
           val operation = RamlOperationParser(entry, endpoint.id, parseOptionalOperations)(operationContext)
             .parse()
           operations += operation
-          ctx.operationContexts.put(operation.id.stripSuffix("%3F"), operationContext)
+          ctx.operationContexts.put(operation, operationContext)
         })
-        endpoint.set(EndPointModel.Operations, AmfArray(operations, Annotations.virtual()), Annotations.inferred())
+        endpoint.setWithoutId(EndPointModel.Operations,
+                              AmfArray(operations, Annotations.virtual()),
+                              Annotations.inferred())
       }
     )
+  }
 
-    val idCounter         = new IdCounter()
-    val RequirementParser = RamlSecurityRequirementParser.parse(endpoint.id, idCounter) _
-    map.key("securedBy", (EndPointModel.Security in endpoint using RequirementParser).allowingSingleValue)
-
-    var parameters               = Parameters()
-    var annotations: Annotations = Annotations()
-
-    val entries = map.regex(uriParametersKey)
-    val implicitExplicitPathParams = entries.collectFirst({ case e if e.value.tagType == YType.Map => e }) match {
-      case None =>
-        implicitPathParamsOrdered(endpoint, isResourceType)
-
-      case Some(e) =>
-        annotations = Annotations(e.value)
-
-        val explicitParameters = e.value
-          .as[YMap]
-          .entries
-          .map(entry => {
-            val param = ctx.factory
-              .parameterParser(entry, (p: Parameter) => p.adopted(endpoint.id), false, "path")
-              .parse()
-            param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashsInSchema(schema, entry))
-            param
-          })
-
-        implicitPathParamsOrdered(endpoint,
-                                  isResourceType,
-                                  variable => !explicitParameters.exists(_.name.is(variable)),
-                                  explicitParameters)
-    }
-
-    parameters = parameters.add(Parameters(path = implicitExplicitPathParams))
-
+  private def parseResourceTypeUsages(map: YMap, endpoint: EndPoint): EndPoint = {
     map.key(
-      "parameters".asRamlAnnotation,
+      "type",
       entry => {
-        parameters =
-          parameters.add(OasParametersParser(entry.value.as[Seq[YNode]], endpoint.id)(spec.toOas(ctx)).parse())
-        annotations = Annotations(entry.value)
+        endpoint.annotations += EndPointResourceTypeEntry(Range(entry.range))
+        val declaration = ParametrizedDeclarationParser(entry.value,
+                                                        (name: String) => ParametrizedResourceType().withName(name),
+                                                        ctx.declarations.findResourceTypeOrError(entry.value))
+          .parse()
+        endpoint.setWithoutId(EndPointModel.Extends,
+                              AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(Annotations.virtual())),
+                              Annotations(Annotations.inferred()))
       }
     )
+    endpoint
+  }
 
-    parameters match {
-      case Parameters(query, path, header, _, _, _) if parameters.nonEmpty =>
-        endpoint.set(EndPointModel.Parameters, AmfArray(query ++ path ++ header, annotations), annotations)
-      case _ =>
-    }
-
+  private def parseTraitUsages(map: YMap, endpoint: EndPoint): EndPoint = {
     map.key(
-      "payloads".asRamlAnnotation,
-      entry => {
-        endpoint.set(EndPointModel.Payloads,
-                     AmfArray(Seq(Raml10PayloadParser(entry, endpoint.id).parse()), Annotations(entry.value)),
-                     Annotations(entry))
+      "is",
+      (e: YMapEntry) => {
+        endpoint.annotations += EndPointTraitEntry(Range(e.range))
+        (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
+          .parse(endpoint.withTrait)).allowingSingleValue.optional(e)
       }
     )
-
-    collector += endpoint
-
-    AnnotationParser(endpoint,
-                     map,
-                     if (isResourceType) List(VocabularyMappings.resourceType)
-                     else List(VocabularyMappings.endpoint))(WebApiShapeParserContextAdapter(ctx)).parse()
-
-    val nestedEndpointRegex = "^/.*"
-    map.regex(
-      nestedEndpointRegex,
-      entries => {
-        if (isResourceType) {
-          entries.foreach { entry =>
-            val nestedEndpointName = entry.key.toString()
-            ctx.eh.violation(
-              NestedEndpoint,
-              endpoint.id.stripSuffix("/applied"),
-              None,
-              s"Nested endpoint in resourceType: '$nestedEndpointName'",
-              Some(LexicalInformation(Range(entry.key.range))),
-              Some(map.sourceName)
-            )
-          }
-        } else {
-          entries.foreach(ctx.factory.endPointParser(_, producer, Some(endpoint), collector, false).parse())
-        }
-      }
-    )
+    endpoint
   }
 
   private def validateSlashsInSchema(shape: Shape, entry: YMapEntry): Unit = {
@@ -260,7 +294,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   private def validateSlashInDataNode(node: DataNode, entry: YMapEntry): Unit = node match {
     case scalar: ScalarDataNode if scalar.value.option().exists(_.contains('/')) =>
       ctx.eh.violation(SlashInUriParameterValues,
-                       node.id,
+                       node,
                        s"Value '${scalar.value.value()}' of uri parameter must not contain '/' character",
                        entry.value.location)
     case _ =>
@@ -288,64 +322,57 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
   private def implicitPathParamsOrdered(endpoint: EndPoint,
                                         isResourceType: Boolean,
-                                        filter: String => Boolean = _ => true,
+                                        paramFilter: String => Boolean = _ => true,
                                         explicitParams: Seq[Parameter] = Nil): Seq[Parameter] = {
-    val parentParams: Map[String, Parameter] = parent
-      .map(
-        _.parameters
-          .filter(_.binding.value() == "path")
-          .foldLeft(Map[String, Parameter]()) {
-            case (acc, p) =>
-              acc.updated(p.name.value(), p)
-          }
-      )
-      .getOrElse(Map())
+    val parentParams: Map[String, Parameter] = parent.fold(Map[String, Parameter]()) { collectPathParametersByName }
+    val pathParams: Seq[String]              = TemplateUri.variables(parsePath())
+    val findExplicitlyDefinedParam = (variable: String, binding: String) =>
+      explicitParams.find(p => p.name.value().equals(variable) && p.binding.value().equals(binding))
 
-    val pathParams: Seq[String] = TemplateUri.variables(parsePath())
-    val params: Seq[Parameter] = pathParams
-      .filter(filter)
-      .flatMap { variable =>
-        parentParams.get(variable) match {
-          case Some(param) =>
-            val pathParam = param.cloneParameter(endpoint.id)
-            param.name.option().foreach(n => pathParam.withSynthesizeName(n))
-            pathParam.annotations += VirtualElement()
-            Some(pathParam)
-          case None =>
-            explicitParams.find(p => p.name.value().equals(variable) && p.binding.value().equals("path")) match {
-              case Some(p) => Some(p)
-              case None    => generateParam(endpoint, variable)
-            }
-        }
-      }
-    if (!isResourceType) {
-      checkParamsUsage(endpoint, pathParams, explicitParams)
+    val params: Seq[Parameter] = pathParams.filter(paramFilter).flatMap { variable =>
+      val clonedFatherParameter = parentParams
+        .get(variable)
+        .map(param => cloneAsVirtualParameter(endpoint, param))
+
+      clonedFatherParameter
+        .orElse(findExplicitlyDefinedParam(variable, "path"))
+        .orElse(generateParam(endpoint, variable))
     }
+
+    if (!isResourceType) checkParamsUsage(endpoint, pathParams, explicitParams)
     params ++ explicitParams.filter(!params.contains(_))
 
   }
 
+  private def cloneAsVirtualParameter(endpoint: EndPoint, param: Parameter) = {
+    val pathParam = param.cloneParameter(endpoint.id)
+    param.name.option().foreach(n => pathParam.withSynthesizeName(n))
+    pathParam.annotations += VirtualElement()
+    pathParam
+  }
+
+  private def collectPathParametersByName(e: EndPoint) = {
+    e.parameters.filter(_.binding.value() == "path").foldLeft(Map[String, Parameter]()) {
+      case (acc, p) =>
+        acc.updated(p.name.value(), p)
+    }
+  }
+
   private def checkParamsUsage(endpoint: EndPoint, pathParams: Seq[String], endpointParams: Seq[Parameter]): Unit = {
+
     endpointParams.foreach { p =>
-      if (!p.name.option().exists(n => pathParams.contains(n)))
-        ctx.eh.warning(UnusedBaseUriParameter,
-                       p.id,
-                       None,
-                       s"Unused uri parameter ${p.name.value()}",
-                       p.position(),
-                       p.location())
+      if (!correspondsToPathVariable(p)) warning(p, s"Unused uri parameter ${p.name.value()}")
     }
 
     endpoint.operations.flatMap(o => Option(o.request)).flatMap(_.uriParameters).foreach { p =>
-      if (!p.name.option().exists(n => pathParams.contains(n))) {
-        ctx.eh.warning(UnusedBaseUriParameter,
-                       p.id,
-                       None,
-                       s"Unused operation uri parameter ${p.name.value()}",
-                       p.position(),
-                       p.location())
-      }
+      if (!correspondsToPathVariable(p)) warning(p, s"Unused operation uri parameter ${p.name.value()}")
     }
+
+    def warning(param: Parameter, message: String) = {
+      ctx.eh.warning(UnusedBaseUriParameter, param, None, message, param.position(), param.location())
+    }
+
+    def correspondsToPathVariable(param: Parameter) = param.name.option().exists(n => pathParams.contains(n))
   }
   protected def parsePath(): String = parent.map(_.path.value()).getOrElse("") + entry.key.as[YScalar].text
 

@@ -19,9 +19,9 @@ case class InnerShapeParser(key: String,
     map.key(
       key, { entry =>
         adopt(shape)
-        OasTypeParser(entry, item => item.adopted(shape.id + s"/$key"), version).parse() match {
+        OasTypeParser(entry, item => Unit, version).parse() match {
           case Some(parsedShape) =>
-            shape.set(field, parsedShape, Annotations(entry.value))
+            shape.setWithoutId(field, parsedShape, Annotations(entry.value))
           case _ => // ignore
         }
       }

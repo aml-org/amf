@@ -137,9 +137,9 @@ class DocumentMakerTest extends WebApiMakerTest {
 
     val id = spec match {
       case _: Oas =>
-        "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.json#/declarations/types/Human"
+        "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.json#/declares/shape/Human"
       case _ =>
-        "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.raml#/declarations/types/Human"
+        "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.raml#/declares/shape/Human"
     }
 
     val linkLabel = spec match {

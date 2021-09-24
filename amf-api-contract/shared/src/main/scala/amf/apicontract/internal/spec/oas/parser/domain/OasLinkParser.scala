@@ -22,8 +22,8 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
 
   private def nameAndAdopt(templateLink: TemplatedLink): TemplatedLink = {
     templateLink
-      .set(TemplatedLinkModel.Name, ScalarNode(definitionEntry.key).string(), Annotations(definitionEntry.key))
-      .adopted(parentId)
+      .setWithoutId(TemplatedLinkModel.Name, ScalarNode(definitionEntry.key).string(), Annotations(definitionEntry.key))
+
       .add(Annotations(definitionEntry))
   }
   def parse(): TemplatedLink = {
@@ -82,7 +82,7 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
     map.key("server").foreach { entry =>
       val m      = entry.value.as[YMap]
       val server = new OasLikeServerParser(templatedLink.id, YMapEntryLike(m))(ctx).parse()
-      templatedLink.set(TemplatedLinkModel.Server, server, Annotations(entry))
+      templatedLink.setWithoutId(TemplatedLinkModel.Server, server, Annotations(entry))
     }
 
     map.key(
@@ -92,10 +92,10 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
           val variable   = ScalarNode(entry.key).string()
           val expression = ScalarNode(entry.value).string()
           IriTemplateMapping(Annotations(entry))
-            .set(IriTemplateMappingModel.TemplateVariable, variable, Annotations(entry.key))
-            .set(IriTemplateMappingModel.LinkExpression, expression, Annotations(entry.value))
+            .setWithoutId(IriTemplateMappingModel.TemplateVariable, variable, Annotations(entry.key))
+            .setWithoutId(IriTemplateMappingModel.LinkExpression, expression, Annotations(entry.value))
         }
-        templatedLink.fields.set(templatedLink.id,
+        templatedLink.fields.setWithoutId(
                                  TemplatedLinkModel.Mapping,
                                  AmfArray(parameters, Annotations(entry.value)),
                                  Annotations(entry))
@@ -106,7 +106,7 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
 
     AnnotationParser(templatedLink, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
-    ctx.closedShape(templatedLink.id, map, "link")
+    ctx.closedShape(templatedLink, map, "link")
 
     templatedLink
   }

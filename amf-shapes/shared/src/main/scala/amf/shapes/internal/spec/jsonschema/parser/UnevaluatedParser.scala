@@ -38,12 +38,12 @@ class UnevaluatedParser(version: SchemaVersion, info: UnevaluatedInfo)(implicit 
       entry.value.tagType match {
         case YType.Bool => (booleanField in shape).explicit(entry)
         case YType.Map =>
-          OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
-            shape.set(booleanField, AmfScalar("true"), Annotations(SynthesizedField()))
-            shape.set(schemaField, s, Annotations(entry))
+          OasTypeParser(entry, s => Unit, version).parse().foreach { s =>
+            shape.setWithoutId(booleanField, AmfScalar("true"), Annotations(SynthesizedField()))
+            shape.setWithoutId(schemaField, s, Annotations(entry))
           }
         case _ =>
-          ctx.eh.violation(error, shape.id, message, entry.location)
+          ctx.eh.violation(error, shape, message, entry.location)
       }
     }
   }

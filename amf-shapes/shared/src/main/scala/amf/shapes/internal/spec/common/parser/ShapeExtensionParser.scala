@@ -32,7 +32,7 @@ case class ShapeExtensionParser(shape: Shape,
         case _: Oas  => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
         case _ =>
           ctx.eh.violation(UnableToParseShapeExtensions,
-                           shape.id,
+                           shape,
                            s"Cannot parse shape extension for spec ${ctx.spec}",
                            map.location)
           shapeExtensionDefinition.name.value()
@@ -40,14 +40,14 @@ case class ShapeExtensionParser(shape: Shape,
       map.key(extensionKey) match {
         case Some(entry) =>
           val dataNode =
-            DataNodeParser(entry.value, parent = Some(shape.id + s"/extension/$extensionKey"))(ctx).parse()
+            DataNodeParser(entry.value)(ctx).parse()
           val extension = ShapeExtension(entry)
             .withDefinedBy(shapeExtensionDefinition)
             .withExtension(dataNode)
           shape.add(ShapeModel.CustomShapeProperties, extension)
         case None if directlyInherited.contains(shapeExtensionDefinition) =>
           if (shapeExtensionDefinition.minCount.option().exists(_ > 0)) {
-            ctx.eh.violation(MissingRequiredUserDefinedFacet, shape.id, s"Missing required facet '$extensionKey'", map.location)
+            ctx.eh.violation(MissingRequiredUserDefinedFacet, shape, s"Missing required facet '$extensionKey'", map.location)
           }
         case _ =>
       }
@@ -79,7 +79,7 @@ case class ShapeExtensionParser(shape: Shape,
           .foreach(
             name =>
               ctx.eh.violation(UserDefinedFacetMatchesBuiltInFacets,
-                               shape.id,
+                               shape,
                                s"Custom defined facet '$name' matches built-in type facets",
                                map.location))
         definedCustomFacets
@@ -87,7 +87,7 @@ case class ShapeExtensionParser(shape: Shape,
           .foreach(
             name =>
               ctx.eh.violation(UserDefinedFacetMatchesAncestorsTypeFacets,
-                               shape.id,
+                               shape,
                                s"Custom defined facet '$name' matches custom facet from inherited type",
                                map.location))
       })

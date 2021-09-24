@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#content-required
   Message: Request body must have a 'content' field defined
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json#/web-api/end-points/%2Ftest/get/requestBody
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json#/web-api/endpoint/%2Ftest/supportedOperation/get/test/expects/request%2FrequestBody
   Property: 
   Range: [(12,23)-(15,9)]
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#discriminator-name-required
   Message: Discriminator must have a propertyName defined
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema
+  Target: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json#/web-api/endpoint/%2Ftest/supportedOperation/get/test/returns/resp/200/payload/application%2Fjson/shape/schema
   Property: 
   Range: [(23,35)-(24,19)]
   Location: file://amf-cli/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json

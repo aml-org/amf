@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicate-parameters
   Message: Parameter queryParam of type query was found duplicated
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/three-duplicated-query-parameters.json#/web-api/end-points/%2FsomePath/get/request/parameter/default-binding/queryParam
+  Target: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/three-duplicated-query-parameters.json#/web-api/endpoint/%2FsomePath/supportedOperation/get/expects/request/parameter/parameter/query/queryParam
   Property: 
   Range: [(16,10)-(21,11)]
   Location: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/three-duplicated-query-parameters.json
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#duplicate-parameters
   Message: Parameter queryParam of type query was found duplicated
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/three-duplicated-query-parameters.json#/web-api/end-points/%2FsomePath/get/request/parameter/query/ParameterExample
+  Target: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/three-duplicated-query-parameters.json#/web-api/endpoint/%2FsomePath/supportedOperation/get/expects/request/parameter/parameter/query/ParameterExample
   Property: 
   Range: [(27,11)-(27,50)]
   Location: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/three-duplicated-query-parameters.json

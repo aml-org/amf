@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.parser.context
 
 import amf.apicontract.internal.spec.common.parser.{CustomSyntax, SpecNode}
 import amf.core.client.common.validation.SeverityLevels
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 import org.yaml.model.{YMap, YNode, YPart}
@@ -27,14 +27,14 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
 
   override def makeCopy(): OasLikeWebApiContext = decorated.makeCopy()
 
-  override def nextValidation(node: String, shape: String, ast: YMap): Unit = {
+  override def nextValidation(node: AmfObject, shape: String, ast: YMap): Unit = {
     if (customSyntax.contains(shape)) {
       val keys = ast.entries.map(getEntryKey)
       validateCustomSyntax(node, ast, shape, keys)
     } else super.nextValidation(node, shape, ast)
   }
 
-  private def validateCustomSyntax(node: String, ast: YMap, shape: String, keys: Seq[String]): Unit = {
+  private def validateCustomSyntax(node: AmfObject, ast: YMap, shape: String, keys: Seq[String]): Unit = {
     if (customSyntax.contains(shape)) {
       val SpecNode(requiredFields, possible) = customSyntax(shape)
 

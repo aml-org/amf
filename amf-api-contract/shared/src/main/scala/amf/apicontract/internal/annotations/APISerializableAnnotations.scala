@@ -11,7 +11,8 @@ private[amf] object APISerializableAnnotations extends SerializableAnnotations {
     "orphan-oas-extension"                   -> OrphanOasExtension,
     "type-property-lexical-info"             -> TypePropertyLexicalInfo,
     "parameter-binding-in-body-lexical-info" -> ParameterBindingInBodyLexicalInfo,
-    "invalid-binding"                        -> InvalidBinding
+    "invalid-binding"                        -> InvalidBinding,
+    "extends-reference"                     -> ExtendsReference
   )
 
 }

@@ -25,7 +25,7 @@ case class ExampleByMediaTypeParser(yMapEntry: YMapEntry, parentId: String)(impl
   def parse(): Example = {
     val example   = Example(yMapEntry)
     val mediaType = yMapEntry.key.as[YScalar].text
-    example.withName(mediaType).adopted(parentId)
+    example.withName(mediaType)
     example.set(ExampleModel.MediaType, mediaType)
     ExampleDataParser(YMapEntryLike(yMapEntry.value), example, ExampleOptions(strictDefault = false, quiet = true))(
       WebApiShapeParserContextAdapter(ctx))

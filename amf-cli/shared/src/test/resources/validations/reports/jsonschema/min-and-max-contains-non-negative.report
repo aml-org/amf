@@ -1,4 +1,4 @@
-ModelId: file://amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json
+ModelId: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json
 Profile: OAS 2.0
 Conforms: false
 Number of results: 6
@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMinCount-minInclusive
   Message: minContains facet should be greater or equal than 0
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/array/invalid
+  Target: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/any/schema/and/array/invalid
   Property: http://www.w3.org/ns/shacl#qualifiedMinCount
   Range: [(10,21)-(10,23)]
   Location: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json
@@ -16,7 +16,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMaxCount-minInclusive
   Message: maxContains facet should be greater or equal than 0
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/array/invalid
+  Target: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/any/schema/and/array/invalid
   Property: http://www.w3.org/ns/shacl#qualifiedMaxCount
   Range: [(11,21)-(11,23)]
   Location: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json
@@ -26,7 +26,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMinCount-maxCount
   Message: minContains facet won't be taken into account in validation
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/array/invalid
+  Target: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/any/schema/and/array/invalid
   Property: http://www.w3.org/ns/shacl#qualifiedMinCount
   Range: [(10,21)-(10,23)]
   Location: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json
@@ -34,7 +34,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMaxCount-maxCount
   Message: maxContains facet won't be taken into account in validation
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/array/invalid
+  Target: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/any/schema/and/array/invalid
   Property: http://www.w3.org/ns/shacl#qualifiedMaxCount
   Range: [(11,21)-(11,23)]
   Location: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json
@@ -42,7 +42,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMinCount-maxCount
   Message: minContains facet won't be taken into account in validation
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/array/valid
+  Target: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/any/schema/and/array/invalid/and/array/valid
   Property: http://www.w3.org/ns/shacl#qualifiedMinCount
   Range: [(19,21)-(19,22)]
   Location: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json
@@ -50,7 +50,7 @@ Level: Warning
 - Constraint: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMaxCount-maxCount
   Message: maxContains facet won't be taken into account in validation
   Severity: Warning
-  Target: file://amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/array/valid
+  Target: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json#/any/schema/and/array/invalid/and/array/valid
   Property: http://www.w3.org/ns/shacl#qualifiedMaxCount
   Range: [(20,21)-(20,22)]
   Location: amf-cli/shared/src/test/resources/validations/jsonschema/min-and-max-contains-non-negative.json

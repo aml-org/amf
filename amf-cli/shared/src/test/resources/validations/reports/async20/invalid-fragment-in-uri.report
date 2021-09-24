@@ -8,7 +8,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#uri-fragment
   Message: Fragments must not be defined in uri
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-fragment-in-uri.yaml#/async-api/end-points/%2Finvalid%23example
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-fragment-in-uri.yaml#/async-api/endpoint/%2Finvalid%23example
   Property: http://a.ml/vocabularies/apiContract#path
   Range: [(8,2)-(8,18)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/invalid-fragment-in-uri.yaml

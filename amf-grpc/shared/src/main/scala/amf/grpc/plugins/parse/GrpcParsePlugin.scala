@@ -64,4 +64,6 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
       case _              => grpcCtx
     }
   }
+
+  override def withIdAdoption: Boolean = false // TODO pending analysis and parsing cleanup
 }

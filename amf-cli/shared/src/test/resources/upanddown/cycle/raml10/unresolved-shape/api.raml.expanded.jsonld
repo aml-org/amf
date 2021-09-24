@@ -81,7 +81,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml/BaseUnitProcessingData",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
@@ -99,7 +99,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt",
         "@type": [
           "http://a.ml/vocabularies/shapes#ArrayShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -109,7 +109,7 @@
         ],
         "http://a.ml/vocabularies/shapes#items": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/items/items",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/shape/items",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -119,7 +119,7 @@
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc"
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc"
               }
             ],
             "http://a.ml/vocabularies/document#link-label": [
@@ -134,16 +134,31 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/items/items/source-map",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/shape/items/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/items/items/source-map/lexical/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/shape/items/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/items/items"
+                        "@value": "http://a.ml/vocabularies/document#link-target"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/shape/items/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/shape/items"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -164,16 +179,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -185,7 +200,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/source-map/lexical/element_2",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/shapes#items"
@@ -198,7 +213,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -211,10 +226,10 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -226,10 +241,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/array/tt"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -243,7 +258,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -263,13 +278,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc/source-map/synthesized-field/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#closed"
@@ -284,10 +299,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -299,10 +314,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -312,7 +327,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -327,10 +342,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/abc"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -344,7 +359,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/direct",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/direct",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -354,7 +369,7 @@
         ],
         "http://a.ml/vocabularies/document#link-target": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc"
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc"
           }
         ],
         "http://a.ml/vocabularies/document#link-label": [
@@ -369,16 +384,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/direct/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/direct/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/direct/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/direct/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/direct"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/direct"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -390,10 +405,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/direct/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/direct/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/direct"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/direct"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -403,7 +418,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/direct/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/direct/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -420,7 +435,7 @@
         ]
       },
       {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc",
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -440,13 +455,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc/source-map",
+            "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc/source-map/synthesized-field/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#closed"
@@ -461,10 +476,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -476,10 +491,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc/source-map/lexical/element_1",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -489,7 +504,7 @@
                 ]
               },
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc/source-map/lexical/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -504,10 +519,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc/source-map/declared-element/element_0",
+                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc"
+                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declares/shape/cc"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

@@ -31,8 +31,8 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
     key.foreach(
       k =>
         correlationId
-          .set(CorrelationIdModel.Name, ScalarNode(k).string(), Annotations(k)))
-    correlationId.adopted(parentId).add(entryLike.annotations)
+          .setWithoutId(CorrelationIdModel.Name, ScalarNode(k).string(), Annotations(k)))
+    correlationId.add(entryLike.annotations)
   }
 
   private def handleRef(map: YMap, fullRef: String) = {
@@ -71,7 +71,7 @@ sealed case class CorrelationIdPopulator(map: YMap, correlationId: CorrelationId
     map.key("location", CorrelationIdModel.Location in correlationId)
 
     AnnotationParser(correlationId, map)(WebApiShapeParserContextAdapter(ctx)).parse()
-    ctx.closedShape(correlationId.id, map, "correlationId")
+    ctx.closedShape(correlationId, map, "correlationId")
     correlationId
   }
 }

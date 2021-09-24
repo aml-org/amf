@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "/BaseUnitProcessingData",
+      "@id": "#/BaseUnitProcessingData",
       "@type": [
         "doc:APIContractProcessingData"
       ],
@@ -10,7 +10,7 @@
       "apiContract:sourceSpec": "RAML 0.8"
     },
     {
-      "@id": "#/web-api",
+      "@id": "/web-api",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,17 +20,17 @@
       "core:name": "API",
       "apiContract:endpoint": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts"
+          "@id": "#/web-api/endpoint/%2Fcontacts"
         }
       ],
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/source-map"
+          "@id": "/web-api#/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts",
+      "@id": "#/web-api/endpoint/%2Fcontacts",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -38,39 +38,39 @@
       "apiContract:path": "/contacts",
       "apiContract:supportedOperation": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get"
         },
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post"
         }
       ],
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/source-map",
+      "@id": "/web-api#/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:source-vendor": [
         {
-          "@id": "#/web-api/source-map/source-vendor/element_0"
+          "@id": "/web-api#/source-map/source-vendor/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/source-map/lexical/element_1"
+          "@id": "/web-api#/source-map/lexical/element_1"
         },
         {
-          "@id": "#/web-api/source-map/lexical/element_0"
+          "@id": "/web-api#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -78,17 +78,17 @@
       "apiContract:method": "get",
       "apiContract:returns": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200"
         }
       ],
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -96,46 +96,46 @@
       "apiContract:method": "post",
       "apiContract:returns": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201"
         }
       ],
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_1"
+          "@id": "#/web-api/endpoint/%2Fcontacts/source-map/lexical/element_1"
         },
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/source-map/source-vendor/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api",
+      "@id": "/web-api#/source-map/source-vendor/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml/web-api",
       "sourcemaps:value": "RAML 0.8"
     },
     {
-      "@id": "#/web-api/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api",
+      "@id": "/web-api#/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml/web-api",
       "sourcemaps:value": "[(2,0)-(34,50)]"
     },
     {
-      "@id": "#/web-api/source-map/lexical/element_0",
+      "@id": "/web-api#/source-map/lexical/element_0",
       "sourcemaps:element": "core:name",
       "sourcemaps:value": "[(2,0)-(3,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -145,31 +145,31 @@
       "core:name": "200",
       "apiContract:payload": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml"
         }
       ],
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/source-map/lexical/element_1"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/source-map/lexical/element_1"
         },
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -179,115 +179,115 @@
       "core:name": "201",
       "apiContract:payload": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml"
         }
       ],
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/source-map/lexical/element_1"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/source-map/lexical/element_1"
         },
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts",
+      "@id": "#/web-api/endpoint/%2Fcontacts/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts",
       "sourcemaps:value": "[(21,0)-(34,50)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0",
+      "@id": "#/web-api/endpoint/%2Fcontacts/source-map/lexical/element_0",
       "sourcemaps:element": "apiContract:path",
       "sourcemaps:value": "[(21,0)-(21,9)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/atom+xml",
       "raml-shapes:schema": {
-        "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
+        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
       },
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get",
       "sourcemaps:value": "[(23,2)-(29,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/source-map/lexical/element_0",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/source-map/lexical/element_0",
       "sourcemaps:element": "apiContract:returns",
       "sourcemaps:value": "[(24,4)-(29,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/atom+xml",
       "raml-shapes:schema": {
-        "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
+        "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml"
       },
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post",
       "sourcemaps:value": "[(29,2)-(34,50)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/source-map/lexical/element_0",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/source-map/lexical/element_0",
       "sourcemaps:element": "apiContract:returns",
       "sourcemaps:value": "[(30,4)-(34,50)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
       "@type": [
         "raml-shapes:SchemaShape",
         "raml-shapes:AnyShape",
@@ -299,35 +299,35 @@
       "shacl:name": "application/atom+xml",
       "apiContract:examples": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
         }
       ],
       "doc:raw": "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\r\n<xs:schema targetNamespace=\"http://www.w3.org/2005/Atom\" elementFormDefault=\"qualified\" \r\n\tattributeFormDefault=\"unqualified\"\r\n\txmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\r\n\t<xs:import namespace=\"http://www.w3.org/XML/1998/namespace\" schemaLocation=\"http://www.w3.org/2001/03/xml.xsd\" />\r\n\t<xs:element name=\"email\" type=\"atom:emailType\" minOccurs=\"0\" maxOccurs=\"1\" />\r\n\t<xs:simpleType name=\"emailType\">\r\n\t\t<xs:annotation>\r\n\t\t\t<xs:documentation>\r\n\t\t\t\tSchema definition for an email address.\r\n\t\t\t</xs:documentation>\r\n\t\t</xs:annotation>\r\n\t\t<xs:restriction base=\"xs:normalizedString\">\r\n\t\t\t<xs:pattern value=\"\\w+@(\\w+\\.)+\\w+\" />\r\n\t\t</xs:restriction>\r\n\t</xs:simpleType>\r\n</xs:schema>",
       "doc:location": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/schemas/atom.xsd",
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200",
       "sourcemaps:value": "[(25,6)-(29,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
       "@type": [
         "raml-shapes:SchemaShape",
         "raml-shapes:AnyShape",
@@ -339,35 +339,35 @@
       "shacl:name": "application/atom+xml",
       "apiContract:examples": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example"
         }
       ],
       "doc:raw": "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\r\n<xs:schema targetNamespace=\"http://www.w3.org/2005/Atom\" elementFormDefault=\"qualified\" \r\n\tattributeFormDefault=\"unqualified\"\r\n\txmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\r\n\t<xs:import namespace=\"http://www.w3.org/XML/1998/namespace\" schemaLocation=\"http://www.w3.org/2001/03/xml.xsd\" />\r\n\t<xs:element name=\"email\" type=\"atom:emailType\" minOccurs=\"0\" maxOccurs=\"1\" />\r\n\t<xs:simpleType name=\"emailType\">\r\n\t\t<xs:annotation>\r\n\t\t\t<xs:documentation>\r\n\t\t\t\tSchema definition for an email address.\r\n\t\t\t</xs:documentation>\r\n\t\t</xs:annotation>\r\n\t\t<xs:restriction base=\"xs:normalizedString\">\r\n\t\t\t<xs:pattern value=\"\\w+@(\\w+\\.)+\\w+\" />\r\n\t\t</xs:restriction>\r\n\t</xs:simpleType>\r\n</xs:schema>",
       "doc:location": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/schemas/atom.xsd",
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201",
       "sourcemaps:value": "[(31,6)-(34,50)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -377,41 +377,41 @@
       "doc:location": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/examples/contact.xml",
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:synthesized-field": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0"
         }
       ],
       "sourcemaps:declared-element": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml",
       "sourcemaps:value": "[(27,10)-(29,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -421,166 +421,166 @@
       "doc:location": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/examples/contact.xml",
       "sourcemaps:sources": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:synthesized-field": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0"
         }
       ],
       "sourcemaps:declared-element": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml",
       "sourcemaps:value": "[(33,10)-(34,50)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:synthesized-field": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_1"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/lexical/element_0"
         }
       ],
       "sourcemaps:tracked-element": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/tracked-element/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/tracked-element/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
       "sourcemaps:element": "core:mediaType",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
       "sourcemaps:element": "doc:location",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
       "sourcemaps:value": "[(5,4)-(6,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
       "sourcemaps:value": ""
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map",
       "@type": [
         "sourcemaps:SourceMap"
       ],
       "sourcemaps:synthesized-field": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_1"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_1"
         },
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/lexical/element_0"
         }
       ],
       "sourcemaps:tracked-element": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/tracked-element/element_0"
+          "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/tracked-element/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
       "sourcemaps:element": "core:mediaType",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
       "sourcemaps:element": "doc:location",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
       "sourcemaps:value": "[(5,4)-(6,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
       "sourcemaps:value": ""
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_1",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_1",
       "sourcemaps:element": "doc:strict",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_0",
       "sourcemaps:element": "doc:raw",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
       "sourcemaps:value": "[(1,0)-(1,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/tracked-element/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
-      "sourcemaps:value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml"
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/tracked-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
+      "sourcemaps:value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/get/returns/resp/200/application%2Fatom%2Bxml"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_1",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_1",
       "sourcemaps:element": "doc:strict",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/synthesized-field/element_0",
       "sourcemaps:element": "doc:raw",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/lexical/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
       "sourcemaps:value": "[(1,0)-(1,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/tracked-element/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
-      "sourcemaps:value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml"
+      "@id": "#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example/source-map/tracked-element/element_0",
+      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/payload/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/examples/example/default-example",
+      "sourcemaps:value": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/endpoint/%2Fcontacts/supportedOperation/post/returns/resp/201/application%2Fatom%2Bxml"
     },
     {
       "@id": "",
@@ -591,11 +591,11 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#/web-api"
+        "@id": "/web-api"
       },
       "doc:root": true,
       "doc:processingData": {
-        "@id": "/BaseUnitProcessingData"
+        "@id": "#/BaseUnitProcessingData"
       }
     }
   ],

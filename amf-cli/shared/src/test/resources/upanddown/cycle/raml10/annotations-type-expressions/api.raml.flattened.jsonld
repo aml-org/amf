@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml/BaseUnitProcessingData",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
@@ -61,10 +61,10 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental"
         }
       ],
       "@type": [
@@ -78,45 +78,45 @@
       },
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml/BaseUnitProcessingData"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/BaseUnitProcessingData"
       }
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated",
       "@type": [
         "http://a.ml/vocabularies/document#DomainProperty",
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/nil/deprecated"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/nil/deprecated"
       },
       "http://a.ml/vocabularies/core#name": "deprecated",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental",
       "@type": [
         "http://a.ml/vocabularies/document#DomainProperty",
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental"
+        "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental"
       },
       "http://a.ml/vocabularies/core#name": "experimental",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/nil/deprecated",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/nil/deprecated",
       "@type": [
         "http://a.ml/vocabularies/shapes#NilShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -126,31 +126,31 @@
       "http://www.w3.org/ns/shacl#name": "deprecated",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/nil/deprecated/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/nil/deprecated/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental",
       "@type": [
         "http://a.ml/vocabularies/shapes#UnionShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -160,66 +160,66 @@
       ],
       "http://a.ml/vocabularies/shapes#anyOf": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/0/nil/default-nil"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/nil/default-nil"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/1/scalar/default-scalar"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/scalar/default-scalar"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "experimental",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/source-map/declared-element/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/source-map/lexical/element_1"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/nil/deprecated/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/nil/deprecated/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/nil/deprecated/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/nil/deprecated/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(4,12)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/0/nil/default-nil",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/nil/default-nil",
       "@type": [
         "http://a.ml/vocabularies/shapes#NilShape",
         "http://www.w3.org/ns/shacl#Shape",
@@ -228,12 +228,12 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/0/nil/default-nil/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/nil/default-nil/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/1/scalar/default-scalar",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/scalar/default-scalar",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -248,86 +248,86 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/1/scalar/default-scalar/source-map"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/scalar/default-scalar/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-expression": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental/source-map/type-expression/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/source-map/type-expression/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental",
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,28)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/source-map/lexical/element_0",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,14)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/nil/deprecated/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/deprecated/nil/deprecated",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/nil/deprecated/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/deprecated/nil/deprecated",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,14)-(4,17)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/0/nil/default-nil/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/nil/default-nil/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/0/nil/default-nil/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/nil/default-nil/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/1/scalar/default-scalar/source-map",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/scalar/default-scalar/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/1/scalar/default-scalar/source-map/lexical/element_0"
+          "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/scalar/default-scalar/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental/source-map/type-expression/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/source-map/type-expression/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental",
       "http://a.ml/vocabularies/document-source-maps#value": "nil | string"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/experimental",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,16)-(5,28)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/0/nil/default-nil/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/0/nil/default-nil",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/nil/default-nil/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/nil/default-nil",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,16)-(5,19)]"
     },
     {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/1/scalar/default-scalar/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declarations/annotations/experimental/union/default-union/1/scalar/default-scalar",
+      "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/scalar/default-scalar/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-type-expressions/api.raml#/declares/experimental/union/experimental/anyOf/scalar/default-scalar",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,22)-(5,28)]"
     }
   ]

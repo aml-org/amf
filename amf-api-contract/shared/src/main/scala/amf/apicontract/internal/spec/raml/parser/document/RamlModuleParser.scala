@@ -25,12 +25,12 @@ case class RamlModuleParser(root: Root, spec: Spec)(implicit override val ctx: R
   def parseModule(): Module = {
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
-      .adopted(root.location)
+
       .add(SourceSpec(ctx.spec))
       .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
-      ctx.closedShape(module.id, rootMap, "module")
+      ctx.closedShape(module, rootMap, "module")
 
       val references = ReferencesParser(module, root.location, "uses", rootMap, root.references).parse()
 

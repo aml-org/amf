@@ -77,7 +77,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
           node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
             apiContext.eh.violation(TransformationValidation, r.id, None, message, r.position(), r.location()))
           val extendsHelper = ExtendsHelper(profile, keepEditingInfo = keepEditingInfo, errorHandler, Some(apiContext))
-          extendsHelper.asEndpoint(
+          val result = extendsHelper.asEndpoint(
             context.model,
             node,
             rt.annotations,
@@ -85,6 +85,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
             r.id,
             configuration
           )
+          result
 
         case _ =>
           apiContext.eh.violation(TransformationValidation,

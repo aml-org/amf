@@ -32,7 +32,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#CreativeWork-url-pattern
   Message: Must be in the format of a URL
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/async-api/creative-work/invalid%20url%20format
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/async-api/documentation/creative-work/invalid%20url%20format
   Property: http://a.ml/vocabularies/core#url
   Range: [(14,7)-(14,25)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
@@ -40,7 +40,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#OAuth2Flow-authorizationUri-pattern
   Message: Must be in the format of a URL
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/declarations/securitySchemes/invalidUrls/settings/oauth2/authorizationCode
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/declares/scheme/invalidUrls/settings/oauth2/flows/authorizationCode
   Property: http://a.ml/vocabularies/security#authorizationUri
   Range: [(22,28)-(22,39)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
@@ -48,7 +48,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#OAuth2Flow-accessTokenUri-pattern
   Message: Must be in the format of a URL
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/declarations/securitySchemes/invalidUrls/settings/oauth2/authorizationCode
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/declares/scheme/invalidUrls/settings/oauth2/flows/authorizationCode
   Property: http://a.ml/vocabularies/security#accessTokenUri
   Range: [(23,20)-(23,31)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml
@@ -56,7 +56,7 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/parser#OAuth2Flow-refreshUri-pattern
   Message: Must be in the format of a URL
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/declarations/securitySchemes/invalidUrls/settings/oauth2/authorizationCode
+  Target: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml#/declares/scheme/invalidUrls/settings/oauth2/flows/authorizationCode
   Property: http://a.ml/vocabularies/security#refreshUri
   Range: [(24,22)-(24,33)]
   Location: file://amf-cli/shared/src/test/resources/validations/async20/validations/several-url-formats.yaml

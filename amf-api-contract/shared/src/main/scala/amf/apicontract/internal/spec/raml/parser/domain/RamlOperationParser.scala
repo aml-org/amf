@@ -42,10 +42,10 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
                     AmfScalar(method.stripSuffix("?"), methodNode.annotations),
                     Annotations.inferred())
     } else {
-      operation.set(Method, methodNode, Annotations.inferred())
+      operation.setWithoutId(Method, methodNode, Annotations.inferred())
     }
 
-    operation.adopted(parentId)
+    operation
   }
 
   def parse(): Operation = {
@@ -57,7 +57,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
       case _ if entry.value.toOption[YScalar].map(_.text).exists(s => s == "" || s == "null") => operation
       case _ =>
         ctx.eh.violation(InvalidOperationType,
-                         operation.id,
+                         operation,
                          s"Invalid node ${entry.value} for method ${operation.method.value()}",
                          entry.value.location)
         operation
@@ -68,7 +68,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     val map     = entry.value.as[YMap]
     val isTrait = ctx.contextType == RamlWebApiContextType.TRAIT
 
-    ctx.closedShape(operation.id, map, if (isTrait) "trait" else "operation")
+    ctx.closedShape(operation, map, if (isTrait) "trait" else "operation")
 
     map.key("displayName", OperationModel.Name in operation)
     map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)
@@ -84,7 +84,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     map.key(
       "tags".asRamlAnnotation,
       entry => {
-        val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
+        val tags = StringTagsParser(entry.value.as[YSequence], operation).parse()
         operation.withTags(tags)
       }
     )
@@ -101,7 +101,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
       .requestParser(map, () => operation.withInferredRequest(), parseOptional)
       .parse()
       .foreach(req =>
-        operation.set(OperationModel.Request, AmfArray(List(req), Annotations.virtual()), Annotations.inferred()))
+        operation.setWithoutId(OperationModel.Request, AmfArray(List(req), Annotations.virtual()), Annotations.inferred()))
 
     map.key(
       "defaultResponse".asRamlAnnotation,
@@ -110,7 +110,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
           val responses = mutable.ListBuffer[Response]()
           entry.value.as[YMap].entries.foreach { entry =>
             responses += ctx.factory
-              .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
+              .responseParser(entry, (r: Response) => Unit, parseOptional)
               .parse()
           }
           operation.withResponses(responses)
@@ -131,13 +131,13 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
 
             entries.foreach { entry =>
               responses += ctx.factory
-                .responseParser(entry, _.adopted(operation.id), parseOptional)
+                .responseParser(entry, _ => Unit, parseOptional)
                 .parse()
             }
         }
 
         val defaultResponses = operation.responses
-        operation.set(OperationModel.Responses,
+        operation.setWithoutId(OperationModel.Responses,
                       AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
                       Annotations(entry))
       }
@@ -152,7 +152,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
           .flatMap { callbackEntry =>
             val name = callbackEntry.key.as[YScalar].text
             Oas30CallbackParser(callbackEntry.value.as[YMap],
-                                _.withName(name).adopted(operation.id),
+                                _.withName(name),
                                 name,
                                 callbackEntry)(toOas(ctx))
               .parse()

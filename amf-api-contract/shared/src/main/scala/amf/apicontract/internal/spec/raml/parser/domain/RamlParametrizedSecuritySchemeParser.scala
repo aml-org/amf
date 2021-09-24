@@ -19,16 +19,16 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
   private val scheme: ParametrizedSecurityScheme = ParametrizedSecurityScheme(node)
 
   def parse(): ParametrizedSecurityScheme = node.tagType match {
-    case YType.Null => scheme.withSynthesizeName("null").add(NullSecurity()).adopted(parentId)
+    case YType.Null => scheme.withSynthesizeName("null").add(NullSecurity())
     case YType.Map =>
       val schemeEntry = node.as[YMap].entries.head
       val name        = ScalarNode(schemeEntry.key)
       val nameText    = name.text().toString
-      scheme.withName(name).adopted(parentId)
+      scheme.withName(name)
 
       ctx.declarations.findSecurityScheme(nameText, SearchScope.Named) match {
         case Some(declaration) =>
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations.inferred())
+          scheme.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations.inferred())
 
           val effectiveDeclaration =
             if (declaration.isLink)
@@ -38,11 +38,11 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
           val settings =
             RamlSecuritySettingsParser(schemeEntry.value, effectiveDeclaration.`type`.value(), scheme).parse()
 
-          scheme.set(ParametrizedSecuritySchemeModel.Settings, settings, Annotations(schemeEntry))
+          scheme.setWithoutId(ParametrizedSecuritySchemeModel.Settings, settings, Annotations(schemeEntry))
         case None =>
           ctx.eh.violation(
             UnknownSecuritySchemeErrorSpecification,
-            scheme.id,
+            scheme,
             s"Security scheme '$nameText' not found in declarations (and name cannot be 'null').",
             node.location
           )
@@ -56,11 +56,11 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
         "'securedBy' property doesn't accept !include tag, only references to security schemes.",
         node.location
       )
-      scheme.withSynthesizeName("invalid").adopted(parentId)
+      scheme.withSynthesizeName("invalid")
     case _ =>
       val name: ScalarNode = ScalarNode(node)
       val textName         = name.text().toString
-      scheme.withName(name).adopted(parentId)
+      scheme.withName(name)
 
       ctx.declarations.findSecurityScheme(textName, SearchScope.Named) match {
         case Some(declaration) =>
@@ -69,7 +69,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
         case None =>
           ctx.eh.violation(
             UnknownSecuritySchemeErrorSpecification,
-            scheme.id,
+            "",
             s"Security scheme '$textName' not found in declarations.",
             node.location
           )

@@ -44,12 +44,12 @@ class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit c
 
     map.key("name", entry => {
       val value = ScalarNode(entry.value)
-      settings.set(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
+      settings.setWithoutId(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
     })
 
     map.key("in", entry => {
       val value = ScalarNode(entry.value)
-      settings.set(HttpApiKeySettingsModel.In, value.string(), Annotations(entry))
+      settings.setWithoutId(HttpApiKeySettingsModel.In, value.string(), Annotations(entry))
     })
 
     map.key(
@@ -90,8 +90,7 @@ class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit c
   private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
     val flows = entry.value.as[YMap].entries.map(parseFlow(settings, _))
     flows.foreach(OAuth2FlowValidations.validateFlowFields(_, ctx.eh, entry))
-    settings.fields.set(settings.id,
-                        OAuth2SettingsModel.Flows,
+    settings.fields.setWithoutId(OAuth2SettingsModel.Flows,
                         AmfArray(flows, Annotations(entry.value)),
                         Annotations(entry.value))
   }
@@ -101,9 +100,7 @@ class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit c
     val flowMap = flowEntry.value.as[YMap]
     val flowKey = ScalarNode(flowEntry.key).string()
 
-    flow.set(OAuth2FlowModel.Flow, flowKey, Annotations(flowEntry.key))
-
-    flow.adopted(settings.id)
+    flow.setWithoutId(OAuth2FlowModel.Flow, flowKey, Annotations(flowEntry.key))
 
     flowMap.key("authorizationUrl", OAuth2FlowModel.AuthorizationUri in flow)
     flowMap.key("tokenUrl", OAuth2FlowModel.AccessTokenUri in flow)

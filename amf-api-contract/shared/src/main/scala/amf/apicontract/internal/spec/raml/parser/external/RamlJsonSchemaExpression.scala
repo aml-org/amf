@@ -68,7 +68,7 @@ case class RamlJsonSchemaExpression(key: YNode,
           NodeDataNodeParser(entry.value, wrapper.id, quiet = false)(WebApiShapeParserContextAdapter(ctx)).parse()
         wrapper.setDefaultStrValue(entry)
         dataNodeResult.dataNode.foreach { dataNode =>
-          wrapper.set(ShapeModel.Default, dataNode, Annotations(entry))
+          wrapper.setWithoutId(ShapeModel.Default, dataNode, Annotations(entry))
         }
       }
     )
@@ -76,7 +76,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     wrapperName(key).foreach(t => wrapper.withName(t, Annotations(key)))
     val typeEntryAnnotations =
       map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
-    wrapper.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations.virtual()), typeEntryAnnotations)
+    wrapper.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations.virtual()), typeEntryAnnotations)
     wrapper
   }
 
@@ -114,7 +114,9 @@ case class RamlJsonSchemaExpression(key: YNode,
         val shape = s.copyShape().withName(key.as[String])
         ctx.declarations.fragments
           .get(basePath)
-          .foreach(e => shape.withReference(e.encoded.id + localPath.getOrElse("")))
+          .foreach(e => shape.callAfterAdoption{ () =>
+            shape.withReference(e.encoded.id + localPath.getOrElse(""))
+          })
         if (shape.examples.nonEmpty) { // top level inlined shape, we don't want to reuse the ID, this must be an included JSON schema => EDGE CASE!
           shape.id = null // <-- suspicious
           adopt(shape)
@@ -141,7 +143,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         val empty = AnyShape()
         adopt(empty)
         ctx.eh.violation(JsonSchemaFragmentNotFound,
-                         empty.id,
+                         empty,
                          s"could not find json schema fragment ${localPath.get} in file $basePath",
                          origin.valueAST.location)
         empty
@@ -149,7 +151,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     }
     ctx.declarations.fragments
       .get(basePath)
-      .foreach(e => shape.withReference(e.encoded.id + localPath.get))
+      .foreach(e => shape.callAfterAdoption{ () => shape.withReference(e.encoded.id + localPath.get)})
 
     shape.annotations += ExternalFragmentRef(localPath.get)
     shape
@@ -159,7 +161,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     val shape = parseJsonShape(origin.text, key, origin.valueAST, adopt, value, origin.originalUrlText)
     ctx.declarations.fragments
       .get(basePath)
-      .foreach(e => shape.withReference(e.encoded.id))
+      .foreach(e => shape.callAfterAdoption(() => shape.withReference(e.encoded.id)))
     ctx.declarations.registerExternalRef(basePath, shape)
     shape.annotations += ParsedJSONSchema(origin.text.trim)
     shape
@@ -276,7 +278,7 @@ case class RamlJsonSchemaExpression(key: YNode,
       case None =>
         val shape = SchemaShape()
         adopt(shape)
-        ctx.eh.violation(UnableToParseJsonSchema, shape.id, "Cannot parse JSON Schema", value.location)
+        ctx.eh.violation(UnableToParseJsonSchema, shape, "Cannot parse JSON Schema", value.location)
         shape
     }
   }

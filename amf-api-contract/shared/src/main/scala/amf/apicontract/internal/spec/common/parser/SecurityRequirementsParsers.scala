@@ -25,9 +25,9 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       adopted(securityRequirement)
       // Parse individual schemes
       val schemes = map.entries.flatMap { entry =>
-        OasLikeParametrizedSecuritySchemeParser(entry, p => p.adopted(securityRequirement.id)).parse()
+        OasLikeParametrizedSecuritySchemeParser(entry, p => Unit).parse()
       }
-      securityRequirement.set(SecurityRequirementModel.Schemes,
+      securityRequirement.setWithoutId(SecurityRequirementModel.Schemes,
                               AmfArray(schemes, Annotations(map)),
                               Annotations.inferred())
       Some(securityRequirement)
@@ -37,7 +37,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       val requirement = SecurityRequirement(Annotations(node)).withName(ScalarNode(node))
       adopted(requirement)
 
-      ctx.eh.violation(InvalidSecurityRequirementObject, requirement.id, s"Invalid security requirement $node", node.location)
+      ctx.eh.violation(InvalidSecurityRequirementObject, requirement, s"Invalid security requirement $node", node.location)
       Some(requirement)
   }
 
@@ -63,11 +63,11 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
 
     private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
       if (declaration.`type`.is("OAuth 2.0")) {
-        val settings = OAuth2Settings(Annotations(schemeEntry)).adopted(scheme.id)
+        val settings = OAuth2Settings(Annotations(schemeEntry))
         val scopes   = getScopes(schemeEntry)
         val flow: OAuth2Flow = OAuth2Flow(Annotations.virtual())
-          .adopted(settings.id)
-        flow.fields.set(flow.id,
+
+        flow.fields.setWithoutId(
                         OAuth2FlowModel.Scopes,
                         AmfArray(scopes, Annotations(schemeEntry.value)),
                         Annotations(schemeEntry))
@@ -79,7 +79,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
               if (!isValidScope(se.flows.headOption, s)) {
                 ctx.eh.violation(
                   UnknownScopeErrorSpecification,
-                  s.id,
+                  s,
                   Some(OAuth2FlowModel.Scopes.value.toString),
                   s"Scope '${s.name.value()}' not found in settings of declared secured by ${scheme.scheme.name.value()}.",
                   s.position(),
@@ -91,12 +91,12 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
         }
 
         scheme
-          .set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows), Annotations.inferred())
+          .setWithoutId(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows), Annotations.inferred())
           .add(Annotations(schemeEntry))
       } else if (declaration.`type`.is("openIdConnect")) {
-        val settings = OpenIdConnectSettings().adopted(scheme.id)
+        val settings = OpenIdConnectSettings()
         val scopes   = getScopes(schemeEntry)
-        scheme.set(
+        scheme.setWithoutId(
           ParametrizedSecuritySchemeModel.Settings,
           settings.setArray(OpenIdConnectSettingsModel.Scopes, scopes, Annotations(schemeEntry.value)),
           Annotations.inferred()
@@ -106,7 +106,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
           case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
           case None             => "Scopes array must be empty for given security scheme"
         }
-        ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node.location)
+        ctx.eh.violation(ScopeNamesMustBeEmpty, scheme, msg, node.location)
       }
     }
 
@@ -116,13 +116,13 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
       ctx.declarations.findSecurityScheme(name, SearchScope.All) match {
         case Some(declaration) =>
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations.inferred())
+          scheme.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations.inferred())
           declaration
         case None =>
           val securityScheme = SecurityScheme(Annotations.virtual())
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme, Annotations.synthesized())
+          scheme.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, securityScheme, Annotations.synthesized())
           ctx.eh.violation(DeclarationNotFound,
-                           securityScheme.id,
+                           securityScheme,
                            s"Security scheme '$name' not found in declarations.",
                            part.location)
           securityScheme
@@ -133,7 +133,7 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
   private def getScopes(schemeEntry: YMapEntry) =
     schemeEntry.value
       .as[Seq[YNode]]
-      .map(n => Scope(n).set(ScopeModel.Name, ScalarNode(n).text(), Annotations.inferred()))
+      .map(n => Scope(n).setWithoutId(ScopeModel.Name, ScalarNode(n).text(), Annotations.inferred()))
 }
 
 object RamlSecurityRequirementParser {
@@ -146,9 +146,8 @@ case class RamlSecurityRequirementParser(node: YNode, parentId: String, idCounte
     implicit val ctx: RamlWebApiContext) {
   def parse(): SecurityRequirement = {
     val requirement = SecurityRequirement(node).withSynthesizeName(idCounter.genId("default-requirement"))
-    requirement.adopted(parentId)
     val scheme: ParametrizedSecurityScheme = RamlParametrizedSecuritySchemeParser(node, requirement.id).parse()
-    requirement.set(SecurityRequirementModel.Schemes, AmfArray(Seq(scheme), Annotations(node)), Annotations.inferred())
+    requirement.setWithoutId(SecurityRequirementModel.Schemes, AmfArray(Seq(scheme), Annotations(node)), Annotations.inferred())
   }
 
 }

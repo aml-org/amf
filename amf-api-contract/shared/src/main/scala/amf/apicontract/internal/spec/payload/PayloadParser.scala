@@ -10,12 +10,12 @@ class PayloadParser(document: YDocument, location: String, mediaType: String)(im
 
   def parseUnit(): PayloadFragment = {
     val payload        = parseNode(location, document.node)
-    val parsedDocument = PayloadFragment(payload, mediaType).adopted(location)
+    val parsedDocument = PayloadFragment(payload, mediaType)
     parsedDocument
   }
 
   private def parseNode(parent: String, node: YNode) =
-    DataNodeParser(node, parent = Some(parent)).parse()
+    DataNodeParser(node).parse()
 }
 
 object PayloadParser {
