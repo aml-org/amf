@@ -1,10 +1,7 @@
 package amf.apicontract.client.scala
 
-import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.{AMLBaseUnitClient, AMLDialectResult}
-import amf.core.client.common.transform._
-import amf.core.client.scala.{AMFParseResult, AMFResult}
-import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
+import amf.core.client.scala.AMFParseResult
+import amf.core.client.scala.model.document.{Document, Module}
 import amf.core.client.scala.parse.{AMFParser, InvalidBaseUnitTypeException}
 import amf.core.internal.metamodel.document.{DocumentModel, ModuleModel}
 import amf.shapes.client.scala.ShapesBaseUnitClient

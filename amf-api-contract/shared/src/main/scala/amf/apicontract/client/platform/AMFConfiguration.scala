@@ -191,6 +191,7 @@ object AsyncAPIConfiguration {
   def Async20(): AMFConfiguration = InternalAsyncAPIConfiguration.Async20()
 }
 
+/** Merged [[WebAPIConfiguration]] and [[AsyncAPIConfiguration]] configurations */
 @JSExportAll
 @JSExportTopLevel("APIConfiguration")
 object APIConfiguration {
