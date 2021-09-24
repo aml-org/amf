@@ -11,16 +11,16 @@ import java.io.{BufferedWriter, File, FileWriter}
 
 class SfdcFileTest extends AsyncFlatSpec {
   "SFDC" should "Convert SFDC into OAS 3" in {
-    val oasClient: AMFBaseUnitClient =
-      OASConfiguration.OAS30().withTransformationPipeline(SfdcToOas30TransformationPipeline).baseUnitClient()
-
+//    val oasClient: AMFBaseUnitClient =
+//      OASConfiguration.OAS30().withTransformationPipeline(SfdcToOas30TransformationPipeline).baseUnitClient()
+    val ramlClient: AMFBaseUnitClient = RAMLConfiguration.RAML10().baseUnitClient()
     SFDCConfiguration
       .SFDC()
       .baseUnitClient()
       .parse("file://amf-cli/shared/src/test/resources/upanddown/sfdc/sfdc.json") map { parseResult =>
-      val transformResult = oasClient.transform(parseResult.baseUnit, SfdcToOas30TransformationPipeline.name)
-      val renderResult    = oasClient.render(transformResult.baseUnit)
-      val fileOut         = new File("amf-cli/shared/src/test/resources/upanddown/sfdc/sfdc.oas")
+      val transformResult = ramlClient.transform(parseResult.baseUnit, PipelineId.Compatibility)
+      val renderResult    = ramlClient.render(transformResult.baseUnit)
+      val fileOut         = new File("amf-cli/shared/src/test/resources/upanddown/sfdc/sfdc.raml")
       val bw              = new BufferedWriter(new FileWriter(fileOut))
       bw.write(renderResult)
       bw.flush()
@@ -28,6 +28,5 @@ class SfdcFileTest extends AsyncFlatSpec {
       // println(renderResult)
       true shouldEqual true
     }
-
   }
 }
