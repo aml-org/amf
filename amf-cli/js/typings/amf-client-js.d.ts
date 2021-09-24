@@ -21,6 +21,21 @@ declare module 'amf-client-js' {
 
 
   }
+  export interface DialectInstanceUnit extends BaseUnit  {
+    processingData: DialectInstanceProcessingData
+
+    withProcessingData(data: DialectInstanceProcessingData): this
+
+    definedBy(): StrField
+
+    graphDependencies(): Array<StrField>
+
+    withDefinedBy(dialectId: string): this
+
+    withGraphDependencies(ids: Array<string>): this
+
+
+  }
   export class StartingParsingEvent  {
     url: string
 
@@ -209,7 +224,7 @@ declare module 'amf-client-js' {
 
     withDialect(dialect: Dialect): AMFConfiguration
 
-    withDialect(path: string): Promise<AMFConfiguration>
+    withDialect(url: string): Promise<AMFConfiguration>
 
     forInstance(url: string): Promise<AMFConfiguration>
 
@@ -233,6 +248,7 @@ declare module 'amf-client-js' {
     usage: StrField
     modelVersion: StrField
     sourceSpec: undefined | Spec
+    processingData: BaseUnitProcessingData
 
     references(): Array<BaseUnit>
 
@@ -256,7 +272,9 @@ declare module 'amf-client-js' {
 
     cloneUnit(): BaseUnit
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
 
   }
@@ -347,7 +365,9 @@ declare module 'amf-client-js' {
 
     renderGraphToBuilder<T>(baseUnit: BaseUnit, builder: org.yaml.builder.JsOutputBuilder): T
 
-    validate(bu: BaseUnit): Promise<AMFValidationReport>
+    validate(baseUnit: BaseUnit): Promise<AMFValidationReport>
+
+    setBaseUri(unit: BaseUnit, base: string): void
 
 
   }
@@ -505,7 +525,7 @@ declare module 'amf-client-js' {
 
   }
   export interface TransformationStep  {
-    transform(model: BaseUnit, errorHandler: ClientErrorHandler): BaseUnit
+    transform(model: BaseUnit, errorHandler: ClientErrorHandler, configuration: AMFGraphConfiguration): BaseUnit
 
 
   }
@@ -527,11 +547,14 @@ declare module 'amf-client-js' {
 
 
   }
-  export class AMFResult  {
+  export class AMFResult extends AMFObjectResult  {
     conforms: boolean
     results: Array<AMFValidationResult>
     baseUnit: BaseUnit
     toString: string
+
+    merge(report: AMFValidationReport): AMFResult
+
 
   }
   export interface ServerBinding extends DomainElement, Linkable  {
@@ -825,7 +848,7 @@ declare module 'amf-client-js' {
 
   }
   export interface JsTransformationStep  {
-    transform(model: BaseUnit, errorHandler: ClientErrorHandler): BaseUnit
+    transform(model: BaseUnit, errorHandler: ClientErrorHandler, configuration: AMFGraphConfiguration): BaseUnit
 
 
   }
@@ -848,6 +871,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DomainElement
@@ -866,7 +890,7 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
 
     withEncodes(encoded: DomainElement): this
 
@@ -875,6 +899,8 @@ declare module 'amf-client-js' {
     withPkg(pkg: string): this
 
     references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -1038,9 +1064,9 @@ declare module 'amf-client-js' {
 
   }
   export class AbstractElementTransformer  {
-    static asEndpoint<T>(unit: T, rt: ResourceType, errorHandler: ClientErrorHandler, profile: ProfileName): EndPoint
+    static asEndpoint<T>(unit: T, rt: ResourceType, errorHandler: ClientErrorHandler, configuration: AMFGraphConfiguration, profile: ProfileName): EndPoint
 
-    static asOperation<T>(unit: T, tr: Trait, errorHandler: ClientErrorHandler, profile: ProfileName): Operation
+    static asOperation<T>(unit: T, tr: Trait, errorHandler: ClientErrorHandler, configuration: AMFGraphConfiguration, profile: ProfileName): Operation
 
 
   }
@@ -1377,6 +1403,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     declares: Array<DomainElement>
@@ -1402,7 +1429,7 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
 
     withNodeMappings(nodeMappings: Array<NodeMapping>): DialectLibrary
 
@@ -1415,6 +1442,8 @@ declare module 'amf-client-js' {
     nodeMappings(): Array<NodeMapping>
 
     references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -1435,6 +1464,19 @@ declare module 'amf-client-js' {
 
 
   }
+  export class DialectInstanceProcessingData extends BaseUnitProcessingData  {
+    constructor()
+
+    definedBy(): StrField
+
+    graphDependencies(): Array<StrField>
+
+    withDefinedBy(dialectId: string): DialectInstanceProcessingData
+
+    withGraphDependencies(ids: Array<string>): DialectInstanceProcessingData
+
+
+  }
   export class ValidationCandidate  {
     shape: Shape
     payload: PayloadFragment
@@ -1447,6 +1489,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: NodeMapping
@@ -1470,7 +1513,7 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
 
     withEncodes(encoded: DomainElement): this
 
@@ -1481,6 +1524,8 @@ declare module 'amf-client-js' {
     withPkg(pkg: string): this
 
     references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -1685,6 +1730,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DomainElement
@@ -1709,7 +1755,7 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
 
     withEncodes(encoded: DomainElement): this
 
@@ -1720,6 +1766,8 @@ declare module 'amf-client-js' {
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -2477,6 +2525,7 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     declares: Array<DomainElement>
@@ -2499,7 +2548,7 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
@@ -2510,6 +2559,8 @@ declare module 'amf-client-js' {
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -2542,11 +2593,12 @@ declare module 'amf-client-js' {
 
 
   }
-  export class DialectInstance implements BaseUnit, EncodesModel, DeclaresModel  {
+  export class DialectInstance implements BaseUnit, EncodesModel, DeclaresModel, DialectInstanceUnit  {
     location: string
     usage: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DialectDomainElement
@@ -2556,6 +2608,8 @@ declare module 'amf-client-js' {
     constructor()
 
     findByType(typeId: string): Array<DomainElement>
+
+    withProcessingData(data: DialectInstanceProcessingData): this
 
     cloneUnit(): BaseUnit
 
@@ -2573,13 +2627,13 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withGraphDependencies(ids: Array<string>): DialectInstance
+    withGraphDependencies(ids: Array<string>): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
 
     graphDependencies(): Array<StrField>
 
-    withDefinedBy(dialectId: string): DialectInstance
+    withDefinedBy(dialectId: string): this
 
     withEncodes(encoded: DialectDomainElement): DialectInstance
 
@@ -2594,6 +2648,8 @@ declare module 'amf-client-js' {
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -2687,6 +2743,18 @@ declare module 'amf-client-js' {
     constructor()
 
     linkCopy(): NilShape
+
+
+  }
+  export class APIContractProcessingData extends BaseUnitProcessingData  {
+    modelVersion: StrField
+    sourceSpec: StrField
+
+    constructor()
+
+    withSourceSpec(spec: string): this
+
+    withSourceSpec(spec: Spec): this
 
 
   }
@@ -2925,11 +2993,9 @@ declare module 'amf-client-js' {
 
     link<T>(label: string): T
 
-    withObjectCollectionProperty(propertyId: string, value: Array<DialectDomainElement>): this
+    withObjectCollectionProperty(propertyIri: string, value: Array<DialectDomainElement>): this
 
     linkCopy(): DialectDomainElement
-
-    withLiteralProperty(propertyId: string, value: boolean): this
 
     isAbstract(): BoolField
 
@@ -2939,21 +3005,21 @@ declare module 'amf-client-js' {
 
     localRefName(): string
 
+    withObjectProperty(iri: string, value: DialectDomainElement): this
+
+    withLiteralProperty(propertyIri: string, value: boolean): this
+
     graph(): Graph
 
     withIsExternalLink(isExternalLink: boolean): DomainElement
 
     withLinkLabel(label: string): this
 
-    withObjectProperty(uri: string, value: DialectDomainElement): this
-
-    getTypeUris(): Array<string>
+    getTypeIris(): Array<string>
 
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
     containsProperty(property: PropertyMapping): boolean
-
-    getPropertyUris(): Array<string>
 
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
@@ -2961,23 +3027,25 @@ declare module 'amf-client-js' {
 
     withLinkTarget(target: undefined): this
 
+    withLiteralProperty(propertyIri: string, value: number): this
+
     withDefinedby(nodeMapping: NodeMapping): DialectDomainElement
+
+    getPropertyIris(): Array<string>
 
     definedBy(): NodeMapping
 
+    withLiteralProperty(propertyIri: string, value: Array<any>): this
+
     withInstanceTypes(types: Array<string>): DialectDomainElement
 
-    withLiteralProperty(propertyId: string, value: number): this
-
-    withLiteralProperty(propertyId: string, value: Array<any>): this
+    getObjectByProperty(iri: string): Array<DialectDomainElement>
 
     includeName(): string
 
-    withLiteralProperty(propertyId: string, value: string): this
+    withLiteralProperty(propertyIri: string, value: string): this
 
     withId(id: string): this
-
-    getObjectByProperty(uri: string): Array<DialectDomainElement>
 
 
   }
@@ -3030,6 +3098,7 @@ declare module 'amf-client-js' {
     version: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     fragmentHeaders: Array<string>
     libraryHeader: undefined | string
     header: string
@@ -3063,9 +3132,9 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    extensions(): Array<SemanticExtension>
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    extensions(): Array<SemanticExtension>
 
     withDocuments(documentsMapping: DocumentsModel): Dialect
 
@@ -3084,6 +3153,8 @@ declare module 'amf-client-js' {
     references(): Array<BaseUnit>
 
     isFragmentHeader(header: string): boolean
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -3616,11 +3687,12 @@ declare module 'amf-client-js' {
 
 
   }
-  export class DialectInstancePatch implements BaseUnit, EncodesModel, DeclaresModel  {
+  export class DialectInstancePatch implements BaseUnit, EncodesModel, DeclaresModel, DialectInstanceUnit  {
     location: string
     usage: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DialectDomainElement
@@ -3630,6 +3702,8 @@ declare module 'amf-client-js' {
     constructor()
 
     findByType(typeId: string): Array<DomainElement>
+
+    withProcessingData(data: DialectInstanceProcessingData): this
 
     cloneUnit(): BaseUnit
 
@@ -3647,13 +3721,13 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withGraphDependencies(ids: Array<string>): DialectInstancePatch
+    withGraphDependencies(ids: Array<string>): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
 
     graphDependencies(): Array<StrField>
 
-    withDefinedBy(dialectId: string): DialectInstancePatch
+    withDefinedBy(dialectId: string): this
 
     withEncodes(encoded: DialectDomainElement): DialectInstancePatch
 
@@ -3668,6 +3742,8 @@ declare module 'amf-client-js' {
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -3862,11 +3938,11 @@ declare module 'amf-client-js' {
 
   }
   export class AMFRenderer  {
-    static render(baseUnit: BaseUnit, env: AMFGraphConfiguration): string
+    static render(baseUnit: BaseUnit, configuration: AMFGraphConfiguration): string
 
-    static render(baseUnit: BaseUnit, mediaType: string, env: AMFGraphConfiguration): string
+    static render(baseUnit: BaseUnit, mediaType: string, configuration: AMFGraphConfiguration): string
 
-    static renderGraphToBuilder<T>(baseUnit: BaseUnit, builder: org.yaml.builder.JsOutputBuilder, config: AMFGraphConfiguration): T
+    static renderGraphToBuilder<T>(baseUnit: BaseUnit, builder: org.yaml.builder.JsOutputBuilder, configuration: AMFGraphConfiguration): T
 
 
   }
@@ -3986,11 +4062,12 @@ declare module 'amf-client-js' {
 
 
   }
-  export class DialectInstanceFragment implements BaseUnit, EncodesModel  {
+  export class DialectInstanceFragment implements BaseUnit, EncodesModel, DialectInstanceUnit  {
     location: string
     usage: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     encodes: DialectDomainElement
@@ -3998,6 +4075,8 @@ declare module 'amf-client-js' {
     constructor()
 
     findByType(typeId: string): Array<DomainElement>
+
+    withProcessingData(data: DialectInstanceProcessingData): this
 
     cloneUnit(): BaseUnit
 
@@ -4011,11 +4090,19 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withGraphDependencies(ids: Array<string>): this
+
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
+
+    graphDependencies(): Array<StrField>
+
+    withDefinedBy(dialectId: string): this
 
     withEncodes(encoded: DialectDomainElement): DialectInstanceFragment
 
     withEncodes(encoded: DomainElement): this
+
+    definedBy(): StrField
 
     pkg(): StrField
 
@@ -4023,7 +4110,18 @@ declare module 'amf-client-js' {
 
     references(): Array<BaseUnit>
 
+    withProcessingData(data: BaseUnitProcessingData): this
+
     withId(id: string): this
+
+
+  }
+  export class BaseUnitProcessingData  {
+    transformed: BoolField
+
+    constructor()
+
+    withTransformed(value: boolean): this
 
 
   }
@@ -4260,6 +4358,7 @@ declare module 'amf-client-js' {
     base: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     declares: Array<DomainElement>
@@ -4296,7 +4395,7 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
 
     pkg(): StrField
 
@@ -4307,6 +4406,8 @@ declare module 'amf-client-js' {
     references(): Array<BaseUnit>
 
     withImports(vocabularies: Array<VocabularyReference>): Vocabulary
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -4388,7 +4489,7 @@ declare module 'amf-client-js' {
 
     static parseContent(content: string, mediaType: string, configuration: AMFGraphConfiguration): Promise<AMFParseResult>
 
-    static parseStartingPoint(graphUrl: string, startingPoint: string, env: AMFGraphConfiguration): Promise<AMFObjectResult>
+    static parseStartingPoint(graphUrl: string, startingPoint: string, configuration: AMFGraphConfiguration): Promise<AMFObjectResult>
 
 
   }
@@ -4663,11 +4764,12 @@ declare module 'amf-client-js' {
 
 
   }
-  export class DialectInstanceLibrary implements BaseUnit, DeclaresModel  {
+  export class DialectInstanceLibrary implements BaseUnit, DeclaresModel, DialectInstanceUnit  {
     location: string
     usage: StrField
     id: string
     raw: undefined | string
+    processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
     modelVersion: StrField
     declares: Array<DomainElement>
@@ -4675,6 +4777,8 @@ declare module 'amf-client-js' {
     constructor()
 
     findByType(typeId: string): Array<DomainElement>
+
+    withProcessingData(data: DialectInstanceProcessingData): this
 
     cloneUnit(): BaseUnit
 
@@ -4690,7 +4794,15 @@ declare module 'amf-client-js' {
 
     withLocation(location: string): this
 
-    withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): BaseUnit
+    withGraphDependencies(ids: Array<string>): this
+
+    withReferenceAlias(alias: string, id: string, fullUrl: string, relativeUrl: string): BaseUnit
+
+    graphDependencies(): Array<StrField>
+
+    withDefinedBy(dialectId: string): this
+
+    definedBy(): StrField
 
     pkg(): StrField
 
@@ -4699,6 +4811,8 @@ declare module 'amf-client-js' {
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
+
+    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -5781,7 +5895,7 @@ declare module 'amf-client-js' {
 
     withDialect(dialect: Dialect): ShapesConfiguration
 
-    withDialect(path: string): Promise<ShapesConfiguration>
+    withDialect(url: string): Promise<ShapesConfiguration>
 
     forInstance(url: string): Promise<ShapesConfiguration>
 
@@ -5926,7 +6040,7 @@ declare module 'amf-client-js' {
 
     withDialect(dialect: Dialect): AMLConfiguration
 
-    withDialect(path: string): Promise<AMLConfiguration>
+    withDialect(url: string): Promise<AMLConfiguration>
 
     forInstance(url: string): Promise<AMLConfiguration>
 
