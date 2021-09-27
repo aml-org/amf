@@ -947,9 +947,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
         .getOrElse(Map[String, YNode]())
 
-      val properties  = mutable.LinkedHashMap[String, PropertyShape]()
-      val properEntry = map.key("properties")
-      properEntry.foreach(entry => {
+      val properties      = mutable.LinkedHashMap[String, PropertyShape]()
+      val propertiesEntry = map.key("properties")
+      propertiesEntry.foreach(entry => {
         entry.value.toOption[YMap] match {
           case Some(m) =>
             val props = PropertiesParser(m, shape.withProperty, requiredFields).parse()
@@ -957,6 +957,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           case _ => // Empty properties node.
         }
       })
+      generateUndefinedRequiredProperties(requiredFields, shape, properties)
       if (version == JSONSchemaDraft7SchemaVersion)
         InnerShapeParser("propertyNames", NodeShapeModel.PropertyNames, map, shape).parse()
 
@@ -972,7 +973,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           case _ => // Empty properties node.
         }
       })
-      val (entryAnnotations, valueAnnotations) = properEntry.map { pe =>
+      val (entryAnnotations, valueAnnotations) = propertiesEntry.map { pe =>
         Annotations(pe.value) -> Annotations(pe)
       } orElse {
         patternPropEntry.map { pp =>
@@ -982,7 +983,6 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
       if (properties.nonEmpty)
         shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, entryAnnotations), valueAnnotations)
-      shape.properties.foreach(p => properties += (p.name.value() -> p))
 
       map.key(
         "dependencies",
@@ -1003,6 +1003,20 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
       shape
     }
+  }
+
+  private def generateUndefinedRequiredProperties(requiredFields: Map[String, YNode],
+                                                  shape: NodeShape,
+                                                  properties: mutable.LinkedHashMap[String, PropertyShape]): Unit = {
+    val undefinedRequiredProperties = requiredFields.keySet.filter(!properties.keySet.contains(_))
+    val generatedRequiredProperties = undefinedRequiredProperties
+      .map(propertyName => {
+        PropertyShape()
+          .withName(propertyName)
+          .set(PropertyShapeModel.MinCount, AmfScalar(1))
+          .set(PropertyShapeModel.Range, AnyShape())
+      })
+    properties ++= generatedRequiredProperties.map(p => p.name.value() -> p)
   }
 
   case class DiscriminatorParser(shape: NodeShape, entry: YMapEntry) {

@@ -419,4 +419,16 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("JSON Schema relative references") {
     validate("json-schema-relative-references/api.raml")
   }
+
+  test("inline schema with required facet") {
+    validate("raml-inline-required.raml")
+  }
+
+  test("schema with properties and undefined required property") {
+    validate("raml-implicit-required-property.raml")
+  }
+
+  test("valid subschema with required facet") {
+    validate("raml-subschema-with-required.raml")
+  }
 }
