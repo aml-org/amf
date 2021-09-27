@@ -22,6 +22,10 @@ private[amf] object ShapeEntities extends Entities {
     UnionShapeModel,
     XMLSerializerModel,
     ShapeExtensionModel,
-    ExampleModel
+    ExampleModel,
+    SchemaDependenciesModel,
+    CreativeWorkModel,
+    IriTemplateMappingModel,
+    DiscriminatorValueMappingModel
   )
 }
