@@ -20,6 +20,7 @@ import amf.apicontract.internal.transformation.compatibility.{
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
 import amf.apicontract.internal.validation.shacl.{ShaclModelValidationPlugin, ViolationModelValidationPlugin}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -52,12 +53,12 @@ trait APIConfigurationBuilder {
   private[amf] def common(): AMFConfiguration = {
     val configuration = AMLConfiguration.predefined()
     ApiRegister.register() // TODO ARM remove when APIMF-3000 is done
+    val coreEntities = AMFGraphConfiguration.predefined().getRegistry.entitiesRegistry.domainEntities
     val result = new AMFConfiguration(
       configuration.resolvers,
       configuration.errorHandlerProvider,
-      // TODO - ARM: move shapes entities and annotations to shape module (?)
       configuration.registry
-        .withEntities(APIEntities.entities ++ FragmentEntities.entities ++ ShapeEntities.entities)
+        .withEntities(APIEntities.entities ++ FragmentEntities.entities ++ ShapeEntities.entities ++ coreEntities)
         .withAnnotations(
           APISerializableAnnotations.annotations ++ WebAPISerializableAnnotations.annotations ++ ShapeSerializableAnnotations.annotations),
       configuration.listeners,
