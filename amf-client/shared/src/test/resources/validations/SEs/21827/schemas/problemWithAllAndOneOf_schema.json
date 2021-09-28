@@ -1,0 +1,174 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"datumtid_t": {
+			"type": "string",
+			"format": "date-time"
+		},
+		"datumtid_or_null_t": {
+			"oneOf": [
+				{"$ref": "#/definitions/datumtid_t"},
+				{"type": "null"}
+			]
+		}
+	},
+	"type": "object",
+	"properties": {
+		"requestObject": {
+			"type": "array",
+			"minItems": 0,
+			"maxItems": 20,
+			"items": {
+				"type": "object",
+				"properties": {
+					"requestObjectSub1": {
+						"type": "object",
+						"properties": {
+							"requestObjectSub1Prop1": {
+								"type": "boolean"
+							},
+							"requestObjectSub1Arr1": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"requestObjectSub1Arr1Prop1": {
+											"$ref": "#/definitions/datumtid_or_null_t"
+										}
+									},
+									"required": [
+										"requestObjectSub1Arr1Prop1"
+									]
+								}
+							},
+							"requestObjectSub1Arr2": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"requestObjectSub1Arr2Prop1": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"requestObjectSub1Arr2Prop1"
+									]
+								}
+							}
+						},
+						"required": [
+							"requestObjectSub1Prop1"
+						],
+						"oneOf": [
+							{
+								"properties": {
+									"requestObjectSub1Prop1": {
+										"enum": [
+											true
+										]
+									}
+								},
+								"required": [
+									"requestObjectSub1Arr1",
+									"requestObjectSub1Arr2"
+								]
+							},
+							{
+								"properties": {
+									"requestObjectSub1Prop1": {
+										"enum": [
+											false
+										]
+									}
+								}
+							}
+						]
+					},
+					"requestObjectSub2": {
+						"type": "boolean"
+					},
+					"requestObjectSub3": {
+						"type": "object",
+						"properties": {
+							"requestObjectSub3Prop1": {
+								"$ref": "#/definitions/datumtid_t"
+							}
+						},
+						"required": [
+							"requestObjectSub3Prop1"
+						]
+					},
+					"requestObjectSub4": {
+						"type": "object",
+						"properties": {
+							"requestObjectSub4Prop1": {
+								"$ref": "#/definitions/datumtid_t"
+							}
+						},
+						"required": [
+							"requestObjectSub4Prop1"
+						]
+					},
+					"requestObjectSub5": {
+						"type": "object",
+						"properties": {
+							"requestObjectSub5Prop1": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"requestObjectSub5Prop1"
+						]
+					}
+				},
+				"required": [
+					"requestObjectSub2"
+				],
+				"allOf": [
+					{
+						"oneOf": [
+							{
+								"required": [
+									"requestObjectSub3"
+								]
+							},
+							{
+								"required": [
+									"requestObjectSub4"
+								]
+							}
+						]
+					},
+					{
+						"oneOf": [
+							{
+								"properties": {
+									"requestObjectSub2": {
+										"enum": [
+											false
+										]
+									}
+								},
+								"required": [
+									"requestObjectSub5"
+								]
+							},
+							{
+								"properties": {
+									"requestObjectSub2": {
+										"enum": [
+											true
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	},
+	"required": [
+		"requestObject"
+	]
+}

@@ -1,0 +1,17 @@
+#%RAML 1.0
+---
+title: allOf and oneOf related stuff
+version: 1.0
+mediaType: application/json
+
+/problemWithAllAndOneOf:
+  post:
+    body:
+      application/json:
+        example: !include examples/problemWithAllAndOneOf_exempel.json
+        type: !include schemas/problemWithAllAndOneOf_schema.json 
+    responses:
+      201:
+        body:
+          application/json:
+            example: {"message": "OK"}

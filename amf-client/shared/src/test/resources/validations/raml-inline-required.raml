@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: "test api"
+
+types:
+    testSchema: |
+      {
+        "required": [
+          "option_two"
+        ]
+      }
+
+/pets:
+  get:
+    responses:
+      200:
+        description: Not Found
+        body:
+          application/json:
+            type: testSchema
+            examples:
+              plain-object:
+                option_two: {}
+              null-object:
+                option_two: null
+              a-string:
+                option_two: this is a string
+              a-number:
+                option_two: 1

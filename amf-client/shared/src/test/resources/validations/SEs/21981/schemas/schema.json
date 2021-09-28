@@ -1,0 +1,352 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/Response",
+  "definitions": {
+  	"Response": {
+      "type": "object",
+      "required": [
+        "p1",
+        "p2",
+        "p4"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p1": {
+          "type": "string"
+        },
+        "p2": {
+          "type": "string"
+        },
+        "p3": {
+          "type": "string"
+        },
+        "p4": {
+          "$ref": "#/definitions/D1"
+        }
+      }
+    },
+    "D1": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/D2"
+          },
+          {
+            "$ref": "#/definitions/D3"
+          },
+          {
+            "$ref": "#/definitions/D4"
+          },
+          {
+            "$ref": "#/definitions/D5"
+          },
+          {
+            "$ref": "#/definitions/D6"
+          },
+          {
+            "$ref": "#/definitions/D7"
+          },
+          {
+            "$ref": "#/definitions/D8"
+          },
+          {
+            "$ref": "#/definitions/D9"
+          }
+        ]
+      }
+    },
+    "D2": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "p5": {
+          "type": "integer"
+        },
+        "p6": {
+          "$ref": "#/definitions/D33"
+        },
+        "p7": {
+          "type": "string"
+        },
+        "p8": {
+          "$ref": "#/definitions/D10"
+        },
+        "p9": {
+          "$ref": "#/definitions/D10"
+        },
+        "p10": {
+          "$ref": "#/definitions/D10"
+        },
+        "p11": {
+          "$ref": "#/definitions/D10"
+        }
+      }
+    },
+    "D3": {
+      "type": "object",
+      "required": [
+        "p5",
+        "p7"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p5": {
+          "type": "integer"
+        },
+        "p6": {
+          "$ref": "#/definitions/D33"
+        },
+        "p7": {
+          "type": "string"
+        },
+        "p15": {
+          "$ref": "#/definitions/D10"
+        }
+      }
+    },
+    "D4": {
+      "type": "object",
+      "required": [
+        "p5",
+        "p7"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p5": {
+          "type": "integer"
+        },
+        "p6": {
+          "$ref": "#/definitions/D33"
+        },
+        "p7": {
+          "type": "string"
+        }
+      }
+    },
+    "D5": {
+      "type": "object",
+      "required": [
+        "p5",
+        "p7"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p5": {
+          "type": "integer"
+        },
+        "p6": {
+          "$ref": "#/definitions/D33"
+        },
+        "p7": {
+          "type": "string"
+        }
+      }
+    },
+    "D6": {
+      "type": "object",
+      "required": [
+        "p5",
+        "p7"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p5": {
+          "type": "integer"
+        },
+        "p6": {
+          "$ref": "#/definitions/D33"
+        },
+        "p7": {
+          "type": "string"
+        }
+      }
+    },
+    "D7": {
+      "type": "object",
+      "required": [
+        "p5",
+        "p7"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p5": {
+          "type": "integer"
+        },
+        "p6": {
+          "$ref": "#/definitions/D33"
+        },
+        "p7": {
+          "type": "string"
+        }
+      }
+    },
+    "D8": {
+      "type": "object",
+      "required": [
+        "p5",
+        "p7"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p5": {
+          "type": "integer"
+        },
+        "p6": {
+          "$ref": "#/definitions/D33"
+        },
+        "p7": {
+          "type": "string"
+        },
+        "p34": {
+          "$ref": "#/definitions/D27"
+        }
+      }
+    },
+    "D9": {
+      "type": "object",
+      "required": [
+        "p5",
+        "p7"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p5": {
+          "type": "integer"
+        },
+        "p6": {
+          "$ref": "#/definitions/D33"
+        },
+        "p7": {
+          "type": "string"
+        }
+      }
+    },
+    "D10": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "p48": {
+          "$ref": "#/definitions/D31"
+        },
+        "p49": {
+          "type": "boolean"
+        },
+        "p52": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "p61": {
+                  "type": "number"
+                },
+                "p56": {
+                  "type": "number"
+                },
+                "p57": {
+                  "type": "number"
+                },
+                "p58": {
+                  "type": "string"
+                },
+                "p59": {
+				  "type": "number"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "p61": {
+                  "type": "number"
+                },
+                "p60": {
+                  "type": "number"
+                }
+              }
+            }
+          ]
+        },
+        "Kategori": {
+          "type": "string"
+        },
+        "LandskodArbetsland": {
+          "type": "string"
+        },
+        "p50": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "p51": {
+              "type": "number"
+            }
+          }
+        },
+        "UtsandUnderTid": {
+          "type": "string"
+        }
+      }
+    },
+    "D27": {
+      "type": "object",
+      "required": [
+        "p53"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p53": {
+          "$ref": "#/definitions/D31"
+        },
+        "p54": {
+          "type": "number"
+        },
+        "p55": {
+          "type": "number"
+        }
+      }
+    },
+    "D33": {
+      "type": "object",
+      "properties": {
+        "p43": {
+          "type": "integer"
+        },
+        "p44": {
+          "type": "integer"
+        },
+        "p45": {
+          "type": "integer"
+        },
+        "p46": {
+          "type": "string"
+        },
+        "p47": {
+          "type": "string"
+        }
+      },
+      "oneOf": [
+      	{"required": ["p43"]},
+		    {"required": ["p44"]},
+		    {"required": ["p45"]}
+      ],
+      "additionalProperties": false
+    },
+    "D31": {
+      "type": "object",
+      "required": [
+        "p41"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "p41": {
+          "$ref": "#/definitions/D33"
+        },
+        "p42": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

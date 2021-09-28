@@ -419,4 +419,36 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("JSON Schema relative references") {
     validate("json-schema-relative-references/api.raml")
   }
+
+  test("inline schema with required facet") {
+    validate("raml-inline-required.raml")
+  }
+
+  test("schema with properties and undefined required property") {
+    validate("raml-implicit-required-property.raml")
+  }
+
+  test("valid subschema with required facet") {
+    validate("raml-subschema-with-required.raml")
+  }
+
+  test("valid required key with boolean value in draft 3") {
+    validate("valid-draft-3-required.raml")
+  }
+
+  test("required key with boolean value in draft 4 onwards") {
+    validate("boolean-required-in-draft-4.raml", Some("raml/boolean-required-in-draft-4.report"))
+  }
+
+  test("invalid required key with boolean value in draft 4 onwards") {
+    validate("invalid-boolean-required.raml", Some("raml/invalid-boolean-required.report"))
+  }
+
+  test("test SE-21827") {
+    validate("SEs/21827/problemWithAllAndOneOf.raml")
+  }
+
+  test("test SE-21981") {
+    validate("SEs/21981/api-json.raml")
+  }
 }

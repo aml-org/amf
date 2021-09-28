@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: api-json
+
+version: v1
+mediaType: [ application/json ]
+
+/aResource:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include schemas/schema.json
+            example: !include examples/example.json
