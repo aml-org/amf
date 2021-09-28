@@ -6,6 +6,7 @@ import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.client.scala.{AMLBaseUnitClient, AMLConfiguration, AMLConfigurationState, AMLElementClient}
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
 import amf.aml.internal.entities.AMLEntities
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandlerProvider, ErrorHandlerProvider}
 import amf.core.client.scala.execution.ExecutionEnvironment
@@ -186,7 +187,7 @@ object ShapesConfiguration {
     ShapesRegister.register() // TODO ARM remove when APIMF-3000 is done
     // TODO ARM: validate plugin and payload plugin of api?
     val predefinedAMLConfig = AMLConfiguration.predefined()
-
+    val coreEntities        = AMFGraphConfiguration.predefined().getRegistry.entitiesRegistry.domainEntities
     new ShapesConfiguration(
       predefinedAMLConfig.resolvers,
       predefinedAMLConfig.errorHandlerProvider,
@@ -195,7 +196,7 @@ object ShapesConfiguration {
         .withAnnotations(AMLSerializableAnnotations.annotations),
       predefinedAMLConfig.listeners,
       predefinedAMLConfig.options
-    ).withEntities(ShapeEntities.entities)
+    ).withEntities(ShapeEntities.entities ++ coreEntities)
       .withAnnotations(ShapeSerializableAnnotations.annotations)
       .withPlugin(JsonSchemaShapePayloadValidationPlugin)
   }
