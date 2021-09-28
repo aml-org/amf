@@ -1,12 +1,12 @@
 package amf.validations
 
+import amf._
 import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
 import amf.core.validation.core.ValidationSpecification
 import amf.core.validation.core.ValidationSpecification.PARSER_SIDE_VALIDATION
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.AmfParser
 import amf.plugins.features.validation.Validations
-import amf._
 
 // noinspection TypeAnnotation
 object ParserSideValidations extends Validations {
@@ -71,6 +71,11 @@ object ParserSideValidations extends Validations {
   val DiscriminatorNameRequired = validation(
     "discriminator-name-required",
     "Discriminator property name is required"
+  )
+
+  val InvalidRequiredValue = validation(
+    "invalid-required-value",
+    "Invalid required value"
   )
 
   val InvalidServerPath = validation(
@@ -176,6 +181,11 @@ object ParserSideValidations extends Validations {
   val InvalidDecimalPoint = validation(
     "invalid-decimal-point",
     "Invalid decimal point"
+  )
+
+  val DuplicateRequiredItem = validation(
+    "duplicate-required-item",
+    "Duplicate required item"
   )
 
   val InvalidTypeDefinition = validation(
@@ -589,15 +599,18 @@ object ParserSideValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING
     ),
-    NullAbstractDeclaration.id           -> all(WARNING),
-    SchemaDeprecated.id                  -> all(WARNING),
-    SchemasDeprecated.id                 -> all(WARNING),
-    UnusedBaseUriParameter.id            -> all(WARNING),
-    InvalidShapeFormat.id                -> all(WARNING),
-    CrossSecurityWarningSpecification.id -> all(WARNING),
-    ReadOnlyPropertyMarkedRequired.id    -> all(WARNING),
-    MissingDiscriminatorProperty.id      -> all(VIOLATION),
-    InvalidPayload.id                    -> all(VIOLATION)
+    NullAbstractDeclaration.id                -> all(WARNING),
+    SchemaDeprecated.id                       -> all(WARNING),
+    SchemasDeprecated.id                      -> all(WARNING),
+    UnusedBaseUriParameter.id                 -> all(WARNING),
+    InvalidShapeFormat.id                     -> all(WARNING),
+    CrossSecurityWarningSpecification.id      -> all(WARNING),
+    ReadOnlyPropertyMarkedRequired.id         -> all(WARNING),
+    MissingDiscriminatorProperty.id           -> all(VIOLATION),
+    InvalidPayload.id                         -> all(VIOLATION),
+    InvalidRequiredBooleanForSchemaVersion.id -> all(WARNING),
+    InvalidRequiredValue.id                   -> all(WARNING),
+    DuplicateRequiredItem.id                  -> all(WARNING),
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -636,6 +649,8 @@ object ParserSideValidations extends Validations {
     InvalidAdditionalItemsType,
     InvalidRequiredArrayForSchemaVersion,
     InvalidRequiredBooleanForSchemaVersion,
+    InvalidRequiredValue,
+    DuplicateRequiredItem,
     InvalidSchemaType,
     UnableToSetDefaultType,
     InvalidTypeDefinition,

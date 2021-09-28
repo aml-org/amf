@@ -143,9 +143,8 @@ abstract class WebApiContext(val loc: String,
                 eh.violation(InvalidJsonSchemaVersion, "", "JSON Schema version value must be a string", node)
                 JSONSchemaDraft4SchemaVersion
             }
-          case _ => JSONSchemaUnspecifiedVersion
+          case _ => JSONSchemaDraft4SchemaVersion
         }
-
       case _ => JSONSchemaUnspecifiedVersion
     }
   }

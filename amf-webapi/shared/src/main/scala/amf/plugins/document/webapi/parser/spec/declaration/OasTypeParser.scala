@@ -34,13 +34,33 @@ import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations.InvalidUnionType
-import amf.validations.ParserSideValidations._
+import amf.validations.ParserSideValidations.{DuplicateRequiredItem, InvalidRequiredValue, _}
 import org.yaml.model._
 
 import scala.collection.mutable
 import scala.util.Try
 
-abstract class JSONSchemaVersion(val name: String)
+abstract class JSONSchemaVersion(val name: String) extends Ordered[JSONSchemaVersion] {
+  override def compare(that: JSONSchemaVersion): Int = {
+    if (name.length < that.name.length) -1
+    else if (name.length > that.name.length) 1
+    else name.compareTo(that.name)
+  }
+
+  def isBiggerThanOrEqualTo(jsonVersion: JSONSchemaVersion): Boolean = {
+    this match {
+      case thisJsonVersion: JSONSchemaVersion => thisJsonVersion >= jsonVersion
+      case _                                  => false
+    }
+  }
+
+  def isSmallerThanOrDifferentThan(jsonVersion: JSONSchemaVersion): Boolean = {
+    this match {
+      case thisJsonVersion: JSONSchemaVersion => thisJsonVersion < jsonVersion
+      case _                                  => true
+    }
+  }
+}
 class OASSchemaVersion(override val name: String, val position: String)(implicit eh: ErrorHandler)
     extends JSONSchemaVersion(name) {
   if (position != "schema" && position != "parameter")
@@ -175,7 +195,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     detectDependency()
       .orElse(detectType())
-      .orElse(detectObjectProperties())
+      .orElse(detectObjectProperties(version))
       .orElse(detectUnion())
       .orElse(detectItemProperties())
       .orElse(detectNumberProperties())
@@ -183,7 +203,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       .getOrElse(defaultType)
   }
 
-  private def detectObjectProperties(): Option[TypeDef.ObjectType.type] =
+  private def detectObjectProperties(version: JSONSchemaVersion): Option[TypeDef.ObjectType.type] =
     map
       .key("properties")
       .orElse(map.key("x-amf-merge"))
@@ -193,7 +213,15 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       .orElse(map.key("patternProperties"))
       .orElse(map.key("additionalProperties"))
       .orElse(map.key("discriminator"))
-      .orElse(map.key("required"))
+      .orElse {
+        map.key("required") match {
+          case Some(entry) =>
+            val isArray            = entry.value.tagType == YType.Seq
+            val isNotDraft3orUnder = version isBiggerThanOrEqualTo JSONSchemaDraft4SchemaVersion
+            if (isArray && isNotDraft3orUnder) Some(entry) else None
+          case None => None
+        }
+      }
       .map(_ => ObjectType)
 
   private def detectItemProperties(): Option[TypeDef.ArrayType.type] =
@@ -927,25 +955,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
       }
 
-      val requiredFields = map
-        .key("required")
-        .map { field =>
-          field.value.tagType match {
-            case YType.Seq if version == JSONSchemaDraft3SchemaVersion =>
-              ctx.eh.violation(InvalidRequiredArrayForSchemaVersion,
-                               shape.id,
-                               "Required arrays of properties not supported in JSON Schema below version draft-4",
-                               field.value)
-              Map[String, YNode]()
-            case YType.Seq =>
-              field.value.as[YSequence].nodes.foldLeft(Map[String, YNode]()) {
-                case (acc, node) =>
-                  acc.updated(node.as[String], node)
-              }
-            case _ => Map[String, YNode]()
-          }
-        }
-        .getOrElse(Map[String, YNode]())
+      val requiredFields = parseRequiredFields(map, shape)
 
       val properties      = mutable.LinkedHashMap[String, PropertyShape]()
       val propertiesEntry = map.key("properties")
@@ -1004,6 +1014,52 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
   }
+
+  private def parseRequiredFields(map: YMap, shape: NodeShape): Map[String, YNode] = {
+
+    def parse(field: YMapEntry): Map[String, YNode] = {
+      val defaultValue = Map[String, YNode]()
+      val requiredSeq  = field.value.asOption[Seq[YNode]]
+      requiredSeq match {
+        case Some(required) =>
+          val requiredGroup = required.groupBy(_.as[String])
+          validateRequiredFields(requiredGroup, shape)
+          requiredGroup.map {
+            case (key, nodes) => key -> nodes.head
+          }
+        case None =>
+          ctx.eh.warning(InvalidRequiredValue, shape.id, "'required' field has to be an array", field.location)
+          defaultValue
+      }
+    }
+
+    val defaultValue = Map[String, YNode]()
+    map
+      .key("required")
+      .map { field =>
+        (field.value.tagType, version) match {
+          case (YType.Seq, JSONSchemaDraft3SchemaVersion) =>
+            ctx.eh.violation(InvalidRequiredArrayForSchemaVersion,
+                             shape.id,
+                             "Required arrays of properties not supported in JSON Schema below version draft-4",
+                             field.value)
+            defaultValue
+          case (_, JSONSchemaDraft3SchemaVersion)        => defaultValue
+          case (YType.Seq, JSONSchemaUnspecifiedVersion) => parse(field)
+          case (_, JSONSchemaUnspecifiedVersion)         => defaultValue
+          case (_, _)                                    => parse(field)
+        }
+      }
+      .getOrElse(defaultValue)
+  }
+
+  private def validateRequiredFields(required: Map[String, Seq[YNode]], shape: NodeShape): Unit =
+    required
+      .foreach {
+        case (name, nodes) if nodes.size > 1 =>
+          ctx.eh.warning(DuplicateRequiredItem, shape.id, s"'$name' is duplicated in 'required' property", nodes.last)
+        case _ => // ignore
+      }
 
   private def generateUndefinedRequiredProperties(requiredFields: Map[String, YNode],
                                                   shape: NodeShape,
@@ -1101,11 +1157,11 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             "required",
             entry => {
               if (entry.value.tagType == YType.Bool) {
-                if (version == JSONSchemaDraft4SchemaVersion || version.isInstanceOf[OASSchemaVersion]) {
-                  ctx.eh.violation(InvalidRequiredBooleanForSchemaVersion,
-                                   property.id,
-                                   "Required property boolean value is only supported in JSON Schema draft-3",
-                                   entry)
+                if (version != JSONSchemaDraft3SchemaVersion) {
+                  ctx.eh.warning(InvalidRequiredBooleanForSchemaVersion,
+                                 property.id,
+                                 "Required property boolean value is only supported in JSON Schema draft-3",
+                                 entry)
                 }
                 val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
                 property.set(PropertyShapeModel.MinCount,
