@@ -1,14 +1,24 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ARG USER_HOME_DIR="/root"
 
-ENV SCALA_VERSION 2.12.10
-ENV SBT_VERSION 1.3.3
+ENV SCALA_VERSION 2.12.11
+ENV SBT_VERSION 1.3.9
 
 # Update the repository sources list and install dependencies
 RUN apt-get update
 
 RUN apt-get install -y software-properties-common unzip htop rsync openssh-client jq
+
+# Set the locale
+RUN apt-get update && apt-get install -y locales
+RUN echo "en_US UTF-8" >> /etc/locale.gen
+RUN dpkg-reconfigure locales
+RUN locale-gen en_US.UTF-8
+RUN localedef -c -i en_US -f UTF-8 en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 # install Java
 USER root
@@ -17,7 +27,8 @@ RUN mkdir -p /usr/share/man/man1 && \
     apt-get install -y openjdk-8-jdk
 
 RUN apt-get install unzip -y && \
-    apt-get autoremove -y
+    apt-get autoremove -y && \
+    apt-get install git -y
 
 # Install Scala
 ## Piping curl directly in tar
@@ -29,7 +40,7 @@ RUN \
 
 # Install sbt
 RUN \
-  curl -L -o sbt-$SBT_VERSION.deb http://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
+  curl -L -o sbt-$SBT_VERSION.deb https://scala.jfrog.io/artifactory/debian/sbt-$SBT_VERSION.deb && \
   dpkg -i sbt-$SBT_VERSION.deb && \
   rm sbt-$SBT_VERSION.deb && \
   sbt sbtVersion
