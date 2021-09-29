@@ -1,5 +1,6 @@
 package amf.apicontract.client.scala.model.document
 
+import amf.aml.internal.metamodel.document.DialectInstanceProcessingDataModel.SourceSpec
 import amf.apicontract.internal.metamodel.document.APIContractProcessingDataModel
 import amf.apicontract.internal.metamodel.document.APIContractProcessingDataModel._
 import amf.core.client.scala.model.StrField
@@ -12,13 +13,7 @@ case class APIContractProcessingData(override val fields: Fields, override val a
     extends BaseUnitProcessingData(fields, annotations) {
   def modelVersion: StrField = fields.field(APIContractModelVersion)
 
-  def sourceSpec: StrField = fields.field(SourceSpec)
-
   override protected[amf] def sourceSpecProvider: Option[Spec] = sourceSpec.option().map(Spec.apply)
-
-  def withSourceSpec(spec: String): this.type = set(SourceSpec, Spec(spec).id)
-
-  def withSourceSpec(spec: Spec): this.type = set(SourceSpec, spec.id)
 
   set(APIContractModelVersion, ApiContractBuildInfo.apiContractModelVersion)
 

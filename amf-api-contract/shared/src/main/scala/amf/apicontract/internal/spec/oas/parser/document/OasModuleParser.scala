@@ -5,13 +5,12 @@ import amf.apicontract.internal.spec.common.parser.{ReferencesParser, WebApiShap
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.core.client.scala.model.document.Module
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.metamodel.document.BaseUnitModel
-import amf.core.internal.parser.{Root, YNodeLikeOps}
 import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.{Root, YNodeLikeOps}
 import amf.core.internal.remote.Spec
-import org.yaml.model.YMap
 import amf.core.internal.utils._
+import org.yaml.model.YMap
 
 /**
   *
@@ -20,11 +19,9 @@ case class OasModuleParser(root: Root, spec: Spec)(implicit val ctx: OasWebApiCo
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx)) {
 
   def parseModule(): Module = {
-    val sourceVendor = SourceSpec(ctx.spec)
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
       .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
-      .add(sourceVendor)
     module.set(BaseUnitModel.Location, root.location)
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>

@@ -7,7 +7,7 @@
       ],
       "apiContract:modelVersion": "3.2.0",
       "doc:transformed": true,
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     },
     {
       "@id": "#33",
@@ -27,9 +27,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#33": "RAML 1.0"
-        },
         "lexical": {
           "core:name": "[(3,0)-(6,0)]",
           "#33": "[(3,0)-(37,3)]"
@@ -414,14 +411,11 @@
         "resolved-link-target": {
           "#23": "amf://id#2"
         },
-        "source-vendor": {
-          "#23": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#23": "[(2,0)-(2,4)]"
         },
         "lexical": {
           "#23": "[(2,0)-(20,0)]"
-        },
-        "type-property-lexical-info": {
-          "#23": "[(2,0)-(2,4)]"
         },
         "resolved-link": {
           "#23": "amf://id#23"
@@ -1636,14 +1630,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#2": "[(2,0)-(2,4)]"
-        },
         "lexical": {
           "#2": "[(2,0)-(20,0)]"
         },
-        "source-vendor": {
-          "#2": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#2": "[(2,0)-(2,4)]"
         }
       }
     },
@@ -1653,7 +1644,7 @@
         "doc:APIContractProcessingData"
       ],
       "apiContract:modelVersion": "3.2.0",
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     },
     {
       "@id": "#18",
@@ -1662,12 +1653,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "#%RAML 1.0 NamedExample\nvalue:\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   ",
-      "core:mediaType": "application/yaml",
-      "smaps": {
-        "source-vendor": {
-          "#18": "RAML 1.0"
-        }
-      }
+      "core:mediaType": "application/yaml"
     },
     {
       "@id": "#19",
@@ -1675,7 +1661,7 @@
         "doc:APIContractProcessingData"
       ],
       "apiContract:modelVersion": "3.2.0",
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     },
     {
       "@id": "#21",
@@ -1684,12 +1670,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "#%RAML 1.0 NamedExample\nvalue:\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n",
-      "core:mediaType": "application/yaml",
-      "smaps": {
-        "source-vendor": {
-          "#21": "RAML 1.0"
-        }
-      }
+      "core:mediaType": "application/yaml"
     },
     {
       "@id": "#22",
@@ -1697,7 +1678,7 @@
         "doc:APIContractProcessingData"
       ],
       "apiContract:modelVersion": "3.2.0",
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     }
   ],
   "@context": {

@@ -1,4 +1,5 @@
 package amf.apicontract.internal.metamodel.document
+import amf.aml.internal.metamodel.document.DialectInstanceProcessingDataModel.SourceSpec
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Document}
 import amf.core.client.scala.vocabulary.ValueType
@@ -13,18 +14,9 @@ object APIContractProcessingDataModel extends BaseUnitProcessingDataModel {
           ApiContract + "modelVersion",
           ModelDoc(ModelVocabularies.AmlDoc, "modelVersion", "Version of the API contract model"))
 
-  val SourceSpec: Field =
-    Field(
-      Str,
-      ApiContract + "sourceSpec",
-      ModelDoc(ModelVocabularies.AmlDoc,
-               "sourceSpec",
-               "Standard of the original API Specification file (e.g. RAML 1.0, OAS 3.0)")
-    )
-
   override def modelInstance: APIContractProcessingData = APIContractProcessingData()
 
-  override def fields: List[Field] = List(APIContractModelVersion, Transformed, SourceSpec)
+  override def fields: List[Field] = List(APIContractModelVersion) ++ BaseUnitProcessingDataModel.fields
 
   override val `type`: List[ValueType] = List(Document + "APIContractProcessingData")
 

@@ -6,7 +6,7 @@
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
       "http://a.ml/vocabularies/apiContract#modelVersion": "3.2.0",
-      "http://a.ml/vocabularies/apiContract#sourceSpec": "OAS 2.0"
+      "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/annotations.json#/web-api",
@@ -85,11 +85,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/annotations.json#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/upanddown/annotations.json#/web-api/source-map/source-vendor/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -189,11 +184,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/upanddown/annotations.json#/web-api/customDomainProperties/extension_1/object_1/source-map/lexical/element_1"
         }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/upanddown/annotations.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/upanddown/annotations.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/annotations.json#/web-api/source-map/lexical/element_3",

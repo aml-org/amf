@@ -20,7 +20,7 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, 
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
-import amf.core.internal.annotations.{Aliases, ExplicitField, ReferencedInfo, SourceAST, SourceSpec}
+import amf.core.internal.annotations.{Aliases, ExplicitField, ReferencedInfo, SourceAST}
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.{Raml10, Spec}
@@ -242,13 +242,13 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val specCtx: RamlSpe
   }
   def apiEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
     val model = retrieveWebApi()
-    val spec  = model.annotations.find(classOf[SourceSpec]).map(_.spec)
+    val spec  = document.sourceSpec
     WebApiEmitter(model, ordering, spec, document.references).emitters
   }
 
   def emitDocument(): YDocument = {
     val doc                    = document.asInstanceOf[Document]
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, doc.encodes.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, doc.sourceSpec)
 
     val content = specCtx.factory.rootLevelEmitters(doc, ordering).emitters ++ apiEmitters(ordering)
 

@@ -26,20 +26,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/web-api"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "RAML 1.0"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
@@ -399,20 +385,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/references/lib/lib.raml"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "RAML 1.0"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
@@ -440,6 +412,16 @@
               }
             ]
           }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/references/lib/lib.raml#/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#APIContractProcessingData"
+            ],
+            "http://a.ml/vocabularies/apiContract#modelVersion": "3.2.0",
+            "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
+          }
         ]
       }
     ],
@@ -463,6 +445,16 @@
             ]
           }
         ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/references/libraries.raml#/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": "3.2.0",
+        "http://a.ml/vocabularies/document#sourceSpec": "RAML 1.0"
       }
     ]
   }

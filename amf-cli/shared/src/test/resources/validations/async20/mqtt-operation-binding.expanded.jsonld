@@ -284,21 +284,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-operation-binding.yaml#/async-api/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-operation-binding.yaml#/async-api"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "ASYNC 2.0"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/validations/async20/mqtt-operation-binding.yaml#/async-api/source-map/lexical/element_3",
@@ -373,7 +358,7 @@
             "@value": "3.2.0"
           }
         ],
-        "http://a.ml/vocabularies/apiContract#sourceSpec": [
+        "http://a.ml/vocabularies/document#sourceSpec": [
           {
             "@value": "ASYNC 2.0"
           }
