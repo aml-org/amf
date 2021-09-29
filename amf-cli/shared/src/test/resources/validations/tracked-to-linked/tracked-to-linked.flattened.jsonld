@@ -7,7 +7,7 @@
       ],
       "apiContract:modelVersion": "3.2.0",
       "doc:transformed": true,
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     },
     {
       "@id": "#23",
@@ -39,9 +39,6 @@
           "core:name": "[(2,0)-(4,0)]",
           "#23": "[(2,0)-(28,47)]",
           "apiContract:accepts": "[(4,0)-(6,0)]"
-        },
-        "source-vendor": {
-          "#23": "RAML 1.0"
         }
       }
     },
@@ -323,14 +320,11 @@
         "resolved-link-target": {
           "#14": "amf://id#2"
         },
-        "source-vendor": {
-          "#14": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#14": "[(2,0)-(2,4)]"
         },
         "lexical": {
           "#14": "[(2,0)-(5,14)]"
-        },
-        "type-property-lexical-info": {
-          "#14": "[(2,0)-(2,4)]"
         },
         "resolved-link": {
           "#14": "amf://id#14"
@@ -852,14 +846,11 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#2": "[(2,0)-(2,4)]"
-        },
         "lexical": {
           "#2": "[(2,0)-(5,14)]"
         },
-        "source-vendor": {
-          "#2": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#2": "[(2,0)-(2,4)]"
         }
       }
     },
@@ -869,7 +860,7 @@
         "doc:APIContractProcessingData"
       ],
       "apiContract:modelVersion": "3.2.0",
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     },
     {
       "@id": "#9",
@@ -878,12 +869,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "#%RAML 1.0 NamedExample\nemployees:\n  -\n    id: 1\n    name: Jhon\n  -\n    id: 2\n    name: Sam",
-      "core:mediaType": "application/yaml",
-      "smaps": {
-        "source-vendor": {
-          "#9": "RAML 1.0"
-        }
-      }
+      "core:mediaType": "application/yaml"
     },
     {
       "@id": "#10",
@@ -891,7 +877,7 @@
         "doc:APIContractProcessingData"
       ],
       "apiContract:modelVersion": "3.2.0",
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     },
     {
       "@id": "#12",
@@ -900,12 +886,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "#%RAML 1.0 NamedExample\nemployee:\n  id: 1\n  name: \"Jhon\"",
-      "core:mediaType": "application/yaml",
-      "smaps": {
-        "source-vendor": {
-          "#12": "RAML 1.0"
-        }
-      }
+      "core:mediaType": "application/yaml"
     },
     {
       "@id": "#13",
@@ -913,7 +894,7 @@
         "doc:APIContractProcessingData"
       ],
       "apiContract:modelVersion": "3.2.0",
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     }
   ],
   "@context": {

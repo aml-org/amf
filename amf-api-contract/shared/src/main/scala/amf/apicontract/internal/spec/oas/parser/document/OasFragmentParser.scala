@@ -11,11 +11,10 @@ import amf.apicontract.internal.spec.common.parser.{
 import amf.apicontract.internal.spec.oas.OasHeader
 import amf.apicontract.internal.spec.oas.OasHeader._
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
-import amf.core.client.scala.model.document.{BaseUnit, EncodesModel, ExternalFragment}
+import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{ExternalDomainElement, Shape}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.remote.Spec
@@ -80,11 +79,6 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
 
     UsageParser(map, fragment).parse()
 
-    fragment match {
-      case encodes: EncodesModel => encodes.encodes.annotations += SourceSpec(ctx.spec)
-      case _                     => fragment.annotations += SourceSpec(ctx.spec)
-    }
-
     if (references.nonEmpty) fragment.withReferences(references.baseUnitReferences())
     fragment
   }
@@ -133,10 +127,7 @@ case class OasFragmentParser(root: Root, spec: Spec, fragment: Option[OasHeader]
       val annotation = AnnotationTypeDeclarationFragment()
 
       val property =
-        AnnotationTypesParser(map,
-                              "annotation",
-                              map,
-                              (annotation: CustomDomainProperty) => Unit).parse()
+        AnnotationTypesParser(map, "annotation", map, (annotation: CustomDomainProperty) => Unit).parse()
 
       annotation.withEncodes(property)
     }

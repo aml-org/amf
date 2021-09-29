@@ -7,7 +7,7 @@
       ],
       "apiContract:modelVersion": "3.2.0",
       "doc:transformed": true,
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     },
     {
       "@id": "#11",
@@ -33,9 +33,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#11": "RAML 1.0"
-        },
         "lexical": {
           "apiContract:scheme": "[(4,0)-(5,0)]",
           "core:description": "[(3,0)-(4,0)]",
@@ -164,15 +161,12 @@
         "resolved-link-target": {
           "#9": "amf://id#2"
         },
-        "source-vendor": {
-          "#9": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#9": "[(2,0)-(2,4)]"
         },
         "lexical": {
           "apiContract:examples": "[(5,0)-(6,10)]",
           "#9": "[(2,0)-(6,10)]"
-        },
-        "type-property-lexical-info": {
-          "#9": "[(2,0)-(2,4)]"
         },
         "resolved-link": {
           "#9": "amf://id#9"
@@ -370,15 +364,12 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#2": "[(2,0)-(2,4)]"
-        },
         "lexical": {
           "apiContract:examples": "[(5,0)-(6,10)]",
           "#2": "[(2,0)-(6,10)]"
         },
-        "source-vendor": {
-          "#2": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#2": "[(2,0)-(2,4)]"
         }
       }
     },
@@ -388,7 +379,7 @@
         "doc:APIContractProcessingData"
       ],
       "apiContract:modelVersion": "3.2.0",
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     }
   ],
   "@context": {

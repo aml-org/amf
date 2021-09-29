@@ -7,7 +7,7 @@
       ],
       "apiContract:modelVersion": "3.2.0",
       "doc:transformed": true,
-      "apiContract:sourceSpec": "RAML 0.8"
+      "doc:sourceSpec": "RAML 0.8"
     },
     {
       "@id": "/web-api",
@@ -54,11 +54,6 @@
       "@id": "/web-api#/source-map",
       "@type": [
         "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:source-vendor": [
-        {
-          "@id": "/web-api#/source-map/source-vendor/element_0"
-        }
       ],
       "sourcemaps:lexical": [
         {
@@ -118,11 +113,6 @@
           "@id": "#/web-api/endpoint/%2Fcontacts/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "/web-api#/source-map/source-vendor/element_0",
-      "sourcemaps:element": "file://amf-cli/shared/src/test/resources/validations/api-with-xml-examples/api.raml/web-api",
-      "sourcemaps:value": "RAML 0.8"
     },
     {
       "@id": "/web-api#/source-map/lexical/element_1",

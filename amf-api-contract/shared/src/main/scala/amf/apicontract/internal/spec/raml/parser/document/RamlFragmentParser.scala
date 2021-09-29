@@ -15,11 +15,10 @@ import amf.core.client.scala.model.document.{ExternalFragment, Fragment}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfScalar, ExternalDomainElement, Shape}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.metamodel.document.FragmentModel
-import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.remote.{Raml10, Spec}
+import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.remote.Spec
 import amf.shapes.internal.spec.common.parser.{RamlCreativeWorkParser, YMapEntryLike}
 import amf.shapes.internal.spec.raml.parser.{Raml10TypeParser, StringDefaultType}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
@@ -74,7 +73,6 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
     UsageParser(rootMap, fragment).parse()
     fragment.add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
     if (aliases.isDefined) fragment.annotations += aliases.get
-    fragment.encodes.add(SourceSpec(Raml10))
     if (references.nonEmpty) fragment.withReferences(references.baseUnitReferences())
     fragment
   }
@@ -94,7 +92,8 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
 
       val item = DocumentationItemFragment()
 
-      item.setWithoutId(FragmentModel.Encodes, (RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse()))
+      item.setWithoutId(FragmentModel.Encodes,
+                        (RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse()))
     }
   }
 
@@ -145,10 +144,7 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
       val annotation = AnnotationTypeDeclarationFragment()
 
       val property =
-        AnnotationTypesParser(map,
-                              "annotation",
-                              map,
-                              (annotation: CustomDomainProperty) => Unit).parse()
+        AnnotationTypesParser(map, "annotation", map, (annotation: CustomDomainProperty) => Unit).parse()
 
       annotation.setWithoutId(FragmentModel.Encodes, property)
     }
@@ -158,9 +154,11 @@ case class RamlFragmentParser(root: Root, spec: Spec, fragmentType: RamlFragment
     def parse(): SecuritySchemeFragment = {
       val security = SecuritySchemeFragment()
 
-      security.setWithoutId(FragmentModel.Encodes, RamlSecuritySchemeParser(map,
-                                 (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) =>
-                                   security)
+      security.setWithoutId(
+        FragmentModel.Encodes,
+        RamlSecuritySchemeParser(
+          map,
+          (security: amf.apicontract.client.scala.model.domain.security.SecurityScheme) => security)
           .parse())
     }
   }

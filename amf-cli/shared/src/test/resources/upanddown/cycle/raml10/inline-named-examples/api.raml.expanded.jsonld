@@ -3640,21 +3640,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "RAML 1.0"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/source-map/lexical/element_1",
@@ -3703,7 +3688,7 @@
             "@value": "3.2.0"
           }
         ],
-        "http://a.ml/vocabularies/apiContract#sourceSpec": [
+        "http://a.ml/vocabularies/document#sourceSpec": [
           {
             "@value": "RAML 1.0"
           }
@@ -4790,21 +4775,6 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/0/shape/type/source-map/type-property-lexical-info/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/0/shape/type"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(2,0)-(2,4)]"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/0/shape/type/source-map/lexical/element_1",
@@ -4833,9 +4803,9 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                   {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/0/shape/type/source-map/source-vendor/element_0",
+                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/0/shape/type/source-map/type-property-lexical-info/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/0/shape/type"
@@ -4843,7 +4813,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "RAML 1.0"
+                        "@value": "[(2,0)-(2,4)]"
                       }
                     ]
                   }
@@ -4868,7 +4838,7 @@
                 "@value": "3.2.0"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#sourceSpec": [
+            "http://a.ml/vocabularies/document#sourceSpec": [
               {
                 "@value": "RAML 1.0"
               }
@@ -4922,29 +4892,6 @@
               {
                 "@value": "application/yaml"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/1/external/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/1/external/source-map/source-vendor/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/1/external"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "RAML 1.0"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
@@ -4964,7 +4911,7 @@
                 "@value": "3.2.0"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#sourceSpec": [
+            "http://a.ml/vocabularies/document#sourceSpec": [
               {
                 "@value": "RAML 1.0"
               }
@@ -5018,29 +4965,6 @@
               {
                 "@value": "application/yaml"
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/2/external/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-                  {
-                    "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/2/external/source-map/source-vendor/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/references/2/external"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "RAML 1.0"
-                      }
-                    ]
-                  }
-                ]
-              }
             ]
           }
         ],
@@ -5060,7 +4984,7 @@
                 "@value": "3.2.0"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#sourceSpec": [
+            "http://a.ml/vocabularies/document#sourceSpec": [
               {
                 "@value": "RAML 1.0"
               }
