@@ -108,13 +108,13 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "null/BaseUnitProcessingData",
+        "@id": "testId/BaseUnitProcessingData",
         "@type": [
-          "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
         ],
-        "http://a.ml/vocabularies/document#transformed": [
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
           {
-            "@value": false
+            "@value": "3.2.0"
           }
         ]
       }

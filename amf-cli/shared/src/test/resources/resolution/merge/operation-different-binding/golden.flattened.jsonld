@@ -1,11 +1,11 @@
 {
   "@graph": [
     {
-      "@id": "null/BaseUnitProcessingData",
+      "@id": "testId/BaseUnitProcessingData",
       "@type": [
-        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
-      "http://a.ml/vocabularies/document#transformed": false
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.2.0"
     },
     {
       "@id": "testId/subscribe/traitOperationId",
@@ -136,7 +136,7 @@
       },
       "http://a.ml/vocabularies/document#root": false,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "testId/BaseUnitProcessingData"
       }
     }
   ]

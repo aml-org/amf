@@ -1,6 +1,7 @@
 package amf.configuration
 
 import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.{AsyncApi, WebApi}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Mimes._
@@ -65,7 +66,7 @@ class E2ERenderConfigurationSetupTest extends ConfigurationSetupTest with FileAs
       .withVersion("1.0")
       .withEndPoints(Seq.empty)
       .withId("api")
-    Document().withId("root").withEncodes(api)
+    Document().withId("root").withProcessingData(APIContractProcessingData()).withEncodes(api)
   }
 
   private def asyncModel: BaseUnit = {
@@ -74,6 +75,6 @@ class E2ERenderConfigurationSetupTest extends ConfigurationSetupTest with FileAs
       .withVersion("1.0")
       .withEndPoints(Seq.empty)
       .withId("api")
-    Document().withId("root").withEncodes(api)
+    Document().withId("root").withProcessingData(APIContractProcessingData()).withEncodes(api)
   }
 }
