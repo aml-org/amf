@@ -2,10 +2,10 @@ package amf.apicontract.internal.validation.payload
 
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.client.scala.validation.payload.AMFShapePayloadValidator
 import amf.core.internal.validation.{ValidationCandidate, ValidationConfiguration}
-import org.mulesoft.common.core.CachedFunction
-import org.mulesoft.common.functional.MonadInstances.identityMonad
 
+import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
 object CandidateValidator {
@@ -14,13 +14,17 @@ object CandidateValidator {
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
 
     val client = config.amfConfig.elementClient()
-
-    val pluginLookupFunc = (candidate: ValidationCandidate) => client.payloadValidatorFor(candidate.shape, candidate.payload)
-
-    val validatorLookup = CachedFunction.from(pluginLookupFunc)
+    val cache  = mutable.Map[String, AMFShapePayloadValidator]()
 
     val futures: Seq[Future[AMFValidationReport]] = candidates.map { candidate =>
-      val validator = validatorLookup.runCached(candidate)
+      val validator = cache.getOrElse(
+        candidate.shape.id, {
+          val foundValidator = client.payloadValidatorFor(candidate.shape, candidate.payload)
+          // TODO: Lousy side effect
+          cache.put(candidate.shape.id, foundValidator)
+          foundValidator
+        }
+      )
       validator.validate(candidate.payload)
     }
 
