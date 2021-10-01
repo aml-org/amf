@@ -1,0 +1,4866 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "sfdc.json",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://mulesoft-30d-dev-ed.my.salesforce.com/services/data/v52.0/sobjects/"
+    }
+  ],
+  "paths": {
+    "/Account": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Account"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Account/{ObjId}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ObjId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "name": "ObjId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          {
+            "name": "ObjId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Account"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OperatingHours": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "IsDeleted": {
+            "type": "boolean"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastViewedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastReferencedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "TimeZone": {
+            "enum": [
+              "Africa/Algiers",
+              "Africa/Cairo",
+              "Africa/Casablanca",
+              "Africa/Johannesburg",
+              "Africa/Nairobi",
+              "America/Adak",
+              "America/Anchorage",
+              "America/Argentina/Buenos_Aires",
+              "America/Bogota",
+              "America/Caracas",
+              "America/Chicago",
+              "America/Denver",
+              "America/El_Salvador",
+              "America/Halifax",
+              "America/Indiana/Indianapolis",
+              "America/Lima",
+              "America/Los_Angeles",
+              "America/Mazatlan",
+              "America/Mexico_City",
+              "America/New_York",
+              "America/Panama",
+              "America/Phoenix",
+              "America/Puerto_Rico",
+              "America/Santiago",
+              "America/Sao_Paulo",
+              "America/Scoresbysund",
+              "America/St_Johns",
+              "America/Tijuana",
+              "Asia/Baghdad",
+              "Asia/Baku",
+              "Asia/Bangkok",
+              "Asia/Beirut",
+              "Asia/Colombo",
+              "Asia/Dhaka",
+              "Asia/Dubai",
+              "Asia/Ho_Chi_Minh",
+              "Asia/Hong_Kong",
+              "Asia/Jakarta",
+              "Asia/Jerusalem",
+              "Asia/Kabul",
+              "Asia/Kamchatka",
+              "Asia/Karachi",
+              "Asia/Kathmandu",
+              "Asia/Kolkata",
+              "Asia/Kuala_Lumpur",
+              "Asia/Kuwait",
+              "Asia/Manila",
+              "Asia/Rangoon",
+              "Asia/Riyadh",
+              "Asia/Seoul",
+              "Asia/Shanghai",
+              "Asia/Singapore",
+              "Asia/Taipei",
+              "Asia/Tashkent",
+              "Asia/Tbilisi",
+              "Asia/Tehran",
+              "Asia/Tokyo",
+              "Asia/Yekaterinburg",
+              "Asia/Yerevan",
+              "Atlantic/Azores",
+              "Atlantic/Bermuda",
+              "Atlantic/Cape_Verde",
+              "Atlantic/South_Georgia",
+              "Australia/Adelaide",
+              "Australia/Brisbane",
+              "Australia/Darwin",
+              "Australia/Lord_Howe",
+              "Australia/Perth",
+              "Australia/Sydney",
+              "Europe/Amsterdam",
+              "Europe/Athens",
+              "Europe/Berlin",
+              "Europe/Brussels",
+              "Europe/Bucharest",
+              "Europe/Dublin",
+              "Europe/Helsinki",
+              "Europe/Istanbul",
+              "Europe/Lisbon",
+              "Europe/London",
+              "Europe/Minsk",
+              "Europe/Moscow",
+              "Europe/Paris",
+              "Europe/Prague",
+              "Europe/Rome",
+              "GMT",
+              "Pacific/Auckland",
+              "Pacific/Chatham",
+              "Pacific/Enderbury",
+              "Pacific/Fiji",
+              "Pacific/Gambier",
+              "Pacific/Guadalcanal",
+              "Pacific/Honolulu",
+              "Pacific/Kiritimati",
+              "Pacific/Marquesas",
+              "Pacific/Niue",
+              "Pacific/Norfolk",
+              "Pacific/Pago_Pago",
+              "Pacific/Pitcairn",
+              "Pacific/Tongatapu"
+            ]
+          }
+        }
+      },
+      "Individual": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "OwnerId": {
+            "$ref": "#/components/schemas/User"
+          },
+          "IsDeleted": {
+            "type": "boolean"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "FirstName": {
+            "type": "string"
+          },
+          "Salutation": {
+            "enum": [
+              "Dr.",
+              "Mr.",
+              "Mrs.",
+              "Ms.",
+              "Prof."
+            ]
+          },
+          "Name": {
+            "type": "string"
+          },
+          "HasOptedOutTracking": {
+            "type": "boolean"
+          },
+          "HasOptedOutProfiling": {
+            "type": "boolean"
+          },
+          "HasOptedOutProcessing": {
+            "type": "boolean"
+          },
+          "HasOptedOutSolicit": {
+            "type": "boolean"
+          },
+          "ShouldForget": {
+            "type": "boolean"
+          },
+          "SendIndividualData": {
+            "type": "boolean"
+          },
+          "CanStorePiiElsewhere": {
+            "type": "boolean"
+          },
+          "HasOptedOutGeoTracking": {
+            "type": "boolean"
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "DeathDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ConvictionsCount": {
+            "type": "integer"
+          },
+          "ChildrenCount": {
+            "type": "integer"
+          },
+          "MilitaryService": {
+            "enum": [
+              "No",
+              "Unknown",
+              "Yes"
+            ]
+          },
+          "IsHomeOwner": {
+            "type": "boolean"
+          },
+          "Occupation": {
+            "type": "string"
+          },
+          "Website": {
+            "type": "string"
+          },
+          "IndividualsAge": {
+            "enum": [
+              "13 or Older",
+              "16 or Older"
+            ]
+          },
+          "LastViewedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "MasterRecordId": {
+            "$ref": "#/components/schemas/Individual"
+          },
+          "ConsumerCreditScore": {
+            "type": "integer"
+          },
+          "ConsumerCreditScoreProviderName": {
+            "type": "string"
+          },
+          "InfluencerRating": {
+            "type": "integer"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "IsDeleted": {
+            "type": "boolean"
+          },
+          "MasterRecordId": {
+            "$ref": "#/components/schemas/Contact"
+          },
+          "AccountId": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "FirstName": {
+            "type": "string"
+          },
+          "Salutation": {
+            "enum": [
+              "Dr.",
+              "Mr.",
+              "Mrs.",
+              "Ms.",
+              "Prof."
+            ]
+          },
+          "Name": {
+            "type": "string"
+          },
+          "OtherStreet": {
+            "type": "string"
+          },
+          "OtherCity": {
+            "type": "string"
+          },
+          "OtherState": {
+            "type": "string"
+          },
+          "OtherPostalCode": {
+            "type": "string"
+          },
+          "OtherCountry": {
+            "type": "string"
+          },
+          "OtherLatitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "OtherLongitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "OtherGeocodeAccuracy": {
+            "enum": [
+              "Address",
+              "Block",
+              "City",
+              "County",
+              "ExtendedZip",
+              "NearAddress",
+              "Neighborhood",
+              "State",
+              "Street",
+              "Unknown",
+              "Zip"
+            ]
+          },
+          "OtherAddress": {
+            "type": "string"
+          },
+          "MailingStreet": {
+            "type": "string"
+          },
+          "MailingCity": {
+            "type": "string"
+          },
+          "MailingState": {
+            "type": "string"
+          },
+          "MailingPostalCode": {
+            "type": "string"
+          },
+          "MailingCountry": {
+            "type": "string"
+          },
+          "MailingLatitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "MailingLongitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "MailingGeocodeAccuracy": {
+            "enum": [
+              "Address",
+              "Block",
+              "City",
+              "County",
+              "ExtendedZip",
+              "NearAddress",
+              "Neighborhood",
+              "State",
+              "Street",
+              "Unknown",
+              "Zip"
+            ]
+          },
+          "MailingAddress": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "Fax": {
+            "type": "string"
+          },
+          "MobilePhone": {
+            "type": "string"
+          },
+          "HomePhone": {
+            "type": "string"
+          },
+          "OtherPhone": {
+            "type": "string"
+          },
+          "AssistantPhone": {
+            "type": "string"
+          },
+          "ReportsToId": {
+            "$ref": "#/components/schemas/Contact"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Department": {
+            "type": "string"
+          },
+          "AssistantName": {
+            "type": "string"
+          },
+          "LeadSource": {
+            "enum": [
+              "Other",
+              "Partner Referral",
+              "Phone Inquiry",
+              "Purchased List",
+              "Web"
+            ]
+          },
+          "Birthdate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "OwnerId": {
+            "$ref": "#/components/schemas/User"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastActivityDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastCURequestDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastCUUpdateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastViewedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastReferencedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "EmailBouncedReason": {
+            "type": "string"
+          },
+          "EmailBouncedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "IsEmailBounced": {
+            "type": "boolean"
+          },
+          "PhotoUrl": {
+            "type": "string"
+          },
+          "Jigsaw": {
+            "type": "string"
+          },
+          "JigsawContactId": {
+            "type": "string"
+          },
+          "CleanStatus": {
+            "enum": [
+              "Acknowledged",
+              "Different",
+              "Inactive",
+              "Matched",
+              "NotFound",
+              "Pending",
+              "SelectMatch",
+              "Skipped"
+            ]
+          },
+          "IndividualId": {
+            "$ref": "#/components/schemas/Individual"
+          },
+          "Level__c": {
+            "enum": [
+              "Primary",
+              "Secondary",
+              "Tertiary"
+            ]
+          },
+          "Languages__c": {
+            "type": "string"
+          }
+        }
+      },
+      "DandBCompany": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "IsDeleted": {
+            "type": "boolean"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastViewedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastReferencedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "DunsNumber": {
+            "type": "string"
+          },
+          "Street": {
+            "type": "string"
+          },
+          "City": {
+            "type": "string"
+          },
+          "State": {
+            "type": "string"
+          },
+          "PostalCode": {
+            "type": "string"
+          },
+          "Country": {
+            "type": "string"
+          },
+          "GeocodeAccuracyStandard": {
+            "enum": [
+              "Address",
+              "Block",
+              "City",
+              "County",
+              "ExtendedZip",
+              "NearAddress",
+              "Neighborhood",
+              "State",
+              "Street",
+              "Unknown",
+              "Zip"
+            ]
+          },
+          "Address": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "Fax": {
+            "type": "string"
+          },
+          "CountryAccessCode": {
+            "type": "string"
+          },
+          "PublicIndicator": {
+            "enum": [
+              "N",
+              "Y"
+            ]
+          },
+          "StockSymbol": {
+            "type": "string"
+          },
+          "StockExchange": {
+            "type": "string"
+          },
+          "SalesVolume": {
+            "type": "number",
+            "format": "double"
+          },
+          "URL": {
+            "type": "string"
+          },
+          "OutOfBusiness": {
+            "enum": [
+              "N",
+              "Y"
+            ]
+          },
+          "EmployeesTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "FipsMsaCode": {
+            "type": "string"
+          },
+          "FipsMsaDesc": {
+            "type": "string"
+          },
+          "TradeStyle1": {
+            "type": "string"
+          },
+          "YearStarted": {
+            "type": "string"
+          },
+          "MailingStreet": {
+            "type": "string"
+          },
+          "MailingCity": {
+            "type": "string"
+          },
+          "MailingState": {
+            "type": "string"
+          },
+          "MailingPostalCode": {
+            "type": "string"
+          },
+          "MailingCountry": {
+            "type": "string"
+          },
+          "MailingGeocodeAccuracy": {
+            "enum": [
+              "Address",
+              "Block",
+              "City",
+              "County",
+              "ExtendedZip",
+              "NearAddress",
+              "Neighborhood",
+              "State",
+              "Street",
+              "Unknown",
+              "Zip"
+            ]
+          },
+          "MailingAddress": {
+            "type": "string"
+          },
+          "Latitude": {
+            "type": "string"
+          },
+          "Longitude": {
+            "type": "string"
+          },
+          "PrimarySic": {
+            "type": "string"
+          },
+          "PrimarySicDesc": {
+            "type": "string"
+          },
+          "SecondSic": {
+            "type": "string"
+          },
+          "SecondSicDesc": {
+            "type": "string"
+          },
+          "ThirdSic": {
+            "type": "string"
+          },
+          "ThirdSicDesc": {
+            "type": "string"
+          },
+          "FourthSic": {
+            "type": "string"
+          },
+          "FourthSicDesc": {
+            "type": "string"
+          },
+          "FifthSic": {
+            "type": "string"
+          },
+          "FifthSicDesc": {
+            "type": "string"
+          },
+          "SixthSic": {
+            "type": "string"
+          },
+          "SixthSicDesc": {
+            "type": "string"
+          },
+          "PrimaryNaics": {
+            "type": "string"
+          },
+          "PrimaryNaicsDesc": {
+            "type": "string"
+          },
+          "SecondNaics": {
+            "type": "string"
+          },
+          "SecondNaicsDesc": {
+            "type": "string"
+          },
+          "ThirdNaics": {
+            "type": "string"
+          },
+          "ThirdNaicsDesc": {
+            "type": "string"
+          },
+          "FourthNaics": {
+            "type": "string"
+          },
+          "FourthNaicsDesc": {
+            "type": "string"
+          },
+          "FifthNaics": {
+            "type": "string"
+          },
+          "FifthNaicsDesc": {
+            "type": "string"
+          },
+          "SixthNaics": {
+            "type": "string"
+          },
+          "SixthNaicsDesc": {
+            "type": "string"
+          },
+          "OwnOrRent": {
+            "enum": [
+              "0",
+              "1",
+              "2"
+            ]
+          },
+          "EmployeesHere": {
+            "type": "number",
+            "format": "double"
+          },
+          "EmployeesHereReliability": {
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          "SalesVolumeReliability": {
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          "CurrencyCode": {
+            "enum": [
+              "0010",
+              "0020",
+              "0030",
+              "0040",
+              "0050",
+              "0070",
+              "0075",
+              "0090",
+              "0095",
+              "0100",
+              "0105",
+              "0110",
+              "0120",
+              "0140",
+              "0150",
+              "0155",
+              "0160",
+              "0190",
+              "0220",
+              "0230",
+              "0250",
+              "0270",
+              "0280",
+              "0290",
+              "0305",
+              "0310",
+              "0320",
+              "0330",
+              "0370",
+              "0380",
+              "0390",
+              "0400",
+              "0410",
+              "0420",
+              "0430",
+              "0440",
+              "0450",
+              "0460",
+              "0470",
+              "0480",
+              "0490",
+              "0500",
+              "0520",
+              "0530",
+              "0540",
+              "0550",
+              "0552",
+              "0560",
+              "0580",
+              "0585",
+              "0590",
+              "0595",
+              "0600",
+              "0605",
+              "0620",
+              "0630",
+              "0640",
+              "0650",
+              "0690",
+              "0700",
+              "0710",
+              "0720",
+              "0730",
+              "0750",
+              "0760",
+              "0770",
+              "0780",
+              "0790",
+              "0800",
+              "0820",
+              "0830",
+              "0840",
+              "0860",
+              "0870",
+              "0880",
+              "0890",
+              "0900",
+              "0910",
+              "0920",
+              "0940",
+              "0960",
+              "0970",
+              "1000",
+              "1010",
+              "1020",
+              "1030",
+              "1040",
+              "1060",
+              "1070",
+              "1080",
+              "1090",
+              "2000",
+              "2010",
+              "2020",
+              "2040",
+              "2060",
+              "2070",
+              "2080",
+              "2090",
+              "3000",
+              "3010",
+              "3020",
+              "3030",
+              "3040",
+              "3060",
+              "3070",
+              "3075",
+              "3085",
+              "3090",
+              "4000",
+              "4010",
+              "4020",
+              "4030",
+              "4040",
+              "4060",
+              "4070",
+              "4090",
+              "5005",
+              "5010",
+              "5020",
+              "5030",
+              "5040",
+              "5080",
+              "5090",
+              "6000",
+              "6030",
+              "6040",
+              "6050",
+              "6060",
+              "6100",
+              "6200",
+              "6300",
+              "6400",
+              "6500",
+              "6600",
+              "6800",
+              "6900",
+              "7200",
+              "7500",
+              "7600",
+              "8000",
+              "8100",
+              "8300",
+              "8500",
+              "8700",
+              "8800",
+              "8900",
+              "9000",
+              "9100",
+              "9300",
+              "9410",
+              "9430",
+              "9440",
+              "9450",
+              "9460",
+              "9470"
+            ]
+          },
+          "LegalStatus": {
+            "enum": [
+              "000",
+              "003",
+              "008",
+              "009",
+              "010",
+              "011",
+              "012",
+              "013",
+              "014",
+              "015",
+              "030",
+              "050",
+              "070",
+              "080",
+              "090",
+              "099",
+              "100",
+              "101",
+              "102",
+              "103",
+              "104",
+              "105",
+              "106",
+              "107",
+              "108",
+              "109",
+              "110",
+              "111",
+              "112",
+              "113",
+              "114",
+              "115",
+              "116",
+              "117",
+              "118",
+              "119",
+              "120",
+              "121",
+              "122",
+              "125",
+              "126",
+              "127",
+              "128",
+              "129",
+              "130",
+              "131",
+              "132",
+              "133",
+              "140",
+              "142",
+              "143",
+              "144",
+              "145",
+              "146",
+              "147",
+              "148",
+              "149",
+              "150",
+              "151",
+              "152",
+              "153",
+              "154",
+              "155",
+              "160",
+              "161",
+              "162",
+              "163",
+              "164",
+              "166",
+              "167",
+              "168",
+              "169",
+              "170",
+              "171",
+              "180",
+              "185",
+              "186",
+              "190",
+              "200",
+              "202",
+              "204",
+              "206",
+              "208",
+              "210",
+              "212",
+              "214",
+              "216",
+              "218",
+              "220",
+              "222",
+              "224",
+              "226",
+              "228",
+              "230",
+              "232",
+              "234",
+              "236",
+              "238",
+              "240",
+              "242",
+              "244",
+              "246",
+              "248",
+              "250",
+              "252",
+              "254",
+              "256",
+              "260",
+              "270",
+              "280",
+              "290",
+              "300",
+              "301",
+              "302",
+              "304",
+              "306",
+              "308",
+              "310",
+              "312",
+              "314",
+              "316",
+              "318",
+              "320",
+              "322",
+              "324",
+              "326",
+              "328",
+              "330",
+              "332",
+              "334",
+              "336",
+              "338",
+              "340",
+              "342",
+              "344",
+              "346",
+              "350",
+              "360",
+              "370",
+              "380",
+              "390",
+              "410",
+              "420",
+              "430",
+              "440",
+              "450",
+              "451",
+              "452",
+              "460",
+              "470",
+              "480",
+              "490",
+              "500",
+              "502",
+              "510",
+              "520",
+              "530",
+              "540",
+              "550",
+              "560",
+              "570",
+              "580",
+              "590",
+              "600",
+              "610",
+              "620",
+              "630",
+              "640",
+              "650",
+              "660",
+              "670",
+              "680",
+              "690",
+              "700",
+              "710",
+              "720",
+              "730",
+              "740",
+              "750",
+              "755",
+              "760",
+              "770",
+              "780",
+              "790",
+              "800",
+              "810",
+              "820",
+              "830",
+              "840",
+              "850",
+              "860",
+              "870",
+              "880",
+              "881",
+              "890",
+              "891",
+              "892",
+              "893",
+              "894",
+              "895",
+              "896",
+              "900",
+              "905",
+              "910",
+              "915",
+              "920",
+              "925",
+              "930",
+              "935",
+              "940",
+              "945",
+              "950",
+              "955",
+              "960",
+              "965",
+              "970",
+              "971",
+              "972",
+              "973",
+              "974",
+              "975",
+              "976",
+              "977",
+              "978",
+              "980",
+              "985",
+              "990",
+              "991",
+              "992",
+              "993",
+              "994",
+              "995",
+              "999"
+            ]
+          },
+          "GlobalUltimateTotalEmployees": {
+            "type": "number",
+            "format": "double"
+          },
+          "EmployeesTotalReliability": {
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ]
+          },
+          "MinorityOwned": {
+            "enum": [
+              "N",
+              "Y"
+            ]
+          },
+          "WomenOwned": {
+            "enum": [
+              "N",
+              "Y"
+            ]
+          },
+          "SmallBusiness": {
+            "enum": [
+              "N",
+              "Y"
+            ]
+          },
+          "MarketingSegmentationCluster": {
+            "enum": [
+              "1",
+              "10",
+              "11",
+              "12",
+              "13",
+              "14",
+              "15",
+              "16",
+              "17",
+              "18",
+              "19",
+              "2",
+              "20",
+              "21",
+              "22",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9"
+            ]
+          },
+          "ImportExportAgent": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ]
+          },
+          "Subsidiary": {
+            "enum": [
+              "0",
+              "3"
+            ]
+          },
+          "TradeStyle2": {
+            "type": "string"
+          },
+          "TradeStyle3": {
+            "type": "string"
+          },
+          "TradeStyle4": {
+            "type": "string"
+          },
+          "TradeStyle5": {
+            "type": "string"
+          },
+          "NationalId": {
+            "type": "string"
+          },
+          "NationalIdType": {
+            "enum": [
+              "00010",
+              "00011",
+              "00012",
+              "00013",
+              "00014",
+              "00016",
+              "00017",
+              "00018",
+              "00019",
+              "00020",
+              "00021",
+              "00022",
+              "00024",
+              "00025",
+              "00026",
+              "00030",
+              "00031",
+              "00032",
+              "00033",
+              "00034",
+              "00035",
+              "00036",
+              "00040",
+              "00042",
+              "00043",
+              "00045",
+              "00050",
+              "00055",
+              "00060",
+              "00065",
+              "00070",
+              "00075",
+              "00080",
+              "00090",
+              "00095",
+              "00099",
+              "00100",
+              "00101",
+              "00102",
+              "00103",
+              "00104",
+              "00105",
+              "00106",
+              "00107",
+              "00108",
+              "00109",
+              "00110",
+              "00111",
+              "00112",
+              "00113",
+              "00115",
+              "00119",
+              "00120",
+              "00122",
+              "00125",
+              "00127",
+              "00130",
+              "00135",
+              "00140",
+              "00142",
+              "00143",
+              "00145",
+              "00155",
+              "00165",
+              "00175",
+              "00185",
+              "00195",
+              "00200",
+              "00210",
+              "00211",
+              "00212",
+              "00220",
+              "00230",
+              "00240",
+              "00250",
+              "00260",
+              "00270",
+              "00281",
+              "00282",
+              "00283",
+              "00284",
+              "00285",
+              "00286",
+              "00290",
+              "00293",
+              "00300",
+              "00301",
+              "00302",
+              "00303",
+              "00304",
+              "00305",
+              "00306",
+              "00307",
+              "00308",
+              "00309",
+              "00310",
+              "00311",
+              "00312",
+              "00313",
+              "00314",
+              "00315",
+              "00316",
+              "00317",
+              "00318",
+              "00320",
+              "00321",
+              "00322",
+              "00323",
+              "00324",
+              "00325",
+              "00330",
+              "00335",
+              "00340",
+              "00342",
+              "00345",
+              "00350",
+              "00355",
+              "00360",
+              "00362",
+              "00400",
+              "00519",
+              "00520",
+              "00521",
+              "00522",
+              "00523",
+              "00524",
+              "00525",
+              "00526",
+              "00527",
+              "00528",
+              "00529",
+              "00530",
+              "00531",
+              "00532",
+              "00533",
+              "00534",
+              "00535",
+              "00536",
+              "00537",
+              "00538",
+              "00539",
+              "00540",
+              "00541",
+              "00542",
+              "00543",
+              "00544",
+              "00545",
+              "00546",
+              "00547",
+              "00548",
+              "00549",
+              "00550",
+              "00551",
+              "00552",
+              "00553",
+              "00554",
+              "00555",
+              "00556",
+              "00557",
+              "00558",
+              "00559",
+              "00560",
+              "00561",
+              "00562",
+              "00563",
+              "00564",
+              "00565",
+              "00566",
+              "00567",
+              "00568",
+              "00569",
+              "00570",
+              "00571",
+              "00572",
+              "00573",
+              "00574",
+              "00575",
+              "00576",
+              "00577",
+              "00578",
+              "00579",
+              "00580",
+              "00581",
+              "00582",
+              "00583",
+              "00584",
+              "00585",
+              "00586",
+              "00587",
+              "00588",
+              "00589",
+              "00590",
+              "00591",
+              "00592",
+              "00593",
+              "00594",
+              "00595",
+              "00596",
+              "00597",
+              "00598",
+              "00599",
+              "00600",
+              "00601",
+              "00602",
+              "00603",
+              "00604",
+              "00605",
+              "00610",
+              "00620",
+              "00630",
+              "00640",
+              "00650",
+              "00660",
+              "00670",
+              "00702",
+              "00710",
+              "00711",
+              "00712",
+              "00715",
+              "00720",
+              "00730",
+              "00735",
+              "00740",
+              "00753",
+              "00759",
+              "00761",
+              "00762",
+              "00766",
+              "00772"
+            ]
+          },
+          "UsTaxId": {
+            "type": "string"
+          },
+          "GeoCodeAccuracy": {
+            "enum": [
+              "0",
+              "A",
+              "B",
+              "C",
+              "D",
+              "G",
+              "H",
+              "I",
+              "K",
+              "L",
+              "M",
+              "N",
+              "P",
+              "S",
+              "T",
+              "Z"
+            ]
+          },
+          "FamilyMembers": {
+            "type": "integer"
+          },
+          "MarketingPreScreen": {
+            "enum": [
+              "H",
+              "L",
+              "M"
+            ]
+          },
+          "GlobalUltimateDunsNumber": {
+            "type": "string"
+          },
+          "GlobalUltimateBusinessName": {
+            "type": "string"
+          },
+          "ParentOrHqDunsNumber": {
+            "type": "string"
+          },
+          "ParentOrHqBusinessName": {
+            "type": "string"
+          },
+          "DomesticUltimateDunsNumber": {
+            "type": "string"
+          },
+          "DomesticUltimateBusinessName": {
+            "type": "string"
+          },
+          "LocationStatus": {
+            "enum": [
+              "0",
+              "1",
+              "2"
+            ]
+          },
+          "CompanyCurrencyIsoCode": {
+            "enum": [
+              "AED",
+              "AFN",
+              "ALL",
+              "AMD",
+              "ANG",
+              "AOA",
+              "ARS",
+              "AUD",
+              "AWG",
+              "AZN",
+              "BAM",
+              "BBD",
+              "BDT",
+              "BGN",
+              "BHD",
+              "BIF",
+              "BMD",
+              "BND",
+              "BOB",
+              "BOV",
+              "BRB",
+              "BRL",
+              "BSD",
+              "BTN",
+              "BWP",
+              "BYN",
+              "BYR",
+              "BZD",
+              "CAD",
+              "CDF",
+              "CHF",
+              "CLF",
+              "CLP",
+              "CNH",
+              "CNY",
+              "COP",
+              "CRC",
+              "CUC",
+              "CUP",
+              "CVE",
+              "CZK",
+              "DJF",
+              "DKK",
+              "DOP",
+              "DZD",
+              "EEK",
+              "EGP",
+              "ERN",
+              "ETB",
+              "EUR",
+              "FJD",
+              "FKP",
+              "GBP",
+              "GEL",
+              "GHS",
+              "GIP",
+              "GMD",
+              "GNF",
+              "GTQ",
+              "GYD",
+              "HKD",
+              "HNL",
+              "HRD",
+              "HRK",
+              "HTG",
+              "HUF",
+              "IDR",
+              "ILS",
+              "INR",
+              "IQD",
+              "IRR",
+              "ISK",
+              "JMD",
+              "JOD",
+              "JPY",
+              "KES",
+              "KGS",
+              "KHR",
+              "KMF",
+              "KPW",
+              "KRW",
+              "KWD",
+              "KYD",
+              "KZT",
+              "LAK",
+              "LBP",
+              "LKR",
+              "LRD",
+              "LSL",
+              "LYD",
+              "MAD",
+              "MDL",
+              "MGA",
+              "MKD",
+              "MMK",
+              "MNT",
+              "MOP",
+              "MRO",
+              "MRU",
+              "MUR",
+              "MVR",
+              "MWK",
+              "MXN",
+              "MXV",
+              "MYR",
+              "MZN",
+              "NAD",
+              "NGN",
+              "NIO",
+              "NOK",
+              "NPR",
+              "NZD",
+              "OMR",
+              "PAB",
+              "PEN",
+              "PGK",
+              "PHP",
+              "PKR",
+              "PLN",
+              "PYG",
+              "QAR",
+              "RON",
+              "RSD",
+              "RUB",
+              "RWF",
+              "SAR",
+              "SBD",
+              "SCR",
+              "SDG",
+              "SEK",
+              "SGD",
+              "SHP",
+              "SLL",
+              "SOS",
+              "SRD",
+              "SSP",
+              "STD",
+              "STN",
+              "SYP",
+              "SZL",
+              "THB",
+              "TJS",
+              "TMT",
+              "TND",
+              "TOP",
+              "TRY",
+              "TTD",
+              "TWD",
+              "TZS",
+              "UAH",
+              "UGX",
+              "USD",
+              "UYU",
+              "UZS",
+              "VEF",
+              "VES",
+              "VND",
+              "VUV",
+              "WST",
+              "XAF",
+              "XCD",
+              "XOF",
+              "XPF",
+              "YER",
+              "ZAR",
+              "ZMW",
+              "ZWL"
+            ]
+          },
+          "Description": {
+            "type": "string"
+          },
+          "FortuneRank": {
+            "type": "integer"
+          },
+          "IncludedInSnP500": {
+            "type": "string"
+          },
+          "PremisesMeasure": {
+            "type": "integer"
+          },
+          "PremisesMeasureReliability": {
+            "type": "string"
+          },
+          "PremisesMeasureUnit": {
+            "type": "string"
+          },
+          "EmployeeQuantityGrowthRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "SalesTurnoverGrowthRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "PrimarySic8": {
+            "type": "string"
+          },
+          "PrimarySic8Desc": {
+            "type": "string"
+          },
+          "SecondSic8": {
+            "type": "string"
+          },
+          "SecondSic8Desc": {
+            "type": "string"
+          },
+          "ThirdSic8": {
+            "type": "string"
+          },
+          "ThirdSic8Desc": {
+            "type": "string"
+          },
+          "FourthSic8": {
+            "type": "string"
+          },
+          "FourthSic8Desc": {
+            "type": "string"
+          },
+          "FifthSic8": {
+            "type": "string"
+          },
+          "FifthSic8Desc": {
+            "type": "string"
+          },
+          "SixthSic8": {
+            "type": "string"
+          },
+          "SixthSic8Desc": {
+            "type": "string"
+          },
+          "PriorYearEmployees": {
+            "type": "integer"
+          },
+          "PriorYearRevenue": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "PostResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "PermissionsEmailSingle": {
+            "type": "boolean"
+          },
+          "PermissionsEmailMass": {
+            "type": "boolean"
+          },
+          "PermissionsEditTask": {
+            "type": "boolean"
+          },
+          "PermissionsEditEvent": {
+            "type": "boolean"
+          },
+          "PermissionsExportReport": {
+            "type": "boolean"
+          },
+          "PermissionsImportPersonal": {
+            "type": "boolean"
+          },
+          "PermissionsDataExport": {
+            "type": "boolean"
+          },
+          "PermissionsManageUsers": {
+            "type": "boolean"
+          },
+          "PermissionsEditPublicFilters": {
+            "type": "boolean"
+          },
+          "PermissionsEditPublicTemplates": {
+            "type": "boolean"
+          },
+          "PermissionsModifyAllData": {
+            "type": "boolean"
+          },
+          "PermissionsManageCases": {
+            "type": "boolean"
+          },
+          "PermissionsMassInlineEdit": {
+            "type": "boolean"
+          },
+          "PermissionsEditKnowledge": {
+            "type": "boolean"
+          },
+          "PermissionsManageKnowledge": {
+            "type": "boolean"
+          },
+          "PermissionsManageSolutions": {
+            "type": "boolean"
+          },
+          "PermissionsCustomizeApplication": {
+            "type": "boolean"
+          },
+          "PermissionsEditReadonlyFields": {
+            "type": "boolean"
+          },
+          "PermissionsRunReports": {
+            "type": "boolean"
+          },
+          "PermissionsViewSetup": {
+            "type": "boolean"
+          },
+          "PermissionsTransferAnyEntity": {
+            "type": "boolean"
+          },
+          "PermissionsNewReportBuilder": {
+            "type": "boolean"
+          },
+          "PermissionsActivateContract": {
+            "type": "boolean"
+          },
+          "PermissionsActivateOrder": {
+            "type": "boolean"
+          },
+          "PermissionsImportLeads": {
+            "type": "boolean"
+          },
+          "PermissionsManageLeads": {
+            "type": "boolean"
+          },
+          "PermissionsTransferAnyLead": {
+            "type": "boolean"
+          },
+          "PermissionsViewAllData": {
+            "type": "boolean"
+          },
+          "PermissionsEditPublicDocuments": {
+            "type": "boolean"
+          },
+          "PermissionsContentHubOnPremiseUser": {
+            "type": "boolean"
+          },
+          "PermissionsViewEncryptedData": {
+            "type": "boolean"
+          },
+          "PermissionsEditBrandTemplates": {
+            "type": "boolean"
+          },
+          "PermissionsEditHtmlTemplates": {
+            "type": "boolean"
+          },
+          "PermissionsChatterInternalUser": {
+            "type": "boolean"
+          },
+          "PermissionsManageEncryptionKeys": {
+            "type": "boolean"
+          },
+          "PermissionsDeleteActivatedContract": {
+            "type": "boolean"
+          },
+          "PermissionsChatterInviteExternalUsers": {
+            "type": "boolean"
+          },
+          "PermissionsSendSitRequests": {
+            "type": "boolean"
+          },
+          "PermissionsManageRemoteAccess": {
+            "type": "boolean"
+          },
+          "PermissionsCanUseNewDashboardBuilder": {
+            "type": "boolean"
+          },
+          "PermissionsManageCategories": {
+            "type": "boolean"
+          },
+          "PermissionsConvertLeads": {
+            "type": "boolean"
+          },
+          "PermissionsPasswordNeverExpires": {
+            "type": "boolean"
+          },
+          "PermissionsUseTeamReassignWizards": {
+            "type": "boolean"
+          },
+          "PermissionsEditActivatedOrders": {
+            "type": "boolean"
+          },
+          "PermissionsInstallMultiforce": {
+            "type": "boolean"
+          },
+          "PermissionsPublishMultiforce": {
+            "type": "boolean"
+          },
+          "PermissionsChatterOwnGroups": {
+            "type": "boolean"
+          },
+          "PermissionsEditOppLineItemUnitPrice": {
+            "type": "boolean"
+          },
+          "PermissionsCreateMultiforce": {
+            "type": "boolean"
+          },
+          "PermissionsBulkApiHardDelete": {
+            "type": "boolean"
+          },
+          "PermissionsSolutionImport": {
+            "type": "boolean"
+          },
+          "PermissionsManageCallCenters": {
+            "type": "boolean"
+          },
+          "PermissionsManageSynonyms": {
+            "type": "boolean"
+          },
+          "PermissionsViewContent": {
+            "type": "boolean"
+          },
+          "PermissionsManageEmailClientConfig": {
+            "type": "boolean"
+          },
+          "PermissionsEnableNotifications": {
+            "type": "boolean"
+          },
+          "PermissionsManageDataIntegrations": {
+            "type": "boolean"
+          },
+          "PermissionsDistributeFromPersWksp": {
+            "type": "boolean"
+          },
+          "PermissionsViewDataCategories": {
+            "type": "boolean"
+          },
+          "PermissionsManageDataCategories": {
+            "type": "boolean"
+          },
+          "PermissionsAuthorApex": {
+            "type": "boolean"
+          },
+          "PermissionsManageMobile": {
+            "type": "boolean"
+          },
+          "PermissionsApiEnabled": {
+            "type": "boolean"
+          },
+          "PermissionsManageCustomReportTypes": {
+            "type": "boolean"
+          },
+          "PermissionsEditCaseComments": {
+            "type": "boolean"
+          },
+          "PermissionsTransferAnyCase": {
+            "type": "boolean"
+          },
+          "PermissionsContentAdministrator": {
+            "type": "boolean"
+          },
+          "PermissionsCreateWorkspaces": {
+            "type": "boolean"
+          },
+          "PermissionsManageContentPermissions": {
+            "type": "boolean"
+          },
+          "PermissionsManageContentProperties": {
+            "type": "boolean"
+          },
+          "PermissionsManageContentTypes": {
+            "type": "boolean"
+          },
+          "PermissionsManageExchangeConfig": {
+            "type": "boolean"
+          },
+          "PermissionsManageAnalyticSnapshots": {
+            "type": "boolean"
+          },
+          "PermissionsScheduleReports": {
+            "type": "boolean"
+          },
+          "PermissionsManageBusinessHourHolidays": {
+            "type": "boolean"
+          },
+          "PermissionsManageEntitlements": {
+            "type": "boolean"
+          },
+          "PermissionsManageDynamicDashboards": {
+            "type": "boolean"
+          },
+          "PermissionsCustomSidebarOnAllPages": {
+            "type": "boolean"
+          },
+          "PermissionsManageInteraction": {
+            "type": "boolean"
+          },
+          "PermissionsViewMyTeamsDashboards": {
+            "type": "boolean"
+          },
+          "PermissionsModerateChatter": {
+            "type": "boolean"
+          },
+          "PermissionsResetPasswords": {
+            "type": "boolean"
+          },
+          "PermissionsFlowUFLRequired": {
+            "type": "boolean"
+          },
+          "PermissionsCanInsertFeedSystemFields": {
+            "type": "boolean"
+          },
+          "PermissionsActivitiesAccess": {
+            "type": "boolean"
+          },
+          "PermissionsManageKnowledgeImportExport": {
+            "type": "boolean"
+          },
+          "PermissionsEmailTemplateManagement": {
+            "type": "boolean"
+          },
+          "PermissionsEmailAdministration": {
+            "type": "boolean"
+          },
+          "PermissionsManageChatterMessages": {
+            "type": "boolean"
+          },
+          "PermissionsAllowEmailIC": {
+            "type": "boolean"
+          },
+          "PermissionsChatterFileLink": {
+            "type": "boolean"
+          },
+          "PermissionsForceTwoFactor": {
+            "type": "boolean"
+          },
+          "PermissionsViewEventLogFiles": {
+            "type": "boolean"
+          },
+          "PermissionsManageNetworks": {
+            "type": "boolean"
+          },
+          "PermissionsManageAuthProviders": {
+            "type": "boolean"
+          },
+          "PermissionsRunFlow": {
+            "type": "boolean"
+          },
+          "PermissionsCreateCustomizeDashboards": {
+            "type": "boolean"
+          },
+          "PermissionsCreateDashboardFolders": {
+            "type": "boolean"
+          },
+          "PermissionsViewPublicDashboards": {
+            "type": "boolean"
+          },
+          "PermissionsManageDashbdsInPubFolders": {
+            "type": "boolean"
+          },
+          "PermissionsCreateCustomizeReports": {
+            "type": "boolean"
+          },
+          "PermissionsCreateReportFolders": {
+            "type": "boolean"
+          },
+          "PermissionsViewPublicReports": {
+            "type": "boolean"
+          },
+          "PermissionsManageReportsInPubFolders": {
+            "type": "boolean"
+          },
+          "PermissionsEditMyDashboards": {
+            "type": "boolean"
+          },
+          "PermissionsEditMyReports": {
+            "type": "boolean"
+          },
+          "PermissionsViewAllUsers": {
+            "type": "boolean"
+          },
+          "PermissionsAllowUniversalSearch": {
+            "type": "boolean"
+          },
+          "PermissionsConnectOrgToEnvironmentHub": {
+            "type": "boolean"
+          },
+          "PermissionsWorkCalibrationUser": {
+            "type": "boolean"
+          },
+          "PermissionsCreateCustomizeFilters": {
+            "type": "boolean"
+          },
+          "PermissionsWorkDotComUserPerm": {
+            "type": "boolean"
+          },
+          "PermissionsContentHubUser": {
+            "type": "boolean"
+          },
+          "PermissionsGovernNetworks": {
+            "type": "boolean"
+          },
+          "PermissionsSalesConsole": {
+            "type": "boolean"
+          },
+          "PermissionsTwoFactorApi": {
+            "type": "boolean"
+          },
+          "PermissionsDeleteTopics": {
+            "type": "boolean"
+          },
+          "PermissionsEditTopics": {
+            "type": "boolean"
+          },
+          "PermissionsCreateTopics": {
+            "type": "boolean"
+          },
+          "PermissionsAssignTopics": {
+            "type": "boolean"
+          },
+          "PermissionsIdentityEnabled": {
+            "type": "boolean"
+          },
+          "PermissionsIdentityConnect": {
+            "type": "boolean"
+          },
+          "PermissionsAllowViewKnowledge": {
+            "type": "boolean"
+          },
+          "PermissionsContentWorkspaces": {
+            "type": "boolean"
+          },
+          "PermissionsManageSearchPromotionRules": {
+            "type": "boolean"
+          },
+          "PermissionsCustomMobileAppsAccess": {
+            "type": "boolean"
+          },
+          "PermissionsViewHelpLink": {
+            "type": "boolean"
+          },
+          "PermissionsManageProfilesPermissionsets": {
+            "type": "boolean"
+          },
+          "PermissionsAssignPermissionSets": {
+            "type": "boolean"
+          },
+          "PermissionsManageRoles": {
+            "type": "boolean"
+          },
+          "PermissionsManageIpAddresses": {
+            "type": "boolean"
+          },
+          "PermissionsManageSharing": {
+            "type": "boolean"
+          },
+          "PermissionsManageInternalUsers": {
+            "type": "boolean"
+          },
+          "PermissionsManagePasswordPolicies": {
+            "type": "boolean"
+          },
+          "PermissionsManageLoginAccessPolicies": {
+            "type": "boolean"
+          },
+          "PermissionsViewPlatformEvents": {
+            "type": "boolean"
+          },
+          "PermissionsManageCustomPermissions": {
+            "type": "boolean"
+          },
+          "PermissionsCanVerifyComment": {
+            "type": "boolean"
+          },
+          "PermissionsManageUnlistedGroups": {
+            "type": "boolean"
+          },
+          "PermissionsStdAutomaticActivityCapture": {
+            "type": "boolean"
+          },
+          "PermissionsModifySecureAgents": {
+            "type": "boolean"
+          },
+          "PermissionsInsightsAppDashboardEditor": {
+            "type": "boolean"
+          },
+          "PermissionsManageTwoFactor": {
+            "type": "boolean"
+          },
+          "PermissionsInsightsAppUser": {
+            "type": "boolean"
+          },
+          "PermissionsInsightsAppAdmin": {
+            "type": "boolean"
+          },
+          "PermissionsInsightsAppEltEditor": {
+            "type": "boolean"
+          },
+          "PermissionsInsightsAppUploadUser": {
+            "type": "boolean"
+          },
+          "PermissionsInsightsCreateApplication": {
+            "type": "boolean"
+          },
+          "PermissionsLightningExperienceUser": {
+            "type": "boolean"
+          },
+          "PermissionsViewDataLeakageEvents": {
+            "type": "boolean"
+          },
+          "PermissionsConfigCustomRecs": {
+            "type": "boolean"
+          },
+          "PermissionsSubmitMacrosAllowed": {
+            "type": "boolean"
+          },
+          "PermissionsBulkMacrosAllowed": {
+            "type": "boolean"
+          },
+          "PermissionsShareInternalArticles": {
+            "type": "boolean"
+          },
+          "PermissionsManageSessionPermissionSets": {
+            "type": "boolean"
+          },
+          "PermissionsManageTemplatedApp": {
+            "type": "boolean"
+          },
+          "PermissionsUseTemplatedApp": {
+            "type": "boolean"
+          },
+          "PermissionsSendAnnouncementEmails": {
+            "type": "boolean"
+          },
+          "PermissionsChatterEditOwnPost": {
+            "type": "boolean"
+          },
+          "PermissionsChatterEditOwnRecordPost": {
+            "type": "boolean"
+          },
+          "PermissionsWaveTabularDownload": {
+            "type": "boolean"
+          },
+          "PermissionsAutomaticActivityCapture": {
+            "type": "boolean"
+          },
+          "PermissionsImportCustomObjects": {
+            "type": "boolean"
+          },
+          "PermissionsDelegatedTwoFactor": {
+            "type": "boolean"
+          },
+          "PermissionsChatterComposeUiCodesnippet": {
+            "type": "boolean"
+          },
+          "PermissionsSelectFilesFromSalesforce": {
+            "type": "boolean"
+          },
+          "PermissionsModerateNetworkUsers": {
+            "type": "boolean"
+          },
+          "PermissionsMergeTopics": {
+            "type": "boolean"
+          },
+          "PermissionsSubscribeToLightningReports": {
+            "type": "boolean"
+          },
+          "PermissionsManagePvtRptsAndDashbds": {
+            "type": "boolean"
+          },
+          "PermissionsAllowLightningLogin": {
+            "type": "boolean"
+          },
+          "PermissionsCampaignInfluence2": {
+            "type": "boolean"
+          },
+          "PermissionsViewDataAssessment": {
+            "type": "boolean"
+          },
+          "PermissionsRemoveDirectMessageMembers": {
+            "type": "boolean"
+          },
+          "PermissionsCanApproveFeedPost": {
+            "type": "boolean"
+          },
+          "PermissionsAddDirectMessageMembers": {
+            "type": "boolean"
+          },
+          "PermissionsAllowViewEditConvertedLeads": {
+            "type": "boolean"
+          },
+          "PermissionsShowCompanyNameAsUserBadge": {
+            "type": "boolean"
+          },
+          "PermissionsAccessCMC": {
+            "type": "boolean"
+          },
+          "PermissionsViewHealthCheck": {
+            "type": "boolean"
+          },
+          "PermissionsManageHealthCheck": {
+            "type": "boolean"
+          },
+          "PermissionsPackaging2": {
+            "type": "boolean"
+          },
+          "PermissionsManageCertificates": {
+            "type": "boolean"
+          },
+          "PermissionsCreateReportInLightning": {
+            "type": "boolean"
+          },
+          "PermissionsPreventClassicExperience": {
+            "type": "boolean"
+          },
+          "PermissionsHideReadByList": {
+            "type": "boolean"
+          },
+          "PermissionsListEmailSend": {
+            "type": "boolean"
+          },
+          "PermissionsFeedPinning": {
+            "type": "boolean"
+          },
+          "PermissionsChangeDashboardColors": {
+            "type": "boolean"
+          },
+          "PermissionsManageRecommendationStrategies": {
+            "type": "boolean"
+          },
+          "PermissionsManagePropositions": {
+            "type": "boolean"
+          },
+          "PermissionsCloseConversations": {
+            "type": "boolean"
+          },
+          "PermissionsSubscribeReportRolesGrps": {
+            "type": "boolean"
+          },
+          "PermissionsSubscribeDashboardRolesGrps": {
+            "type": "boolean"
+          },
+          "PermissionsUseWebLink": {
+            "type": "boolean"
+          },
+          "PermissionsHasUnlimitedNBAExecutions": {
+            "type": "boolean"
+          },
+          "PermissionsViewOnlyEmbeddedAppUser": {
+            "type": "boolean"
+          },
+          "PermissionsViewAllActivities": {
+            "type": "boolean"
+          },
+          "PermissionsSubscribeReportToOtherUsers": {
+            "type": "boolean"
+          },
+          "PermissionsLightningConsoleAllowedForUser": {
+            "type": "boolean"
+          },
+          "PermissionsSubscribeReportsRunAsUser": {
+            "type": "boolean"
+          },
+          "PermissionsSubscribeToLightningDashboards": {
+            "type": "boolean"
+          },
+          "PermissionsSubscribeDashboardToOtherUsers": {
+            "type": "boolean"
+          },
+          "PermissionsCreateLtngTempInPub": {
+            "type": "boolean"
+          },
+          "PermissionsAppointmentBookingUserAccess": {
+            "type": "boolean"
+          },
+          "PermissionsTransactionalEmailSend": {
+            "type": "boolean"
+          },
+          "PermissionsViewPrivateStaticResources": {
+            "type": "boolean"
+          },
+          "PermissionsCreateLtngTempFolder": {
+            "type": "boolean"
+          },
+          "PermissionsApexRestServices": {
+            "type": "boolean"
+          },
+          "PermissionsConfigureLiveMessage": {
+            "type": "boolean"
+          },
+          "PermissionsLiveMessageAgent": {
+            "type": "boolean"
+          },
+          "PermissionsEnableCommunityAppLauncher": {
+            "type": "boolean"
+          },
+          "PermissionsGiveRecognitionBadge": {
+            "type": "boolean"
+          },
+          "PermissionsLightningSchedulerUserAccess": {
+            "type": "boolean"
+          },
+          "PermissionsLtngPromoReserved01UserPerm": {
+            "type": "boolean"
+          },
+          "PermissionsManageSubscriptions": {
+            "type": "boolean"
+          },
+          "PermissionsWaveManagePrivateAssetsUser": {
+            "type": "boolean"
+          },
+          "PermissionsCanEditDataPrepRecipe": {
+            "type": "boolean"
+          },
+          "PermissionsAddAnalyticsRemoteConnections": {
+            "type": "boolean"
+          },
+          "PermissionsManageSurveys": {
+            "type": "boolean"
+          },
+          "PermissionsViewRoles": {
+            "type": "boolean"
+          },
+          "PermissionsCanManageMaps": {
+            "type": "boolean"
+          },
+          "PermissionsLMOutboundMessagingUserPerm": {
+            "type": "boolean"
+          },
+          "PermissionsModifyDataClassification": {
+            "type": "boolean"
+          },
+          "PermissionsPrivacyDataAccess": {
+            "type": "boolean"
+          },
+          "PermissionsQueryAllFiles": {
+            "type": "boolean"
+          },
+          "PermissionsModifyMetadata": {
+            "type": "boolean"
+          },
+          "PermissionsManageCMS": {
+            "type": "boolean"
+          },
+          "PermissionsSandboxTestingInCommunityApp": {
+            "type": "boolean"
+          },
+          "PermissionsCanEditPrompts": {
+            "type": "boolean"
+          },
+          "PermissionsViewUserPII": {
+            "type": "boolean"
+          },
+          "PermissionsManageHubConnections": {
+            "type": "boolean"
+          },
+          "PermissionsB2BMarketingAnalyticsUser": {
+            "type": "boolean"
+          },
+          "PermissionsTraceXdsQueries": {
+            "type": "boolean"
+          },
+          "PermissionsViewSecurityCommandCenter": {
+            "type": "boolean"
+          },
+          "PermissionsManageSecurityCommandCenter": {
+            "type": "boolean"
+          },
+          "PermissionsViewAllCustomSettings": {
+            "type": "boolean"
+          },
+          "PermissionsViewAllForeignKeyNames": {
+            "type": "boolean"
+          },
+          "PermissionsAddWaveNotificationRecipients": {
+            "type": "boolean"
+          },
+          "PermissionsHeadlessCMSAccess": {
+            "type": "boolean"
+          },
+          "PermissionsLMEndMessagingSessionUserPerm": {
+            "type": "boolean"
+          },
+          "PermissionsConsentApiUpdate": {
+            "type": "boolean"
+          },
+          "PermissionsPaymentsAPIUser": {
+            "type": "boolean"
+          },
+          "PermissionsAccessContentBuilder": {
+            "type": "boolean"
+          },
+          "PermissionsAccountSwitcherUser": {
+            "type": "boolean"
+          },
+          "PermissionsViewAnomalyEvents": {
+            "type": "boolean"
+          },
+          "PermissionsManageC360AConnections": {
+            "type": "boolean"
+          },
+          "PermissionsManageReleaseUpdates": {
+            "type": "boolean"
+          },
+          "PermissionsViewAllProfiles": {
+            "type": "boolean"
+          },
+          "PermissionsSkipIdentityConfirmation": {
+            "type": "boolean"
+          },
+          "PermissionsLearningManager": {
+            "type": "boolean"
+          },
+          "PermissionsSendCustomNotifications": {
+            "type": "boolean"
+          },
+          "PermissionsPackaging2Delete": {
+            "type": "boolean"
+          },
+          "PermissionsFSCComprehensiveUserAccess": {
+            "type": "boolean"
+          },
+          "PermissionsBotManageBots": {
+            "type": "boolean"
+          },
+          "PermissionsBotManageBotsTrainingData": {
+            "type": "boolean"
+          },
+          "PermissionsSchedulingLineAmbassador": {
+            "type": "boolean"
+          },
+          "PermissionsSchedulingFacilityManager": {
+            "type": "boolean"
+          },
+          "PermissionsManageLearningReporting": {
+            "type": "boolean"
+          },
+          "PermissionsIsotopeCToCUser": {
+            "type": "boolean"
+          },
+          "PermissionsCanAccessCE": {
+            "type": "boolean"
+          },
+          "PermissionsIsotopeAccess": {
+            "type": "boolean"
+          },
+          "PermissionsIsotopeLEX": {
+            "type": "boolean"
+          },
+          "PermissionsQuipMetricsAccess": {
+            "type": "boolean"
+          },
+          "PermissionsQuipUserEngagementMetrics": {
+            "type": "boolean"
+          },
+          "PermissionsManageExternalConnections": {
+            "type": "boolean"
+          },
+          "PermissionsUseReturnOrder": {
+            "type": "boolean"
+          },
+          "PermissionsUseReturnOrderAPIs": {
+            "type": "boolean"
+          },
+          "PermissionsUseSubscriptionEmails": {
+            "type": "boolean"
+          },
+          "PermissionsAIViewInsightObjects": {
+            "type": "boolean"
+          },
+          "PermissionsAICreateInsightObjects": {
+            "type": "boolean"
+          },
+          "PermissionsLifecycleManagementAPIUser": {
+            "type": "boolean"
+          },
+          "PermissionsNativeWebviewScrolling": {
+            "type": "boolean"
+          },
+          "UserLicenseId": {
+            "$ref": "#/components/schemas/UserLicense"
+          },
+          "UserType": {
+            "enum": [
+              "CsnOnly",
+              "CspLitePortal",
+              "CustomerSuccess",
+              "Guest",
+              "PowerCustomerSuccess",
+              "PowerPartner",
+              "SelfService",
+              "Standard"
+            ]
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "LastViewedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastReferencedDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Group": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "DeveloperName": {
+            "type": "string"
+          },
+          "RelatedId": {
+            "$ref": "#/components/schemas/User"
+          },
+          "Type": {
+            "enum": [
+              "AllCustomerPortal",
+              "ChannelProgramGroup",
+              "CollaborationGroup",
+              "Manager",
+              "ManagerAndSubordinatesInternal",
+              "Organization",
+              "PRMOrganization",
+              "Participant",
+              "Queue",
+              "Regular",
+              "Role",
+              "RoleAndSubordinates",
+              "RoleAndSubordinatesInternal",
+              "SharingRecordCollGroup",
+              "Territory",
+              "TerritoryAndSubordinates"
+            ]
+          },
+          "Email": {
+            "type": "string"
+          },
+          "OwnerId": {
+            "$ref": "#/components/schemas/Organization"
+          },
+          "DoesSendEmailToMembers": {
+            "type": "boolean"
+          },
+          "DoesIncludeBosses": {
+            "type": "boolean"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "Username": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "FirstName": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "CompanyName": {
+            "type": "string"
+          },
+          "Division": {
+            "type": "string"
+          },
+          "Department": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Street": {
+            "type": "string"
+          },
+          "City": {
+            "type": "string"
+          },
+          "State": {
+            "type": "string"
+          },
+          "PostalCode": {
+            "type": "string"
+          },
+          "Country": {
+            "type": "string"
+          },
+          "Latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "Longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "GeocodeAccuracy": {
+            "enum": [
+              "Address",
+              "Block",
+              "City",
+              "County",
+              "ExtendedZip",
+              "NearAddress",
+              "Neighborhood",
+              "State",
+              "Street",
+              "Unknown",
+              "Zip"
+            ]
+          },
+          "Address": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "EmailPreferencesAutoBcc": {
+            "type": "boolean"
+          },
+          "EmailPreferencesAutoBccStayInTouch": {
+            "type": "boolean"
+          },
+          "EmailPreferencesStayInTouchReminder": {
+            "type": "boolean"
+          },
+          "SenderEmail": {
+            "type": "string"
+          },
+          "SenderName": {
+            "type": "string"
+          },
+          "Signature": {
+            "type": "string"
+          },
+          "StayInTouchSubject": {
+            "type": "string"
+          },
+          "StayInTouchSignature": {
+            "type": "string"
+          },
+          "StayInTouchNote": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "Fax": {
+            "type": "string"
+          },
+          "MobilePhone": {
+            "type": "string"
+          },
+          "Alias": {
+            "type": "string"
+          },
+          "CommunityNickname": {
+            "type": "string"
+          },
+          "BadgeText": {
+            "type": "string"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "TimeZoneSidKey": {
+            "enum": [
+              "Africa/Algiers",
+              "Africa/Cairo",
+              "Africa/Casablanca",
+              "Africa/Johannesburg",
+              "Africa/Nairobi",
+              "America/Adak",
+              "America/Anchorage",
+              "America/Argentina/Buenos_Aires",
+              "America/Bogota",
+              "America/Caracas",
+              "America/Chicago",
+              "America/Denver",
+              "America/El_Salvador",
+              "America/Halifax",
+              "America/Indiana/Indianapolis",
+              "America/Lima",
+              "America/Los_Angeles",
+              "America/Mazatlan",
+              "America/Mexico_City",
+              "America/New_York",
+              "America/Panama",
+              "America/Phoenix",
+              "America/Puerto_Rico",
+              "America/Santiago",
+              "America/Sao_Paulo",
+              "America/Scoresbysund",
+              "America/St_Johns",
+              "America/Tijuana",
+              "Asia/Baghdad",
+              "Asia/Baku",
+              "Asia/Bangkok",
+              "Asia/Beirut",
+              "Asia/Colombo",
+              "Asia/Dhaka",
+              "Asia/Dubai",
+              "Asia/Ho_Chi_Minh",
+              "Asia/Hong_Kong",
+              "Asia/Jakarta",
+              "Asia/Jerusalem",
+              "Asia/Kabul",
+              "Asia/Kamchatka",
+              "Asia/Karachi",
+              "Asia/Kathmandu",
+              "Asia/Kolkata",
+              "Asia/Kuala_Lumpur",
+              "Asia/Kuwait",
+              "Asia/Manila",
+              "Asia/Rangoon",
+              "Asia/Riyadh",
+              "Asia/Seoul",
+              "Asia/Shanghai",
+              "Asia/Singapore",
+              "Asia/Taipei",
+              "Asia/Tashkent",
+              "Asia/Tbilisi",
+              "Asia/Tehran",
+              "Asia/Tokyo",
+              "Asia/Yekaterinburg",
+              "Asia/Yerevan",
+              "Atlantic/Azores",
+              "Atlantic/Bermuda",
+              "Atlantic/Cape_Verde",
+              "Atlantic/South_Georgia",
+              "Australia/Adelaide",
+              "Australia/Brisbane",
+              "Australia/Darwin",
+              "Australia/Lord_Howe",
+              "Australia/Perth",
+              "Australia/Sydney",
+              "Europe/Amsterdam",
+              "Europe/Athens",
+              "Europe/Berlin",
+              "Europe/Brussels",
+              "Europe/Bucharest",
+              "Europe/Dublin",
+              "Europe/Helsinki",
+              "Europe/Istanbul",
+              "Europe/Lisbon",
+              "Europe/London",
+              "Europe/Minsk",
+              "Europe/Moscow",
+              "Europe/Paris",
+              "Europe/Prague",
+              "Europe/Rome",
+              "GMT",
+              "Pacific/Auckland",
+              "Pacific/Chatham",
+              "Pacific/Enderbury",
+              "Pacific/Fiji",
+              "Pacific/Gambier",
+              "Pacific/Guadalcanal",
+              "Pacific/Honolulu",
+              "Pacific/Kiritimati",
+              "Pacific/Marquesas",
+              "Pacific/Niue",
+              "Pacific/Norfolk",
+              "Pacific/Pago_Pago",
+              "Pacific/Pitcairn",
+              "Pacific/Tongatapu"
+            ]
+          },
+          "UserRoleId": {
+            "$ref": "#/components/schemas/UserRole"
+          },
+          "LocaleSidKey": {
+            "enum": [
+              "af_ZA",
+              "am_ET",
+              "ar_AE",
+              "ar_BH",
+              "ar_DZ",
+              "ar_EG",
+              "ar_IQ",
+              "ar_JO",
+              "ar_KW",
+              "ar_LB",
+              "ar_LY",
+              "ar_MA",
+              "ar_OM",
+              "ar_QA",
+              "ar_SA",
+              "ar_SD",
+              "ar_SY",
+              "ar_TN",
+              "ar_YE",
+              "az_AZ",
+              "be_BY",
+              "bg_BG",
+              "bn_BD",
+              "bn_IN",
+              "bs_BA",
+              "ca_ES",
+              "cs_CZ",
+              "cy_GB",
+              "da_DK",
+              "de_AT",
+              "de_BE",
+              "de_CH",
+              "de_DE",
+              "de_LU",
+              "dz_BT",
+              "el_GR",
+              "en_AG",
+              "en_AU",
+              "en_BB",
+              "en_BM",
+              "en_BS",
+              "en_BW",
+              "en_BZ",
+              "en_CA",
+              "en_CM",
+              "en_ER",
+              "en_FJ",
+              "en_FK",
+              "en_GB",
+              "en_GH",
+              "en_GI",
+              "en_GM",
+              "en_GY",
+              "en_HK",
+              "en_ID",
+              "en_IE",
+              "en_IN",
+              "en_JM",
+              "en_KE",
+              "en_KY",
+              "en_LR",
+              "en_MG",
+              "en_MU",
+              "en_MW",
+              "en_MY",
+              "en_NA",
+              "en_NG",
+              "en_NZ",
+              "en_PG",
+              "en_PH",
+              "en_PK",
+              "en_RW",
+              "en_SB",
+              "en_SC",
+              "en_SG",
+              "en_SH",
+              "en_SL",
+              "en_SX",
+              "en_SZ",
+              "en_TO",
+              "en_TT",
+              "en_TZ",
+              "en_UG",
+              "en_US",
+              "en_VU",
+              "en_WS",
+              "en_ZA",
+              "es_AR",
+              "es_BO",
+              "es_CL",
+              "es_CO",
+              "es_CR",
+              "es_CU",
+              "es_DO",
+              "es_EC",
+              "es_ES",
+              "es_GT",
+              "es_HN",
+              "es_MX",
+              "es_NI",
+              "es_PA",
+              "es_PE",
+              "es_PR",
+              "es_PY",
+              "es_SV",
+              "es_US",
+              "es_UY",
+              "es_VE",
+              "et_EE",
+              "eu_ES",
+              "fa_IR",
+              "fi_FI",
+              "fr_BE",
+              "fr_CA",
+              "fr_CH",
+              "fr_FR",
+              "fr_GN",
+              "fr_HT",
+              "fr_KM",
+              "fr_LU",
+              "fr_MC",
+              "fr_MR",
+              "fr_WF",
+              "ga_IE",
+              "gu_IN",
+              "haw_US",
+              "hi_IN",
+              "hr_HR",
+              "ht_HT",
+              "ht_US",
+              "hu_HU",
+              "hy_AM",
+              "in_ID",
+              "is_IS",
+              "it_CH",
+              "it_IT",
+              "iw_IL",
+              "ja_JP",
+              "ka_GE",
+              "kk_KZ",
+              "km_KH",
+              "kn_IN",
+              "ko_KP",
+              "ko_KR",
+              "ky_KG",
+              "lb_LU",
+              "lo_LA",
+              "lt_LT",
+              "lu_CD",
+              "lv_LV",
+              "mi_NZ",
+              "mk_MK",
+              "ml_IN",
+              "mr_IN",
+              "ms_BN",
+              "ms_MY",
+              "mt_MT",
+              "my_MM",
+              "ne_NP",
+              "nl_AW",
+              "nl_BE",
+              "nl_NL",
+              "nl_SR",
+              "no_NO",
+              "pl_PL",
+              "ps_AF",
+              "pt_AO",
+              "pt_BR",
+              "pt_CV",
+              "pt_MZ",
+              "pt_PT",
+              "pt_ST",
+              "rm_CH",
+              "rn_BI",
+              "ro_MD",
+              "ro_RO",
+              "ru_AM",
+              "ru_BY",
+              "ru_KG",
+              "ru_KZ",
+              "ru_LT",
+              "ru_MD",
+              "ru_PL",
+              "ru_RU",
+              "ru_UA",
+              "sh_BA",
+              "sh_CS",
+              "sh_ME",
+              "sh_ME_USD",
+              "sk_SK",
+              "sl_SI",
+              "sm_US",
+              "sm_WS",
+              "so_DJ",
+              "so_SO",
+              "sq_AL",
+              "sr_BA",
+              "sr_CS",
+              "sr_RS",
+              "sv_SE",
+              "sw_KE",
+              "ta_IN",
+              "ta_LK",
+              "te_IN",
+              "tg_TJ",
+              "th_TH",
+              "ti_ET",
+              "tl_PH",
+              "tr_TR",
+              "uk_UA",
+              "ur_PK",
+              "uz_LATN_UZ",
+              "vi_VN",
+              "xh_ZA",
+              "yo_BJ",
+              "zh_CN",
+              "zh_CN_PINYIN",
+              "zh_CN_STROKE",
+              "zh_HK",
+              "zh_HK_STROKE",
+              "zh_MO",
+              "zh_MY",
+              "zh_SG",
+              "zh_TW",
+              "zh_TW_STROKE",
+              "zu_ZA"
+            ]
+          },
+          "ReceivesInfoEmails": {
+            "type": "boolean"
+          },
+          "ReceivesAdminInfoEmails": {
+            "type": "boolean"
+          },
+          "EmailEncodingKey": {
+            "enum": [
+              "Big5",
+              "Big5-HKSCS",
+              "EUC-JP",
+              "GB2312",
+              "ISO-2022-JP",
+              "ISO-8859-1",
+              "Shift_JIS",
+              "UTF-8",
+              "ks_c_5601-1987",
+              "x-SJIS_0213"
+            ]
+          },
+          "ProfileId": {
+            "$ref": "#/components/schemas/Profile"
+          },
+          "UserType": {
+            "enum": [
+              "CsnOnly",
+              "CspLitePortal",
+              "CustomerSuccess",
+              "Guest",
+              "PowerCustomerSuccess",
+              "PowerPartner",
+              "SelfService",
+              "Standard"
+            ]
+          },
+          "LanguageLocaleKey": {
+            "enum": [
+              "da",
+              "de",
+              "en_US",
+              "es",
+              "es_MX",
+              "fi",
+              "fr",
+              "it",
+              "ja",
+              "ko",
+              "nl_NL",
+              "no",
+              "pt_BR",
+              "ru",
+              "sv",
+              "th",
+              "zh_CN",
+              "zh_TW"
+            ]
+          },
+          "EmployeeNumber": {
+            "type": "string"
+          },
+          "DelegatedApproverId": {
+            "$ref": "#/components/schemas/Group"
+          },
+          "ManagerId": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastLoginDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastPasswordChangeDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "NumberOfFailedLogins": {
+            "type": "integer"
+          },
+          "OfflineTrialExpirationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "OfflinePdaTrialExpirationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "UserPermissionsMarketingUser": {
+            "type": "boolean"
+          },
+          "UserPermissionsOfflineUser": {
+            "type": "boolean"
+          },
+          "UserPermissionsCallCenterAutoLogin": {
+            "type": "boolean"
+          },
+          "UserPermissionsSFContentUser": {
+            "type": "boolean"
+          },
+          "UserPermissionsKnowledgeUser": {
+            "type": "boolean"
+          },
+          "UserPermissionsInteractionUser": {
+            "type": "boolean"
+          },
+          "UserPermissionsSupportUser": {
+            "type": "boolean"
+          },
+          "UserPermissionsJigsawProspectingUser": {
+            "type": "boolean"
+          },
+          "UserPermissionsSiteforceContributorUser": {
+            "type": "boolean"
+          },
+          "UserPermissionsSiteforcePublisherUser": {
+            "type": "boolean"
+          },
+          "UserPermissionsWorkDotComUserFeature": {
+            "type": "boolean"
+          },
+          "ForecastEnabled": {
+            "type": "boolean"
+          },
+          "UserPreferencesActivityRemindersPopup": {
+            "type": "boolean"
+          },
+          "UserPreferencesEventRemindersCheckboxDefault": {
+            "type": "boolean"
+          },
+          "UserPreferencesTaskRemindersCheckboxDefault": {
+            "type": "boolean"
+          },
+          "UserPreferencesReminderSoundOff": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableAllFeedsEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableFollowersEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableProfilePostEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableChangeCommentEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableLaterCommentEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisProfPostCommentEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesContentNoEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesContentEmailAsAndWhen": {
+            "type": "boolean"
+          },
+          "UserPreferencesApexPagesDeveloperMode": {
+            "type": "boolean"
+          },
+          "UserPreferencesReceiveNoNotificationsAsApprover": {
+            "type": "boolean"
+          },
+          "UserPreferencesReceiveNotificationsAsDelegatedApprover": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideCSNGetChatterMobileTask": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableMentionsPostEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisMentionsCommentEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideCSNDesktopTask": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideChatterOnboardingSplash": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideSecondChatterOnboardingSplash": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisCommentAfterLikeEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableLikeEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesSortFeedByComment": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableMessageEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideLegacyRetirementModal": {
+            "type": "boolean"
+          },
+          "UserPreferencesJigsawListUser": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableBookmarkEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableSharePostEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesEnableAutoSubForFeeds": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableFileShareNotificationsForApi": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowTitleToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowManagerToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowEmailToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowWorkPhoneToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowMobilePhoneToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowFaxToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowStreetAddressToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowCityToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowStateToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowPostalCodeToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowCountryToExternalUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowProfilePicToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowTitleToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowCityToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowStateToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowPostalCodeToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowCountryToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableFeedbackEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableWorkEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideS1BrowserUI": {
+            "type": "boolean"
+          },
+          "UserPreferencesDisableEndorsementEmail": {
+            "type": "boolean"
+          },
+          "UserPreferencesPathAssistantCollapsed": {
+            "type": "boolean"
+          },
+          "UserPreferencesCacheDiagnostics": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowEmailToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowManagerToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowWorkPhoneToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowMobilePhoneToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowFaxToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesShowStreetAddressToGuestUsers": {
+            "type": "boolean"
+          },
+          "UserPreferencesLightningExperiencePreferred": {
+            "type": "boolean"
+          },
+          "UserPreferencesPreviewLightning": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideEndUserOnboardingAssistantModal": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideLightningMigrationModal": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideSfxWelcomeMat": {
+            "type": "boolean"
+          },
+          "UserPreferencesHideBiggerPhotoCallout": {
+            "type": "boolean"
+          },
+          "UserPreferencesGlobalNavBarWTShown": {
+            "type": "boolean"
+          },
+          "UserPreferencesGlobalNavGridMenuWTShown": {
+            "type": "boolean"
+          },
+          "UserPreferencesCreateLEXAppsWTShown": {
+            "type": "boolean"
+          },
+          "UserPreferencesFavoritesWTShown": {
+            "type": "boolean"
+          },
+          "UserPreferencesRecordHomeSectionCollapseWTShown": {
+            "type": "boolean"
+          },
+          "UserPreferencesRecordHomeReservedWTShown": {
+            "type": "boolean"
+          },
+          "UserPreferencesFavoritesShowTopFavorites": {
+            "type": "boolean"
+          },
+          "UserPreferencesExcludeMailAppAttachments": {
+            "type": "boolean"
+          },
+          "UserPreferencesSuppressTaskSFXReminders": {
+            "type": "boolean"
+          },
+          "UserPreferencesSuppressEventSFXReminders": {
+            "type": "boolean"
+          },
+          "UserPreferencesPreviewCustomTheme": {
+            "type": "boolean"
+          },
+          "UserPreferencesHasCelebrationBadge": {
+            "type": "boolean"
+          },
+          "UserPreferencesUserDebugModePref": {
+            "type": "boolean"
+          },
+          "UserPreferencesSRHOverrideActivities": {
+            "type": "boolean"
+          },
+          "UserPreferencesNewLightningReportRunPageEnabled": {
+            "type": "boolean"
+          },
+          "UserPreferencesNativeEmailClient": {
+            "type": "boolean"
+          },
+          "ContactId": {
+            "$ref": "#/components/schemas/Contact"
+          },
+          "AccountId": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "CallCenterId": {
+            "$ref": "#/components/schemas/CallCenter"
+          },
+          "Extension": {
+            "type": "string"
+          },
+          "FederationIdentifier": {
+            "type": "string"
+          },
+          "AboutMe": {
+            "type": "string"
+          },
+          "FullPhotoUrl": {
+            "type": "string"
+          },
+          "SmallPhotoUrl": {
+            "type": "string"
+          },
+          "IsExtIndicatorVisible": {
+            "type": "boolean"
+          },
+          "OutOfOfficeMessage": {
+            "type": "string"
+          },
+          "MediumPhotoUrl": {
+            "type": "string"
+          },
+          "DigestFrequency": {
+            "enum": [
+              "D",
+              "N",
+              "W"
+            ]
+          },
+          "DefaultGroupNotificationFrequency": {
+            "enum": [
+              "D",
+              "N",
+              "P",
+              "W"
+            ]
+          },
+          "JigsawImportLimitOverride": {
+            "type": "integer"
+          },
+          "LastViewedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastReferencedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "BannerPhotoUrl": {
+            "type": "string"
+          },
+          "SmallBannerPhotoUrl": {
+            "type": "string"
+          },
+          "MediumBannerPhotoUrl": {
+            "type": "string"
+          },
+          "IsProfilePhotoActive": {
+            "type": "boolean"
+          },
+          "IndividualId": {
+            "$ref": "#/components/schemas/Individual"
+          }
+        }
+      },
+      "UserRole": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "ParentRoleId": {
+            "$ref": "#/components/schemas/UserRole"
+          },
+          "RollupDescription": {
+            "type": "string"
+          },
+          "OpportunityAccessForAccountOwner": {
+            "enum": [
+              "Edit",
+              "None",
+              "Read"
+            ]
+          },
+          "CaseAccessForAccountOwner": {
+            "enum": [
+              "Edit",
+              "None",
+              "Read"
+            ]
+          },
+          "ContactAccessForAccountOwner": {
+            "enum": [
+              "Edit",
+              "None",
+              "Read"
+            ]
+          },
+          "ForecastUserId": {
+            "$ref": "#/components/schemas/User"
+          },
+          "MayForecastManagerShare": {
+            "type": "boolean"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "DeveloperName": {
+            "type": "string"
+          },
+          "PortalAccountId": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "PortalType": {
+            "enum": [
+              "CustomerPortal",
+              "None",
+              "Partner"
+            ]
+          },
+          "PortalAccountOwnerId": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "Organization": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Division": {
+            "type": "string"
+          },
+          "Street": {
+            "type": "string"
+          },
+          "City": {
+            "type": "string"
+          },
+          "State": {
+            "type": "string"
+          },
+          "PostalCode": {
+            "type": "string"
+          },
+          "Country": {
+            "type": "string"
+          },
+          "Latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "Longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "GeocodeAccuracy": {
+            "enum": [
+              "Address",
+              "Block",
+              "City",
+              "County",
+              "ExtendedZip",
+              "NearAddress",
+              "Neighborhood",
+              "State",
+              "Street",
+              "Unknown",
+              "Zip"
+            ]
+          },
+          "Address": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "Fax": {
+            "type": "string"
+          },
+          "PrimaryContact": {
+            "type": "string"
+          },
+          "DefaultLocaleSidKey": {
+            "enum": [
+              "af_ZA",
+              "am_ET",
+              "ar_AE",
+              "ar_BH",
+              "ar_DZ",
+              "ar_EG",
+              "ar_IQ",
+              "ar_JO",
+              "ar_KW",
+              "ar_LB",
+              "ar_LY",
+              "ar_MA",
+              "ar_OM",
+              "ar_QA",
+              "ar_SA",
+              "ar_SD",
+              "ar_SY",
+              "ar_TN",
+              "ar_YE",
+              "az_AZ",
+              "be_BY",
+              "bg_BG",
+              "bn_BD",
+              "bn_IN",
+              "bs_BA",
+              "ca_ES",
+              "cs_CZ",
+              "cy_GB",
+              "da_DK",
+              "de_AT",
+              "de_BE",
+              "de_CH",
+              "de_DE",
+              "de_LU",
+              "dz_BT",
+              "el_GR",
+              "en_AG",
+              "en_AU",
+              "en_BB",
+              "en_BM",
+              "en_BS",
+              "en_BW",
+              "en_BZ",
+              "en_CA",
+              "en_CM",
+              "en_ER",
+              "en_FJ",
+              "en_FK",
+              "en_GB",
+              "en_GH",
+              "en_GI",
+              "en_GM",
+              "en_GY",
+              "en_HK",
+              "en_ID",
+              "en_IE",
+              "en_IN",
+              "en_JM",
+              "en_KE",
+              "en_KY",
+              "en_LR",
+              "en_MG",
+              "en_MU",
+              "en_MW",
+              "en_MY",
+              "en_NA",
+              "en_NG",
+              "en_NZ",
+              "en_PG",
+              "en_PH",
+              "en_PK",
+              "en_RW",
+              "en_SB",
+              "en_SC",
+              "en_SG",
+              "en_SH",
+              "en_SL",
+              "en_SX",
+              "en_SZ",
+              "en_TO",
+              "en_TT",
+              "en_TZ",
+              "en_UG",
+              "en_US",
+              "en_VU",
+              "en_WS",
+              "en_ZA",
+              "es_AR",
+              "es_BO",
+              "es_CL",
+              "es_CO",
+              "es_CR",
+              "es_CU",
+              "es_DO",
+              "es_EC",
+              "es_ES",
+              "es_GT",
+              "es_HN",
+              "es_MX",
+              "es_NI",
+              "es_PA",
+              "es_PE",
+              "es_PR",
+              "es_PY",
+              "es_SV",
+              "es_US",
+              "es_UY",
+              "es_VE",
+              "et_EE",
+              "eu_ES",
+              "fa_IR",
+              "fi_FI",
+              "fr_BE",
+              "fr_CA",
+              "fr_CH",
+              "fr_FR",
+              "fr_GN",
+              "fr_HT",
+              "fr_KM",
+              "fr_LU",
+              "fr_MC",
+              "fr_MR",
+              "fr_WF",
+              "ga_IE",
+              "gu_IN",
+              "haw_US",
+              "hi_IN",
+              "hr_HR",
+              "ht_HT",
+              "ht_US",
+              "hu_HU",
+              "hy_AM",
+              "in_ID",
+              "is_IS",
+              "it_CH",
+              "it_IT",
+              "iw_IL",
+              "ja_JP",
+              "ka_GE",
+              "kk_KZ",
+              "km_KH",
+              "kn_IN",
+              "ko_KP",
+              "ko_KR",
+              "ky_KG",
+              "lb_LU",
+              "lo_LA",
+              "lt_LT",
+              "lu_CD",
+              "lv_LV",
+              "mi_NZ",
+              "mk_MK",
+              "ml_IN",
+              "mr_IN",
+              "ms_BN",
+              "ms_MY",
+              "mt_MT",
+              "my_MM",
+              "ne_NP",
+              "nl_AW",
+              "nl_BE",
+              "nl_NL",
+              "nl_SR",
+              "no_NO",
+              "pl_PL",
+              "ps_AF",
+              "pt_AO",
+              "pt_BR",
+              "pt_CV",
+              "pt_MZ",
+              "pt_PT",
+              "pt_ST",
+              "rm_CH",
+              "rn_BI",
+              "ro_MD",
+              "ro_RO",
+              "ru_AM",
+              "ru_BY",
+              "ru_KG",
+              "ru_KZ",
+              "ru_LT",
+              "ru_MD",
+              "ru_PL",
+              "ru_RU",
+              "ru_UA",
+              "sh_BA",
+              "sh_CS",
+              "sh_ME",
+              "sh_ME_USD",
+              "sk_SK",
+              "sl_SI",
+              "sm_US",
+              "sm_WS",
+              "so_DJ",
+              "so_SO",
+              "sq_AL",
+              "sr_BA",
+              "sr_CS",
+              "sr_RS",
+              "sv_SE",
+              "sw_KE",
+              "ta_IN",
+              "ta_LK",
+              "te_IN",
+              "tg_TJ",
+              "th_TH",
+              "ti_ET",
+              "tl_PH",
+              "tr_TR",
+              "uk_UA",
+              "ur_PK",
+              "uz_LATN_UZ",
+              "vi_VN",
+              "xh_ZA",
+              "yo_BJ",
+              "zh_CN",
+              "zh_CN_PINYIN",
+              "zh_CN_STROKE",
+              "zh_HK",
+              "zh_HK_STROKE",
+              "zh_MO",
+              "zh_MY",
+              "zh_SG",
+              "zh_TW",
+              "zh_TW_STROKE",
+              "zu_ZA"
+            ]
+          },
+          "TimeZoneSidKey": {
+            "enum": [
+              "Africa/Algiers",
+              "Africa/Cairo",
+              "Africa/Casablanca",
+              "Africa/Johannesburg",
+              "Africa/Nairobi",
+              "America/Adak",
+              "America/Anchorage",
+              "America/Argentina/Buenos_Aires",
+              "America/Bogota",
+              "America/Caracas",
+              "America/Chicago",
+              "America/Denver",
+              "America/El_Salvador",
+              "America/Halifax",
+              "America/Indiana/Indianapolis",
+              "America/Lima",
+              "America/Los_Angeles",
+              "America/Mazatlan",
+              "America/Mexico_City",
+              "America/New_York",
+              "America/Panama",
+              "America/Phoenix",
+              "America/Puerto_Rico",
+              "America/Santiago",
+              "America/Sao_Paulo",
+              "America/Scoresbysund",
+              "America/St_Johns",
+              "America/Tijuana",
+              "Asia/Baghdad",
+              "Asia/Baku",
+              "Asia/Bangkok",
+              "Asia/Beirut",
+              "Asia/Colombo",
+              "Asia/Dhaka",
+              "Asia/Dubai",
+              "Asia/Ho_Chi_Minh",
+              "Asia/Hong_Kong",
+              "Asia/Jakarta",
+              "Asia/Jerusalem",
+              "Asia/Kabul",
+              "Asia/Kamchatka",
+              "Asia/Karachi",
+              "Asia/Kathmandu",
+              "Asia/Kolkata",
+              "Asia/Kuala_Lumpur",
+              "Asia/Kuwait",
+              "Asia/Manila",
+              "Asia/Rangoon",
+              "Asia/Riyadh",
+              "Asia/Seoul",
+              "Asia/Shanghai",
+              "Asia/Singapore",
+              "Asia/Taipei",
+              "Asia/Tashkent",
+              "Asia/Tbilisi",
+              "Asia/Tehran",
+              "Asia/Tokyo",
+              "Asia/Yekaterinburg",
+              "Asia/Yerevan",
+              "Atlantic/Azores",
+              "Atlantic/Bermuda",
+              "Atlantic/Cape_Verde",
+              "Atlantic/South_Georgia",
+              "Australia/Adelaide",
+              "Australia/Brisbane",
+              "Australia/Darwin",
+              "Australia/Lord_Howe",
+              "Australia/Perth",
+              "Australia/Sydney",
+              "Europe/Amsterdam",
+              "Europe/Athens",
+              "Europe/Berlin",
+              "Europe/Brussels",
+              "Europe/Bucharest",
+              "Europe/Dublin",
+              "Europe/Helsinki",
+              "Europe/Istanbul",
+              "Europe/Lisbon",
+              "Europe/London",
+              "Europe/Minsk",
+              "Europe/Moscow",
+              "Europe/Paris",
+              "Europe/Prague",
+              "Europe/Rome",
+              "GMT",
+              "Pacific/Auckland",
+              "Pacific/Chatham",
+              "Pacific/Enderbury",
+              "Pacific/Fiji",
+              "Pacific/Gambier",
+              "Pacific/Guadalcanal",
+              "Pacific/Honolulu",
+              "Pacific/Kiritimati",
+              "Pacific/Marquesas",
+              "Pacific/Niue",
+              "Pacific/Norfolk",
+              "Pacific/Pago_Pago",
+              "Pacific/Pitcairn",
+              "Pacific/Tongatapu"
+            ]
+          },
+          "LanguageLocaleKey": {
+            "enum": [
+              "da",
+              "de",
+              "en_US",
+              "es",
+              "es_MX",
+              "fi",
+              "fr",
+              "it",
+              "ja",
+              "ko",
+              "nl_NL",
+              "no",
+              "pt_BR",
+              "ru",
+              "sv",
+              "th",
+              "zh_CN",
+              "zh_TW"
+            ]
+          },
+          "ReceivesInfoEmails": {
+            "type": "boolean"
+          },
+          "ReceivesAdminInfoEmails": {
+            "type": "boolean"
+          },
+          "PreferencesRequireOpportunityProducts": {
+            "type": "boolean"
+          },
+          "PreferencesTransactionSecurityPolicy": {
+            "type": "boolean"
+          },
+          "PreferencesTerminateOldestSession": {
+            "type": "boolean"
+          },
+          "PreferencesConsentManagementEnabled": {
+            "type": "boolean"
+          },
+          "PreferencesAutoSelectIndividualOnMerge": {
+            "type": "boolean"
+          },
+          "PreferencesLightningLoginEnabled": {
+            "type": "boolean"
+          },
+          "PreferencesOnlyLLPermUserAllowed": {
+            "type": "boolean"
+          },
+          "FiscalYearStartMonth": {
+            "type": "integer"
+          },
+          "UsesStartDateAsFiscalYearName": {
+            "type": "boolean"
+          },
+          "DefaultAccountAccess": {
+            "enum": [
+              "ControlledByCampaign",
+              "ControlledByLeadOrContact",
+              "Edit",
+              "None",
+              "Read"
+            ]
+          },
+          "DefaultContactAccess": {
+            "enum": [
+              "ControlledByParent",
+              "Edit",
+              "None",
+              "Read"
+            ]
+          },
+          "DefaultOpportunityAccess": {
+            "enum": [
+              "ControlledByCampaign",
+              "ControlledByLeadOrContact",
+              "Edit",
+              "None",
+              "Read"
+            ]
+          },
+          "DefaultLeadAccess": {
+            "enum": [
+              "Edit",
+              "None",
+              "Read",
+              "ReadEditTransfer"
+            ]
+          },
+          "DefaultCaseAccess": {
+            "enum": [
+              "Edit",
+              "None",
+              "Read",
+              "ReadEditTransfer"
+            ]
+          },
+          "DefaultCalendarAccess": {
+            "enum": [
+              "AllowEdits",
+              "HideDetails",
+              "HideDetailsInsert",
+              "ShowDetails",
+              "ShowDetailsInsert"
+            ]
+          },
+          "DefaultPricebookAccess": {
+            "enum": [
+              "None",
+              "Read",
+              "ReadSelect"
+            ]
+          },
+          "DefaultCampaignAccess": {
+            "enum": [
+              "All",
+              "Edit",
+              "None",
+              "Read"
+            ]
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ComplianceBccEmail": {
+            "type": "string"
+          },
+          "UiSkin": {
+            "enum": [
+              "PortalDefault",
+              "Theme1",
+              "Theme2",
+              "Theme3",
+              "Webstore"
+            ]
+          },
+          "SignupCountryIsoCode": {
+            "type": "string"
+          },
+          "TrialExpirationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "NumKnowledgeService": {
+            "type": "integer"
+          },
+          "OrganizationType": {
+            "enum": [
+              "Base Edition",
+              "Contact Manager Edition",
+              "Developer Edition",
+              "Enterprise Edition",
+              "Personal Edition",
+              "Professional Edition",
+              "Team Edition",
+              "Unlimited Edition"
+            ]
+          },
+          "NamespacePrefix": {
+            "type": "string"
+          },
+          "InstanceName": {
+            "type": "string"
+          },
+          "IsSandbox": {
+            "type": "boolean"
+          },
+          "WebToCaseDefaultOrigin": {
+            "type": "string"
+          },
+          "MonthlyPageViewsUsed": {
+            "type": "integer"
+          },
+          "MonthlyPageViewsEntitlement": {
+            "type": "integer"
+          },
+          "IsReadOnly": {
+            "type": "boolean"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "UserLicense": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "LicenseDefinitionKey": {
+            "type": "string"
+          },
+          "TotalLicenses": {
+            "type": "integer"
+          },
+          "Status": {
+            "enum": [
+              "Active",
+              "Disabled"
+            ]
+          },
+          "UsedLicenses": {
+            "type": "integer"
+          },
+          "UsedLicensesLastUpdated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "MasterLabel": {
+            "type": "string"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CallCenter": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "InternalName": {
+            "type": "string"
+          },
+          "Version": {
+            "type": "number",
+            "format": "double"
+          },
+          "AdapterUrl": {
+            "type": "string"
+          },
+          "CustomSettings": {
+            "type": "string"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "Account": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string"
+          },
+          "IsDeleted": {
+            "type": "boolean"
+          },
+          "MasterRecordId": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Type": {
+            "enum": [
+              "Channel Partner / Reseller",
+              "Customer - Channel",
+              "Customer - Direct",
+              "Installation Partner",
+              "Other",
+              "Prospect",
+              "Technology Partner"
+            ]
+          },
+          "ParentId": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "BillingStreet": {
+            "type": "string"
+          },
+          "BillingCity": {
+            "type": "string"
+          },
+          "BillingState": {
+            "type": "string"
+          },
+          "BillingPostalCode": {
+            "type": "string"
+          },
+          "BillingCountry": {
+            "type": "string"
+          },
+          "BillingLatitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "BillingLongitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "BillingGeocodeAccuracy": {
+            "enum": [
+              "Address",
+              "Block",
+              "City",
+              "County",
+              "ExtendedZip",
+              "NearAddress",
+              "Neighborhood",
+              "State",
+              "Street",
+              "Unknown",
+              "Zip"
+            ]
+          },
+          "BillingAddress": {
+            "type": "string"
+          },
+          "ShippingStreet": {
+            "type": "string"
+          },
+          "ShippingCity": {
+            "type": "string"
+          },
+          "ShippingState": {
+            "type": "string"
+          },
+          "ShippingPostalCode": {
+            "type": "string"
+          },
+          "ShippingCountry": {
+            "type": "string"
+          },
+          "ShippingLatitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "ShippingLongitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "ShippingGeocodeAccuracy": {
+            "enum": [
+              "Address",
+              "Block",
+              "City",
+              "County",
+              "ExtendedZip",
+              "NearAddress",
+              "Neighborhood",
+              "State",
+              "Street",
+              "Unknown",
+              "Zip"
+            ]
+          },
+          "ShippingAddress": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "Fax": {
+            "type": "string"
+          },
+          "AccountNumber": {
+            "type": "string"
+          },
+          "Website": {
+            "type": "string"
+          },
+          "PhotoUrl": {
+            "type": "string"
+          },
+          "Sic": {
+            "type": "string"
+          },
+          "Industry": {
+            "enum": [
+              "Agriculture",
+              "Apparel",
+              "Banking",
+              "Biotechnology",
+              "Chemicals",
+              "Communications",
+              "Construction",
+              "Consulting",
+              "Education",
+              "Electronics",
+              "Energy",
+              "Engineering",
+              "Entertainment",
+              "Environmental",
+              "Finance",
+              "Food & Beverage",
+              "Government",
+              "Healthcare",
+              "Hospitality",
+              "Insurance",
+              "Machinery",
+              "Manufacturing",
+              "Media",
+              "Not For Profit",
+              "Other",
+              "Recreation",
+              "Retail",
+              "Shipping",
+              "Technology",
+              "Telecommunications",
+              "Transportation",
+              "Utilities"
+            ]
+          },
+          "AnnualRevenue": {
+            "type": "string"
+          },
+          "NumberOfEmployees": {
+            "type": "integer"
+          },
+          "Ownership": {
+            "enum": [
+              "Other",
+              "Private",
+              "Public",
+              "Subsidiary"
+            ]
+          },
+          "TickerSymbol": {
+            "type": "string"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "Rating": {
+            "enum": [
+              "Cold",
+              "Hot",
+              "Warm"
+            ]
+          },
+          "Site": {
+            "type": "string"
+          },
+          "OwnerId": {
+            "$ref": "#/components/schemas/User"
+          },
+          "CreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "CreatedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "LastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastModifiedById": {
+            "$ref": "#/components/schemas/User"
+          },
+          "SystemModstamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastActivityDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastViewedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "LastReferencedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Jigsaw": {
+            "type": "string"
+          },
+          "JigsawCompanyId": {
+            "type": "string"
+          },
+          "CleanStatus": {
+            "enum": [
+              "Acknowledged",
+              "Different",
+              "Inactive",
+              "Matched",
+              "NotFound",
+              "Pending",
+              "SelectMatch",
+              "Skipped"
+            ]
+          },
+          "AccountSource": {
+            "enum": [
+              "Other",
+              "Partner Referral",
+              "Phone Inquiry",
+              "Purchased List",
+              "Web"
+            ]
+          },
+          "DunsNumber": {
+            "type": "string"
+          },
+          "Tradestyle": {
+            "type": "string"
+          },
+          "NaicsCode": {
+            "type": "string"
+          },
+          "NaicsDesc": {
+            "type": "string"
+          },
+          "YearStarted": {
+            "type": "string"
+          },
+          "SicDesc": {
+            "type": "string"
+          },
+          "DandbCompanyId": {
+            "$ref": "#/components/schemas/DandBCompany"
+          },
+          "OperatingHoursId": {
+            "$ref": "#/components/schemas/OperatingHours"
+          },
+          "CustomerPriority__c": {
+            "enum": [
+              "High",
+              "Low",
+              "Medium"
+            ]
+          },
+          "SLA__c": {
+            "enum": [
+              "Bronze",
+              "Gold",
+              "Platinum",
+              "Silver"
+            ]
+          },
+          "Active__c": {
+            "enum": [
+              "No",
+              "Yes"
+            ]
+          },
+          "NumberofLocations__c": {
+            "type": "number",
+            "format": "double"
+          },
+          "UpsellOpportunity__c": {
+            "enum": [
+              "Maybe",
+              "No",
+              "Yes"
+            ]
+          },
+          "SLASerialNumber__c": {
+            "type": "string"
+          },
+          "SLAExpirationDate__c": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

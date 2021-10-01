@@ -154,7 +154,7 @@ case class SfdcDocumentParser(root: Root)(implicit val ctx: SfdcWebApiContext) {
             }
           }
         })
-      val postSchema = NodeShape().withId("http://salesforce.com/" + name.value.asInstanceOf[YScalar].text).withName(name).withProperties(schema)
+      val postSchema = NodeShape().withName(name).withProperties(schema)
 
       ctx.declarations += postSchema.add(DeclaredElement())
     }
@@ -164,7 +164,7 @@ case class SfdcDocumentParser(root: Root)(implicit val ctx: SfdcWebApiContext) {
     val preBase = ast.value.asInstanceOf[YSequence].nodes(0).value.asInstanceOf[YMap].map.get("url").get.value.asInstanceOf[YScalar].text
     val baseUrl = preBase.substring(0, preBase.lastIndexOf('/') + 1)
     parseWebAPI(baseUrl)
-    ctx.declarations += NodeShape().add(DeclaredElement()).withId("http://salesforce.com/PostResponse").withName("PostResponse").withProperties(
+    ctx.declarations += NodeShape().add(DeclaredElement()).withName("PostResponse").withProperties(
       Seq(PropertyShape().withName("id").withRange(ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#string")),
         // PropertyShape().withName("errors").withName(ArrayShape().withLinkTarget()),
         PropertyShape().withName("success").withRange(ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#boolean"))))
