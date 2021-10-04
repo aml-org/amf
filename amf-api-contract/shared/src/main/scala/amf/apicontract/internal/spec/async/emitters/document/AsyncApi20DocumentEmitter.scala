@@ -13,7 +13,6 @@ import amf.apicontract.internal.spec.common.emitter
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SecurityRequirementsEmitter}
 import amf.apicontract.internal.spec.oas.emitter.domain.{InfoEmitter, TagsEmitter}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.{AsyncApi20, Spec}
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, EntryPartEmitter, ValueEmitter, traverse}
@@ -32,7 +31,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncS
 
   def emitWebApi(ordering: SpecOrdering): Seq[EntryEmitter] = {
     val model = retrieveWebApi()
-    val spec  = model.annotations.find(classOf[SourceSpec]).map(_.spec)
+    val spec  = document.sourceSpec
     val api   = WebApiEmitter(model, ordering, spec, Seq())
     api.emitters
   }
@@ -52,7 +51,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val specCtx: AsyncS
   def emitDocument(): YDocument = {
     val doc = document.asInstanceOf[Document]
 
-    val ordering = SpecOrdering.ordering(AsyncApi20, doc.encodes.annotations)
+    val ordering = SpecOrdering.ordering(AsyncApi20, doc.sourceSpec)
 
 //    val references = ReferencesEmitter(document, ordering)
     val declares =

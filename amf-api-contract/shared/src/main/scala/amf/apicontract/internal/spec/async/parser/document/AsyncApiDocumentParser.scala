@@ -3,22 +3,40 @@ package amf.apicontract.internal.spec.async.parser.document
 import amf.aml.internal.parse.common.DeclarationKey
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.AsyncApi
-import amf.apicontract.client.scala.model.domain.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
+import amf.apicontract.client.scala.model.domain.bindings.{
+  ChannelBindings,
+  MessageBindings,
+  OperationBindings,
+  ServerBindings
+}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.internal.metamodel.domain.bindings.{ChannelBindingsModel, MessageBindingsModel, OperationBindingsModel, ServerBindingsModel}
+import amf.apicontract.internal.metamodel.domain.bindings.{
+  ChannelBindingsModel,
+  MessageBindingsModel,
+  OperationBindingsModel,
+  ServerBindingsModel
+}
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
-import amf.apicontract.internal.spec.async.parser.bindings.{AsyncChannelBindingsParser, AsyncMessageBindingsParser, AsyncOperationBindingsParser, AsyncServerBindingsParser}
+import amf.apicontract.internal.spec.async.parser.bindings.{
+  AsyncChannelBindingsParser,
+  AsyncMessageBindingsParser,
+  AsyncOperationBindingsParser,
+  AsyncServerBindingsParser
+}
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.parser.domain._
 import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.parser.document.OasLikeDeclarationsHelper
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser, OasLikeTagsParser}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{InvalidIdentifier, MandatoryChannelsProperty}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  InvalidIdentifier,
+  MandatoryChannelsProperty
+}
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.{DeclaredElement, SourceSpec}
+import amf.core.internal.annotations.{DeclaredElement}
 import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
@@ -42,7 +60,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     val references = AsyncReferencesParser(root.references).parse()
     parseDeclarations(map, document)
 
-    val api = parseApi(map).add(SourceSpec(ctx.spec))
+    val api = parseApi(map)
     document
       .setWithoutId(DocumentModel.Encodes, api, Annotations.inferred())
 
@@ -80,10 +98,13 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
         api.setWithoutId(WebApiModel.Servers, AmfArray(servers, Annotations(entry.value)), Annotations(entry))
       }
     )
-    map.key("tags", entry => {
-      val tags = OasLikeTagsParser(api.id, entry).parse()
-      api.setWithoutId(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
-    })
+    map.key(
+      "tags",
+      entry => {
+        val tags = OasLikeTagsParser(api.id, entry).parse()
+        api.setWithoutId(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+      }
+    )
     map.key(
       "defaultContentType",
       entry => {
@@ -187,8 +208,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
               (scheme) => {
                 val name = entry.key.as[String]
                 scheme.setWithoutId(SecuritySchemeModel.Name,
-                           AmfScalar(name, Annotations(entry.key.value)),
-                           Annotations(entry.key))
+                                    AmfScalar(name, Annotations(entry.key.value)),
+                                    Annotations(entry.key))
                 scheme
               }
             )

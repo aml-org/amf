@@ -144,7 +144,7 @@ Class that groups data related to how a Base Unit was processed
  | ------ | ------ | ------ | ------ |
  | modelVersion | string | Version of the API contract model | http://a.ml/vocabularies/apiContract#modelVersion |
  | transformed | boolean | Indicates whether a BaseUnit was transformed with some pipeline | http://a.ml/vocabularies/document#transformed |
- | sourceSpec | string | Standard of the original API Specification file (e.g. RAML 1.0, OAS 3.0) | http://a.ml/vocabularies/apiContract#sourceSpec |
+ | sourceSpec | string | Standard of the specification file | http://a.ml/vocabularies/document#sourceSpec |
 
 ## AbstractDeclaration
 Graph template that can be used to declare a re-usable graph structure that can be applied to different domain elements
@@ -428,6 +428,7 @@ Class that groups data related to how a Base Unit was processed
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | transformed | boolean | Indicates whether a BaseUnit was transformed with some pipeline | http://a.ml/vocabularies/document#transformed |
+ | sourceSpec | string | Standard of the specification file | http://a.ml/vocabularies/document#sourceSpec |
 
 ## Callback
 Model defining the information for a HTTP callback/ webhook
@@ -666,6 +667,7 @@ Class that groups data related to how a Base Unit was processed
  | definedBy | url | Dialect used to parse this Dialect Instance | http://a.ml/vocabularies/meta#definedBy |
  | graphDependencies | [url] | Other dialects referenced to parse specific nodes in this Dialect Instance | http://a.ml/vocabularies/document#graphDependencies |
  | transformed | boolean | Indicates whether a BaseUnit was transformed with some pipeline | http://a.ml/vocabularies/document#transformed |
+ | sourceSpec | string | Standard of the specification file | http://a.ml/vocabularies/document#sourceSpec |
 
 ## DialectLibrary
 Library of AML mappings that can be reused in different AML dialects

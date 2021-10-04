@@ -6,10 +6,9 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.model.document.{BaseUnit, Document, EncodesModel, Module}
+import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.remote.{Raml10YamlHint, _}
 import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.emit.AMFRenderer
@@ -71,7 +70,7 @@ trait ModelValidationTest extends DirectoryTest {
   private def profileFromModel(unit: BaseUnit): ProfileName = {
     val maybeVendor = Option(unit)
       .collect({ case d: Document => d })
-      .flatMap(_.encodes.annotations.find(classOf[SourceSpec]).map(_.spec))
+      .flatMap(_.sourceSpec)
     maybeVendor match {
       case Some(Raml08)     => Raml08Profile
       case Some(Oas20)      => Oas20Profile
@@ -83,19 +82,7 @@ trait ModelValidationTest extends DirectoryTest {
 
   val defaultTarget: Spec = Raml10
 
-  def target(model: BaseUnit): Spec = model match {
-    case d: EncodesModel =>
-      d.encodes.annotations
-        .find(classOf[SourceSpec])
-        .map(_.spec)
-        .getOrElse(Raml10)
-    case m: Module =>
-      m.annotations
-        .find(classOf[SourceSpec])
-        .map(_.spec)
-        .getOrElse(Raml10)
-    case _ => Raml10
-  }
+  def target(model: BaseUnit): Spec = model.sourceSpec.getOrElse(Raml10)
 }
 
 trait ModelResolutionTest extends ModelValidationTest {
