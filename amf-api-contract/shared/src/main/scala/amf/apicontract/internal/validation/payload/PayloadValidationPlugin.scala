@@ -1,6 +1,11 @@
 package amf.apicontract.internal.validation.payload
 
-import amf.apicontract.internal.validation.payload.collector.{EnumInShapesCollector, ExtensionsCollector, PayloadsInApiCollector, ShapeFacetsCollector}
+import amf.apicontract.internal.validation.payload.collector.{
+  EnumInShapesCollector,
+  ExtensionsCollector,
+  PayloadsInApiCollector,
+  ShapeFacetsCollector
+}
 import amf.apicontract.internal.validation.plugin.{AmlAware, BaseApiValidationPlugin}
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
@@ -14,22 +19,28 @@ object PayloadValidationPlugin {
 
   protected val id: String = this.getClass.getSimpleName
 
-  def apply() = new PayloadValidationPlugin()
+  def apply(profile: ProfileName) = new PayloadValidationPlugin(profile)
 }
 
-class PayloadValidationPlugin extends BaseApiValidationPlugin with AmlAware with ShaclReportAdaptation {
+class PayloadValidationPlugin(val profile: ProfileName)
+    extends BaseApiValidationPlugin
+    with AmlAware
+    with ShaclReportAdaptation {
+
   override val id: String = PayloadValidationPlugin.id
 
   override def applies(element: ValidationInfo): Boolean = super.applies(element)
 
-  override protected def specificValidate(unit: BaseUnit, profile: ProfileName, options: ValidationOptions)(
+  override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
-    val collectors = Seq(PayloadsInApiCollector, EnumInShapesCollector, ShapeFacetsCollector, ExtensionsCollector)
+    val collectors  = Seq(PayloadsInApiCollector, EnumInShapesCollector, ShapeFacetsCollector, ExtensionsCollector)
+    val validations = effectiveOrException(options.config, profile)
+
     UnitPayloadsValidation(unit, collectors)
       .validate(options.config)
       .map { results =>
         val mappedSeverityResults = results.flatMap { result =>
-          buildValidationWithCustomLevelForProfile(result, options.effectiveValidations)
+          buildValidationWithCustomLevelForProfile(result, validations)
         }
         AMFValidationReport(unit.id, profile, mappedSeverityResults)
       }

@@ -5,8 +5,12 @@ import amf.core.client.common.{HighPriority, NormalPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.plugins.validation.{AMFValidatePlugin, ValidationInfo, ValidationOptions, ValidationResult}
+import amf.core.internal.validation.{EffectiveValidations, ValidationConfiguration}
 
 import scala.concurrent.{ExecutionContext, Future}
+
+case class ProfileNotFoundException(profile: ProfileName)
+    extends Exception(s"No Validation Profile in configuration for ${profile.profile}")
 
 object BaseApiValidationPlugin {
   val standardApiProfiles =
@@ -17,15 +21,17 @@ trait BaseApiValidationPlugin extends AMFValidatePlugin with ModelResolution wit
 
   override def priority: PluginPriority = NormalPriority
 
+  protected def profile: ProfileName
+
   override def applies(element: ValidationInfo): Boolean = !isAmlUnit(element.baseUnit)
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
-    withResolvedModel(unit, options.profile, options.config) { (resolvedUnit, resolutionReport) =>
+    withResolvedModel(unit, profile, options.config) { (resolvedUnit, resolutionReport) =>
       val report = resolutionReport match {
         case Some(report) if !report.conforms => Future.successful(report)
         case _ =>
-          specificValidate(resolvedUnit, options.profile, options).map { validationStepReport =>
+          specificValidate(resolvedUnit, options).map { validationStepReport =>
             resolutionReport.map(_.merge(validationStepReport)).getOrElse(validationStepReport)
           }
       }
@@ -33,6 +39,10 @@ trait BaseApiValidationPlugin extends AMFValidatePlugin with ModelResolution wit
     }
   }
 
-  protected def specificValidate(unit: BaseUnit, profile: ProfileName, options: ValidationOptions)(
+  protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport]
+
+  protected def effectiveOrException(config: ValidationConfiguration, profile: ProfileName): EffectiveValidations = {
+    config.effectiveValidations.getOrElse(profile, throw ProfileNotFoundException(profile))
+  }
 }

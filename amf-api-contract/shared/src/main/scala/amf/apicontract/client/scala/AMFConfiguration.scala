@@ -1,8 +1,7 @@
 package amf.apicontract.client.scala
 
 import amf.aml.client.scala.AMLConfiguration
-import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.document.DialectInstance
+import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
@@ -17,9 +16,12 @@ import amf.apicontract.internal.transformation.compatibility.{
   Raml08CompatibilityPipeline,
   Raml10CompatibilityPipeline
 }
+import amf.apicontract.internal.validation.model.ApiEffectiveValidations._
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
 import amf.apicontract.internal.validation.shacl.{ShaclModelValidationPlugin, ViolationModelValidationPlugin}
+import amf.core.client.common.validation.ProfileNames._
+import amf.core.client.common.validation.{ProfileName, ProfileNames}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
@@ -33,6 +35,7 @@ import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.remote.Spec
 import amf.core.internal.resource.AMFResolvers
+import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
@@ -63,11 +66,9 @@ trait APIConfigurationBuilder {
           APISerializableAnnotations.annotations ++ WebAPISerializableAnnotations.annotations ++ ShapeSerializableAnnotations.annotations),
       configuration.listeners,
       configuration.options
-    ).withPlugins(
-        List(
-          PayloadValidationPlugin(),
-          JsonSchemaShapePayloadValidationPlugin
-        ))
+    ).withPlugins(List(
+        JsonSchemaShapePayloadValidationPlugin
+      ))
       .withFallback(ApiContractFallbackPlugin())
     result
   }
@@ -93,8 +94,14 @@ object RAMLConfiguration extends APIConfigurationBuilder {
 
   def RAML10(): AMFConfiguration =
     common()
-      .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin, Raml10ElementRenderPlugin, ShaclModelValidationPlugin))
-      .withValidationProfile(Raml10ValidationProfile)
+      .withPlugins(List(
+        Raml10ParsePlugin,
+        Raml10RenderPlugin,
+        Raml10ElementRenderPlugin,
+        ShaclModelValidationPlugin(ProfileNames.RAML10),
+        PayloadValidationPlugin(ProfileNames.RAML10)
+      ))
+      .withValidationProfile(Raml10ValidationProfile, Raml10EffectiveValidations)
       .withTransformationPipelines(
         List(
           Raml10TransformationPipeline(),
@@ -104,8 +111,14 @@ object RAMLConfiguration extends APIConfigurationBuilder {
         ))
   def RAML08(): AMFConfiguration =
     common()
-      .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin, Raml08ElementRenderPlugin, ShaclModelValidationPlugin))
-      .withValidationProfile(Raml08ValidationProfile)
+      .withPlugins(List(
+        Raml08ParsePlugin,
+        Raml08RenderPlugin,
+        Raml08ElementRenderPlugin,
+        ShaclModelValidationPlugin(ProfileNames.RAML08),
+        PayloadValidationPlugin(ProfileNames.RAML08)
+      ))
+      .withValidationProfile(Raml08ValidationProfile, Raml08EffectiveValidations)
       .withTransformationPipelines(
         List(
           Raml08TransformationPipeline(),
@@ -141,8 +154,14 @@ object OASConfiguration extends APIConfigurationBuilder {
 
   def OAS20(): AMFConfiguration =
     common()
-      .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin, Oas20ElementRenderPlugin, ShaclModelValidationPlugin))
-      .withValidationProfile(Oas20ValidationProfile)
+      .withPlugins(List(
+        Oas20ParsePlugin,
+        Oas20RenderPlugin,
+        Oas20ElementRenderPlugin,
+        ShaclModelValidationPlugin(ProfileNames.OAS20),
+        PayloadValidationPlugin(ProfileNames.OAS20)
+      ))
+      .withValidationProfile(Oas20ValidationProfile, Oas20EffectiveValidations)
       .withTransformationPipelines(
         List(
           Oas20TransformationPipeline(),
@@ -150,10 +169,17 @@ object OASConfiguration extends APIConfigurationBuilder {
           Oas20CompatibilityPipeline(),
           Oas20CachePipeline()
         ))
+
   def OAS30(): AMFConfiguration =
     common()
-      .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin, Oas30ElementRenderPlugin, ShaclModelValidationPlugin))
-      .withValidationProfile(Oas30ValidationProfile)
+      .withPlugins(List(
+        Oas30ParsePlugin,
+        Oas30RenderPlugin,
+        Oas30ElementRenderPlugin,
+        ShaclModelValidationPlugin(ProfileNames.OAS30),
+        PayloadValidationPlugin(ProfileNames.OAS30)
+      ))
+      .withValidationProfile(Oas30ValidationProfile, Oas30EffectiveValidations)
       .withTransformationPipelines(
         List(
           Oas30TransformationPipeline(),
@@ -217,8 +243,15 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFConfiguration =
     common()
       .withPlugins(
-        List(Async20ParsePlugin, Async20RenderPlugin, Async20ElementRenderPlugin, ShaclModelValidationPlugin))
-      .withValidationProfile(Async20ValidationProfile)
+        List(
+          Async20ParsePlugin,
+          Async20RenderPlugin,
+          Async20ElementRenderPlugin,
+          ShaclModelValidationPlugin(ASYNC20),
+          PayloadValidationPlugin(ASYNC20)
+        )
+      )
+      .withValidationProfile(Async20ValidationProfile, Async20EffectiveValidations)
       .withTransformationPipelines(
         List(
           Async20TransformationPipeline(),
@@ -320,6 +353,11 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   private[amf] override def withValidationProfile(profile: ValidationProfile): AMFConfiguration =
     super._withValidationProfile(profile)
+
+  // Keep AMF internal, done to avoid recomputing validations every time a config is requested
+  private[amf] override def withValidationProfile(profile: ValidationProfile,
+                                                  effective: EffectiveValidations): AMFConfiguration =
+    super._withValidationProfile(profile, effective)
 
   /**
     * Add a [[TransformationPipeline]]

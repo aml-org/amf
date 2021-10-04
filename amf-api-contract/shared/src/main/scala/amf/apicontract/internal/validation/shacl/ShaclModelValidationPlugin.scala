@@ -6,34 +6,35 @@ import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.plugins.validation.{ValidationInfo, ValidationOptions}
-import amf.core.internal.validation.ShaclReportAdaptation
+import amf.core.internal.validation.{EffectiveValidations, ShaclReportAdaptation}
 import amf.validation.internal.shacl.custom.CustomShaclValidator
 import amf.validation.internal.shacl.custom.CustomShaclValidator.CustomShaclFunctions
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object ShaclModelValidationPlugin extends BaseApiValidationPlugin with ShaclReportAdaptation {
+case class ShaclModelValidationPlugin(profile: ProfileName)
+    extends BaseApiValidationPlugin
+    with ShaclReportAdaptation {
 
   override val id: String = this.getClass.getSimpleName
 
   override def priority: PluginPriority = HighPriority
 
-  override protected def specificValidate(unit: BaseUnit, profile: ProfileName, options: ValidationOptions)(
+  override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
-    validateWithShacl(unit, profile, options)
+    validateWithShacl(unit, options: ValidationOptions)
   }
 
-  private def validateWithShacl(unit: BaseUnit, profile: ProfileName, options: ValidationOptions)(
+  private def validateWithShacl(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
-    val shaclOptions = DefaultShaclOptions(options.config.amfConfig.listeners.toSeq)
-      .withMessageStyle(profile.messageStyle)
 
-    val validator = new CustomShaclValidator(functions, profile.messageStyle)
+    val validator   = new CustomShaclValidator(functions, profile.messageStyle)
+    val validations = effectiveOrException(options.config, profile)
 
     validator
-      .validate(unit, options.effectiveValidations.effective.values.toSeq)
+      .validate(unit, validations.effective.values.toSeq)
       .map { report =>
-        adaptToAmfReport(unit, profile, report, options.effectiveValidations)
+        adaptToAmfReport(unit, profile, report, validations)
       }
   }
 
