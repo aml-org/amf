@@ -1117,7 +1117,6 @@ declare module 'amf-client-js' {
     contentType: Array<StrField>
     accepts: Array<StrField>
     position: Range
-    sourceSpec: undefined | Spec
     extendsNode: Array<DomainElement>
 
     withDocumentationTitle(title: string): CreativeWork
@@ -2407,7 +2406,6 @@ declare module 'amf-client-js' {
     contentType: Array<StrField>
     accepts: Array<StrField>
     position: Range
-    sourceSpec: undefined | Spec
     extendsNode: Array<DomainElement>
 
     constructor()
@@ -2852,7 +2850,6 @@ declare module 'amf-client-js' {
     contentType: Array<StrField>
     accepts: Array<StrField>
     position: Range
-    sourceSpec: undefined | Spec
     extendsNode: Array<DomainElement>
 
     constructor()
@@ -3174,7 +3171,6 @@ declare module 'amf-client-js' {
     encoding: StrField
     mediaType: StrField
     schema: Shape
-    serializationOrder: Shape
 
     constructor()
 
