@@ -6,7 +6,7 @@
         "http://a.ml/vocabularies/document#APIContractProcessingData"
       ],
       "http://a.ml/vocabularies/apiContract#modelVersion": "3.2.0",
-      "http://a.ml/vocabularies/apiContract#sourceSpec": "ASYNC 2.0"
+      "http://a.ml/vocabularies/document#sourceSpec": "ASYNC 2.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/async-api",
@@ -51,11 +51,6 @@
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/async-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/async-api/source-map/source-vendor/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -104,11 +99,6 @@
           "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/async-api/endpoint/someChannel/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/async-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/async-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/async-api/source-map/lexical/element_3",

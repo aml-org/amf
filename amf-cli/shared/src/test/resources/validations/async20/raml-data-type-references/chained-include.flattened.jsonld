@@ -7,7 +7,7 @@
       ],
       "apiContract:modelVersion": "3.2.0",
       "doc:transformed": true,
-      "apiContract:sourceSpec": "ASYNC 2.0"
+      "doc:sourceSpec": "ASYNC 2.0"
     },
     {
       "@id": "#13",
@@ -25,9 +25,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#13": "ASYNC 2.0"
-        },
         "lexical": {
           "apiContract:endpoint": "[(10,0)-(19,0)]",
           "core:name": "[(3,2)-(4,0)]",
@@ -190,14 +187,11 @@
         "resolved-link": {
           "#7": "amf://id#9"
         },
-        "type-property-lexical-info": {
-          "#7": "[(3,0)-(3,4)]"
-        },
         "lexical": {
           "#7": "[(3,0)-(6,0)]"
         },
-        "source-vendor": {
-          "#7": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#7": "[(3,0)-(3,4)]"
         },
         "resolved-link-target": {
           "#7": "amf://id#7"
@@ -399,7 +393,7 @@
         "doc:APIContractProcessingData"
       ],
       "apiContract:modelVersion": "3.2.0",
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     },
     {
       "@id": "#6",
@@ -407,7 +401,7 @@
         "doc:APIContractProcessingData"
       ],
       "apiContract:modelVersion": "3.2.0",
-      "apiContract:sourceSpec": "RAML 1.0"
+      "doc:sourceSpec": "RAML 1.0"
     }
   ],
   "@context": {

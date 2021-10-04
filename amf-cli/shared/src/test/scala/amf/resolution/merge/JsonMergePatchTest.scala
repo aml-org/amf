@@ -1,5 +1,6 @@
 package amf.resolution.merge
 
+import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.{Message, Operation}
 import amf.apicontract.internal.spec.async.Subscribe
 import amf.apicontract.internal.spec.async.parser.context.{Async20WebApiContext, AsyncWebApiContext}
@@ -151,7 +152,10 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
       val target = parseOperation(targetFile, "target")
       val patch  = parseOperation(patchFile, "patch")
       val merged = adoptAndMerge(target, patch)
-      Document().withId("testId").withEncodes(merged.asInstanceOf[Operation])
+      Document()
+        .withId("testId")
+        .withProcessingData(APIContractProcessingData())
+        .withEncodes(merged.asInstanceOf[Operation])
     }
 
     def parseOperation(filePath: String, id: String): Operation = {
@@ -170,7 +174,10 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
       val target = parseMessage(targetFile, "target")
       val patch  = parseMessage(patchFile, "patch")
       val merged = adoptAndMerge(target, patch)
-      Document().withId("testId").withEncodes(merged.asInstanceOf[Message])
+      Document()
+        .withId("testId")
+        .withProcessingData(APIContractProcessingData())
+        .withEncodes(merged.asInstanceOf[Message])
     }
 
     def parseMessage(filePath: String, id: String): Message = {
@@ -189,7 +196,10 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
       val target = parseNode(targetFile, "target")
       val patch  = parseNode(patchFile, "patch")
       val merged = adoptAndMerge(target, patch)
-      Document().withId("testId").withEncodes(merged.asInstanceOf[DataNode])
+      Document()
+        .withId("testId")
+        .withProcessingData(APIContractProcessingData())
+        .withEncodes(merged.asInstanceOf[DataNode])
     }
 
     def parseNode(filePath: String, id: String): DataNode = {

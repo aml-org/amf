@@ -14,12 +14,18 @@ import amf.apicontract.internal.spec.common.parser._
 import amf.apicontract.internal.spec.oas.OasLikeSecuritySchemeTypeMappings
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeInformationParser, OasLikeTagsParser, OasResponseParser}
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{InvalidAnnotationType, InvalidParameterType, InvalidSecurityRequirementsSeq, InvalidSecuritySchemeType, MandatoryPathsProperty}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  InvalidAnnotationType,
+  InvalidParameterType,
+  InvalidSecurityRequirementsSeq,
+  InvalidSecuritySchemeType,
+  MandatoryPathsProperty
+}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.{DeclaredElement, LexicalInformation, SingleValueArray, SourceSpec}
+import amf.core.internal.annotations.{DeclaredElement, LexicalInformation, SingleValueArray}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel}
 import amf.core.internal.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -31,7 +37,12 @@ import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser, RamlCreativeWorkParser, YMapEntryLike}
+import amf.shapes.internal.spec.common.parser.{
+  AnnotationParser,
+  OasLikeCreativeWorkParser,
+  RamlCreativeWorkParser,
+  YMapEntryLike
+}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model.{YMapEntry, YNode, _}
@@ -84,7 +95,8 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
   def parseDocument(): Document = parseDocument(Document())
 
   private def parseDocument[T <: Document](document: T): T = {
-    document.withLocation(root.location)
+    document
+      .withLocation(root.location)
       .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
@@ -93,7 +105,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
     val references = ReferencesParser(document, root.location, "uses".asOasExtension, map, root.references).parse()
     parseDeclarations(root, map, document)
 
-    val api = parseWebApi(map).add(SourceSpec(ctx.spec))
+    val api = parseWebApi(map)
     document.setWithoutId(DocumentModel.Encodes, api, Annotations.inferred())
 
     addDeclarationsToModel(document)
@@ -142,8 +154,7 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
             val customProperty = AnnotationTypesParser(entry,
                                                        customProperty =>
                                                          customProperty
-                                                           .withName(typeName)
-                                                           )
+                                                           .withName(typeName))
             ctx.declarations += customProperty.add(DeclaredElement())
           })
       }
@@ -188,8 +199,8 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
               (scheme) => {
                 val name = entry.key.as[String]
                 scheme.setWithoutId(SecuritySchemeModel.Name,
-                           AmfScalar(name, Annotations(entry.key.value)),
-                           Annotations(entry.key))
+                                    AmfScalar(name, Annotations(entry.key.value)),
+                                    Annotations(entry.key))
                 scheme
               }
             )
@@ -261,10 +272,13 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
 
     ctx.factory.serversParser(map, api).parse()
 
-    map.key("tags", entry => {
-      val tags = OasLikeTagsParser(api.id, entry).parse()
-      api.setWithoutId(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
-    })
+    map.key(
+      "tags",
+      entry => {
+        val tags = OasLikeTagsParser(api.id, entry).parse()
+        api.setWithoutId(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+      }
+    )
 
     map.key("security".asOasExtension, entry => { parseSecurity(entry, api) }) // extension needs to go first, so normal security key lexical info will be used if present
 
@@ -291,10 +305,9 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
     )
 
     if (documentations.nonEmpty)
-      api.fields.setWithoutId(
-                     WebApiModel.Documentations,
-                     AmfArray(documentations.map(_._1), Annotations.virtual()),
-                     Annotations.virtual())
+      api.fields.setWithoutId(WebApiModel.Documentations,
+                              AmfArray(documentations.map(_._1), Annotations.virtual()),
+                              Annotations.virtual())
 
     map.key("paths") match {
       case Some(entry) => parseEndpoints(api, entry)
@@ -325,7 +338,9 @@ abstract class OasDocumentParser(root: Root, spec: Spec)(implicit val ctx: OasWe
         Nil
     }
     val extension: Seq[SecurityRequirement] = api.security
-    api.setWithoutId(WebApiModel.Security, AmfArray(requirements ++ extension, Annotations(entry.value)), Annotations(entry))
+    api.setWithoutId(WebApiModel.Security,
+                     AmfArray(requirements ++ extension, Annotations(entry.value)),
+                     Annotations(entry))
   }
 
   private def parseEndpoints(api: WebApi, entry: YMapEntry) = {

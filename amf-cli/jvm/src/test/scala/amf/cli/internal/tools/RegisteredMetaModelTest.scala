@@ -2,6 +2,7 @@ package amf.cli.internal.tools
 
 import amf.aml.internal.entities.AMLEntities
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
+import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.core.internal.entities.Entities
 import amf.core.internal.metamodel.{ModelDefaultBuilder, Obj}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -12,7 +13,7 @@ import org.scalatest.{Assertion, FunSuite, Matchers}
 class RegisteredMetaModelTest extends FunSuite with Matchers with PlatformSecrets {
 
   test("APIEntities contains all ApiContract domain entities") {
-    check(new Reflections("amf.apicontract.internal.metamodel.domain"), APIEntities)
+    check(new Reflections("amf.apicontract.internal.metamodel.domain"), APIEntities, blocked = List(BaseApiModel))
   }
 
   test("FragmentEntities contains all ApiContract document entities") {
@@ -27,17 +28,20 @@ class RegisteredMetaModelTest extends FunSuite with Matchers with PlatformSecret
     check(new Reflections("amf.shapes.internal"), ShapeEntities)
   }
 
-  private def check(reflection: Reflections, entities: Entities): Assertion = {
+  private def check(reflection: Reflections, entities: Entities, blocked: Seq[ModelDefaultBuilder] = Nil): Assertion = {
     val models = getMetaModels(reflection)
-    val registeredModels = models
-      .collect {
-        case other if other.isInstanceOf[ModelDefaultBuilder] => other.asInstanceOf[ModelDefaultBuilder]
-      }
+    val actualBuilders = models.collect { case b: ModelDefaultBuilder => b }
+    val missingEntities = actualBuilders
       .filter { model =>
-        !entities.contains(model)
+        !blocked.contains(model) && !entities.contains(model) // must be registered and not present in entities
       }
-    withClue(s"There are ${registeredModels.size} models not registered: $registeredModels") {
-      registeredModels shouldBe empty
+    val registeredButBlocked = blocked.filter { entities.contains }
+
+    withClue(s"There are ${missingEntities.size} models not registered: $missingEntities") {
+      missingEntities shouldBe empty
+    }
+    withClue(s"There are ${registeredButBlocked.size} models that should not be registered: $registeredButBlocked") {
+      registeredButBlocked shouldBe empty
     }
   }
 

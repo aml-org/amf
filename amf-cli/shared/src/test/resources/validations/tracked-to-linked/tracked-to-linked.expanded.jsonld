@@ -605,9 +605,6 @@
             "core:name": "[(2,0)-(4,0)]",
             "#23": "[(2,0)-(28,47)]",
             "apiContract:accepts": "[(4,0)-(6,0)]"
-          },
-          "source-vendor": {
-            "#23": "RAML 1.0"
           }
         }
       }
@@ -633,7 +630,7 @@
             "@value": true
           }
         ],
-        "apiContract:sourceSpec": [
+        "doc:sourceSpec": [
           {
             "@value": "RAML 1.0"
           }
@@ -798,14 +795,11 @@
               "synthesized-field": {
                 "shacl:closed": "true"
               },
-              "type-property-lexical-info": {
-                "#2": "[(2,0)-(2,4)]"
-              },
               "lexical": {
                 "#2": "[(2,0)-(5,14)]"
               },
-              "source-vendor": {
-                "#2": "RAML 1.0"
+              "type-property-lexical-info": {
+                "#2": "[(2,0)-(2,4)]"
               }
             }
           }
@@ -826,7 +820,7 @@
                 "@value": "3.2.0"
               }
             ],
-            "apiContract:sourceSpec": [
+            "doc:sourceSpec": [
               {
                 "@value": "RAML 1.0"
               }
@@ -862,12 +856,7 @@
               {
                 "@value": "application/yaml"
               }
-            ],
-            "smaps": {
-              "source-vendor": {
-                "#9": "RAML 1.0"
-              }
-            }
+            ]
           }
         ],
         "doc:root": [
@@ -886,7 +875,7 @@
                 "@value": "3.2.0"
               }
             ],
-            "apiContract:sourceSpec": [
+            "doc:sourceSpec": [
               {
                 "@value": "RAML 1.0"
               }
@@ -922,12 +911,7 @@
               {
                 "@value": "application/yaml"
               }
-            ],
-            "smaps": {
-              "source-vendor": {
-                "#12": "RAML 1.0"
-              }
-            }
+            ]
           }
         ],
         "doc:root": [
@@ -946,7 +930,7 @@
                 "@value": "3.2.0"
               }
             ],
-            "apiContract:sourceSpec": [
+            "doc:sourceSpec": [
               {
                 "@value": "RAML 1.0"
               }
@@ -1245,14 +1229,11 @@
           "resolved-link-target": {
             "#14": "amf://id#2"
           },
-          "source-vendor": {
-            "#14": "RAML 1.0"
+          "type-property-lexical-info": {
+            "#14": "[(2,0)-(2,4)]"
           },
           "lexical": {
             "#14": "[(2,0)-(5,14)]"
-          },
-          "type-property-lexical-info": {
-            "#14": "[(2,0)-(2,4)]"
           },
           "resolved-link": {
             "#14": "amf://id#14"

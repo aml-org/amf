@@ -33,7 +33,7 @@ abstract class OasModuleEmitter(module: Module)(implicit val specCtx: OasSpecEmi
 
   def emitModule(): YDocument = {
 
-    val ordering = SpecOrdering.ordering(Oas20, module.annotations)
+    val ordering = SpecOrdering.ordering(Oas20, module.sourceSpec)
 
     val references = Seq(ReferencesEmitter(module, ordering))
     val declares   = OasDeclarationsEmitter(module.declares, ordering, module.references).emitters
@@ -66,7 +66,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val specCtx: OasS
 
   def emitFragment(): YDocument = {
 
-    val ordering: SpecOrdering = SpecOrdering.ordering(Oas20, fragment.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Oas20, fragment.sourceSpec)
 
     val typeEmitter: OasFragmentTypeEmitter = fragment match {
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)

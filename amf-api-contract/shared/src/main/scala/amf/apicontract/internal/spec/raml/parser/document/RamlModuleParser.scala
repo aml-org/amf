@@ -7,7 +7,6 @@ import amf.apicontract.internal.spec.raml.parser.document.RamlAnnotationTargets.
 import amf.core.client.scala.model.document.Module
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.SourceSpec
 import amf.core.internal.metamodel.document.ModuleModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YNodeLikeOps}
@@ -25,8 +24,6 @@ case class RamlModuleParser(root: Root, spec: Spec)(implicit override val ctx: R
   def parseModule(): Module = {
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
-
-      .add(SourceSpec(ctx.spec))
       .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>

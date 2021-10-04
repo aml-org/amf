@@ -629,9 +629,6 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#27": "RAML 1.0"
-          },
           "lexical": {
             "core:name": "[(2,0)-(4,0)]",
             "#27": "[(2,0)-(25,39)]"
@@ -660,7 +657,7 @@
             "@value": true
           }
         ],
-        "apiContract:sourceSpec": [
+        "doc:sourceSpec": [
           {
             "@value": "RAML 1.0"
           }
@@ -691,12 +688,7 @@
               {
                 "@value": "application/yaml"
               }
-            ],
-            "smaps": {
-              "source-vendor": {
-                "#2": "RAML 1.0"
-              }
-            }
+            ]
           }
         ],
         "doc:root": [
@@ -715,7 +707,7 @@
                 "@value": "3.2.0"
               }
             ],
-            "apiContract:sourceSpec": [
+            "doc:sourceSpec": [
               {
                 "@value": "RAML 1.0"
               }

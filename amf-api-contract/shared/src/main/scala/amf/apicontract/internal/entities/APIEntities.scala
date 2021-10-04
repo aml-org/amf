@@ -83,7 +83,6 @@ private[amf] object APIEntities extends Entities {
     Amqp091OperationBindingModel,
     OpenIdConnectSettingsModel,
     HttpSettingsModel,
-    BaseApiModel,
     HttpApiKeySettingsModel
   )
 }

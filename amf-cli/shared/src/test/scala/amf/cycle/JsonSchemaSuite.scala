@@ -4,14 +4,12 @@ import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
-import amf.core.client.scala.{AMFParseResult, AMFResult}
+import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
-import amf.core.internal.adoption.IdAdopter
-import amf.core.internal.annotations.SourceSpec
-import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig, Root}
-import amf.core.internal.remote.{Platform, Spec}
+import amf.core.internal.parser.{LimitedParseConfig, Root}
+import amf.core.internal.remote.{Oas20, Platform, Spec}
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
@@ -37,8 +35,8 @@ trait JsonSchemaSuite {
     val options = ParsingOptions()
     val eh      = amfConfig.errorHandlerProvider.errorHandler()
     val parsed  = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None)
-    parsed.annotations += SourceSpec(Spec.OAS20)
-    val unit = wrapInDataTypeFragment(root, parsed)
+    val unit    = wrapInDataTypeFragment(root, parsed)
+    unit.processingData.withSourceSpec(Oas20)
     amfConfig.baseUnitClient().setBaseUri(unit, path)
     new AMFParseResult(unit, eh.getResults)
   }

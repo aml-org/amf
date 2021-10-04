@@ -1,17 +1,17 @@
 {
   "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
   "paths": {
     "/books": {
       "x-amf-description": "La colección de libros de la biblioteca"
     }
   },
-  "info": {
-    "title": "API",
-    "version": "1.0"
-  },
   "x-amf-extends": {
     "$ref": "file://amf-cli/shared/src/test/resources/upanddown/banking-api.raml"
   },
-  "x-amf-usage": "Spanish localization",
-  "x-amf-extensionType": "2.0 Overlay"
+  "x-amf-extensionType": "2.0 Overlay",
+  "x-amf-usage": "Spanish localization"
 }
