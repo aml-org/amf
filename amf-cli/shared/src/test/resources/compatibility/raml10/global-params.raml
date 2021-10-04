@@ -1,0 +1,14 @@
+#%RAML 1.0
+
+title: API Manager
+baseUri: https://anypoint.mulesoft.com/apimanager/api/{version}
+version: v1
+mediaType: application/json
+
+/organizations/{organizationId}:
+  description: Organizations are the container entity for all API Manager-related resources.
+  post:
+    responses:
+      201:
+        body:
+          application/json:
