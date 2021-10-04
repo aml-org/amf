@@ -73,7 +73,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
           // Use accepts field.
           accepts match {
             case Some(a) =>
-              if (!isValidation && profile.isOas()) operation.set(OperationModel.Accepts, a)
+              if (!isValidation && profile == Oas20Profile) operation.set(OperationModel.Accepts, a)
               request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id))
             case None =>
           }
@@ -134,7 +134,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
 
   /** Add tracked annotation only to examples that tracked the old payload with no media type. */
   private def replaceTrackedAnnotation(payload: Payload, newPayloadId: AmfObject): Shape =
-  // originally was defined as replace but renamed method to actual behaviour
+    // originally was defined as replace but renamed method to actual behaviour
     ExampleTracking.trackIfExists(payload.schema, newPayloadId, payload.id)
 
   def overrideWith(root: Option[Seq[String]], overrider: Option[Seq[String]]): Option[Seq[String]] =
