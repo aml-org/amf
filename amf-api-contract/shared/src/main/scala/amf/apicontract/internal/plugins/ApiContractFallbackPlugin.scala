@@ -16,8 +16,6 @@ import amf.core.internal.remote.{JSONRefs, Spec}
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.CoreParserValidations.{CantReferenceSpecInFileTree, CouldntGuessRoot}
 
-// TODO ARM: change this, refactor to have different options based on the configuration (Raml strict, WebApi Relaxed).
-// TODO ARM: Export withFallback and this object to the user. User cannot create instance or implement interface? yes? no?
 case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boolean = false) extends DomainParsingFallback {
 
   private def docMediaType(doc: Root) = if (doc.raw.isJson) `application/json` else `application/yaml`
