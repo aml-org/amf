@@ -13,7 +13,7 @@ import amf.core.internal.validation.CoreValidations.UnresolvedReference
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
-import org.yaml.parser.YamlParser
+import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -44,17 +44,18 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
                 reference.unit.tagReference(unit.location().getOrElse(unit.id), r)
                 resolved.map(res => {
                   reference.unit.addReference(res.unit)
-                  r.refs.foreach { case refContainer: SYamlRefContainer =>
-                    refContainer.node match {
-                      case mut: MutRef =>
-                        res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
-                        mut.target = res.ast
-                      case other =>
-                        compilerContext.violation(InvalidFragmentType,
-                                                  "Cannot inline a fragment in a not mutable node",
-                                                  other.location)
-                    }
-                  // not meaning, only for collect all futures, not matter the type
+                  r.refs.foreach {
+                    case refContainer: SYamlRefContainer =>
+                      refContainer.node match {
+                        case mut: MutRef =>
+                          res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
+                          mut.target = res.ast
+                        case other =>
+                          compilerContext.violation(InvalidFragmentType,
+                                                    "Cannot inline a fragment in a not mutable node",
+                                                    other.location)
+                      }
+                    // not meaning, only for collect all futures, not matter the type
                   }
                 })
               case ReferenceResolutionResult(Some(e), None) =>
@@ -75,8 +76,9 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
 
   private def evaluateUnresolvedReference(compilerContext: CompilerContext, r: Reference, e: Throwable): Unit = {
     if (!r.isInferred) {
-      r.refs.foreach { case ref: ASTRefContainer =>
-        compilerContext.violation(UnresolvedReference, r.url, e.getMessage, ref.pos)
+      r.refs.foreach {
+        case ref: ASTRefContainer =>
+          compilerContext.violation(UnresolvedReference, r.url, e.getMessage, ref.pos)
       }
     }
   }
@@ -89,6 +91,12 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
           YamlParser(e.encodes.raw.value(), e.location().getOrElse(""))(new SYamlAMFParserErrorHandler(ctx.eh))
             .withIncludeTag("!include")
             .document())
+      case e: ExternalFragment if isJson(e.encodes) =>
+        Right(
+          JsonParser
+            .withSource(e.encodes.raw.value(), e.location().getOrElse(""))(new SYamlAMFParserErrorHandler(ctx.eh))
+            .document()
+        )
       case e: ExternalFragment =>
         Left(e.encodes.raw.value())
       case o if hasDocumentAST(o) =>
@@ -99,6 +107,8 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
 
   private def isRamlOrYaml(encodes: ExternalDomainElement) =
     encodes.mediaType.option().exists(_.contains("yaml"))
+  private def isJson(encodes: ExternalDomainElement) =
+    encodes.mediaType.option().exists(_.contains("json"))
 
   private def hasDocumentAST(other: BaseUnit) =
     other.annotations.find(classOf[SourceAST]).exists(_.ast.isInstanceOf[YDocument])
