@@ -185,7 +185,6 @@ object ShapesConfiguration {
 
   def predefined(): ShapesConfiguration = {
     ShapesRegister.register() // TODO ARM remove when APIMF-3000 is done
-    // TODO ARM: validate plugin and payload plugin of api?
     val predefinedAMLConfig = AMLConfiguration.predefined()
     val coreEntities        = AMFGraphConfiguration.predefined().getRegistry.entitiesRegistry.domainEntities
     new ShapesConfiguration(
