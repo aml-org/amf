@@ -1,0 +1,17 @@
+#%RAML 0.8
+title: Pro
+version: 1.0
+
+/testmapping:
+  get:
+    description: makes a
+    is:
+    protocols: # should fail
+    responses:
+      200:
+        description: returns updated Load balancer JSON object.
+        body:
+          application/json:
+            example: ""
+      404:
+        description: there
