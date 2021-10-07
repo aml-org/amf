@@ -57,7 +57,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
         s"file://amf-cli/shared/src/test/resources/reference-itself.raml",
         Raml10YamlHint,
         defaultConfig
-          .withErrorHandlerProvider(() => UnhandledErrorHandler), // TODO ARM then default should not throw exception?
+          .withErrorHandlerProvider(() => UnhandledErrorHandler),
         None
       )
     } map { ex =>
