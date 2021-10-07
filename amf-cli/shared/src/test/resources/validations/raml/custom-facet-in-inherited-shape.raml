@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: A
+types:
+  myDate:
+    type: string
+    facets:
+      format: string
+  year:
+    type: myDate
+    format: YYYY
+  yee:
+    type: year
+    format: YYYY
+/q:
