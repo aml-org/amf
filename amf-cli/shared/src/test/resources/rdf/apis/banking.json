@@ -1,0 +1,97 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": ",
+    "version": "1.0"
+  },
+  "basePath": "/apis",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/customers": {
+
+    },
+    "/customers/{customer_id}": {
+      "parameters": [
+        {
+          "name": "customer_id",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "delete": {
+        "description": "Removes a Customer from the system",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "description": "Returns Customer data",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/customers/{customer_id}/accounts": {
+      "parameters": [
+        {
+          "name": "customer_id",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "description": "Returns a collection accounts",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/customers/{customer_id}/cards/debit": {
+      "parameters": [
+        {
+          "name": "customer_id",
+          "required": true,
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "description": "Returns a collection of cards",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "Requests the creation of a new DebitCard",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "account",
+            "type": "integer",
+            "description": "account id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
