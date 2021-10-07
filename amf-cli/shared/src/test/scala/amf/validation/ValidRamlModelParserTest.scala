@@ -283,5 +283,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/trait-definition-numeric-name.raml")
   }
 
+  test("Custom facet defined in shapes with inheritance") {
+    checkValid("/raml/custom-facet-in-inherited-shape.raml")
+  }
+
   override val hint: Hint = Raml10YamlHint
 }
