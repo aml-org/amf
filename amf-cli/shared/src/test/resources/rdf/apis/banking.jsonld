@@ -1,0 +1,381 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json/web-api",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
+        "http://a.ml/vocabularies/document#RootDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "",
+      "http://a.ml/vocabularies/apiContract#server": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/server/%2Fapis"
+        }
+      ],
+      "http://a.ml/vocabularies/apiContract#accepts": [
+        "application/json"
+      ],
+      "http://a.ml/vocabularies/apiContract#contentType": [
+        "application/json"
+      ],
+      "http://a.ml/vocabularies/core#version": "1.0",
+      "http://a.ml/vocabularies/apiContract#endpoint": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#APIContractProcessingData"
+      ],
+      "http://a.ml/vocabularies/apiContract#modelVersion": "3.2.0",
+      "http://a.ml/vocabularies/document#sourceSpec": "OAS 2.0"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/server/%2Fapis",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Server",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#urlTemplate": "/apis"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#EndPoint",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#path": "/customers/{customer_id}/cards/debit",
+      "http://a.ml/vocabularies/apiContract#supportedOperation": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/get"
+        }
+      ],
+      "http://a.ml/vocabularies/apiContract#parameter": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#EndPoint",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#path": "/customers/{customer_id}/accounts",
+      "http://a.ml/vocabularies/apiContract#supportedOperation": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/supportedOperation/get"
+        }
+      ],
+      "http://a.ml/vocabularies/apiContract#parameter": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#EndPoint",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#path": "/customers/{customer_id}",
+      "http://a.ml/vocabularies/apiContract#supportedOperation": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get"
+        },
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/delete"
+        }
+      ],
+      "http://a.ml/vocabularies/apiContract#parameter": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/parameter/path/customer_id"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#EndPoint",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#path": "/customers"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#method": "post",
+      "http://a.ml/vocabularies/core#description": "Requests the creation of a new DebitCard",
+      "http://a.ml/vocabularies/apiContract#expects": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request"
+        }
+      ],
+      "http://a.ml/vocabularies/apiContract#returns": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/returns/resp/200"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/get",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#method": "get",
+      "http://a.ml/vocabularies/core#description": "Returns a collection of cards",
+      "http://a.ml/vocabularies/apiContract#returns": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/get/returns/resp/200"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "customer_id",
+      "http://a.ml/vocabularies/apiContract#paramName": "customer_id",
+      "http://a.ml/vocabularies/apiContract#required": true,
+      "http://a.ml/vocabularies/apiContract#binding": "path",
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id/any/schema"
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/supportedOperation/get",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#method": "get",
+      "http://a.ml/vocabularies/core#description": "Returns a collection accounts",
+      "http://a.ml/vocabularies/apiContract#returns": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/supportedOperation/get/returns/resp/200"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "customer_id",
+      "http://a.ml/vocabularies/apiContract#paramName": "customer_id",
+      "http://a.ml/vocabularies/apiContract#required": true,
+      "http://a.ml/vocabularies/apiContract#binding": "path",
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id/any/schema"
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#method": "get",
+      "http://a.ml/vocabularies/core#description": "Returns Customer data",
+      "http://a.ml/vocabularies/apiContract#returns": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get/returns/resp/200"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/delete",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#method": "delete",
+      "http://a.ml/vocabularies/core#description": "Removes a Customer from the system",
+      "http://a.ml/vocabularies/apiContract#returns": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/delete/returns/resp/200"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/parameter/path/customer_id",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "customer_id",
+      "http://a.ml/vocabularies/apiContract#paramName": "customer_id",
+      "http://a.ml/vocabularies/apiContract#required": true,
+      "http://a.ml/vocabularies/apiContract#binding": "path",
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/parameter/path/customer_id/any/schema"
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#parameter": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request/parameter/parameter/query/account"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/returns/resp/200",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#statusCode": "200",
+      "http://a.ml/vocabularies/core#name": "200",
+      "http://a.ml/vocabularies/core#description": "OK"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#statusCode": "200",
+      "http://a.ml/vocabularies/core#name": "200",
+      "http://a.ml/vocabularies/core#description": "OK"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/parameter/parameter/path/customer_id/any/schema",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#name": "schema"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#statusCode": "200",
+      "http://a.ml/vocabularies/core#name": "200",
+      "http://a.ml/vocabularies/core#description": "OK"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/parameter/parameter/path/customer_id/any/schema",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#name": "schema"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#statusCode": "200",
+      "http://a.ml/vocabularies/core#name": "200",
+      "http://a.ml/vocabularies/core#description": "OK"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/delete/returns/resp/200",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#statusCode": "200",
+      "http://a.ml/vocabularies/core#name": "200",
+      "http://a.ml/vocabularies/core#description": "OK"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/parameter/path/customer_id/any/schema",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#name": "schema"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request/parameter/parameter/query/account",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "account",
+      "http://a.ml/vocabularies/apiContract#paramName": "account",
+      "http://a.ml/vocabularies/core#description": "account id",
+      "http://a.ml/vocabularies/apiContract#required": false,
+      "http://a.ml/vocabularies/apiContract#binding": "query",
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request/parameter/parameter/query/account/any/schema"
+      }
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/supportedOperation/post/expects/request/parameter/parameter/query/account/any/schema",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#name": "schema",
+      "http://a.ml/vocabularies/core#description": "account id"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json",
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json/web-api"
+      },
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-cli/shared/src/test/resources/rdf/apis/banking.json#/BaseUnitProcessingData"
+      }
+    }
+  ]
+}
