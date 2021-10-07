@@ -674,4 +674,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("override type any with other type that is object[]") {
     validate("override-any-with-array-type.raml")
   }
+
+  test("define protocol keys with no values") {
+    validate("protocols-key-no-value.raml", Some("08/protocols-key-no-value.report"))
+  }
+
+  test("define authorization grant with null as value") {
+    validate("raml08-authorization-grant-null-value.raml", Some("08/raml08-authorization-grant-null-value.report"))
+  }
 }
