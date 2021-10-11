@@ -20,7 +20,7 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
   }
 
   private def parseName(): Unit = {
-    val name= findName(enumTypeDef, "AnonymoousEnum", "Missing enumeration type name", enum.id)
+    val name= findName(enumTypeDef, "AnonymousEnum", "Missing enumeration type name", enum.id)
     enum.withName(name)
   }
 
@@ -29,7 +29,8 @@ class GraphQLNestedEnumParser(enumTypeDef: Node)(implicit val ctx: GraphQLWebApi
       case n: Node if n.children.head.isInstanceOf[Terminal] => n.children.head.asInstanceOf[Terminal]
     }
     val dataNodes = values.map { t =>
-      ScalarNode(t.value, Some(XsdTypes.xsdString.iri()), toAnnotations(t))
+      val s = ScalarNode(t.value, Some(XsdTypes.xsdString.iri()), toAnnotations(t)).withName(t.value)
+      s.adopted(enum.id)
     }
     enum.withValues(dataNodes)
   }
