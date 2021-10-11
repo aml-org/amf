@@ -1215,7 +1215,7 @@
 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
 "http://www.w3.org/2000/01/rdf-schema#_1": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar/data-node",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar/ANIMAL",
 "@type": [
 "http://a.ml/vocabularies/data#Scalar",
 "http://a.ml/vocabularies/data#Node",
@@ -1230,12 +1230,17 @@
 {
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
+],
+"http://a.ml/vocabularies/core#name": [
+{
+"@value": "ANIMAL"
+}
 ]
 }
 ],
 "http://www.w3.org/2000/01/rdf-schema#_2": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar/data-node",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar/VEGETAL",
 "@type": [
 "http://a.ml/vocabularies/data#Scalar",
 "http://a.ml/vocabularies/data#Node",
@@ -1250,12 +1255,17 @@
 {
 "@id": "http://www.w3.org/2001/XMLSchema#string"
 }
+],
+"http://a.ml/vocabularies/core#name": [
+{
+"@value": "VEGETAL"
+}
 ]
 }
 ],
 "http://www.w3.org/2000/01/rdf-schema#_3": [
 {
-"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar/data-node",
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/graphql/simple/api.graphql/scalar/default-scalar/MUSHROOM",
 "@type": [
 "http://a.ml/vocabularies/data#Scalar",
 "http://a.ml/vocabularies/data#Node",
@@ -1269,6 +1279,11 @@
 "http://www.w3.org/ns/shacl#datatype": [
 {
 "@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://a.ml/vocabularies/core#name": [
+{
+"@value": "MUSHROOM"
 }
 ]
 }
