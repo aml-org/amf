@@ -260,5 +260,10 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/complex-multiple-recursions-calfa.raml")
   }
 
+  test("Test API with JSON examples") {
+    checkValid("/json-examples/api.raml")
+
+  }
+
   override val hint: Hint = Raml10YamlHint
 }
