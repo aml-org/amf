@@ -194,4 +194,12 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     )
   }
 
+  test("Raml with file request payload converted to oas with valid consumes mediatype") {
+    cycle("raml10/request-with-type-file-in-body.raml",
+      "cycled-apis/oas20/request-with-type-file-in-body.json",
+      Raml10YamlHint,
+      Oas20JsonHint,
+      transformWith = Some(Oas20))
+  }
+
 }
