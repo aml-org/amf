@@ -88,11 +88,14 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
-    amfConfig
-      .withErrorHandlerProvider(() => UnhandledErrorHandler)
+    val result = amfConfig
+      .withErrorHandlerProvider(() => DefaultErrorHandler())
       .baseUnitClient()
       .transform(unit, PipelineId.Compatibility)
-      .baseUnit
+    if(!result.conforms) {
+      throw new RuntimeException(s"Compatibility transformation does not conform: ${result.results.head.message}")
+    }
+    result.baseUnit
   }
 
   private def profile(spec: Spec): ProfileName = spec match {
