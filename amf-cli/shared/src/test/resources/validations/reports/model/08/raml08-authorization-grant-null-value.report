@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/raml08-authorization-grant-null-value.raml
+Profile: RAML 0.8
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/parser#Settings-authorizationGrant-pattern
+  Message: Invalid authorization grant. The options are: code, token, owner or credentials
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/validations/raml08-authorization-grant-null-value.raml#/declares/scheme/oauth_2_0/settings/oauth2
+  Property: http://a.ml/vocabularies/security#authorizationGrant
+  Range: [(24,27)-(24,45)]
+  Location: file://amf-cli/shared/src/test/resources/validations/raml08-authorization-grant-null-value.raml

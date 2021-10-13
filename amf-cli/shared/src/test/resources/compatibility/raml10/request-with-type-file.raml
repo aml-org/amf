@@ -1,0 +1,37 @@
+#%RAML 1.0
+title: "Some title"
+version: "1.0"
+protocols:
+- "HTTP"
+mediaType:
+- "*/*"
+
+
+/pdfmarkup/v1/documents/prepareForPrint:
+  post:
+    body:
+      application/vnd.adobe.xfdf:
+        type: file
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+/model:
+  description: Project model
+  post:
+    body:
+      "*/*":
+        properties:
+          file:
+            description: The file that contains the project sources
+            type: file
+          innerBasePath:
+            description: The path inside the project sources file to use as base dir
+            type: string
+            required: false
+    responses:
+      200:
+        description: A project model
+        body:
+          application/json:

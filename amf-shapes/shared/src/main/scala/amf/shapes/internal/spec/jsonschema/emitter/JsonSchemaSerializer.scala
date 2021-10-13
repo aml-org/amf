@@ -10,7 +10,6 @@ trait JsonSchemaSerializer extends PlatformSecrets {
   // todo, check if its resolved?
   // todo lexical ordering?
 
-  // TODO ARM: change name, not descriptive.
   protected def toJsonSchema(element: AnyShape, config: AMFGraphConfiguration): String = {
 
     element.annotations

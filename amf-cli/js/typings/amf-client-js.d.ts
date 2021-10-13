@@ -199,6 +199,8 @@ declare module 'amf-client-js' {
 
 
   }
+  export class SkippedValidationPluginEvent  {
+  }
   export class AMFConfiguration extends BaseShapesConfiguration  {
     baseUnitClient(): AMFBaseUnitClient
 
@@ -1004,6 +1006,8 @@ declare module 'amf-client-js' {
     getObjectByProperty(uri: string): Array<DomainElement>
 
     scalarByProperty(uri: string): Array<any>
+
+    removeField(uri: string): this
 
 
   }
@@ -3463,6 +3467,7 @@ declare module 'amf-client-js' {
     static readonly FoundReferences: 'FoundReferences'
     static readonly SelectedParsePlugin: 'SelectedParsePlugin'
     static readonly DetectedSyntaxMediaType: 'DetectedSyntaxMediaType'
+    static readonly SkippedValidationPlugin: 'SkippedValidationPlugin'
 
   }
   export class AnyShape implements Shape  {

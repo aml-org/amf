@@ -162,7 +162,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
   }
 
   private def mediaTypeError(prop: PropertyShape)(implicit errorHandler: AMFErrorHandler): Unit =
-    errorHandler.violation(
+    errorHandler.warning(
       InvalidConsumesWithFileParameter,
       prop.id,
       "Consumes must be either 'multipart/form-data', 'application/x-www-form-urlencoded', or both when a file parameter is present",

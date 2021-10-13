@@ -32,12 +32,10 @@ class AMFElementClient private[amf] (private val _internal: InternalAMFElementCl
   override def renderToBuilder[T](element: DomainElement, builder: DocBuilder[T]): Unit =
     AMFElementRenderer.renderToBuilder(element, builder, getConfiguration())
 
-  // TODO ARM: Replace profile for spec
   /** Get this resource type as an endpoint. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
   def asEndpoint[T <: BaseUnit](unit: T, rt: ResourceType, profile: ProfileName = Raml10Profile): EndPoint =
     AbstractElementTransformer.asEndpoint(unit, rt, obtainEH, getConfiguration(), profile)
 
-  // TODO ARM: Replace profile for spec
   /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
   def asOperation[T <: BaseUnit](unit: T, tr: Trait, profile: ProfileName = Raml10Profile): Operation =
     AbstractElementTransformer.asOperation(unit, tr, obtainEH, getConfiguration(), profile)

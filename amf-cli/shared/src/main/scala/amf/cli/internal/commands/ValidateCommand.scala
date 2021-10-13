@@ -37,11 +37,8 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  // TODO ARM: move to registry? or to context parsing? discuss with tomi
   def findDialect(configuration: AMFConfiguration, id: String): Option[Dialect] = {
-    configuration.registry.plugins.parsePlugins.collectFirst({
-      case aml: AMLDialectInstanceParsingPlugin if aml.dialect.id == id => aml.dialect
-    })
+    configuration.configurationState().getDialects().find(_.id == id)
   }
 
   def report(model: BaseUnit, config: ParserConfig, configuration: AMFConfiguration): Future[AMFValidationReport] = {

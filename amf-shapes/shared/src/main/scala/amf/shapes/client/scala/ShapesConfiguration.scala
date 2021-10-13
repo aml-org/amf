@@ -18,6 +18,7 @@ import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
+import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import amf.shapes.client.scala.plugin.JsonSchemaShapePayloadValidationPlugin
 import amf.shapes.internal.annotations.ShapeSerializableAnnotations
@@ -102,6 +103,11 @@ class ShapesConfiguration private[amf] (override private[amf] val resolvers: AMF
   private[amf] override def withValidationProfile(profile: ValidationProfile): ShapesConfiguration =
     super._withValidationProfile(profile)
 
+  // Keep AMF internal, done to avoid recomputing validations every time a config is requested
+  private[amf] override def withValidationProfile(profile: ValidationProfile,
+                                                  effective: EffectiveValidations): ShapesConfiguration =
+    super._withValidationProfile(profile, effective)
+
   /**
     * Add a [[TransformationPipeline]]
     * @param pipeline [[TransformationPipeline]] to add to configuration object
@@ -185,7 +191,6 @@ object ShapesConfiguration {
 
   def predefined(): ShapesConfiguration = {
     ShapesRegister.register() // TODO ARM remove when APIMF-3000 is done
-    // TODO ARM: validate plugin and payload plugin of api?
     val predefinedAMLConfig = AMLConfiguration.predefined()
     val coreEntities        = AMFGraphConfiguration.predefined().getRegistry.entitiesRegistry.domainEntities
     new ShapesConfiguration(

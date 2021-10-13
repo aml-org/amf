@@ -30,6 +30,5 @@ trait OasParsePlugin extends OasLikeParsePlugin {
                         wrapped: ParserContext,
                         ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
 
-  // TODO ARM: Decide, should an OAS Document be able to reference another OAS Document?
   override def validSpecsToReference: Seq[Spec] = super.validSpecsToReference :+ spec
 }

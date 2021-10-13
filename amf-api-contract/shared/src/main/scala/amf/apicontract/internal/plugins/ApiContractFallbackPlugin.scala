@@ -16,11 +16,7 @@ import amf.core.internal.remote.{JSONRefs, Spec}
 import amf.core.internal.utils.MediaTypeMatcher
 import amf.core.internal.validation.CoreParserValidations.{CantReferenceSpecInFileTree, CouldntGuessRoot}
 
-// TODO ARM: change this, refactor to have different options based on the configuration (Raml strict, WebApi Relaxed).
-// TODO ARM: Export withFallback and this object to the user. User cannot create instance or implement interface? yes? no?
 case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boolean = false) extends DomainParsingFallback {
-
-  private def docMediaType(doc: Root) = if (doc.raw.isJson) `application/json` else `application/yaml`
 
   override def chooseFallback(root: Root, availablePlugins: Seq[AMFParsePlugin], isRoot: Boolean): AMFParsePlugin = {
     if (strict && isRoot) throw UnsupportedDomainForDocumentException(root.location)
@@ -42,7 +38,7 @@ case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boole
         ExternalDomainElement(Annotations(parsed.document))
           .withId(document.location + "#/")
           .withRaw(document.raw)
-          .withMediaType(docMediaType(document))
+          .withMediaType(document.mediatype)
       result.parsed = Some(parsed.document.node)
       val references = document.references.map(_.unit)
       val fragment = ExternalFragment()
