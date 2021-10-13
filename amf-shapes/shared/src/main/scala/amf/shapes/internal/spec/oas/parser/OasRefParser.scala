@@ -1,14 +1,13 @@
 package amf.shapes.internal.spec.oas.parser
 
-import amf.core.client.scala.model.domain.{AmfScalar, Linkable, Shape}
+import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.internal.annotations.ExternalFragmentRef
 import amf.core.internal.metamodel.domain.LinkableElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain._
 import amf.core.internal.utils.UriUtils
-import amf.shapes.internal.annotations.ExternalJsonSchemaShape
-import amf.shapes.client.scala.model.domain.UnresolvedShape
 import amf.shapes.client.scala.model.domain.{AnyShape, UnresolvedShape}
+import amf.shapes.internal.annotations.ExternalJsonSchemaShape
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
@@ -39,8 +38,8 @@ class OasRefParser(map: YMap,
       }
   }
 
-  private def findDeclarationAndParse(e: YMapEntry) = {
-    val rawRef: String = e.value
+  private def findDeclarationAndParse(entry: YMapEntry) = {
+    val rawRef: String = entry.value
     val definitionName = OasShapeDefinitions.stripDefinitionsPrefix(rawRef)
     ctx.findType(definitionName, SearchScope.All) match {
       case Some(s) =>
@@ -54,8 +53,8 @@ class OasRefParser(map: YMap,
           *  now we work with canonical JSON schema pointers, not local refs
           */
         val referencedShape = ctx.findLocalJSONPath(rawRef) match {
-          case Some(_) => searchLocalJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, e)
-          case _       => searchRemoteJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, e)
+          case Some(_) => searchLocalJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, entry)
+          case _       => searchRemoteJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, entry)
         }
         referencedShape.foreach(adopt)
         referencedShape
@@ -69,33 +68,33 @@ class OasRefParser(map: YMap,
       .withSupportsRecursion(true)
   }
 
-  private def searchLocalJsonSchema(r: String, t: String, e: YMapEntry): Option[AnyShape] = {
+  private def searchLocalJsonSchema(raw: String, term: String, entry: YMapEntry): Option[AnyShape] = {
     val (rawOrResolvedRef, declarationNameOrResolvedRef) =
-      if (ctx.linkTypes) (r, t)
+      if (ctx.linkTypes) (raw, term)
       else {
-        val resolvedRef = UriUtils.resolveRelativeTo(ctx.rootContextDocument, r)
+        val resolvedRef = UriUtils.resolveRelativeTo(ctx.rootContextDocument, raw)
         (resolvedRef, resolvedRef)
       }
     ctx.findJsonSchema(rawOrResolvedRef) match {
       case Some(s) =>
         Some(createLinkToDeclaration(rawOrResolvedRef, s))
       case None if isOasLikeContext && isDeclaration(rawOrResolvedRef) && ctx.isMainFileContext =>
-        handleNotFoundOas(e, rawOrResolvedRef, declarationNameOrResolvedRef)
+        handleNotFoundOas(entry, rawOrResolvedRef, declarationNameOrResolvedRef)
       case None =>
-        handleNotFoundJsonSchema(r, e, rawOrResolvedRef, declarationNameOrResolvedRef)
+        handleNotFoundJsonSchema(raw, entry, rawOrResolvedRef, declarationNameOrResolvedRef)
     }
   }
 
-  private def handleNotFoundJsonSchema(r: String,
-                                       e: YMapEntry,
+  private def handleNotFoundJsonSchema(raw: String,
+                                       entry: YMapEntry,
                                        rawOrResolvedRef: String,
                                        declarationNameOrResolvedRef: String) = {
     val tmpShape: UnresolvedShape =
-      createAndRegisterUnresolvedShape(e, rawOrResolvedRef, declarationNameOrResolvedRef)
+      createAndRegisterUnresolvedShape(entry, rawOrResolvedRef, declarationNameOrResolvedRef)
     ctx.registerJsonSchema(rawOrResolvedRef, tmpShape)
-    ctx.findLocalJSONPath(r) match {
+    ctx.findLocalJSONPath(raw) match {
       case Some(entryLike) =>
-        val definitiveName = entryLike.key.map(_.as[String]) getOrElse (name)
+        val definitiveName = entryLike.key.map(_.as[String]) getOrElse name
         OasTypeParser(entryLike, definitiveName, adopt, version)
           .parse()
           .map { shape =>
@@ -119,7 +118,7 @@ class OasRefParser(map: YMap,
     }
   }
 
-  private def handleNotFoundOas(e: YMapEntry, rawOrResolvedRef: String, declarationNameOrResolvedRef: String) = {
+  private def handleNotFoundOas(entry: YMapEntry, rawOrResolvedRef: String, declarationNameOrResolvedRef: String) = {
     val shape = AnyShape(ast).withName(name, nameAnnotations)
     val tmpShape = UnresolvedShape(
       Fields(),
@@ -128,7 +127,7 @@ class OasRefParser(map: YMap,
       None,
       Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
       shouldLink = false).withName(declarationNameOrResolvedRef, Annotations()).withSupportsRecursion(true)
-    tmpShape.unresolved(declarationNameOrResolvedRef, Nil, Some(e.location))(ctx)
+    tmpShape.unresolved(declarationNameOrResolvedRef, Nil, Some(entry.location))(ctx)
     tmpShape.withContext(ctx)
     adopt(tmpShape)
     shape.withLinkTarget(tmpShape).withLinkLabel(declarationNameOrResolvedRef)
@@ -162,7 +161,7 @@ class OasRefParser(map: YMap,
     ctx.findJsonSchema(fullUrl) match {
       case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullUrl, e, u)
       case Some(shape)              => createLinkToParsedShape(ref, shape)
-      case _                        =>
+      case _ =>
         parseRemoteSchema(ref, fullUrl) match {
           case None =>
             val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fullUrl)
