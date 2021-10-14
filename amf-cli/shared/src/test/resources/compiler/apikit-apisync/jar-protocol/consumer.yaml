@@ -1,0 +1,11 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: consumer
+
+paths:
+  /pets:
+    get:
+      responses:
+        '500':
+          $ref: 'utility.yaml#/components/responses/500'
