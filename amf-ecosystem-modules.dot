@@ -1,7 +1,9 @@
 # http://www.graphviz.org/content/cluster
+# to install graphviz visit https://graphviz.org/download/
 # to generate image run: dot -Tpng amf-ecosystem-modules.dot > amf-ecosystem-modules.png
 
 digraph G {
+    graph [ dpi = 300 ];
     # modules
     subgraph cluster_0 {
         "amf-cli"
@@ -15,6 +17,7 @@ digraph G {
         label="aml-org/amf-aml"
         fontcolor=gray
     	"amf-aml" [style=dashed]
+    	"amf-rdf"
 	    "amf-validation"
 	    color=gray
     }
@@ -28,4 +31,5 @@ digraph G {
 
 	# dependencies
 	"amf-cli" -> "amf-api-contract" -> "amf-shapes" -> "amf-aml" -> "amf-validation" -> "amf-core" [label="dependsOn"]
+	"amf-rdf" -> "amf-core" [label="dependsOn"]
 }
