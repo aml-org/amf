@@ -2,15 +2,18 @@
 # to generate image run: dot -Tpng amf-ecosystem-modules.dot > amf-ecosystem-modules.png
 
 digraph G {
-    graph [ dpi = 300 ];
     # modules
     subgraph cluster_0 {
         "amf-cli"
 	    "amf-api-contract" [style=dashed]
 	    "amf-shapes"
 	    color=gray
+	    label="aml-org/amf"
+        fontcolor=gray
     }
     subgraph cluster_1 {
+        label="aml-org/amf-aml"
+        fontcolor=gray
     	"amf-aml" [style=dashed]
 	    "amf-validation"
 	    color=gray
@@ -19,9 +22,10 @@ digraph G {
     subgraph cluster_2 {
 	    "amf-core"
 	    color=gray
+	    label="aml-org/amf-core"
+        fontcolor=gray
     }
-    
+
 	# dependencies
-	"amf-cli" -> "amf-api-contract" -> "amf-shapes"
-	"amf-shapes" -> "amf-aml" -> "amf-validation" -> "amf-core" [label="dependsOn"]
+	"amf-cli" -> "amf-api-contract" -> "amf-shapes" -> "amf-aml" -> "amf-validation" -> "amf-core" [label="dependsOn"]
 }
