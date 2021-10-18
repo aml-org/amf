@@ -2,7 +2,7 @@ package amf.shapes.internal.spec.common.parser
 
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
-import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParserContext}
+import amf.core.client.scala.parse.document.ErrorHandlingContext
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
@@ -10,8 +10,8 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, _}
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.ShapeParserContext
-import WellKnownAnnotation.resolveAnnotation
 import amf.shapes.internal.spec.common.parser.AnnotationParser.parseExtensions
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.resolveAnnotation
 import amf.shapes.internal.spec.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAnnotationTarget
 import amf.shapes.internal.vocabulary.VocabularyMappings
@@ -25,7 +25,7 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
   }
 
   // NOTE: DONE LIKE THIS BECAUSE OF SCALA JS LINKING ERRORS
-  private def customDomainPropertiesFrom(obj: AmfObject) =
+  private def customDomainPropertiesFrom(obj: AmfObject): Seq[DomainExtension] =
     Option(obj.fields.field(CustomDomainProperties)).getOrElse(Seq[DomainExtension]())
 
   def parseOrphanNode(orphanNodeName: String): Unit = {
