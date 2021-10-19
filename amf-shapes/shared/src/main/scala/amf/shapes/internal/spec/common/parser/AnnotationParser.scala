@@ -1,12 +1,14 @@
 package amf.shapes.internal.spec.common.parser
 
+import amf.aml.internal.parse.common.AnnotationsParser
+import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
-import amf.core.client.scala.parse.document.ErrorHandlingContext
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, DomainElement}
+import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParserContext}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.{LimitedParseConfig, YMapOps}
 import amf.core.internal.parser.domain.{Annotations, _}
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.ShapeParserContext
@@ -20,7 +22,7 @@ import org.yaml.model._
 case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(
     implicit val ctx: ShapeParserContext) {
   def parse(): Unit = {
-    val extensions = parseExtensions(Some(element), map, target)
+    val extensions = parseExtensions(Some(element), map, target, Some(ctx.extensionsFacade))
     setExtensions(extensions)
   }
 
@@ -44,24 +46,45 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
     val oldExtensions = customDomainPropertiesFrom(element)
     if (extensions.nonEmpty)
       element.setWithoutId(DomainElementModel.CustomDomainProperties,
-                  AmfArray(oldExtensions ++ extensions, Annotations.inferred()),
-                  Annotations.inferred())
+                           AmfArray(oldExtensions ++ extensions, Annotations.inferred()),
+                           Annotations.inferred())
   }
 }
 
 object AnnotationParser {
-  def parseExtensions(parent: Option[AmfObject], map: YMap, target: List[String] = Nil)(
+  def parseExtensions(parent: Option[AmfObject],
+                      map: YMap,
+                      target: List[String] = Nil,
+                      semanticParser: Option[SemanticExtensionsFacade] = None)(
       implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler): Seq[DomainExtension] =
     map.entries.flatMap { entry =>
-      resolveAnnotation(entryKey(entry)).map(ExtensionParser(_, parent, entry, target).parse().add(Annotations(entry)))
+      resolveAnnotation(entryKey(entry)).map { annotation =>
+        val elementTypes = parent.map(_.meta.`type`.map(_.iri())).getOrElse(List.empty)
+        parseSemantic(annotation, entry, elementTypes, semanticParser)
+          .getOrElse(ExtensionParser(annotation, parent, entry, target).parse().add(Annotations(entry)))
+      }
     }
+
+  private def parseSemantic(annotation: String,
+                            entry: YMapEntry,
+                            elementTypes: Seq[String],
+                            semanticParser: Option[SemanticExtensionsFacade])(
+      implicit ctx: ErrorHandlingContext): Option[DomainExtension] = {
+    semanticParser.flatMap { parser =>
+      val nextCtx = ParserContext(config = LimitedParseConfig(ctx.eh, parser.registry))
+      parser.parse(annotation, elementTypes, entry, nextCtx, "nonImportantId")
+    }
+  }
 
   private def entryKey(entry: YMapEntry) = {
     entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
   }
 }
 
-private case class ExtensionParser(annotation: String, parent: Option[AmfObject], entry: YMapEntry, target: List[String] = Nil)(
+private case class ExtensionParser(annotation: String,
+                                   parent: Option[AmfObject],
+                                   entry: YMapEntry,
+                                   target: List[String] = Nil)(
     implicit val ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler) {
   def parse(): DomainExtension = {
     val domainExtension = DomainExtension(Annotations(entry))
@@ -70,8 +93,7 @@ private case class ExtensionParser(annotation: String, parent: Option[AmfObject]
     // throw a parser-side warning validation error if no annotation can be found
     val customDomainProperty = ctx
       .findAnnotation(annotation, SearchScope.All)
-      .getOrElse(
-        CustomDomainProperty(Annotations(entry)).withName(annotation, Annotations(entry.key)))
+      .getOrElse(CustomDomainProperty(Annotations(entry)).withName(annotation, Annotations(entry.key)))
     validateAllowedTargets(customDomainProperty)
     domainExtension
       .setWithoutId(DomainExtensionModel.Extension, dataNode, Annotations.inferred())
@@ -86,13 +108,11 @@ private case class ExtensionParser(annotation: String, parent: Option[AmfObject]
         if (allowedTargets.map(_.value()).intersect(target).isEmpty) {
           val ramlTarget         = VocabularyMappings.uriToRaml.get(target.head)
           val ramlAllowedTargets = allowedTargets.flatMap(uri => VocabularyMappings.uriToRaml.get(uri.value()))
-          val msg = s"Annotation $annotation not allowed in target ${
-            ramlTarget
-              .getOrElse("")
-          }, allowed targets: ${ramlAllowedTargets.mkString(", ")}"
+          val msg = s"Annotation $annotation not allowed in target ${ramlTarget
+            .getOrElse("")}, allowed targets: ${ramlAllowedTargets.mkString(", ")}"
           parent match {
             case Some(obj) => ctx.eh.violation(InvalidAnnotationTarget, obj, msg, entry.location)
-            case None => ctx.eh.violation(InvalidAnnotationTarget, "", msg, entry.location)
+            case None      => ctx.eh.violation(InvalidAnnotationTarget, "", msg, entry.location)
           }
         }
       case _ =>
