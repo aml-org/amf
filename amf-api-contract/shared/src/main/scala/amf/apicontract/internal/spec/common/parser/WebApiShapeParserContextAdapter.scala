@@ -1,9 +1,16 @@
 package amf.apicontract.internal.spec.common.parser
 
+import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.common.OasWebApiDeclarations
 import amf.apicontract.internal.spec.jsonschema.JsonSchemaWebApiContext
-import amf.apicontract.internal.spec.oas.parser.context.{Oas2Syntax, Oas2WebApiContext, Oas3Syntax, Oas3WebApiContext, OasLikeWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.{
+  Oas2Syntax,
+  Oas2WebApiContext,
+  Oas3Syntax,
+  Oas3WebApiContext,
+  OasLikeWebApiContext
+}
 import amf.apicontract.internal.spec.raml.parser.context.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.apicontract.internal.spec.raml.parser.external.DefaultRamlExternalSchemaExpressionFactory
 import amf.apicontract.internal.spec.spec.{toOas, toOasDeclarations}
@@ -31,6 +38,8 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
   override def spec: Spec = ctx.spec
 
   override def syntax: SpecSyntax = ctx.syntax
+
+  override def extensionsFacade: SemanticExtensionsFacade = ctx.extensionsFacade
 
   override def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo): Unit = ctx match {
     case ramlCtx: RamlWebApiContext => ramlCtx.closedRamlTypeShape(shape, ast, shapeType, typeInfo)
