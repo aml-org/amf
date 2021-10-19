@@ -25,12 +25,18 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
 
   test("Resource loader shouldn't have absolute path if ref and base aren't absolute") {
     val mappings = Map(
-      "resource::really-cool-urn:1.0.0:raml:zip:main.raml" -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/main.raml",
-      "something.raml"                                     -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/something.raml",
-      "examples/something/get-something-response.raml"     -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/get-something-response.raml",
-      "examples/something/put-something-request.raml"      -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/put-something-request.raml",
-      "examples/common/async-response.raml"                -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/common/async-response.raml",
-      "libraries/resourceTypes.raml"                       -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/libraries/resourceTypes.raml",
+      "resource::really-cool-urn:1.0.0:raml:zip:main.raml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/main.raml"),
+      "something.raml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/something.raml"),
+      "examples/something/get-something-response.raml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/get-something-response.raml"),
+      "examples/something/put-something-request.raml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/something/put-something-request.raml"),
+      "examples/common/async-response.raml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/examples/common/async-response.raml"),
+      "libraries/resourceTypes.raml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/libraries/resourceTypes.raml"),
     )
     val url          = "resource::really-cool-urn:1.0.0:raml:zip:main.raml"
     val errorHandler = DefaultParserErrorHandler()
@@ -46,11 +52,16 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
   // APIMF-3118
   test("Resource loader should find nested references") {
     val mappings = Map(
-      "resource::37fab092-be99-4538-b5ce-b004c5439f6d:refexample:1.0.1:oas:zip:example.json" -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/example.json",
-      "exchange.json"                                                                        -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/exchange.json",
-      "components/schemas/okResponse.json"                                                 -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/okResponse.json",
-      "components/schemas/item.json"                                                         -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/item.json",
-      "components/schemas/nested.json"                                                       -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/nested.json",
+      "resource::37fab092-be99-4538-b5ce-b004c5439f6d:refexample:1.0.1:oas:zip:example.json" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/example.json"),
+      "exchange.json" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/exchange.json"),
+      "components/schemas/okResponse.json" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/okResponse.json"),
+      "components/schemas/item.json" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/item.json"),
+      "components/schemas/nested.json" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/uri-file-prefix/components/schemas/nested.json"),
     )
     val url          = "resource::37fab092-be99-4538-b5ce-b004c5439f6d:refexample:1.0.1:oas:zip:example.json"
     val errorHandler = DefaultParserErrorHandler()
@@ -65,9 +76,12 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
 
   test("Parsing context generated in extends resolution stage for raml traits") {
     val mappings = Map(
-      "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml" -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/townfile.raml",
-      "some-modules/for-health-check.raml"                     -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/for-health-check.raml",
-      "some-modules/trait.raml"                                -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/trait.raml",
+      "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/townfile.raml"),
+      "some-modules/for-health-check.raml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/for-health-check.raml"),
+      "some-modules/trait.raml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/extends-stage-traits/some-modules/trait.raml"),
     )
     val url     = "resource::really-cool-urn:1.0.0:raml:zip:townfile.raml"
     val loaders = Seq(new URNResourceLoader(mappings))
@@ -81,12 +95,47 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     }
   }
 
-  class URNResourceLoader(mappings: Map[String, String]) extends ResourceLoader {
+  // APIMF-3384
+  test("should accept content URLs starting with 'jar:'") {
+    val mappings = Map(
+      "resource::com.mycompany:consumer-api:1.0.0:oas:zip:consumer.yaml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/jar-protocol/consumer.yaml",
+        "jar:file:/zip/consumerYaml.zip!/consumer.yaml"
+      ),
+      "utility.yaml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/jar-protocol/utility.yaml",
+        "jar:file:/zip/consumerYaml.zip!/utility.yaml"
+      ),
+    )
+    val url = "resource::com.mycompany:consumer-api:1.0.0:oas:zip:consumer.yaml"
+    val loaders = Seq(new URNResourceLoader(mappings))
+    val env     = Environment().withLoaders(loaders)
+    for {
+      unit   <- RuntimeCompiler.apply(url, None, None, base = Context(platform), cache = Cache(), env = env)
+      _      <- Future.successful(RuntimeResolver.resolve(Raml10.name, unit, ResolutionPipeline.EDITING_PIPELINE))
+      report <- RuntimeValidator(unit, Raml10Profile, RAMLStyle, resolved = true)
+    } yield {
+      report.results should have size 0
+    }
+  }
+
+  case class CustomContentResult(actualPath: String, customPath: String)
+
+  object CustomContentResult {
+    def apply(actualPath: String, customPath: String) = new CustomContentResult(actualPath, customPath)
+    def apply(actualPath: String)                     = new CustomContentResult(actualPath, actualPath)
+  }
+
+  class URNResourceLoader(mappings: Map[String, CustomContentResult]) extends ResourceLoader {
 
     override def fetch(resource: String): Future[Content] = {
       mappings
         .get(resource)
-        .map(platform.resolve)
+        .map(url => {
+          platform
+            .resolve(url.actualPath)
+            .map(content => new Content(content.stream, url.customPath))
+        })
         .getOrElse(throw FileNotFound(new RuntimeException(s"Couldn't find resource $resource")))
     }
 
