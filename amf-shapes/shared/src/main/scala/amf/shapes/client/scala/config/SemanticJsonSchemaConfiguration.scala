@@ -1,8 +1,7 @@
 package amf.shapes.client.scala.config
 
 import amf.aml.client.scala.AMLConfiguration
-import amf.shapes.internal.annotations.ShapeSerializableAnnotations
-import amf.shapes.internal.entities.ShapeEntities
+import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.JsonSchemaDialectParsePlugin
 
 object SemanticJsonSchemaConfiguration {
