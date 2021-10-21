@@ -26,6 +26,11 @@ private[amf] object ShapeEntities extends Entities {
     SchemaDependenciesModel,
     CreativeWorkModel,
     IriTemplateMappingModel,
-    DiscriminatorValueMappingModel
+    DiscriminatorValueMappingModel,
+    DefaultVocabularyModel,
+    SemanticContextModel,
+    CuriePrefixModel,
+    ContextMappingModel,
+    BaseIRIModel
   )
 }
