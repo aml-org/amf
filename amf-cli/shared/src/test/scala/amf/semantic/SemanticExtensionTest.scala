@@ -1,4 +1,4 @@
-package amf.internal.scala.semantic
+package amf.semantic
 
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.client.scala.model.domain.api.Api
@@ -12,7 +12,7 @@ class SemanticExtensionTest extends AsyncFunSuite with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  private val basePath = "file://amf-api-contract/shared/src/test/resources/semantic/"
+  private val basePath = "file://amf-cli/shared/src/test/resources/semantic/"
 
   test("Apply semantic extension to RAML 1.0") {
     assertModel("dialect.yaml", "api.raml") { lookupPagination }
