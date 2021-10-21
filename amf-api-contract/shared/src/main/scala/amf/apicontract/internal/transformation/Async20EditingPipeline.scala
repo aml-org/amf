@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation
 
+import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
 import amf.apicontract.internal.spec.async.transformation.{
   AsyncContentTypeResolutionStage,
   AsyncExamplePropagationResolutionStage,
@@ -37,7 +38,8 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
       new AsyncExamplePropagationResolutionStage(),
       new ServerVariableExampleResolutionStage(),
       new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
-      new AnnotationRemovalStage()
+      new AnnotationRemovalStage(),
+      SemanticExtensionFlatteningStage
     ) ++ url
 }
 

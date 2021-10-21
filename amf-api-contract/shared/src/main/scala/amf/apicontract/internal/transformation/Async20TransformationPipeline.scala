@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation
 
+import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
 import amf.apicontract.internal.spec.async.transformation.{
   AsyncContentTypeResolutionStage,
   AsyncExamplePropagationResolutionStage,
@@ -33,7 +34,8 @@ class Async20TransformationPipeline private (override val name: String) extends 
       new PathDescriptionNormalizationStage(Async20Profile),
       new CleanReferencesStage(),
       new DeclarationsRemovalStage(),
-      new AnnotationRemovalStage()
+      new AnnotationRemovalStage(),
+      SemanticExtensionFlatteningStage
     )
 }
 

@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation
 
+import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
 import amf.apicontract.internal.spec.common.transformation.stage._
 import amf.apicontract.internal.transformation.stages.{ExtensionsResolutionStage, WebApiReferenceResolutionStage}
 import amf.core.client.common.transform._
@@ -30,7 +31,8 @@ class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override v
       new MediaTypeResolutionStage(profileName, keepEditingInfo = true),
       new ResponseExamplesResolutionStage(),
       new PayloadAndParameterResolutionStage(profileName),
-      new AnnotationRemovalStage()
+      new AnnotationRemovalStage(),
+      SemanticExtensionFlatteningStage
     ) ++ url
   }
 
