@@ -1,0 +1,132 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "doc:sourceSpec": "ASYNC 2.0"
+    },
+    {
+      "@id": "#/async-api",
+      "@type": [
+        "apiContract:AsyncAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Something",
+      "core:version": "1.0.1",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/async-api/endpoint/%2Fendpoint"
+        }
+      ]
+    },
+    {
+      "@id": "#/async-api/endpoint/%2Fendpoint",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/endpoint",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs"
+        }
+      ]
+    },
+    {
+      "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "subscribe",
+      "core:description": "a channel",
+      "apiContract:guiSummary": "summary",
+      "apiContract:returns": [
+        {
+          "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response"
+        }
+      ],
+      "apiContract:tag": [
+        {
+          "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/tag/tag/atag"
+        }
+      ],
+      "apiContract:operationId": "subs"
+    },
+    {
+      "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response/payload/application%2Fjson"
+        }
+      ],
+      "core:displayName": "lightMeasured",
+      "core:title": "Light measured",
+      "core:summary": "Inform about environmental lighting conditions of a particular streetlight.",
+      "http://a.ml/vocab#pagination": {
+        "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response/customDomainProperties/extension/"
+      }
+    },
+    {
+      "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/tag/tag/atag",
+      "@type": [
+        "apiContract:Tag",
+        "doc:DomainElement"
+      ],
+      "core:name": "atag"
+    },
+    {
+      "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response/payload/application%2Fjson",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "apiContract:schemaMediaType": "application/schema+json;version=draft-07"
+    },
+    {
+      "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response/customDomainProperties/extension/",
+      "@type": [
+        "http://a.ml/vocab#Pagination",
+        "file://amf-cli/shared/src/test/resources/semantic/dialect.yaml#/declarations/Pagination",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "http://a.ml/vocab#PageSize": 5
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/async-api"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/api.async.yaml",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}
