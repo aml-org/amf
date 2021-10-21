@@ -2,6 +2,8 @@ package amf.apicontract.client.scala
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
+import amf.aml.client.scala.model.domain.SemanticExtension
+import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
 import amf.apicontract.internal.entities.{APIEntities, FragmentEntities}
@@ -56,7 +58,7 @@ trait APIConfigurationBuilder {
   private[amf] def common(): AMFConfiguration = {
     val configuration = AMLConfiguration.predefined()
     ApiRegister.register() // TODO ARM remove when APIMF-3000 is done
-    val coreEntities = AMFGraphConfiguration.predefined().getRegistry.entitiesRegistry.domainEntities
+    val coreEntities = AMFGraphConfiguration.predefined().getRegistry.getEntitiesRegistry.domainEntities
     val result = new AMFConfiguration(
       configuration.resolvers,
       configuration.errorHandlerProvider,
@@ -291,7 +293,7 @@ object APIConfiguration extends APIConfigurationBuilder {
   */
 class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
-                                     override private[amf] val registry: AMFRegistry,
+                                     override private[amf] val registry: AMLRegistry,
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
     extends ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
@@ -350,6 +352,9 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMFConfiguration =
     super._withAnnotations(annotations)
+
+  private[amf] override def withExtensions(dialect: Dialect): AMFConfiguration =
+    super.withExtensions(dialect).asInstanceOf[AMFConfiguration]
 
   private[amf] override def withValidationProfile(profile: ValidationProfile): AMFConfiguration =
     super._withValidationProfile(profile)
@@ -426,10 +431,10 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMFConfiguration =
     super._withExecutionEnvironment(executionEnv)
 
-  override protected def copy(resolvers: AMFResolvers,
-                              errorHandlerProvider: ErrorHandlerProvider,
-                              registry: AMFRegistry,
-                              listeners: Set[AMFEventListener],
-                              options: AMFOptions): AMFConfiguration =
-    new AMFConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
+  override protected[amf] def copy(resolvers: AMFResolvers,
+                                   errorHandlerProvider: ErrorHandlerProvider,
+                                   registry: AMFRegistry,
+                                   listeners: Set[AMFEventListener],
+                                   options: AMFOptions): AMFConfiguration =
+    new AMFConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
 }

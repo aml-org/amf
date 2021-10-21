@@ -1,4 +1,5 @@
 package amf.validation
+import amf.aml.client.scala.AMLConfiguration
 import amf.apicontract.client.scala.RAMLConfiguration
 import amf.apicontract.internal.spec.payload.PayloadParsePlugin
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
@@ -71,7 +72,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "yaml" => PayloadYamlHint
       }
       val config        = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
-      val payloadClient = AMFGraphConfiguration.predefined().withPlugin(PayloadParsePlugin).baseUnitClient()
+      val payloadClient = AMLConfiguration.predefined().withPlugin(PayloadParsePlugin).baseUnitClient()
       val client        = config.baseUnitClient()
       val candidates: Future[Seq[ValidationCandidate]] = for {
         library <- client.parse(payloadsPath + libraryFile).map(_.baseUnit)

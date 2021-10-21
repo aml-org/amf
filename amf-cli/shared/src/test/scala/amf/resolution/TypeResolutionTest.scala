@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
@@ -24,7 +25,9 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
     val adopt: Shape => Unit = shape => { shape.adopted("/test") }
 
     val ramlCtx: Raml10WebApiContext =
-      new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(UnhandledErrorHandler)))
+      new Raml10WebApiContext("",
+                              Nil,
+                              ParserContext(config = LimitedParseConfig(UnhandledErrorHandler, AMLRegistry.empty)))
 
     implicit val ctx: ShapeParserContext = WebApiShapeParserContextAdapter(ramlCtx)
 

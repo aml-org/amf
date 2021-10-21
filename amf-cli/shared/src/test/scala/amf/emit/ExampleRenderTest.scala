@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
@@ -77,8 +78,11 @@ class ExampleRenderTest extends AsyncFunSuite with FileAssertionTest {
     cycle("simple-yaml-object.raml", "yaml-object-as-json.json", mediaType = `application/json`)
   }
 
-  private def cycle(source: String, golden: String, removeRaw: Boolean = false, mediaType: String = `application/json`) = {
-    val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+  private def cycle(source: String,
+                    golden: String,
+                    removeRaw: Boolean = false,
+                    mediaType: String = `application/json`) = {
+    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
       unit    <- config.baseUnitClient().parse(basePath + source).map(_.baseUnit)
       example <- findExample(unit, removeRaw)
@@ -96,7 +100,10 @@ class ExampleRenderTest extends AsyncFunSuite with FileAssertionTest {
         case Some(a) =>
           val ast = a.ast.asInstanceOf[YDocument].as[YMap]
           val context =
-            new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(DefaultErrorHandler())))
+            new Raml10WebApiContext(
+              "",
+              Nil,
+              ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty)))
           val anyShape = AnyShape()
           RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
             WebApiShapeParserContextAdapter(context)).parse()
