@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.contexts.parser
 
 import amf.core.client.scala.config.ParsingOptions
-import amf.core.client.scala.model.domain.Shape
+import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
@@ -167,7 +167,7 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
 
   override def shapes: Map[String, Shape] = Map()
 
-  override def closedShape(node: String, ast: YMap, shape: String): Unit = {}
+  override def closedShape(node: AmfObject, ast: YMap, shape: String): Unit = {}
 
   override def registerJsonSchema(url: String, shape: AnyShape): Unit =
     ctx.globalSpace.update(normalizedJsonPointer(url), shape)
@@ -213,6 +213,9 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
 
   override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
+    ctx.violation(violationId, node, message)
+
+  override def violation(violationId: ValidationSpecification, node: AmfObject, message: String): Unit =
     ctx.violation(violationId, node, message)
 
   override def addNodeRefIds(ids: mutable.Map[YNode, String]): Unit = {}
