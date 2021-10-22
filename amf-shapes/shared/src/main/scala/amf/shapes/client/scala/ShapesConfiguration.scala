@@ -138,7 +138,7 @@ class ShapesConfiguration private[amf] (override private[amf] val resolvers: AMF
     super._withEntities(entities)
 
   private[amf] override def withExtensions(dialect: Dialect): ShapesConfiguration = {
-    copy(registry = registry.withExtensions(dialect.extensions().map(e => e.extensionName().value() -> dialect).toMap))
+    super.withExtensions(dialect).asInstanceOf[ShapesConfiguration]
   }
 
   private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): ShapesConfiguration =
