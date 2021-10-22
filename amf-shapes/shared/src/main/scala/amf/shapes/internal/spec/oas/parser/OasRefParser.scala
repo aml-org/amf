@@ -38,7 +38,7 @@ class OasRefParser(map: YMap,
       }
   }
 
-  private def findDeclarationAndParse(entry: YMapEntry) = {
+  private def findDeclarationAndParse(entry: YMapEntry): Option[AnyShape] = {
     val rawRef: String = entry.value
     val definitionName = OasShapeDefinitions.stripDefinitionsPrefix(rawRef)
     ctx.findType(definitionName, SearchScope.All) match {

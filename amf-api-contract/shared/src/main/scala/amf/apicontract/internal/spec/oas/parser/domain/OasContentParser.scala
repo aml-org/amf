@@ -8,8 +8,8 @@ import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.annotations.TrackedElement
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
-import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.domain.metamodel.ExampleModel
+import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasExamplesParser}
 import amf.shapes.internal.spec.oas.parser.OasTypeParser
 import org.yaml.model.{YMap, YMapEntry}
@@ -43,6 +43,14 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
   private def getMediaType(mediaTypeNode: ScalarNode) =
     mediaTypeNode.text().toString
 
+  private def createNameFromRefUrl(entry: YMapEntry): String = {
+    val hasRef = entry.value.value.asInstanceOf[YMap].key("$ref")
+    if (hasRef.isDefined) {
+      val name = entry.value.value.toString.split("/").last
+      if (name.endsWith("\"")) name.substring(0, name.length() - 1) else name
+    } else "schema"
+  }
+
   def parse(): Payload = {
     val map     = entry.value.as[YMap]
     val payload = buildPayloadWithMediaType()
@@ -53,7 +61,7 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, shape => shape.withName("schema"))(
+        OasTypeParser(entry, shape => shape.withName(createNameFromRefUrl(entry)))(
           WebApiShapeParserContextAdapter(ctx))
           .parse()
           .map { s =>
@@ -74,10 +82,9 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
       "encoding",
       entry => {
         val encodings = OasEncodingParser(entry.value.as[YMap], payload.withEncoding).parse()
-        payload.fields.setWithoutId(
-                           PayloadModel.Encoding,
-                           AmfArray(encodings, Annotations(entry.value)),
-                           Annotations(entry))
+        payload.fields.setWithoutId(PayloadModel.Encoding,
+                                    AmfArray(encodings, Annotations(entry.value)),
+                                    Annotations(entry))
       }
     )
 
