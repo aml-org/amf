@@ -32,6 +32,22 @@ class JsonLdSemanticExtensionsParseTest extends AsyncFunSuite with Matchers {
     assertParsedModel("dialect.yaml", "instance.async.jsonld", lookupPagination)
   }
 
+  test("Parse JSON-LD with scalar semantic extensions for RAML 1.0") {
+    assertParsedModel("scalar-dialect.yaml", "instance-scalar.raml.jsonld", lookupScalarPagination)
+  }
+
+  test("Parse JSON-LD with scalar semantic extensions for OAS 1.0") {
+    assertParsedModel("scalar-dialect.yaml", "instance-scalar.oas20.jsonld", lookupScalarPagination)
+  }
+
+  test("Parse JSON-LD with scalar semantic extensions for OAS 3.0") {
+    assertParsedModel("scalar-dialect.yaml", "instance-scalar.oas30.jsonld", lookupScalarPagination)
+  }
+
+  test("Parse JSON-LD with scalar semantic extensions for ASYNC 2.0") {
+    assertParsedModel("scalar-dialect.yaml", "instance-scalar.async.jsonld", lookupScalarPagination)
+  }
+
   private def assertParsedModel(dialectPath: String,
                                 jsonLdPath: String,
                                 assertion: Document => Assertion): Future[Assertion] = {
@@ -64,6 +80,16 @@ class JsonLdSemanticExtensionsParseTest extends AsyncFunSuite with Matchers {
       .head
       .graph
       .scalarByProperty("http://a.ml/vocab#PageSize")
+      .head shouldBe 5
+  }
+
+  private def lookupScalarPagination(document: Document): Assertion = {
+    val extension =
+      document.encodes.asInstanceOf[Api].endPoints.head.operations.head.responses.head
+
+    extension.graph.containsProperty("http://a.ml/vocab#pagination") shouldBe true
+    extension.graph
+      .scalarByProperty("http://a.ml/vocab#pagination")
       .head shouldBe 5
   }
 }
