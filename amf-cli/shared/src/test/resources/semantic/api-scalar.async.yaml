@@ -8,6 +8,4 @@ channels:
     subscribe:
       operationId: subs
       message:
-        name: lightMeasured
-        x-pagination:
-          pageSize: 5
+        x-pageSize: 5
