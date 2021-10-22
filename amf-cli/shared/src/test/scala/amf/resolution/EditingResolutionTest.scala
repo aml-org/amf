@@ -1052,119 +1052,131 @@ class EditingResolutionTest extends ResolutionTest {
   }
 
   // Merged inherit tests - Non ignored tests work
-  {
-    // Fails w/Stack overflow
-    multiGoldenTest("Merge inlined recursive JSON Schemas RAML 1.0", "api.%s", ignored = true) { config =>
-      cycle(
-        "api.raml",
-        config.golden,
-        Raml10YamlHint,
-        target = AmfJsonHint,
-        directory = resolutionPath + "merge-inlined-recursive-json-schemas/",
-        transformWith = Some(Raml10),
-        renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledErrorHandler)
-      )
-    }
 
-    // Fails w/ class cast exception in shape normalization
-    /**
-      * Traversal:
-      *   SomeSchema (@id: ../endpoints/../schema/schema
-      *     property: causes (@id: ../endpoints/../schema/schema/property/causes)
-      *       range: array (@id: ../endpoints/../schema/schema/property/causes/array/causes)
-      *         items: SomeSchema (@id: ...#/definitions/SomeSchema) <- Recursive shape should be detected here!
-      *           property: causes (@id: ../endpoints/../schema/schema/property/causes) <- But instead here
-      */
-    multiGoldenTest("Merge recursive JSON Schema fragments RAML 1.0", "api.%s", ignored = true) { config =>
-      cycle(
-        "api.raml",
-        config.golden,
-        Raml10YamlHint,
-        target = AmfJsonHint,
-        directory = resolutionPath + "merge-recursive-json-schema-fragments/",
-        transformWith = Some(Raml10),
-        renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledErrorHandler)
-      )
-    }
+  // Fails w/Stack overflow
+  multiGoldenTest("Merge inlined recursive JSON Schemas RAML 1.0", "api.%s", ignored = true) { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "merge-inlined-recursive-json-schemas/",
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledErrorHandler)
+    )
+  }
 
-    multiGoldenTest("Merge inherits RAML 1.0", "api.%s") { config =>
-      cycle(
-        "api.raml",
-        config.golden,
-        Raml10YamlHint,
-        target = AmfJsonHint,
-        directory = resolutionPath + "merge-inherits/",
-        transformWith = Some(Raml10),
-        renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledErrorHandler)
-      )
-    }
+  // Fails w/ class cast exception in shape normalization
+  /**
+    * Traversal:
+    *   SomeSchema (@id: ../endpoints/../schema/schema
+    *     property: causes (@id: ../endpoints/../schema/schema/property/causes)
+    *       range: array (@id: ../endpoints/../schema/schema/property/causes/array/causes)
+    *         items: SomeSchema (@id: ...#/definitions/SomeSchema) <- Recursive shape should be detected here!
+    *           property: causes (@id: ../endpoints/../schema/schema/property/causes) <- But instead here
+    */
+  multiGoldenTest("Merge recursive JSON Schema fragments RAML 1.0", "api.%s", ignored = true) { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "merge-recursive-json-schema-fragments/",
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledErrorHandler)
+    )
+  }
 
-    multiGoldenTest("Merge recursive inherits RAML 1.0", "api.%s") { config =>
-      cycle(
-        "api.raml",
-        config.golden,
-        Raml10YamlHint,
-        target = AmfJsonHint,
-        directory = resolutionPath + "merge-recursive-inherits/",
-        transformWith = Some(Raml10),
-        renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledErrorHandler)
-      )
-    }
+  multiGoldenTest("Merge inherits RAML 1.0", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "merge-inherits/",
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledErrorHandler)
+    )
+  }
 
-    multiGoldenTest("Merge inherits with JSON Schema fragments in RAML 1.0", "api.%s") { config =>
-      cycle(
-        "api.raml",
-        config.golden,
-        Raml10YamlHint,
-        target = AmfJsonHint,
-        directory = resolutionPath + "merge-inherits-json-schema-fragments/",
-        transformWith = Some(Raml10),
-        renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledErrorHandler)
-      )
-    }
+  multiGoldenTest("Merge recursive inherits RAML 1.0", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "merge-recursive-inherits/",
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledErrorHandler)
+    )
+  }
 
-    multiGoldenTest("OAS 3.0 discriminators", "api.%s") { config =>
-      cycle(
-        "api.yaml",
-        config.golden,
-        Oas30YamlHint,
-        target = AmfJsonHint,
-        directory = resolutionPath + "oas30-discriminator/",
-        transformWith = Some(Oas30),
-        renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledErrorHandler)
-      )
-    }
+  multiGoldenTest("Merge inherits with JSON Schema fragments in RAML 1.0", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "merge-inherits-json-schema-fragments/",
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledErrorHandler)
+    )
+  }
 
-    multiGoldenTest("OAS 3.0 discriminators from JSON-LD", "api.target.%s") { config =>
-      cycle(
-        "api.source.flattened.jsonld",
-        config.golden,
-        AmfJsonHint,
-        target = AmfJsonHint,
-        directory = resolutionPath + "oas30-discriminator-json-ld/",
-        transformWith = Some(Oas30),
-        renderOptions = Some(config.renderOptions)
-      )
-    }
+  multiGoldenTest("OAS 3.0 discriminators", "api.%s") { config =>
+    cycle(
+      "api.yaml",
+      config.golden,
+      Oas30YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "oas30-discriminator/",
+      transformWith = Some(Oas30),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledErrorHandler)
+    )
+  }
 
-    multiGoldenTest("OAS 3.0 discriminators invalid mapping", "api.%s") { config =>
-      cycle(
-        "api.yaml",
-        config.golden,
-        Oas30YamlHint,
-        target = AmfJsonHint,
-        directory = resolutionPath + "oas30-discriminator-invalid-mapping/",
-        transformWith = Some(Oas30),
-        renderOptions = Some(config.renderOptions)
-      )
-    }
+  multiGoldenTest("OAS 3.0 discriminators from JSON-LD", "api.target.%s") { config =>
+    cycle(
+      "api.source.flattened.jsonld",
+      config.golden,
+      AmfJsonHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "oas30-discriminator-json-ld/",
+      transformWith = Some(Oas30),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
 
+  multiGoldenTest("OAS 3.0 discriminators invalid mapping", "api.%s") { config =>
+    cycle(
+      "api.yaml",
+      config.golden,
+      Oas30YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "oas30-discriminator-invalid-mapping/",
+      transformWith = Some(Oas30),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  // finish Merged inherit tests
+
+  test("OAS 3.0 with equal local and external ref should resolved equally") {
+    cycle(
+      "api.yaml",
+      "output.json",
+      Oas30YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "external-schema-ref/",
+      transformWith = Some(Oas30),
+      eh = Some(UnhandledErrorHandler)
+    )
   }
 
   override val basePath: String = ""
