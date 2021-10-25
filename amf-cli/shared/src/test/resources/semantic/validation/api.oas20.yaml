@@ -1,0 +1,17 @@
+swagger: "2.0"
+info:
+  title: Something
+  version: '1.0'
+paths:
+  /endpoint:
+    get:
+      responses:
+        200:
+          description: Something
+          x-pagination: 5
+        201:
+          description: Something
+          x-pagination: -4
+        203:
+          description: Something
+          x-pagination: 20
