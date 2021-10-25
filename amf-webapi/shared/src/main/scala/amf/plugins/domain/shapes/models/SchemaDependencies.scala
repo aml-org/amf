@@ -1,0 +1,34 @@
+package amf.plugins.domain.shapes.models
+
+import amf.core.metamodel.Obj
+import amf.core.model.domain.Shape
+import amf.core.parser.{Annotations, Fields}
+import amf.plugins.domain.shapes.metamodel.SchemaDependenciesModel
+import amf.plugins.domain.shapes.metamodel.SchemaDependenciesModel.SchemaTarget
+import org.yaml.model.YMapEntry
+
+/**
+  * Schema Dependency
+  */
+case class SchemaDependencies(fields: Fields, annotations: Annotations) extends Dependencies {
+
+  def schemaTarget: Shape                       = fields.field(SchemaTarget)
+  def withSchemaTarget(shape: Shape): this.type = set(SchemaTarget, shape)
+
+  override def meta: Obj = SchemaDependenciesModel
+
+  /** Call after object has been adopted by specified parent. */
+  override def adopted(parent: String, cycle: Seq[String]): SchemaDependencies.this.type = {
+    simpleAdoption(parent)
+    Option(schemaTarget).foreach(_.adopted(id, cycle :+ id))
+    this
+  }
+}
+
+object SchemaDependencies {
+  def apply(): SchemaDependencies = apply(Annotations())
+
+  def apply(ast: YMapEntry): SchemaDependencies = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): SchemaDependencies = SchemaDependencies(Fields(), annotations)
+}

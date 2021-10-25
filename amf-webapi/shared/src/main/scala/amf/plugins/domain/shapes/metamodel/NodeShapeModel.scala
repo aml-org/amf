@@ -62,6 +62,12 @@ object NodeShapeModel extends AnyShapeModel {
                            Shapes + "dependencies",
                            ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint"))
 
+  val SchemaDependencies = Field(
+    Array(SchemaDependenciesModel),
+    Shapes + "schemaDependencies",
+    ModelDoc(ModelVocabularies.Shapes, "schemaDependencies", "Applied schemas if property exists constraint")
+  )
+
   val specificFields = List(
     MinProperties,
     MaxProperties,
@@ -72,7 +78,8 @@ object NodeShapeModel extends AnyShapeModel {
     DiscriminatorMapping,
     Properties,
     PropertyNames,
-    Dependencies
+    Dependencies,
+    SchemaDependencies
   )
 
   override val fields: List[Field] =
