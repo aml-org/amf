@@ -1,12 +1,12 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement, Linkable, Shape}
 import amf.core.model.{BoolField, IntField, StrField}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.parser.{Annotations, FieldEntry, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel}
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel, PropertyDependenciesModel}
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import org.yaml.model.YPart
 
@@ -22,6 +22,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def discriminator: StrField                       = fields.field(Discriminator)
   def discriminatorValue: StrField                  = fields.field(DiscriminatorValue)
   def discriminatorMapping: Seq[IriTemplateMapping] = fields.field(DiscriminatorMapping)
+  def schemaDependencies: Seq[SchemaDependencies]   = fields.field(NodeShapeModel.SchemaDependencies)
   def properties: Seq[PropertyShape]                = fields.field(Properties)
   def dependencies: Seq[PropertyDependencies]       = fields.field(Dependencies)
   def additionalPropertiesSchema: Shape             = fields.field(AdditionalPropertiesSchema)
@@ -36,6 +37,8 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def withProperties(properties: Seq[PropertyShape]): this.type              = setArray(Properties, properties)
   def withDependencies(dependencies: Seq[PropertyDependencies]): this.type   = setArray(Dependencies, dependencies)
   def withPropertyNames(shape: Shape): this.type                             = set(PropertyNames, shape)
+  def withSchemaDependencies(dependencies: Seq[SchemaDependencies]): this.type =
+    setArray(NodeShapeModel.SchemaDependencies, dependencies)
 
   def withDependency(): PropertyDependencies = {
     val result = PropertyDependencies()
@@ -69,12 +72,46 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
       simpleAdoption(parent + "#/")
     if (!isCycle) {
       val newCycle: Seq[String] = cycle :+ id
-      properties.foreach(_.adopted(id, newCycle))
+      reAdoptPropertiesAndDependencies(newCycle)
       Option(additionalPropertiesSchema).foreach { shape =>
         shape.adopted(id, newCycle)
       }
     }
     this
+  }
+
+  private def reAdoptPropertiesAndDependencies(cycle: Seq[String]): Unit = {
+    val oldIdToPropertyMap = properties.filter(p => Option(p.id).isDefined).map(p => (p.id, p)).toMap
+    properties.foreach(_.adopted(id, cycle))
+
+    (schemaDependencies ++ dependencies).foreach { dep =>
+      dep.adopted(id, cycle)
+      reAdoptDependency(dep, oldIdToPropertyMap)
+    }
+  }
+
+  private def reAdoptDependency(dependency: Dependencies, oldIdToPropertyMap: Map[String, PropertyShape]) = {
+    dependency.fields.entry(PropertyDependenciesModel.PropertySource).foreach {
+      case entry @ FieldEntry(_, value) =>
+        val oldPropertyId = entry.scalar.value.toString
+        oldIdToPropertyMap.get(oldPropertyId).foreach { property =>
+          dependency.set(PropertyDependenciesModel.PropertySource,
+                         AmfScalar(property.id, entry.element.annotations),
+                         value.annotations)
+        }
+    }
+    dependency.fields.entry(PropertyDependenciesModel.PropertyTarget).foreach {
+      case entry @ FieldEntry(_, value) =>
+        val dependents = entry.array.scalars
+        val updatedDependents = dependents
+          .flatMap { field =>
+            oldIdToPropertyMap.get(field.value.toString)
+          }
+          .map(p => AmfScalar(p.id))
+        dependency.set(PropertyDependenciesModel.PropertyTarget,
+                       AmfArray(updatedDependents, entry.element.annotations),
+                       value.annotations)
+    }
   }
 
   override def linkCopy(): NodeShape = NodeShape().withId(id)
