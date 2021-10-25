@@ -125,18 +125,6 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-  // todo: json schema parser test? should expose json schema parser?
-  test("Not seq in dependencies entry at json schema type def") {
-    validate(
-      "error/not-seq-dependency-def-jsonchema.raml",
-      invalidSeq => {
-        invalidSeq.level should be("Violation")
-        invalidSeq.message should startWith("Expected scalar but found:")
-        invalidSeq.position.map(_.range) should be(Some(Range((42, 33), (50, 21))))
-      }
-    )
-  }
-
   test("Duplicated endpoints validations test") {
     validate(
       "error/dup_endpoint.raml",

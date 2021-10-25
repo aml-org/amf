@@ -6,13 +6,13 @@ import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Bool
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.metamodel.domain.{ModelDoc, ShapeModel, ModelVocabularies}
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.model.DataType
-import amf.core.model.document.{EncodesModel, ExternalFragment, BaseUnit}
+import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{Position, Value, FieldEntry, Annotations, Fields}
+import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.core.remote.Vendor
 import amf.core.utils.AmfStrings
 import amf.core.vocabulary.Namespace
@@ -21,18 +21,19 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.emitter.oas.{JsonSchemaEmitterContext, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.common.{ShapeDependenciesEmitter, TypeEmitterFactory}
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{RamlTypeDefStringValueMatcher, OasTypeDefMatcher, RamlTypeDefMatcher}
+import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.shapes.parser.{TypeDefYTypeMapping, TypeDefXsdMapping, XsdTypeDefMapping}
+import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YType, YScalar, YNode}
+import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -565,8 +566,15 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
 
     val propertiesMap = ListMap(node.properties.map(p => p.id -> p): _*)
 
-    fs.entry(NodeShapeModel.Dependencies)
-      .map(f => result += RamlShapeDependenciesEmitter(f, ordering, propertiesMap))
+    val emitterFactory: TypeEmitterFactory = shape =>
+      OasTypeEmitter(shape, ordering, Seq(), references, Seq(), Seq())(toOas(spec))
+    if (fs.entry(NodeShapeModel.Dependencies).isDefined) {
+      result += ShapeDependenciesEmitter(node,
+                                         ordering,
+                                         propertiesMap,
+                                         isRamlExtension = true,
+                                         typeFactory = emitterFactory)
+    }
 
     if (!typeEmitted)
       result += MapEntryEmitter("type", "object")
@@ -853,57 +861,6 @@ case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refer
   }
 
   override val typeName: Option[String] = Some("file")
-}
-
-case class RamlShapeDependenciesEmitter(f: FieldEntry, ordering: SpecOrdering, props: ListMap[String, PropertyShape])(
-    implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
-  override def emit(b: EntryBuilder): Unit = {
-    b.entry(
-      "dependencies".asRamlAnnotation,
-      _.obj { b =>
-        val result =
-          f.array.values.map(v =>
-            RamlPropertyDependenciesEmitter(v.asInstanceOf[PropertyDependencies], ordering, props))
-        traverse(ordering.sorted(result), b)
-      }
-    )
-  }
-
-  override def position(): Position = pos(f.value.annotations)
-}
-
-case class RamlPropertyDependenciesEmitter(
-    property: PropertyDependencies,
-    ordering: SpecOrdering,
-    properties: ListMap[String, PropertyShape])(implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
-
-  override def emit(b: EntryBuilder): Unit = {
-    properties
-      .get(property.propertySource.value())
-      .foreach(p => {
-        b.entry(
-          p.name.value(),
-          b => {
-            val targets = property.fields
-              .entry(PropertyDependenciesModel.PropertyTarget)
-              .map(f => {
-                f.array.scalars.flatMap(iri =>
-                  properties.get(iri.value.toString).map(p => AmfScalar(p.name.value(), iri.annotations)))
-              })
-
-            targets.foreach(target => {
-              b.list { b =>
-                traverse(ordering.sorted(target.map(t => ScalarEmitter(t))), b)
-              }
-            })
-          }
-        )
-      })
-  }
-
-  override def position(): Position = pos(property.annotations) // TODO check this
 }
 
 case class RamlUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -1929,7 +1886,15 @@ case class OasNodeShapeEmitter(node: NodeShape,
 
     val properties = ListMap(node.properties.map(p => p.id -> p): _*)
 
-    fs.entry(NodeShapeModel.Dependencies).map(f => result += OasShapeDependenciesEmitter(f, ordering, properties))
+    val emitterFactory: TypeEmitterFactory = shape =>
+      OasTypeEmitter(shape, ordering, Seq(), references, pointer, schemaPath, isHeader)
+    if (fs.entry(NodeShapeModel.SchemaDependencies).isDefined || fs.entry(NodeShapeModel.Dependencies).isDefined) {
+      result += ShapeDependenciesEmitter(node,
+                                         ordering,
+                                         properties,
+                                         isRamlExtension = false,
+                                         typeFactory = emitterFactory)
+    }
 
     fs.entry(NodeShapeModel.Inherits).map(f => result += OasShapeInheritsEmitter(f, ordering, references))
 
@@ -2010,55 +1975,6 @@ case class OasShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refere
   }
 
   override def position(): Position = pos(f.value.annotations)
-}
-
-case class OasShapeDependenciesEmitter(f: FieldEntry,
-                                       ordering: SpecOrdering,
-                                       propertiesMap: ListMap[String, PropertyShape])
-    extends EntryEmitter {
-  override def emit(b: EntryBuilder): Unit = {
-
-    b.entry(
-      "dependencies",
-      _.obj { b =>
-        val result = f.array.values.map(v =>
-          OasPropertyDependenciesEmitter(v.asInstanceOf[PropertyDependencies], ordering, propertiesMap))
-        traverse(ordering.sorted(result), b)
-      }
-    )
-  }
-
-  override def position(): Position = pos(f.value.annotations)
-}
-
-case class OasPropertyDependenciesEmitter(property: PropertyDependencies,
-                                          ordering: SpecOrdering,
-                                          properties: ListMap[String, PropertyShape])
-    extends EntryEmitter {
-
-  override def emit(b: EntryBuilder): Unit = {
-    properties
-      .get(property.propertySource.value())
-      .foreach(p => {
-        b.entry(
-          p.name.value(),
-          _.list { b =>
-            val targets = property.fields
-              .entry(PropertyDependenciesModel.PropertyTarget)
-              .map(f => {
-                f.array.scalars.flatMap(iri =>
-                  properties.get(iri.value.toString).map(p => AmfScalar(p.name.value(), iri.annotations)))
-              })
-
-            targets.foreach(target => {
-              traverse(ordering.sorted(target.map(t => ScalarEmitter(t))), b)
-            })
-          }
-        )
-      })
-  }
-
-  override def position(): Position = pos(property.annotations) // TODO check this
 }
 
 case class OasNilShapeEmitter(nil: NilShape, ordering: SpecOrdering) extends EntryEmitter {

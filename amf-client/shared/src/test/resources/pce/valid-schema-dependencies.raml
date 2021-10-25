@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: Example
+
+types:
+  sc:
+    type: |
+      {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+          "A": {
+            "type": "string"
+            },
+          "B": {
+            "type": "string"
+            }
+          },
+        "dependencies": {
+          "A" : { "required" : ["B"] }
+        }
+      }
+
+
+/foo:
+  post:
+    body:
+      application/json:
+        type: sc
+        example: |
+          {
+                "A": "12" , "B" : "12"
+          }
