@@ -13,7 +13,11 @@ import amf.core.internal.parser.domain.{Annotations, _}
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.AnnotationParser.parseExtensions
-import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.resolveAnnotation
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.{
+  isOasAnnotation,
+  isRamlAnnotation,
+  resolveAnnotation
+}
 import amf.shapes.internal.spec.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAnnotationTarget
 import amf.shapes.internal.vocabulary.VocabularyMappings
