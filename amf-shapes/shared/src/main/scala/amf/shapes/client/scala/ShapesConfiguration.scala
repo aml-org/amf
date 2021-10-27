@@ -1,11 +1,10 @@
 package amf.shapes.client.scala
 
-import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.document.DialectInstance
-import amf.aml.client.scala.model.domain.SemanticExtension
-import amf.aml.client.scala.{AMLBaseUnitClient, AMLConfiguration, AMLConfigurationState, AMLElementClient}
+import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
+import amf.aml.client.scala.{AMLConfiguration, AMLConfigurationState}
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
 import amf.aml.internal.entities.AMLEntities
+import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandlerProvider, ErrorHandlerProvider}
@@ -29,19 +28,19 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class ShapesConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                         override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
-                                        override private[amf] val registry: AMFRegistry,
+                                        override private[amf] val registry: AMLRegistry,
                                         override private[amf] val listeners: Set[AMFEventListener],
                                         override private[amf] val options: AMFOptions)
     extends AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
-  override protected def copy(resolvers: AMFResolvers = resolvers,
-                              errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
-                              registry: AMFRegistry = registry,
-                              listeners: Set[AMFEventListener] = listeners,
-                              options: AMFOptions = options): ShapesConfiguration =
-    new ShapesConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
+  override protected[amf] def copy(resolvers: AMFResolvers = resolvers,
+                                   errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
+                                   registry: AMFRegistry = registry,
+                                   listeners: Set[AMFEventListener] = listeners,
+                                   options: AMFOptions = options): ShapesConfiguration =
+    new ShapesConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
 
   /** Contains common AMF graph operations associated to documents */
   override def baseUnitClient(): ShapesBaseUnitClient = new ShapesBaseUnitClient(this)
@@ -138,8 +137,9 @@ class ShapesConfiguration private[amf] (override private[amf] val resolvers: AMF
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): ShapesConfiguration =
     super._withEntities(entities)
 
-  override private[amf] def withExtensions(extensions: Seq[SemanticExtension]): ShapesConfiguration =
-    copy(registry = registry.withExtensions(extensions))
+  private[amf] override def withExtensions(dialect: Dialect): ShapesConfiguration = {
+    super.withExtensions(dialect).asInstanceOf[ShapesConfiguration]
+  }
 
   private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): ShapesConfiguration =
     super._withAnnotations(annotations)
@@ -183,7 +183,7 @@ object ShapesConfiguration {
     new ShapesConfiguration(
       AMFResolvers.predefined(),
       DefaultErrorHandlerProvider,
-      AMFRegistry.empty,
+      AMLRegistry.empty,
       Set.empty,
       AMFOptions.default()
     )
@@ -192,7 +192,7 @@ object ShapesConfiguration {
   def predefined(): ShapesConfiguration = {
     ShapesRegister.register() // TODO ARM remove when APIMF-3000 is done
     val predefinedAMLConfig = AMLConfiguration.predefined()
-    val coreEntities        = AMFGraphConfiguration.predefined().getRegistry.entitiesRegistry.domainEntities
+    val coreEntities        = AMFGraphConfiguration.predefined().getRegistry.getEntitiesRegistry.domainEntities
     new ShapesConfiguration(
       predefinedAMLConfig.resolvers,
       predefinedAMLConfig.errorHandlerProvider,

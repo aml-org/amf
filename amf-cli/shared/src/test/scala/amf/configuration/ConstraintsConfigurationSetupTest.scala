@@ -36,7 +36,7 @@ class ConstraintsConfigurationSetupTest extends ConfigurationSetupTest {
   }
 
   private def onlyHasConstraintsOf(config: AMFConfiguration, vendors: Seq[Spec]): Boolean = {
-    val constraints = config.registry.constraintsRules
+    val constraints = config.registry.getConstraintsRules
     constraints.size == vendors.length && vendors.forall(v => constraints.contains(ProfileName(v.id)))
   }
 

@@ -1,5 +1,7 @@
 package amf.apicontract.internal.spec.common.transformation
 
+import amf.aml.internal.entities.AMLEntities
+import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.model.document.{ResourceTypeFragment, TraitFragment}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorEndPoint
@@ -251,7 +253,8 @@ case class ExtendsHelper(profile: ProfileName,
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
           case (alias, ReferencedInfo(_, fullUrl, _)) if m.location().contains(fullUrl) =>
-            val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(ctx.eh)))
+            val nestedCtx =
+              new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(ctx.eh, AMLRegistry.empty)))
             m.declares.foreach { declaration =>
               extractDeclarationToContextWithLocalAndRootName(declaration, m)(nestedCtx)
             }
@@ -308,6 +311,10 @@ object ExtendsHelper {
 }
 
 class CustomRaml08WebApiContext
-    extends Raml08WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(IgnoringErrorHandler)))
+    extends Raml08WebApiContext("",
+                                Nil,
+                                ParserContext(config = LimitedParseConfig(IgnoringErrorHandler, AMLRegistry.empty)))
 class CustomRaml10WebApiContext
-    extends Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(IgnoringErrorHandler)))
+    extends Raml10WebApiContext("",
+                                Nil,
+                                ParserContext(config = LimitedParseConfig(IgnoringErrorHandler, AMLRegistry.empty)))

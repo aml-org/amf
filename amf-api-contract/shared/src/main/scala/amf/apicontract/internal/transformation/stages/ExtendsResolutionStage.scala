@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation.stages
 
+import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.model.domain.templates.{
   ParametrizedResourceType,
   ParametrizedTrait,
@@ -59,8 +60,9 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
     /** Default to raml10 context. */
     def ctx(): RamlWebApiContext = profile match {
       case Raml08Profile =>
-        new Raml08WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler)))
-      case _ => new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler)))
+        new Raml08WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler, AMLRegistry.empty)))
+      case _ =>
+        new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler, AMLRegistry.empty)))
     }
 
     def transform[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T =

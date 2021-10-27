@@ -1,11 +1,7 @@
 package amf.apicontract.internal.transformation
 
-import amf.apicontract.internal.spec.common.transformation.stage.{
-  AnnotationRemovalStage,
-  MediaTypeResolutionStage,
-  PayloadAndParameterResolutionStage,
-  ResponseExamplesResolutionStage
-}
+import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
+import amf.apicontract.internal.spec.common.transformation.stage.{AnnotationRemovalStage, MediaTypeResolutionStage, PayloadAndParameterResolutionStage, ResponseExamplesResolutionStage}
 import amf.apicontract.internal.transformation.stages.ExtensionsResolutionStage
 import amf.core.client.common.validation.{Async20Profile, GrpcProfile, Oas30Profile, ProfileName}
 import amf.core.client.scala.AMFGraphConfiguration
@@ -30,7 +26,8 @@ class ValidationTransformationPipeline private[amf] (profile: ProfileName,
       new MediaTypeResolutionStage(profile, isValidation = true),
       new ResponseExamplesResolutionStage(),
       new PayloadAndParameterResolutionStage(profile),
-      new AnnotationRemovalStage()
+      SemanticExtensionFlatteningStage,
+      new AnnotationRemovalStage(),
     )
 }
 
