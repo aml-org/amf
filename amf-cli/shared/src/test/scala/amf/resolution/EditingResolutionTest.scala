@@ -1167,17 +1167,5 @@ class EditingResolutionTest extends ResolutionTest {
 
   // finish Merged inherit tests
 
-  test("OAS 3.0 with equal local and external ref should resolved equally") {
-    cycle(
-      "api.yaml",
-      "output.json",
-      Oas30YamlHint,
-      target = AmfJsonHint,
-      directory = resolutionPath + "external-schema-ref/",
-      transformWith = Some(Oas30),
-      eh = Some(UnhandledErrorHandler)
-    )
-  }
-
   override val basePath: String = ""
 }
