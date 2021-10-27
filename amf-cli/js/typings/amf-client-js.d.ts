@@ -5943,6 +5943,11 @@ declare module 'amf-client-js' {
 
 
   }
+
+  export class SemanticJsonSchemaConfiguration            {
+    static predefined(): AMLConfiguration
+  }
+
   export class Position  {
     isZero: boolean
     toString: string
