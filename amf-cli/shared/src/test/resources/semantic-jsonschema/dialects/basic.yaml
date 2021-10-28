@@ -1,0 +1,26 @@
+#%Dialect 1.0
+nodeMappings:
+  Person:
+    mapping:
+      name:
+        range: string
+        mandatory: true
+      age:
+        range: integer
+        mandatory: true
+      info:
+        range: SchemaNode
+        mandatory: false
+        allowMultiple: true
+  SchemaNode:
+    mapping:
+      note:
+        range: string
+        mandatory: false
+external:
+  ns0: http://test.com/vocab#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Person
