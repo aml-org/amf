@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
 import amf.core.client.scala.model.domain.DomainElement
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 
-case class ShapeTransformer(s: AnyShape, ctx: ShapeTransformationContext) {
+case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext) {
   val shape: AnyShape = s.linkTarget.getOrElse(s).asInstanceOf[AnyShape]
 
   def transform(): DomainElement = {
@@ -11,7 +11,7 @@ case class ShapeTransformer(s: AnyShape, ctx: ShapeTransformationContext) {
       updateContext { ctx =>
         shape match {
           case node: NodeShape if node.properties.nonEmpty => NodeShapeTransformer(node, ctx).transform()
-          case any: AnyShape                               => AnyShapeTransformer(any,ctx).transform()
+          case any: AnyShape                               => AnyShapeTransformer(any, ctx).transform()
         }
       }
     }
@@ -20,14 +20,14 @@ case class ShapeTransformer(s: AnyShape, ctx: ShapeTransformationContext) {
   def ensureNotTransformed(f: => DomainElement): DomainElement = {
     ctx.shapeMap.get(shape.id) match {
       case Some(mapping) => mapping
-      case None => f
+      case None          => f
     }
   }
 
   def updateContext(f: ShapeTransformationContext => DomainElement): DomainElement = {
     shape.semanticContext match {
       case Some(semantics) => f(ctx.updateSemanticContext(semantics))
-      case _            => f(ctx)
+      case _               => f(ctx)
     }
   }
 }
