@@ -1,0 +1,211 @@
+{
+  "@graph": [
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      }
+    },
+    {
+      "@id": "/externals/ns0",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "ns0",
+      "meta:base": "http://test.com/vocab#"
+    },
+    {
+      "@id": "/externals/xsd",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "xsd",
+      "meta:base": "http://www.w3.org/2001/XMLSchema#"
+    },
+    {
+      "@id": "/externals/foaf",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "foaf",
+      "meta:base": "http://xmlns.com/foaf/0.1/"
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/Child"
+        }
+      ]
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/SchemaNode"
+        },
+        {
+          "@id": "#/declarations/Child"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "amf-json-schema-generated-dialect",
+      "core:version": "1.0",
+      "meta:externals": [
+        {
+          "@id": "/externals/ns0"
+        },
+        {
+          "@id": "/externals/xsd"
+        },
+        {
+          "@id": "/externals/foaf"
+        }
+      ],
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declarations/SchemaNode",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode",
+      "shacl:property": [
+        {
+          "@id": "/and/shape/Parent1/property/property/displayName"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Child",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:targetClass": [
+        {
+          "@id": "http://xmlns.com/foaf/0.1/Person"
+        }
+      ],
+      "core:name": "Child",
+      "shacl:property": [
+        {
+          "@id": "/property/property/name"
+        },
+        {
+          "@id": "/property/property/age"
+        }
+      ],
+      "doc:extends": [
+        {
+          "@id": "#/declarations/Child/null"
+        }
+      ]
+    },
+    {
+      "@id": "/and/shape/Parent1/property/property/displayName",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://xmlns.com/foaf/0.1/displayName"
+        }
+      ],
+      "core:name": "displayName",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "/property/property/name",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "name",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 1
+    },
+    {
+      "@id": "/property/property/age",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "age",
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "shacl:minCount": 1
+    },
+    {
+      "@id": "#/declarations/Child/null",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "#/declarations/SchemaNode"
+        }
+      ],
+      "doc:link-label": "SchemaNode"
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/allOf.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}
