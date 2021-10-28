@@ -6,17 +6,19 @@ import amf.shapes.client.scala.model.domain.AnyShape
 
 case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext) {
 
-  val nodeMapping: UnionNodeMapping = UnionNodeMapping(Fields(),shape.annotations).withId(shape.id)
+  val nodeMapping: UnionNodeMapping = UnionNodeMapping(Fields(), shape.annotations).withId(shape.id)
 
   def transform(): UnionNodeMapping = {
+    setMappingName()
+    setMappingID()
     updateContext()
-    nameShape()
 
-    val members = shape.xone.flatMap { case member: AnyShape =>
-      ShapeTransformer(member, ctx).transform() match {
-        case nm: NodeMapping => Seq(nm.id)
-        case unm: UnionNodeMapping => unm.objectRange().map(_.value())
-      }
+    val members = shape.xone.flatMap {
+      case member: AnyShape =>
+        ShapeTransformation(member, ctx).transform() match {
+          case nm: NodeMapping       => Seq(nm.id)
+          case unm: UnionNodeMapping => unm.objectRange().map(_.value())
+        }
     }
     if (shape.or.nonEmpty) {
       throw new Error("Or constraint not supported")
@@ -31,22 +33,28 @@ case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)
   private def checkInheritance(): Unit = {
     val superSchemas = shape.and
     if (superSchemas.nonEmpty) { // @TODO: support more than 1 super schema
-      val hierarchy = superSchemas.map { case s: AnyShape =>
-        val transformed = ShapeTransformer(s, ctx).transform()
-        transformed match {
-          case nm: NodeMapping       => nm.link[NodeMapping](nm.name.value())
-          case unm: UnionNodeMapping => unm.link[UnionNodeMapping](unm.name.value())
-        }
+      val hierarchy = superSchemas.map {
+        case s: AnyShape =>
+          val transformed = ShapeTransformation(s, ctx).transform()
+          transformed match {
+            case nm: NodeMapping       => nm.link[NodeMapping](nm.name.value())
+            case unm: UnionNodeMapping => unm.link[UnionNodeMapping](unm.name.value())
+          }
       }
       nodeMapping.withExtends(hierarchy)
     }
   }
 
-  private def nameShape() {
+  private def setMappingName(): Unit = {
     shape.displayName.option() match {
       case Some(name) => nodeMapping.withName(name.replaceAll(" ", ""))
       case _          => ctx.genName(nodeMapping)
     }
+  }
+
+  private def setMappingID(): Unit = {
+    val id = s"#/declarations/${nodeMapping.name}"
+    nodeMapping.withId(id)
   }
 
   private def updateContext(): Unit = {

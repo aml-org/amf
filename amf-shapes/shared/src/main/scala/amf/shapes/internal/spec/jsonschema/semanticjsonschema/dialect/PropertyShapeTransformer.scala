@@ -7,23 +7,17 @@ import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, ScalarShape}
 
 case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext) {
 
-  val propertyMapping: PropertyMapping = PropertyMapping(Fields(),Annotations(property.annotations))
-    .withId(property.id)
-    .withName(property.name.value())
-
-  def checkMandatoriness(): Unit = {
-    property.minCount.option().foreach { minCount =>
-      propertyMapping.withMinCount(minCount)
-    }
-  }
+  val propertyMapping: PropertyMapping = PropertyMapping(Fields(), Annotations(property.annotations))
 
   def transform(): PropertyMapping = {
+
+    setMappingName()
+    setMappingID()
+
     property.range match {
-      case scalar: ScalarShape =>
-        transformScalarProperty(scalar)
-      case obj: NodeShape      =>
-        transformObjectProperty(obj)
-      case array: ArrayShape   =>
+      case scalar: ScalarShape => transformScalarProperty(scalar)
+      case obj: NodeShape      => transformObjectProperty(obj)
+      case array: ArrayShape =>
         propertyMapping.withAllowMultiple(true)
         array.items match {
           case scalar: ScalarShape => transformScalarProperty(scalar)
@@ -35,8 +29,12 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     propertyMapping
   }
 
+  private def setMappingName(): Unit = propertyMapping.withName(property.name.value().replaceAll(" ", ""))
+
+  private def setMappingID(): Unit = propertyMapping.withId(property.id)
+
   def transformObjectProperty(obj: NodeShape): Unit = {
-    val range = ShapeTransformer(obj, ctx).transform()
+    val range = ShapeTransformation(obj, ctx).transform()
     propertyMapping.withObjectRange(Seq(range.id))
   }
 
@@ -61,7 +59,7 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     } map { s =>
 
     }
-     */
+   */
   }
 
   private def sanitizeScalarRange(xsd: String): String = {
@@ -69,6 +67,12 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
       xsd.replace("#long", "#float")
     } else {
       xsd;
+    }
+  }
+
+  private def checkMandatoriness(): Unit = {
+    property.minCount.option().foreach { minCount =>
+      propertyMapping.withMinCount(minCount)
     }
   }
 
