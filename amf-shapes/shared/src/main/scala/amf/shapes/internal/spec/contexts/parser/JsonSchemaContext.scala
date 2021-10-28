@@ -1,5 +1,6 @@
 package amf.shapes.internal.spec.contexts.parser
 
+import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
@@ -247,10 +248,11 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
 object JsonSchemaContext {
   def apply(ctx: ParserContext): ShapeParserContext = {
     new JsonSchemaContext(ctx) {
-      override var jsonSchemaIndex: Option[AstIndex]         = None
-      override var globalSpace: mutable.Map[String, Any]     = mutable.Map()
-      override var localJSONSchemaContext: Option[YNode]     = None
-      override var indexCache: mutable.Map[String, AstIndex] = mutable.Map()
+      override var jsonSchemaIndex: Option[AstIndex]          = None
+      override var globalSpace: mutable.Map[String, Any]      = mutable.Map()
+      override var localJSONSchemaContext: Option[YNode]      = None
+      override var indexCache: mutable.Map[String, AstIndex]  = mutable.Map()
+      override def extensionsFacade: SemanticExtensionsFacade = SemanticExtensionsFacade.apply(ctx.config)
 
       override def makeJsonSchemaContextForParsing(url: String,
                                                    document: Root,
