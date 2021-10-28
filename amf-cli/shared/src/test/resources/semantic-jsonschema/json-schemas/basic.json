@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#"
+  },
+  "title": "Person",
+  "type": "object",
+  "required": [
+    "name",
+    "age"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "info": {
+      "type": "array",
+      "items":
+      {
+        "type": "object",
+        "properties": {
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
