@@ -258,7 +258,6 @@ object JsonSchemaContext {
                                                    document: Root,
                                                    options: ParsingOptions): ShapeParserContext =
         JsonSchemaContext(ctx)
-
     }
   }
 }
