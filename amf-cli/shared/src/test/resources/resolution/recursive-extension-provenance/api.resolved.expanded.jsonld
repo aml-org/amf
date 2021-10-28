@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#27",
+        "@id": "#28",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#28",
+            "@id": "#29",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#30",
+                "@id": "#31",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#31",
+                    "@id": "#32",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -55,7 +55,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#32",
+                        "@id": "#33",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -89,7 +89,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#32": "[(24,8)-(25,36)]"
+                            "#33": "[(24,8)-(25,36)]"
                           }
                         }
                       }
@@ -103,14 +103,14 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#30": "[(22,4)-(25,36)]"
+                    "#31": "[(22,4)-(25,36)]"
                   }
                 }
               }
             ],
             "doc:extends": [
               {
-                "@id": "#29",
+                "@id": "#30",
                 "@type": [
                   "apiContract:ParametrizedResourceType",
                   "doc:ParametrizedDeclaration",
@@ -291,7 +291,7 @@
                 "smaps": {
                   "lexical": {
                     "core:name": "[(28,8)-(28,24)]",
-                    "#29": "[(28,8)-(28,24)]"
+                    "#30": "[(28,8)-(28,24)]"
                   }
                 }
               }
@@ -299,7 +299,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(27,0)-(27,16)]",
-                "#28": "[(27,0)-(28,24)]"
+                "#29": "[(27,0)-(28,24)]"
               }
             }
           }
@@ -307,7 +307,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#27": "[(2,0)-(28,24)]"
+            "#28": "[(2,0)-(28,24)]"
           }
         }
       }

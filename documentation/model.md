@@ -19,6 +19,7 @@ AMF Model Documentation
 * [BaseApi](#baseapi)
 * [BaseUnit](#baseunit)
 * [BaseUnitProcessingData](#baseunitprocessingdata)
+* [BaseUnitSourceInformation](#baseunitsourceinformation)
 * [Callback](#callback)
 * [ChannelBinding](#channelbinding)
 * [ChannelBindings](#channelbindings)
@@ -67,6 +68,7 @@ AMF Model Documentation
 * [License](#license)
 * [LinkNode](#linknode)
 * [LinkableElement](#linkableelement)
+* [LocationInformation](#locationinformation)
 * [MatrixShape](#matrixshape)
 * [Message](#message)
 * [MessageBinding](#messagebinding)
@@ -264,6 +266,7 @@ Fragment encoding a RAML annotation type
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## AnyShape
 Base class for all shapes stored in the graph model
@@ -421,6 +424,7 @@ Base class for every single document model unit. After parsing a document the pa
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## BaseUnitProcessingData
 Class that groups data related to how a Base Unit was processed
@@ -429,6 +433,14 @@ Class that groups data related to how a Base Unit was processed
  | ------ | ------ | ------ | ------ |
  | transformed | boolean | Indicates whether a BaseUnit was transformed with some pipeline | http://a.ml/vocabularies/document#transformed |
  | sourceSpec | string | Standard of the specification file | http://a.ml/vocabularies/document#sourceSpec |
+
+## BaseUnitSourceInformation
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | rootLocation | string | Root source location of base unit | http://a.ml/vocabularies/document#rootLocation |
+ | additionalLocations | [[LocationInformation](#locationinformation)] | Additional source locations from which certain elements where parsed | http://a.ml/vocabularies/document#additionalLocations |
 
 ## Callback
 Model defining the information for a HTTP callback/ webhook
@@ -539,6 +551,7 @@ Fragment encoding a RAML data type
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DatatypePropertyTerm
 
@@ -571,6 +584,7 @@ Definition of an AML dialect, mapping AST nodes from dialect documents into an o
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectFragment
 AML dialect mapping fragment that can be included in multiple AML dialects
@@ -587,6 +601,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstance
 
@@ -605,6 +620,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstanceFragment
 
@@ -623,6 +639,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstanceLibrary
 
@@ -640,6 +657,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstancePatch
 
@@ -658,6 +676,7 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstanceProcessingData
 Class that groups data related to how a Base Unit was processed
@@ -684,6 +703,7 @@ Library of AML mappings that can be reused in different AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DiscriminatorValueMapping
 Mapping that relates a certain discriminator value to a certain shape
@@ -710,6 +730,7 @@ The main difference is that the Document encoded DomainElement is stand-alone an
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DocumentMapping
 Mapping for a particular dialect document into a graph base unit
@@ -734,6 +755,7 @@ Fragment encoding a RAML documentation item
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## Documents
 Mapping from different type of dialect documents to base units in the parsed graph
@@ -843,6 +865,7 @@ API spec information designed to be applied and compelement the information of a
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## ExtensionLike
 A Document that extends a target document, overwriting part of the information or overlaying additional information.
@@ -859,6 +882,7 @@ A Document that extends a target document, overwriting part of the information o
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## External
 
@@ -897,6 +921,7 @@ Fragment encoding an external entity
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## ExternalSourceElement
 Inlined fragment of information
@@ -966,6 +991,7 @@ A Fragment is a parsing Unit that encodes a DomainElement
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## HttpApiKeySettings
 Settings for an Http API Key security scheme
@@ -1066,6 +1092,14 @@ in the graph itself. Linkable elements are just replaced by regular links after 
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
+
+## LocationInformation
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | location | string | Location of the metadata document that generated this base unit | http://a.ml/vocabularies/document#location |
+ | elements | [url] | Elements which all belong to a certain source location | http://a.ml/vocabularies/document#elements |
 
 ## MatrixShape
 Data shape containing nested multi-dimensional collection shapes
@@ -1172,6 +1206,7 @@ It main purpose is to expose the declared references so they can be re-used
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## MqttMessageBinding
 
@@ -1230,6 +1265,7 @@ Fragment encoding a RAML named example
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## NilShape
 Data shape representing the null/nil value in the input schema
@@ -1475,6 +1511,7 @@ Model defining a RAML overlay
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## Parameter
 Piece of data required or returned by an Operation
@@ -1569,6 +1606,7 @@ Fragment encoding HTTP payload information
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## PropertyDependencies
 Dependency between sets of property shapes
@@ -1737,6 +1775,7 @@ Fragment encoding a RAML resource type
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## Response
 Response information for an operation
@@ -1919,6 +1958,7 @@ Fragment encoding a RAML security scheme
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## SemanticExtension
 Mapping a particular extension name to an extension definition
@@ -2072,6 +2112,7 @@ Fragment encoding a RAML trait
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## TupleShape
 Data shape containing a multi-valued collection of shapes
@@ -2194,6 +2235,7 @@ Basic primitives for the declaration of vocabularies.
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## VocabularyReference
 

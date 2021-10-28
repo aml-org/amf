@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#27",
+      "@id": "#32",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,18 +20,18 @@
       "core:name": "some title",
       "apiContract:endpoint": [
         {
-          "@id": "#28"
+          "@id": "#33"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
-          "#27": "[(2,0)-(25,39)]"
+          "#32": "[(2,0)-(25,39)]"
         }
       }
     },
     {
-      "@id": "#28",
+      "@id": "#33",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,23 +39,23 @@
       "apiContract:path": "/the-one-endpoint",
       "apiContract:supportedOperation": [
         {
-          "@id": "#34"
+          "@id": "#36"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#29"
+          "@id": "#34"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(22,0)-(22,17)]",
-          "#28": "[(22,0)-(25,39)]"
+          "#33": "[(22,0)-(25,39)]"
         }
       }
     },
     {
-      "@id": "#34",
+      "@id": "#36",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -63,18 +63,18 @@
       "apiContract:method": "delete",
       "apiContract:returns": [
         {
-          "@id": "#35"
+          "@id": "#37"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(12,6)-(19,27)]",
-          "#34": "[(11,4)-(19,27)]"
+          "#36": "[(11,4)-(19,27)]"
         }
       }
     },
     {
-      "@id": "#29",
+      "@id": "#34",
       "@type": [
         "apiContract:ParametrizedResourceType",
         "doc:ParametrizedDeclaration",
@@ -86,18 +86,18 @@
       },
       "doc:variable": [
         {
-          "@id": "#30"
+          "@id": "#35"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(24,4)-(24,19)]",
-          "#29": "[(24,4)-(25,39)]"
+          "#34": "[(24,4)-(25,39)]"
         }
       }
     },
     {
-      "@id": "#35",
+      "@id": "#37",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -116,7 +116,7 @@
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(14,10)-(19,27)]",
-          "#35": "[(13,8)-(19,27)]"
+          "#37": "[(13,8)-(19,27)]"
         }
       }
     },
@@ -147,7 +147,7 @@
       }
     },
     {
-      "@id": "#30",
+      "@id": "#35",
       "@type": [
         "doc:VariableValue",
         "doc:DomainElement"
@@ -159,7 +159,7 @@
       "smaps": {
         "lexical": {
           "doc:value": "[(2,0)-(3,17)]",
-          "#30": "[(25,6)-(25,39)]"
+          "#35": "[(25,6)-(25,39)]"
         }
       }
     },
@@ -224,7 +224,7 @@
         "doc:DomainElement"
       ],
       "data:someExample": {
-        "@id": "#32"
+        "@id": "#30"
       },
       "core:name": "examples",
       "smaps": {
@@ -299,14 +299,14 @@
       }
     },
     {
-      "@id": "#32",
+      "@id": "#30",
       "@type": [
         "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
       "data:name": {
-        "@id": "#33"
+        "@id": "#29"
       },
       "core:name": "someExample",
       "smaps": {
@@ -315,7 +315,7 @@
         },
         "lexical": {
           "data:name": "[(3,2)-(3,17)]",
-          "#32": "[(3,0)-(3,17)]"
+          "#30": "[(3,0)-(3,17)]"
         }
       }
     },
@@ -398,7 +398,7 @@
       }
     },
     {
-      "@id": "#33",
+      "@id": "#29",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -417,7 +417,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#33": "[(3,8)-(3,17)]"
+          "#29": "[(3,8)-(3,17)]"
         }
       }
     },
@@ -702,7 +702,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#27"
+        "@id": "#32"
       },
       "doc:root": true,
       "doc:processingData": {

@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#4",
+        "@id": "#5",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#5",
+            "@id": "#6",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -38,7 +38,7 @@
                 "@value": ""
               }
             ],
-            "amf://id#5/scalar-valued/1/a": {
+            "amf://id#6/scalar-valued/1/a": {
               "core:extensionName": [
                 {
                   "@value": "a"
@@ -49,7 +49,7 @@
                   "@value": "http://a.ml/vocabularies/core#description"
                 }
               ],
-              "@id": "#5/scalar-valued/1/a/scalar_1",
+              "@id": "#6/scalar-valued/1/a/scalar_1",
               "@type": [
                 "data:Scalar",
                 "data:Node",
@@ -76,19 +76,19 @@
                   "shacl:datatype": "true"
                 },
                 "lexical": {
-                  "#5/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
+                  "#6/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
                 }
               }
             },
             "doc:customDomainProperties": [
               {
-                "@id": "#5/scalar-valued/1/a"
+                "@id": "#6/scalar-valued/1/a"
               }
             ],
             "smaps": {
               "lexical": {
                 "core:description": "[(8,2)-(9,13)]",
-                "#5": "[(7,0)-(9,13)]",
+                "#6": "[(7,0)-(9,13)]",
                 "apiContract:path": "[(7,0)-(7,9)]"
               }
             }
@@ -97,7 +97,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(4,0)]",
-            "#4": "[(2,0)-(9,13)]"
+            "#5": "[(2,0)-(9,13)]"
           }
         }
       }

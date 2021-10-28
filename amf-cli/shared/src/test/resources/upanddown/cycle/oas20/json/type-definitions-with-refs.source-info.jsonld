@@ -1,0 +1,350 @@
+{
+  "@graph": [
+    {
+      "@id": "#10",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "doc:sourceSpec": "OAS 2.0"
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "doc:BaseUnitSourceInformation"
+      ],
+      "doc:rootLocation": "file://amf-cli/shared/src/test/resources/upanddown/cycle/oas20/json/type-definitions-with-refs.json"
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Swagger Sample API",
+      "core:version": "1.0.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#13"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:endpoint": "[(7,2)-(20,3)]",
+          "core:name": "[(5,4)-(5,33)]",
+          "#12": "[(1,0)-(52,1)]",
+          "core:version": "[(4,4)-(4,22)]"
+        }
+      }
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/endpoint",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#14"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#13": "[(8,4)-(19,5)]"
+        }
+      }
+    },
+    {
+      "@id": "#14",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#15"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(10,8)-(17,9)]",
+          "#14": "[(9,6)-(18,7)]"
+        }
+      }
+    },
+    {
+      "@id": "#15",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "core:description": "",
+      "apiContract:payload": [
+        {
+          "@id": "#16"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "core:description": "[(12,12)-(12,29)]",
+          "#15": "[(11,10)-(16,11)]",
+          "core:name": "[(11,10)-(11,15)]"
+        }
+      }
+    },
+    {
+      "@id": "#16",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:schema": {
+        "@id": "#1"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(13,12)-(15,13)]"
+        }
+      }
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#2"
+        }
+      ],
+      "doc:recursive": true,
+      "shacl:name": "ErrorModel",
+      "smaps": {
+        "synthesized-field": {
+          "doc:recursive": "true",
+          "shacl:closed": "true"
+        },
+        "resolved-link": {
+          "#1": "amf://id#5"
+        },
+        "type-property-lexical-info": {
+          "#1": "[(23,6)-(23,12)]"
+        },
+        "lexical": {
+          "shacl:name": "[(22,4)-(22,16)]",
+          "#1": "[(22,4)-(32,5)]"
+        },
+        "declared-element": {
+          "#1": ""
+        },
+        "resolved-link-target": {
+          "#1": "amf://id#1"
+        }
+      }
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#code"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#3"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "code",
+      "smaps": {
+        "lexical": {
+          "shacl:minCount": "[(25,8)-(25,14)]",
+          "#2": "[(28,8)-(30,9)]"
+        }
+      }
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:name": "code",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#3": "[(29,10)-(29,16)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(29,10)-(29,27)]",
+          "#3": "[(28,8)-(30,9)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        },
+        {
+          "@id": "#6"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#12"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#10"
+      },
+      "doc:sourceInformation": {
+        "@id": "#11"
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "ExtendedErrorModel",
+      "shacl:and": [
+        {
+          "@id": "#1"
+        },
+        {
+          "@id": "#7"
+        }
+      ],
+      "smaps": {
+        "declared-element": {
+          "#6": ""
+        },
+        "lexical": {
+          "shacl:and": "[(34,6)-(49,7)]",
+          "#6": "[(33,4)-(50,5)]",
+          "shacl:name": "[(33,4)-(33,24)]"
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#8"
+        }
+      ],
+      "shacl:name": "item1",
+      "smaps": {
+        "synthesized-field": {
+          "shacl:closed": "true"
+        },
+        "lexical": {
+          "#7": "[(38,8)-(48,9)]"
+        },
+        "type-property-lexical-info": {
+          "#7": "[(39,10)-(39,16)]"
+        }
+      }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#rootCause"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#9"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "rootCause",
+      "smaps": {
+        "lexical": {
+          "shacl:minCount": "[(41,12)-(41,23)]",
+          "#8": "[(44,12)-(46,13)]"
+        }
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "rootCause",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#9": "[(45,14)-(45,20)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(45,14)-(45,30)]",
+          "#9": "[(44,12)-(46,13)]"
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

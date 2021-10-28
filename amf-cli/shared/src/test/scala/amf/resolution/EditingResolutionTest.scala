@@ -1167,5 +1167,29 @@ class EditingResolutionTest extends ResolutionTest {
 
   // finish Merged inherit tests
 
+  test("raml referencing multiple files emitting to jsonld with source information") {
+    cycle(
+      "api.raml",
+      "output.source-info.jsonld",
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      directory = resolutionPath + "raml-multiple-fragments/",
+      renderOptions = Some(RenderOptions().withSourceMaps.withPrettyPrint.withSourceInformation),
+      transformWith = Some(Raml10)
+    )
+  }
+
+  test("single file oas emitting to jsonld with source information") {
+    cycle(
+      "type-definitions-with-refs.json",
+      "type-definitions-with-refs.source-info.jsonld",
+      Oas20JsonHint,
+      target = AmfJsonHint,
+      directory = cyclePath + "cycle/oas20/json/",
+      renderOptions = Some(RenderOptions().withSourceMaps.withPrettyPrint.withSourceInformation),
+      transformWith = Some(Oas20)
+    )
+  }
+
   override val basePath: String = ""
 }

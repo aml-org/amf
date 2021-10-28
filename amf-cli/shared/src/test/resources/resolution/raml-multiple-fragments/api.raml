@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: sfdsdf
+uses:
+  libA: refs/libA.raml
+  libB: refs/libB.raml
+
+types:
+  a: libA.Person
+  b: libB.SomeString
+  c: !include refs/data-type.raml
