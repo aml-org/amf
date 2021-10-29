@@ -1,6 +1,6 @@
 package amf.cli.internal.commands
 
-import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.{APIConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{Aml, Mimes, Oas20, Raml10}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -31,14 +31,16 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Parse command") {
-    val args = Array("parse",
-                     "-in",
-                     Raml10.id,
-                     "-mime-in",
+    val args = Array(
+      "parse",
+      "-in",
+      Raml10.id,
+      "-mime-in",
       `application/yaml`,
-                     "--validate",
-                     "false",
-                     "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml")
+      "--validate",
+      "false",
+      "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml"
+    )
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
     val stdout = new TestWriter()
@@ -54,6 +56,42 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(proc.successful)
+    }
+  }
+
+  test("Parse command with source maps and source information") {
+    val args = Array(
+      "parse",
+      "-in",
+      Raml10.id,
+      "-sm",
+      "true",
+      "-si",
+      "true",
+      "-mime-in",
+      `application/yaml`,
+      "--validate",
+      "false",
+      "file://amf-cli/shared/src/test/resources/upanddown/complete-with-operations.raml"
+    )
+    val cfg = CmdLineParser.parse(args)
+    assert(cfg.isDefined)
+    val stdout = new TestWriter()
+    val stderr = new TestWriter()
+    val proc   = new TestProc()
+
+    ParseCommand(platform).run(cfg.get.copy(
+                                 stdout = stdout,
+                                 stderr = stderr,
+                                 proc = proc
+                               ),
+                               APIConfiguration.API()) map { _ =>
+      val result = stdout.acc
+      assert(stderr.acc == "")
+      assert(proc.successful)
+      assert(result.contains("@graph"))
+      assert(result.contains("BaseUnitSourceInformation"))
+      assert(result.contains("document-source-maps#SourceMap"))
     }
   }
 

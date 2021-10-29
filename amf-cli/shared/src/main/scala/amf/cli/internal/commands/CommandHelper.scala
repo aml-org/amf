@@ -84,6 +84,9 @@ trait CommandHelper {
     if (config.withSourceMaps) {
       generateOptions = generateOptions.withSourceMaps
     }
+    if (config.withSourceInformation) {
+      generateOptions = generateOptions.withSourceInformation
+    }
     if (config.withCompactNamespaces) {
       generateOptions = generateOptions.withCompactUris
     }
