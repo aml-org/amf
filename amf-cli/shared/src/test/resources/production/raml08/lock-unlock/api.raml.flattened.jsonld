@@ -439,6 +439,11 @@
         {
           "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber/source-map/synthesized-field/element_3"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#default-node": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber/source-map/default-node/element_0"
+        }
       ]
     },
     {
@@ -637,6 +642,11 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber/source-map/synthesized-field/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#paramName",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber/source-map/default-node/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount/supportedOperation/get/expects/request/parameter/parameter/query/from",
