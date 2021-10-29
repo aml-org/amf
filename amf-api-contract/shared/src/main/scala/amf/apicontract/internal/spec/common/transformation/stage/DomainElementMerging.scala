@@ -219,7 +219,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
   def fixPayloadTrackedElements[T <: DomainElement](main: T, other: T): Unit = {
     (main, other) match {
       case (main: Payload, other: Payload) => ExampleTracking.replaceTracking(main.schema, main, other.id)
-      case _ =>
+      case _                               =>
     }
   }
 
@@ -366,7 +366,9 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
             if (field == EndPointModel.Operations) {
               ctx.mergeOperationContext(otherObj)
             }
-            if (!areSameJsonSchema(mainObjOption.get, otherObj)) {
+            if (mainObjOption.get.annotations.find(classOf[DefaultNode]).isDefined) {
+              target.add(field, adoptInner(target.id, o))
+            } else if (!areSameJsonSchema(mainObjOption.get, otherObj)) {
               val adopted = adoptInner(target.id, otherObj).asInstanceOf[DomainElement]
               merge(existing(value.scalar.value), adopted)
             }
