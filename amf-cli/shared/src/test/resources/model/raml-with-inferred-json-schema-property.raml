@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: test
+mediaType: application/json
+
+/someEndpoint:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: |
+              {
+                "type": "object",
+                "properties": {
+                  "A": {
+                   "type": "boolean"
+                  }
+                },
+                "required": ["A", "B"]
+              }
