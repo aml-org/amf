@@ -18,7 +18,7 @@ object CmdLineParser {
   }
 
   val parser: OptionParser[ParserConfig] = new scopt.OptionParser[ParserConfig]("amf") {
-    head("Anything Modeling Framework", "4.X")
+    head("Anything Modeling Framework", "5.X")
 
     arg[String]("<file_in> [<file_out>]")
       .unbounded()
@@ -79,6 +79,11 @@ object CmdLineParser {
           .abbr("sm")
           .text("Generate source maps in AMF output")
           .action((f, c) => c.copy(withSourceMaps = f))
+
+        opt[Boolean]("source-information")
+          .abbr("si")
+          .text("Generate source information node in AMF output")
+          .action((f, c) => c.copy(withSourceInformation = f))
 
         opt[Boolean]("compacted")
           .abbr("ctx")

@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#23",
+      "@id": "#24",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,18 +20,18 @@
       "core:name": "PC Billing System API",
       "apiContract:endpoint": [
         {
-          "@id": "#24"
+          "@id": "#25"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
-          "#23": "[(2,0)-(28,27)]"
+          "#24": "[(2,0)-(28,27)]"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#25",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,23 +39,23 @@
       "apiContract:path": "/applying-rt",
       "apiContract:supportedOperation": [
         {
-          "@id": "#26"
+          "@id": "#27"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#25"
+          "@id": "#26"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(22,0)-(22,12)]",
-          "#24": "[(22,0)-(28,27)]"
+          "#25": "[(22,0)-(28,27)]"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#27",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -63,18 +63,18 @@
       "apiContract:method": "get",
       "apiContract:returns": [
         {
-          "@id": "#27"
+          "@id": "#28"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(25,4)-(28,27)]",
-          "#26": "[(24,2)-(28,27)]"
+          "#27": "[(24,2)-(28,27)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#26",
       "@type": [
         "apiContract:ParametrizedResourceType",
         "doc:ParametrizedDeclaration",
@@ -87,12 +87,12 @@
       "smaps": {
         "lexical": {
           "core:name": "[(23,8)-(23,26)]",
-          "#25": "[(23,8)-(23,26)]"
+          "#26": "[(23,8)-(23,26)]"
         }
       }
     },
     {
-      "@id": "#27",
+      "@id": "#28",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -108,7 +108,7 @@
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(27,8)-(28,27)]",
-          "#27": "[(26,6)-(28,27)]"
+          "#28": "[(26,6)-(28,27)]"
         }
       }
     },
@@ -564,7 +564,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#23"
+        "@id": "#24"
       },
       "doc:root": true,
       "doc:processingData": {

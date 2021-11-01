@@ -5,7 +5,7 @@ import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.document.{BaseUnitSourceInformation, Document}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.remote._
@@ -22,14 +22,16 @@ import scala.concurrent.Future
 class DocumentMakerTest extends WebApiMakerTest {
 
   test("Raml declared types ") {
-    val doc = documentWithTypes(Raml10)
-      .withLocation("file://amf-cli/shared/src/test/resources/maker/declared-types.raml")
+    val location = "file://amf-cli/shared/src/test/resources/maker/declared-types.raml"
+    val doc = documentWithTypes(Raml10, location)
+      .withLocation(location)
     assertFixture(doc, "declared-types.raml", Raml10YamlHint)
   }
 
   test("Oas declared types ") {
-    val doc = documentWithTypes(Oas20)
-      .withLocation("file://amf-cli/shared/src/test/resources/maker/declared-types.json")
+    val location = "file://amf-cli/shared/src/test/resources/maker/declared-types.json"
+    val doc = documentWithTypes(Oas20, location)
+      .withLocation(location)
 
     doc.encodes.set(WebApiModel.EndPoints, AmfArray(Seq()))
 
@@ -37,14 +39,16 @@ class DocumentMakerTest extends WebApiMakerTest {
   }
 
   test("Raml inherits declared types ") {
-    val doc = documentWithInheritsTypes(Raml10)
-      .withLocation("file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.raml")
+    val location = "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.raml"
+    val doc = documentWithInheritsTypes(Raml10, location)
+      .withLocation(location)
     assertFixture(doc, "inherits-declared-types.raml", Raml10YamlHint)
   }
 
   test("Oas inherits declared types ") {
-    val doc = documentWithInheritsTypes(Oas20)
-      .withLocation("file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.json")
+    val location = "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.json"
+    val doc = documentWithInheritsTypes(Oas20, location)
+      .withLocation(location)
     assertFixture(doc, "inherits-declared-types.json", Oas20YamlHint)
   }
 
@@ -63,7 +67,7 @@ class DocumentMakerTest extends WebApiMakerTest {
     override def getResults: List[AMFValidationResult] = Nil
   }
 
-  private def documentWithTypes(spec: Spec): Document = {
+  private def documentWithTypes(spec: Spec, loc: String): Document = {
 
     val minCount = spec match {
       case _: Oas => 0
@@ -112,11 +116,11 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    document(spec).withDeclares(Seq(person))
+    document(spec, loc).withDeclares(Seq(person))
 
   }
 
-  private def document(spec: Spec): Document = {
+  private def document(spec: Spec, loc: String): Document = {
     amf.core.client.scala.model.domain.extensions.PropertyShape().withScalarSchema("hey")
     val api = WebApi()
       .withName("test types")
@@ -126,10 +130,11 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withEncodes(api)
       .withRoot(true)
       .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
+      .withSourceInformation(BaseUnitSourceInformation().withRootLocation(loc))
     document
   }
 
-  private def documentWithInheritsTypes(spec: Spec) = {
+  private def documentWithInheritsTypes(spec: Spec, loc: String) = {
     val minCount = spec match {
       case _: Oas => 0
       case _      => 1
@@ -201,7 +206,7 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    document(spec).withDeclares(Seq(human, person))
+    document(spec, loc).withDeclares(Seq(human, person))
 
   }
 }
