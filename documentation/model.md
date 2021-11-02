@@ -435,7 +435,7 @@ Class that groups data related to how a Base Unit was processed
  | sourceSpec | string | Standard of the specification file | http://a.ml/vocabularies/document#sourceSpec |
 
 ## BaseUnitSourceInformation
-
+Class that stores information of the source from which the base unit was parsed
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1094,7 +1094,7 @@ in the graph itself. Linkable elements are just replaced by regular links after 
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
 
 ## LocationInformation
-
+Class that store a specific location and the elements that where parsed from this source
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
