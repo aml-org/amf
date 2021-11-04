@@ -40,7 +40,7 @@ object AstFinder {
     ctx.setJsonSchemaAST(node)
     val rootAst = hashFragment match {
       case Some(fragment) => findNodeInIndex(fragment, ctx)
-      case None           => Some(YMapEntryLike(node))
+      case None           => Some(YMapEntryLike(node)(ctx))
     }
     rootAst.getOrElse {
       ctx.eh.violation(UnableToParseJsonSchema,
