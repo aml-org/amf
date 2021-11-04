@@ -4,6 +4,8 @@ import amf.apicontract.client.platform.model.domain.api.WebApi
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.shapes.client.scala.model.domain.ContextMapping
+import amf.shapes.internal.domain.metamodel.{BaseIRIModel, ContextMappingModel, CuriePrefixModel, DefaultVocabularyModel, SemanticContextModel}
 import org.reflections.Reflections
 import org.scalatest.{FunSuite, Matchers}
 
@@ -11,6 +13,14 @@ import scala.collection.JavaConverters.asScalaSetConverter
 
 
 class PlatformModelWrappersTest extends FunSuite with Matchers with PlatformSecrets {
+
+  private val filtered = List(
+    ContextMappingModel.`type`.head.toString,
+    SemanticContextModel.`type`.head.toString,
+    DefaultVocabularyModel.`type`.head.toString,
+    CuriePrefixModel.`type`.head.toString,
+    BaseIRIModel.`type`.head.toString
+  )
 
   test("All models have platform wrappers registered") {
     WebAPIConfiguration.WebAPI() // registers all wrappers, remove when APIMF-3000 is done
@@ -21,8 +31,12 @@ class PlatformModelWrappersTest extends FunSuite with Matchers with PlatformSecr
       new Reflections("amf.core.client.scala.model"),
     )
     val instances = obtainModelInstances(reflections)
-    instances.foreach(callPlatformWrap)
+    instances.filter(doesntHaveClientWrappers).foreach(callPlatformWrap)
     succeed
+  }
+
+  private def doesntHaveClientWrappers(x: AmfObject) = {
+    !filtered.contains(x.meta.`type`.head.toString)
   }
 
   private def obtainModelInstances(reflections: List[Reflections]): List[AmfObject] = {
