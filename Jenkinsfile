@@ -58,33 +58,33 @@ pipeline {
         }
       }
     }
-    stage('Publish') {
-      when {
-        anyOf {
-          branch 'master'
-          branch 'develop'
-          branch 'release/*'
-        }
-      }
-      steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          script {
-            try{
-              if (failedStage.isEmpty()) {
-              sh '''
-                  echo "about to publish in sbt"
-                  sbt publish
-                  echo "sbt publishing successful"
-              '''
-              }
-            } catch(ignored) {
-              failedStage = failedStage + " PUBLISH "
-              unstable "Failed publication"
-            }
-          }
-        }
-      }
-    }
+//    stage('Publish') {
+//      when {
+//        anyOf {
+//          branch 'master'
+//          branch 'develop'
+//          branch 'release/*'
+//        }
+//      }
+//      steps {
+//        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+//          script {
+//            try{
+//              if (failedStage.isEmpty()) {
+//              sh '''
+//                  echo "about to publish in sbt"
+//                  sbt publish
+//                  echo "sbt publishing successful"
+//              '''
+//              }
+//            } catch(ignored) {
+//              failedStage = failedStage + " PUBLISH "
+//              unstable "Failed publication"
+//            }
+//          }
+//        }
+//      }
+//    }
     stage('Tag version') {
       when {
         anyOf {
