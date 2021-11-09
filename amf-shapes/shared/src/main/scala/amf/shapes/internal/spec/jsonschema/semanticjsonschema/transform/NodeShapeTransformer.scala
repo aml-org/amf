@@ -1,33 +1,26 @@
-package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
+package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
 import amf.aml.client.scala.model.domain.{NodeMapping, UnionNodeMapping}
 import amf.core.internal.parser.domain.Fields
-import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 
-case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext) {
+case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContext) {
 
-  val nodeMapping: UnionNodeMapping = UnionNodeMapping(Fields(), shape.annotations).withId(shape.id)
+  val nodeMapping: NodeMapping = NodeMapping(Fields(), shape.annotations).withId(shape.id)
 
-  def transform(): UnionNodeMapping = {
+  def transform(): NodeMapping = {
     setMappingName()
     setMappingID()
     updateContext()
 
-    val members = shape.xone.flatMap {
-      case member: AnyShape =>
-        ShapeTransformation(member, ctx).transform() match {
-          case nm: NodeMapping       => Seq(nm.id)
-          case unm: UnionNodeMapping => unm.objectRange().map(_.value())
-        }
-    }
-    if (shape.or.nonEmpty) {
-      throw new Error("Or constraint not supported")
-    }
-    if (Option(shape.not).nonEmpty) {
-      throw new Error("Not constraint not supported")
+    val propertyMappings = shape.properties.map { property =>
+      PropertyShapeTransformer(property, ctx).transform()
     }
 
-    nodeMapping.withObjectRange(members)
+    checkInheritance()
+    checkSemantics()
+    nodeMapping.withPropertiesMapping(propertyMappings)
+
   }
 
   private def checkInheritance(): Unit = {
@@ -42,6 +35,15 @@ case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)
           }
       }
       nodeMapping.withExtends(hierarchy)
+    }
+  }
+
+  private def checkSemantics(): Unit = {
+    ctx.semantics.typeMappings match {
+      case types if types.nonEmpty =>
+        nodeMapping.withNodeTypeMapping(types.head.value()) // @TODO: support multiple type mappings
+      case _ =>
+      // ignore
     }
   }
 
@@ -60,5 +62,4 @@ case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)
   private def updateContext(): Unit = {
     ctx.registerNodeMapping(nodeMapping)
   }
-
 }
