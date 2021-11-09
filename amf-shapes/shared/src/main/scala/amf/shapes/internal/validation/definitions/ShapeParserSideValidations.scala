@@ -292,6 +292,11 @@ object ShapeParserSideValidations extends Validations {
     "'schemas' and 'types' properties are mutually exclusive"
   )
 
+  val InvalidContextNode = validation(
+    "@context-must-be-object-or-string",
+    "@context value must be object or string"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id           -> all(WARNING),
     JsonSchemaInheritanceWarning.id -> all(WARNING),
@@ -321,6 +326,7 @@ object ShapeParserSideValidations extends Validations {
     MissingRequiredUserDefinedFacet,
     UnableToParseShapeExtensions,
     ExceededMaxYamlReferences,
-    InvalidJsonSchemaType
+    InvalidJsonSchemaType,
+    InvalidContextNode
   )
 }
