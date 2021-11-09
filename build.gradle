@@ -9,7 +9,6 @@ buildscript {
             name "mule-ee-releases"
             url "https://repository.mulesoft.org/nexus/content/repositories/releases/"
         }
-        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath "com.mulesoft:gradle-tools:0.2.6"
@@ -37,7 +36,9 @@ repositories {
     maven {
         url "https://repository-master.mulesoft.org/nexus/content/repositories/releases"
     }
-    maven { url 'https://jitpack.io' }
+    maven {
+        url "https://repository-master.mulesoft.org/nexus/content/repositories/public"
+    }
 }
 
 def versions = new Properties()

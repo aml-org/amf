@@ -10,7 +10,6 @@ addSbtPlugin("com.eed3si9n" % "sbt-sriracha" % "0.1.0")
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.10.0")
 
 resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral)
-resolvers += "jitpack" at "https://jitpack.io"
 credentials ++= Common.credentials()
 
 addSbtPlugin("com.github.amlorg" % "scala-js-typings" % "0.0.14")
