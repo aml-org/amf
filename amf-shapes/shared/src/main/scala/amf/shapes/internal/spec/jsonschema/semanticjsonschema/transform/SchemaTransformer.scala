@@ -1,4 +1,4 @@
-package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
+package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
 import amf.aml.client.scala.model.domain.{NodeMapping, UnionNodeMapping}
 import amf.core.client.scala.model.domain.DomainElement

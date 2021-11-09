@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": [{
+      "@base": "http://test.com/adocument.jsonld",
+      "@vocab": "http://test.com/my_test_vocabulary#"
+  }],
+  "title": "Person",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

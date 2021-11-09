@@ -3,6 +3,7 @@ package amf.shapes.internal.spec.oas.parser
 import amf.core.client.common.position.Range
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.document.ExternalFragment
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.vocabulary.Namespace
@@ -526,7 +527,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
   }
 
-  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
 
     override def parse(): AnyShape = {
       adopt(shape)
@@ -578,7 +580,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
     override def parse(): AnyShape = {
       checkJsonIdentity(shape, map, adopt, ctx.futureDeclarations)
       super.parse()
@@ -1015,7 +1018,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       )
 
       map.key("enum", ShapeModel.Values in shape using enumParser)
-      map.key("externalDocs", AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
+      map.key("externalDocs",
+              AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
       map.key(
@@ -1111,37 +1115,60 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     override def parse(): AnyShape = {
       val contextEntry = map.key("@context")
-      contextEntry.map(entry => {
-        Option(entry.value.as[YMap]) match {
-          case Some(m) =>
-            val semanticContext = SemanticContext(m)
-            m.entries.foreach { entry =>
-              entry.key.as[YScalar].text match {
-                case "@base"  => parseBase(entry.value, semanticContext)
-                case "@vocab" => parseVocab(entry.value, semanticContext)
-                case "@type"  => parseTypeMapping(entry.value, semanticContext)
-                case _        => parseMapping(entry, semanticContext)
-              }
-            }
+      contextEntry.fold(shape) { entry =>
+        entry.value.tagType match {
+          case YType.Map =>
+            val semanticContext: SemanticContext = parseMapContext(entry.value.as[YMap])
             shape.withSemanticContext(semanticContext)
-          case _ => shape // empty context property
+          case YType.Str =>
+            val semanticContext = parseContextFromReference(entry.value.as[String])
+            semanticContext.foreach(context => shape.withSemanticContext(context))
+            shape
+          case _ =>
+            ctx.eh.violation(InvalidContextNode,
+                             shape,
+                             "@context must be an object or a string",
+                             Annotations(entry.value))
+            shape
         }
-      }) getOrElse (shape)
+
+      }
+    }
+
+    private def parseContextFromReference(reference: String): Option[SemanticContext] = {
+      val unit = ctx.refs.find(p => p.origin.url == reference).map(_.unit)
+      unit
+        .collect { case fragment: ExternalFragment => fragment.encodes.parsed }
+        .flatten
+        .map(ast => parseMapContext(ast.as[YMap]))
+    }
+
+    private def parseMapContext(m: YMap) = {
+      val semanticContext = SemanticContext(m)
+      m.entries.foreach { entry =>
+        entry.key.as[YScalar].text match {
+          case "@base"  => parseBase(entry.value, semanticContext)
+          case "@vocab" => parseVocab(entry.value, semanticContext)
+          case "@type"  => parseTypeMapping(entry.value, semanticContext)
+          case _        => parseMapping(entry, semanticContext)
+        }
+      }
+      semanticContext
     }
 
     def parseBase(n: YNode, semanticContext: SemanticContext): Any = {
       Option(n.as[YScalar]) match {
         case Some(YType.Null) => semanticContext.withBase(BaseIri(n).withNulled(true))
-        case Some(s)    => semanticContext.withBase(BaseIri(s).withIri(s.text))
-        case _          => // ignore
+        case Some(s)          => semanticContext.withBase(BaseIri(s).withIri(s.text))
+        case _                => // ignore
       }
     }
 
     def parseVocab(n: YNode, semanticContext: SemanticContext): Any = {
       Option(n.as[YScalar]) match {
         case Some(YType.Null) => // ignore
-        case Some(s)    => semanticContext.withVocab(DefaultVocabulary(s).withIri(s.text))
-        case _          => // ignore
+        case Some(s)          => semanticContext.withVocab(DefaultVocabulary(s).withIri(s.text))
+        case _                => // ignore
       }
     }
 

@@ -1,4 +1,4 @@
-package amf.shapes.internal.spec.jsonschema.semanticjsonschema.dialect
+package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
 import amf.core.client.scala.model.domain.DomainElement
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
