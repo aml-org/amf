@@ -62,7 +62,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'remod-breaking'
         }
       }
       steps {
@@ -185,7 +184,7 @@ pipeline {
             if (env.BRANCH_NAME == 'master') {
               color = '#FF0000'
               headerFlavour = "RED ALERT"
-            } else if (env.BRANCH_NAME == 'devel') {
+            } else if (env.BRANCH_NAME == 'develop') {
               color = '#FFD700'
             }
             slackSend color: color, channel: "${slackChannel}", message: ":alert: ${headerFlavour}! :alert: Build failed!. \n\tBranch: ${env.BRANCH_NAME}\n\tStage:${failedStage}\n(See ${env.BUILD_URL})\n"
