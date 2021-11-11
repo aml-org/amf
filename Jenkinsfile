@@ -62,6 +62,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'apimf-3548'
         }
       }
       steps {
