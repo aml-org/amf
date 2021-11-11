@@ -61,6 +61,11 @@ class GraphParsingValidationTest extends AsyncFunSuite with Matchers {
     run(path)
   }
 
+  test("Validate parsing of '@type' with scalar value") {
+    val path: String = s"$basePath/type-scalar-value.jsonld"
+    run(path)
+  }
+
   protected def run(path: String): Future[Assertion] = {
     val config: AMFConfiguration  = APIConfiguration.API()
     val client: AMFBaseUnitClient = config.baseUnitClient()
