@@ -23,6 +23,11 @@ class MarkdownBuilder(val current: String = "") {
   def addBullet(text: String): MarkdownBuilder = {
     new MarkdownBuilder(current + "\n" + s"* $text")
   }
+  def addBullet(items: List[String]): MarkdownBuilder = {
+    items.foldLeft(this) { (acc, curr) =>
+      acc.addBullet(curr)
+    }
+  }
 
   def addRow(cols: List[String]): MarkdownBuilder = {
     val text = cols.fold("") { (acc, curr) =>
