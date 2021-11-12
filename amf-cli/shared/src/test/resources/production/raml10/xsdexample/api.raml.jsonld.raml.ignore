@@ -2,7 +2,15 @@
 title: test
 types:
   Customer:
-    example: null
+    example: |-
+      <Customer>
+          <name>Bart</name>
+          <lastName>Simpson</lastName>
+          <address>
+              <street>evergreen</street>
+              <number>123</number>
+          </address>
+      </Customer>
     properties:
       name:
         type: string
