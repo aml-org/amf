@@ -109,12 +109,7 @@ trait CommandHelper {
   def effectiveMediaType(mediaType: Option[String], spec: Option[String]): String = {
     mediaType match {
       case Some(effectiveMediaType) => effectiveMediaType
-      case None =>
-        spec match {
-//          case Some(effectiveVendor) if AMFPluginsRegistry.documentPluginForID(effectiveVendor).isDefined =>
-//            AMFPluginsRegistry.documentPluginForID(effectiveVendor).get.documentSyntaxes.head
-          case _ => "*/*"
-        }
+      case None => "*/*"
     }
   }
 
