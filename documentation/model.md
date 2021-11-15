@@ -478,6 +478,8 @@ Types:
 
 ## BaseIRI
 
+Types:
+* http://a.ml/vocabularies/meta#ContextBaseIri
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -576,6 +578,8 @@ Types:
 
 ## ContextMapping
 
+Types:
+* http://a.ml/vocabularies/meta#ContextMapping
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -618,6 +622,8 @@ Types:
 
 ## CuriePrefix
 
+Types:
+* http://a.ml/vocabularies/meta#ContextCuriePrefix
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -695,6 +701,8 @@ Types:
 
 ## DefaultVocabulary
 
+Types:
+* http://a.ml/vocabularies/meta#ContextDefaultVocabulary
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2425,6 +2433,8 @@ Types:
 
 ## SemanticContext
 
+Types:
+* http://a.ml/vocabularies/meta#SemanticContext
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
