@@ -24,14 +24,14 @@ import scala.concurrent.{ExecutionContext, Future}
   *     Origin file: api.<<fileExtension>>
   *     Golden file: api.<<fileExtension>>.jsonld
   *     Cannot be ignored
-  *  4 - Generate golden from jsonld for <<directory>>: parse the json for the origin and generates a target spec.
+  *  4 - Generate golden from jsonld for <<directory>>: parse the jsonld for the origin and generates a target spec.
   *     Origin file: api.<<fileExtension>>.jsonld
   *     Golden file: api.<<fileExtension>>.jsonld.<<fileExtension>>
   *     To ignore this step, add .ignore extension to api.<<fileExtension>>.jsonld (Step 3 will run anyway)
   *  5 - Parse golden from jsonld for <<directory>>: parse dumped spec target generated from jsonld and generates the same target. Check the generated target throw jsonld.
   *     Origin file: api.<<fileExtension>>.jsonld.<<fileExtension>>
   *     Golden file: api.<<fileExtension>>.jsonld.<<fileExtension>>
-  *     To ignore this step add .ignore extension to api.<<fileExtension>>.jsonlod.<<fileExtension>> (Setp 4 will run anyway, unless that be explicitly ignored).
+  *     To ignore this step add .ignore extension to api.<<fileExtension>>.jsonld.<<fileExtension>> (Step 4 will run anyway, unless that be explicitly ignored).
   *
   * <<directory>> : each directory case in the basePath location.
   * <<fileExtension>>: the file extension provided for test.
