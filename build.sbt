@@ -1,4 +1,5 @@
 
+import Common.snapshots
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
@@ -7,17 +8,17 @@ import sbtsonar.SonarPlugin.autoImport.sonarProperties
 import scala.language.postfixOps
 import scala.sys.process._
 import Versions.versions
-import org.mulesoft.typings.generation.ScalaClassFilterBuilder
-import org.mulesoft.typings.resolution.BuiltInMappings.{dictionary, option, overwrite}
-import org.mulesoft.typings.resolution.MappingFactory
-import org.mulesoft.typings.resolution.namespace.PrefixNamespaceReplacer
+import sbtassembly.AssemblyPlugin.autoImport.assembly
 
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
 ThisBuild / version := versions("amf.apicontract")
+ThisBuild / organization := "com.github.amlorg"
 ThisBuild / scalaVersion := "2.12.11"
+ThisBuild / resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Common.public, Resolver.mavenLocal, Resolver.mavenCentral)
+ThisBuild / credentials ++= Common.credentials()
 
 val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model")
 
@@ -45,9 +46,6 @@ sonarProperties ++= Map(
 )
 
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
-  organization := "com.github.amlorg",
-  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Common.public, Resolver.mavenLocal, Resolver.mavenCentral),
-  credentials ++= Common.credentials(),
   assembly / aggregate := false,
   libraryDependencies ++= Seq(
     "org.scalatest"   %%% "scalatest"         % "3.0.5" % Test,
@@ -308,6 +306,39 @@ buildJS := {
   val _ = (cliJS / Compile / fullOptJS).value
   "./amf-cli/js/build-scripts/buildjs.sh" !
 }
+
+
+/** **********************************************
+  * AD-HOC CLI
+  * ********************************************* */
+
+lazy val adhocCli = (project in file("adhoc-cli"))
+  .settings(
+    version := "0.1-SNAPSHOT",
+    publishTo := Some(snapshots)
+  )
+  .settings(
+    assembly / aggregate := true,
+    assembly / test := {},
+    assembly / mainClass := Some("amf.adhoc.cli.Main"),
+    assembly / assemblyOutputPath := file("amf.jar"),
+    assembly / assemblyMergeStrategy := {
+      case x if x.contains("commons/logging") => MergeStrategy.discard
+      case x if x.endsWith("JS_DEPENDENCIES") => MergeStrategy.discard
+      case x if x.contains("javax/annotation") => MergeStrategy.discard
+      case PathList(ps @ _*) if ps.last endsWith "module-info.class" => MergeStrategy.first
+      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => MergeStrategy.discard
+      case x =>
+        val oldStrategy = (assembly / assemblyMergeStrategy).value
+        oldStrategy(x)
+    },
+    assembly / artifact := {
+      val art = (assembly / artifact).value
+      art.withClassifier(Some("assembly"))
+    },
+    addArtifact(assembly / artifact, assembly))
+  .dependsOn(apiContractJVM)
+
 
 addCommandAlias(
   "buildCommandLine",
