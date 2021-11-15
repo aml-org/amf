@@ -338,6 +338,7 @@ lazy val adhocCli = (project in file("adhoc-cli"))
     },
     addArtifact(assembly / artifact, assembly))
   .dependsOn(apiContractJVM)
+  .disablePlugins(SonarPlugin)
 
 
 addCommandAlias(
