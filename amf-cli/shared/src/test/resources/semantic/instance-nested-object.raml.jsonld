@@ -7,7 +7,7 @@
       ],
       "apiContract:modelVersion": "3.2.0",
       "doc:transformed": true,
-      "doc:sourceSpec": "OAS 2.0"
+      "doc:sourceSpec": "RAML 1.0"
     },
     {
       "@id": "/web-api",
@@ -18,28 +18,27 @@
         "doc:DomainElement"
       ],
       "core:name": "Something",
-      "core:version": "1.0",
       "apiContract:endpoint": [
         {
-          "@id": "#/web-api/endpoint/%2Fendpoint"
+          "@id": "#/web-api/endpoint/%2Fsample"
         }
       ]
     },
     {
-      "@id": "#/web-api/endpoint/%2Fendpoint",
+      "@id": "#/web-api/endpoint/%2Fsample",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
       ],
-      "apiContract:path": "/endpoint",
+      "apiContract:path": "/sample",
       "apiContract:supportedOperation": [
         {
-          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get"
+          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get"
         }
       ]
     },
     {
-      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get",
+      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -47,12 +46,12 @@
       "apiContract:method": "get",
       "apiContract:returns": [
         {
-          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200"
+          "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200"
         }
       ]
     },
     {
-      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200",
+      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -60,20 +59,33 @@
       ],
       "apiContract:statusCode": "200",
       "core:name": "200",
-      "core:description": "Something",
-      "http://a.ml/vocab#pagination": {
-        "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/customDomainProperties/pagination/element"
+      "core:description": "A Response",
+      "http://a.ml/vocab#tag": {
+        "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element"
       }
     },
     {
-      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200/customDomainProperties/pagination/element",
+      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element",
       "@type": [
-        "http://a.ml/vocab#Pagination",
-        "file://amf-cli/shared/src/test/resources/semantic/dialect.yaml#/declarations/Pagination",
+        "http://a.ml/vocab#Tag",
+        "file://amf-cli/shared/src/test/resources/semantic/nested-object-dialect.yaml#/declarations/Tag",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
-      "http://a.ml/vocab#PageSize": 5
+      "http://a.ml/vocab#Type": {
+        "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element"
+      },
+      "http://a.ml/vocab#Tag": "SomeTag"
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element",
+      "@type": [
+        "http://a.ml/vocab#TagType",
+        "file://amf-cli/shared/src/test/resources/semantic/nested-object-dialect.yaml#/declarations/TagType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "http://a.ml/vocab#TagTypeValue": "SomeTagType"
     },
     {
       "@id": "",
@@ -93,7 +105,7 @@
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic/api.oas20.yaml",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/api-nested-object.raml",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",

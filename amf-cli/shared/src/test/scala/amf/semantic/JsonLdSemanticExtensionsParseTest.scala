@@ -48,6 +48,10 @@ class JsonLdSemanticExtensionsParseTest extends AsyncFunSuite with Matchers {
     assertParsedModel("scalar-dialect.yaml", "instance-scalar.async.jsonld", lookupScalarPagination)
   }
 
+  test("Parse JSON-LD with nested object semantic extensions for RAML 1.0") {
+    assertParsedModel("nested-object-dialect.yaml", "instance-nested-object.raml.jsonld", lookupNestedTagType)
+  }
+
   private def assertParsedModel(dialectPath: String,
                                 jsonLdPath: String,
                                 assertion: Document => Assertion): Future[Assertion] = {
@@ -91,5 +95,20 @@ class JsonLdSemanticExtensionsParseTest extends AsyncFunSuite with Matchers {
     extension.graph
       .scalarByProperty("http://a.ml/vocab#pagination")
       .head shouldBe 5
+  }
+
+  private def lookupNestedTagType(document: Document): Assertion = {
+    val extension =
+      document.encodes.asInstanceOf[Api].endPoints.head.operations.head.responses.head
+
+    extension.graph.containsProperty("http://a.ml/vocab#tag") shouldBe true
+    extension.graph
+      .getObjectByProperty("http://a.ml/vocab#tag")
+      .head
+      .graph
+      .getObjectByProperty("http://a.ml/vocab#Type")
+      .head
+      .graph
+      .containsProperty("http://a.ml/vocab#TagTypeValue") shouldBe true
   }
 }
