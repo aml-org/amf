@@ -8,15 +8,15 @@ Level: Violation
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: items should be equal to one of the allowed values
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/customDomainProperties/extension/object_1
-  Property: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/customDomainProperties/extension/object_1
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/customDomainProperties/test/object_1
+  Property: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/customDomainProperties/test/object_1
   Range: [(23,0)-(25,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml
 
 - Constraint: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: items should be equal to one of the allowed values
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/customDomainProperties/extension_1/object_1
-  Property: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/customDomainProperties/extension_1/object_1
+  Target: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/customDomainProperties/testInt/object_1
+  Property: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/customDomainProperties/testInt/object_1
   Range: [(26,0)-(28,0)]
   Location: file://amf-cli/shared/src/test/resources/validations/annotations/annotations_enum.raml
