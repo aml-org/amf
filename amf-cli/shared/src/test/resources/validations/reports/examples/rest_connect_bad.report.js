@@ -11,7 +11,7 @@ should be string
 should match some schema in anyOf
 
   Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/validations/production/rest_connect/apibad.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/customDomainProperties/extension/scalar_1
-  Property: file://amf-cli/shared/src/test/resources/validations/production/rest_connect/apibad.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/customDomainProperties/extension/scalar_1
+  Target: file://amf-cli/shared/src/test/resources/validations/production/rest_connect/apibad.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/customDomainProperties/ignored/scalar_1
+  Property: file://amf-cli/shared/src/test/resources/validations/production/rest_connect/apibad.raml#/web-api/endpoint/%2Ftest/supportedOperation/get/customDomainProperties/ignored/scalar_1
   Range: [(26,28)-(26,32)]
   Location: file://amf-cli/shared/src/test/resources/validations/production/rest_connect/apibad.raml
