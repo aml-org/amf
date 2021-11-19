@@ -1,0 +1,29 @@
+{
+  "@graph": [
+    {
+      "@id": "BaseUnitProcessingData",
+      "@type": "doc:BaseUnitProcessingData",
+      "doc:transformed": false
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}
