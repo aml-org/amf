@@ -83,6 +83,16 @@ class JsonLdSemanticExtensionsRenderTest extends FunSuiteCycleTests {
     }
   }
 
+  test("Render flattened nested object semantic extensions to JSON-LD in a RAML 1.0 spec") {
+    getConfig("nested-object-dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
+      cycle("api-nested-object.raml",
+            golden = "instance-nested-object.raml.jsonld",
+            Raml10YamlHint,
+            AmfJsonHint,
+            amfConfig = Some(config))
+    }
+  }
+
   /** Method for transforming parsed unit. Override if necessary. */
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     APIConfiguration.fromSpec(unit.sourceSpec.get).baseUnitClient().transform(unit).baseUnit
