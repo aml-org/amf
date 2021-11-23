@@ -101,9 +101,9 @@ else
         npm publish
 
         echo "Finished latest publish"
-        echo "Add 'beta' tag to latest"
+        echo "Add 'release' tag to latest"
 
-        npm dist-tag add amf-client-js@${PROJECT_VERSION} beta
+        npm dist-tag add amf-client-js@${PROJECT_VERSION} release
     fi
 fi
 
