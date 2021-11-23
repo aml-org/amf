@@ -1,5 +1,7 @@
 package amf.resolution.merge
 
+import amf.aml.internal.entities.AMLEntities
+import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.{Message, Operation}
 import amf.apicontract.internal.spec.async.Subscribe
@@ -138,7 +140,9 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     }
 
     def getBogusParserCtx: AsyncWebApiContext =
-      new Async20WebApiContext("loc", Seq(), ParserContext(config = LimitedParseConfig(DefaultErrorHandler())))
+      new Async20WebApiContext("loc",
+                               Seq(),
+                               ParserContext(config = LimitedParseConfig(DefaultErrorHandler(), AMLRegistry.empty)))
 
     def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): String =
       new AMFRenderer(document, AmfJsonHint, renderOptions).renderToString

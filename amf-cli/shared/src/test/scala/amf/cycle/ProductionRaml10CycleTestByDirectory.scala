@@ -1,6 +1,5 @@
 package amf.cycle
 
-import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote.{Hint, Raml10YamlHint}
 
 /**

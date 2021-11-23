@@ -12,7 +12,7 @@ private[amf] object APISerializableAnnotations extends SerializableAnnotations {
     "type-property-lexical-info"             -> TypePropertyLexicalInfo,
     "parameter-binding-in-body-lexical-info" -> ParameterBindingInBodyLexicalInfo,
     "invalid-binding"                        -> InvalidBinding,
-    "extends-reference"                     -> ExtendsReference
+    "extends-reference"                      -> ExtendsReference
   )
 
 }

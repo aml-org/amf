@@ -1,0 +1,87 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:transformed": true,
+      "doc:sourceSpec": "ASYNC 2.0"
+    },
+    {
+      "@id": "#/async-api",
+      "@type": [
+        "apiContract:AsyncAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Something",
+      "core:version": "1.0.1",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/async-api/endpoint/%2Fendpoint"
+        }
+      ]
+    },
+    {
+      "@id": "#/async-api/endpoint/%2Fendpoint",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/endpoint",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs"
+        }
+      ]
+    },
+    {
+      "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "subscribe",
+      "apiContract:returns": [
+        {
+          "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response"
+        }
+      ],
+      "apiContract:operationId": "subs"
+    },
+    {
+      "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "http://a.ml/vocab#pagination": 5
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/async-api"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/api-scalar.async.yaml",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

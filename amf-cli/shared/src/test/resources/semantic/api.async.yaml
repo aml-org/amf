@@ -1,0 +1,13 @@
+asyncapi: "2.0.0"
+info:
+  title: Something
+  version: 1.0.1
+
+channels:
+  /endpoint:
+    subscribe:
+      operationId: subs
+      message:
+        name: lightMeasured
+        x-pagination:
+          pageSize: 5

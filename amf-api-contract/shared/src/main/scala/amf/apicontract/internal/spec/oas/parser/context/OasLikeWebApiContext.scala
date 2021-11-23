@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.oas.parser.context
 
+import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
 import amf.apicontract.internal.spec.common.OasLikeWebApiDeclarations

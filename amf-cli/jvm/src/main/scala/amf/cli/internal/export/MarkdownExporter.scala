@@ -23,6 +23,8 @@ object MarkdownExporter {
     val tempBuilder = builder
       .addHeader(2, model.name)
       .addText(model.doc)
+      .addText("Types:")
+      .addBullet(model.types)
       .startTable(List("Name", "Value", "Documentation", "Namespace"))
     model.fields
       .foldLeft(tempBuilder) { (builder, field) =>

@@ -52,12 +52,16 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
                          profile: ProfileName = defaultProfile,
                          profileFile: Option[String] = None,
                          overridedHint: Option[Hint] = None,
-                         directory: String = basePath): Future[Assertion] = {
-    val initialConfig = APIConfiguration.API()
+                         directory: String = basePath,
+                         configOverride: Option[AMFConfiguration] = None): Future[Assertion] = {
+    val initialConfig = configOverride.getOrElse(APIConfiguration.API())
     val finalHint     = overridedHint.getOrElse(hint)
     for {
       parseResult <- parse(directory + api, initialConfig, finalHint)
-      report      <- configFor(parseResult.sourceSpec).baseUnitClient().validate(parseResult.baseUnit)
+      report <- configOverride
+        .getOrElse(configFor(parseResult.sourceSpec))
+        .baseUnitClient()
+        .validate(parseResult.baseUnit)
       r <- {
         val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val finalReport =

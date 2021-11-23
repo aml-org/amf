@@ -181,15 +181,17 @@ trait BuildCycleTests extends BuildCycleTestCommon {
                   renderOptions: Option[RenderOptions] = None,
                   pipeline: Option[String] = None,
                   transformWith: Option[Spec] = None,
-                  eh: Option[AMFErrorHandler] = None): Future[Assertion] = {
+                  eh: Option[AMFErrorHandler] = None,
+                  amfConfig: Option[AMFConfiguration] = None): Future[Assertion] = {
 
-    val config          = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
-    val amfConfig       = buildConfig(renderOptions, eh)
-    val transformConfig = buildConfig(configFor(transformWith.getOrElse(target.spec)), renderOptions, eh)
-    val renderConfig    = buildConfig(configFor(target.spec), renderOptions, eh)
+    val config      = CycleConfig(source, golden, hint, target, directory, pipeline, transformWith)
+    val parseConfig = amfConfig.getOrElse(buildConfig(renderOptions, eh))
+    val transformConfig =
+      amfConfig.getOrElse(buildConfig(configFor(transformWith.getOrElse(target.spec)), renderOptions, eh))
+    val renderConfig = amfConfig.getOrElse(buildConfig(configFor(target.spec), renderOptions, eh))
 
     for {
-      parsed       <- build(config, amfConfig)
+      parsed       <- build(config, parseConfig)
       resolved     <- Future.successful(transform(parsed, config, transformConfig))
       actualString <- Future.successful(render(resolved, config, renderConfig))
       actualFile   <- writeTemporaryFile(golden)(actualString)

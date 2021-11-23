@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: soap-xml-oas-design
+components:
+  schemas:
+    payPlanschema:
+      type: object
+      properties:
+        Envelope:
+          type: object
+  examples:
+    payplanexample:
+      value:
+        Envelope: {}
+paths:
+  /payPlan:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/xml:
+            schema:
+              $ref: /request-schema.json#components/schemas/payPlanschema
+            examples:
+              PaymentPlanEx:
+                $ref: '#/components/examples/payplanexample'
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/xml:
+              schema:
+                type: object
+              examples:
+                resEx:
+                  value:
+                    output: 200 Response
+  /payPlan2:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/payPlanschema'
+            examples:
+              PaymentPlanEx:
+                $ref: '#/components/examples/payplanexample'
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/xml:
+              schema:
+                type: object
+              examples:
+                resEx:
+                  value:
+                    output: 200 Response

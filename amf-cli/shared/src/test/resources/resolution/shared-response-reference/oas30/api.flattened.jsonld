@@ -10,7 +10,7 @@
       "doc:sourceSpec": "OAS 3.0"
     },
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,23 +21,23 @@
       "core:version": "1.4.0",
       "apiContract:endpoint": [
         {
-          "@id": "#15"
+          "@id": "#16"
         },
         {
-          "@id": "#18"
+          "@id": "#19"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:endpoint": "[(5,0)-(16,0)]",
           "core:name": "[(4,2)-(5,0)]",
-          "#14": "[(1,0)-(35,0)]",
+          "#15": "[(1,0)-(35,0)]",
           "core:version": "[(3,2)-(4,0)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#16",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -45,17 +45,17 @@
       "apiContract:path": "/echo",
       "apiContract:supportedOperation": [
         {
-          "@id": "#16"
+          "@id": "#17"
         }
       ],
       "smaps": {
         "lexical": {
-          "#15": "[(6,2)-(11,0)]"
+          "#16": "[(6,2)-(11,0)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#19",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -63,17 +63,17 @@
       "apiContract:path": "/users",
       "apiContract:supportedOperation": [
         {
-          "@id": "#19"
+          "@id": "#20"
         }
       ],
       "smaps": {
         "lexical": {
-          "#18": "[(11,2)-(16,0)]"
+          "#19": "[(11,2)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#17",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -81,18 +81,18 @@
       "apiContract:method": "post",
       "apiContract:returns": [
         {
-          "@id": "#17"
+          "@id": "#18"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(8,6)-(11,0)]",
-          "#16": "[(7,4)-(11,0)]"
+          "#17": "[(7,4)-(11,0)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#20",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -100,18 +100,18 @@
       "apiContract:method": "delete",
       "apiContract:returns": [
         {
-          "@id": "#20"
+          "@id": "#21"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(13,6)-(16,0)]",
-          "#19": "[(12,4)-(16,0)]"
+          "#20": "[(12,4)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#18",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -127,23 +127,23 @@
       ],
       "smaps": {
         "resolved-link-target": {
-          "#17": "amf://id#12"
+          "#18": "amf://id#12"
         },
         "lexical": {
           "apiContract:payload": "[(28,6)-(35,0)]",
-          "#17": "[(26,4)-(35,0)]",
+          "#18": "[(26,4)-(35,0)]",
           "core:description": "[(27,6)-(28,0)]"
         },
         "declared-element": {
-          "#17": ""
+          "#18": ""
         },
         "resolved-link": {
-          "#17": "amf://id#17"
+          "#18": "amf://id#18"
         }
       }
     },
     {
-      "@id": "#20",
+      "@id": "#21",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -159,18 +159,18 @@
       ],
       "smaps": {
         "resolved-link-target": {
-          "#20": "amf://id#12"
+          "#21": "amf://id#12"
         },
         "lexical": {
           "apiContract:payload": "[(28,6)-(35,0)]",
-          "#20": "[(26,4)-(35,0)]",
+          "#21": "[(26,4)-(35,0)]",
           "core:description": "[(27,6)-(28,0)]"
         },
         "declared-element": {
-          "#20": ""
+          "#21": ""
         },
         "resolved-link": {
-          "#20": "amf://id#20"
+          "#21": "amf://id#21"
         }
       }
     },
@@ -460,7 +460,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#14"
+        "@id": "#15"
       },
       "doc:root": true,
       "doc:processingData": {

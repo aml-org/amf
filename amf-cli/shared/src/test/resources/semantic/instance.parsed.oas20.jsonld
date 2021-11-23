@@ -1,0 +1,87 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:APIContractProcessingData"
+      ],
+      "apiContract:modelVersion": "3.2.0",
+      "doc:sourceSpec": "OAS 2.0"
+    },
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Something",
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/endpoint",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200"
+        }
+      ]
+    },
+    {
+      "@id": "#/web-api/endpoint/%2Fendpoint/supportedOperation/get/returns/resp/200",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "core:description": "Something"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic/api.oas20.yaml",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

@@ -24,7 +24,7 @@ import amf.core.client.common.position.Range
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.annotations.{LexicalInformation, VirtualElement}
+import amf.core.internal.annotations.{DefaultNode, LexicalInformation, VirtualElement}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{CompilerConfiguration, YMapOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
@@ -308,7 +308,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     if (operationsDefineParam) None
     else {
-      val pathParam = Parameter(Annotations.virtual())
+      val pathParam = Parameter(Annotations.virtual() += DefaultNode())
         .withSynthesizeName(variable)
         .set(ParameterModel.ParameterName, variable, Annotations.synthesized())
         .syntheticBinding("path")

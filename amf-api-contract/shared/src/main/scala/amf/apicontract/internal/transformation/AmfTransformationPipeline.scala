@@ -1,5 +1,6 @@
 package amf.apicontract.internal.transformation
 
+import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
 import amf.apicontract.internal.spec.common.transformation.stage._
 import amf.apicontract.internal.transformation.stages.{ExtensionsResolutionStage, WebApiReferenceResolutionStage}
 import amf.core.client.common.transform._
@@ -31,7 +32,8 @@ class AmfTransformationPipeline private[amf] (override val name: String) extends
       new PayloadAndParameterResolutionStage(profileName),
       new CleanReferencesStage(),
       new DeclarationsRemovalStage(),
-      new AnnotationRemovalStage()
+      new AnnotationRemovalStage(),
+      SemanticExtensionFlatteningStage
     )
 }
 

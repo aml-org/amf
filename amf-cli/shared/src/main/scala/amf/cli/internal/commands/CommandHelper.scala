@@ -84,6 +84,9 @@ trait CommandHelper {
     if (config.withSourceMaps) {
       generateOptions = generateOptions.withSourceMaps
     }
+    if (config.withSourceInformation) {
+      generateOptions = generateOptions.withSourceInformation
+    }
     if (config.withCompactNamespaces) {
       generateOptions = generateOptions.withCompactUris
     }
@@ -106,12 +109,7 @@ trait CommandHelper {
   def effectiveMediaType(mediaType: Option[String], spec: Option[String]): String = {
     mediaType match {
       case Some(effectiveMediaType) => effectiveMediaType
-      case None =>
-        spec match {
-//          case Some(effectiveVendor) if AMFPluginsRegistry.documentPluginForID(effectiveVendor).isDefined =>
-//            AMFPluginsRegistry.documentPluginForID(effectiveVendor).get.documentSyntaxes.head
-          case _ => "*/*"
-        }
+      case None => "*/*"
     }
   }
 

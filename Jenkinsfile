@@ -38,7 +38,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'release/*'
         }
       }
       steps {
@@ -58,33 +57,32 @@ pipeline {
         }
       }
     }
-//    stage('Publish') {
-//      when {
-//        anyOf {
-//          branch 'master'
-//          branch 'develop'
-//          branch 'release/*'
-//        }
-//      }
-//      steps {
-//        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-//          script {
-//            try{
-//              if (failedStage.isEmpty()) {
-//              sh '''
-//                  echo "about to publish in sbt"
-//                  sbt publish
-//                  echo "sbt publishing successful"
-//              '''
-//              }
-//            } catch(ignored) {
-//              failedStage = failedStage + " PUBLISH "
-//              unstable "Failed publication"
-//            }
-//          }
-//        }
-//      }
-//    }
+    stage('Publish') {
+      when {
+        anyOf {
+          branch 'master'
+          branch 'develop'
+        }
+      }
+      steps {
+        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+          script {
+            try{
+              if (failedStage.isEmpty()) {
+              sh '''
+                  echo "about to publish in sbt"
+                  sbt publish
+                  echo "sbt publishing successful"
+              '''
+              }
+            } catch(ignored) {
+              failedStage = failedStage + " PUBLISH "
+              unstable "Failed publication"
+            }
+          }
+        }
+      }
+    }
     stage('Tag version') {
       when {
         anyOf {
@@ -178,7 +176,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'release/*'
         }
       }
       steps {
@@ -187,7 +184,7 @@ pipeline {
             if (env.BRANCH_NAME == 'master') {
               color = '#FF0000'
               headerFlavour = "RED ALERT"
-            } else if (env.BRANCH_NAME == 'devel') {
+            } else if (env.BRANCH_NAME == 'develop') {
               color = '#FFD700'
             }
             slackSend color: color, channel: "${slackChannel}", message: ":alert: ${headerFlavour}! :alert: Build failed!. \n\tBranch: ${env.BRANCH_NAME}\n\tStage:${failedStage}\n(See ${env.BUILD_URL})\n"

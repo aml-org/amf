@@ -73,7 +73,6 @@ object RamlFragmentHeader {
     case t if Raml10Overlay.asRegExp().pattern.matcher(t).matches()        => Some(Raml10Overlay)
     case t if Raml10Extension.asRegExp().pattern.matcher(t).matches()      => Some(Raml10Extension)
     case t if Raml10SecurityScheme.asRegExp().pattern.matcher(t).matches() => Some(Raml10SecurityScheme)
-    case t if Raml10NamedExample.asRegExp().pattern.matcher(t).matches()   => Some(Raml10NamedExample)
     case _                                                                 => None
   }
 }

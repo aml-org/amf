@@ -1,6 +1,7 @@
 package amf.apicontract.internal.spec.common.parser
 
 import amf.aml.internal.parse.common.DeclarationContext
+import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
 import amf.apicontract.internal.spec.common.{OasParameter, WebApiDeclarations}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
@@ -71,6 +72,8 @@ abstract class WebApiContext(loc: String,
 
   val syntax: SpecSyntax
   val spec: Spec
+
+  val extensionsFacade: SemanticExtensionsFacade = SemanticExtensionsFacade(wrapped.config)
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext

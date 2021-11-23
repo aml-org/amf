@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Something
+/sample:
+  get:
+    responses:
+      200:
+        (pagination): 5
+        description: A Response
+      201:
+        (pagination): -50
+        description: A Response
+      203:
+        (pagination): 24
+        description: A Response

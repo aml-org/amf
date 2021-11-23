@@ -4,12 +4,13 @@ import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.document.{APIContractProcessingData, DataTypeFragment}
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
-import amf.core.client.scala.model.document.{Document, Fragment}
+import amf.core.client.scala.model.document.{BaseUnitSourceInformation, Document, Fragment, LocationInformation}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.remote._
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.internal.adoption.IdAdopter
+import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
 import amf.shapes.client.scala.model.domain.NodeShape
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
@@ -41,17 +42,19 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
         case actual: Document => actual
       })
       .map({ actual =>
-        AmfObjectMatcher(withoutLocation(rootExpected)).assert(withoutLocation(actual))
+        AmfObjectMatcher(withoutLocationOrSourceInfo(rootExpected)).assert(withoutLocationOrSourceInfo(actual))
         actual.references.zipWithIndex foreach {
           case (actualRef, index) =>
-            AmfObjectMatcher(withoutLocation(rootExpected.references(index))).assert(withoutLocation(actualRef))
+            AmfObjectMatcher(withoutLocationOrSourceInfo(rootExpected.references(index)))
+              .assert(withoutLocationOrSourceInfo(actualRef))
         }
         Succeeded
       })
   }
 
-  def withoutLocation(e: AmfObject): AmfObject = {
+  def withoutLocationOrSourceInfo(e: AmfObject): AmfObject = {
     e.fields.removeField(amf.core.internal.metamodel.document.DocumentModel.Location)
+    e.fields.removeField(BaseUnitModel.SourceInformation)
     e
   }
 
@@ -96,7 +99,10 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
         .withDeclares(Seq(personLink))
         .withRoot(true)
         .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
-      AMFGraphConfiguration.predefined().baseUnitClient().setBaseUri(result, "file://amf-cli/shared/src/test/resources/references/" + file)
+      AMFGraphConfiguration
+        .predefined()
+        .baseUnitClient()
+        .setBaseUri(result, "file://amf-cli/shared/src/test/resources/references/" + file)
       result
     }
   }

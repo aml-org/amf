@@ -1,5 +1,6 @@
 package amf.compiler
 
+import amf.apicontract.client.scala.model.domain.Request
 import amf.apicontract.client.scala.{
   AMFConfiguration,
   APIConfiguration,
@@ -124,6 +125,19 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
           r.results.head.message
             .contains("such file or directory")) // temp, assert better the message for js and jvm
       })
+  }
+
+  // APIMF-3402
+  test("internal and external ref should be called the same") {
+    build("file://amf-cli/shared/src/test/resources/resolution/external-schema-ref/api.yaml", Raml10YamlHint) map {
+      bu =>
+        val webapi = bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+        webapi.endPoints.foreach(endpoint => {
+          val name = endpoint.operations.head.request.payloads.head.schema.name.value()
+          name shouldBe "payPlanschema"
+        })
+        webapi should not be null
+    }
   }
 
   private def assertDocument(unit: BaseUnit): Assertion = unit match {

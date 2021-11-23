@@ -4,6 +4,7 @@ import amf.core.client.common.validation.Raml08Profile
 import amf.core.internal.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class ValidRamlModelParserTest extends ValidModelTest {
+
   test("Valid baseUri validations test") {
     checkValid("webapi/valid_baseuri.raml")
   }
@@ -285,6 +286,10 @@ class ValidRamlModelParserTest extends ValidModelTest {
 
   test("Custom facet defined in shapes with inheritance") {
     checkValid("/raml/custom-facet-in-inherited-shape.raml")
+  }
+
+  test("Uri parameter merge with default parameters doesn't reduce merge error") {
+    checkValid("/raml/valid-default-uri-parameter-merge-error.raml")
   }
 
   override val hint: Hint = Raml10YamlHint

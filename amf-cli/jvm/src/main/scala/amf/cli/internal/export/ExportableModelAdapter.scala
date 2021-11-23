@@ -8,8 +8,10 @@ object ExportableModelAdapter {
     val fields = model.attributes.map {
       case (name, attribute) => adapt(name, attribute)
     }
-    ExportableModel(formatModelName(model.name), fields, model.obj.doc.description)
+    ExportableModel(formatModelName(model.name), fields, model.obj.doc.description, types(model))
   }
+
+  private def types(model: Model) = model.obj.`type`.map(_.iri())
 
   private def adapt(name: String, attribute: Attribute): ExportableField = {
     attribute match {
@@ -37,7 +39,7 @@ object ExportableModelAdapter {
   private def formatModelName(name: String): String = name.replace("Model", "")
 }
 
-case class ExportableModel(name: String, fields: List[ExportableField], doc: String)
+case class ExportableModel(name: String, fields: List[ExportableField], doc: String, types: List[String])
 case class ExportableField(name: String,
                            value: String,
                            isArray: Boolean,

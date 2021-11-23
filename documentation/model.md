@@ -19,6 +19,7 @@ AMF Model Documentation
 * [BaseApi](#baseapi)
 * [BaseUnit](#baseunit)
 * [BaseUnitProcessingData](#baseunitprocessingdata)
+* [BaseUnitSourceInformation](#baseunitsourceinformation)
 * [Callback](#callback)
 * [ChannelBinding](#channelbinding)
 * [ChannelBindings](#channelbindings)
@@ -67,6 +68,7 @@ AMF Model Documentation
 * [License](#license)
 * [LinkNode](#linknode)
 * [LinkableElement](#linkableelement)
+* [LocationInformation](#locationinformation)
 * [MatrixShape](#matrixshape)
 * [Message](#message)
 * [MessageBinding](#messagebinding)
@@ -139,6 +141,8 @@ AMF Model Documentation
 * [XMLSerializer](#xmlserializer)
 ## APIContractProcessingData
 Class that groups data related to how a Base Unit was processed
+Types:
+* http://a.ml/vocabularies/document#APIContractProcessingData
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -150,6 +154,9 @@ Class that groups data related to how a Base Unit was processed
 Graph template that can be used to declare a re-usable graph structure that can be applied to different domain elements
 in order to re-use common semantics. Similar to a Lisp macro or a C++ template.
 It can be extended by any domain element adding bindings for the variables in the declaration.
+Types:
+* http://a.ml/vocabularies/document#AbstractDeclaration
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -164,6 +171,10 @@ It can be extended by any domain element adding bindings for the variables in th
 
 ## Amqp091ChannelBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#Amqp091ChannelBinding
+* http://a.ml/vocabularies/apiBinding#ChannelBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -176,6 +187,9 @@ It can be extended by any domain element adding bindings for the variables in th
 
 ## Amqp091ChannelExchange
 
+Types:
+* http://a.ml/vocabularies/apiBinding#Amqp091ChannelExchange
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -188,6 +202,10 @@ It can be extended by any domain element adding bindings for the variables in th
 
 ## Amqp091MessageBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#Amqp091MessageBinding
+* http://a.ml/vocabularies/apiBinding#MessageBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -199,6 +217,10 @@ It can be extended by any domain element adding bindings for the variables in th
 
 ## Amqp091OperationBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding
+* http://a.ml/vocabularies/apiBinding#OperationBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -218,6 +240,9 @@ It can be extended by any domain element adding bindings for the variables in th
 
 ## Amqp091Queue
 
+Types:
+* http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -230,6 +255,9 @@ It can be extended by any domain element adding bindings for the variables in th
 
 ## AnnotationMapping
 
+Types:
+* http://a.ml/vocabularies/meta#NodeAnnotationMapping
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -253,6 +281,10 @@ It can be extended by any domain element adding bindings for the variables in th
 
 ## AnnotationTypeDeclarationFragment
 Fragment encoding a RAML annotation type
+Types:
+* http://a.ml/vocabularies/apiContract#AnnotationTypeDeclarationFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -264,9 +296,15 @@ Fragment encoding a RAML annotation type
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## AnyShape
 Base class for all shapes stored in the graph model
+Types:
+* http://a.ml/vocabularies/shapes#AnyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -302,6 +340,10 @@ Base class for all shapes stored in the graph model
 
 ## ApiKeySettings
 Settings for an API Key security scheme
+Types:
+* http://a.ml/vocabularies/security#ApiKeySettings
+* http://a.ml/vocabularies/security#Settings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -312,6 +354,11 @@ Settings for an API Key security scheme
 
 ## ArrayNode
 Node that represents a dynamic array data structure
+Types:
+* http://a.ml/vocabularies/data#Array
+* http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq
+* http://a.ml/vocabularies/data#Node
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -321,6 +368,12 @@ Node that represents a dynamic array data structure
 
 ## ArrayShape
 Shape that contains a nested collection of data shapes
+Types:
+* http://a.ml/vocabularies/shapes#ArrayShape
+* http://a.ml/vocabularies/shapes#AnyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -367,6 +420,11 @@ Shape that contains a nested collection of data shapes
 
 ## AsyncApi
 Top level element describing a asynchronous API
+Types:
+* http://a.ml/vocabularies/apiContract#AsyncAPI
+* http://a.ml/vocabularies/apiContract#API
+* http://a.ml/vocabularies/document#RootDomainElement
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -389,6 +447,10 @@ Top level element describing a asynchronous API
 
 ## BaseApi
 Top level element describing any kind of API
+Types:
+* http://a.ml/vocabularies/apiContract#API
+* http://a.ml/vocabularies/document#RootDomainElement
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -411,6 +473,8 @@ Top level element describing any kind of API
 
 ## BaseUnit
 Base class for every single document model unit. After parsing a document the parser generate parsing Units. Units encode the domain elements and can reference other units to re-use descriptions.
+Types:
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -421,17 +485,33 @@ Base class for every single document model unit. After parsing a document the pa
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## BaseUnitProcessingData
 Class that groups data related to how a Base Unit was processed
+Types:
+* http://a.ml/vocabularies/document#BaseUnitProcessingData
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | transformed | boolean | Indicates whether a BaseUnit was transformed with some pipeline | http://a.ml/vocabularies/document#transformed |
  | sourceSpec | string | Standard of the specification file | http://a.ml/vocabularies/document#sourceSpec |
 
+## BaseUnitSourceInformation
+Class that stores information of the source from which the base unit was parsed
+Types:
+* http://a.ml/vocabularies/document#BaseUnitSourceInformation
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | rootLocation | string | Root source location of base unit | http://a.ml/vocabularies/document#rootLocation |
+ | additionalLocations | [[LocationInformation](#locationinformation)] | Additional source locations from which certain elements where parsed | http://a.ml/vocabularies/document#additionalLocations |
+
 ## Callback
 Model defining the information for a HTTP callback/ webhook
+Types:
+* http://a.ml/vocabularies/apiContract#Callback
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -442,6 +522,9 @@ Model defining the information for a HTTP callback/ webhook
 
 ## ChannelBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#ChannelBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -450,6 +533,9 @@ Model defining the information for a HTTP callback/ webhook
 
 ## ChannelBindings
 
+Types:
+* http://a.ml/vocabularies/apiBinding#ChannelBindings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -462,6 +548,9 @@ Model defining the information for a HTTP callback/ webhook
 
 ## ClassTerm
 
+Types:
+* http://www.w3.org/2002/07/owl#Class
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -474,6 +563,9 @@ Model defining the information for a HTTP callback/ webhook
 
 ## CorrelationId
 Model defining an identifier that can used for message tracing and correlation
+Types:
+* http://a.ml/vocabularies/core#CorrelationId
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -487,6 +579,9 @@ Model defining an identifier that can used for message tracing and correlation
 
 ## CreativeWork
 The most generic kind of creative work, including books, movies, photographs, software programs, etc.
+Types:
+* http://a.ml/vocabularies/core#CreativeWork
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -506,6 +601,10 @@ This can be achieved by using an annotationType in RAML. In OpenAPI thy don't ne
       Contrast this extension mechanism with the creation of a propertyTerm in a vocabulary, a more
 re-usable and generic way of achieving the same functionality.
 It can be validated using a SHACL shape
+Types:
+* http://a.ml/vocabularies/document#DomainProperty
+* http://www.w3.org/1999/02/22-rdf-syntax-ns#Property
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -520,6 +619,9 @@ It can be validated using a SHACL shape
 
 ## DataNode
 Base class for all data nodes parsed from the data structure
+Types:
+* http://a.ml/vocabularies/data#Node
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -528,6 +630,10 @@ Base class for all data nodes parsed from the data structure
 
 ## DataTypeFragment
 Fragment encoding a RAML data type
+Types:
+* http://a.ml/vocabularies/shapes#DataTypeFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -539,9 +645,14 @@ Fragment encoding a RAML data type
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DatatypePropertyTerm
 
+Types:
+* http://www.w3.org/2002/07/owl#DatatypeProperty
+* http://a.ml/vocabularies/meta#Property
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -553,6 +664,12 @@ Fragment encoding a RAML data type
 
 ## Dialect
 Definition of an AML dialect, mapping AST nodes from dialect documents into an output semantic graph
+Types:
+* http://a.ml/vocabularies/meta#Dialect
+* http://a.ml/vocabularies/document#Document
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Module
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -571,9 +688,14 @@ Definition of an AML dialect, mapping AST nodes from dialect documents into an o
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectFragment
 AML dialect mapping fragment that can be included in multiple AML dialects
+Types:
+* http://a.ml/vocabularies/meta#DialectFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -587,9 +709,16 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstance
 
+Types:
+* http://a.ml/vocabularies/meta#DialectInstance
+* http://a.ml/vocabularies/document#Document
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Module
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -605,9 +734,14 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstanceFragment
 
+Types:
+* http://a.ml/vocabularies/meta#DialectInstanceFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -623,9 +757,14 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstanceLibrary
 
+Types:
+* http://a.ml/vocabularies/meta#DialectInstanceLibrary
+* http://a.ml/vocabularies/document#Module
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -640,9 +779,14 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstancePatch
 
+Types:
+* http://a.ml/vocabularies/meta#DialectInstancePatch
+* http://a.ml/vocabularies/document#DocumentExtension
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -658,9 +802,12 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DialectInstanceProcessingData
 Class that groups data related to how a Base Unit was processed
+Types:
+* http://a.ml/vocabularies/document#DialectInstanceProcessingData
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -671,6 +818,12 @@ Class that groups data related to how a Base Unit was processed
 
 ## DialectLibrary
 Library of AML mappings that can be reused in different AML dialects
+Types:
+* http://a.ml/vocabularies/meta#DialectLibrary
+* http://a.ml/vocabularies/document#Document
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Module
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -684,9 +837,13 @@ Library of AML mappings that can be reused in different AML dialects
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DiscriminatorValueMapping
 Mapping that relates a certain discriminator value to a certain shape
+Types:
+* http://a.ml/vocabularies/shapes#DiscriminatorValueMapping
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -698,6 +855,11 @@ Mapping that relates a certain discriminator value to a certain shape
 A Document is a parsing Unit that encodes a stand-alone DomainElement and can include references to other DomainElements that reference from the encoded DomainElement.
 Since it encodes a DomainElement, but also declares references, it behaves like a Fragment and a Module at the same time.
 The main difference is that the Document encoded DomainElement is stand-alone and that the references declared are supposed to be private not for re-use from other Units
+Types:
+* http://a.ml/vocabularies/document#Document
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Module
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -710,9 +872,13 @@ The main difference is that the Document encoded DomainElement is stand-alone an
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## DocumentMapping
 Mapping for a particular dialect document into a graph base unit
+Types:
+* http://a.ml/vocabularies/meta#DocumentMapping
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -723,6 +889,10 @@ Mapping for a particular dialect document into a graph base unit
 
 ## DocumentationItemFragment
 Fragment encoding a RAML documentation item
+Types:
+* http://a.ml/vocabularies/apiContract#UserDocumentationFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -734,9 +904,13 @@ Fragment encoding a RAML documentation item
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## Documents
 Mapping from different type of dialect documents to base units in the parsed graph
+Types:
+* http://a.ml/vocabularies/meta#DocumentsModel
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -751,6 +925,8 @@ Mapping from different type of dialect documents to base units in the parsed gra
 
 ## DomainElement
 Base class for any element describing a domain model. Domain Elements are encoded or declared into base units
+Types:
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -761,6 +937,9 @@ Extension to the model being parsed from RAML annotation or OpenAPI extensions
 They must be a DomainPropertySchema (only in RAML) defining them.
 The DomainPropertySchema might have an associated Data Shape that must validate the extension nested graph.
 They are parsed as RDF graphs using a default transformation from a set of nested records into RDF.
+Types:
+* http://a.ml/vocabularies/apiContract#DomainExtension
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -772,6 +951,9 @@ They are parsed as RDF graphs using a default transformation from a set of neste
 
 ## EmptyBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#EmptyBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -779,6 +961,9 @@ They are parsed as RDF graphs using a default transformation from a set of neste
 
 ## Encoding
 
+Types:
+* http://a.ml/vocabularies/apiContract#Encoding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -792,6 +977,9 @@ They are parsed as RDF graphs using a default transformation from a set of neste
 
 ## EndPoint
 EndPoint in the API holding a number of executable operations
+Types:
+* http://a.ml/vocabularies/apiContract#EndPoint
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -809,6 +997,9 @@ EndPoint in the API holding a number of executable operations
 
 ## Example
 Example value for a schema inside an API
+Types:
+* http://a.ml/vocabularies/apiContract#Example
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -830,6 +1021,12 @@ Example value for a schema inside an API
 
 ## Extension
 API spec information designed to be applied and compelement the information of a base specification. RAML extensions and overlays are examples of extensions.
+Types:
+* http://a.ml/vocabularies/apiContract#Extension
+* http://a.ml/vocabularies/document#Document
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Module
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -843,9 +1040,13 @@ API spec information designed to be applied and compelement the information of a
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## ExtensionLike
 A Document that extends a target document, overwriting part of the information or overlaying additional information.
+Types:
+* http://a.ml/vocabularies/document#DocumentExtension
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -859,9 +1060,14 @@ A Document that extends a target document, overwriting part of the information o
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## External
 
+Types:
+* http://www.w3.org/2002/07/owl#Ontology
+* http://a.ml/vocabularies/meta#ExternalVocabulary
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -871,6 +1077,7 @@ A Document that extends a target document, overwriting part of the information o
 
 ## ExternalContextFields
 
+Types:
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -878,6 +1085,9 @@ A Document that extends a target document, overwriting part of the information o
 
 ## ExternalDomainElement
 Domain element containing foreign information that cannot be included into the model semantics
+Types:
+* http://a.ml/vocabularies/document#ExternalDomainElement
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -886,6 +1096,10 @@ Domain element containing foreign information that cannot be included into the m
 
 ## ExternalFragment
 Fragment encoding an external entity
+Types:
+* http://a.ml/vocabularies/document#ExternalFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -897,9 +1111,12 @@ Fragment encoding an external entity
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## ExternalSourceElement
 Inlined fragment of information
+Types:
+* http://a.ml/vocabularies/document#ExternalSource
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -909,6 +1126,12 @@ Inlined fragment of information
 
 ## FileShape
 Shape describing data uploaded in an API request
+Types:
+* http://a.ml/vocabularies/shapes#FileShape
+* http://a.ml/vocabularies/shapes#AnyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -955,6 +1178,9 @@ Shape describing data uploaded in an API request
 
 ## Fragment
 A Fragment is a parsing Unit that encodes a DomainElement
+Types:
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -966,9 +1192,14 @@ A Fragment is a parsing Unit that encodes a DomainElement
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## HttpApiKeySettings
 Settings for an Http API Key security scheme
+Types:
+* http://a.ml/vocabularies/security#HttpApiKeySettings
+* http://a.ml/vocabularies/security#Settings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -979,6 +1210,10 @@ Settings for an Http API Key security scheme
 
 ## HttpMessageBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#HttpMessageBinding
+* http://a.ml/vocabularies/apiBinding#MessageBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -989,6 +1224,10 @@ Settings for an Http API Key security scheme
 
 ## HttpOperationBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#HttpOperationBinding
+* http://a.ml/vocabularies/apiBinding#OperationBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1001,6 +1240,10 @@ Settings for an Http API Key security scheme
 
 ## HttpSettings
 Settings for an HTTP security scheme
+Types:
+* http://a.ml/vocabularies/security#HttpSettings
+* http://a.ml/vocabularies/security#Settings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1011,6 +1254,9 @@ Settings for an HTTP security scheme
 
 ## IriTemplateMapping
 
+Types:
+* http://a.ml/vocabularies/apiContract#IriTemplateMapping
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1020,6 +1266,10 @@ Settings for an HTTP security scheme
 
 ## KafkaMessageBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#KafkaMessageBinding
+* http://a.ml/vocabularies/apiBinding#MessageBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1030,6 +1280,10 @@ Settings for an HTTP security scheme
 
 ## KafkaOperationBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#KafkaOperationBinding
+* http://a.ml/vocabularies/apiBinding#OperationBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1041,6 +1295,9 @@ Settings for an HTTP security scheme
 
 ## License
 Licensing information for a resource
+Types:
+* http://a.ml/vocabularies/core#License
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1050,6 +1307,10 @@ Licensing information for a resource
 
 ## LinkNode
 Node that represents a dynamic link in a data structure
+Types:
+* http://a.ml/vocabularies/data#Link
+* http://a.ml/vocabularies/data#Node
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1060,6 +1321,8 @@ Node that represents a dynamic link in a data structure
 ## LinkableElement
 Reification of a link between elements in the model. Used when we want to capture the structure of the source document
 in the graph itself. Linkable elements are just replaced by regular links after resolution.
+Types:
+* http://a.ml/vocabularies/document#Linkable
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1067,8 +1330,25 @@ in the graph itself. Linkable elements are just replaced by regular links after 
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
 
+## LocationInformation
+Class that store a specific location and the elements that where parsed from this source
+Types:
+* http://a.ml/vocabularies/document#LocationInformation
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | location | string | Location of the metadata document that generated this base unit | http://a.ml/vocabularies/document#location |
+ | elements | [url] | Elements which all belong to a certain source location | http://a.ml/vocabularies/document#elements |
+
 ## MatrixShape
 Data shape containing nested multi-dimensional collection shapes
+Types:
+* http://a.ml/vocabularies/shapes#MatrixShape
+* http://a.ml/vocabularies/shapes#ArrayShape
+* http://a.ml/vocabularies/shapes#AnyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1115,6 +1395,9 @@ Data shape containing nested multi-dimensional collection shapes
 
 ## Message
 
+Types:
+* http://a.ml/vocabularies/apiContract#Message
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1140,6 +1423,9 @@ Data shape containing nested multi-dimensional collection shapes
 
 ## MessageBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#MessageBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1148,6 +1434,9 @@ Data shape containing nested multi-dimensional collection shapes
 
 ## MessageBindings
 
+Types:
+* http://a.ml/vocabularies/apiBinding#MessageBindings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1161,6 +1450,9 @@ Data shape containing nested multi-dimensional collection shapes
 ## Module
 A Module is a parsing Unit that declares DomainElements that can be referenced from the DomainElements in other parsing Units.
 It main purpose is to expose the declared references so they can be re-used
+Types:
+* http://a.ml/vocabularies/document#Module
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1172,9 +1464,14 @@ It main purpose is to expose the declared references so they can be re-used
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## MqttMessageBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#MqttMessageBinding
+* http://a.ml/vocabularies/apiBinding#MessageBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1184,6 +1481,10 @@ It main purpose is to expose the declared references so they can be re-used
 
 ## MqttOperationBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#MqttOperationBinding
+* http://a.ml/vocabularies/apiBinding#OperationBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1195,6 +1496,10 @@ It main purpose is to expose the declared references so they can be re-used
 
 ## MqttServerBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#MqttServerBinding
+* http://a.ml/vocabularies/apiBinding#ServerBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1208,6 +1513,9 @@ It main purpose is to expose the declared references so they can be re-used
 
 ## MqttServerLastWill
 
+Types:
+* http://a.ml/vocabularies/apiBinding#MqttServerLastWill
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1219,6 +1527,10 @@ It main purpose is to expose the declared references so they can be re-used
 
 ## NamedExampleFragment
 Fragment encoding a RAML named example
+Types:
+* http://a.ml/vocabularies/apiContract#NamedExampleFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1230,9 +1542,15 @@ Fragment encoding a RAML named example
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## NilShape
 Data shape representing the null/nil value in the input schema
+Types:
+* http://a.ml/vocabularies/shapes#NilShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1268,6 +1586,10 @@ Data shape representing the null/nil value in the input schema
 
 ## NodeMapping
 
+Types:
+* http://a.ml/vocabularies/meta#NodeMapping
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1284,6 +1606,12 @@ Data shape representing the null/nil value in the input schema
 
 ## NodeShape
 Shape that validates a record of fields, like a JS object
+Types:
+* http://www.w3.org/ns/shacl#NodeShape
+* http://a.ml/vocabularies/shapes#AnyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1335,6 +1663,10 @@ Shape that validates a record of fields, like a JS object
 
 ## OAuth1Settings
 Settings for an OAuth1 security scheme
+Types:
+* http://a.ml/vocabularies/security#OAuth1Settings
+* http://a.ml/vocabularies/security#Settings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1347,6 +1679,9 @@ Settings for an OAuth1 security scheme
 
 ## OAuth2Flow
 Flow for an OAuth2 security scheme setting
+Types:
+* http://a.ml/vocabularies/security#OAuth2Flow
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1359,6 +1694,10 @@ Flow for an OAuth2 security scheme setting
 
 ## OAuth2Settings
 Settings for an OAuth2 security scheme
+Types:
+* http://a.ml/vocabularies/security#OAuth2Settings
+* http://a.ml/vocabularies/security#Settings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1369,12 +1708,17 @@ Settings for an OAuth2 security scheme
 
 ## ObjType
 
+Types:
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
 
 ## ObjectNode
 Node that represents a dynamic object with records data structure
+Types:
+* http://a.ml/vocabularies/data#Object
+* http://a.ml/vocabularies/data#Node
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1383,6 +1727,10 @@ Node that represents a dynamic object with records data structure
 
 ## ObjectPropertyTerm
 
+Types:
+* http://www.w3.org/2002/07/owl#ObjectProperty
+* http://a.ml/vocabularies/meta#Property
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1394,6 +1742,10 @@ Node that represents a dynamic object with records data structure
 
 ## OpenIdConnectSettings
 Settings for an OpenID security scheme
+Types:
+* http://a.ml/vocabularies/security#OpenIdConnectSettings
+* http://a.ml/vocabularies/security#Settings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1404,6 +1756,9 @@ Settings for an OpenID security scheme
 
 ## Operation
 Action that can be executed using a particular HTTP invocation
+Types:
+* http://a.ml/vocabularies/apiContract#Operation
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1432,6 +1787,9 @@ Action that can be executed using a particular HTTP invocation
 
 ## OperationBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#OperationBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1440,6 +1798,9 @@ Action that can be executed using a particular HTTP invocation
 
 ## OperationBindings
 
+Types:
+* http://a.ml/vocabularies/apiBinding#OperationBindings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1452,6 +1813,9 @@ Action that can be executed using a particular HTTP invocation
 
 ## Organization
 Organization providing an good or service
+Types:
+* http://a.ml/vocabularies/core#Organization
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1462,6 +1826,12 @@ Organization providing an good or service
 
 ## Overlay
 Model defining a RAML overlay
+Types:
+* http://a.ml/vocabularies/apiContract#Overlay
+* http://a.ml/vocabularies/document#Document
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Module
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1475,9 +1845,13 @@ Model defining a RAML overlay
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## Parameter
 Piece of data required or returned by an Operation
+Types:
+* http://a.ml/vocabularies/apiContract#Parameter
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1501,6 +1875,9 @@ Piece of data required or returned by an Operation
 
 ## ParametrizedDeclaration
 Generic graph template supporting variables that can be transformed into a domain element
+Types:
+* http://a.ml/vocabularies/document#ParametrizedDeclaration
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1511,6 +1888,10 @@ Generic graph template supporting variables that can be transformed into a domai
 
 ## ParametrizedResourceType
 RAML resource type that can accept parameters
+Types:
+* http://a.ml/vocabularies/apiContract#ParametrizedResourceType
+* http://a.ml/vocabularies/document#ParametrizedDeclaration
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1521,6 +1902,9 @@ RAML resource type that can accept parameters
 
 ## ParametrizedSecurityScheme
 
+Types:
+* http://a.ml/vocabularies/security#ParametrizedSecurityScheme
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1531,6 +1915,10 @@ RAML resource type that can accept parameters
 
 ## ParametrizedTrait
 RAML trait with declared parameters
+Types:
+* http://a.ml/vocabularies/apiContract#ParametrizedTrait
+* http://a.ml/vocabularies/document#ParametrizedDeclaration
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1541,6 +1929,9 @@ RAML trait with declared parameters
 
 ## Payload
 Encoded payload using certain media-type
+Types:
+* http://a.ml/vocabularies/apiContract#Payload
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1557,6 +1948,10 @@ Encoded payload using certain media-type
 
 ## PayloadFragment
 Fragment encoding HTTP payload information
+Types:
+* http://a.ml/vocabularies/apiContract#PayloadFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1569,9 +1964,13 @@ Fragment encoding HTTP payload information
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## PropertyDependencies
 Dependency between sets of property shapes
+Types:
+* http://a.ml/vocabularies/shapes#PropertyDependencies
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1581,6 +1980,9 @@ Dependency between sets of property shapes
 
 ## PropertyMapping
 Semantic mapping from an input AST in a dialect document to the output graph of information for a class of output node
+Types:
+* http://a.ml/vocabularies/meta#NodePropertyMapping
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1608,6 +2010,11 @@ Semantic mapping from an input AST in a dialect document to the output graph of 
 
 ## PropertyShape
 Constraint over a property in a data shape.
+Types:
+* http://www.w3.org/ns/shacl#PropertyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1643,6 +2050,9 @@ Constraint over a property in a data shape.
 
 ## PublicNodeMapping
 Mapping for a graph node mapping to a particular function in a dialect
+Types:
+* http://a.ml/vocabularies/meta#PublicNodeMapping
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1652,6 +2062,11 @@ Mapping for a graph node mapping to a particular function in a dialect
 
 ## RecursiveShape
 Recursion on a Shape structure, used when expanding a shape and finding the canonical representation of that shape.
+Types:
+* http://a.ml/vocabularies/shapes#RecursiveShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1682,6 +2097,10 @@ Recursion on a Shape structure, used when expanding a shape and finding the cano
 
 ## Request
 Request information for an operation
+Types:
+* http://a.ml/vocabularies/apiContract#Request
+* http://a.ml/vocabularies/apiContract#Message
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1712,6 +2131,10 @@ Request information for an operation
 
 ## ResourceType
 Type of document base unit encoding a RAML resource type
+Types:
+* http://a.ml/vocabularies/apiContract#ResourceType
+* http://a.ml/vocabularies/document#AbstractDeclaration
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1726,6 +2149,10 @@ Type of document base unit encoding a RAML resource type
 
 ## ResourceTypeFragment
 Fragment encoding a RAML resource type
+Types:
+* http://a.ml/vocabularies/apiContract#ResourceTypeFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1737,9 +2164,14 @@ Fragment encoding a RAML resource type
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## Response
 Response information for an operation
+Types:
+* http://a.ml/vocabularies/apiContract#Response
+* http://a.ml/vocabularies/apiContract#Message
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1767,6 +2199,10 @@ Response information for an operation
 
 ## ScalarNode
 Node that represents a dynamic scalar value data structure
+Types:
+* http://a.ml/vocabularies/data#Scalar
+* http://a.ml/vocabularies/data#Node
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1777,6 +2213,12 @@ Node that represents a dynamic scalar value data structure
 
 ## ScalarShape
 Data shape describing a scalar value in the input data model, reified as an scalar node in the mapped graph
+Types:
+* http://a.ml/vocabularies/shapes#ScalarShape
+* http://a.ml/vocabularies/shapes#AnyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1826,6 +2268,9 @@ Data shape describing a scalar value in the input data model, reified as an scal
 
 ## SchemaDependencies
 Dependency between a property shape and a schema
+Types:
+* http://a.ml/vocabularies/shapes#SchemaDependencies
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1835,6 +2280,12 @@ Dependency between a property shape and a schema
 
 ## SchemaShape
 Raw schema that cannot be parsed using AMF shapes model
+Types:
+* http://a.ml/vocabularies/shapes#SchemaShape
+* http://a.ml/vocabularies/shapes#AnyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1872,6 +2323,9 @@ Raw schema that cannot be parsed using AMF shapes model
 
 ## Scope
 
+Types:
+* http://a.ml/vocabularies/security#Scope
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1881,6 +2335,9 @@ Raw schema that cannot be parsed using AMF shapes model
 
 ## SecurityRequirement
 Flow for an OAuth2 security scheme setting
+Types:
+* http://a.ml/vocabularies/security#SecurityRequirement
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1889,6 +2346,9 @@ Flow for an OAuth2 security scheme setting
 
 ## SecurityScheme
 Authentication and access control mechanism defined in an API
+Types:
+* http://a.ml/vocabularies/security#SecurityScheme
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1908,6 +2368,10 @@ Authentication and access control mechanism defined in an API
 
 ## SecuritySchemeFragment
 Fragment encoding a RAML security scheme
+Types:
+* http://a.ml/vocabularies/security#SecuritySchemeFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1919,9 +2383,13 @@ Fragment encoding a RAML security scheme
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## SemanticExtension
 Mapping a particular extension name to an extension definition
+Types:
+* http://a.ml/vocabularies/meta#ExtensionMapping
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1931,6 +2399,9 @@ Mapping a particular extension name to an extension definition
 
 ## Server
 Information about the network accessible locations where the API is available
+Types:
+* http://a.ml/vocabularies/apiContract#Server
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1946,6 +2417,9 @@ Information about the network accessible locations where the API is available
 
 ## ServerBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#ServerBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1954,6 +2428,9 @@ Information about the network accessible locations where the API is available
 
 ## ServerBindings
 
+Types:
+* http://a.ml/vocabularies/apiBinding#ServerBindings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1966,6 +2443,9 @@ Information about the network accessible locations where the API is available
 
 ## Settings
 Settings for a security scheme
+Types:
+* http://a.ml/vocabularies/security#Settings
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -1976,6 +2456,10 @@ Settings for a security scheme
 Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph.
 They can be used to define and enforce schemas for the data graph information through SHACL.
 Shapes can be recursive and inherit from other shapes.
+Types:
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2004,6 +2488,9 @@ Shapes can be recursive and inherit from other shapes.
 
 ## ShapeExtension
 Custom extensions for a data shape definition inside an API definition
+Types:
+* http://a.ml/vocabularies/apiContract#ShapeExtension
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2014,12 +2501,17 @@ Custom extensions for a data shape definition inside an API definition
 ## SourceMap
 SourceMaps include tags with syntax specific information obtained when parsing a particular specification syntax like RAML or OpenAPI.
 It can be used to re-generate the document from the RDF model with a similar syntax
+Types:
+* http://a.ml/vocabularies/document-source-maps#SourceMap
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
 
 ## Tag
 Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format.
+Types:
+* http://a.ml/vocabularies/apiContract#Tag
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2030,6 +2522,9 @@ Categorical information provided by some API spec format. Tags are extensions to
 
 ## TemplatedLink
 Templated link containing URL template and variables mapping
+Types:
+* http://a.ml/vocabularies/apiContract#TemplatedLink
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2047,6 +2542,10 @@ Templated link containing URL template and variables mapping
 
 ## Trait
 Type of document base unit encoding a RAML trait
+Types:
+* http://a.ml/vocabularies/apiContract#Trait
+* http://a.ml/vocabularies/document#AbstractDeclaration
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2061,6 +2560,10 @@ Type of document base unit encoding a RAML trait
 
 ## TraitFragment
 Fragment encoding a RAML trait
+Types:
+* http://a.ml/vocabularies/apiContract#TraitFragment
+* http://a.ml/vocabularies/document#Fragment
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2072,9 +2575,17 @@ Fragment encoding a RAML trait
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## TupleShape
 Data shape containing a multi-valued collection of shapes
+Types:
+* http://a.ml/vocabularies/shapes#TupleShape
+* http://a.ml/vocabularies/shapes#ArrayShape
+* http://a.ml/vocabularies/shapes#AnyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2118,6 +2629,10 @@ Data shape containing a multi-valued collection of shapes
 
 ## UnionNodeMapping
 
+Types:
+* http://a.ml/vocabularies/meta#UnionNodeMapping
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2132,6 +2647,12 @@ Data shape containing a multi-valued collection of shapes
 
 ## UnionShape
 Shape representing the union of many alternative data shapes
+Types:
+* http://a.ml/vocabularies/shapes#UnionShape
+* http://a.ml/vocabularies/shapes#AnyShape
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/shapes#Shape
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2169,6 +2690,9 @@ Shape representing the union of many alternative data shapes
 
 ## VariableValue
 Value for a variable in a graph template
+Types:
+* http://a.ml/vocabularies/document#VariableValue
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2178,6 +2702,10 @@ Value for a variable in a graph template
 
 ## Vocabulary
 Basic primitives for the declaration of vocabularies.
+Types:
+* http://a.ml/vocabularies/meta#Vocabulary
+* http://www.w3.org/2002/07/owl#Ontology
+* http://a.ml/vocabularies/document#Unit
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2194,9 +2722,13 @@ Basic primitives for the declaration of vocabularies.
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
  | package | string | Logical identifier providing a common namespace for the information in this base unit | http://a.ml/vocabularies/document#package |
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
+ | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## VocabularyReference
 
+Types:
+* http://a.ml/vocabularies/meta#VocabularyReference
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2207,6 +2739,11 @@ Basic primitives for the declaration of vocabularies.
 
 ## WebApi
 Top level element describing a HTTP API
+Types:
+* http://a.ml/vocabularies/apiContract#WebAPI
+* http://a.ml/vocabularies/apiContract#API
+* http://a.ml/vocabularies/document#RootDomainElement
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2229,6 +2766,10 @@ Top level element describing a HTTP API
 
 ## WebSocketsChannelBinding
 
+Types:
+* http://a.ml/vocabularies/apiBinding#WebSocketsChannelBinding
+* http://a.ml/vocabularies/apiBinding#ChannelBinding
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2241,6 +2782,9 @@ Top level element describing a HTTP API
 
 ## XMLSerializer
 Information about how to encode into XML a particular data shape
+Types:
+* http://a.ml/vocabularies/shapes#XMLSerializer
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |

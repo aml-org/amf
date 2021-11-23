@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#11",
+      "@id": "#13",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,7 +21,7 @@
       "core:description": "test description",
       "apiContract:server": [
         {
-          "@id": "#16"
+          "@id": "#18"
         }
       ],
       "apiContract:scheme": [
@@ -29,21 +29,21 @@
       ],
       "apiContract:endpoint": [
         {
-          "@id": "#12"
+          "@id": "#14"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:scheme": "[(4,0)-(5,0)]",
           "core:description": "[(3,0)-(4,0)]",
-          "#11": "[(2,0)-(16,23)]",
+          "#13": "[(2,0)-(16,23)]",
           "core:name": "[(2,0)-(3,0)]",
           "apiContract:server": "[(5,0)-(7,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#18",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -54,12 +54,12 @@
           "core:urlTemplate": "[(5,0)-(7,0)]"
         },
         "synthesized-field": {
-          "#16": "true"
+          "#18": "true"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#14",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -68,19 +68,19 @@
       "core:name": "People",
       "apiContract:supportedOperation": [
         {
-          "@id": "#13"
+          "@id": "#15"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(11,2)-(12,0)]",
-          "#12": "[(10,0)-(16,23)]",
+          "#14": "[(10,0)-(16,23)]",
           "apiContract:path": "[(10,0)-(10,7)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#15",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -89,18 +89,18 @@
       "core:name": "Create a person",
       "apiContract:expects": [
         {
-          "@id": "#14"
+          "@id": "#16"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(13,4)-(14,0)]",
-          "#13": "[(12,2)-(16,23)]"
+          "#15": "[(12,2)-(16,23)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#16",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -108,7 +108,7 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#15"
+          "@id": "#17"
         }
       ],
       "smaps": {
@@ -118,7 +118,7 @@
       }
     },
     {
-      "@id": "#15",
+      "@id": "#17",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -129,7 +129,7 @@
       },
       "smaps": {
         "lexical": {
-          "#15": "[(15,6)-(16,23)]"
+          "#17": "[(15,6)-(16,23)]"
         }
       }
     },
@@ -312,7 +312,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#11"
+        "@id": "#13"
       },
       "doc:root": true,
       "doc:processingData": {

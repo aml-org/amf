@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: api
+
+resourceTypes:
+  myResourceType:
+    uriParameters:
+      myUriParameter:
+        type: myInteger
+
+types:
+  myInteger:
+    type: integer
+
+/myEndpoint/{myUriParameter}:
+  type: myResourceType
