@@ -60,32 +60,32 @@
       "apiContract:statusCode": "200",
       "core:name": "200",
       "core:description": "A Response",
-      "http://a.ml/vocab#tag": {
+      "aml:tag": {
         "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element"
       }
     },
     {
       "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element",
       "@type": [
-        "http://a.ml/vocab#Tag",
+        "aml:Tag",
         "file://amf-cli/shared/src/test/resources/semantic/nested-object-dialect.yaml#/declarations/Tag",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
-      "http://a.ml/vocab#Type": {
+      "aml:Type": {
         "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element"
       },
-      "http://a.ml/vocab#Tag": "SomeTag"
+      "aml:Tag": "SomeTag"
     },
     {
       "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200/customDomainProperties/tag/element/element",
       "@type": [
-        "http://a.ml/vocab#TagType",
+        "aml:TagType",
         "file://amf-cli/shared/src/test/resources/semantic/nested-object-dialect.yaml#/declarations/TagType",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
-      "http://a.ml/vocab#TagTypeValue": "SomeTagType"
+      "aml:TagTypeValue": "SomeTagType"
     },
     {
       "@id": "",
@@ -106,6 +106,7 @@
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic/api-nested-object.raml",
+    "aml": "http://a.ml/vocab#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",
