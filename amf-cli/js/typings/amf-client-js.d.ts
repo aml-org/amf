@@ -191,12 +191,6 @@ declare module 'amf-client-js' {
 
     getExtensions(): Array<SemanticExtension>
 
-    findSemanticByPropertyTerm(dialect: Dialect, uri: string): Array<SemanticExtension>
-
-    findSemanticByTarget(dialect: Dialect, uri: string): Array<SemanticExtension>
-
-    findSemanticByName(dialect: Dialect, name: string): undefined | SemanticExtension
-
 
   }
   export class SkippedValidationPluginEvent  {
@@ -251,6 +245,7 @@ declare module 'amf-client-js' {
     modelVersion: StrField
     sourceSpec: undefined | Spec
     processingData: BaseUnitProcessingData
+    sourceInformation: BaseUnitSourceInformation
 
     references(): Array<BaseUnit>
 
@@ -875,6 +870,7 @@ declare module 'amf-client-js' {
     raw: undefined | string
     processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     encodes: DomainElement
 
@@ -1408,6 +1404,7 @@ declare module 'amf-client-js' {
     raw: undefined | string
     processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     declares: Array<DomainElement>
     externals: Array<External>
@@ -1494,6 +1491,7 @@ declare module 'amf-client-js' {
     raw: undefined | string
     processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     encodes: NodeMapping
     externals: Array<External>
@@ -1735,6 +1733,7 @@ declare module 'amf-client-js' {
     raw: undefined | string
     processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     encodes: DomainElement
     declares: Array<DomainElement>
@@ -2529,6 +2528,7 @@ declare module 'amf-client-js' {
     raw: undefined | string
     processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     declares: Array<DomainElement>
 
@@ -2600,8 +2600,9 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    processingData: BaseUnitProcessingData
+    processingData: DialectInstanceProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     encodes: DialectDomainElement
     declares: Array<DomainElement>
@@ -2650,8 +2651,6 @@ declare module 'amf-client-js' {
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
-
-    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -2745,6 +2744,18 @@ declare module 'amf-client-js' {
     constructor()
 
     linkCopy(): NilShape
+
+
+  }
+  export class BaseUnitSourceInformation  {
+    rootLocation: StrField
+    additionalLocations: Array<LocationInformation>
+
+    constructor()
+
+    withRootLocation(value: string): this
+
+    withAdditionalLocations(locations: Array<LocationInformation>): this
 
 
   }
@@ -3104,6 +3115,7 @@ declare module 'amf-client-js' {
     libraryHeader: undefined | string
     header: string
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     encodes: DomainElement
     declares: Array<DomainElement>
@@ -3693,8 +3705,9 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    processingData: BaseUnitProcessingData
+    processingData: DialectInstanceProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     encodes: DialectDomainElement
     declares: Array<DomainElement>
@@ -3743,8 +3756,6 @@ declare module 'amf-client-js' {
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
-
-    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -4068,8 +4079,9 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    processingData: BaseUnitProcessingData
+    processingData: DialectInstanceProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     encodes: DialectDomainElement
 
@@ -4110,8 +4122,6 @@ declare module 'amf-client-js' {
     withPkg(pkg: string): this
 
     references(): Array<BaseUnit>
-
-    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -4361,6 +4371,7 @@ declare module 'amf-client-js' {
     raw: undefined | string
     processingData: BaseUnitProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     declares: Array<DomainElement>
     externals: Array<External>
@@ -4770,8 +4781,9 @@ declare module 'amf-client-js' {
     usage: StrField
     id: string
     raw: undefined | string
-    processingData: BaseUnitProcessingData
+    processingData: DialectInstanceProcessingData
     sourceSpec: undefined | Spec
+    sourceInformation: BaseUnitSourceInformation
     modelVersion: StrField
     declares: Array<DomainElement>
 
@@ -4812,8 +4824,6 @@ declare module 'amf-client-js' {
     withDeclares(declares: Array<DomainElement>): this
 
     references(): Array<BaseUnit>
-
-    withProcessingData(data: BaseUnitProcessingData): this
 
     withId(id: string): this
 
@@ -5417,6 +5427,7 @@ declare module 'amf-client-js' {
     schemaVersion: JSONSchemaVersion
     isWithCompactUris: boolean
     isWithSourceMaps: boolean
+    isWithSourceInformation: boolean
     isAmfJsonLdSerialization: boolean
     isPrettyPrint: boolean
     isEmitNodeIds: boolean
@@ -5430,6 +5441,10 @@ declare module 'amf-client-js' {
     withSourceMaps(): RenderOptions
 
     withoutSourceMaps(): RenderOptions
+
+    withSourceInformation(): RenderOptions
+
+    withoutSourceInformation(): RenderOptions
 
     withCompactUris(): RenderOptions
 
@@ -5723,6 +5738,19 @@ declare module 'amf-client-js' {
   }
   export class AMFValidator  {
     static validate(baseUnit: BaseUnit, conf: AMFGraphConfiguration): Promise<AMFValidationReport>
+
+
+  }
+  export class LocationInformation  {
+    locationValue: StrField
+
+    constructor()
+
+    withLocation(value: string): this
+
+    elements(): Array<StrField>
+
+    withElements(elements: Array<string>): this
 
 
   }
