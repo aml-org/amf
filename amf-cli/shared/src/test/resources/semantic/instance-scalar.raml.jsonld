@@ -60,7 +60,7 @@
       "apiContract:statusCode": "200",
       "core:name": "200",
       "core:description": "A Response",
-      "http://a.ml/vocab#pagination": 5
+      "aml:pagination": 5
     },
     {
       "@id": "",
@@ -81,6 +81,7 @@
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic/api-scalar.raml",
+    "aml": "http://a.ml/vocab#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#"

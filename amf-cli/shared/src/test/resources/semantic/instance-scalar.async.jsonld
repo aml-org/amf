@@ -59,7 +59,7 @@
         "apiContract:Message",
         "doc:DomainElement"
       ],
-      "http://a.ml/vocab#pagination": 5
+      "aml:pagination": 5
     },
     {
       "@id": "",
@@ -80,6 +80,7 @@
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic/api-scalar.async.yaml",
+    "aml": "http://a.ml/vocab#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#"
