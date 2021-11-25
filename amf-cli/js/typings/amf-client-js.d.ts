@@ -5945,7 +5945,7 @@ declare module 'amf-client-js' {
   }
 
   export class SemanticJsonSchemaConfiguration            {
-    static predefined(): AMLConfiguration
+    static predefined(): ShapesConfiguration
   }
 
   export class Position  {
