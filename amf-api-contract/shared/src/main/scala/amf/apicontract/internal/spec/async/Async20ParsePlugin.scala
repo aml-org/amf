@@ -9,6 +9,7 @@ import amf.apicontract.internal.spec.raml.Raml10ParsePlugin
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.exception.InvalidDocumentHeaderException
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.{AsyncApi20, Mimes, Spec}
@@ -19,8 +20,7 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
 
   override def applies(element: Root): Boolean = AsyncHeader(element).contains(Async20Header)
 
-  override def validSpecsToReference: Seq[Spec] =
-    super.validSpecsToReference :+ Raml10ParsePlugin.spec
+  override def referencePlugins: Seq[AMFParsePlugin] = super.referencePlugins :+ Raml10ParsePlugin
 
   override def mediaTypes: Seq[String] = Seq(Mimes.`application/yaml`, Mimes.`application/json`)
 

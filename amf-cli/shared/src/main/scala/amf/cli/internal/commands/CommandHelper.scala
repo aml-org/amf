@@ -58,12 +58,7 @@ trait CommandHelper {
     val configClient                       = configuration.baseUnitClient()
     if (config.resolve && config.validate) {
       val inputFile = ensureUrl(config.input.get)
-      val parsed = AMFCompiler(
-        inputFile,
-        Context(platform),
-        cache = Cache(),
-        CompilerConfiguration(configuration)
-      ).build()
+      val parsed    = configClient.parse(inputFile).map(_.baseUnit)
       parsed map { parsed =>
         configClient.transform(parsed, PipelineId.Default).baseUnit
       }
@@ -109,7 +104,7 @@ trait CommandHelper {
   def effectiveMediaType(mediaType: Option[String], spec: Option[String]): String = {
     mediaType match {
       case Some(effectiveMediaType) => effectiveMediaType
-      case None => "*/*"
+      case None                     => "*/*"
     }
   }
 

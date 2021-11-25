@@ -12,9 +12,10 @@ trait CrossSpecRestriction { this: ApiParsePlugin =>
   // TODO: all documents should have a Vendor
   protected def restrictCrossSpecReferences(optionalReferencedSpec: Option[Spec], reference: Reference)(
       implicit errorHandler: AMFErrorHandler): Unit = {
-    val possibleReferencedSpec: List[Spec] = (optionalReferencedSpec ++ validSpecsToReference).toList
+    val possibleReferencedSpec: List[Spec] = (optionalReferencedSpec ++ referencePlugins.map(_.spec)).toList
     optionalReferencedSpec.foreach { referencedSpec =>
       if (!possibleReferencedSpec.contains(referencedSpec)) {
+        // this seems unreachable, as references will only be parsed with referencePlugins.
         referenceNodes(reference).foreach(node =>
           errorHandler.violation(InvalidCrossSpec, "", "Cannot reference fragments of another spec", node))
       }
@@ -27,5 +28,7 @@ trait CrossSpecRestriction { this: ApiParsePlugin =>
     }
   }
 
-  private def referenceNodes(reference: Reference): Seq[SourceLocation] = reference.refs.collect { case ref: ASTRefContainer => ref.pos }
+  private def referenceNodes(reference: Reference): Seq[SourceLocation] = reference.refs.collect {
+    case ref: ASTRefContainer => ref.pos
+  }
 }

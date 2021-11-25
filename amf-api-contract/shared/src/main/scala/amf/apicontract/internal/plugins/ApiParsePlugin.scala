@@ -9,9 +9,8 @@ import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{JSONRefs, Mimes, Spec}
 
 trait ApiParsePlugin extends AMFParsePlugin with CrossSpecRestriction {
-
   override def priority: PluginPriority                                = NormalPriority
   override def allowRecursiveReferences: Boolean                       = true
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = new ApiReferenceHandler(id)
-  override def validSpecsToReference: Seq[Spec]                        = Seq(JSONRefs)
+  override def referencePlugins: Seq[AMFParsePlugin]                   = List(this)
 }

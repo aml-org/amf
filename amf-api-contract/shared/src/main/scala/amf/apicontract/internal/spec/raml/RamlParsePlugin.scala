@@ -115,5 +115,4 @@ trait RamlParsePlugin extends ApiParsePlugin {
     }
   }
 
-  override def validSpecsToReference: Seq[Spec] = super.validSpecsToReference :+ spec
 }

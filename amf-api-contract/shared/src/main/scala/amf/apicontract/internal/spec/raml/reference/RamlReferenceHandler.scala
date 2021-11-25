@@ -33,28 +33,28 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
       case Right(document) =>
         val parsed = SyamlParsedDocument(document)
 
-        val refs         = new RamlReferenceHandler(plugin).collect(parsed, compilerContext.parserContext)
-        val updated      = compilerContext.forReference(reference.origin.url)
-        val allowedSpecs = plugin.validSpecsToReference :+ plugin.spec
+        val refs    = new RamlReferenceHandler(plugin).collect(parsed, compilerContext.parserContext)
+        val updated = compilerContext.forReference(reference.origin.url, Nil)
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, allowedSpecs, allowRecursiveRefs = true) // why would this always allow recursions?
+          r.parseReference(updated, plugin.referencePlugins, allowRecursiveRefs = true) // why would this always allow recursions?
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)
                 reference.unit.tagReference(unit.location().getOrElse(unit.id), r)
                 resolved.map(res => {
                   reference.unit.addReference(res.unit)
-                  r.refs.foreach { case refContainer: SYamlRefContainer =>
-                    refContainer.node match {
-                      case mut: MutRef =>
-                        res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
-                        mut.target = res.ast
-                      case other =>
-                        compilerContext.violation(InvalidFragmentType,
-                                                  "Cannot inline a fragment in a not mutable node",
-                                                  other.location)
-                    }
-                  // not meaning, only for collect all futures, not matter the type
+                  r.refs.foreach {
+                    case refContainer: SYamlRefContainer =>
+                      refContainer.node match {
+                        case mut: MutRef =>
+                          res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
+                          mut.target = res.ast
+                        case other =>
+                          compilerContext.violation(InvalidFragmentType,
+                                                    "Cannot inline a fragment in a not mutable node",
+                                                    other.location)
+                      }
+                    // not meaning, only for collect all futures, not matter the type
                   }
                 })
               case ReferenceResolutionResult(Some(e), None) =>
@@ -75,8 +75,9 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends ApiReferenceHandler(p
 
   private def evaluateUnresolvedReference(compilerContext: CompilerContext, r: Reference, e: Throwable): Unit = {
     if (!r.isInferred) {
-      r.refs.foreach { case ref: ASTRefContainer =>
-        compilerContext.violation(UnresolvedReference, r.url, e.getMessage, ref.pos)
+      r.refs.foreach {
+        case ref: ASTRefContainer =>
+          compilerContext.violation(UnresolvedReference, r.url, e.getMessage, ref.pos)
       }
     }
   }

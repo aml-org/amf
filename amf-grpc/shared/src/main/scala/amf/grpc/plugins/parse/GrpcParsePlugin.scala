@@ -19,8 +19,6 @@ object GrpcParsePlugin extends ApiParsePlugin with GrpcASTParserHelper {
 
   override def spec: Spec = Grpc
 
-  override def validSpecsToReference: Seq[Spec] = super.validSpecsToReference :+ spec
-
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
     GrpcDocumentParser(document)(context(document, ctx)).parseDocument()
   }

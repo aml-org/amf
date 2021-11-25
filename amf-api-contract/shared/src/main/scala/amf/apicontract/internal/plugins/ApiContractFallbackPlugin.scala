@@ -31,7 +31,6 @@ case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boole
   case class ApiContractDomainFallbackPlugin(parsed: SyamlParsedDocument, isRoot: Boolean = false) extends AMFParsePlugin {
     override def spec: Spec = JSONRefs
 
-    override def validSpecsToReference: Seq[Spec] = Seq(JSONRefs)
     override def parse(document: Root, ctx: ParserContext): BaseUnit = {
       throwUserFriendlyWarnings(document, ctx)
       val result =
@@ -69,6 +68,8 @@ case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boole
       `application/json`,
       `application/yaml`,
     )
+
+    override def referencePlugins: Seq[AMFParsePlugin] = Nil
 
     override def applies(document: Root): Boolean = !document.raw.isXml // for JSON or YAML
 

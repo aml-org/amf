@@ -27,7 +27,8 @@ trait CompilerTestBuilder extends PlatformSecrets {
     AMFCompiler(
       url,
       cache = cache.getOrElse(Cache()),
-      parserConfig = amfConfig.compilerConfiguration,
+      compilerConfig = amfConfig.compilerConfiguration,
+      applicablePlugins = amfConfig.registry.sortedParsePlugins,
       base = Context(platform)
     )
 

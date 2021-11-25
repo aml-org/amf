@@ -56,5 +56,7 @@ object JsonSchemaParsePlugin extends AMFParsePlugin {
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = SimpleReferenceHandler
 
+  override def referencePlugins: Seq[AMFParsePlugin] = List(this)
+
   override def allowRecursiveReferences: Boolean = true
 }

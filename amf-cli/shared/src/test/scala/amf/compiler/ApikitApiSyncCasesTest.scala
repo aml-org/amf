@@ -34,19 +34,12 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
         "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/libraries/resourceTypes.raml"),
     )
     val url = "resource::really-cool-urn:1.0.0:raml:zip:main.raml"
-    val eh  = DefaultErrorHandler()
-    AMFCompiler(
-      url,
-      base = Context(platform),
-      cache = Cache(),
-      CompilerConfiguration(
-        WebAPIConfiguration
-          .WebAPI()
-          .withResourceLoaders(List(new URNResourceLoader(mappings)))
-          .withErrorHandlerProvider(() => eh))
-    ).build()
-      .map { _ =>
-        eh.getResults should have size 0
+    val config = WebAPIConfiguration
+      .WebAPI()
+      .withResourceLoaders(List(new URNResourceLoader(mappings)))
+    config.baseUnitClient().parse(url)
+      .map { parseResult =>
+        parseResult.results should have size 0
       }
   }
 

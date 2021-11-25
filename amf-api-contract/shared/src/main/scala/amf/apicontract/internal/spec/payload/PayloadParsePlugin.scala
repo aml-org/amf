@@ -37,6 +37,8 @@ object PayloadParsePlugin extends AMFParsePlugin {
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = SimpleReferenceHandler
 
+  override def referencePlugins: Seq[AMFParsePlugin] = Nil
+
   override def allowRecursiveReferences: Boolean = false
 
   private def notRAML(root: Root) = root.parsed match {

@@ -30,5 +30,4 @@ trait OasParsePlugin extends OasLikeParsePlugin {
                         wrapped: ParserContext,
                         ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
 
-  override def validSpecsToReference: Seq[Spec] = super.validSpecsToReference :+ spec
 }
