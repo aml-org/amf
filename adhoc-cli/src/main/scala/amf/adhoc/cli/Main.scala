@@ -56,14 +56,12 @@ object Main {
     var baseUnit    = parsing.baseUnit
     val withLexical = args.length > 2 && args(2) == "--with-lexical"
 
-    if (!withLexical) {
-      val transformation =
-        APIConfiguration
-          .fromSpec(parsing.sourceSpec)
-          .baseUnitClient()
-          .transform(parsing.baseUnit, PipelineId.Editing)
-      baseUnit = transformation.baseUnit
-    }
+    val transformation =
+      APIConfiguration
+        .fromSpec(parsing.sourceSpec)
+        .baseUnitClient()
+        .transform(parsing.baseUnit, PipelineId.Editing)
+    baseUnit = transformation.baseUnit
 
     val renderOptions = if (withLexical) {
       RenderOptions().withPrettyPrint.withSourceMaps.withSourceInformation
