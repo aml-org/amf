@@ -124,7 +124,9 @@ trait ValidModelTest extends MultiPlatformReportGenTest {
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/"
   override val reportsPath: String = "file://amf-cli/shared/src/test/resources/validations/reports/"
 
-  protected def checkValid(api: String, profile: ProfileName = Raml10Profile): Future[Assertion] =
-    super.validate(api, None, profile, None)
+  protected def checkValid(api: String,
+                           profile: ProfileName = Raml10Profile,
+                           configOverride: Option[AMFConfiguration] = None): Future[Assertion] =
+    super.validate(api, None, profile, None, configOverride = configOverride)
 
 }

@@ -10,6 +10,7 @@ import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandlerProvider, ErrorHandlerProvider}
 import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
@@ -95,6 +96,9 @@ class ShapesConfiguration private[amf] (override private[amf] val resolvers: AMF
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): ShapesConfiguration =
     super._withPlugin(amfPlugin)
+
+  override def withReferenceParsePlugin(plugin: AMFParsePlugin): ShapesConfiguration =
+    super._withReferenceParsePlugin(plugin)
 
   override def withPlugins(plugins: List[AMFPlugin[_]]): ShapesConfiguration =
     super._withPlugins(plugins)

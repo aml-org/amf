@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.apicontract.client.scala.AsyncAPIConfiguration
 import amf.core.client.common.validation.Async20Profile
 import amf.core.internal.remote.{Async20YamlHint, Hint}
 
@@ -103,6 +104,16 @@ class ValidAsyncModelParserTest extends ValidModelTest {
 
   test("Referencing raml content with $ref - type defined in external json") {
     checkValid("raml-data-type-references/ref-external-json.yaml", Async20Profile)
+  }
+
+  test("Referencing raml content with $ref without specifying format - async config") {
+    checkValid("raml-data-type-references/ref-without-schema-format.yaml",
+               Async20Profile,
+               Some(AsyncAPIConfiguration.Async20()))
+  }
+
+  test("Referencing raml content with $ref without specifying format - composite config") {
+    checkValid("raml-data-type-references/ref-without-schema-format.yaml", Async20Profile)
   }
 
   override val basePath: String = "file://amf-cli/shared/src/test/resources/validations/async20/"
