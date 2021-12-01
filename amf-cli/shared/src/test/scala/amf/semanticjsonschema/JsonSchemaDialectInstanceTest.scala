@@ -27,6 +27,10 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
     run("allOf")
   }
 
+  test("Dialect instance validation with minimum and maximum JSON schema") {
+    run("minimum-maximum")
+  }
+
   // TODO review this validation. Is failing.
   ignore("Dialect instance validation with oneOf JSON schema") {
     run("oneOf")
