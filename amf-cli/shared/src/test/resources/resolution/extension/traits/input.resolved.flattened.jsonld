@@ -98,14 +98,14 @@
         "doc:ParametrizedDeclaration",
         "doc:DomainElement"
       ],
-      "core:name": "slave",
+      "core:name": "secondary",
       "doc:target": {
         "@id": "#5"
       },
       "smaps": {
         "lexical": {
-          "core:name": "[(12,9)-(12,14)]",
-          "#15": "[(12,9)-(12,14)]"
+          "core:name": "[(12,9)-(12,18)]",
+          "#15": "[(12,9)-(12,18)]"
         }
       }
     },
@@ -144,7 +144,7 @@
         "doc:AbstractDeclaration",
         "doc:DomainElement"
       ],
-      "core:name": "slave",
+      "core:name": "secondary",
       "doc:dataNode": {
         "@id": "#6"
       },
@@ -158,7 +158,7 @@
         "lexical": {
           "doc:dataNode": "[(8,4)-(10,0)]",
           "#5": "[(7,2)-(10,0)]",
-          "core:name": "[(7,2)-(7,7)]"
+          "core:name": "[(7,2)-(7,11)]"
         },
         "resolved-link": {
           "#5": "amf://id#8"
@@ -237,7 +237,7 @@
         "data:Node",
         "doc:DomainElement"
       ],
-      "data:value": "Slave description",
+      "data:value": "secondary description",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
@@ -249,7 +249,7 @@
           "core:name": "true"
         },
         "lexical": {
-          "#7": "[(8,17)-(8,34)]"
+          "#7": "[(8,17)-(8,38)]"
         }
       }
     },
