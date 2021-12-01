@@ -1,4 +1,4 @@
-package amf.grpc.plugins.render
+package amf.grpc.internal.plugins.render
 
 import amf.apicontract.internal.plugins.ApiRenderPlugin
 import amf.core.client.common.{NormalPriority, PluginPriority}
