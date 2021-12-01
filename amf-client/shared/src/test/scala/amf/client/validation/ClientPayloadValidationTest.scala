@@ -215,6 +215,26 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
     }
   }
 
+  test("Test that an invalid object payload is validated against an any type") {
+
+    AMF.init().flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+
+      val test    = new AnyShape()
+      val payload = """{
+                      |  "a": "something"
+                      |  "b": "other thing"
+                      |}""".stripMargin
+
+      val report = test
+        .payloadValidator("application/json")
+        .asOption
+        .get
+        .syncValidate("application/json", payload)
+      report.conforms shouldBe false
+    }
+  }
+
   test("Test that recursive shape has a payload validator") {
     amf.Core.init().asFuture.flatMap { _ =>
       amf.Core.registerPlugin(PayloadValidatorPlugin)
