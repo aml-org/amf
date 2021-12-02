@@ -5,7 +5,11 @@ import amf.core.model.document.ExternalFragment
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.AsyncWebApiDeclarations
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft7SchemaVersion,
+  JSONSchemaVersion,
+  SchemaVersion
+}
 import amf.validations.ParserSideValidations.MalformedJsonReference
 
 import scala.collection.mutable
@@ -20,7 +24,7 @@ abstract class AsyncWebApiContext(loc: String,
 
   override val factory: AsyncSpecVersionFactory
 
-  override val defaultSchemaVersion: JSONSchemaVersion = JSONSchemaDraft7SchemaVersion
+  override val defaultSchemaVersion: SchemaVersion = JSONSchemaDraft7SchemaVersion
 
   override def validateRefFormatWithError(ref: String): Boolean = {
     if (ref.contains("#") && !ref.contains("#/")) {
