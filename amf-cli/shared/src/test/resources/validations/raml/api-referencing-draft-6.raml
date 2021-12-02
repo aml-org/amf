@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: title
+version: 1.0
+mediaType: application/json
+
+/draft-6-numeric-exclusive-min:
+  get:
+    responses:
+      200:
+        body:
+            application/json:
+              type: !include external-schemas/draft-6-numeric-exclusive-min.json
