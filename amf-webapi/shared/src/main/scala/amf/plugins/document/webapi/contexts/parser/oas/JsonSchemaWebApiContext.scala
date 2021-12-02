@@ -1,9 +1,10 @@
 package amf.plugins.document.webapi.contexts.parser.oas
+
 import amf.core.client.ParsingOptions
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{JsonSchema, Vendor}
-import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, RamlWebApiContext}
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.spec.declaration.SchemaVersion
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax}
 
@@ -12,7 +13,7 @@ class JsonSchemaWebApiContext(loc: String,
                               private val wrapped: ParserContext,
                               private val ds: Option[OasWebApiDeclarations],
                               options: ParsingOptions = ParsingOptions(),
-                              override val defaultSchemaVersion: JSONSchemaVersion)
+                              override val defaultSchemaVersion: SchemaVersion)
     extends OasWebApiContext(loc, refs, options, wrapped, ds) {
 
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)

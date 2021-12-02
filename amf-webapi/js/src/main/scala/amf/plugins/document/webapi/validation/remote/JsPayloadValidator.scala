@@ -32,9 +32,12 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode, v
   }
 
   override protected def loadJson(str: String): js.Dynamic = {
+    val isObjectLike = str.startsWith("{") || str.startsWith("[")
     try js.Dynamic.global.JSON.parse(str)
     catch {
-      case e: JavaScriptException if e.exception.isInstanceOf[SyntaxError] => throw new InvalidJsonObject(e)
+      case e: JavaScriptException if e.exception.isInstanceOf[SyntaxError] =>
+        if (isObjectLike) throw new InvalidJsonObject(e)
+        else throw new InvalidJsonValue(e)
     }
   }
 
@@ -93,7 +96,9 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode, v
   }
 }
 
-case class JsReportValidationProcessor(override val profileName: ProfileName, override protected var intermediateResults: Seq[AMFValidationResult] = Seq()) extends ReportValidationProcessor {
+case class JsReportValidationProcessor(override val profileName: ProfileName,
+                                       override protected var intermediateResults: Seq[AMFValidationResult] = Seq())
+    extends ReportValidationProcessor {
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 

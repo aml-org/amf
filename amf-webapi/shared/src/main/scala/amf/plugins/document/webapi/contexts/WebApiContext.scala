@@ -11,11 +11,7 @@ import amf.plugins.document.vocabularies.parser.common.DeclarationContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaVersion,
-  SchemaVersion
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, AstIndex, AstIndexBuilder, JsonSchemaInference}
 import amf.plugins.domain.shapes.models.AnyShape
@@ -36,7 +32,7 @@ abstract class WebApiContext(val loc: String,
     with PlatformSecrets
     with JsonSchemaInference {
 
-  override val defaultSchemaVersion: JSONSchemaVersion = JSONSchemaDraft4SchemaVersion
+  override val defaultSchemaVersion: SchemaVersion = JSONSchemaDraft4SchemaVersion
 
   def validateRefFormatWithError(ref: String): Boolean = true
 

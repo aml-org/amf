@@ -66,6 +66,11 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
 
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
 
+  private val isAnyType: Boolean = shape match {
+    case as: AnyShape if as.isAnyType => true
+    case _                            => false
+  }
+
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 
   protected def callValidator(schema: LoadedSchema,
@@ -113,16 +118,14 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
             null
           )))
     } else
-      shape match {
-        // if the shape is of type any, any payload should validate against it so the validation is skipped
-        case anyShape: AnyShape if anyShape.isAnyType => validationProcessor.processResults(Nil)
-        case _ =>
-          try {
-            performValidation(buildCandidate(mediaType, payload), validationProcessor)
-          } catch {
-            case e: InvalidJsonObject => validationProcessor.processException(e, None)
-            case e: InvalidJsonValue  => validationProcessor.processException(e, None)
-          }
+      try {
+        performValidation(buildCandidate(mediaType, payload), validationProcessor)
+      } catch {
+        case e: InvalidJsonObject => validationProcessor.processException(e, None)
+        // if the shape is of type any, any scalar payload should validate against it so the validation is skipped
+        // We don't skip completely the validation because if the payload is an object with an error we want the error
+        case e: InvalidJsonValue if isAnyType => validationProcessor.processResults(Nil)
+        case e: InvalidJsonValue              => validationProcessor.processException(e, None)
       }
   }
 

@@ -16,7 +16,7 @@ import org.yaml.model.{YMap, YNode, YScalar}
 
 trait JsonSchemaInference {
 
-  val defaultSchemaVersion: JSONSchemaVersion
+  val defaultSchemaVersion: SchemaVersion
 
   def parseSchemaVersion(ast: YNode, errorHandler: ErrorHandler): SchemaVersion =
     parseSchemaEntry(ast) match {
