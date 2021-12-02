@@ -11,7 +11,7 @@ import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{JsonSchema, Spec}
-import amf.shapes.internal.spec.common.JSONSchemaVersion
+import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.SpecSyntax
 
 class JsonSchemaWebApiContext(loc: String,
@@ -19,7 +19,7 @@ class JsonSchemaWebApiContext(loc: String,
                               private val wrapped: ParserContext,
                               private val ds: Option[OasWebApiDeclarations],
                               options: ParsingOptions = ParsingOptions(),
-                              override val defaultSchemaVersion: JSONSchemaVersion)
+                              override val defaultSchemaVersion: SchemaVersion)
     extends OasWebApiContext(loc, refs, options, wrapped, ds) {
 
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)

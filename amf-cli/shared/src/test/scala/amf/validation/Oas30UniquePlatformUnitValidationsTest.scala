@@ -1,4 +1,5 @@
 package amf.validation
+
 import amf.core.client.common.validation.Oas30Profile
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas30JsonHint, Oas30YamlHint}
 import org.scalatest.Matchers
@@ -136,6 +137,22 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
              Some("warning-unresolved-ref.report"),
              Oas30Profile,
              directory = resolutionPath)
+  }
+
+  test("Valid oas3 with inlined ref to schema with nullable") {
+    validate("ref-nullable/ref-nullable-inlined.yaml", None, Oas30Profile)
+  }
+
+  test("Valid oas3 with external ref to schema with nullable") {
+    validate("ref-nullable/ref-nullable-external.yaml", None, Oas30Profile)
+  }
+
+  test("Valid oas3 with ref to external unknown schema") {
+    validate("ref-schema/ref-unknown-schema.json", None, Oas30Profile)
+  }
+
+  test("Valid oas3 with ref to external versioned schema") {
+    validate("ref-schema/ref-version-schema.json", None, Oas30Profile)
   }
 
 }
