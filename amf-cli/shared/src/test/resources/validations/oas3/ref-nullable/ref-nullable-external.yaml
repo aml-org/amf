@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  title: "Something"
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    a:
+      type: object
+      properties:
+        a1:
+          $ref: "/ref.yaml#b"
+      example:
+        a1:
+          b1: null

@@ -5,6 +5,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
 import amf.core.internal.remote.{Oas20, Spec}
 import amf.shapes.internal.spec.common.parser.SpecSyntax
+import amf.shapes.internal.spec.common.{OAS20SchemaVersion, SchemaPosition, SchemaVersion}
 
 class Oas2WebApiContext(loc: String,
                         refs: Seq[ParsedReference],
@@ -15,6 +16,8 @@ class Oas2WebApiContext(loc: String,
   override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
   override val spec: Spec                  = Oas20
   override val syntax: SpecSyntax          = Oas2Syntax
+
+  override val defaultSchemaVersion: SchemaVersion = OAS20SchemaVersion.apply(SchemaPosition.Other)
 
   override def makeCopy(): Oas2WebApiContext =
     new Oas2WebApiContext(rootContextDocument, refs, this, Some(declarations), options)

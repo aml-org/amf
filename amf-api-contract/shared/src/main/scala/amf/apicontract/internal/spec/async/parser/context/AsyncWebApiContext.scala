@@ -6,7 +6,7 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.Mal
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.ExternalFragment
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
-import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
+import amf.shapes.internal.spec.common.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
 
 import scala.collection.mutable
 
@@ -20,7 +20,7 @@ abstract class AsyncWebApiContext(loc: String,
 
   override val factory: AsyncSpecVersionFactory
 
-  override val defaultSchemaVersion: JSONSchemaVersion = JSONSchemaDraft7SchemaVersion
+  override val defaultSchemaVersion: SchemaVersion = JSONSchemaDraft7SchemaVersion
 
   override def validateRefFormatWithError(ref: String): Boolean = {
     if (ref.contains("#") && !ref.contains("#/")) {
