@@ -25,6 +25,7 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("Dialect generation from JSON schema with oneOf", "oneOf")
   multiOutputTest("Dialect generation from JSON schema with remote context", "remote-context")
   multiOutputTest("Dialect generation from JSON schema with maximum and minimum", "minimum-maximum")
+  multiOutputTest("Dialect generation from JSON schema with any type property", "any-property")
 
   private def multiOutputTest(label: String, filename: String): Unit = {
 
