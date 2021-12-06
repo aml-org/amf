@@ -20,9 +20,11 @@ case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)
           case unm: UnionNodeMapping => unm.objectRange().map(_.value())
         }
     }
+
     if (shape.or.nonEmpty) {
       throw new Error("Or constraint not supported")
     }
+
     if (Option(shape.not).nonEmpty) {
       throw new Error("Not constraint not supported")
     }
