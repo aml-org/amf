@@ -43,6 +43,10 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
     validate("facets/invalid-facet-value-type.raml", Some("invalid-facet-value-type.report"))
   }
 
+  test("Referencing json schema draft 6/7 with numeric exclusiveMin/Max values") {
+    validate("api-referencing-draft-6-7.raml", Some("exclusive-min-max-payload-validations.report"))
+  }
+
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/multi-plat-model/"
   override val hint: Hint  = RamlYamlHint

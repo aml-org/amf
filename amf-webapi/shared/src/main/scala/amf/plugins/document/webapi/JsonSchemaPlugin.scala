@@ -30,7 +30,7 @@ import amf.plugins.document.webapi.contexts.parser.raml.Raml08WebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaUnspecifiedVersion, OasTypeParser}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
@@ -137,7 +137,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   }
 
   private def getJsonSchemaContext(document: Root,
-                                   parentContext: ParserContext,
+                                   parentContext: WebApiContext,
                                    url: String,
                                    options: ParsingOptions): JsonSchemaWebApiContext = {
     val cleanNested =
@@ -155,7 +155,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
                                 document.references,
                                 cleanNested,
                                 inheritedDeclarations.map(d => toOasDeclarations(d)),
-                                options)
+                                options,
+                                parentContext.defaultSchemaVersion)
   }
 
   private def getRootAst(document: Root,
@@ -184,6 +185,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
                      parentContext: ParserContext,
                      platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
+    val webApiContext = context(document.location, document.references, options, parentContext)
 
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
@@ -193,13 +195,14 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         val hashFragment: Option[String] =
           parts.tail.headOption.map(t => if (t.startsWith("/definitions")) t.stripPrefix("/") else t)
 
-        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url, options)
+        val jsonSchemaContext = getJsonSchemaContext(document, webApiContext, url, options)
         val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
 
         val parsed =
-          OasTypeParser(YMapEntry("schema", rootAst),
-                        shape => shape.withId(shapeId),
-                        version = jsonSchemaContext.computeJsonSchemaVersion(rootAst))(jsonSchemaContext)
+          OasTypeParser(
+            YMapEntry("schema", rootAst),
+            shape => shape.withId(shapeId),
+            version = jsonSchemaContext.computeJsonSchemaVersion(parsedDoc.document.node))(jsonSchemaContext)
             .parse() match {
             case Some(shape) =>
               shape
@@ -230,6 +233,16 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     } else {
       Some(ast)
     }
+  }
+
+  def context(loc: String,
+              refs: Seq[ParsedReference],
+              options: ParsingOptions,
+              wrapped: ParserContext,
+              ds: Option[OasWebApiDeclarations] = None): JsonSchemaWebApiContext = {
+    // todo: we can set this default as this plugin is hardcoded to not parse
+    // todo 2: we should debate the default version to use in the Plugin if we are to use it.
+    new JsonSchemaWebApiContext(loc, refs, wrapped, ds, options, JSONSchemaUnspecifiedVersion)
   }
 
   override protected def unparseAsYDocument(
