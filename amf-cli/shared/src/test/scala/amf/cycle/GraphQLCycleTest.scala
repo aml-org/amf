@@ -24,7 +24,7 @@ class GraphQLCycleTest extends GraphQLFunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/graphql/"
 
 
-  test("Can parse a simple GraphQL API") {
+  test("HERE_HERE Can parse a simple GraphQL API") {
     cycle("simple/api.graphql", "simple/api.jsonld", GraphQLHint, AmfJsonHint)
   }
 

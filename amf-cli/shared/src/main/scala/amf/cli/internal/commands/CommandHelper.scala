@@ -28,7 +28,7 @@ trait CommandHelper {
     else if (inputFile.startsWith("/")) s"file:/$inputFile"
     else s"file://$inputFile"
 
-  protected def processDialects(config: ParserConfig, configuration: AMFConfiguration): Future[AMFConfiguration] = {
+  protected def processDialects(config: ParserConfig, configuration: AMLConfiguration): Future[AMLConfiguration] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val dialectFutures                     = config.dialects.map(dialect => configuration.baseUnitClient().parseDialect(dialect))
     Future.sequence(dialectFutures) map (results =>
@@ -37,7 +37,7 @@ trait CommandHelper {
       })
   }
 
-  protected def parseInput(config: ParserConfig, configuration: AMLConfiguration): Future[(BaseUnit, Spec)] = {
+  protected def parseInput(config: ParserConfig, configuration: AMFGraphConfiguration): Future[(BaseUnit, Spec)] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val inputFile                          = ensureUrl(config.input.get)
     val configClient                       = configuration.baseUnitClient()
@@ -91,7 +91,7 @@ trait CommandHelper {
     val renderConfig = configFor(spec)
     val result =
       renderConfig
-        .getOrElse(configuration)
+        .getOrElse(AMFGraphConfiguration.predefined())
         .withRenderOptions(generateOptions)
         .baseUnitClient()
         .render(unit)

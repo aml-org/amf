@@ -13,12 +13,13 @@ object CmdLineParser {
     Oas20Profile.profile == f ||
     AmfProfile.profile == f ||
     GrpcProfile.profile == f ||
+    "GRAPHQL" == f ||
     Aml.id == f
 
   }
 
   val parser: OptionParser[ParserConfig] = new scopt.OptionParser[ParserConfig]("amf") {
-    head("Anything Modeling Framework", "4.X")
+    head("Anything Modeling Framework", "5.X")
 
     arg[String]("<file_in> [<file_out>]")
       .unbounded()
