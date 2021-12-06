@@ -1,0 +1,15 @@
+#%Dialect 1.0
+nodeMappings:
+  SchemaNode:
+    mapping:
+      someProperty:
+        range: string
+        mandatory: false
+      someNonExistingProperty:
+        range: any
+        mandatory: true
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: SchemaNode
