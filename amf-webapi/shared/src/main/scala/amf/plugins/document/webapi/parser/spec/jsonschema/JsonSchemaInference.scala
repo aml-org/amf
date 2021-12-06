@@ -1,13 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
 import amf.core.errorhandling.ErrorHandler
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft3SchemaVersion,
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaDraft7SchemaVersion,
-  JSONSchemaUnspecifiedVersion,
-  SchemaVersion
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaDraft6SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaUnspecifiedVersion, SchemaVersion}
 import amf.validations.ParserSideValidations.InvalidJsonSchemaVersion
 import org.yaml.model.{YMap, YNode, YScalar}
 
@@ -57,6 +51,7 @@ trait JsonSchemaInference {
     "http://json-schema.org/draft-02/schema#" -> JSONSchemaDraft3SchemaVersion,
     JSONSchemaDraft3SchemaVersion.url         -> JSONSchemaDraft3SchemaVersion,
     JSONSchemaDraft4SchemaVersion.url         -> JSONSchemaDraft4SchemaVersion,
+    JSONSchemaDraft6SchemaVersion.url         -> JSONSchemaDraft6SchemaVersion,
     JSONSchemaDraft7SchemaVersion.url         -> JSONSchemaDraft7SchemaVersion,
   )
 }

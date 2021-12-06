@@ -84,6 +84,7 @@ abstract class JSONSchemaVersion(override val name: String, val url: String)
 
 object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3", "http://json-schema.org/draft-03/schema#")
 object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4", "http://json-schema.org/draft-04/schema#")
+object JSONSchemaDraft6SchemaVersion extends JSONSchemaVersion("draft-6", "http://json-schema.org/draft-06/schema#")
 object JSONSchemaDraft7SchemaVersion extends JSONSchemaVersion("draft-7", "http://json-schema.org/draft-07/schema#")
 object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("", "")
 
@@ -551,7 +552,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       setValue("minimum", map, ScalarShapeModel.Minimum, shape)
       setValue("maximum", map, ScalarShapeModel.Maximum, shape)
 
-      if (version == JSONSchemaDraft7SchemaVersion) {
+      if (version.isBiggerThanOrEqualTo(JSONSchemaDraft6SchemaVersion)) {
         parseNumericExclusive(map, shape)
       } else {
         map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
