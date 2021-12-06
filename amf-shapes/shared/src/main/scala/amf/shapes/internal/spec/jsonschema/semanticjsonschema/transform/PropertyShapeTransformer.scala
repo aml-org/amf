@@ -1,9 +1,10 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
 import amf.aml.client.scala.model.domain.PropertyMapping
+import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.shapes.client.scala.model.domain.{ArrayShape, NodeShape, ScalarShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape}
 
 case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext) {
 
@@ -23,6 +24,7 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
           case scalar: ScalarShape => transformScalarProperty(scalar)
           case obj: NodeShape      => transformObjectProperty(obj)
         }
+      case any: AnyShape => transformAnyProperty(any)
     }
     checkMandatoriness()
     checkSemantics()
@@ -32,11 +34,6 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
   private def setMappingName(): Unit = propertyMapping.withName(property.name.value().replaceAll(" ", ""))
 
   private def setMappingID(): Unit = propertyMapping.withId(property.id)
-
-  def transformObjectProperty(obj: NodeShape): Unit = {
-    val range = ShapeTransformation(obj, ctx).transform()
-    propertyMapping.withObjectRange(Seq(range.id))
-  }
 
   private def transformScalarProperty(scalar: ScalarShape): Unit = {
     // datatype
@@ -60,6 +57,19 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
 
     }
    */
+  }
+
+  def transformObjectProperty(obj: NodeShape): Unit = {
+    val range = ShapeTransformation(obj, ctx).transform()
+    propertyMapping.withObjectRange(Seq(range.id))
+  }
+
+  def transformAnyProperty(any: AnyShape): Unit = {
+    if (any.isAnyType) propertyMapping.withLiteralRange(DataType.Any)
+    else {
+      val range = ShapeTransformation(any, ctx).transform()
+      propertyMapping.withObjectRange(Seq(range.id))
+    }
   }
 
   private def sanitizeScalarRange(xsd: String): String = {
