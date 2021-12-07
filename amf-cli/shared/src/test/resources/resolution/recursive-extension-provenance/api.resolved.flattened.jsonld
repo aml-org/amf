@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#28",
+      "@id": "#27",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,18 +20,18 @@
       "core:name": "test",
       "apiContract:endpoint": [
         {
-          "@id": "#29"
+          "@id": "#28"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#28": "[(2,0)-(28,24)]"
+          "#27": "[(2,0)-(28,24)]"
         }
       }
     },
     {
-      "@id": "#29",
+      "@id": "#28",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,23 +39,23 @@
       "apiContract:path": "/CodeableConcept",
       "apiContract:supportedOperation": [
         {
-          "@id": "#31"
+          "@id": "#30"
         }
       ],
       "doc:extends": [
         {
-          "@id": "#30"
+          "@id": "#29"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(27,0)-(27,16)]",
-          "#29": "[(27,0)-(28,24)]"
+          "#28": "[(27,0)-(28,24)]"
         }
       }
     },
     {
-      "@id": "#31",
+      "@id": "#30",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -63,17 +63,17 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#32"
+          "@id": "#31"
         }
       ],
       "smaps": {
         "lexical": {
-          "#31": "[(22,4)-(25,36)]"
+          "#30": "[(22,4)-(25,36)]"
         }
       }
     },
     {
-      "@id": "#30",
+      "@id": "#29",
       "@type": [
         "apiContract:ParametrizedResourceType",
         "doc:ParametrizedDeclaration",
@@ -86,12 +86,12 @@
       "smaps": {
         "lexical": {
           "core:name": "[(28,8)-(28,24)]",
-          "#30": "[(28,8)-(28,24)]"
+          "#29": "[(28,8)-(28,24)]"
         }
       }
     },
     {
-      "@id": "#32",
+      "@id": "#31",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -99,7 +99,7 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#33"
+          "@id": "#32"
         }
       ],
       "smaps": {
@@ -141,7 +141,7 @@
       }
     },
     {
-      "@id": "#33",
+      "@id": "#32",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -152,7 +152,7 @@
       },
       "smaps": {
         "lexical": {
-          "#33": "[(24,8)-(25,36)]"
+          "#32": "[(24,8)-(25,36)]"
         }
       }
     },
@@ -465,7 +465,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#28"
+        "@id": "#27"
       },
       "doc:root": true,
       "doc:processingData": {

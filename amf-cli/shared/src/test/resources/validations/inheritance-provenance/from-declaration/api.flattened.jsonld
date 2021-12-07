@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#7",
+      "@id": "#6",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,18 +20,18 @@
       "core:name": "API",
       "apiContract:endpoint": [
         {
-          "@id": "#8"
+          "@id": "#7"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#7": "[(2,0)-(14,0)]"
+          "#6": "[(2,0)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#7",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,18 +39,18 @@
       "apiContract:path": "/endpoint",
       "apiContract:supportedOperation": [
         {
-          "@id": "#9"
+          "@id": "#8"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(7,0)-(7,9)]",
-          "#8": "[(7,0)-(14,0)]"
+          "#7": "[(7,0)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#8",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -58,17 +58,17 @@
       "apiContract:method": "get",
       "apiContract:expects": [
         {
-          "@id": "#10"
+          "@id": "#9"
         }
       ],
       "smaps": {
         "lexical": {
-          "#9": "[(8,2)-(14,0)]"
+          "#8": "[(8,2)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#9",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -76,7 +76,7 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#11"
+          "@id": "#10"
         }
       ],
       "smaps": {
@@ -86,23 +86,23 @@
       }
     },
     {
-      "@id": "#11",
+      "@id": "#10",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#12"
+        "@id": "#11"
       },
       "smaps": {
         "lexical": {
-          "#11": "[(10,6)-(14,0)]"
+          "#10": "[(10,6)-(14,0)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#11",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -113,10 +113,10 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#13"
+          "@id": "#12"
         },
         {
-          "@id": "#14"
+          "@id": "#13"
         }
       ],
       "shacl:name": "Person",
@@ -125,13 +125,13 @@
           "shacl:name": "amf://id#1"
         },
         "inherited-shapes": {
-          "#12": "amf://id#16"
+          "#11": "amf://id#15"
         },
         "lexical": {
-          "#12": "[(10,6)-(14,0)]"
+          "#11": "[(10,6)-(14,0)]"
         },
         "type-property-lexical-info": {
-          "#12": "[(11,8)-(11,12)]"
+          "#11": "[(11,8)-(11,12)]"
         },
         "synthesized-field": {
           "shacl:closed": "true"
@@ -139,7 +139,7 @@
       }
     },
     {
-      "@id": "#13",
+      "@id": "#12",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -163,15 +163,15 @@
         },
         "lexical": {
           "raml-shapes:range": "[(6,12)-(6,18)]",
-          "#13": "[(6,6)-(7,0)]"
+          "#12": "[(6,6)-(7,0)]"
         },
         "inheritance-provenance": {
-          "#13": "amf://id#1"
+          "#12": "amf://id#1"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#13",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -184,7 +184,7 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#15"
+        "@id": "#14"
       },
       "shacl:minCount": 1,
       "shacl:name": "employeeNumber",
@@ -195,7 +195,7 @@
         },
         "lexical": {
           "raml-shapes:range": "[(13,26)-(13,33)]",
-          "#14": "[(13,10)-(14,0)]"
+          "#13": "[(13,10)-(14,0)]"
         }
       }
     },
@@ -222,7 +222,7 @@
       }
     },
     {
-      "@id": "#15",
+      "@id": "#14",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -239,7 +239,7 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(13,26)-(13,33)]",
-          "#15": "[(13,10)-(14,0)]"
+          "#14": "[(13,10)-(14,0)]"
         }
       }
     },
@@ -257,7 +257,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#7"
+        "@id": "#6"
       },
       "doc:root": true,
       "doc:processingData": {

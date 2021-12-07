@@ -15,7 +15,12 @@ import amf.apicontract.internal.transformation.stages.WebApiReferenceResolutionS
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.Async20Profile
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
-import amf.core.internal.transform.stages.{CleanReferencesStage, DeclarationsRemovalStage, ExternalSourceRemovalStage}
+import amf.core.internal.transform.stages.{
+  CleanReferencesStage,
+  DeclarationsRemovalStage,
+  ExternalSourceRemovalStage,
+  SourceInformationStage
+}
 import amf.core.internal.remote.AsyncApi20
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
@@ -35,7 +40,8 @@ class Async20TransformationPipeline private (override val name: String) extends 
       new CleanReferencesStage(),
       new DeclarationsRemovalStage(),
       new AnnotationRemovalStage(),
-      SemanticExtensionFlatteningStage
+      SemanticExtensionFlatteningStage,
+      SourceInformationStage
     )
 }
 

@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#18",
+      "@id": "#16",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,18 +20,18 @@
       "core:name": "test",
       "apiContract:endpoint": [
         {
-          "@id": "#19"
+          "@id": "#17"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#18": "[(2,0)-(18,23)]"
+          "#16": "[(2,0)-(18,23)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#17",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,21 +39,21 @@
       "apiContract:path": "/articles",
       "apiContract:supportedOperation": [
         {
-          "@id": "#20"
+          "@id": "#18"
         },
         {
-          "@id": "#23"
+          "@id": "#21"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(6,0)-(6,9)]",
-          "#19": "[(6,0)-(18,23)]"
+          "#17": "[(6,0)-(18,23)]"
         }
       }
     },
     {
-      "@id": "#20",
+      "@id": "#18",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -61,18 +61,18 @@
       "apiContract:method": "get",
       "apiContract:returns": [
         {
-          "@id": "#21"
+          "@id": "#19"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(8,4)-(13,0)]",
-          "#20": "[(7,2)-(13,0)]"
+          "#18": "[(7,2)-(13,0)]"
         }
       }
     },
     {
-      "@id": "#23",
+      "@id": "#21",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -80,39 +80,18 @@
       "apiContract:method": "post",
       "apiContract:returns": [
         {
-          "@id": "#24"
-        }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(14,4)-(18,23)]",
-          "#23": "[(13,2)-(18,23)]"
-        }
-      }
-    },
-    {
-      "@id": "#21",
-      "@type": [
-        "apiContract:Response",
-        "apiContract:Message",
-        "doc:DomainElement"
-      ],
-      "apiContract:statusCode": "200",
-      "core:name": "200",
-      "apiContract:payload": [
-        {
           "@id": "#22"
         }
       ],
       "smaps": {
         "lexical": {
-          "apiContract:payload": "[(10,8)-(13,0)]",
-          "#21": "[(9,6)-(13,0)]"
+          "apiContract:returns": "[(14,4)-(18,23)]",
+          "#21": "[(13,2)-(18,23)]"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#19",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -122,34 +101,39 @@
       "core:name": "200",
       "apiContract:payload": [
         {
-          "@id": "#25"
+          "@id": "#20"
         }
       ],
       "smaps": {
         "lexical": {
-          "apiContract:payload": "[(16,8)-(18,23)]",
-          "#24": "[(15,6)-(18,23)]"
+          "apiContract:payload": "[(10,8)-(13,0)]",
+          "#19": "[(9,6)-(13,0)]"
         }
       }
     },
     {
       "@id": "#22",
       "@type": [
-        "apiContract:Payload",
+        "apiContract:Response",
+        "apiContract:Message",
         "doc:DomainElement"
       ],
-      "core:mediaType": "application/json",
-      "raml-shapes:schema": {
-        "@id": "#4"
-      },
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "apiContract:payload": [
+        {
+          "@id": "#23"
+        }
+      ],
       "smaps": {
         "lexical": {
-          "#22": "[(11,10)-(13,0)]"
+          "apiContract:payload": "[(16,8)-(18,23)]",
+          "#22": "[(15,6)-(18,23)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#20",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -160,7 +144,23 @@
       },
       "smaps": {
         "lexical": {
-          "#25": "[(17,10)-(18,23)]"
+          "#20": "[(11,10)-(13,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#23",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#4"
+      },
+      "smaps": {
+        "lexical": {
+          "#23": "[(17,10)-(18,23)]"
         }
       }
     },
@@ -438,7 +438,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#18"
+        "@id": "#16"
       },
       "doc:root": true,
       "doc:processingData": {

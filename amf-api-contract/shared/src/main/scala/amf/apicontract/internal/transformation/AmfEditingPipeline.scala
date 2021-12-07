@@ -6,7 +6,7 @@ import amf.apicontract.internal.transformation.stages.{ExtensionsResolutionStage
 import amf.core.client.common.transform._
 import amf.core.client.common.validation.{AmfProfile, ProfileName}
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
-import amf.core.internal.transform.stages.UrlShortenerStage
+import amf.core.internal.transform.stages.{SourceInformationStage, UrlShortenerStage}
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
 class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override val name: String)
@@ -33,7 +33,7 @@ class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override v
       new PayloadAndParameterResolutionStage(profileName),
       new AnnotationRemovalStage(),
       SemanticExtensionFlatteningStage
-    ) ++ url
+    ) ++ url :+ SourceInformationStage // source info stage must be invoked after url shortening
   }
 
   val ID: String               = PipelineId.Editing

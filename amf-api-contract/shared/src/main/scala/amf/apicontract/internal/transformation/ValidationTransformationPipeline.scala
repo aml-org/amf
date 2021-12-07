@@ -8,7 +8,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
-import amf.core.internal.transform.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage}
+import amf.core.internal.transform.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, SourceInformationStage}
 import amf.core.internal.validation.ValidationConfiguration
 import amf.shapes.internal.domain.resolution.ShapeNormalizationStage
 
@@ -27,6 +27,7 @@ class ValidationTransformationPipeline private[amf] (profile: ProfileName,
       new ResponseExamplesResolutionStage(),
       new PayloadAndParameterResolutionStage(profile),
       SemanticExtensionFlatteningStage,
+      SourceInformationStage,
       new AnnotationRemovalStage(),
     )
 }

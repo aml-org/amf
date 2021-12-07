@@ -10,7 +10,7 @@
       "doc:sourceSpec": "OAS 2.0"
     },
     {
-      "@id": "#12",
+      "@id": "#11",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -19,7 +19,7 @@
       ],
       "apiContract:server": [
         {
-          "@id": "#13"
+          "@id": "#12"
         }
       ],
       "apiContract:scheme": [
@@ -27,30 +27,30 @@
       ],
       "core:documentation": [
         {
-          "@id": "#15"
+          "@id": "#14"
         }
       ],
       "apiContract:endpoint": [
         {
-          "@id": "#16"
+          "@id": "#15"
         }
       ],
       "apiContract:tag": [
         {
-          "@id": "#14"
+          "@id": "#13"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:tag": "[(9,0)-(11,0)]",
           "apiContract:scheme": "[(2,0)-(4,0)]",
-          "#12": "[(1,0)-(34,16)]",
+          "#11": "[(1,0)-(34,16)]",
           "apiContract:endpoint": "[(11,0)-(20,0)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#12",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -69,7 +69,7 @@
       }
     },
     {
-      "@id": "#15",
+      "@id": "#14",
       "@type": [
         "core:CreativeWork",
         "doc:DomainElement"
@@ -82,12 +82,12 @@
       "smaps": {
         "lexical": {
           "core:url": "[(8,2)-(9,0)]",
-          "#15": "[(8,0)-(9,0)]"
+          "#14": "[(8,0)-(9,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#15",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -95,17 +95,17 @@
       "apiContract:path": "/v1/{parent}/{collectionId}",
       "apiContract:supportedOperation": [
         {
-          "@id": "#17"
+          "@id": "#16"
         }
       ],
       "smaps": {
         "lexical": {
-          "#16": "[(12,2)-(20,0)]"
+          "#15": "[(12,2)-(20,0)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#13",
       "@type": [
         "apiContract:Tag",
         "doc:DomainElement"
@@ -114,12 +114,12 @@
       "smaps": {
         "lexical": {
           "core:name": "[(10,4)-(11,0)]",
-          "#14": "[(10,4)-(11,0)]"
+          "#13": "[(10,4)-(11,0)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#16",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -128,7 +128,7 @@
       "core:name": "firestore.projects.databases.documents.list",
       "apiContract:returns": [
         {
-          "@id": "#18"
+          "@id": "#17"
         }
       ],
       "apiContract:operationId": "firestore.projects.databases.documents.list",
@@ -136,13 +136,13 @@
         "lexical": {
           "apiContract:operationId": "[(14,6)-(15,0)]",
           "core:name": "[(14,6)-(15,0)]",
-          "#17": "[(13,4)-(20,0)]",
+          "#16": "[(13,4)-(20,0)]",
           "apiContract:returns": "[(15,6)-(20,0)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#17",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -153,19 +153,19 @@
       "core:description": "Successful response",
       "apiContract:payload": [
         {
-          "@id": "#19"
+          "@id": "#18"
         }
       ],
       "smaps": {
         "lexical": {
           "core:description": "[(17,10)-(18,0)]",
-          "#18": "[(16,8)-(20,0)]",
+          "#17": "[(16,8)-(20,0)]",
           "core:name": "[(16,8)-(16,13)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#18",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -299,7 +299,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#12"
+        "@id": "#11"
       },
       "doc:root": true,
       "doc:processingData": {

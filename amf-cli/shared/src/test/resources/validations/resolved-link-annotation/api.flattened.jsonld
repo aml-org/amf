@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#11",
+      "@id": "#10",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -26,7 +26,7 @@
       ],
       "apiContract:endpoint": [
         {
-          "@id": "#12"
+          "@id": "#11"
         }
       ],
       "smaps": {
@@ -37,13 +37,13 @@
         "lexical": {
           "apiContract:contentType": "[(3,0)-(4,0)]",
           "core:name": "[(2,0)-(3,0)]",
-          "#11": "[(2,0)-(17,17)]",
+          "#10": "[(2,0)-(17,17)]",
           "apiContract:accepts": "[(3,0)-(4,0)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#11",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -51,21 +51,21 @@
       "apiContract:path": "/endpoint",
       "apiContract:supportedOperation": [
         {
-          "@id": "#13"
+          "@id": "#12"
         },
         {
-          "@id": "#16"
+          "@id": "#15"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(11,0)-(11,9)]",
-          "#12": "[(11,0)-(17,17)]"
+          "#11": "[(11,0)-(17,17)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#12",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -73,17 +73,17 @@
       "apiContract:method": "get",
       "apiContract:expects": [
         {
-          "@id": "#14"
+          "@id": "#13"
         }
       ],
       "smaps": {
         "lexical": {
-          "#13": "[(12,2)-(15,0)]"
+          "#12": "[(12,2)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#15",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -91,43 +91,43 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#17"
+          "@id": "#16"
         }
       ],
       "smaps": {
         "lexical": {
-          "#16": "[(15,2)-(17,17)]"
+          "#15": "[(15,2)-(17,17)]"
         }
       }
     },
     {
+      "@id": "#13",
+      "@type": [
+        "apiContract:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#14"
+        }
+      ]
+    },
+    {
+      "@id": "#16",
+      "@type": [
+        "apiContract:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#17"
+        }
+      ]
+    },
+    {
       "@id": "#14",
-      "@type": [
-        "apiContract:Request",
-        "apiContract:Message",
-        "doc:DomainElement"
-      ],
-      "apiContract:payload": [
-        {
-          "@id": "#15"
-        }
-      ]
-    },
-    {
-      "@id": "#17",
-      "@type": [
-        "apiContract:Request",
-        "apiContract:Message",
-        "doc:DomainElement"
-      ],
-      "apiContract:payload": [
-        {
-          "@id": "#18"
-        }
-      ]
-    },
-    {
-      "@id": "#15",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -138,12 +138,12 @@
       },
       "smaps": {
         "lexical": {
-          "#15": "[(13,4)-(15,0)]"
+          "#14": "[(13,4)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#17",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -154,7 +154,7 @@
       },
       "smaps": {
         "lexical": {
-          "#18": "[(16,4)-(17,17)]"
+          "#17": "[(16,4)-(17,17)]"
         }
       }
     },
@@ -347,7 +347,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#11"
+        "@id": "#10"
       },
       "doc:root": true,
       "doc:processingData": {

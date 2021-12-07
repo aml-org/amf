@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#18",
+      "@id": "#17",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,19 +21,19 @@
       "core:version": "v1",
       "apiContract:endpoint": [
         {
-          "@id": "#19"
+          "@id": "#18"
         }
       ],
       "smaps": {
         "lexical": {
           "core:version": "[(3,0)-(5,0)]",
-          "#18": "[(2,0)-(27,24)]",
+          "#17": "[(2,0)-(27,24)]",
           "core:name": "[(2,0)-(3,0)]"
         }
       }
     },
     {
-      "@id": "#19",
+      "@id": "#18",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -41,18 +41,18 @@
       "apiContract:path": "/events",
       "apiContract:supportedOperation": [
         {
-          "@id": "#20"
+          "@id": "#19"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(23,0)-(23,7)]",
-          "#19": "[(23,0)-(27,24)]"
+          "#18": "[(23,0)-(27,24)]"
         }
       }
     },
     {
-      "@id": "#20",
+      "@id": "#19",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -60,17 +60,17 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#21"
+          "@id": "#20"
         }
       ],
       "smaps": {
         "lexical": {
-          "#20": "[(24,2)-(27,24)]"
+          "#19": "[(24,2)-(27,24)]"
         }
       }
     },
     {
-      "@id": "#21",
+      "@id": "#20",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -78,7 +78,7 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#22"
+          "@id": "#21"
         }
       ],
       "smaps": {
@@ -88,7 +88,7 @@
       }
     },
     {
-      "@id": "#22",
+      "@id": "#21",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -99,7 +99,7 @@
       },
       "smaps": {
         "lexical": {
-          "#22": "[(26,6)-(27,24)]"
+          "#21": "[(26,6)-(27,24)]"
         }
       }
     },
@@ -339,7 +339,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#18"
+        "@id": "#17"
       },
       "doc:root": true,
       "doc:processingData": {

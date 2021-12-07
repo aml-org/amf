@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#10",
+        "@id": "#9",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#11",
+            "@id": "#10",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#13",
+                "@id": "#12",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -52,7 +52,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#17",
+                    "@id": "#16",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -60,7 +60,7 @@
                     ],
                     "apiContract:header": [
                       {
-                        "@id": "#18",
+                        "@id": "#17",
                         "@type": [
                           "apiContract:Parameter",
                           "doc:DomainElement"
@@ -87,7 +87,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#19",
+                            "@id": "#18",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "raml-shapes:AnyShape",
@@ -107,7 +107,7 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "#19": "[(8,8)-(8,15)]"
+                                "#18": "[(8,8)-(8,15)]"
                               }
                             }
                           }
@@ -118,7 +118,7 @@
                           },
                           "lexical": {
                             "raml-shapes:schema": "[(8,8)-(8,15)]",
-                            "#18": "[(8,8)-(8,15)]"
+                            "#17": "[(8,8)-(8,15)]"
                           }
                         }
                       }
@@ -132,7 +132,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#14",
+                    "@id": "#13",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -150,7 +150,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#15",
+                        "@id": "#14",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -162,7 +162,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#16",
+                            "@id": "#15",
                             "@type": [
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
@@ -176,17 +176,17 @@
                             ],
                             "smaps": {
                               "auto-generated-name": {
-                                "#16": ""
+                                "#15": ""
                               },
                               "lexical": {
-                                "#16": "[(16,10)-(16,27)]"
+                                "#15": "[(16,10)-(16,27)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#15": "[(16,10)-(16,27)]"
+                            "#14": "[(16,10)-(16,27)]"
                           }
                         }
                       }
@@ -194,7 +194,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(15,8)-(16,27)]",
-                        "#14": "[(14,6)-(16,27)]"
+                        "#13": "[(14,6)-(16,27)]"
                       }
                     }
                   }
@@ -202,7 +202,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(13,4)-(16,27)]",
-                    "#13": "[(11,2)-(16,27)]",
+                    "#12": "[(11,2)-(16,27)]",
                     "core:description": "[(12,4)-(13,0)]"
                   }
                 }
@@ -210,7 +210,7 @@
             ],
             "doc:extends": [
               {
-                "@id": "#12",
+                "@id": "#11",
                 "@type": [
                   "apiContract:ParametrizedResourceType",
                   "doc:ParametrizedDeclaration",
@@ -396,7 +396,7 @@
                 "smaps": {
                   "lexical": {
                     "core:name": "[(10,8)-(10,18)]",
-                    "#12": "[(10,8)-(10,18)]"
+                    "#11": "[(10,8)-(10,18)]"
                   }
                 }
               }
@@ -404,7 +404,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(9,0)-(9,9)]",
-                "#11": "[(9,0)-(16,27)]"
+                "#10": "[(9,0)-(16,27)]"
               }
             }
           }
@@ -412,7 +412,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#10": "[(2,0)-(16,27)]"
+            "#9": "[(2,0)-(16,27)]"
           }
         }
       }

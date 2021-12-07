@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#45",
+      "@id": "#37",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -21,7 +21,7 @@
       "core:description": "some description",
       "apiContract:server": [
         {
-          "@id": "#46"
+          "@id": "#38"
         }
       ],
       "apiContract:accepts": [
@@ -40,7 +40,7 @@
           "core:version": "[(5,0)-(6,0)]",
           "apiContract:accepts": "[(6,0)-(7,0)]",
           "core:description": "[(7,0)-(9,0)]",
-          "#45": "[(2,0)-(16,0)]",
+          "#37": "[(2,0)-(16,0)]",
           "core:name": "[(4,0)-(5,0)]",
           "apiContract:server": "[(2,0)-(4,0)]",
           "apiContract:contentType": "[(6,0)-(7,0)]"
@@ -48,7 +48,7 @@
       }
     },
     {
-      "@id": "#46",
+      "@id": "#38",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -59,7 +59,7 @@
           "core:urlTemplate": "[(2,0)-(4,0)]"
         },
         "synthesized-field": {
-          "#46": "true"
+          "#38": "true"
         }
       }
     },
@@ -85,7 +85,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#45"
+        "@id": "#37"
       },
       "doc:root": true,
       "doc:processingData": {
