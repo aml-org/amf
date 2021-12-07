@@ -27,22 +27,6 @@ echo "amf-apicontract.versions version: $PROJECT_VERSION"
 echo "Is snapshot: $IS_SNAPSHOT"
 echo "Is RC: $IS_RC"
 
-echo "Running fullOpt"
-sbt cliJS/fullOptJS
-echo "Finished fullOpt"
-
-echo "Running buildjs script"
-./amf-cli/js/build-scripts/buildjs.sh
-echo "Finished buildjs script"
-
-# echo "Generating typings"
-# sbt -Dsbt.sourcemode=true cliJS/generateTypings
-# echo "Finished generating typings"
-
-# echo "Running build-typings script"
-# ./amf-cli/js/build-scripts/build-typings.sh
-# echo "Finished build-typings script"
-
 cd amf-cli/js
 
 if ${IS_SNAPSHOT}; then
@@ -101,9 +85,9 @@ else
         npm publish
 
         echo "Finished latest publish"
-        echo "Add 'beta' tag to latest"
+        echo "Add 'release' tag to latest"
 
-        npm dist-tag add amf-client-js@${PROJECT_VERSION} beta
+        npm dist-tag add amf-client-js@${PROJECT_VERSION} release
     fi
 fi
 
