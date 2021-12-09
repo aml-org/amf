@@ -254,7 +254,7 @@ lazy val graphqlJS =
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc)
+  .dependsOn(grpc,graphql)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(

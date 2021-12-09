@@ -14,6 +14,7 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   @JSExportTopLevel("NodeShape")
   def this() = this(InternalNodeShape())
 
+  def isAbstract: BoolField                                            = _internal.isAbstract
   def minProperties: IntField                                          = _internal.minProperties
   def maxProperties: IntField                                          = _internal.maxProperties
   def closed: BoolField                                                = _internal.closed
@@ -29,6 +30,11 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def propertyNames: Shape                                             = _internal.propertyNames
   def unevaluatedProperties: Boolean                                   = _internal.unevaluatedProperties
   def unevaluatedPropertiesSchema: Shape                               = _internal.unevaluatedPropertiesSchema
+
+  def withIsAbstract(isAbstract: Boolean): this.type = {
+    _internal.withIsAbstract(isAbstract)
+    this
+  }
 
   def withMinProperties(min: Int): this.type = {
     _internal.withMinProperties(min)
