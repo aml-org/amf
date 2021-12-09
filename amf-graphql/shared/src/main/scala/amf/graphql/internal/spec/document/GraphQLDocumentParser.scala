@@ -44,6 +44,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     val webApi = WebApi()
     webApi.withName(root.location.split("/").last)
     doc.adopted(root.location).withLocation(root.location).withEncodes(webApi)
+    webApi.withId(webApi.id.replace(webApi.componentId,s"#${webApi.componentId}"))
   }
 
   private def parseNestedType(objTypeDef: Node): Unit = {
