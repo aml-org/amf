@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#16",
+        "@id": "#15",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#17",
+            "@id": "#16",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#18",
+                "@id": "#17",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -47,7 +47,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#19",
+                    "@id": "#18",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -55,7 +55,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#20",
+                        "@id": "#19",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -89,7 +89,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#20": "[(14,6)-(16,0)]"
+                            "#19": "[(14,6)-(16,0)]"
                           }
                         }
                       }
@@ -103,7 +103,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#18": "[(12,2)-(16,0)]"
+                    "#17": "[(12,2)-(16,0)]"
                   }
                 }
               }
@@ -111,7 +111,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(11,0)-(11,5)]",
-                "#17": "[(11,0)-(16,0)]"
+                "#16": "[(11,0)-(16,0)]"
               }
             }
           }
@@ -119,7 +119,7 @@
         "smaps": {
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#16": "[(2,0)-(16,0)]"
+            "#15": "[(2,0)-(16,0)]"
           }
         }
       }

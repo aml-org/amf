@@ -23,14 +23,14 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   test("Raml declared types ") {
     val location = "file://amf-cli/shared/src/test/resources/maker/declared-types.raml"
-    val doc = documentWithTypes(Raml10, location)
+    val doc = documentWithTypes(Raml10)
       .withLocation(location)
     assertFixture(doc, "declared-types.raml", Raml10YamlHint)
   }
 
   test("Oas declared types ") {
     val location = "file://amf-cli/shared/src/test/resources/maker/declared-types.json"
-    val doc = documentWithTypes(Oas20, location)
+    val doc = documentWithTypes(Oas20)
       .withLocation(location)
 
     doc.encodes.set(WebApiModel.EndPoints, AmfArray(Seq()))
@@ -40,14 +40,14 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   test("Raml inherits declared types ") {
     val location = "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.raml"
-    val doc = documentWithInheritsTypes(Raml10, location)
+    val doc = documentWithInheritsTypes(Raml10)
       .withLocation(location)
     assertFixture(doc, "inherits-declared-types.raml", Raml10YamlHint)
   }
 
   test("Oas inherits declared types ") {
     val location = "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.json"
-    val doc = documentWithInheritsTypes(Oas20, location)
+    val doc = documentWithInheritsTypes(Oas20)
       .withLocation(location)
     assertFixture(doc, "inherits-declared-types.json", Oas20YamlHint)
   }
@@ -67,7 +67,7 @@ class DocumentMakerTest extends WebApiMakerTest {
     override def getResults: List[AMFValidationResult] = Nil
   }
 
-  private def documentWithTypes(spec: Spec, loc: String): Document = {
+  private def documentWithTypes(spec: Spec): Document = {
 
     val minCount = spec match {
       case _: Oas => 0
@@ -116,11 +116,11 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    document(spec, loc).withDeclares(Seq(person))
+    document(spec).withDeclares(Seq(person))
 
   }
 
-  private def document(spec: Spec, loc: String): Document = {
+  private def document(spec: Spec): Document = {
     amf.core.client.scala.model.domain.extensions.PropertyShape().withScalarSchema("hey")
     val api = WebApi()
       .withName("test types")
@@ -130,11 +130,10 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withEncodes(api)
       .withRoot(true)
       .withProcessingData(APIContractProcessingData().withSourceSpec(spec))
-      .withSourceInformation(BaseUnitSourceInformation().withRootLocation(loc))
     document
   }
 
-  private def documentWithInheritsTypes(spec: Spec, loc: String) = {
+  private def documentWithInheritsTypes(spec: Spec) = {
     val minCount = spec match {
       case _: Oas => 0
       case _      => 1
@@ -206,7 +205,7 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    document(spec, loc).withDeclares(Seq(human, person))
+    document(spec).withDeclares(Seq(human, person))
 
   }
 }

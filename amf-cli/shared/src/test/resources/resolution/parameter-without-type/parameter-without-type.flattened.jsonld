@@ -10,7 +10,7 @@
       "doc:sourceSpec": "OAS 2.0"
     },
     {
-      "@id": "#5",
+      "@id": "#4",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,24 +20,24 @@
       "core:name": "Przelewy24 REST API Documentation",
       "apiContract:server": [
         {
-          "@id": "#6"
+          "@id": "#5"
         }
       ],
       "apiContract:endpoint": [
         {
-          "@id": "#7"
+          "@id": "#6"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:endpoint": "[(7,2)-(17,3)]",
-          "#5": "[(1,0)-(24,1)]",
+          "#4": "[(1,0)-(24,1)]",
           "core:name": "[(4,4)-(4,48)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#5",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -53,7 +53,7 @@
       }
     },
     {
-      "@id": "#7",
+      "@id": "#6",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -61,17 +61,17 @@
       "apiContract:path": "/v1/transaction/register/splitpayment",
       "apiContract:supportedOperation": [
         {
-          "@id": "#8"
+          "@id": "#7"
         }
       ],
       "smaps": {
         "lexical": {
-          "#7": "[(8,4)-(16,5)]"
+          "#6": "[(8,4)-(16,5)]"
         }
       }
     },
     {
-      "@id": "#8",
+      "@id": "#7",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -79,18 +79,18 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#9"
+          "@id": "#8"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(9,14)-(15,7)]",
-          "#8": "[(9,6)-(15,7)]"
+          "#7": "[(9,6)-(15,7)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#8",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -98,34 +98,34 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#10"
+          "@id": "#9"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(10,8)-(14,9)]",
-          "#9": "[(9,14)-(15,7)]"
+          "#8": "[(9,14)-(15,7)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#9",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:name": "formData",
       "raml-shapes:schema": {
-        "@id": "#11"
+        "@id": "#10"
       },
       "smaps": {
         "form-body-parameter": {
-          "#10": "true"
+          "#9": "true"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#10",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -136,13 +136,13 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#12"
+          "@id": "#11"
         }
       ],
       "shacl:name": "formData"
     },
     {
-      "@id": "#12",
+      "@id": "#11",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -178,7 +178,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#5"
+        "@id": "#4"
       },
       "doc:root": true,
       "doc:processingData": {

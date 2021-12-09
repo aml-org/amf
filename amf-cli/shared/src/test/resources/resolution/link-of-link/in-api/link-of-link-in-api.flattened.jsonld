@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#13",
+      "@id": "#11",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,18 +20,18 @@
       "core:name": "MyTestApi",
       "apiContract:endpoint": [
         {
-          "@id": "#14"
+          "@id": "#12"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
-          "#13": "[(2,0)-(13,30)]"
+          "#11": "[(2,0)-(13,30)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#12",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -39,18 +39,18 @@
       "apiContract:path": "/endpoint",
       "apiContract:supportedOperation": [
         {
-          "@id": "#15"
+          "@id": "#13"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:path": "[(7,0)-(7,9)]",
-          "#14": "[(7,0)-(13,30)]"
+          "#12": "[(7,0)-(13,30)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#13",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -58,18 +58,18 @@
       "apiContract:method": "post",
       "apiContract:returns": [
         {
-          "@id": "#16"
+          "@id": "#14"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(9,4)-(13,30)]",
-          "#15": "[(8,2)-(13,30)]"
+          "#13": "[(8,2)-(13,30)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#14",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -79,18 +79,18 @@
       "core:name": "200",
       "apiContract:payload": [
         {
-          "@id": "#17"
+          "@id": "#15"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(11,8)-(13,30)]",
-          "#16": "[(10,6)-(13,30)]"
+          "#14": "[(10,6)-(13,30)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#15",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -101,7 +101,7 @@
       },
       "smaps": {
         "lexical": {
-          "#17": "[(12,10)-(13,30)]"
+          "#15": "[(12,10)-(13,30)]"
         }
       }
     },
@@ -213,7 +213,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#13"
+        "@id": "#11"
       },
       "doc:root": true,
       "doc:processingData": {
