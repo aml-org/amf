@@ -2507,6 +2507,9 @@ Types:
 
 ## ShapeOperation
 Action that can be executed over the data of a particular shape
+Types:
+* http://a.ml/vocabularies/shapes#Operation
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2518,11 +2521,15 @@ Action that can be executed over the data of a particular shape
 
 ## ShapeParameter
 Piece of data required or returned by an Operation
+Types:
+* http://a.ml/vocabularies/shapes#Parameter
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
  | paramName | string | Name of a parameter | http://a.ml/vocabularies/apiContract#paramName |
+ | binding | string | Part of the Request model where the parameter can be encoded (header, path, query param, etc.) | http://a.ml/vocabularies/apiContract#binding |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | required | boolean | Marks the parameter as required | http://a.ml/vocabularies/apiContract#required |
  | schema | [Shape](#shape) | Schema the parameter value must validate | http://a.ml/vocabularies/shapes#schema |
@@ -2533,6 +2540,9 @@ Piece of data required or returned by an Operation
 
 ## ShapePayload
 Encoded payload using certain media-type
+Types:
+* http://a.ml/vocabularies/shapes#Payload
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2546,6 +2556,8 @@ Encoded payload using certain media-type
 
 ## ShapeRequest
 Request information for an operation
+Types:
+* http://a.ml/vocabularies/shapes#Request
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
@@ -2553,6 +2565,9 @@ Request information for an operation
 
 ## ShapeResponse
 Response information for an operation
+Types:
+* http://a.ml/vocabularies/shapes#Response
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |

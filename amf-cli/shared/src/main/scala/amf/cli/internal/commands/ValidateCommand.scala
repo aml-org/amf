@@ -1,5 +1,6 @@
 package amf.cli.internal.commands
 
+import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
@@ -16,7 +17,7 @@ import scala.util.{Failure, Success}
 
 class ValidateCommand(override val platform: Platform) extends CommandHelper {
 
-  def run(parserConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
+  def run(parserConfig: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val res = for {
       newConfig  <- processDialects(parserConfig, configuration)
@@ -37,18 +38,18 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def findDialect(configuration: AMFConfiguration, id: String): Option[Dialect] = {
+  def findDialect(configuration: AMLConfiguration, id: String): Option[Dialect] = {
     configuration.configurationState().getDialects().find(_.id == id)
   }
 
-  def report(model: BaseUnit, config: ParserConfig, configuration: AMFConfiguration): Future[AMFValidationReport] = {
+  def report(model: BaseUnit, config: ParserConfig, configuration: AMLConfiguration): Future[AMFValidationReport] = {
     implicit val executionContext: ExecutionContext = configuration.getExecutionContext
-    val customProfileLoaded: Future[(ProfileName, AMFConfiguration)] = Future {
+    val customProfileLoaded: Future[(ProfileName, AMLConfiguration)] = Future {
       model match {
         case dialectInstance: DialectInstance =>
           @silent("deprecated") // Silent can only be used in assignment expressions
           val definedBy =
-            dialectInstance.processingData.definedBy().option().orElse(dialectInstance.definedBy().option()).orNull
+            dialectInstance.processingData.definedBy().option().orElse(dialectInstance.processingData.definedBy().option()).orNull
           findDialect(configuration, definedBy) match {
             case Some(dialect) =>
               (ProfileName(dialect.nameAndVersion()), configuration)
