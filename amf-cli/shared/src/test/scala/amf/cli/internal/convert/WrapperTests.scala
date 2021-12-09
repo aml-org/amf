@@ -1009,6 +1009,17 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+  private def removeFields(unit: BaseUnit): Future[BaseUnit] = Future {
+    val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
+    webApi.description.remove()
+    val operation: Operation = webApi.endPoints.asSeq.head.operations.asSeq.head
+    operation.graph()._internal.removeField("http://a.ml/vocabularies/apiContract#returns")
+
+    webApi.graph()._internal.removeField("http://a.ml/vocabularies/core#license")
+    unit
+  }
+
+
   private def resourceLoaderFor(url: String, content: String): ResourceLoader = {
     new ResourceLoader {
       override def fetch(resource: String): Future[Content] =

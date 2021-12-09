@@ -1,6 +1,6 @@
 package amf.shapes.internal.domain.metamodel
 
-import amf.core.client.scala.vocabulary.Namespace.{Shacl, Shapes}
+import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Shacl, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Bool, Int, Str}
@@ -8,11 +8,12 @@ import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.domain.metamodel.operations.ShapeOperationModel
 
 /**
   * Node shape metaModel.
   */
-object NodeShapeModel extends AnyShapeModel {
+trait NodeShapeModel extends AnyShapeModel {
 
   val MinProperties: Field = Field(
     Int,
@@ -37,7 +38,8 @@ object NodeShapeModel extends AnyShapeModel {
   val AdditionalPropertiesKeySchema: Field = Field(
     ShapeModel,
     Shacl + "additionalPropertiesKeySchema",
-    ModelDoc(ExternalModelVocabularies.Shacl, "additionalPropertiesKeySchema", "Additional properties key schema"))
+    ModelDoc(ExternalModelVocabularies.Shacl, "additionalPropertiesKeySchema", "Additional properties key schema")
+  )
 
   val Discriminator: Field =
     Field(Str, Shapes + "discriminator", ModelDoc(ModelVocabularies.Shapes, "discriminator", "Discriminator property"))
@@ -100,7 +102,20 @@ object NodeShapeModel extends AnyShapeModel {
              "Properties that may not be evaluated in schema validation")
   )
 
+  val Operations: Field = Field(
+    Array(ShapeOperationModel),
+    Shapes + "supportedOperation",
+    ModelDoc(ModelVocabularies.Shapes, "supportedOperation", "Supported operations for this shape")
+  )
+
+  val IsAbstract: Field = Field(
+    Bool,
+    Shapes + "isAbstract",
+    ModelDoc(ModelVocabularies.Shapes, "isAbstract", "Marks this shape as an abstract node shape declared for pure re-use")
+  )
+
   val specificFields = List(
+    IsAbstract,
     MinProperties,
     MaxProperties,
     Closed,
@@ -115,7 +130,8 @@ object NodeShapeModel extends AnyShapeModel {
     Dependencies,
     SchemaDependencies,
     UnevaluatedProperties,
-    UnevaluatedPropertiesSchema
+    UnevaluatedPropertiesSchema,
+    Operations
   )
 
   override val fields: List[Field] =
@@ -131,3 +147,5 @@ object NodeShapeModel extends AnyShapeModel {
     "Shape that validates a record of fields, like a JS object"
   )
 }
+
+object NodeShapeModel extends NodeShapeModel
