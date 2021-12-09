@@ -20,7 +20,9 @@ case class ShapeParameter(override val fields: Fields, override val annotations:
   def description: StrField      = fields.field(Description)
   def required: BoolField        = fields.field(Required)
   def schema: Shape              = fields.field(Schema)
+  def binding: StrField          = fields.field(Binding)
 
+  def withBinding(binding: String): this.type = set(Binding, binding)
   def withParameterName(name: String, annots: Annotations = Annotations()): this.type =
     set(ParameterName, name, annots)
   def withDescription(description: String): this.type          = set(Description, description)

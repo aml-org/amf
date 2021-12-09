@@ -27,6 +27,14 @@ object ShapeParameterModel
     ApiContract + "paramName",
     ModelDoc(ModelVocabularies.ApiContract, "paramName", "Name of a parameter", Seq((Namespace.Core + "name").iri())))
 
+  val Binding = Field(
+    Str,
+    ApiContract + "binding",
+    ModelDoc(ModelVocabularies.ApiContract,
+      "binding",
+      "Part of the Request model where the parameter can be encoded (header, path, query param, etc.)")
+  )
+
   val Required =
     Field(Bool,
           ApiContract + "required",
@@ -41,7 +49,7 @@ object ShapeParameterModel
   override val `type`: List[ValueType] = Shapes + "Parameter" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
-    List(Name, ParameterName, Description, Required, Schema) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+    List(Name, ParameterName, Binding, Description, Required, Schema) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = ShapeParameter()
 

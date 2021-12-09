@@ -60,7 +60,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
         val fieldName =
           findName(argumentNode, "AnonymousArgument", "", s"Missing name for field at root operation $method ")
 
-        val queryParam = request.withQueryParameter(fieldName)
+        val queryParam = request.withQueryParameter(fieldName).withBinding("query")
 
         findDescription(argumentNode) match {
           case Some(t: Terminal) => queryParam.withDescription(cleanDocumentation(t.value))
