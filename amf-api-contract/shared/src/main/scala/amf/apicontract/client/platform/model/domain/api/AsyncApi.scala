@@ -95,4 +95,9 @@ case class AsyncApi(override private[amf] val _internal: InternalAsyncApi) exten
     _internal.withSecurity(security.asInternal)
     this
   }
+
+  override def withTags(tags: ClientList[Tag]): this.type = {
+    _internal.withTags(tags.asInternal)
+    this
+  }
 }

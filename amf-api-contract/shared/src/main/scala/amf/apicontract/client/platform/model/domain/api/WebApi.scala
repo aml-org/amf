@@ -1,7 +1,7 @@
 package amf.apicontract.client.platform.model.domain.api
 
 import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
-import amf.apicontract.client.platform.model.domain.{EndPoint, License, Organization, Server}
+import amf.apicontract.client.platform.model.domain.{EndPoint, License, Organization, Server, Tag}
 import amf.apicontract.client.scala.model.domain.api.{WebApi => InternalWebApi}
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.shapes.client.platform.model.domain.CreativeWork
@@ -97,4 +97,8 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends A
     this
   }
 
+  override def withTags(tags: ClientList[Tag]): this.type = {
+    _internal.withTags(tags.asInternal)
+    this
+  }
 }
