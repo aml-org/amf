@@ -12,24 +12,6 @@
     {
       "@id": "#19",
       "@type": [
-        "doc:BaseUnitSourceInformation"
-      ],
-      "doc:rootLocation": "file://amf-cli/shared/src/test/resources/resolution/raml-multiple-fragments/api.raml",
-      "doc:additionalLocations": [
-        {
-          "@id": "#20"
-        },
-        {
-          "@id": "#21"
-        },
-        {
-          "@id": "#22"
-        }
-      ]
-    },
-    {
-      "@id": "#23",
-      "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
         "doc:RootDomainElement",
@@ -39,17 +21,38 @@
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#23": "[(2,0)-(10,33)]"
+          "#19": "[(2,0)-(10,33)]"
         }
       }
     },
     {
-      "@id": "#20",
+      "@id": "/BaseUnitSourceInformation",
+      "@type": [
+        "doc:BaseUnitSourceInformation"
+      ],
+      "doc:rootLocation": "file://amf-cli/shared/src/test/resources/resolution/raml-multiple-fragments/api.raml",
+      "doc:additionalLocations": [
+        {
+          "@id": "/BaseUnitSourceInformation/location_0"
+        },
+        {
+          "@id": "/BaseUnitSourceInformation/location_1"
+        },
+        {
+          "@id": "/BaseUnitSourceInformation/location_2"
+        }
+      ]
+    },
+    {
+      "@id": "/BaseUnitSourceInformation/location_0",
       "@type": [
         "doc:LocationInformation"
       ],
       "doc:location": "file://amf-cli/shared/src/test/resources/resolution/raml-multiple-fragments/refs/libA.raml",
       "doc:elements": [
+        {
+          "@id": "#15"
+        },
         {
           "@id": "#6"
         },
@@ -68,12 +71,15 @@
       ]
     },
     {
-      "@id": "#21",
+      "@id": "/BaseUnitSourceInformation/location_1",
       "@type": [
         "doc:LocationInformation"
       ],
       "doc:location": "file://amf-cli/shared/src/test/resources/resolution/raml-multiple-fragments/refs/libB.raml",
       "doc:elements": [
+        {
+          "@id": "#16"
+        },
         {
           "@id": "#10"
         },
@@ -83,12 +89,15 @@
       ]
     },
     {
-      "@id": "#22",
+      "@id": "/BaseUnitSourceInformation/location_2",
       "@type": [
         "doc:LocationInformation"
       ],
       "doc:location": "file://amf-cli/shared/src/test/resources/resolution/raml-multiple-fragments/refs/data-type.raml",
       "doc:elements": [
+        {
+          "@id": "#17"
+        },
         {
           "@id": "#13"
         }
@@ -125,14 +134,14 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#23"
+        "@id": "#19"
       },
       "doc:root": true,
       "doc:processingData": {
         "@id": "#18"
       },
       "doc:sourceInformation": {
-        "@id": "#19"
+        "@id": "/BaseUnitSourceInformation"
       },
       "smaps": {
         "aliases-array": {

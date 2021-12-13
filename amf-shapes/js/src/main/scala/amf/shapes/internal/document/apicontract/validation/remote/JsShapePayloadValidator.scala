@@ -5,16 +5,8 @@ import amf.core.client.scala.model.document.PayloadFragment
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.client.scala.validation.payload.ShapeValidationConfiguration
-import amf.core.internal.validation.ValidationConfiguration
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
-import amf.shapes.internal.validation.jsonschema.{
-  BaseJsonSchemaPayloadValidator,
-  BooleanValidationProcessor,
-  ExampleUnknownException,
-  InvalidJsonObject,
-  ReportValidationProcessor,
-  ValidationProcessor
-}
+import amf.shapes.internal.validation.jsonschema._
 
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
@@ -43,9 +35,12 @@ class JsShapePayloadValidator(private val shape: Shape,
   }
 
   override protected def loadJson(str: String): js.Dynamic = {
+    val isObjectLike = str.startsWith("{") || str.startsWith("[")
     try js.Dynamic.global.JSON.parse(str)
     catch {
-      case e: JavaScriptException if e.exception.isInstanceOf[SyntaxError] => throw new InvalidJsonObject(e)
+      case e: JavaScriptException if e.exception.isInstanceOf[SyntaxError] =>
+        if (isObjectLike) throw new InvalidJsonObject(e)
+        else throw new InvalidJsonValue(e)
     }
   }
 

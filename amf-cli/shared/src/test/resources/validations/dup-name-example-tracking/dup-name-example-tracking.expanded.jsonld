@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#26",
+        "@id": "#21",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -33,7 +33,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#27",
+            "@id": "#22",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -45,7 +45,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#28",
+                "@id": "#23",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -57,7 +57,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#29",
+                    "@id": "#24",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -108,7 +108,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#28": "[(12,2)-(22,0)]"
+                    "#23": "[(12,2)-(22,0)]"
                   }
                 }
               }
@@ -116,12 +116,12 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(11,0)-(11,4)]",
-                "#27": "[(11,0)-(22,0)]"
+                "#22": "[(11,0)-(22,0)]"
               }
             }
           },
           {
-            "@id": "#30",
+            "@id": "#25",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -133,7 +133,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#31",
+                "@id": "#26",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -145,7 +145,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#32",
+                    "@id": "#27",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -196,7 +196,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#31": "[(23,2)-(31,13)]"
+                    "#26": "[(23,2)-(31,13)]"
                   }
                 }
               }
@@ -204,7 +204,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:path": "[(22,0)-(22,4)]",
-                "#30": "[(22,0)-(31,13)]"
+                "#25": "[(22,0)-(31,13)]"
               }
             }
           }
@@ -217,7 +217,7 @@
           "lexical": {
             "apiContract:contentType": "[(4,0)-(6,0)]",
             "core:name": "[(2,0)-(4,0)]",
-            "#26": "[(2,0)-(31,13)]",
+            "#21": "[(2,0)-(31,13)]",
             "apiContract:accepts": "[(4,0)-(6,0)]"
           }
         }

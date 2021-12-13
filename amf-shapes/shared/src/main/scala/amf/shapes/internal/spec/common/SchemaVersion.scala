@@ -48,8 +48,9 @@ case object RAML08SchemaVersion                             extends RAMLSchemaVe
 
 object SchemaPosition extends Enumeration {
   type Position = Value
-  val Schema    = Value("schema")
-  val Parameter = Value("parameter")
+  val Schema: SchemaPosition.Value    = Value("schema")
+  val Parameter: SchemaPosition.Value = Value("parameter")
+  val Other: SchemaPosition.Value     = Value("")
 }
 
 class OASSchemaVersion(override val name: String, val position: Position) extends SchemaVersion(name)

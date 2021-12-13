@@ -1,6 +1,5 @@
 package amf.client.validation
 
-import amf.aml.client.platform.AMLConfiguration
 import amf.cli.internal.convert.NativeOps
 import amf.core.client.common.validation.{ScalarRelaxedValidationMode, StrictValidationMode}
 import amf.core.client.platform.AMFGraphConfiguration
@@ -168,6 +167,18 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
 
     val report = payloadValidator(test, `application/json`).syncValidate("any example")
     report.conforms shouldBe true
+  }
+
+  test("Test that an invalid object payload is validated against an any type") {
+
+    val test    = new AnyShape()
+    val payload = """{
+                    |  "a": "something"
+                    |  "b": "other thing"
+                    |}""".stripMargin
+
+    val report = payloadValidator(test, `application/json`).syncValidate(payload)
+    report.conforms shouldBe false
   }
 
   test("Test that recursive shape has a payload validator") {

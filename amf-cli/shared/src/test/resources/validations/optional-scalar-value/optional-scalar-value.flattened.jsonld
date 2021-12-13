@@ -10,7 +10,7 @@
       "doc:sourceSpec": "RAML 1.0"
     },
     {
-      "@id": "#5",
+      "@id": "#4",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -20,36 +20,36 @@
       "core:name": "API",
       "apiContract:endpoint": [
         {
-          "@id": "#6"
+          "@id": "#5"
         }
       ],
       "smaps": {
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
-          "#5": "[(2,0)-(9,13)]"
+          "#4": "[(2,0)-(9,13)]"
         }
       }
     },
     {
-      "@id": "#6",
+      "@id": "#5",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
       ],
       "apiContract:path": "/resource",
       "core:description": "",
-      "amf://id#6/scalar-valued/1/a": {
-        "@id": "#6/scalar-valued/1/a/scalar_1"
+      "amf://id#5/scalar-valued/1/a": {
+        "@id": "#5/scalar-valued/1/a/scalar_1"
       },
       "doc:customDomainProperties": [
         {
-          "@id": "#6/scalar-valued/1/a"
+          "@id": "#5/scalar-valued/1/a"
         }
       ],
       "smaps": {
         "lexical": {
           "core:description": "[(8,2)-(9,13)]",
-          "#6": "[(7,0)-(9,13)]",
+          "#5": "[(7,0)-(9,13)]",
           "apiContract:path": "[(7,0)-(7,9)]"
         }
       }
@@ -57,7 +57,7 @@
     {
       "core:extensionName": "a",
       "doc:element": "http://a.ml/vocabularies/core#description",
-      "@id": "#6/scalar-valued/1/a/scalar_1",
+      "@id": "#5/scalar-valued/1/a/scalar_1",
       "@type": [
         "data:Scalar",
         "data:Node",
@@ -76,7 +76,7 @@
           "shacl:datatype": "true"
         },
         "lexical": {
-          "#6/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
+          "#5/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
         }
       }
     },
@@ -94,7 +94,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#5"
+        "@id": "#4"
       },
       "doc:root": true,
       "doc:processingData": {

@@ -60,19 +60,19 @@
         "doc:DomainElement"
       ],
       "core:displayName": "lightMeasured",
-      "http://a.ml/vocab#pagination": {
-        "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response/customDomainProperties/extension/"
+      "aml:pagination": {
+        "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response/customDomainProperties/pagination/element"
       }
     },
     {
-      "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response/customDomainProperties/extension/",
+      "@id": "#/async-api/endpoint/%2Fendpoint/supportedOperation/subscribe/subs/returns/resp/default-response/customDomainProperties/pagination/element",
       "@type": [
-        "http://a.ml/vocab#Pagination",
+        "aml:Pagination",
         "file://amf-cli/shared/src/test/resources/semantic/dialect.yaml#/declarations/Pagination",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
-      "http://a.ml/vocab#PageSize": 5
+      "aml:PageSize": 5
     },
     {
       "@id": "",
@@ -93,6 +93,7 @@
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic/api.async.yaml",
+    "aml": "http://a.ml/vocab#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",

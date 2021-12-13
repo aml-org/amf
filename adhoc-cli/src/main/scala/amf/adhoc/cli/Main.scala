@@ -1,9 +1,9 @@
 package amf.adhoc.cli
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.common.transform.PipelineId
-import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.Mimes
 
@@ -47,23 +47,42 @@ object Main {
   }
 
   private def apiParse(args: Array[String]): Unit = {
-    // For comprehensions skip Exceptions like File Not Found Exception
-    val parsingFuture = APIConfiguration
-      .API()
+    var parsedExtensions: Array[Dialect] = Array()
+    val withSemex                        = args.contains("--extensions")
+    if (withSemex) {
+      val start = args.indexOf("--extensions") + 1
+      val end = {
+        val nextArgIdx = args.indexWhere(_.startsWith("--"), start)
+        val lastIdx    = args.length
+        math.max(nextArgIdx, lastIdx)
+      }
+      val extensions = args.slice(start, end)
+
+      parsedExtensions = extensions
+        .map { e =>
+          Await.result(AMLConfiguration.predefined().baseUnitClient().parseDialect(s"file://$e"), Duration.Inf)
+        }
+        .map(_.dialect)
+    }
+
+    var parsingConf = APIConfiguration.API()
+    parsedExtensions.foreach(e => parsingConf = parsingConf.withExtensions(e))
+
+    val parsingFuture = parsingConf
       .baseUnitClient()
       .parse(s"file://${args(1)}")
     val parsing     = Await.result(parsingFuture, Duration.Inf)
     var baseUnit    = parsing.baseUnit
-    val withLexical = args.length > 2 && args(2) == "--with-lexical"
+    val withLexical = args.contains("--with-lexical")
 
-    if (!withLexical) {
-      val transformation =
-        APIConfiguration
-          .fromSpec(parsing.sourceSpec)
-          .baseUnitClient()
-          .transform(parsing.baseUnit, PipelineId.Editing)
-      baseUnit = transformation.baseUnit
-    }
+    var transformationConf = APIConfiguration.fromSpec(parsing.sourceSpec)
+    parsedExtensions.foreach(e => transformationConf = transformationConf.withExtensions(e))
+
+    val transformation =
+      transformationConf
+        .baseUnitClient()
+        .transform(parsing.baseUnit, PipelineId.Editing)
+    baseUnit = transformation.baseUnit
 
     val renderOptions = if (withLexical) {
       RenderOptions().withPrettyPrint.withSourceMaps.withSourceInformation
@@ -72,8 +91,7 @@ object Main {
     }
 
     println {
-      APIConfiguration
-        .API()
+      transformationConf
         .withRenderOptions(renderOptions)
         .baseUnitClient()
         .render(baseUnit, Mimes.`application/ld+json`)

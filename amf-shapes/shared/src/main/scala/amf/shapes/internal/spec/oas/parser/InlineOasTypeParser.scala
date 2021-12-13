@@ -83,8 +83,11 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       }
       parsedShape match {
         case Some(shape: AnyShape) =>
-          if (isOas) // external schemas can have any top level key
-            ctx.closedShape(shape, map, version.asInstanceOf[OASSchemaVersion].position.toString)
+          version match {
+            case oas: OASSchemaVersion if (oas.position != SchemaPosition.Other) =>
+              ctx.closedShape(shape, map, oas.position.toString)
+            case _ => // Nothing to do
+          }
           if (isOas3) Some(checkNilUnion(shape))
           else Some(shape)
         case None => None
@@ -296,7 +299,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           setValue("minimum", map, ScalarShapeModel.Minimum, shape)
           setValue("maximum", map, ScalarShapeModel.Maximum, shape)
           map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
-          if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) {
+          if (version isBiggerThanOrEqualTo JSONSchemaDraft6SchemaVersion) {
             parseNumericExclusive(map, shape)
           } else {
             map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)

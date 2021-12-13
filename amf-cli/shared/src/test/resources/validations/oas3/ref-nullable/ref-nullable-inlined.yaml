@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  title: "Something"
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    a:
+      type: object
+      properties:
+        a1:
+          $ref: "#/components/schemas/b"
+      example:
+        a1:
+          b1: null
+    b:
+      type: object
+      properties:
+        b1:
+          type: string
+          nullable: true

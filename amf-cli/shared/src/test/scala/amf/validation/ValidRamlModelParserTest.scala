@@ -292,5 +292,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/valid-default-uri-parameter-merge-error.raml")
   }
 
+  test("Referencing json schema draft 6 with numeric exclusiveMin/Max values") {
+    checkValid("/raml/api-referencing-draft-6.raml")
+  }
+
   override val hint: Hint = Raml10YamlHint
 }

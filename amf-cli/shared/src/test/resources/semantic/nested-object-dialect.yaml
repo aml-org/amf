@@ -1,0 +1,39 @@
+#%Dialect 1.0
+dialect: Pagination Test
+version: 1.0
+
+external:
+  apiContract: http://a.ml/vocabularies/apiContract#
+  aml: http://a.ml/vocab#
+
+documents: {}
+
+annotationMappings:
+  TagAnnotation:
+    domain: apiContract.Response
+    propertyTerm: aml.tag
+    range:  Tag
+
+nodeMappings:
+  Tag:
+    classTerm: aml.Tag
+    mapping:
+      name:
+        propertyTerm: aml.Tag
+        range: string
+        mandatory: true
+      type:
+        propertyTerm: aml.Type
+        range: TagType
+        mandatory: true
+
+  TagType:
+    classTerm: aml.TagType
+    mapping:
+      value:
+        propertyTerm: aml.TagTypeValue
+        range: string
+        mandatory: true
+
+extensions:
+  tag: TagAnnotation
