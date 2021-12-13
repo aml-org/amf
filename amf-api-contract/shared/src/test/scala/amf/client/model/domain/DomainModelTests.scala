@@ -441,6 +441,7 @@ class DomainModelTests extends FunSuite with Matchers with BeforeAndAfterAll {
     val documentations = Seq(creativeWork._internal)
     val servers        = Seq(new Server()._internal)
     val requirements   = Seq(new SecurityRequirement()._internal)
+    val tags           = Seq(new Tag()._internal)
 
     val webapi = new WebApi()
       .withName(s)
@@ -457,6 +458,7 @@ class DomainModelTests extends FunSuite with Matchers with BeforeAndAfterAll {
       .withDocumentation(documentations.asClient)
       .withServers(servers.asClient)
       .withSecurity(requirements.asClient)
+      .withTags(tags.asClient)
     webapi.name.value() shouldBe s
     webapi.description.value() shouldBe s
     webapi.identifier.value() shouldBe s
@@ -471,6 +473,7 @@ class DomainModelTests extends FunSuite with Matchers with BeforeAndAfterAll {
     webapi.documentations.asInternal shouldBe documentations
     webapi.servers.asInternal shouldBe servers
     webapi.security.asInternal shouldBe requirements
+    webapi.tags.asInternal shouldBe tags
   }
 
   test("test License") {

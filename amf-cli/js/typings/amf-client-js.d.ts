@@ -1106,6 +1106,7 @@ declare module 'amf-client-js' {
     security: Array<SecurityRequirement>
     identifier: StrField
     description: StrField
+    tags: Array<Tag>
     documentations: Array<CreativeWork>
     servers: Array<Server>
     schemes: Array<StrField>
@@ -2398,6 +2399,7 @@ declare module 'amf-client-js' {
     security: Array<SecurityRequirement>
     identifier: StrField
     description: StrField
+    tags: Array<Tag>
     documentations: Array<CreativeWork>
     servers: Array<Server>
     schemes: Array<StrField>
@@ -2440,6 +2442,8 @@ declare module 'amf-client-js' {
     withIsExternalLink(isExternalLink: boolean): DomainElement
 
     withTermsOfService(terms: string): this
+
+    withTags(tags: Array<Tag>): this
 
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
@@ -2854,6 +2858,7 @@ declare module 'amf-client-js' {
     security: Array<SecurityRequirement>
     identifier: StrField
     description: StrField
+    tags: Array<Tag>
     documentations: Array<CreativeWork>
     servers: Array<Server>
     schemes: Array<StrField>
@@ -2896,6 +2901,8 @@ declare module 'amf-client-js' {
     withIsExternalLink(isExternalLink: boolean): DomainElement
 
     withTermsOfService(terms: string): this
+
+    withTags(tags: Array<Tag>): this
 
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
