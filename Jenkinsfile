@@ -116,7 +116,6 @@ pipeline {
         anyOf {
           branch 'develop'
           branch 'master'
-          branch 'release/*'
           branch 'support/*'
         }
       }
