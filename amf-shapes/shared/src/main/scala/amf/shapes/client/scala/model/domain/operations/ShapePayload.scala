@@ -1,6 +1,6 @@
 package amf.shapes.client.scala.model.domain.operations
 
-import amf.core.client.scala.model.domain.{NamedDomainElement, Shape}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
@@ -12,7 +12,7 @@ import org.yaml.model.YPart
   * Payload internal model.
   */
 case class ShapePayload(fields: Fields, annotations: Annotations)
-  extends NamedDomainElement {
+  extends NamedDomainElement with Linkable {
 
   def schema: Shape             = fields.field(ShapePayloadModel.Schema)
 
@@ -44,6 +44,11 @@ case class ShapePayload(fields: Fields, annotations: Annotations)
     "/" + name.value().urlComponentEncoded
 
   override def nameField: Field = ShapePayloadModel.Name
+
+  override def linkCopy(): Linkable = ShapePayload().withId(id)
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ???
 }
 
 object ShapePayload {
