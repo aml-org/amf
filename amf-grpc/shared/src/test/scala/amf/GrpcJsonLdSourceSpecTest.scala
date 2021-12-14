@@ -16,7 +16,7 @@ class GrpcJsonLdSourceSpecTest extends AsyncFunSuite with Matchers {
     for {
       result     <- client.parse(path)
       jsonld     <- Future.successful(client.render(result.baseUnit, Mimes.`application/ld+json`))
-      jsonLdUnit <- client.parseContent(jsonld)
+      jsonLdUnit <- client.parseContent(jsonld, "application/ld+json")
     } yield {
       jsonLdUnit.sourceSpec shouldBe Spec.GRPC
     }

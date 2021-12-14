@@ -22,7 +22,7 @@ object AntlrSyntaxParsePlugin extends AMFSyntaxParsePlugin {
   override val id: String = "antlr-ast-parse"
 
   override def applies(element: CharSequence): Boolean = {
-    val text         = element.toString
+    val text         = element.toString.trim
     val isJSONObject = text.startsWith("{") && text.endsWith("}")
     val isJSONArray  = text.startsWith("[") && text.endsWith("]")
     val isYamlHash   = text.startsWith("#")
