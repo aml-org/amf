@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: Test API
+
+annotationTypes:
+  tags:
+    type: string
+  xtags:
+    type: string
+
+/test:
+  get:
+    (tags): test
+    (xtags): test

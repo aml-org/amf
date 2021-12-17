@@ -1,10 +1,6 @@
 package amf.spec
 
-import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.{
-  isOasAnnotation,
-  isRamlAnnotation,
-  resolveAnnotation
-}
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.{isOasAnnotation, isRamlAnnotation, resolveAnnotation}
 import org.scalatest.{FunSuite, Inspectors, Matchers}
 
 class AnnotationsTest extends FunSuite with Matchers with Inspectors {
@@ -18,7 +14,9 @@ class AnnotationsTest extends FunSuite with Matchers with Inspectors {
     ("regex)", None),
     ("invalid(regex)", None),
     ("(invalid)regex", None),
-    ("some", None)
+    ("some", None),
+    ("tags", None),
+    ("(tags)", Some("tags")),
   )
 
   private val oasFixture = Seq(

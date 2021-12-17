@@ -2,6 +2,8 @@ package amf.shapes.internal.spec.common.parser
 
 import scala.util.matching.Regex
 
+/** Annotations that does not exist in a spec but we save them with the 'amf-' prefix and treat them differently than
+  * other normal annotations, specially to save information from one spec that can't be expressed in the other */
 object WellKnownAnnotation {
 
   val ramlKnownAnnotations = Set(
@@ -91,13 +93,13 @@ object WellKnownAnnotation {
   )
 
   def resolveAnnotation(field: String): Option[String] = field match {
-    case ramlAnnotation(value) if notContains(ramlKnownAnnotations, value) => Some(value)
-    case oasAnnotation(value) if notContains(oasKnownAnnotations, value)   => Some(value)
-    case _                                                                 => None
+    case ramlAnnotation(value) if !isWellKnown(ramlKnownAnnotations, value) => Some(value)
+    case oasAnnotation(value) if !isWellKnown(oasKnownAnnotations, value)   => Some(value)
+    case _                                                                  => None
   }
 
-  private def notContains(annotations: Set[String], value: String) =
-    !annotations.contains(value.stripPrefix(amfPrefix))
+  private def isWellKnown(annotations: Set[String], value: String) =
+    value.startsWith(amfPrefix) && annotations.contains(value.stripPrefix(amfPrefix))
 
   def isOasAnnotation(field: String): Boolean = field match {
     case oasAnnotation(_) => true
