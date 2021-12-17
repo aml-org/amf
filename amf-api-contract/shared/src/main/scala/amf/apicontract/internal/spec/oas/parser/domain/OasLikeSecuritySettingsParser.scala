@@ -2,7 +2,6 @@ package amf.apicontract.internal.spec.oas.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.isOasAnnotation
 import amf.apicontract.internal.spec.common.parser.{
   SettingsProducers,
   SpecParserOps,
@@ -14,6 +13,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isOasAnnotation
 import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
@@ -45,7 +45,8 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
     }
 
     if (entries.nonEmpty) {
-      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(WebApiShapeParserContextAdapter(ctx)).parse()
+      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(
+        WebApiShapeParserContextAdapter(ctx)).parse()
       settings.setWithoutId(SettingsModel.AdditionalProperties, node)
     }
 
@@ -107,7 +108,9 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
 
     Scope(scopeEntry)
       .setWithoutId(ScopeModel.Name, AmfScalar(name, Annotations(scopeEntry.key)), Annotations.inferred())
-      .setWithoutId(ScopeModel.Description, AmfScalar(description, Annotations(scopeEntry.key)), Annotations.inferred())
+      .setWithoutId(ScopeModel.Description,
+                    AmfScalar(description, Annotations(scopeEntry.key)),
+                    Annotations.inferred())
 
   }
 

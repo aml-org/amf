@@ -1,6 +1,10 @@
 package amf.spec
 
-import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation._
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.{
+  isOasAnnotation,
+  isRamlAnnotation,
+  resolveAnnotation
+}
 import org.scalatest.{FunSuite, Inspectors, Matchers}
 
 class AnnotationsTest extends FunSuite with Matchers with Inspectors {
