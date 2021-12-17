@@ -2,7 +2,6 @@ package amf.apicontract.internal.spec.raml.parser.domain
 
 import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
-import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
 import amf.apicontract.internal.spec.common.parser.{
   SpecField,
   SpecNode,
@@ -19,6 +18,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, Lazy}
 import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
 import amf.shapes.internal.spec.datanode.DataNodeParser
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
@@ -53,7 +53,8 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
     }
 
     if (entries.nonEmpty) {
-      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(WebApiShapeParserContextAdapter(ctx)).parse()
+      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))))(
+        WebApiShapeParserContextAdapter(ctx)).parse()
       settings.setWithoutId(SettingsModel.AdditionalProperties, node)
     }
     settings
@@ -106,9 +107,10 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
       (OAuth2FlowModel.Scopes in flow.getOrCreate using ScopeParser).allowingSingleValue.apply(entry)
     }
 
-    flow.option.foreach(f =>
-      settings.fields
-        .setWithoutId(OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred()))
+    flow.option.foreach(
+      f =>
+        settings.fields
+          .setWithoutId(OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred()))
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
     settings

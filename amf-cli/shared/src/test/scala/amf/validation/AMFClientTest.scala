@@ -1,8 +1,10 @@
 package amf.validation
 
-import amf.apicontract.client.scala.RAMLConfiguration
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.{AMFBaseUnitClient, AMFConfiguration, OASConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.ExternalSourceElement
 import amf.shapes.client.scala.model.domain.{NodeShape, SchemaShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
@@ -12,13 +14,19 @@ import scala.concurrent.ExecutionContext
 class AMFClientTest extends AsyncFunSuite with Matchers {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  test("AMF should persist and restore the raw XML schema") {
-    val api           = "file://amf-cli/shared/src/test/resources/validations/raml/raml-with-xml/api.raml"
-    val ro            = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
-    val configuration = RAMLConfiguration.RAML10().withRenderOptions(ro)
-    val client        = configuration.baseUnitClient()
+  val basePath                      = "file://amf-cli/shared/src/test/resources/validations"
+  val ro: RenderOptions             = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
+  val ramlConfig: AMFConfiguration  = RAMLConfiguration.RAML10().withRenderOptions(ro)
+  val ramlClient: AMFBaseUnitClient = ramlConfig.baseUnitClient()
+  val oasConfig: AMFConfiguration   = OASConfiguration.OAS30().withRenderOptions(ro)
+  val oasClient: AMFBaseUnitClient  = oasConfig.baseUnitClient()
+  val oas2Config: AMFConfiguration  = OASConfiguration.OAS20().withRenderOptions(ro)
+  val oas2Client: AMFBaseUnitClient = oas2Config.baseUnitClient()
 
-    client.parse(api) flatMap { parseResult =>
+  test("AMF should persist and restore the raw XML schema") {
+    val api = s"$basePath/raml/raml-with-xml/api.raml"
+
+    ramlClient.parse(api) flatMap { parseResult =>
       // parsing
       parseResult.conforms shouldBe true
       val schemaShapeType = "http://a.ml/vocabularies/shapes#SchemaShape"
@@ -35,8 +43,8 @@ class AMFClientTest extends AsyncFunSuite with Matchers {
       raw.isEmpty shouldBe false
 
       // serialization
-      val transformResult = client.transform(parseResult.baseUnit, PipelineId.Editing)
-      val rendered        = client.render(transformResult.baseUnit, "application/ld+json")
+      val transformResult = ramlClient.transform(parseResult.baseUnit, PipelineId.Editing)
+      val rendered        = ramlClient.render(transformResult.baseUnit, "application/ld+json")
 
       // restoring
       val client2 = RAMLConfiguration.RAML10().baseUnitClient()
@@ -56,12 +64,9 @@ class AMFClientTest extends AsyncFunSuite with Matchers {
   }
 
   test("AMF should persist and restore the raw json schema") {
-    val api           = "file://amf-cli/shared/src/test/resources/validations/raml/raml-with-json-schema/api.raml"
-    val ro            = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
-    val configuration = RAMLConfiguration.RAML10().withRenderOptions(ro)
-    val client        = configuration.baseUnitClient()
+    val api = s"$basePath/raml/raml-with-json-schema/api.raml"
 
-    client.parse(api) flatMap { parseResult =>
+    ramlClient.parse(api) flatMap { parseResult =>
       // parsing
       parseResult.conforms shouldBe true
       val NodeShapeType = "http://www.w3.org/ns/shacl#NodeShape"
@@ -78,8 +83,8 @@ class AMFClientTest extends AsyncFunSuite with Matchers {
       idToRaw.value().isEmpty shouldBe false
 
       // serialization
-      val transformResult = client.transform(parseResult.baseUnit, PipelineId.Editing)
-      val rendered        = client.render(transformResult.baseUnit, "application/ld+json")
+      val transformResult = ramlClient.transform(parseResult.baseUnit, PipelineId.Editing)
+      val rendered        = ramlClient.render(transformResult.baseUnit, "application/ld+json")
 
       // restoring
       val client2 = RAMLConfiguration.RAML10().baseUnitClient()
@@ -95,6 +100,31 @@ class AMFClientTest extends AsyncFunSuite with Matchers {
         restoredRaw.isInstanceOf[String] shouldBe true
         restoredRaw.isEmpty shouldBe false
       }
+    }
+  }
+
+  // github issue #1086
+  test("AMF should not remove well known annotations") {
+    val ramlApi = s"$basePath/raml/api-with-annotations.raml"
+
+    def getEndpointAnnotations(bu: BaseUnit) =
+      bu.asInstanceOf[Document]
+        .encodes
+        .asInstanceOf[WebApi]
+        .endPoints
+        .head
+        .operations
+        .head
+        .customDomainProperties
+
+    ramlClient.parse(ramlApi) flatMap { parseResult =>
+      val transformResult = ramlClient.transform(parseResult.baseUnit, PipelineId.Default)
+      val ramlAnnotations = getEndpointAnnotations(transformResult.baseUnit)
+      ramlAnnotations.length shouldBe 2
+
+      val oasTransformResult = oasClient.transform(parseResult.baseUnit, PipelineId.Compatibility)
+      val oasAnnotations     = getEndpointAnnotations(oasTransformResult.baseUnit)
+      oasAnnotations.length shouldBe 2
     }
   }
 }

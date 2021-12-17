@@ -5,7 +5,6 @@ import amf.apicontract.client.scala.model.domain.{Operation, Request, Response}
 import amf.apicontract.internal.metamodel.domain.OperationModel.Method
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.{OperationModel, ResponseModel}
-import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.isOasAnnotation
 import amf.apicontract.internal.spec.common.parser.{
   OasLikeSecurityRequirementParser,
   SpecParserOps,
@@ -20,6 +19,7 @@ import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isOasAnnotation
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser}
 import org.yaml.model._
 
@@ -45,7 +45,8 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
     map.key("operationId").foreach { entry =>
       val operationId = entry.value.toString()
       if (!ctx.registerOperationId(operationId))
-        ctx.eh.violation(DuplicatedOperationId, operation, s"Duplicated operation id '$operationId'", entry.value.location)
+        ctx.eh
+          .violation(DuplicatedOperationId, operation, s"Duplicated operation id '$operationId'", entry.value.location)
     }
 
     parseOperationId(map, operation)
@@ -62,7 +63,7 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
     operation
   }
 
-  def parseOperationId(map: YMap, operation: Operation) = {
+  def parseOperationId(map: YMap, operation: Operation): Unit = {
     map.key("operationId", OperationModel.Name in operation)
     map.key("operationId", OperationModel.OperationId in operation)
   }
@@ -133,7 +134,9 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
               ).parse()
           }
 
-        operation.setWithoutId(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))
+        operation.setWithoutId(OperationModel.Responses,
+                               AmfArray(responses, Annotations(entry.value)),
+                               Annotations(entry))
       }
     )
 
@@ -145,12 +148,11 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
     // TODO check for empty array for resolution ?
     val requirements = entry.value
       .as[Seq[YNode]]
-      .flatMap(s =>
-        OasLikeSecurityRequirementParser(s, (s: SecurityRequirement) => Unit, idCounter).parse())
+      .flatMap(s => OasLikeSecurityRequirementParser(s, (s: SecurityRequirement) => Unit, idCounter).parse())
     val extension = operation.security
     operation.setWithoutId(WebApiModel.Security,
-                  AmfArray(requirements ++ extension, Annotations(entry.value)),
-                  Annotations(entry))
+                           AmfArray(requirements ++ extension, Annotations(entry.value)),
+                           Annotations(entry))
   }
 }
 
@@ -162,7 +164,8 @@ case class Oas20OperationParser(entry: YMapEntry, adopt: Operation => Operation)
     val map       = entry.value.as[YMap]
     Oas20RequestParser(map, (r: Request) => Unit)
       .parse()
-      .map(r => operation.setWithoutId(OperationModel.Request, AmfArray(Seq(r), Annotations.virtual()), Annotations(map)))
+      .map(r =>
+        operation.setWithoutId(OperationModel.Request, AmfArray(Seq(r), Annotations.virtual()), Annotations(map)))
 
     map.key("schemes", OperationModel.Schemes in operation)
     map.key("consumes", OperationModel.Accepts in operation)
@@ -203,16 +206,12 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
           .entries
           .flatMap { callbackEntry =>
             val name = callbackEntry.key.as[YScalar].text
-            Oas30CallbackParser(callbackEntry.value.as[YMap],
-                                _.withName(name),
-                                name,
-                                callbackEntry)
+            Oas30CallbackParser(callbackEntry.value.as[YMap], _.withName(name), name, callbackEntry)
               .parse()
           }
-        operation.fields.setWithoutId(
-                             OperationModel.Callbacks,
-                             AmfArray(callbacks, Annotations(entry.value)),
-                             Annotations(entry))
+        operation.fields.setWithoutId(OperationModel.Callbacks,
+                                      AmfArray(callbacks, Annotations(entry.value)),
+                                      Annotations(entry))
       }
     )
 

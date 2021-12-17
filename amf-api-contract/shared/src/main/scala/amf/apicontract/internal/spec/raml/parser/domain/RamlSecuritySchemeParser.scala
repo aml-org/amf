@@ -3,7 +3,6 @@ package amf.apicontract.internal.spec.raml.parser.domain
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.apicontract.client.scala.model.domain.{Parameter, Response}
 import amf.apicontract.internal.metamodel.domain.security.SecuritySchemeModel
-import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
 import amf.apicontract.internal.spec.common.parser.{
   RamlParametersParser,
   SecuritySchemeParser,
@@ -22,6 +21,7 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.parser.AnnotationParser
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
 import amf.shapes.internal.spec.raml.parser.Raml10TypeParser
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExclusivePropertiesSpecification
 import amf.shapes.internal.vocabulary.VocabularyMappings
@@ -120,13 +120,11 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
               "headers",
               entry => {
                 val parameters: Seq[Parameter] =
-                  RamlParametersParser(entry.value.as[YMap],
-                                       (p: Parameter) => Unit,
-                                       binding = "header") // todo replace in separation
+                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "header") // todo replace in separation
                     .parse()
                 scheme.setWithoutId(SecuritySchemeModel.Headers,
-                           AmfArray(parameters, Annotations(entry.value)),
-                           Annotations(entry))
+                                    AmfArray(parameters, Annotations(entry.value)),
+                                    Annotations(entry))
               }
             )
 
@@ -146,8 +144,8 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                   RamlParametersParser(entry.value.as[YMap], (p: Parameter) => Unit, binding = "query") // todo replace in separation
                     .parse()
                 scheme.setWithoutId(SecuritySchemeModel.QueryParameters,
-                           AmfArray(parameters, Annotations(entry.value)),
-                           Annotations(entry))
+                                    AmfArray(parameters, Annotations(entry.value)),
+                                    Annotations(entry))
               }
             )
 
@@ -178,8 +176,8 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                     })
                 }
                 scheme.setWithoutId(SecuritySchemeModel.Responses,
-                           AmfArray(responses, Annotations(entry.value)),
-                           Annotations(entry))
+                                    AmfArray(responses, Annotations(entry.value)),
+                                    Annotations(entry))
               }
             )
             AnnotationParser(scheme, value)(WebApiShapeParserContextAdapter(ctx)).parse()
