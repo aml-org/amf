@@ -30,8 +30,6 @@ lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
 lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")
 lazy val branch     = sys.env.getOrElse("BRANCH_NAME", "develop")
 
-//enablePlugins(ScalaJSBundlerPlugin)
-
 sonarProperties ++= Map(
   "sonar.login"                      -> sonarToken,
   "sonar.projectKey"                 -> "mulesoft.amf",
@@ -88,7 +86,6 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(
-    jsDependencies += ProvidedJS / "ajv.min.js",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-module.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations"
@@ -289,7 +286,7 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
   )
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-client-module.js",
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "amf.js",
   )
   .jsSettings(TypingGenerationSettings.settings:_*)
   .disablePlugins(SonarPlugin)
