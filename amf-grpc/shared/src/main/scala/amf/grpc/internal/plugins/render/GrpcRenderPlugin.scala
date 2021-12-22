@@ -1,4 +1,4 @@
-package amf.grpc.plugins.render
+package amf.grpc.internal.plugins.render
 
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit

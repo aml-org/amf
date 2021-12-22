@@ -53,7 +53,7 @@ case class ApiContractFallbackPlugin(strict: Boolean = true, skipWarnings: Boole
     private def throwUserFriendlyWarnings(document: Root, ctx: ParserContext) = {
       if (isRoot) ctx.eh.warning(CouldntGuessRoot, "", None, s"Couldn't guess spec for root file", None, Some(document.location))
       else if (!skipWarnings){
-        pluginThatMatches(document, ctx.config.sortedParsePlugins).foreach { spec =>
+        pluginThatMatches(document, ctx.config.sortedReferenceParsePlugins).foreach { spec =>
           ctx.eh.warning(CantReferenceSpecInFileTree, "", None, s"Document identified as ${spec.id} is of different spec from root", None, Some(document.location))
         }
       }

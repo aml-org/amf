@@ -29,6 +29,7 @@ import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
 import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.internal.metamodel.ModelDefaultBuilder
@@ -253,6 +254,7 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
           PayloadValidationPlugin(ASYNC20)
         )
       )
+      .withReferenceParsePlugin(Raml10ParsePlugin)
       .withValidationProfile(Async20ValidationProfile, Async20EffectiveValidations)
       .withTransformationPipelines(
         List(
@@ -343,6 +345,9 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMFConfiguration =
     super._withPlugin(amfPlugin)
+
+  override def withReferenceParsePlugin(amfPlugin: AMFParsePlugin): AMFConfiguration =
+    super._withReferenceParsePlugin(amfPlugin)
 
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMFConfiguration =
     super._withPlugins(plugins)

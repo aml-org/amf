@@ -1,0 +1,10 @@
+asyncapi: '2.0.0'
+info:
+  title: AsyncAPI_8733879276737
+  version: '1.0.0'
+channels:
+  /course:
+    subscribe:
+      message:
+        payload:
+          $ref: external-data-type.raml

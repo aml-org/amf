@@ -1,4 +1,4 @@
-package amf.grpc.plugins.parse
+package amf.grpc.internal.plugins.parse
 
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
 import amf.core.client.scala.parse.document._
