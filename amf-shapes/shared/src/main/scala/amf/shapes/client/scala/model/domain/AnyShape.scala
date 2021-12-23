@@ -22,8 +22,8 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
   def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
   def comment: StrField               = fields.field(Comment)
 
-  def withSemanticContext(context: SemanticContext) = set(AnyShapeModel.Semantics, context)
-  def semanticContext: Option[SemanticContext]      = Option(fields.field(AnyShapeModel.Semantics))
+  def withSemanticContext(context: SemanticContext): this.type = set(AnyShapeModel.Semantics, context)
+  def semanticContext: Option[SemanticContext]                 = Option(fields.field(AnyShapeModel.Semantics))
 
   override def documentations: Seq[CreativeWork] = Seq(documentation)
 

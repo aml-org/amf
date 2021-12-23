@@ -297,6 +297,21 @@ object ShapeParserSideValidations extends Validations {
     "@context value must be object or string"
   )
 
+  val InvalidCharacteristicsNode = validation(
+    "@characteristics-must-be-a-seq",
+    "@characteristics value must be a sequence of strings"
+  )
+
+  val InvalidPrefixReference = validation(
+    "@invalid-prefix-reference",
+    "the referenced prefix could not be found in the @context declarations"
+  )
+
+  val InvalidIri = validation(
+    "@invalid-iri-text",
+    "the text must conform the IRI format"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id           -> all(WARNING),
     JsonSchemaInheritanceWarning.id -> all(WARNING),
@@ -327,6 +342,9 @@ object ShapeParserSideValidations extends Validations {
     UnableToParseShapeExtensions,
     ExceededMaxYamlReferences,
     InvalidJsonSchemaType,
-    InvalidContextNode
+    InvalidContextNode,
+    InvalidCharacteristicsNode,
+    InvalidPrefixReference,
+    InvalidIri
   )
 }

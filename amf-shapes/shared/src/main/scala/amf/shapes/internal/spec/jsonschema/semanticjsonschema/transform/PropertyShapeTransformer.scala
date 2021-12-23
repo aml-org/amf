@@ -98,6 +98,16 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
         }
       }
     }
+    property.range match {
+      case any: AnyShape if any.semanticContext.nonEmpty =>
+        val semanticContext = any.semanticContext.get
+        semanticContext.typeMappings.map(_.value()).headOption match {
+          case Some(iri) =>
+            propertyMapping.withNodePropertyMapping(semanticContext.expand(iri))
+          case None => // Ignore
+        }
+      case _ => // Ignore
+    }
   }
 
 }
