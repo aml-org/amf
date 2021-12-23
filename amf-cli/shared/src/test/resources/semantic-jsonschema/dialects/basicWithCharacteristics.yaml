@@ -1,0 +1,20 @@
+#%Dialect 1.0
+nodeMappings:
+  Somesecuritything:
+    mapping:
+      key:
+        range: string
+        propertyTerm: security.sensitive
+        mandatory: true
+        pattern: ^[A-Za-z]*$
+      info:
+        range: integer
+        mandatory: true
+external:
+  security: https://anypoint.mulesoft.com/security#
+  ns0: http://test.com/vocab#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Somesecuritything
