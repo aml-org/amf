@@ -19,6 +19,10 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
     run("basic")
   }
 
+  test("Dialect instance validation with basic with characteristics JSON schema") {
+    run("basicWithCharacteristics")
+  }
+
   test("Dialect instance validation with intermediate JSON schema") {
     run("intermediate")
   }
