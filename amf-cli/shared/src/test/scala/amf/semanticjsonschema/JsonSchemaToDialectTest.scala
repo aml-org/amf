@@ -20,6 +20,7 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   private val dialectPath    = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/dialects/"
 
   multiOutputTest("Dialect generation from basic JSON schema", "basic")
+  multiOutputTest("Dialect generation from basic JSON schema with characteristics", "basicWithCharacteristics")
   multiOutputTest("Dialect generation from intermediate JSON schema", "intermediate")
   multiOutputTest("Dialect generation from JSON schema with allOf", "allOf")
   multiOutputTest("Dialect generation from JSON schema with oneOf", "oneOf")

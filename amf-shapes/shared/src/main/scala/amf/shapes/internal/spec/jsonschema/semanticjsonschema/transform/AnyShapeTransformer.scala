@@ -22,11 +22,11 @@ case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)
     }
 
     if (shape.or.nonEmpty) {
-      throw new Error("Or constraint not supported")
+//      throw new Error("Or constraint not supported")
     }
 
     if (Option(shape.not).nonEmpty) {
-      throw new Error("Not constraint not supported")
+//      throw new Error("Not constraint not supported")
     }
 
     nodeMapping.withObjectRange(members)
