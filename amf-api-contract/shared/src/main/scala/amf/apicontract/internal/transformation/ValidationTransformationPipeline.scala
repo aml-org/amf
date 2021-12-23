@@ -26,7 +26,7 @@ class ValidationTransformationPipeline private[amf] (profile: ProfileName,
       new MediaTypeResolutionStage(profile, isValidation = true),
       new ResponseExamplesResolutionStage(),
       new PayloadAndParameterResolutionStage(profile),
-      SemanticExtensionFlatteningStage,
+      new SemanticExtensionFlatteningStage,
       SourceInformationStage,
       new AnnotationRemovalStage(),
     )
