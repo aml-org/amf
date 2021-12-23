@@ -38,7 +38,7 @@ class AmfTransformationPipeline private[amf] (override val name: String) extends
       new CleanReferencesStage(),
       new DeclarationsRemovalStage(),
       new AnnotationRemovalStage(),
-      SemanticExtensionFlatteningStage,
+      new SemanticExtensionFlatteningStage,
       SourceInformationStage
     )
 }
