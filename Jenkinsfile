@@ -62,6 +62,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'semantic-json-schema-publish'
         }
       }
       steps {
