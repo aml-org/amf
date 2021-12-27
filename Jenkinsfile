@@ -20,6 +20,11 @@ pipeline {
   }
   stages {
     stage('Test') {
+      when {
+        not {
+          branch 'semantic-json-schema-publish'
+        }
+      }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
           script {
