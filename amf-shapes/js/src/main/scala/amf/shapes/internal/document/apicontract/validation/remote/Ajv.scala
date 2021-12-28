@@ -1,7 +1,7 @@
 package amf.shapes.internal.document.apicontract.validation.remote
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSGlobal
+import scala.scalajs.js.annotation.{JSGlobal, JSImport}
 
 object Draft4MetaSchema {
   val text =
@@ -18,8 +18,8 @@ protected[amf] trait ValidationResult extends js.Any {
   val message: String    = js.native
 }
 
-@JSGlobal
 @js.native
+@JSImport("ajv", JSImport.Default)
 protected[amf] class Ajv(options: js.Object) extends js.Object {
   def validate(schema: js.Object, data: js.Dynamic): Boolean = js.native
   def addMetaSchema(metaSchema: js.Object): Ajv              = js.native
@@ -38,18 +38,12 @@ protected[amf] object AjvValidator {
     .asInstanceOf[js.Object]
 
   def apply(): Ajv = {
-    val ajv = js.Dynamic
-      .newInstance(nativeAjv)(options)
-      .asInstanceOf[Ajv]
-      .addMetaSchema(Draft4MetaSchema.instance)
+    val ajv = new Ajv(options).addMetaSchema(Draft4MetaSchema.instance)
     setValidators(ajv)
   }
 
   def fast(): Ajv = {
-    val ajv = js.Dynamic
-      .newInstance(nativeAjv)(fastOptions)
-      .asInstanceOf[Ajv]
-      .addMetaSchema(Draft4MetaSchema.instance)
+    val ajv = new Ajv(fastOptions).addMetaSchema(Draft4MetaSchema.instance)
     setValidators(ajv)
   }
 
@@ -68,13 +62,6 @@ protected[amf] object AjvValidator {
         "^([0-9]{4})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$")
       .addFormat("date", "^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$")
   }
-
-  def nativeAjv: js.Dynamic =
-    if (js.isUndefined(js.Dynamic.global.Ajv)) {
-      throw new Exception("Cannot find global Ajv object")
-    } else {
-      js.Dynamic.global.Ajv
-    }
 }
 
 protected[amf] object LazyAjv {
