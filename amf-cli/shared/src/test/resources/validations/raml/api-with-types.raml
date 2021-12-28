@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: test api
+types:
+  BaseType:
+    displayName: base type
+    description: description of base type
+    type: string
+    example: "base example"
+
+  inline: BaseType
+
+  simple-inheritance:
+    type: BaseType
+
+  complex-inheritance:
+    description: Description of the complex type
+    type: BaseType

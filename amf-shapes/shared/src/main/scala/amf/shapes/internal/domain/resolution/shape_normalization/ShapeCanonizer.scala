@@ -7,21 +7,8 @@ import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import amf.core.internal.validation.CoreValidations.TransformationValidation
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.client.scala.model.domain.UnionShape
-import amf.shapes.client.scala.model.domain.{
-  AnyShape,
-  ArrayShape,
-  Example,
-  FileShape,
-  InheritanceChain,
-  MatrixShape,
-  NilShape,
-  NodeShape,
-  ScalarShape,
-  TupleShape,
-  UnionShape
-}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -141,7 +128,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       } else Nil
       shape.fields.removeField(ShapeModel.Inherits) // i need to remove the resolved type without inhertis, because later it will be added to cache once it will be fully resolved
       var accShape: Shape                             = normalizeWithoutCaching(shape)
-      var superShapeswithDiscriminator: Seq[AnyShape] = Nil
+      var superShapesWithDiscriminator: Seq[AnyShape] = Nil
       var inheritedIds: Seq[String]                   = Nil
 
       superTypes.foreach { superNode =>
@@ -149,7 +136,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))
-          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(
+          superShapesWithDiscriminator = superShapesWithDiscriminator ++ Seq(
             canonicalSuperNode.asInstanceOf[NodeShape])
 
         canonicalSuperNode match {
@@ -162,12 +149,12 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       if (context.keepEditingInfo) accShape.annotations += InheritedShapes(oldInheritsIds.map(_.id))
       if (!shape.id.equals(accShape.id)) {
         context.cache.registerMapping(shape.id, accShape.id)
-        accShape.withId(shape.id) // i need to override id, if not i will override the father catched shape
+        accShape.withId(shape.id) // i need to override id, if not i will override the father cached shape
       }
 
       // adjust inheritance chain if discriminator is defined
       accShape match {
-        case any: AnyShape => superShapeswithDiscriminator.foreach(_.linkSubType(any))
+        case any: AnyShape => superShapesWithDiscriminator.foreach(_.linkSubType(any))
         case _             => // ignore
       }
 
@@ -203,6 +190,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
           // duplicated
           copyTracking(e1, toExample)
         case None =>
+          // copy example
           e1.annotations += LocalElement()
           to.setArrayWithoutId(AnyShapeModel.Examples, to.examples ++ Seq(e1))
       }
@@ -251,11 +239,11 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     }
   }
 
-  def endpointSimpleInheritance(shape: Shape): Boolean = shape match {
-    case any: AnyShape if any.annotations.contains(classOf[DeclaredElement]) => false
+  def isSimpleInheritance(shape: Shape): Boolean = shape match {
     case any: AnyShape if any.inherits.size == 1 =>
-      val superType       = any.inherits.head
-      val ignoredFields   = Seq(ShapeModel.Inherits, AnyShapeModel.Examples, AnyShapeModel.Name)
+      val superType = any.inherits.head
+      val ignoredFields =
+        Seq(ShapeModel.Inherits, AnyShapeModel.Examples, AnyShapeModel.Name)
       val effectiveFields = shape.fields.fields().filterNot(f => ignoredFields.contains(f.field))
       validFields(effectiveFields, superType)
     case _ => false
@@ -271,6 +259,11 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       }
     })
     true
+  }
+
+  def endpointSimpleInheritance(shape: Shape): Boolean = shape match {
+    case anyShape: AnyShape if anyShape.annotations.contains(classOf[DeclaredElement]) => false
+    case anyShape: AnyShape                                                            => isSimpleInheritance(anyShape)
   }
 
   protected def hasDiscriminator(shape: Shape): Boolean = {
