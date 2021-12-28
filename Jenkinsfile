@@ -1,4 +1,6 @@
 #!groovy
+@Library('amf-jenkins-library') _
+
 def slackChannel = '#amf-jenkins'
 def failedStage = ""
 def color = '#FF8C00'
@@ -95,13 +97,8 @@ pipeline {
           script {
             try{
               if (failedStage.isEmpty()) {
-                sh '''#!/bin/bash
-                      echo "about to tag the commit with the new version:"
-                      version=$(sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*')
-                      url="https://${GITHUB_USER}:${GITHUB_PASS}@github.com/${GITHUB_ORG}/${GITHUB_REPO}"
-                      git tag $version
-                      git push $url $version && echo "tagging successful"
-                '''
+                def version = sbtArtifactVersion("apiContractJVM")
+                tagCommitToGithub(version)
               }
             } catch(ignored) {
               failedStage = failedStage + " TAGGING "
@@ -159,7 +156,7 @@ pipeline {
               } else {
                 echo "Skipping Amf Metadata Tests Build Trigger as env.BRANCH_NAME is not master or develop"
               }
-              def newAmfVersion = getAmfVersion()
+              def newAmfVersion = sbtArtifactVersion("apiContractJVM")
               echo "Starting ApiQuery hook API-Query/api-query-amf-integration/master with amf version: ${newAmfVersion}"
               build job: "API-Query-new/api-query-amf-integration/master", wait: false, parameters: [[$class: 'StringParameterValue', name: 'AMF_NEW_VERSION', value: newAmfVersion]]
             }
@@ -199,8 +196,4 @@ pipeline {
 
 Boolean isDevelop() {
   env.BRANCH_NAME == "develop"
-}
-
-String getAmfVersion() {
-  sh(returnStdout: true, script: "sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*'").trim()
 }
