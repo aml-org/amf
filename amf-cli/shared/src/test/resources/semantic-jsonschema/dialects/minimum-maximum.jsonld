@@ -108,12 +108,12 @@
       "core:name": "age",
       "shacl:datatype": [
         {
-          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+          "@id": "http://a.ml/vocabularies/shapes#number"
         }
       ],
       "shacl:minCount": 1,
-      "shacl:minInclusive": 0.0,
-      "shacl:maxInclusive": 150.0
+      "shacl:minInclusive": 0.5,
+      "shacl:maxInclusive": 150.2
     }
   ],
   "@context": {
