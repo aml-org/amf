@@ -136,7 +136,7 @@ case class SemanticContextParser(map: YMap, shape: AnyShape)(implicit val ctx: S
       case _ => compactIri
     }
 
-    if (UriValidator.isUri(expandedIri))
+    if (!UriValidator.isUri(expandedIri))
       ctx.eh.violation(InvalidIri, shape, "the text must conform the IRI format", Annotations(node.value))
 
     // the Iri is returned without changes because it will be expanded on emission where is needed
