@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: Test API
+baseUri: https://example.com
+protocols:
+  - HTTPS
+
+types:
+  ScalarJsonSchema:
+    type: !include scalar_json_schema.json # Contains {"type": "string"}
+
+/pets:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: ScalarJsonSchema

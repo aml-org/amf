@@ -6,7 +6,7 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.ExternalSourceElement
-import amf.shapes.client.scala.model.domain.{NodeShape, SchemaShape}
+import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape, SchemaShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.ExecutionContext
@@ -125,6 +125,26 @@ class AMFClientTest extends AsyncFunSuite with Matchers {
       val oasTransformResult = oasClient.transform(parseResult.baseUnit, PipelineId.Compatibility)
       val oasAnnotations     = getEndpointAnnotations(oasTransformResult.baseUnit)
       oasAnnotations.length shouldBe 2
+    }
+  }
+
+  test("Declared Raml type with Json Schema should inherit type from it") {
+    val ramlApi = s"$basePath/raml/json-schema-scalar-type/json-schema-with-scalar-type.raml"
+    ramlClient.parse(ramlApi) flatMap { parseResult =>
+      val jsonSchemaType = "http://www.w3.org/2001/XMLSchema#string"
+      val declaredTypeWithJsonSchemaNode =
+        parseResult.baseUnit.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
+      declaredTypeWithJsonSchemaNode.dataType.value() shouldBe jsonSchemaType
+    }
+  }
+
+  test("Declared Raml type with Json Schema in external file should inherit type from it") {
+    val ramlApi = s"$basePath/raml/json-schema-scalar-type/json-schema-with-scalar-type-in-external-file.raml"
+    ramlClient.parse(ramlApi) flatMap { parseResult =>
+      val jsonSchemaType = "http://www.w3.org/2001/XMLSchema#string"
+      val declaredTypeWithJsonSchemaNode =
+        parseResult.baseUnit.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
+      declaredTypeWithJsonSchemaNode.dataType.value() shouldBe jsonSchemaType
     }
   }
 }
