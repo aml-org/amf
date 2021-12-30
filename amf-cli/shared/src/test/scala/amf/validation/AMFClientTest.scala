@@ -6,7 +6,7 @@ import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.ExternalSourceElement
-import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape, SchemaShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.ExecutionContext
@@ -128,6 +128,7 @@ class AMFClientTest extends AsyncFunSuite with Matchers {
     }
   }
 
+  // github issue #1121
   test("Declared Raml type with Json Schema should inherit type from it") {
     val ramlApi = s"$basePath/raml/json-schema-scalar-type/json-schema-with-scalar-type.raml"
     ramlClient.parse(ramlApi) flatMap { parseResult =>
@@ -145,6 +146,19 @@ class AMFClientTest extends AsyncFunSuite with Matchers {
       val declaredTypeWithJsonSchemaNode =
         parseResult.baseUnit.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
       declaredTypeWithJsonSchemaNode.dataType.value() shouldBe jsonSchemaType
+    }
+  }
+
+  // github issue #1163
+  test("Simple inheritance should not delete documentation fields") {
+    val api = s"$basePath/raml/api-with-types.raml"
+    ramlClient.parse(api) flatMap { parseResult =>
+      val transformResult = ramlClient.transform(parseResult.baseUnit, PipelineId.Editing)
+      val examples        = transformResult.baseUnit.asInstanceOf[Document].declares
+      val haveNoExamples =
+        examples.filter(s => s.asInstanceOf[AnyShape].examples.isEmpty).map(_.asInstanceOf[AnyShape].name.value())
+      val shouldNotHaveExamples = Seq("complex-inheritance-obj", "complex-inheritance-string")
+      haveNoExamples == shouldNotHaveExamples shouldBe true
     }
   }
 }
