@@ -18,8 +18,8 @@ import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.annotations._
-import amf.shapes.client.scala.model.domain.{AnyShape, SchemaShape, UnresolvedShape}
-import amf.shapes.internal.domain.metamodel.AnyShapeModel
+import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape, SchemaShape, UnresolvedShape}
+import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ScalarShapeModel}
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.{ExternalFragmentHelper, NodeDataNodeParser}
 import amf.shapes.internal.spec.jsonschema.parser.JsonSchemaParsingHelper
@@ -77,7 +77,17 @@ case class RamlJsonSchemaExpression(key: YNode,
     val typeEntryAnnotations =
       map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
     wrapper.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations.virtual()), typeEntryAnnotations)
+    preResolveDataType(parsed, wrapper)
     wrapper
+  }
+
+  private def preResolveDataType(parsed: AnyShape, wrapper: AnyShape): Unit = {
+    parsed match {
+      case scalarShape: ScalarShape =>
+        val inheritedDataType = scalarShape.dataType.value()
+        wrapper.set(ScalarShapeModel.DataType, inheritedDataType)
+      case _  =>
+    }
   }
 
   private def parseWrappedSchema(origin: ValueAndOrigin) = {
