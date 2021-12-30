@@ -1,0 +1,24 @@
+#%Dialect 1.0
+nodeMappings:
+  SchemaNode:
+    mapping:
+      credentialsOriginHasHttpBasicAuthenticationHeader:
+        range: string
+        mandatory: true
+      clientIdExpression:
+        range: string
+        propertyTerm: ns0.dataweaveExpression
+        mandatory: true
+        pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+      clientSecretExpression:
+        range: string
+        mandatory: false
+external:
+  security: anypoint://vocabulary/policy.yaml#
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: anypoint://vocabulary/policy.yaml#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: SchemaNode
