@@ -21,6 +21,7 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
 
   multiOutputTest("Dialect generation from basic JSON schema", "basic")
   multiOutputTest("Dialect generation from basic JSON schema with characteristics", "basicWithCharacteristics")
+  multiOutputTest("Dialect generation from JSON schema with characteristics", "complexWithCharacteristics")
   multiOutputTest("Dialect generation from intermediate JSON schema", "intermediate")
   multiOutputTest("Dialect generation from JSON schema with allOf", "allOf")
   multiOutputTest("Dialect generation from JSON schema with oneOf", "oneOf")
@@ -44,7 +45,11 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
 
   private def run(schema: String, golden: String, hint: Hint): Future[Assertion] = {
     for {
-      dialect <- parseSchema(schema).map(_.dialect)
+      dialectResult <- parseSchema(schema)
+      dialect <- {
+        assert(dialectResult.conforms)
+        Future(dialectResult.dialect)
+      }
       result <- {
         val expected = emit(dialect, hint)
         writeTemporaryFile(golden)(expected).flatMap(s => assertDifferences(s, golden))
