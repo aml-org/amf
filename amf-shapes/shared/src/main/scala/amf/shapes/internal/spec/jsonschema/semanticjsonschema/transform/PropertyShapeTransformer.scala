@@ -1,10 +1,14 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
-import amf.aml.client.scala.model.domain.PropertyMapping
+import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
+import amf.aml.internal.metamodel.domain.PropertyMappingModel
 import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.DataType._
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, ScalarNode}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape}
+import org.mulesoft.common.collections.FilterType
 
 case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext) {
 
@@ -28,6 +32,7 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     }
     checkMandatoriness()
     checkSemantics()
+    transformEnum(property, propertyMapping)
     propertyMapping
   }
 
@@ -85,6 +90,34 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
       propertyMapping.withMinCount(minCount)
     }
   }
+
+  private def transformEnum(shape: PropertyShape, target: PropertyMapping) = {
+    val enumValues = literalValues(shape.range.values).map(AmfScalar(_))
+    enumValues match {
+      case scala.collection.immutable.Nil => // ignore
+      case other                          => target.set(PropertyMappingModel.Enum, AmfArray(other))
+    }
+  }
+
+  private def literalValues(values: Seq[DataNode]): List[Any] = {
+    values
+      .filterType[ScalarNode]
+      .collect {
+        case node: ScalarNode if is(node, String)  => node.value.option()
+        case node: ScalarNode if is(node, Number)  => convert(node, _.toDouble)
+        case node: ScalarNode if is(node, Double)  => convert(node, _.toDouble)
+        case node: ScalarNode if is(node, Float)   => convert(node, _.toFloat)
+        case node: ScalarNode if is(node, Long)    => convert(node, _.toLong)
+        case node: ScalarNode if is(node, Integer) => convert(node, _.toInt)
+        case node: ScalarNode if is(node, Boolean) => convert(node, _.toBoolean)
+      }
+      .flatten
+      .toList
+  }
+
+  private def convert(node: ScalarNode, conversion: String => Any) = node.value.option().map(conversion)
+
+  private def is(node: ScalarNode, dataType: String) = node.dataType.option().contains(dataType)
 
   def checkSemantics(): Unit = {
     ctx.semantics.mapping.foreach { semanticMapping =>
