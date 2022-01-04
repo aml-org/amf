@@ -5,8 +5,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.IdCounter
-import amf.shapes.client.scala.model.domain.Example
-import amf.shapes.client.scala.model.domain.{AnyShape, Example}
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ExampleModel}
 import amf.shapes.internal.spec.common.emitter.{
   SafeNamedMultipleExampleEmitter,
@@ -24,11 +23,9 @@ trait ExamplesEmitter {
     shape.fields
       .entry(AnyShapeModel.Examples)
       .foreach(f => {
+        val examples = shape.examples
         val (anonymous, named) =
-          spec
-            .filterLocal(shape.examples)
-            .partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
-        val examples = spec.filterLocal(f.array.values.collect({ case e: Example => e }))
+          examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
         if (examples.size == 1 && named.isEmpty) {
           anonymous.headOption.foreach { a =>
             results += SingleExampleEmitter("example", a, ordering)

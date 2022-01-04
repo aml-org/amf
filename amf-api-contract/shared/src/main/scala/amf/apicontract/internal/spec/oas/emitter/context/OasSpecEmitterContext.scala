@@ -30,7 +30,7 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
     extends OasLikeSpecEmitterFactory
     with OasCompactEmitterFactory {
 
-  protected override implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
+  protected override implicit val shapeCtx: OasLikeShapeEmitterContextAdapter = OasLikeShapeEmitterContextAdapter(spec)
 
   override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter =
     (link, _) => OasTagToReferenceEmitter(link)
@@ -146,9 +146,6 @@ abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   override val factory: OasSpecEmitterFactory
-
-  override def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] =
-    super[CompactableEmissionContext].filterLocal(elements)
 }
 
 class Oas3SpecEmitterContext(eh: AMFErrorHandler,

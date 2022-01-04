@@ -3,6 +3,8 @@ title: Test
 types:
   Login:
     type: object
+    example:
+      name: Something
     additionalProperties: true
     properties:
       name:
