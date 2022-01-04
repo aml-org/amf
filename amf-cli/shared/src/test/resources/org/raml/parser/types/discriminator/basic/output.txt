@@ -4,6 +4,15 @@ types:
   Person:
     type: object
     discriminator: kind
+    examples:
+      good:
+        kind: Employee
+        employeeId: 1
+        name: Santiago
+      good1:
+        kind: user
+        userId: 1
+        name: Leandro
     additionalProperties: true
     properties:
       kind:

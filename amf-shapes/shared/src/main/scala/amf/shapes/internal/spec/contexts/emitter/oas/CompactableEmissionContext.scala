@@ -20,12 +20,9 @@ trait CompactableEmissionContext {
     _forceEmission = id
   }
 
-  def removeForceEmission = {
+  def removeForceEmission(): Unit = {
     _forceEmission = None
   }
-
-  // oas emission emits schemas to the definitions, so we need the schemas to emit all their examples
-  def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] = elements
 }
 
 case class DefinitionsQueue(

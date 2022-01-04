@@ -1,17 +1,18 @@
 package amf.validation
 
+import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.client.scala.{AMFBaseUnitClient, AMFConfiguration, OASConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.ExternalSourceElement
-import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape, SchemaShape}
-import org.scalatest.{AsyncFunSuite, Matchers}
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
+import amf.testing.ConfigProvider.configFor
+import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
-class AMFClientTest extends AsyncFunSuite with Matchers {
+class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath                      = "file://amf-cli/shared/src/test/resources/validations"
@@ -20,8 +21,28 @@ class AMFClientTest extends AsyncFunSuite with Matchers {
   val ramlClient: AMFBaseUnitClient = ramlConfig.baseUnitClient()
   val oasConfig: AMFConfiguration   = OASConfiguration.OAS30().withRenderOptions(ro)
   val oasClient: AMFBaseUnitClient  = oasConfig.baseUnitClient()
-  val oas2Config: AMFConfiguration  = OASConfiguration.OAS20().withRenderOptions(ro)
-  val oas2Client: AMFBaseUnitClient = oas2Config.baseUnitClient()
+
+  def modelAssertion(path: String, pipelineId: String = PipelineId.Default, parseOnly: Boolean = false)(
+      assertion: BaseUnit => Assertion): Future[Assertion] = {
+    val parser = APIConfiguration.API().baseUnitClient()
+    parser.parse(path) flatMap { parseResult =>
+      if (parseOnly) assertion(parseResult.baseUnit)
+      else {
+        val specificClient  = configFor(parseResult.sourceSpec).baseUnitClient()
+        val transformResult = specificClient.transform(parseResult.baseUnit, pipelineId)
+        assertion(transformResult.baseUnit)
+      }
+    }
+  }
+
+  def getFirstOperation(bu: BaseUnit) =
+    bu.asInstanceOf[Document]
+      .encodes
+      .asInstanceOf[WebApi]
+      .endPoints
+      .head
+      .operations
+      .head
 
   test("AMF should persist and restore the raw XML schema") {
     val api = s"$basePath/raml/raml-with-xml/api.raml"
@@ -105,46 +126,46 @@ class AMFClientTest extends AsyncFunSuite with Matchers {
 
   // github issue #1086
   test("AMF should not remove well known annotations") {
-    val ramlApi = s"$basePath/raml/api-with-annotations.raml"
-
-    def getEndpointAnnotations(bu: BaseUnit) =
-      bu.asInstanceOf[Document]
-        .encodes
-        .asInstanceOf[WebApi]
-        .endPoints
-        .head
-        .operations
-        .head
-        .customDomainProperties
-
-    ramlClient.parse(ramlApi) flatMap { parseResult =>
-      val transformResult = ramlClient.transform(parseResult.baseUnit, PipelineId.Default)
-      val ramlAnnotations = getEndpointAnnotations(transformResult.baseUnit)
+    modelAssertion(s"$basePath/raml/api-with-annotations.raml") { bu =>
+      val ramlAnnotations = getFirstOperation(bu).customDomainProperties
       ramlAnnotations.length shouldBe 2
-
-      val oasTransformResult = oasClient.transform(parseResult.baseUnit, PipelineId.Compatibility)
-      val oasAnnotations     = getEndpointAnnotations(oasTransformResult.baseUnit)
+      val oasTransformResult = oasClient.transform(bu, PipelineId.Compatibility)
+      val oasAnnotations     = getFirstOperation(oasTransformResult.baseUnit).customDomainProperties
       oasAnnotations.length shouldBe 2
     }
   }
 
+  // github issue #1121
   test("Declared Raml type with Json Schema should inherit type from it") {
     val ramlApi = s"$basePath/raml/json-schema-scalar-type/json-schema-with-scalar-type.raml"
-    ramlClient.parse(ramlApi) flatMap { parseResult =>
+    modelAssertion(ramlApi, parseOnly = true) { bu =>
       val jsonSchemaType = "http://www.w3.org/2001/XMLSchema#string"
       val declaredTypeWithJsonSchemaNode =
-        parseResult.baseUnit.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
+        bu.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
       declaredTypeWithJsonSchemaNode.dataType.value() shouldBe jsonSchemaType
     }
   }
 
   test("Declared Raml type with Json Schema in external file should inherit type from it") {
     val ramlApi = s"$basePath/raml/json-schema-scalar-type/json-schema-with-scalar-type-in-external-file.raml"
-    ramlClient.parse(ramlApi) flatMap { parseResult =>
+    modelAssertion(ramlApi, parseOnly = true) { bu =>
       val jsonSchemaType = "http://www.w3.org/2001/XMLSchema#string"
       val declaredTypeWithJsonSchemaNode =
-        parseResult.baseUnit.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
+        bu.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
       declaredTypeWithJsonSchemaNode.dataType.value() shouldBe jsonSchemaType
+    }
+  }
+
+  // github issue #1163
+  test("Simple inheritance should not delete documentation fields") {
+    modelAssertion(s"$basePath/raml/api-with-types.raml", PipelineId.Editing) { bu =>
+      val haveNoExamples =
+        bu.asInstanceOf[Document]
+          .declares
+          .filter(s => s.asInstanceOf[AnyShape].examples.isEmpty)
+          .map(_.asInstanceOf[AnyShape].name.value())
+      val shouldNotHaveExamples = Seq("complex-inheritance-obj", "complex-inheritance-string")
+      haveNoExamples == shouldNotHaveExamples shouldBe true
     }
   }
 }

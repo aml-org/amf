@@ -1,0 +1,72 @@
+#%RAML 1.0
+title: test api
+types:
+  BaseTypeString:
+    displayName: base type
+    description: description of base type
+    type: string
+    example: "base example"
+
+  inline-string: BaseTypeString
+
+  simple-inheritance-string:
+    type: BaseTypeString
+
+  simple-inheritance-with-doc-string:
+    type: BaseTypeString
+    description: Description of the simple inheritance type
+
+  complex-inheritance-string:
+    type: BaseTypeString
+    description: Description of the complex inheritance type
+    maxLength: 3
+
+
+  BaseTypeObj:
+    displayName: base type
+    description: description of base type
+    type: object
+    properties:
+      name: string
+      age: number
+    example:
+      name: Drakatah
+      age: 24
+
+  inline-obj: BaseTypeObj
+
+  simple-inheritance-obj:
+    type: BaseTypeObj
+
+  simple-inheritance-with-doc-obj:
+    displayName: simple inheritance of an object with doc fields
+    type: BaseTypeObj
+
+  complex-inheritance-obj:
+    type: BaseTypeObj
+    properties:
+      phone: number
+    additionalProperties: false
+
+
+  BaseTypeArray:
+    displayName: base type
+    description: description of base type
+    type: BaseTypeString[]
+    example:
+      - a string
+      - another string
+
+  inline-array: BaseTypeArray
+
+  simple-inheritance-array:
+    type: BaseTypeArray
+
+  simple-inheritance-with-doc-array:
+    displayName: simple inheritance of an object with doc fields
+    type: BaseTypeArray
+
+  complex-inheritance-array:
+    type: BaseTypeArray
+    minItems: 5
+    uniqueItems: true

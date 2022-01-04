@@ -3,25 +3,13 @@ package amf.shapes.internal.domain.resolution.shape_normalization
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.annotations._
+import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.internal.parser.domain.{Annotations, FieldEntry}
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.CoreValidations.TransformationValidation
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.client.scala.model.domain.UnionShape
-import amf.shapes.client.scala.model.domain.{
-  AnyShape,
-  ArrayShape,
-  Example,
-  FileShape,
-  InheritanceChain,
-  MatrixShape,
-  NilShape,
-  NodeShape,
-  ScalarShape,
-  TupleShape,
-  UnionShape
-}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -139,9 +127,9 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
         case rec: RecursiveShape => rec
         case shape: Shape        => shape.link(shape.name.value()).asInstanceOf[Shape]
       } else Nil
-      shape.fields.removeField(ShapeModel.Inherits) // i need to remove the resolved type without inhertis, because later it will be added to cache once it will be fully resolved
+      shape.fields.removeField(ShapeModel.Inherits) // i need to remove the resolved type without inherits, because later it will be added to cache once it will be fully resolved
       var accShape: Shape                             = normalizeWithoutCaching(shape)
-      var superShapeswithDiscriminator: Seq[AnyShape] = Nil
+      var superShapesWithDiscriminator: Seq[AnyShape] = Nil
       var inheritedIds: Seq[String]                   = Nil
 
       superTypes.foreach { superNode =>
@@ -149,7 +137,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))
-          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(
+          superShapesWithDiscriminator = superShapesWithDiscriminator ++ Seq(
             canonicalSuperNode.asInstanceOf[NodeShape])
 
         canonicalSuperNode match {
@@ -162,12 +150,12 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       if (context.keepEditingInfo) accShape.annotations += InheritedShapes(oldInheritsIds.map(_.id))
       if (!shape.id.equals(accShape.id)) {
         context.cache.registerMapping(shape.id, accShape.id)
-        accShape.withId(shape.id) // i need to override id, if not i will override the father catched shape
+        accShape.withId(shape.id) // i need to override id, if not i will override the father cached shape
       }
 
       // adjust inheritance chain if discriminator is defined
       accShape match {
-        case any: AnyShape => superShapeswithDiscriminator.foreach(_.linkSubType(any))
+        case any: AnyShape => superShapesWithDiscriminator.foreach(_.linkSubType(any))
         case _             => // ignore
       }
 
@@ -178,18 +166,13 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       }
 
       shape match {
-        // If the shape is a declaration that inherits of only one type and not declare any property, the it inherits the examples
-        case s: NodeShape if isSimpleInheritanceDeclaration(s, superTypes) =>
-          aggregateExamples(accShape, superTypes.head)
-        case _ => // Nothing to do
+        case any: AnyShape if isSimpleInheritance(any, superTypes) => aggregateExamples(accShape, superTypes.head)
+        case _                                                     => // Nothing to do
       }
 
       accShape
     }
   }
-
-  private def isSimpleInheritanceDeclaration(n: NodeShape, inherits: Seq[Shape]): Boolean =
-    n.annotations.contains(classOf[DeclaredElement]) && inherits.size == 1 && n.properties.isEmpty
 
   private def copyExamples(from: AnyShape, to: AnyShape): Unit = {
     from.examples.foreach(e1 => {
@@ -203,7 +186,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
           // duplicated
           copyTracking(e1, toExample)
         case None =>
-          e1.annotations += LocalElement()
+          // copy example
           to.setArrayWithoutId(AnyShapeModel.Examples, to.examples ++ Seq(e1))
       }
     })
@@ -251,19 +234,44 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     }
   }
 
-  def endpointSimpleInheritance(shape: Shape): Boolean = shape match {
-    case any: AnyShape if any.annotations.contains(classOf[DeclaredElement]) => false
-    case any: AnyShape if any.inherits.size == 1 =>
-      val superType       = any.inherits.head
-      val ignoredFields   = Seq(ShapeModel.Inherits, AnyShapeModel.Examples, AnyShapeModel.Name)
-      val effectiveFields = shape.fields.fields().filterNot(f => ignoredFields.contains(f.field))
-      validFields(effectiveFields, superType)
-    case _ => false
+  private def isSimpleInheritance(shape: Shape, superTypes: Seq[Shape] = Seq()): Boolean = {
+    shape match {
+      case ns: NodeShape =>
+        superTypes.size == 1 && ns.annotations.contains(classOf[DeclaredElement]) && ns.properties.isEmpty
+      case _: AnyShape if superTypes.size == 1 =>
+        val superType = superTypes.head
+        val ignoredFields =
+          Seq(
+            ShapeModel.Inherits,
+            ShapeModel.Name,
+            ShapeModel.DisplayName,
+            ShapeModel.Description,
+            AnyShapeModel.Examples,
+            AnyShapeModel.Documentation,
+            AnyShapeModel.Comment,
+            ScalarShapeModel.DataType
+          )
+        fieldsPresentInSuperType(shape, superType, ignoredFields)
+      case _ => false
+    }
   }
 
-  // To be a simple inheritance, all the effective fields of the shape must be the same in the superType
-  private def validFields(entries: Iterable[FieldEntry], superType: Shape): Boolean = {
-    entries.foreach(e => {
+  private def endpointSimpleInheritance(shape: Shape): Boolean = shape match {
+    case anyShape: AnyShape if anyShape.annotations.contains(classOf[DeclaredElement]) => false
+    case anyShape: AnyShape =>
+      anyShape match {
+        case any: AnyShape if any.inherits.size == 1 =>
+          val superType     = any.inherits.head
+          val ignoredFields = Seq(ShapeModel.Inherits, AnyShapeModel.Examples, AnyShapeModel.Name)
+          fieldsPresentInSuperType(shape, superType, ignoredFields)
+        case _ => false
+      }
+  }
+
+  private def fieldsPresentInSuperType(shape: Shape, superType: Shape, ignoredFields: Seq[Field] = Seq()): Boolean = {
+    val effectiveFields = shape.fields.fields().filterNot(f => ignoredFields.contains(f.field))
+    // To be a simple inheritance, all the effective fields of the shape must be the same in the superType
+    effectiveFields.foreach(e => {
       superType.fields.entry(e.field) match {
         case Some(s) if s.value.value.equals(e.value.value)                              => // Valid
         case _ if e.field == NodeShapeModel.Closed && !superType.isInstanceOf[NodeShape] => // Valid

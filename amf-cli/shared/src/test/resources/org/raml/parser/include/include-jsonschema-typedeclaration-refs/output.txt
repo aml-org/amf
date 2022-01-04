@@ -3,6 +3,16 @@ title: Staff API
 version: v1-dev
 types:
   User:
+    example:
+      firstName: Iron
+      lastName: Man
+      friends:
+        -
+          name: Thor
+          hatesYou: true
+        -
+          name: Coulson
+          hatesYou: false
     displayName: Example Schema
     additionalProperties: true
     properties:

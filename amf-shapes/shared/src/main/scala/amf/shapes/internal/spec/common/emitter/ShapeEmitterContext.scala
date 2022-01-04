@@ -81,7 +81,7 @@ class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
                                     val options: RenderOptions)
     extends OasLikeShapeEmitterContext {
 
-  override def nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
+  override def nameRegex: Regex = """^[a-zA-Z0-9.\-_]+$""".r
 
   override def schemasDeclarationsPath: String = JsonSchemaDeclarationsPath(schemaVersion)
 
@@ -138,9 +138,6 @@ trait OasLikeShapeEmitterContext
                    pointer: Seq[String],
                    schemaPath: Seq[(String, String)]): Seq[Emitter]
   def anyOfKey: YNode
-
-  override def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] =
-    super[CompactableEmissionContext].filterLocal(elements)
 }
 
 trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissionDecorator {
