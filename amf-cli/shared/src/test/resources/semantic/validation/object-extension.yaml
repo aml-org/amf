@@ -1,0 +1,42 @@
+#%Dialect 1.0
+dialect: Repository object extensions
+version: 1.0
+
+external:
+  aml: http://a.ml/vocab#
+  apiContract: http://a.ml/vocabularies/apiContract#
+
+documents:
+  root:
+    declares: {}
+
+annotationMappings:
+  MaintainerAnnotationMapping:
+    domain: apiContract.API
+    propertyTerm: aml.maintainer
+    range:  MaintainerGroup
+
+nodeMappings:
+
+  MaintainerGroup:
+    classTerm: aml.MaintainerGroup
+    mapping:
+      users:
+        range: Maintainer
+        allowMultiple: true
+        mandatory: true
+
+  Maintainer:
+    classTerm: aml.Maintainer
+    mapping:
+      username:
+        propertyTerm: aml.username
+        range: string
+        mandatory: true
+      contributor:
+        propertyTerm: aml.contributor
+        range: boolean
+        mandatory: true
+
+extensions:
+  maintainer: MaintainerAnnotationMapping

@@ -8,7 +8,7 @@ import amf.apicontract.client.scala.{
   RAMLConfiguration
 }
 import amf.core.client.scala.config.RenderOptions
-import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.internal.remote.{AmfJsonHint, Async20YamlHint, Hint, Oas20YamlHint, Oas30YamlHint, Raml10YamlHint}
 import amf.validation.{MultiPlatformReportGenTest, UniquePlatformReportGenTest}
 
@@ -53,6 +53,17 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
                Some("api.async.report"),
                overridedHint = Some(Async20YamlHint),
                configOverride = Some(config))
+    }
+  }
+
+  test("Validate unresolved links in SemEx") {
+    getConfig("object-extension.yaml", OASConfiguration.OAS30()).flatMap { config =>
+      validate(
+        "unresolved-link-api.oas30.yaml",
+        Some("unresolved-link-api.oas30.report"),
+        overridedHint = Some(Oas30YamlHint),
+        configOverride = Some(config.withErrorHandlerProvider(() => DefaultErrorHandler()))
+      )
     }
   }
 
