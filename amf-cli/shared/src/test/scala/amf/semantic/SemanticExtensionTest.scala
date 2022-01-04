@@ -18,29 +18,43 @@ class SemanticExtensionTest extends AsyncFunSuite with Matchers {
   private val basePath = "file://amf-cli/shared/src/test/resources/semantic/"
 
   test("Apply semantic extension to RAML 1.0") {
-    assertModel("dialect.yaml", "api.raml") { lookupPagination }
+    assertModel("dialect.yaml", "api.raml") { lookupResponse }
   }
 
   test("Apply semantic extension to OAS 2.0") {
-    assertModel("dialect.yaml", "api.oas20.yaml") { lookupPagination }
+    assertModel("dialect.yaml", "api.oas20.yaml") { lookupResponse }
   }
 
   test("Apply semantic extension to OAS 3.0") {
-    assertModel("dialect.yaml", "api.oas30.yaml") { lookupPagination }
+    assertModel("dialect.yaml", "api.oas30.yaml") { lookupResponse }
   }
 
   test("Apply semantic extension to ASYNC 2.0") {
-    assertModel("dialect.yaml", "api.async.yaml") { lookupPagination }
+    assertModel("dialect.yaml", "api.async.yaml") { lookupResponse }
   }
 
-  private def lookupPagination(document: Document) = {
+  test("Apply same SemEx to Request and Response") {
+    assertModel("dialect-several-domains.yaml", "api-several-domains.raml") { doc =>
+      lookupResponse(doc)
+      lookupOperation(doc)
+    }
+  }
+
+  private def lookupResponse(document: Document) = {
     val extension =
       document.encodes.asInstanceOf[Api].endPoints.head.operations.head.responses.head.customDomainProperties.head
 
-    assertPaginationExtension(extension)
+    assertPaginationExtension(extension, 5)
   }
 
-  private def assertPaginationExtension(extension: DomainExtension): Assertion = {
+  private def lookupOperation(document: Document) = {
+    val extension =
+      document.encodes.asInstanceOf[Api].endPoints.head.operations.head.customDomainProperties.head
+
+    assertPaginationExtension(extension, 10)
+  }
+
+  private def assertPaginationExtension(extension: DomainExtension, expectedValue: Int): Assertion = {
     val extensionValue = extension.fields.getValueAsOption("http://a.ml/vocab#pagination").get
 
     extension.name.value() shouldBe "pagination"
@@ -54,7 +68,7 @@ class SemanticExtensionTest extends AsyncFunSuite with Matchers {
       .head
       .graph
       .scalarByProperty("http://a.ml/vocab#PageSize")
-      .head shouldBe 5
+      .head shouldBe expectedValue
   }
 
   private def assertAnnotations(value: Value): Unit = {

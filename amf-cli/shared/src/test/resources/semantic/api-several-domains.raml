@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Something
+/sample:
+  get:
+    (pagination):
+      pageSize: 10
+    responses:
+      200:
+        (pagination):
+          pageSize: 5
+        description: A Response

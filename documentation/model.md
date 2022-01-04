@@ -281,7 +281,7 @@ Types:
  | unique | boolean | Marks the values for the property mapping as a primary key for this type of node | http://a.ml/vocabularies/meta#unique |
  | externallyLinkable | boolean | Marks this object property as supporting external links | http://a.ml/vocabularies/meta#externallyLinkable |
  | typeDiscriminatorName | string | Information about the field in the source AST to be used as discrimintaro in the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorName |
- | domain | url | Domain node type IRI for which a specific annotation mapping can be applied. Similar rdfs:domain but at an instance level, rather than schema level. | http://a.ml/vocabularies/amf/aml#domain |
+ | domain | [url] | Domain node type IRI for which a specific annotation mapping can be applied. Similar rdfs:domain but at an instance level, rather than schema level. | http://a.ml/vocabularies/amf/aml#domain |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## AnnotationTypeDeclarationFragment
