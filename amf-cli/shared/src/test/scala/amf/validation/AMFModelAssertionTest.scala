@@ -15,12 +15,14 @@ import scala.concurrent.{ExecutionContext, Future}
 class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath                      = "file://amf-cli/shared/src/test/resources/validations"
-  val ro: RenderOptions             = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
-  val ramlConfig: AMFConfiguration  = RAMLConfiguration.RAML10().withRenderOptions(ro)
-  val ramlClient: AMFBaseUnitClient = ramlConfig.baseUnitClient()
-  val oasConfig: AMFConfiguration   = OASConfiguration.OAS30().withRenderOptions(ro)
-  val oasClient: AMFBaseUnitClient  = oasConfig.baseUnitClient()
+  val basePath                        = "file://amf-cli/shared/src/test/resources/validations"
+  val ro: RenderOptions               = RenderOptions().withCompactUris.withPrettyPrint.withSourceMaps
+  val ramlConfig: AMFConfiguration    = RAMLConfiguration.RAML10().withRenderOptions(ro)
+  val ramlClient: AMFBaseUnitClient   = ramlConfig.baseUnitClient()
+  val raml08Config: AMFConfiguration  = RAMLConfiguration.RAML08().withRenderOptions(ro)
+  val raml08Client: AMFBaseUnitClient = raml08Config.baseUnitClient()
+  val oasConfig: AMFConfiguration     = OASConfiguration.OAS30().withRenderOptions(ro)
+  val oasClient: AMFBaseUnitClient    = oasConfig.baseUnitClient()
 
   def modelAssertion(path: String, pipelineId: String = PipelineId.Default, parseOnly: Boolean = false)(
       assertion: BaseUnit => Assertion): Future[Assertion] = {
@@ -166,6 +168,14 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
           .map(_.asInstanceOf[AnyShape].name.value())
       val shouldNotHaveExamples = Seq("complex-inheritance-obj", "complex-inheritance-string")
       haveNoExamples == shouldNotHaveExamples shouldBe true
+    }
+  }
+
+  test("Simple inheritance should not delete documentation fields in uri params") {
+    modelAssertion(s"$basePath/raml/uri-params/uri-params.raml") { bu =>
+      val parameters    = bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.head.parameters.toList
+      val paramExamples = parameters.map(p => p.schema.asInstanceOf[ScalarShape].examples)
+      paramExamples.count(_.isEmpty) shouldBe 0
     }
   }
 }

@@ -166,7 +166,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       }
 
       shape match {
-        case any: AnyShape if isSimpleInheritance(any, superTypes) => aggregateExamples(accShape, superTypes.head)
+        case any: AnyShape if isSimpleInheritance(any, superTypes) => aggregateExamples(superTypes.head, accShape)
         case _                                                     => // Nothing to do
       }
 
@@ -203,15 +203,10 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     }
   }
 
-  protected def aggregateExamples(shape: Shape, referencedShape: Shape): Unit = {
-    (shape, referencedShape) match {
-      case (accShape: AnyShape, refShape: AnyShape) =>
-        val (from, to) =
-          if (accShape.annotations.contains(classOf[DeclaredElement])) (refShape, accShape)
-          else (accShape, refShape)
-
+  protected def aggregateExamples(shape: Shape, toShape: Shape): Unit = {
+    (shape, toShape) match {
+      case (from: AnyShape, to: AnyShape) =>
         copyExamples(from, to)
-
         val namesCache: mutable.Set[String] = mutable.Set() // duplicated names
         // we give proper names if there are more than one example, so it cannot be null
         if (to.examples.size > 1) {
