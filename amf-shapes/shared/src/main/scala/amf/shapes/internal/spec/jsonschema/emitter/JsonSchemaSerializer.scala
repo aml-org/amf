@@ -1,6 +1,7 @@
 package amf.shapes.internal.spec.jsonschema.emitter
 
 import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.internal.plugins.render.DefaultRenderConfiguration
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
@@ -23,9 +24,10 @@ trait JsonSchemaSerializer extends PlatformSecrets {
 
     val originalId = element.id
     fixNameIfNeeded(element)
+    val renderConfig = DefaultRenderConfiguration(config)
     val yamlDoc = JsonSchemaEmitter(element,
                                     Seq(element),
-                                    options = config.options.renderOptions,
+                                    renderConfig = renderConfig,
                                     errorHandler = config.errorHandlerProvider.errorHandler())
       .emitDocument()
     val jsonSchema = JsonRender.render(yamlDoc)

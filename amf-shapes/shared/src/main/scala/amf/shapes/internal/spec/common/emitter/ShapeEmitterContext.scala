@@ -4,9 +4,10 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
-import amf.core.client.scala.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
+import amf.core.client.scala.model.domain.{CustomizableElement, DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.MultipleValuesArrayEmitter
 import amf.core.internal.render.SpecOrdering
@@ -58,8 +59,10 @@ object JsonSchemaDeclarationsPath {
   * This implies having to use compact declaredTypesEmitter and recursiveShapeEmitter emitters to handle shapes that have RecursiveShapes,
   * emitting their fixpoint target to the schemas definitions facet dynamically.
   */
-class InlineJsonSchemaShapeEmitterContext(eh: AMFErrorHandler, schemaVersion: SchemaVersion, options: RenderOptions)
-    extends JsonSchemaShapeEmitterContext(eh, schemaVersion, options) {
+class InlineJsonSchemaShapeEmitterContext(eh: AMFErrorHandler,
+                                          schemaVersion: SchemaVersion,
+                                          config: RenderConfiguration)
+    extends JsonSchemaShapeEmitterContext(eh, schemaVersion, config) {
   override def recursiveShapeEmitter(shape: RecursiveShape,
                                      ordering: SpecOrdering,
                                      schemaPath: Seq[(String, String)]): EntryEmitter = {
@@ -72,14 +75,16 @@ class InlineJsonSchemaShapeEmitterContext(eh: AMFErrorHandler, schemaVersion: Sc
 }
 
 object JsonSchemaShapeEmitterContext {
-  def apply(eh: AMFErrorHandler, schemaVersion: SchemaVersion, options: RenderOptions) =
-    new JsonSchemaShapeEmitterContext(eh, schemaVersion, options)
+  def apply(eh: AMFErrorHandler, schemaVersion: SchemaVersion, config: RenderConfiguration) =
+    new JsonSchemaShapeEmitterContext(eh, schemaVersion, config)
 }
 
 class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
                                     val schemaVersion: SchemaVersion,
-                                    val options: RenderOptions)
+                                    val config: RenderConfiguration)
     extends OasLikeShapeEmitterContext {
+
+  override def options: RenderOptions = config.renderOptions
 
   override def nameRegex: Regex = """^[a-zA-Z0-9.\-_]+$""".r
 
@@ -101,8 +106,10 @@ class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
   override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter =
     OasFacetsInstanceEmitter(extension, ordering)
 
-  override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
-    OasAnnotationEmitter(e, default)
+  override def annotationEmitter(parent: CustomizableElement,
+                                 e: DomainExtension,
+                                 default: SpecOrdering): EntryEmitter =
+    OasAnnotationEmitter(parent, e, default)
 
   override def spec: Spec = Spec.JSONSCHEMA
 
@@ -142,6 +149,8 @@ trait OasLikeShapeEmitterContext
 
 trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissionDecorator {
 
+  def config: RenderConfiguration
+
   def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter
 
   def arrayEmitter(asOasExtension: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter
@@ -150,7 +159,7 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissi
 
   def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter
 
-  def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter
+  def annotationEmitter(parent: CustomizableElement, e: DomainExtension, default: SpecOrdering): EntryEmitter
 
   def eh: AMFErrorHandler
 
@@ -161,45 +170,4 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissi
   def schemaVersion: SchemaVersion
 
   def options: RenderOptions
-}
-
-class Raml10ShapeEmitterContext(val eh: AMFErrorHandler, val options: RenderOptions) extends RamlShapeEmitterContext {
-  override def typesEmitter
-    : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter =
-    (shape, ordering, emitter, ignored, references) =>
-      Raml10TypePartEmitter(shape, ordering, emitter, ignored, references)(this)
-
-  override def typesKey: YNode = ???
-
-  override def localReference(shape: Shape): PartEmitter = ???
-
-  override def toOasNext: OasLikeShapeEmitterContext = ???
-
-  override def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter = ???
-
-  override def arrayEmitter(asOasExtension: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter = ???
-
-  override def customFacetsEmitter(f: FieldEntry,
-                                   ordering: SpecOrdering,
-                                   references: Seq[BaseUnit]): CustomFacetsEmitter = ???
-
-  override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter = ???
-
-  override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter = ???
-
-  override def spec: Spec = ???
-
-  override def ref(b: YDocument.PartBuilder, url: String): Unit = ???
-
-  override def schemaVersion: SchemaVersion = ???
-
-  override def isOas3: Boolean = ???
-
-  override def isOasLike: Boolean = ???
-
-  override def isRaml: Boolean = ???
-
-  override def isJsonSchema: Boolean = ???
-
-  override def isAsync: Boolean = ???
 }

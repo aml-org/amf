@@ -4,8 +4,10 @@ import amf.core.client.common.position.Position
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
+import amf.core.internal.plugins.render.{EmptyRenderConfiguration, RenderConfiguration}
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.SpecOrdering.Lexical
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.{
   InlineJsonSchemaShapeEmitterContext,
@@ -22,12 +24,27 @@ import amf.shapes.internal.spec.oas.emitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 
+object JsonSchemaEmitter {
+  def apply(root: Shape,
+            declarations: Seq[DomainElement],
+            renderConfig: RenderConfiguration,
+            errorHandler: AMFErrorHandler) =
+    new JsonSchemaEmitter(root, declarations, Lexical, renderConfig, errorHandler)
+
+  def apply(root: Shape, declarations: Seq[DomainElement], options: RenderOptions, errorHandler: AMFErrorHandler) = {
+    val renderConfig = EmptyRenderConfiguration(errorHandler, options)
+    new JsonSchemaEmitter(root, declarations, Lexical, renderConfig, errorHandler)
+  }
+}
+
 // TODO improve JsonSchemaEmitter interface
 case class JsonSchemaEmitter(root: Shape,
                              declarations: Seq[DomainElement],
-                             ordering: SpecOrdering = SpecOrdering.Lexical,
-                             options: RenderOptions,
+                             ordering: SpecOrdering,
+                             renderConfig: RenderConfiguration,
                              errorHandler: AMFErrorHandler) {
+
+  private val options: RenderOptions = renderConfig.renderOptions
 
   def emitDocument(): YDocument = {
     val schemaVersion = SchemaVersion.fromClientOptions(options.schemaVersion)
@@ -42,8 +59,8 @@ case class JsonSchemaEmitter(root: Shape,
 
   private def createContextWith(schemaVersion: JSONSchemaVersion) = {
     if (options.isWithCompactedEmission)
-      JsonSchemaShapeEmitterContext(errorHandler, schemaVersion, options)
-    else new InlineJsonSchemaShapeEmitterContext(errorHandler, schemaVersion, options)
+      JsonSchemaShapeEmitterContext(errorHandler, schemaVersion, renderConfig)
+    else new InlineJsonSchemaShapeEmitterContext(errorHandler, schemaVersion, renderConfig)
   }
 
   private def jsonSchemaRefEntry(ctx: OasLikeShapeEmitterContext) = new EntryEmitter {

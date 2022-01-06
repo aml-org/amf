@@ -6,9 +6,10 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.DomainExtension
-import amf.core.client.scala.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
+import amf.core.client.scala.model.domain.{CustomizableElement, DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.render.BaseEmitters.ArrayEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
@@ -35,13 +36,14 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
                             ordering: SpecOrdering,
                             schemaPath: Seq[(String, String)]): EntryEmitter
 
-  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
+  override def annotationEmitter: (CustomizableElement, DomainExtension, SpecOrdering) => AnnotationEmitter =
+    OasAnnotationEmitter.apply
 }
 
 abstract class OasLikeSpecEmitterContext(eh: AMFErrorHandler,
                                          refEmitter: RefEmitter = OasRefEmitter,
-                                         options: RenderOptions = RenderOptions())
-    extends SpecEmitterContext(eh, refEmitter, options) {
+                                         renderConfig: RenderConfiguration)
+    extends SpecEmitterContext(eh, refEmitter, renderConfig) {
   override def schemaVersion: SchemaVersion
   def schemasDeclarationsPath: String
 

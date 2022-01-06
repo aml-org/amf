@@ -6,7 +6,7 @@ import amf.apicontract.internal.metamodel.domain.{MessageModel, PayloadModel}
 import amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas
-import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
+import amf.apicontract.internal.spec.oas.emitter.context.{OasLikeShapeEmitterContextAdapter, OasLikeSpecEmitterContext}
 import amf.apicontract.internal.spec.oas.emitter.domain.{OasTagToReferenceEmitter, TagsEmitter}
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
@@ -19,6 +19,7 @@ import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{CreativeWork, Example}
 import amf.shapes.internal.spec.common.emitter.ExampleDataNodePartEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 
@@ -121,7 +122,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
               val result = ListBuffer[EntryEmitter]()
               fs.entry(MessageModel.DisplayName).map(f => result += ValueEmitter("name", f))
               val bindingOrphanAnnotations =
-                message.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+                message.customDomainProperties.filter(e => Option(e.extension).isDefined).filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
               fs.entry(MessageModel.HeaderSchema).foreach(emitHeader(result, _))
               fs.entry(MessageModel.CorrelationId)
                 .map(f => result += new AsyncApiCorrelationIdEmitter(f.element.asInstanceOf[CorrelationId], ordering))
@@ -133,7 +134,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
               fs.entry(MessageModel.Documentation)
                 .map(f => result += new AsyncApiCreativeWorksEmitter(f.element.asInstanceOf[CreativeWork], ordering))
               fs.entry(MessageModel.Bindings)
-                .foreach(f => result += new AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
+                .foreach(f => result += AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
 
               val headerExamples  = fs.entry(MessageModel.HeaderExamples).map(_.arrayValues[Example]).getOrElse(Nil)
               val payloadExamples = fs.entry(MessageModel.Examples).map(_.arrayValues[Example]).getOrElse(Nil)
@@ -144,6 +145,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
                 fs.entry(MessageModel.Extends).foreach(f => emitTraits(f, result))
                 fs.entry(MessageModel.Payloads).foreach(f => emitPayloads(f, result))
               }
+              result ++= AnnotationsEmitter(message, ordering)(OasLikeShapeEmitterContextAdapter(spec)).emitters
               traverse(ordering.sorted(result), emitter)
             }
         }

@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.emitter.document
 
 import amf.apicontract.client.scala.model.document.{Extension, Overlay}
 import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, RequestModel}
 import amf.apicontract.internal.spec.common.Parameters
@@ -37,8 +37,8 @@ import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
-import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, OrphanAnnotationsEmitter}
-import amf.shapes.internal.spec.oas.emitter.OasSpecEmitter
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
+import amf.shapes.internal.spec.oas.emitter.{OasOrphanAnnotationsEmitter, OasSpecEmitter}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
@@ -264,7 +264,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val specCtx: OasS
     }
 
     private def pathsElementAnnotations(): Seq[EntryEmitter] = {
-      OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
+      OasOrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
     }
 
     private def endpoints(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {

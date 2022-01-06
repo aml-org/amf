@@ -17,6 +17,7 @@ import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, Shap
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.{Oas20, Oas30, Spec}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters._
@@ -136,8 +137,8 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) exte
 
 abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
                                      refEmitter: RefEmitter = OasRefEmitter,
-                                     options: RenderOptions = RenderOptions())
-    extends OasLikeSpecEmitterContext(eh, refEmitter, options)
+                                     renderConfig: RenderConfiguration)
+    extends OasLikeSpecEmitterContext(eh, refEmitter, renderConfig)
     with CompactableEmissionContext {
 
   def schemasDeclarationsPath: String
@@ -148,10 +149,8 @@ abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
   override val factory: OasSpecEmitterFactory
 }
 
-class Oas3SpecEmitterContext(eh: AMFErrorHandler,
-                             refEmitter: RefEmitter = OasRefEmitter,
-                             options: RenderOptions = RenderOptions())
-    extends OasSpecEmitterContext(eh, refEmitter, options) {
+class Oas3SpecEmitterContext(eh: AMFErrorHandler, refEmitter: RefEmitter = OasRefEmitter, config: RenderConfiguration)
+    extends OasSpecEmitterContext(eh, refEmitter, config) {
   override val anyOfKey: String                = "anyOf"
   val schemaVersion: SchemaVersion             = OAS30SchemaVersion(SchemaPosition.Schema)
   override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory(this)
@@ -159,10 +158,8 @@ class Oas3SpecEmitterContext(eh: AMFErrorHandler,
   override def schemasDeclarationsPath: String = "/components/schemas/"
 }
 
-class Oas2SpecEmitterContext(eh: AMFErrorHandler,
-                             refEmitter: RefEmitter = OasRefEmitter,
-                             options: RenderOptions = RenderOptions())
-    extends OasSpecEmitterContext(eh, refEmitter, options) {
+class Oas2SpecEmitterContext(eh: AMFErrorHandler, refEmitter: RefEmitter = OasRefEmitter, config: RenderConfiguration)
+    extends OasSpecEmitterContext(eh, refEmitter, config) {
   val schemaVersion: SchemaVersion             = OAS20SchemaVersion(SchemaPosition.Schema)
   override val factory: OasSpecEmitterFactory  = new Oas2SpecEmitterFactory(this)
   override val spec: Spec                      = Oas20

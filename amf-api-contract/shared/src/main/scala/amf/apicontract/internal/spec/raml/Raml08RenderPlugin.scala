@@ -9,7 +9,7 @@ import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document._
-import amf.core.internal.plugins.render.RenderInfo
+import amf.core.internal.plugins.render.{RenderConfiguration, RenderInfo}
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.Spec
 import org.yaml.model.YDocument
@@ -19,17 +19,17 @@ object Raml08RenderPlugin extends ApiRenderPlugin {
   override def spec: Spec = Spec.RAML08
 
   override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderOptions: RenderOptions,
+                                            renderConfig: RenderConfiguration,
                                             errorHandler: AMFErrorHandler): Option[YDocument] = unit match {
     case document: Document =>
-      Some(RamlDocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
+      Some(RamlDocumentEmitter(document)(specContext(renderConfig, errorHandler)).emitDocument())
     case fragment: Fragment =>
-      Some(new RamlFragmentEmitter(fragment)(specContext(renderOptions, errorHandler)).emitFragment())
+      Some(new RamlFragmentEmitter(fragment)(specContext(renderConfig, errorHandler)).emitFragment())
     case _ => None
   }
 
-  private def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext =
-    new Raml08SpecEmitterContext(errorHandler)
+  private def specContext(config: RenderConfiguration, errorHandler: AMFErrorHandler): RamlSpecEmitterContext =
+    new Raml08SpecEmitterContext(errorHandler, config)
 
   override def defaultSyntax(): String = `application/yaml`
 

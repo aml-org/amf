@@ -19,6 +19,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.client.scala.model.domain.Example
@@ -53,7 +54,9 @@ case class Raml10EmitterFactory()(implicit val ctx: Raml10SpecEmitterContext) ex
 }
 
 object Raml10EmitterFactory {
-  def apply(eh: AMFErrorHandler): Raml10EmitterFactory = Raml10EmitterFactory()(new Raml10SpecEmitterContext(eh))
+  def apply(eh: AMFErrorHandler, renderConfiguration: RenderConfiguration): Raml10EmitterFactory =
+    Raml10EmitterFactory()(new Raml10SpecEmitterContext(eh, config = renderConfiguration))
+
 }
 
 case class Raml08EmitterFactory()(implicit val ctx: Raml08SpecEmitterContext) extends RamlEmitterFactory {
@@ -80,7 +83,8 @@ case class Raml08EmitterFactory()(implicit val ctx: Raml08SpecEmitterContext) ex
 }
 
 object Raml08EmitterFactory {
-  def apply(eh: AMFErrorHandler): Raml08EmitterFactory = Raml08EmitterFactory()(new Raml08SpecEmitterContext(eh))
+  def apply(eh: AMFErrorHandler, renderConfiguration: RenderConfiguration): Raml08EmitterFactory =
+    Raml08EmitterFactory()(new Raml08SpecEmitterContext(eh, renderConfiguration))
 }
 
 trait RamlEmitterFactory extends DomainElementEmitterFactory {

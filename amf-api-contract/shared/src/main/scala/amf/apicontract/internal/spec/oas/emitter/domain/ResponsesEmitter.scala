@@ -5,13 +5,15 @@ import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextA
 import amf.apicontract.internal.spec.oas.emitter.context.OasSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.CustomizableElement
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{pos, sourceOr, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
-import amf.shapes.internal.spec.common.emitter.annotations.OrphanAnnotationsEmitter
+import amf.shapes.internal.spec.oas.emitter
+import amf.shapes.internal.spec.oas.emitter.OasOrphanAnnotationsEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
 class ResponsesEmitter(key: String,
@@ -37,7 +39,7 @@ class ResponsesEmitter(key: String,
   }
 
   private def responsesElementsAnnotations(): Seq[EntryEmitter] = {
-    OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
+    OasOrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
   }
 
   override def position(): Position = pos(f.value.annotations)
