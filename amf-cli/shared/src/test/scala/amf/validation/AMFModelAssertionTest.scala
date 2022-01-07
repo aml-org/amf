@@ -7,6 +7,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.ExternalSourceElement
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
+import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
@@ -37,14 +38,17 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     }
   }
 
-  def getFirstOperation(bu: BaseUnit) =
-    bu.asInstanceOf[Document]
-      .encodes
-      .asInstanceOf[WebApi]
-      .endPoints
-      .head
-      .operations
-      .head
+  def getWebApi(bu: BaseUnit) = bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+
+  def getFirstEndpoint(bu: BaseUnit) = getWebApi(bu).endPoints.head
+
+  def getFirstOperation(bu: BaseUnit) = getFirstEndpoint(bu).operations.head
+
+  def getFirstResponse(bu: BaseUnit) = getFirstOperation(bu).responses.head
+
+  def getFirstPayload(bu: BaseUnit) = getFirstResponse(bu).payloads.head
+
+  def getFirstPayloadSchema(bu: BaseUnit) = getFirstPayload(bu).schema.asInstanceOf[ScalarShape]
 
   test("AMF should persist and restore the raw XML schema") {
     val api = s"$basePath/raml/raml-with-xml/api.raml"
@@ -176,6 +180,20 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val parameters    = bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.head.parameters.toList
       val paramExamples = parameters.map(p => p.schema.asInstanceOf[ScalarShape].examples)
       paramExamples.count(_.isEmpty) shouldBe 0
+    }
+  }
+
+  test("RAML 08 should not delete empty example") {
+    val api08 = s"$basePath/raml/empty-example-08.raml"
+    val api10 = s"$basePath/raml/empty-example.raml"
+    raml08Client.parse(api08) flatMap { parseResult08 =>
+      ramlClient.parse(api10) flatMap { parseResult10 =>
+        val examplesField08 = getFirstPayloadSchema(parseResult08.baseUnit).fields.get(AnyShapeModel.Examples)
+        val examplesField   = getFirstPayloadSchema(parseResult10.baseUnit).fields.get(AnyShapeModel.Examples)
+        val range08         = examplesField08.annotations.lexical()
+        val range           = examplesField.annotations.lexical()
+        range08 shouldEqual range
+      }
     }
   }
 }
