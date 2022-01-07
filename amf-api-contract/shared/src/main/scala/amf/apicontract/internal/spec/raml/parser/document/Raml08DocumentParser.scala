@@ -137,17 +137,15 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
         )
       }
 
-      Raml08TypeParser(entry,
-                       shape => shape.withName(entry.key),
-                       isAnnotation = false,
-                       StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
+      Raml08TypeParser(entry, shape => shape.withName(entry.key), isAnnotation = false, StringDefaultType)(
+        WebApiShapeParserContextAdapter(ctx))
         .parse() match {
         case Some(shape) =>
           ctx.declarations += shape.add(DeclaredElement())
           // This is a workaround for the weird situations where we reuse a local RAML identifier inside a json schema without
           // a proper $ref
           val localRaml08RefInJson =
-            platform.normalizePath(UriUtils.stripFileName(ctx.rootContextDocument) + shape.name.value())
+            UriUtils.normalizePath(UriUtils.stripFileName(ctx.rootContextDocument) + shape.name.value())
           ctx.futureDeclarations.resolveRef(localRaml08RefInJson, shape)
         case None => ctx.eh.violation(InvalidTypeDefinition, parent, s"Error parsing shape '$entry'", entry.location)
       }
