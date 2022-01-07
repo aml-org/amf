@@ -2,8 +2,8 @@ package amf.shapes.internal.spec.raml.parser
 
 import amf.core.client.common.position
 import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfScalar, _}
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Shapes
 import amf.core.internal.annotations.{
@@ -25,18 +25,14 @@ import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.remote.Raml08
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.internal.annotations.{
-  InlineDefinition,
-  ParsedJSONSchema,
-  SchemaIsJsonSchema,
-  TypePropertyLexicalInfo
-}
+import amf.shapes.internal.annotations._
 import amf.shapes.internal.domain.metamodel._
+import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.shapes.internal.spec.common.TypeDef._
+import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.common.parser._
-import amf.shapes.internal.spec.common.{parser, _}
 import amf.shapes.internal.spec.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.shapes.internal.spec.jsonschema.parser.Draft4ShapeDependenciesParser
 import amf.shapes.internal.spec.raml.parser.RamlTypeDetection.parseFormat
@@ -44,7 +40,7 @@ import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
 import amf.shapes.internal.spec.{RamlTypeDefMatcher, ShapeParserContext, TypeName}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations._
 import amf.shapes.internal.vocabulary.VocabularyMappings
-import org.yaml.model.{YPart, _}
+import org.yaml.model._
 
 import scala.language.postfixOps
 
@@ -202,33 +198,26 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
     result.add(Annotations(ast))
   }
 
-  private def parseSchemaOrTypeDeclarationAndExamples = {
-    // has schema or its simple raml type declaration
-    val map = node.as[YMap]
-    map
-      .key("schema")
-      .fold {
-        Option(SimpleTypeParser(name, adopt, map, defaultType.typeDef).parse())
-      } { _ =>
-        val maybeShape = Raml08SchemaParser(map, adopt).parse()
-        maybeShape.map { s =>
-          if (map.key("example").isDefined) {
-
-            val inherits: AnyShape = s.meta.modelInstance.withSynthesizeName("inherits")
-            adopt(inherits)
-            Raml08ExampleParser(inherits, map).parse()
-            inherits.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(s), Annotations.virtual()), Annotations.inferred())
-            inherits
-          } else s
-        }
+  // has schema or it's a simple raml type declaration
+  private def parseSchemaOrTypeDeclarationAndExamples(): Option[AnyShape] = {
+    val map    = node.as[YMap]
+    val schema = map.key("schema")
+    if (schema.isDefined) {
+      val maybeShape = Raml08SchemaParser(map, adopt).parse()
+      maybeShape.map { s =>
+        if (map.key("example").isDefined) {
+          val inherits: AnyShape = s.meta.modelInstance.withSynthesizeName("inherits")
+          adopt(inherits)
+          Raml08ExampleParser(inherits, map).parse()
+          inherits.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(s), Annotations.virtual()), Annotations.inferred())
+          inherits
+        } else s
       }
+    } else Option(SimpleTypeParser(name, adopt, map, defaultType.typeDef).parse())
   }
 
   private def parseUnion(shape: ScalarShape) = {
-    Option(
-      Raml08UnionTypeParser(UnionShape(node).withName(name, Annotations(key)),
-                            node.as[YSequence],
-                            ast).parse())
+    Option(Raml08UnionTypeParser(UnionShape(node).withName(name, Annotations(key)), node.as[YSequence], ast).parse())
   }
 
   override def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
@@ -304,14 +293,15 @@ case class Raml08ExampleParser(s: AnyShape, map: YMap)(implicit ctx: ShapeParser
     map
       .key("example")
       .foreach(entry => {
-        getExamples(map, s)
-          .foreach(e => {
-            s.setWithoutId(ScalarShapeModel.Examples, AmfArray(Seq(e), Annotations(entry.value)), Annotations(entry))
-          })
+        val exampleOption = getSingleExample(map, s)
+        val examplesArray =
+          if (exampleOption.isDefined) AmfArray(Seq(exampleOption.get), Annotations(entry))
+          else AmfArray(Seq(), Annotations(entry))
+        s.setWithoutId(ExamplesField.Examples, examplesArray, Annotations(entry))
       })
   }
 
-  private def getExamples(map: YMap, inherits: AnyShape): Option[Example] = {
+  private def getSingleExample(map: YMap, inherits: AnyShape): Option[Example] = {
     RamlSingleExampleParser("example",
                             map,
                             inherits.withExample,
@@ -320,6 +310,7 @@ case class Raml08ExampleParser(s: AnyShape, map: YMap)(implicit ctx: ShapeParser
   }
 
 }
+
 case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPart, adopt: Shape => Unit)(
     implicit ctx: ShapeParserContext) {
   def parse(): Option[AnyShape] = {
@@ -333,8 +324,8 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
           ScalarShape(ast)
             .withName(name, Annotations())
             .setWithoutId(ScalarShapeModel.DataType,
-                 AmfScalar(XsdTypeDefMapping.xsd(defaultType), Annotations.inferred()),
-                 Annotations.inferred()))
+                          AmfScalar(XsdTypeDefMapping.xsd(defaultType), Annotations.inferred()),
+                          Annotations.inferred()))
       case AnyType =>
         Some(AnyShape(ast).withName(name, Annotations()).add(Inferred()))
       case _ =>
@@ -404,14 +395,17 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
               Some(shape.withName(name, Annotations()))
             case (Some(iri: String), format: Option[String]) =>
               val shape = ScalarShape(value).setWithoutId(ScalarShapeModel.DataType,
-                                                 AmfScalar(iri, Annotations(value)),
-                                                 Annotations(value))
+                                                          AmfScalar(iri, Annotations(value)),
+                                                          Annotations(value))
               format.foreach { f =>
                 if (f != "") shape.setWithoutId(ScalarShapeModel.Format, AmfScalar(f), Annotations())
               }
               Some(shape.withName(name, Annotations()))
             case _ =>
-              ctx.eh.violation(InvalidTypeDefinition, "", s"Invalid type def ${value.text} for ${Raml08.id}", value.location)
+              ctx.eh.violation(InvalidTypeDefinition,
+                               "",
+                               s"Invalid type def ${value.text} for ${Raml08.id}",
+                               value.location)
               None
           }
         }
@@ -582,12 +576,12 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         val parsed =
           ctx.typeParser(toParse, s => s.withId(union.id), typeInfo.isAnnotation, defaultType).parse().get
         union.setWithoutId(UnionShapeModel.AnyOf,
-                  AmfArray(
-                    Seq(
-                      parsed,
-                      NilShape(Annotations.virtual()).withId(union.id)
-                    )),
-                  Annotations.synthesized())
+                           AmfArray(
+                             Seq(
+                               parsed,
+                               NilShape(Annotations.virtual()).withId(union.id)
+                             )),
+                           Annotations.synthesized())
       case m: YMap =>
         val newEntries = m.entries.map { entry =>
           if (entry.key.as[YScalar].text == "type") {
@@ -649,18 +643,18 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           val entry = ast.asInstanceOf[YMapEntry]
           InheritanceParser(entry, shape, None).parse()
           shape.setWithoutId(ScalarShapeModel.DataType,
-                    AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations.inferred()),
-                    Annotations(entry))
+                             AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations.inferred()),
+                             Annotations(entry))
           shape
         case _ =>
           if (node.isNull || node.isEmpty)
             shape.setWithoutId(ScalarShapeModel.DataType,
-                      AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations.virtual()),
-                      Annotations.inferred())
+                               AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations.virtual()),
+                               Annotations.inferred())
           else
             shape.setWithoutId(ScalarShapeModel.DataType,
-                      AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node.value)),
-                      Annotations(node))
+                               AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node.value)),
+                               Annotations(node))
 
       }
     }
@@ -769,9 +763,10 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
   private def parseReference(node: YNode, parendId: String, createLink: AnyShape => Shape): Option[Shape] = {
     ctx.link(node) match {
       case Left(key) =>
-        val referenced = ctx.findType(key,
-                                      SearchScope.Fragments,
-                                      Some((s: String) => ctx.eh.violation(InvalidFragmentType, parendId, s, node.location)))
+        val referenced = ctx.findType(
+          key,
+          SearchScope.Fragments,
+          Some((s: String) => ctx.eh.violation(InvalidFragmentType, parendId, s, node.location)))
         referenced.map(createLink(_).add(ExternalFragmentRef(key)))
       case _ =>
         val text       = node.as[YScalar].text
@@ -864,12 +859,12 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         .fold(
           shape
             .setWithoutId(ScalarShapeModel.DataType,
-                 AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
-                 Annotations.synthesized()))(
+                          AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
+                          Annotations.synthesized()))(
           entry =>
             shape.setWithoutId(ScalarShapeModel.DataType,
-                      AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef), Annotations(entry.value)),
-                      Annotations(entry)))
+                               AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef), Annotations(entry.value)),
+                               Annotations(entry)))
 
       // todo: should i parse double type values as value.double()? when emit it the values will appear with .0 (if they where ints)
       map.key(
@@ -956,7 +951,9 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setWithoutId(UnionShapeModel.AnyOf, AmfArray(unionNodes, Annotations(entry.value)), Annotations(entry))
+              shape.setWithoutId(UnionShapeModel.AnyOf,
+                                 AmfArray(unionNodes, Annotations(entry.value)),
+                                 Annotations(entry))
 
             case _ =>
               ctx.eh.violation(InvalidUnionType, shape, "Unions are built from multiple shape nodes", entry.location)
@@ -989,7 +986,10 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               shape.setArray(ShapeModel.Or, nodes, Annotations(entry.value))
 
             case _ =>
-              ctx.eh.violation(InvalidOrType, shape, "Or constraints are built from multiple shape nodes", entry.location)
+              ctx.eh.violation(InvalidOrType,
+                               shape,
+                               "Or constraints are built from multiple shape nodes",
+                               entry.location)
           }
         }
       )
@@ -1017,7 +1017,10 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               shape.setArray(ShapeModel.And, nodes, Annotations(entry.value))
 
             case _ =>
-              ctx.eh.violation(InvalidAndType, shape, "And constraints are built from multiple shape nodes", entry.location)
+              ctx.eh.violation(InvalidAndType,
+                               shape,
+                               "And constraints are built from multiple shape nodes",
+                               entry.location)
           }
         }
       )
@@ -1091,12 +1094,12 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
             AmfScalar(n.as[YScalar].text)
           }
           shape.fields.setWithoutId(FileShapeModel.FileTypes,
-                           AmfArray(fileTypes, Annotations(entry.value)),
-                           Annotations(entry))
+                                    AmfArray(fileTypes, Annotations(entry.value)),
+                                    Annotations(entry))
         case Some(entry) if entry.value.tagType == YType.Str =>
           shape.fields.setWithoutId(FileShapeModel.FileTypes,
-                           AmfArray(Seq(AmfScalar(entry.value.as[YScalar].text)), Annotations(entry.value)),
-                           Annotations(entry))
+                                    AmfArray(Seq(AmfScalar(entry.value.as[YScalar].text)), Annotations(entry.value)),
+                                    Annotations(entry))
         case Some(entry) =>
           ctx.eh.violation(
             UnexpectedFileTypesSyntax,
@@ -1127,10 +1130,13 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
       map.key("format".asRamlAnnotation, ScalarShapeModel.Format in shape)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
-      map.key("multipleOf", entry => { // todo pope
-        val value = ParserScalarNode(entry.value)
-        shape.setWithoutId(ScalarShapeModel.MultipleOf, value.text(), Annotations(entry))
-      })
+      map.key(
+        "multipleOf",
+        entry => { // todo pope
+          val value = ParserScalarNode(entry.value)
+          shape.setWithoutId(ScalarShapeModel.MultipleOf, value.text(), Annotations(entry))
+        }
+      )
 
       shape
     }
@@ -1449,7 +1455,9 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                   unresolved(entry.value, shape)
               }
               if (!text.matches("<<.*>>")) {
-                shape.setWithoutId(ShapeModel.Inherits, AmfArray(Seq(baseClass), Annotations(entry.value)), Annotations(entry))
+                shape.setWithoutId(ShapeModel.Inherits,
+                                   AmfArray(Seq(baseClass), Annotations(entry.value)),
+                                   Annotations(entry))
               }
           }
 
@@ -1674,10 +1682,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               setPathTo(property, entry.key.as[YScalar].text.stripSuffix("?"), Annotations(entry.key))
             }
           }
-          Raml10TypeParser(entry,
-                           shape => Unit,
-                           TypeInfo(isPropertyOrParameter = true),
-                           StringDefaultType)
+          Raml10TypeParser(entry, shape => Unit, TypeInfo(isPropertyOrParameter = true), StringDefaultType)
             .parse()
             .foreach { range =>
               if (entry.value.tagType == YType.Null) {
