@@ -12,6 +12,7 @@ import amf.apicontract.internal.spec.async.emitters.context.Async20SpecEmitterCo
 import amf.apicontract.internal.spec.oas.emitter.domain.OasLikeEmitterFactory
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.client.scala.model.domain.Example
@@ -61,7 +62,7 @@ case class AsyncDomainElementEmitterFactory()(implicit val ctx: Async20SpecEmitt
 }
 
 object AsyncDomainElementEmitterFactory {
-  def apply(eh: AMFErrorHandler): AsyncDomainElementEmitterFactory =
-    AsyncDomainElementEmitterFactory()(new Async20SpecEmitterContext(eh))
+  def apply(eh: AMFErrorHandler, config: RenderConfiguration): AsyncDomainElementEmitterFactory =
+    AsyncDomainElementEmitterFactory()(new Async20SpecEmitterContext(eh, config = config))
 
 }

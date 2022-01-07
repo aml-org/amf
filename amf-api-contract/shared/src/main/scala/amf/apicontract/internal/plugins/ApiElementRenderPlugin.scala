@@ -6,6 +6,7 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.parse.document.{ParsedDocument, SyamlParsedDocument}
 import amf.core.client.scala.render.AMFElementRenderPlugin
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.emitters.PartEmitter
@@ -16,13 +17,15 @@ trait ApiElementRenderPlugin extends AMFElementRenderPlugin {
   override val id: String = s"${spec.id} Element"
 
   protected def spec: Spec
-  protected def emitterFactory: AMFErrorHandler => DomainElementEmitterFactory
+  protected def emitterFactory: (AMFErrorHandler, RenderConfiguration) => DomainElementEmitterFactory
 
-  override def applies(element: DomainElement): Boolean =
-    emitterFactory(IgnoringErrorHandler).emitter(element).isDefined
+  override def applies(element: DomainElement, config: RenderConfiguration): Boolean =
+    emitterFactory(IgnoringErrorHandler, config).emitter(element).isDefined
 
-  override def render(element: DomainElement, errorHandler: AMFErrorHandler): ParsedDocument = {
-    val emitter = emitterFactory(errorHandler).emitter(element).getOrElse(new EmptyEmitter())
+  override def render(element: DomainElement,
+                      errorHandler: AMFErrorHandler,
+                      config: RenderConfiguration): ParsedDocument = {
+    val emitter = emitterFactory(errorHandler, config).emitter(element).getOrElse(new EmptyEmitter())
     val document = YDocument { b =>
       traverse(Seq(emitter), b)
     }

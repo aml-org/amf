@@ -36,9 +36,10 @@ import amf.core.client.scala.model.domain.extensions.{
   PropertyShape,
   ShapeExtension
 }
-import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.client.scala.model.domain.{CustomizableElement, DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.{Raml08, Raml10, Spec}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
@@ -135,7 +136,7 @@ class Raml10EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
   override def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter =
     RamlFacetsInstanceEmitter.apply
 
-  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter =
+  override def annotationEmitter: (CustomizableElement, DomainExtension, SpecOrdering) => AnnotationEmitter =
     RamlAnnotationEmitter.apply
 
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter =
@@ -220,9 +221,9 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
       }
   }
 
-  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = {
-    (domainExtension: DomainExtension, ordering: SpecOrdering) =>
-      new AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering) {
+  override def annotationEmitter: (CustomizableElement, DomainExtension, SpecOrdering) => AnnotationEmitter = {
+    (elem: CustomizableElement, domainExtension: DomainExtension, ordering: SpecOrdering) =>
+      new AnnotationEmitter(elem, domainExtension: DomainExtension, ordering: SpecOrdering, _ => "") {
 
         override def emit(b: EntryBuilder): Unit = {
           spec.eh.violation(
@@ -234,7 +235,6 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
             domainExtension.location()
           )
         }
-        override val name: String = ""
       }
   }
 
@@ -276,8 +276,8 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
 
 class Raml10SpecEmitterContext(eh: AMFErrorHandler,
                                refEmitter: RefEmitter = RamlRefEmitter,
-                               options: RenderOptions = RenderOptions())
-    extends RamlSpecEmitterContext(eh, refEmitter, options) {
+                               config: RenderConfiguration)
+    extends RamlSpecEmitterContext(eh, refEmitter, config) {
   override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
   override val spec: Spec                         = Raml10
 
@@ -286,19 +286,19 @@ class Raml10SpecEmitterContext(eh: AMFErrorHandler,
 
 class XRaml10SpecEmitterContext(eh: AMFErrorHandler,
                                 refEmitter: RefEmitter = OasRefEmitter,
-                                options: RenderOptions = RenderOptions())
-    extends Raml10SpecEmitterContext(eh, refEmitter, options) {
+                                renderConfig: RenderConfiguration)
+    extends Raml10SpecEmitterContext(eh, refEmitter, renderConfig) {
   override def localReference(reference: Linkable): PartEmitter =
     oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   val oasFactory: OasSpecEmitterFactory = new Oas2SpecEmitterFactory(
-    new Oas2SpecEmitterContext(eh, refEmitter, options))
+    new Oas2SpecEmitterContext(eh, refEmitter, renderConfig))
 
   override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
 
-class Raml08SpecEmitterContext(eh: AMFErrorHandler, options: RenderOptions = RenderOptions())
-    extends RamlSpecEmitterContext(eh, RamlRefEmitter, options) {
+class Raml08SpecEmitterContext(eh: AMFErrorHandler, renderConfig: RenderConfiguration)
+    extends RamlSpecEmitterContext(eh, RamlRefEmitter, renderConfig) {
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
   override val spec: Spec                         = Raml08
 
@@ -307,8 +307,8 @@ class Raml08SpecEmitterContext(eh: AMFErrorHandler, options: RenderOptions = Ren
 
 abstract class RamlSpecEmitterContext(override val eh: AMFErrorHandler,
                                       refEmitter: RefEmitter,
-                                      options: RenderOptions = RenderOptions())
-    extends SpecEmitterContext(eh, refEmitter, options) {
+                                      renderConfig: RenderConfiguration)
+    extends SpecEmitterContext(eh, refEmitter, renderConfig) {
 
   override def localReference(reference: Linkable): PartEmitter = RamlLocalReferenceEmitter(reference)
 

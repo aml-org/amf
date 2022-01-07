@@ -7,6 +7,7 @@ import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, ExternalFragment, Fragment, Module}
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.Spec
 import org.yaml.model.{YDocument, YNode}
 
@@ -19,20 +20,20 @@ object Oas20RenderPlugin extends OasRenderPlugin {
   override def mediaTypes: Seq[String] = Seq(`application/json`, `application/yaml`)
 
   override def unparseAsYDocument(unit: BaseUnit,
-                                  renderOptions: RenderOptions,
+                                  renderConfig: RenderConfiguration,
                                   errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
-      case module: Module => Some(Oas20ModuleEmitter(module)(specContext(renderOptions, errorHandler)).emitModule())
+      case module: Module => Some(Oas20ModuleEmitter(module)(specContext(renderConfig, errorHandler)).emitModule())
       case document: Document =>
-        Some(Oas2DocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
+        Some(Oas2DocumentEmitter(document)(specContext(renderConfig, errorHandler)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
       case fragment: Fragment =>
-        Some(new OasFragmentEmitter(fragment)(specContext(renderOptions, errorHandler)).emitFragment())
+        Some(new OasFragmentEmitter(fragment)(specContext(renderConfig, errorHandler)).emitFragment())
       case _ => None
     }
 
   override def priority: PluginPriority = NormalPriority
 
-  private def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): OasSpecEmitterContext =
-    new Oas2SpecEmitterContext(errorHandler, options = options)
+  private def specContext(renderConfig: RenderConfiguration, errorHandler: AMFErrorHandler): OasSpecEmitterContext =
+    new Oas2SpecEmitterContext(errorHandler, config = renderConfig)
 }

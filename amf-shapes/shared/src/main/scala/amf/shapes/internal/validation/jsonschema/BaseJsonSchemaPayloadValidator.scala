@@ -16,6 +16,7 @@ import amf.core.client.scala.validation.payload.{
 }
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
 import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
+import amf.core.internal.plugins.render.EmptyRenderConfiguration
 import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlSyntaxRenderPlugin}
 import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._

@@ -8,14 +8,15 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{DomainExtension, ShapeExtension}
-import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.model.domain.{CustomizableElement, DomainElement, Linkable}
 import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.Spec
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.internal.spec.common.SchemaVersion
-import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.common.emitter.annotations.FacetsInstanceEmitter
+import amf.shapes.internal.spec.common.emitter.{CustomFacetsEmitter, ShapeEmitterContext}
 import org.yaml.model.YDocument
 
 object AgnosticShapeEmitterContextAdapter {
@@ -23,6 +24,8 @@ object AgnosticShapeEmitterContextAdapter {
 }
 
 class AgnosticShapeEmitterContextAdapter(private val specCtx: SpecEmitterContext) extends ShapeEmitterContext {
+
+  override def config: RenderConfiguration = specCtx.renderConfig
 
   override def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter =
     specCtx.factory.tagToReferenceEmitter(l, refs)
@@ -38,8 +41,10 @@ class AgnosticShapeEmitterContextAdapter(private val specCtx: SpecEmitterContext
   override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter =
     specCtx.factory.facetsInstanceEmitter(extension, ordering)
 
-  override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
-    specCtx.factory.annotationEmitter(e, default)
+  override def annotationEmitter(parent: CustomizableElement,
+                                 e: DomainExtension,
+                                 default: SpecOrdering): EntryEmitter =
+    specCtx.factory.annotationEmitter(parent, e, default)
 
   override def eh: AMFErrorHandler = specCtx.eh
 

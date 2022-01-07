@@ -8,7 +8,6 @@ import amf.apicontract.internal.spec.async.emitters.bindings.{
   AsyncApiServerBindingsEmitter
 }
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
-import amf.apicontract.internal.spec.oas
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.domain.OasTagToReferenceEmitter
 import amf.core.client.common.position.Position
@@ -18,7 +17,8 @@ import amf.core.client.scala.model.domain.{AmfElement, DomainElement, Linkable, 
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.internal.spec.common.emitter.annotations.OrphanAnnotationsEmitter
+import amf.shapes.internal.spec.oas.emitter
+import amf.shapes.internal.spec.oas.emitter.OasOrphanAnnotationsEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YNode
 
@@ -79,7 +79,7 @@ case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrder
     }
   }
 
-  def extensionEmitters: Seq[EntryEmitter] = OrphanAnnotationsEmitter(extensions, ordering).emitters
+  def extensionEmitters: Seq[EntryEmitter] = OasOrphanAnnotationsEmitter(extensions, ordering).emitters
 
   def emitterForElement(element: AmfElement): Option[EntryEmitter] = {
     element match {
@@ -126,6 +126,7 @@ class EmptyBindingEmitter(binding: EmptyBinding, ordering: SpecOrdering) extends
   }
 
   override def position(): Position = pos(binding.annotations)
+
 }
 
 case class AsyncApiBindingsDeclarationEmitter(key: String, bindings: Seq[AmfElement], ordering: SpecOrdering)(
@@ -133,7 +134,8 @@ case class AsyncApiBindingsDeclarationEmitter(key: String, bindings: Seq[AmfElem
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val namedBindingsEmitters = bindings.map(p => AsyncApiNamedBindingsEmitter(p, ordering, Nil))
+    val namedBindingsEmitters =
+      bindings.map(p => AsyncApiNamedBindingsEmitter(p, ordering, Nil))
     b.entry(
       key,
       _.obj(pb => namedBindingsEmitters.foreach(e => e.emit(pb)))

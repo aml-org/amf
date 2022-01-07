@@ -17,6 +17,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, SynthesizedField}
 import amf.core.internal.parser.domain.{Annotations, Value}
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.client.scala.model.domain.Example
@@ -57,8 +58,9 @@ case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) exten
 }
 
 object Oas20EmitterFactory {
-  def apply(eh: AMFErrorHandler): Oas20EmitterFactory =
-    Oas20EmitterFactory()(new Oas2SpecEmitterContext(eh, options = RenderOptions().withoutCompactedEmission))
+  def apply(eh: AMFErrorHandler, config: RenderConfiguration): Oas20EmitterFactory =
+    Oas20EmitterFactory()(
+      new Oas2SpecEmitterContext(eh, config = config.withRenderOptions(RenderOptions().withoutCompactedEmission)))
 }
 
 case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) extends OasEmitterFactory {
@@ -86,8 +88,9 @@ case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) exten
 }
 
 object Oas30EmitterFactory {
-  def apply(eh: AMFErrorHandler): Oas30EmitterFactory =
-    Oas30EmitterFactory()(new Oas3SpecEmitterContext(eh, options = RenderOptions().withoutCompactedEmission))
+  def apply(eh: AMFErrorHandler, config: RenderConfiguration): Oas30EmitterFactory =
+    Oas30EmitterFactory()(
+      new Oas3SpecEmitterContext(eh, config = config.withRenderOptions(RenderOptions().withoutCompactedEmission)))
 }
 
 trait OasEmitterFactory extends OasLikeEmitterFactory {

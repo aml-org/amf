@@ -327,7 +327,8 @@ case class OasParametersEmitter(key: String,
           key,
           _.obj(
             traverse(ramlParameters.map(p =>
-                       Raml10ParameterEmitter(p, ordering, Nil)(new XRaml10SpecEmitterContext(spec.eh))),
+                       Raml10ParameterEmitter(p, ordering, Nil)(
+                         new XRaml10SpecEmitterContext(spec.eh, renderConfig = spec.renderConfig))),
                      _))
         )
     }

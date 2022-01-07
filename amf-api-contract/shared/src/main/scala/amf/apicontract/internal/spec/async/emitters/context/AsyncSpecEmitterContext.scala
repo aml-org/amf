@@ -17,6 +17,7 @@ import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, Shap
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.{AsyncApi20, Spec}
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.SpecOrdering
@@ -33,7 +34,8 @@ abstract class AsyncSpecEmitterFactory(override implicit val spec: AsyncSpecEmit
     extends OasLikeSpecEmitterFactory {
 
   override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
-    AsyncDeclaredTypesEmitters.obtainEmitter
+    (types, references, ordering) =>
+      AsyncDeclaredTypesEmitters.obtainEmitter(types, references, ordering, spec.renderConfig)
 
   def recursiveShapeEmitter(shape: RecursiveShape,
                             ordering: SpecOrdering,
@@ -71,8 +73,8 @@ case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
 
 abstract class AsyncSpecEmitterContext(eh: AMFErrorHandler,
                                        refEmitter: RefEmitter = AsyncRefEmitter,
-                                       options: RenderOptions = RenderOptions())
-    extends OasLikeSpecEmitterContext(eh, refEmitter, options) {
+                                       config: RenderConfiguration)
+    extends OasLikeSpecEmitterContext(eh, refEmitter, config) {
 
   def schemasDeclarationsPath: String
 
@@ -84,9 +86,9 @@ abstract class AsyncSpecEmitterContext(eh: AMFErrorHandler,
 
 class Async20SpecEmitterContext(eh: AMFErrorHandler,
                                 refEmitter: RefEmitter = AsyncRefEmitter,
-                                options: RenderOptions = RenderOptions(),
+                                config: RenderConfiguration,
                                 val schemaVersion: SchemaVersion = JSONSchemaDraft7SchemaVersion)
-    extends AsyncSpecEmitterContext(eh, refEmitter, options) {
+    extends AsyncSpecEmitterContext(eh, refEmitter, config) {
 
   override val nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
 

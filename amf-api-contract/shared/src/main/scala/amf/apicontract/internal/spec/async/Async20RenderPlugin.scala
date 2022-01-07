@@ -9,7 +9,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.internal.plugins.render.RenderInfo
+import amf.core.internal.plugins.render.{RenderConfiguration, RenderInfo}
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.Spec
 import org.yaml.model.YDocument
@@ -36,15 +36,17 @@ object Async20RenderPlugin extends ApiRenderPlugin {
   }
 
   override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderOptions: RenderOptions,
+                                            renderConfig: RenderConfiguration,
                                             errorHandler: AMFErrorHandler): Option[YDocument] = {
     unit match {
       case document: Document =>
-        Some(new AsyncApi20DocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
+        Some(new AsyncApi20DocumentEmitter(document)(specContext(renderConfig, errorHandler)).emitDocument())
       case _ => None
     }
   }
 
-  private def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext =
-    new Async20SpecEmitterContext(errorHandler, options = options)
+  private def specContext(renderConfig: RenderConfiguration, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext = {
+    val options = renderConfig.renderOptions
+    new Async20SpecEmitterContext(errorHandler, config = renderConfig)
+  }
 }
