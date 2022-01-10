@@ -33,6 +33,14 @@ case class Parameters(query: Seq[Parameter] = Nil,
     )
   }
 
+  def findDuplicatesIn(inner: Parameters): List[Parameter] = {
+    findDuplicateParametersBetween(query, inner.query) ++
+      findDuplicateParametersBetween(path, inner.path) ++
+      findDuplicateParametersBetween(header, inner.header) ++
+      findDuplicateParametersBetween(cookie, inner.cookie) ++
+      findDuplicateParametersBetween(baseUri08, inner.baseUri08)
+  }
+
   private def mergeParams(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
     val globalMap = global.map(p => p.name.value() -> p).toMap
     val innerMap  = inner.map(p => p.name.value()  -> p).toMap
@@ -50,6 +58,14 @@ case class Parameters(query: Seq[Parameter] = Nil,
   }
 
   private def addPayloads(global: Seq[Payload], inner: Seq[Payload]): Seq[Payload] = global ++ inner
+
+  private def findDuplicateParametersBetween(global: Seq[Parameter], inner: Seq[Parameter]): List[Parameter] = {
+    val globalMap = global.map(p => p.name.value() -> p).toMap
+    inner.foldLeft(List[Parameter]())((list, parameter) => {
+      val parameterIsDuplicated = globalMap.contains(parameter.name.value())
+      if (parameterIsDuplicated) parameter :: list else list
+    })
+  }
 
   def nonEmpty: Boolean = query.nonEmpty || path.nonEmpty || header.nonEmpty || body.nonEmpty || cookie.nonEmpty
 }
