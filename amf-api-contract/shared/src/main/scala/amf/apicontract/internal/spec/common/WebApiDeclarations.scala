@@ -638,6 +638,7 @@ object OasWebApiDeclarations {
     declarations.traits = d.traits
     declarations.securitySchemes = d.securitySchemes
     declarations.responses = d.responses
+    declarations.annotations = d.annotations // FOR OAS -> RAML CONVERSION
     declarations // add withs methods?
   }
 }
