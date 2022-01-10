@@ -177,5 +177,13 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/same-type-inheritance-recursion.raml", Some("same-type-inheritance-recursion.report"))
   }
 
+  test("Duplicated parameter warning") {
+    checkReport(
+      "/duplicate-parameters/endpoint-parameter-duplicate-in-operation.json",
+      Some("endpoint-parameter-duplicate-in-operation.report"),
+      profile = Oas20Profile
+    )
+  }
+
   override val hint: Hint = Raml10YamlHint
 }

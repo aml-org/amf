@@ -1,11 +1,25 @@
 package amf.apicontract.internal.transformation
 
 import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
-import amf.apicontract.internal.spec.common.transformation.stage.{AnnotationRemovalStage, MediaTypeResolutionStage, PayloadAndParameterResolutionStage, ResponseExamplesResolutionStage}
+import amf.apicontract.internal.spec.common.transformation.stage.{
+  AmfParametersNormalizationStage,
+  AnnotationRemovalStage,
+  MediaTypeResolutionStage,
+  OpenApiParametersNormalizationStage,
+  ParametersNormalizationStage,
+  PayloadAndParameterResolutionStage,
+  Raml10ParametersNormalizationStage,
+  ResponseExamplesResolutionStage
+}
 import amf.apicontract.internal.transformation.stages.ExtensionsResolutionStage
-import amf.core.client.common.validation.{Async20Profile, GrpcProfile, Oas30Profile, ProfileName}
-import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.common.validation.{
+  Async20Profile,
+  Oas20Profile,
+  Oas30Profile,
+  ProfileName,
+  Raml08Profile,
+  Raml10Profile
+}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
 import amf.core.internal.transform.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, SourceInformationStage}
@@ -23,6 +37,7 @@ class ValidationTransformationPipeline private[amf] (profile: ProfileName,
       new ExternalSourceRemovalStage,
       new ExtensionsResolutionStage(profile, keepEditingInfo = false),
       new ShapeNormalizationStage(profile, keepEditingInfo = false),
+      parameterNormalizationStageFor(profile),
       new MediaTypeResolutionStage(profile, isValidation = true),
       new ResponseExamplesResolutionStage(),
       new PayloadAndParameterResolutionStage(profile),
@@ -30,6 +45,14 @@ class ValidationTransformationPipeline private[amf] (profile: ProfileName,
       SourceInformationStage,
       new AnnotationRemovalStage(),
     )
+
+  private def parameterNormalizationStageFor(profile: ProfileName): ParametersNormalizationStage = {
+    profile match {
+      case Raml10Profile                                                => new Raml10ParametersNormalizationStage
+      case Oas30Profile | Oas20Profile | Raml08Profile | Async20Profile => new OpenApiParametersNormalizationStage
+      case _                                                            => new AmfParametersNormalizationStage
+    }
+  }
 }
 
 object ValidationTransformationPipeline {

@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/endpoint-parameter-duplicate-in-operation.json
+Profile: OAS 2.0
+Conforms: true
+Number of results: 1
+
+Level: Warning
+
+- Constraint: http://a.ml/vocabularies/amf/resolution#duplicated-parameter-warning
+  Message: An operation's parameter with the same name: queryParam and binding: query as one from the endpoint was found
+  Severity: Warning
+  Target: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/endpoint-parameter-duplicate-in-operation.json#/web-api/endpoint/%2FsomePath/supportedOperation/get/expects/request/parameter/parameter/query/queryParam
+  Property:
+  Range: [(18,10)-(22,11)]
+  Location: file://amf-cli/shared/src/test/resources/validations/duplicate-parameters/endpoint-parameter-duplicate-in-operation.json

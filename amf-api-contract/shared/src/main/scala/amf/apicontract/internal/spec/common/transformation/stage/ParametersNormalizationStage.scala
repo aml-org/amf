@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.model.domain.api.Api
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, RequestModel, ServerModel}
 import amf.apicontract.internal.spec.common.Parameters
+import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.DuplicatedParameterWarning
 import amf.core.client.common.validation.{AmfProfile, Oas20Profile, ProfileName}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -25,14 +26,15 @@ abstract class ParametersNormalizationStage(profile: ProfileName) extends Transf
                          configuration: AMFGraphConfiguration): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val api = doc.encodes.asInstanceOf[Api]
-      transform(api)
+      transform(api)(errorHandler)
       doc
     case _ => model
   }
 
-  protected def transform(api: Api): Api = api
+  protected def transform(api: Api)(implicit errorHandler: AMFErrorHandler): Api = api
 
-  protected def pushParamsToEndpointOperations(endpoint: EndPoint, finalParams: Parameters) = {
+  protected def pushParamsToEndpointOperations(endpoint: EndPoint, finalParams: Parameters)(
+    implicit errorHandler: AMFErrorHandler) = {
     endpoint.operations.foreach { op =>
       setRequestParameters(op, finalParams)
     }
@@ -42,16 +44,38 @@ abstract class ParametersNormalizationStage(profile: ProfileName) extends Transf
     if (path.nonEmpty)
       endpoint.fields.setWithoutId(EndPointModel.Parameters, AmfArray(path))
 
-  private def setRequestParameters(op: Operation, params: Parameters) = {
-    val request = Option(op.request).getOrElse(op.withRequest())
-
-    val finalParams = params.merge(Parameters(request.queryParameters, request.uriParameters, request.headers))
+  private def setRequestParameters(op: Operation, params: Parameters)(implicit errorHandler: AMFErrorHandler) = {
+    val request           = Option(op.request).getOrElse(op.withRequest())
+    val requestParameters = Parameters(request.queryParameters, request.uriParameters, request.headers)
+    checkDuplicatedParameters(params, requestParameters)
+    val finalParams = params.merge(requestParameters)
     // set the list of parameters at the operation level in the corresponding fields
     if (finalParams.query.nonEmpty)
       request.fields.setWithoutId(RequestModel.QueryParameters, AmfArray(finalParams.query))
     if (finalParams.header.nonEmpty) request.fields.setWithoutId(RequestModel.Headers, AmfArray(finalParams.header))
     val pathParams = finalParams.baseUri08 ++ finalParams.path
     if (pathParams.nonEmpty) request.fields.setWithoutId(RequestModel.UriParameters, AmfArray(pathParams))
+  }
+
+  private def checkDuplicatedParameters(endPointParams: Parameters, requestParams: Parameters)(
+    implicit errorHandler: AMFErrorHandler): Unit = {
+    val duplicates = endPointParams.findDuplicatesIn(requestParams)
+    duplicates.foreach({ parameter =>
+    {
+      addWarningForDuplicateParameter(parameter)
+    }
+    })
+  }
+
+  private def addWarningForDuplicateParameter(param: Parameter)(implicit errorHandler: AMFErrorHandler): Unit = {
+    errorHandler.warning(
+      DuplicatedParameterWarning,
+      param,
+      None,
+      s"An operation's parameter with the same name: ${param.name.value()} and binding: ${param.binding.value()} as one from the endpoint was found",
+      param.position(),
+      param.location()
+    )
   }
 }
 
@@ -64,7 +88,7 @@ class OpenApiParametersNormalizationStage extends ParametersNormalizationStage(O
     * @param api WebApi in
     * @return api WebApi out
     */
-  override protected def transform(api: Api): Api = {
+  override protected def transform(api: Api)(implicit errorHandler: AMFErrorHandler): Api = {
     // collect endpoint path parameters
     api.endPoints.foreach { endpoint =>
       val finalParams = Parameters.classified(endpoint.path.value(), endpoint.parameters)
@@ -87,7 +111,7 @@ class AmfParametersNormalizationStage extends ParametersNormalizationStage(AmfPr
     * @param api BaseApi in
     * @return api BaseApi out
     */
-  override protected def transform(api: Api): Api = {
+  override protected def transform(api: Api)(implicit errorHandler: AMFErrorHandler): Api = {
     // collect endpoint path parameters
     api.endPoints.foreach { endpoint =>
       val finalParams = Parameters(path = removeParamsFromMadeUpServer(api))
@@ -124,7 +148,7 @@ class Raml10ParametersNormalizationStage extends ParametersNormalizationStage(Am
     * @param baseApi Api in
     * @return baseApi Api out
     */
-  override protected def transform(baseApi: Api): Api = {
+  override protected def transform(baseApi: Api)(implicit errorHandler: AMFErrorHandler): Api = {
     // collect endpoint path parameters
     baseApi.endPoints.foreach { endpoint =>
       val endpointParameters = endpoint.parameters
