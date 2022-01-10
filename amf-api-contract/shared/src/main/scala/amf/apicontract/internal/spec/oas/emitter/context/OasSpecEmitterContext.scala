@@ -21,7 +21,12 @@ import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.{Oas20, Oas30, Spec}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters._
-import amf.shapes.internal.spec.common.emitter.annotations.{FacetsInstanceEmitter, OasFacetsInstanceEmitter}
+import amf.shapes.internal.spec.common.emitter.annotations.{
+  AnnotationEmitter,
+  FacetsInstanceEmitter,
+  OasAnnotationEmitter,
+  OasFacetsInstanceEmitter
+}
 import amf.shapes.internal.spec.common.emitter._
 import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition, SchemaVersion}
 import amf.shapes.internal.spec.contexts.emitter.oas.{CompactableEmissionContext, OasCompactEmitterFactory}
