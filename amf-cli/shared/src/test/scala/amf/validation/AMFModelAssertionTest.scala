@@ -25,11 +25,11 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   val oasConfig: AMFConfiguration     = OASConfiguration.OAS30().withRenderOptions(ro)
   val oasClient: AMFBaseUnitClient    = oasConfig.baseUnitClient()
 
-  def modelAssertion(path: String, pipelineId: String = PipelineId.Default, parseOnly: Boolean = false)(
+  def modelAssertion(path: String, pipelineId: String = PipelineId.Default, transform: Boolean = true)(
       assertion: BaseUnit => Assertion): Future[Assertion] = {
     val parser = APIConfiguration.API().baseUnitClient()
     parser.parse(path) flatMap { parseResult =>
-      if (parseOnly) assertion(parseResult.baseUnit)
+      if (!transform) assertion(parseResult.baseUnit)
       else {
         val specificClient  = configFor(parseResult.sourceSpec).baseUnitClient()
         val transformResult = specificClient.transform(parseResult.baseUnit, pipelineId)
@@ -144,7 +144,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // github issue #1121
   test("Declared Raml type with Json Schema should inherit type from it") {
     val ramlApi = s"$basePath/raml/json-schema-scalar-type/json-schema-with-scalar-type.raml"
-    modelAssertion(ramlApi, parseOnly = true) { bu =>
+    modelAssertion(ramlApi, transform = false) { bu =>
       val jsonSchemaType = "http://www.w3.org/2001/XMLSchema#string"
       val declaredTypeWithJsonSchemaNode =
         bu.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
@@ -154,7 +154,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
   test("Declared Raml type with Json Schema in external file should inherit type from it") {
     val ramlApi = s"$basePath/raml/json-schema-scalar-type/json-schema-with-scalar-type-in-external-file.raml"
-    modelAssertion(ramlApi, parseOnly = true) { bu =>
+    modelAssertion(ramlApi, transform = false) { bu =>
       val jsonSchemaType = "http://www.w3.org/2001/XMLSchema#string"
       val declaredTypeWithJsonSchemaNode =
         bu.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
@@ -194,6 +194,15 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
         val range           = examplesField.annotations.lexical()
         range08 shouldEqual range
       }
+    }
+  }
+
+  test("different datatypes should not fall under simple inheritance") {
+    val api = s"$basePath/raml/merge-resourceType.raml"
+    ramlClient.parse(api) flatMap { parseResult =>
+      val transformResult = ramlClient.transform(parseResult.baseUnit, PipelineId.Editing)
+      // parsing or resolution results are not relevant
+      ramlClient.validate(transformResult.baseUnit) map (report => report.results.size shouldBe 0)
     }
   }
 }

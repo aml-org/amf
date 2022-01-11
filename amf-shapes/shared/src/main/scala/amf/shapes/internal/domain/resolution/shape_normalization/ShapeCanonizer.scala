@@ -243,8 +243,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
             ShapeModel.Description,
             AnyShapeModel.Examples,
             AnyShapeModel.Documentation,
-            AnyShapeModel.Comment,
-            ScalarShapeModel.DataType
+            AnyShapeModel.Comment
           )
         fieldsPresentInSuperType(shape, superType, ignoredFields)
       case _ => false
