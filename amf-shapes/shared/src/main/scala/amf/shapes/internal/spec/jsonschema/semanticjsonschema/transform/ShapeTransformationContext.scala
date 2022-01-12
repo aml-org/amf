@@ -4,7 +4,7 @@ import amf.aml.client.scala.model.domain.NodeMappable
 import amf.aml.internal.metamodel.domain.NodeMappableModel
 import amf.aml.internal.render.emitters.common.IdCounter
 import amf.core.client.scala.model.domain.DomainElement
-import amf.shapes.client.scala.model.domain.SemanticContext
+import amf.shapes.client.scala.model.domain.{CuriePrefix, SemanticContext}
 
 import scala.collection.mutable
 
@@ -42,18 +42,11 @@ class ShapeTransformationContext(val shapeMap: mutable.Map[String, DomainElement
   }
 
   private def updateExternals(): Unit = {
-    semantics.vocab.foreach { vocab =>
-      vocab.iri.option().foreach { iri =>
-        if (!externals.values.toSeq.contains(iri)) {
-          val nextKey = s"ns${externals.keys.count(k => k.startsWith("ns"))}"
-          externals += (nextKey -> iri)
-        }
-      }
-    }
+    semantics.vocab.flatMap(_.iri.option()).map(addToExternals)
 
     semantics.curies.foreach { curie =>
       if (externals.contains(curie.alias.value()) && externals(curie.alias.value()) != curie.iri.value()) {
-        val nextKey = s"${curie.alias.value()}${externals.keys.count(k => k.startsWith(curie.alias.value()))}"
+        val nextKey = computeExternalKey(curie)
         externals += (nextKey -> curie.iri.value())
       } else {
         externals += (curie.alias.value() -> curie.iri.value())
@@ -62,22 +55,29 @@ class ShapeTransformationContext(val shapeMap: mutable.Map[String, DomainElement
 
     semantics.typeMappings.foreach { mapping =>
       val iri = iriBase(mapping.value())
-      if (!externals.values.toSeq.contains(iri)) {
-        val nextKey = s"ns${externals.keys.count(k => k.startsWith("ns"))}"
-        externals += (nextKey -> iri)
-      }
+      addToExternals(iri)
     }
 
-    semantics.mapping.foreach { mapping =>
-      mapping.iri.option().foreach { mappingIri =>
-        val iri = iriBase(mappingIri)
-        if (!externals.values.toSeq.contains(iri)) {
-          val nextKey = s"ns${externals.keys.count(k => k.startsWith("ns"))}"
-          externals += (nextKey -> iri)
-        }
+    semantics.mapping
+      .flatMap(_.iri.option())
+      .map { iri =>
+        val adaptedIri = iriBase(iri)
+        addToExternals(adaptedIri)
       }
+  }
+
+  private def computeExternalKey(curie: CuriePrefix) = {
+    s"${curie.alias.value()}${externals.keys.count(k => k.startsWith(curie.alias.value()))}"
+  }
+
+  private def addToExternals(iri: String) = {
+    if (!externals.values.toSeq.contains(iri)) {
+      val nextKey = computeExternalKey
+      externals += (nextKey -> iri)
     }
   }
+
+  private def computeExternalKey = s"ns${externals.keys.count(k => k.startsWith("ns"))}"
 
   private def iriBase(iri: String): String = {
     if (iri.contains("#")) {

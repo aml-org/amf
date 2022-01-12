@@ -5,6 +5,7 @@ import amf.core.client.scala.model.domain.DomainElement
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 
 case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(implicit errorHandler: AMFErrorHandler) {
+
   val shape: AnyShape = s.linkTarget.getOrElse(s).asInstanceOf[AnyShape]
 
   def transform(): DomainElement = {
@@ -18,14 +19,14 @@ case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(imp
     }
   }
 
-  def ensureNotTransformed(f: => DomainElement): DomainElement = {
+  private def ensureNotTransformed(f: => DomainElement): DomainElement = {
     ctx.shapeMap.get(shape.id) match {
       case Some(mapping) => mapping
       case None          => f
     }
   }
 
-  def updateContext(f: ShapeTransformationContext => DomainElement): DomainElement = {
+  private def updateContext[T](f: ShapeTransformationContext => T): T = {
     shape.semanticContext match {
       case Some(semantics) => f(ctx.updateSemanticContext(semantics))
       case _               => f(ctx)
