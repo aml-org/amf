@@ -6,14 +6,15 @@ import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.SemanticJsonSchemaValidations.UnsupportedConstraint
 
 case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)(
-    implicit errorHandler: AMFErrorHandler) {
+    implicit errorHandler: AMFErrorHandler)
+    extends ShapeTransformer {
 
   val nodeMapping: UnionNodeMapping = UnionNodeMapping(shape.annotations).withId(shape.id)
 
   def transform(): UnionNodeMapping = {
-    setMappingName()
-    setMappingID()
-    updateContext()
+    setMappingName(shape, nodeMapping)
+    setMappingId(nodeMapping)
+    updateContext(nodeMapping)
 
     val members = shape.xone.flatMap {
       case member: AnyShape =>
@@ -32,21 +33,5 @@ case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)
     }
 
     nodeMapping.withObjectRange(members)
-  }
-
-  private def setMappingName(): Unit = {
-    shape.displayName.option() match {
-      case Some(name) => nodeMapping.withName(name.replaceAll(" ", ""))
-      case _          => ctx.genName(nodeMapping)
-    }
-  }
-
-  private def setMappingID(): Unit = {
-    val id = s"#/declarations/${nodeMapping.name}"
-    nodeMapping.withId(id)
-  }
-
-  private def updateContext(): Unit = {
-    ctx.registerNodeMapping(nodeMapping)
   }
 }

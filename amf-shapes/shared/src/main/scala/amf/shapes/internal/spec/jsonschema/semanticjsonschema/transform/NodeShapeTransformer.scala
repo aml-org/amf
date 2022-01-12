@@ -6,23 +6,24 @@ import amf.core.internal.parser.domain.Fields
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 
 case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContext)(
-    implicit errorHandler: AMFErrorHandler) {
+    implicit errorHandler: AMFErrorHandler)
+    extends ShapeTransformer {
 
   val nodeMapping: NodeMapping = NodeMapping(shape.annotations).withId(shape.id)
 
   def transform(): NodeMapping = {
-    setMappingName()
-    setMappingID()
-    updateContext()
+    setMappingName(shape, nodeMapping)
+    setMappingId(nodeMapping)
+    updateContext(nodeMapping)
 
     val propertyMappings = shape.properties.map { property =>
       PropertyShapeTransformer(property, ctx).transform()
     }
+    nodeMapping.withPropertiesMapping(propertyMappings)
 
     checkInheritance()
     checkSemantics()
-    nodeMapping.withPropertiesMapping(propertyMappings)
-
+    nodeMapping
   }
 
   private def checkInheritance(): Unit = {
@@ -32,8 +33,8 @@ case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContex
         case s: AnyShape =>
           val transformed = ShapeTransformation(s, ctx).transform()
           transformed match {
-            case nm: NodeMapping       => nm.link(nm.name.value())
-            case unm: UnionNodeMapping => unm.link(unm.name.value())
+            case nm: NodeMapping       => nm.link[NodeMapping](nm.name.value())
+            case unm: UnionNodeMapping => unm.link[UnionNodeMapping](unm.name.value())
           }
       }
       nodeMapping.withExtends(hierarchy)
@@ -41,27 +42,11 @@ case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContex
   }
 
   private def checkSemantics(): Unit = {
-    ctx.semantics.typeMappings match {
-      case types if types.nonEmpty =>
-        nodeMapping.withNodeTypeMapping(types.head.value()) // @TODO: support multiple type mappings
-      case _ =>
-      // ignore
-    }
-  }
-
-  private def setMappingName(): Unit = {
-    shape.displayName.option() match {
-      case Some(name) => nodeMapping.withName(name.replaceAll(" ", ""))
-      case _          => ctx.genName(nodeMapping)
-    }
-  }
-
-  private def setMappingID(): Unit = {
-    val id = s"#/declarations/${nodeMapping.name}"
-    nodeMapping.withId(id)
-  }
-
-  private def updateContext(): Unit = {
-    ctx.registerNodeMapping(nodeMapping)
+    // @TODO: support multiple type mappings
+    ctx.semantics.typeMappings.headOption
+      .flatMap(_.option())
+      .foreach { typeMapping =>
+        nodeMapping.withNodeTypeMapping(typeMapping)
+      }
   }
 }
