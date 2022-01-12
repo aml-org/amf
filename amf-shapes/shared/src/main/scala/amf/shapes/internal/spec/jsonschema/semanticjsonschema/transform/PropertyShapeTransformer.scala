@@ -3,7 +3,7 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.metamodel.domain.PropertyMappingModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.{DataType, ValueField}
 import amf.core.client.scala.model.DataType._
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, ScalarNode}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
@@ -24,18 +24,21 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     property.range match {
       case scalar: ScalarShape => transformScalarProperty(scalar)
       case obj: NodeShape      => transformObjectProperty(obj)
-      case array: ArrayShape =>
-        propertyMapping.withAllowMultiple(true)
-        array.items match {
-          case scalar: ScalarShape => transformScalarProperty(scalar)
-          case obj: NodeShape      => transformObjectProperty(obj)
-        }
-      case any: AnyShape => transformAnyProperty(any)
+      case array: ArrayShape   => transformArray(array)
+      case any: AnyShape       => transformAnyProperty(any)
     }
     checkMandatoriness()
     checkSemantics()
     transformEnum(property, propertyMapping)
     propertyMapping
+  }
+
+  private def transformArray(array: ArrayShape) = {
+    propertyMapping.withAllowMultiple(true)
+    array.items match {
+      case scalar: ScalarShape => transformScalarProperty(scalar)
+      case obj: NodeShape      => transformObjectProperty(obj)
+    }
   }
 
   private def setMappingName(): Unit = propertyMapping.withName(property.name.value().replaceAll(" ", ""))
@@ -47,31 +50,17 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     val scalarRangeDatatype = sanitizeScalarRange(scalar.dataType.value())
     propertyMapping.withLiteralRange(scalarRangeDatatype)
     // pattern
-    scalar.pattern.option().foreach { pattern =>
-      propertyMapping.withPattern(pattern)
-    }
-    scalar.minimum.option().foreach { minimum =>
-      propertyMapping.withMinimum(minimum)
-    }
-    scalar.maximum.option().foreach { maximum =>
-      propertyMapping.withMaximum(maximum)
-    }
-    /*
-    scalar.values.filter {
-      case _: ScalarNode => true
-      case _             => false // @TODO: advanced types of enums
-    } map { s =>
-
-    }
-   */
+    setWhenPresent(scalar.pattern, propertyMapping.withPattern)
+    setWhenPresent(scalar.minimum, propertyMapping.withMinimum)
+    setWhenPresent(scalar.maximum, propertyMapping.withMaximum)
   }
 
-  def transformObjectProperty(obj: NodeShape): Unit = {
+  private def transformObjectProperty(obj: NodeShape): Unit = {
     val range = ShapeTransformation(obj, ctx).transform()
     propertyMapping.withObjectRange(Seq(range.id))
   }
 
-  def transformAnyProperty(any: AnyShape): Unit = {
+  private def transformAnyProperty(any: AnyShape): Unit = {
     if (any.isAnyType) propertyMapping.withLiteralRange(DataType.Any)
     else {
       val range = ShapeTransformation(any, ctx).transform()
@@ -88,9 +77,7 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
   }
 
   private def checkMandatoriness(): Unit = {
-    property.minCount.option().foreach { minCount =>
-      propertyMapping.withMinCount(minCount)
-    }
+    setWhenPresent(property.minCount, propertyMapping.withMinCount)
   }
 
   private def transformEnum(shape: PropertyShape, target: PropertyMapping) = {
@@ -101,6 +88,7 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     }
   }
 
+  // @TODO: advanced types of enums
   private def literalValues(values: Seq[DataNode]): List[Any] = {
     values
       .filterType[ScalarNode]
@@ -121,28 +109,34 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
 
   private def is(node: ScalarNode, dataType: String) = node.dataType.option().contains(dataType)
 
-  def checkSemantics(): Unit = {
+  private def checkSemantics(): Unit = {
     ctx.semantics.mapping.foreach { semanticMapping =>
-      val alias = semanticMapping.alias.value()
-      if (propertyMapping.name().value() == alias) {
-        semanticMapping.iri.option().foreach { iri =>
-          propertyMapping.withNodePropertyMapping(iri)
+      semanticMapping.alias
+        .option()
+        .filter(alias => alias == propertyMapping.name().value())
+        .foreach { _ =>
+          semanticMapping.iri.option().foreach { iri =>
+            propertyMapping.withNodePropertyMapping(iri)
+          }
+          semanticMapping.coercion.option().foreach { iri =>
+            propertyMapping.withLiteralRange(iri)
+          }
         }
-        semanticMapping.coercion.option().foreach { iri =>
-          propertyMapping.withLiteralRange(iri)
-        }
-      }
     }
     property.range match {
-      case any: AnyShape if any.semanticContext.nonEmpty =>
-        val semanticContext = any.semanticContext.get
-        semanticContext.typeMappings.map(_.value()).headOption match {
-          case Some(iri) =>
-            propertyMapping.withNodePropertyMapping(semanticContext.expand(iri))
-          case None => // Ignore
+      case any: AnyShape =>
+        any.semanticContext.foreach { context =>
+          context.typeMappings
+            .flatMap(_.option())
+            .headOption
+            .foreach { iri =>
+              propertyMapping.withNodePropertyMapping(context.expand(iri))
+            }
         }
+
       case _ => // Ignore
     }
   }
 
+  private def setWhenPresent[T](field: ValueField[T], setValue: T => Unit) = field.option().foreach(setValue(_))
 }
