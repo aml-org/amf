@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "title": "Child",
+  "anyOf": [
+    {"$ref":  "#/$defs/Parent1"},
+    {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "Parent1": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

@@ -17,13 +17,10 @@ class ShapeTransformationContext(val shapeMap: mutable.Map[String, DomainElement
   // when we create it, we update the externals
   updateExternals()
 
-  def transformed(): Seq[DomainElement] = {
-    shapeMap.values.toSeq
-  }
+  def transformed(): Seq[DomainElement] = shapeMap.values.toSeq
 
-  def registerNodeMapping[T <: NodeMappableModel](nodeMapping: NodeMappable[T]): Unit = {
+  def registerNodeMapping[T <: NodeMappableModel](nodeMapping: NodeMappable[T]): Unit =
     shapeMap(nodeMapping.id) = nodeMapping
-  }
 
   def genName[T <: NodeMappableModel](nodeMapping: NodeMappable[T]): NodeMappable[T] = {
     val nodeMappingName = nodeMapping.name.option().getOrElse("SchemaNode")

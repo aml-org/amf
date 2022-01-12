@@ -41,7 +41,7 @@ object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
     val newCtx = context(ctx.copyWithSonsReferences().copy(refs = document.references))
     val parsed = new JsonSchemaParser().parse(document, newCtx, ctx.parsingOptions)
     new IdAdopter(parsed, document.location).adoptFromRelative()
-    val transformed = SchemaTransformer(parsed).transform()
+    val transformed = SchemaTransformer(parsed)(ctx.eh).transform()
     wrapTransformationResult(document.location, transformed)
   }
 
