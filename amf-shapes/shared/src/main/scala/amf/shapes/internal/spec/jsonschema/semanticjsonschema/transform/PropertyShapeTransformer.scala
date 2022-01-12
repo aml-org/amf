@@ -2,6 +2,7 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
 import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.metamodel.domain.PropertyMappingModel
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.DataType._
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, ScalarNode}
@@ -10,9 +11,10 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape}
 import org.mulesoft.common.collections.FilterType
 
-case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext) {
+case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext)(
+    implicit errorHandler: AMFErrorHandler) {
 
-  val propertyMapping: PropertyMapping = PropertyMapping(Fields(), Annotations(property.annotations))
+  val propertyMapping: PropertyMapping = PropertyMapping(property.annotations)
 
   def transform(): PropertyMapping = {
 
