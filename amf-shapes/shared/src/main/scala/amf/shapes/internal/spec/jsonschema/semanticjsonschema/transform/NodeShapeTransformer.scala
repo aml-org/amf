@@ -1,12 +1,14 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
 import amf.aml.client.scala.model.domain.{NodeMapping, UnionNodeMapping}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.internal.parser.domain.Fields
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 
-case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContext) {
+case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContext)(
+    implicit errorHandler: AMFErrorHandler) {
 
-  val nodeMapping: NodeMapping = NodeMapping(Fields(), shape.annotations).withId(shape.id)
+  val nodeMapping: NodeMapping = NodeMapping(shape.annotations).withId(shape.id)
 
   def transform(): NodeMapping = {
     setMappingName()
@@ -30,8 +32,8 @@ case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContex
         case s: AnyShape =>
           val transformed = ShapeTransformation(s, ctx).transform()
           transformed match {
-            case nm: NodeMapping       => nm.link[NodeMapping](nm.name.value())
-            case unm: UnionNodeMapping => unm.link[UnionNodeMapping](unm.name.value())
+            case nm: NodeMapping       => nm.link(nm.name.value())
+            case unm: UnionNodeMapping => unm.link(unm.name.value())
           }
       }
       nodeMapping.withExtends(hierarchy)
