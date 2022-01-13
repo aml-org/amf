@@ -1,5 +1,6 @@
 package amf.cli.internal.commands
 
+import amf.aml.client.scala.AMLConfiguration
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{Mimes, Platform}
@@ -9,7 +10,7 @@ import scala.util.{Failure, Success}
 
 class ParseCommand(override val platform: Platform) extends TranslateCommand(platform) {
 
-  override def run(origConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
+  override def run(origConfig: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
     implicit val ec: ExecutionContext = configuration.getExecutionContext
     val parserConfig                  = origConfig.copy(outputFormat = Some("AMF Graph"), outputMediaType = Some(`application/ld+json`))
     val res = for {

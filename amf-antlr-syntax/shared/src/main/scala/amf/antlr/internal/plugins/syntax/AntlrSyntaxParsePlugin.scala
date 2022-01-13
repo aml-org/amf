@@ -6,13 +6,14 @@ import amf.core.client.scala.parse.AMFSyntaxParsePlugin
 import amf.core.client.scala.parse.document.{ParsedDocument, ParserContext}
 import amf.core.internal.remote.Mimes.`application/x-protobuf`
 import amf.core.internal.remote.Syntax
-import org.mulesoft.antlrast.platform.PlatformProtobuf3Parser
+import org.mulesoft.antlrast.platform.{PlatformGraphQLParser, PlatformProtobuf3Parser}
 
 object AntlrSyntaxParsePlugin extends AMFSyntaxParsePlugin {
 
   override def parse(text: CharSequence, mediaType: String, ctx: ParserContext): ParsedDocument = {
-    val input = text.toString
-    val ast   = new PlatformProtobuf3Parser().parse(ctx.rootContextDocument, input)
+    val input  = text.toString
+    val parser = if (input.contains("proto3")) new PlatformProtobuf3Parser() else new PlatformGraphQLParser()
+    val ast    = parser.parse(ctx.rootContextDocument, input)
     AntlrParsedDocument(ast, None)
   }
 
@@ -21,12 +22,11 @@ object AntlrSyntaxParsePlugin extends AMFSyntaxParsePlugin {
   override val id: String = "antlr-ast-parse"
 
   override def applies(element: CharSequence): Boolean = {
-    val text          = element.toString
-    val isJSONObject  = text.startsWith("{") && text.endsWith("}")
-    val isJSONArray   = text.startsWith("[") && text.endsWith("]")
-    val isYamlHash    = text.startsWith("#")
-    val containsProto = text.contains("proto3")
-    containsProto && !isJSONArray && !isJSONObject && !isYamlHash
+    val text         = element.toString.trim
+    val isJSONObject = text.startsWith("{") && text.endsWith("}")
+    val isJSONArray  = text.startsWith("[") && text.endsWith("]")
+    val isYamlHash   = text.startsWith("#")
+    !isJSONArray && !isJSONObject && !isYamlHash
   }
 
   override def priority: PluginPriority = HighPriority

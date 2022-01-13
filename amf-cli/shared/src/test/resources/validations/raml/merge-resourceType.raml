@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: EWB Api
+version: v1
+
+types:
+  Customer:
+    type: object
+    properties:
+      firstName: string
+    example:
+      firstName: asdf
+
+resourceTypes:
+  collection:
+    post?:
+      body:
+        application/json:
+          type: <<item>>
+
+/customers:
+  type:
+    collection:
+      item: Customer
+  post:
+    body:
+      application/json:
+        type:

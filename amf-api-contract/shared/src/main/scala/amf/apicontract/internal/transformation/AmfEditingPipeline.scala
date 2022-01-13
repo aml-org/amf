@@ -32,7 +32,7 @@ class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override v
       new ResponseExamplesResolutionStage(),
       new PayloadAndParameterResolutionStage(profileName),
       new AnnotationRemovalStage(),
-      SemanticExtensionFlatteningStage
+      new SemanticExtensionFlatteningStage
     ) ++ url :+ SourceInformationStage // source info stage must be invoked after url shortening
   }
 

@@ -2,6 +2,11 @@
 title: Sample API
 types:
   Person:
+    example: |-
+      <Person>
+        <name>max</name>
+        <age>22</age>
+      </Person>
     additionalProperties: true
     properties:
       name:

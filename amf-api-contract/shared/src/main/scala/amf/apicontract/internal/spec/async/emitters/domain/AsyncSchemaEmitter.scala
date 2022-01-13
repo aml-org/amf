@@ -44,7 +44,7 @@ case class AsyncSchemaEmitter(key: String,
     b.entry(
       key,
       b => {
-        val newCtx = new Async20SpecEmitterContext(spec.eh, schemaVersion = schemaVersion)
+        val newCtx = new Async20SpecEmitterContext(spec.eh, config = spec.renderConfig, schemaVersion = schemaVersion)
         OasTypePartEmitter(shape, ordering, references = references)(OasLikeShapeEmitterContextAdapter(newCtx))
           .emit(b)
       }

@@ -5,7 +5,7 @@ import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter.domain.{RamlApiKeySettingsEmitters, RamlOAuth1SettingsEmitters}
 import amf.core.client.common.position.Position
-import amf.core.client.scala.model.domain.DataNode
+import amf.core.client.scala.model.domain.{CustomizableElement, DataNode}
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.Spec
@@ -14,8 +14,10 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.annotations.OrphanOasExtension
-import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, OrphanAnnotationsEmitter}
+import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, ShapeEmitterContext}
+import amf.shapes.internal.spec.oas.emitter
+import amf.shapes.internal.spec.oas.emitter.OasOrphanAnnotationsEmitter
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 
@@ -157,7 +159,8 @@ private case class Oas3OAuth2FlowEmitter(settings: OAuth2Settings, ordering: Spe
     val orphanAnnotations =
       settings.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
 
-    fs.entry(OAuth2SettingsModel.Flows).foreach(f => result += Oas3OAuthFlowsEmitter(f, ordering, orphanAnnotations))
+    fs.entry(OAuth2SettingsModel.Flows)
+      .foreach(f => result += Oas3OAuthFlowsEmitter(f, ordering, orphanAnnotations))
 
     result ++= AnnotationsEmitter(settings, ordering).emitters
 
@@ -183,7 +186,7 @@ private case class Oas3OAuthFlowsEmitter(f: FieldEntry,
   }
 
   private def flowsElementAnnotations(): Seq[EntryEmitter] =
-    OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
+    OasOrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
 
   override def position(): Position = pos(f.value.annotations)
 }
@@ -234,7 +237,7 @@ case class OasOAuth2ScopeEmitter(key: String,
   } // todo : name and description?
 
   private def scopesElementAnnotations(): Seq[EntryEmitter] = {
-    OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
+    OasOrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
   }
 
   override def position(): Position = pos(f.value.annotations)

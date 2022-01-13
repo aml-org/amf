@@ -6,8 +6,9 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
-import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.client.scala.model.domain.{CustomizableElement, DomainElement, Linkable, Shape}
 import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.ArrayEmitter
 import amf.core.internal.render.SpecOrdering
@@ -21,8 +22,10 @@ import org.yaml.model.YType
 
 abstract class SpecEmitterContext(val eh: AMFErrorHandler,
                                   private val refEmitter: RefEmitter,
-                                  val options: RenderOptions)
+                                  val renderConfig: RenderConfiguration)
     extends DeclarationEmissionDecorator {
+
+  val options: RenderOptions = renderConfig.renderOptions
 
   def ref(b: PartBuilder, url: String): Unit = refEmitter.ref(url, b)
 
@@ -47,7 +50,7 @@ trait SpecEmitterFactory {
 
   def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter
 
-  def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter
+  def annotationEmitter: (CustomizableElement, DomainExtension, SpecOrdering) => AnnotationEmitter
 
   def parametrizedSecurityEmitter: (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter
 

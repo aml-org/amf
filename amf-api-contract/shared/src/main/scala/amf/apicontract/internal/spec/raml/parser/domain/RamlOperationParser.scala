@@ -4,7 +4,6 @@ import amf.apicontract.client.scala.model.domain.{Operation, Response}
 import amf.apicontract.internal.annotations.OperationTraitEntry
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.apicontract.internal.metamodel.domain.OperationModel.Method
-import amf.apicontract.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
 import amf.apicontract.internal.spec.common.parser.{
   RamlSecurityRequirementParser,
   SpecParserOps,
@@ -21,6 +20,7 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter}
 import amf.shapes.internal.spec.RamlWebApiContextType
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, OasLikeCreativeWorkParser}
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
@@ -93,7 +93,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
       "is",
       (e: YMapEntry) => {
         operation.annotations += OperationTraitEntry(Range(e.range))
-        ((DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue.optional)(e)
+        (DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue.optional(e)
       }
     )
 
@@ -101,7 +101,8 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
       .requestParser(map, () => operation.withInferredRequest(), parseOptional)
       .parse()
       .foreach(req =>
-        operation.setWithoutId(OperationModel.Request, AmfArray(List(req), Annotations.virtual()), Annotations.inferred()))
+        operation
+          .setWithoutId(OperationModel.Request, AmfArray(List(req), Annotations.virtual()), Annotations.inferred()))
 
     map.key(
       "defaultResponse".asRamlAnnotation,
@@ -138,8 +139,8 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
 
         val defaultResponses = operation.responses
         operation.setWithoutId(OperationModel.Responses,
-                      AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
-                      Annotations(entry))
+                               AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
+                               Annotations(entry))
       }
     )
 
@@ -151,10 +152,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
           .entries
           .flatMap { callbackEntry =>
             val name = callbackEntry.key.as[YScalar].text
-            Oas30CallbackParser(callbackEntry.value.as[YMap],
-                                _.withName(name),
-                                name,
-                                callbackEntry)(toOas(ctx))
+            Oas30CallbackParser(callbackEntry.value.as[YMap], _.withName(name), name, callbackEntry)(toOas(ctx))
               .parse()
           }
         operation.withCallbacks(callbacks)

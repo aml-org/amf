@@ -4,6 +4,7 @@ import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, We
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.plugins.render.EmptyRenderConfiguration
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{Mimes, Spec}
 import amf.core.internal.unsafe.PlatformSecrets
@@ -211,8 +212,9 @@ case class JsonSchemaTestEmitter(to: JSONSchemaVersion) extends SchemaEmitter {
     RenderOptions().withSchemaVersion(SchemaVersion.toClientOptions(to))
 
   override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
+    val config    = EmptyRenderConfiguration(UnhandledErrorHandler, options)
     val shape     = fragment.encodes
-    val emitter   = JsonSchemaEmitter(shape, Seq(shape), options = options, errorHandler = UnhandledErrorHandler)
+    val emitter   = JsonSchemaEmitter(shape, Seq(shape), renderConfig = config, errorHandler = UnhandledErrorHandler)
     val goldenDoc = emitter.emitDocument()
     JsonRender.render(goldenDoc)
   }

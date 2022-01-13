@@ -74,11 +74,11 @@ class GrpcDocumentEmitter(document: BaseUnit, builder: StringDocBuilder) extends
   }
 
   private def emitMessages(l: StringDocBuilder) = {
-    ctx.topLevelMessages.map { s => GrpcMessageEmitter(s, l, ctx).emit() }
+    ctx.topLevelMessages.foreach { s => GrpcMessageEmitter(s, l, ctx).emit() }
   }
 
   private def emitEnums(l: StringDocBuilder) = {
-    ctx.topLevelEnums.map { s => GrpcEnumEmitter(s, l, ctx).emit() }
+    ctx.topLevelEnums.foreach { s => GrpcEnumEmitter(s, l, ctx).emit() }
   }
 
   private def emitServices(l: StringDocBuilder): Unit = {

@@ -145,7 +145,7 @@ case class OasOperationPartEmitter(operation: Operation,
                        a: Option[AnnotationsEmitter],
                        fs: Seq[Field],
                        us: Seq[BaseUnit]): RamlTypePartEmitter = {
-    val ramlCtx = new Raml10SpecEmitterContext(spec.eh)
+    val ramlCtx = new Raml10SpecEmitterContext(spec.eh, config = spec.renderConfig)
     Raml10TypePartEmitter(s, o, a, fs, us)(emitter.RamlShapeEmitterContextAdapter(ramlCtx))
   }
 

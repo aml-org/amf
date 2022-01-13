@@ -13,6 +13,7 @@ object CmdLineParser {
     Oas20Profile.profile == f ||
     AmfProfile.profile == f ||
     GrpcProfile.profile == f ||
+    "GRAPHQL" == f ||
     Aml.id == f
 
   }

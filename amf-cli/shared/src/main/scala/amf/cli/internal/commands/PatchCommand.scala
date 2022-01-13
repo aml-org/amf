@@ -1,5 +1,6 @@
 package amf.cli.internal.commands
 
+import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.DialectInstancePatch
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.model.document.BaseUnit
@@ -11,7 +12,7 @@ import scala.util.{Failure, Success}
 
 class PatchCommand(override val platform: Platform) extends TranslateCommand(platform) {
 
-  override def run(parserConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
+  override def run(parserConfig: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val parsingConfig =
       parserConfig.copy(outputFormat = Some("AML 1.0"), outputMediaType = Some(`application/yaml`), resolve = true)

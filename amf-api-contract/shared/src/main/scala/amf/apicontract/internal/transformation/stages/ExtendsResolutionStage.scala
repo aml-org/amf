@@ -25,6 +25,7 @@ import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig, YNodeLikeOps}
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.unsafe.PlatformSecrets
@@ -396,9 +397,10 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
     private case class EndPointTreeBuilder(endpoint: EndPoint) extends ElementTreeBuilder(endpoint) {
       override protected def astFromEmition: YNode =
-        YDocument(f =>
-          f.obj(
-            Raml10EndPointEmitter(endpoint, SpecOrdering.Lexical)(new Raml10SpecEmitterContext(errorHandler)).emit)).node
+        YDocument(
+          f =>
+            f.obj(Raml10EndPointEmitter(endpoint, SpecOrdering.Lexical)(
+              new Raml10SpecEmitterContext(errorHandler, config = RenderConfiguration.empty(errorHandler))).emit)).node
           .toOption[YMap]
           .map(_.entries)
           .getOrElse(Nil)
@@ -424,7 +426,8 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
     private def emitOperation(operation: Operation, f: PartBuilder): Unit = {
       f.obj(
-        Raml10OperationEmitter(operation, SpecOrdering.Lexical, Nil)(new Raml10SpecEmitterContext(errorHandler)).emit)
+        Raml10OperationEmitter(operation, SpecOrdering.Lexical, Nil)(
+          new Raml10SpecEmitterContext(errorHandler, config = RenderConfiguration.empty(errorHandler))).emit)
     }
   }
 

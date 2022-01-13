@@ -5,7 +5,10 @@ import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.scala.model
 import amf.shapes.client.platform.model.domain._
+import amf.shapes.client.platform.model.domain.operations._
+import amf.shapes.client.scala.model.domain.operations._
 import amf.shapes.internal.domain.metamodel._
+import amf.shapes.internal.domain.metamodel.operations._
 
 /** Shared WebApi registrations. */
 private[amf] object ShapesRegister extends PlatformSecrets {
@@ -72,6 +75,21 @@ private[amf] object ShapesRegister extends PlatformSecrets {
     }
     platform.registerWrapper(IriTemplateMappingModel) {
       case s: model.domain.IriTemplateMapping => IriTemplateMapping(s)
+    }
+    platform.registerWrapper(ShapePayloadModel) {
+      case s: amf.shapes.client.scala.model.domain.operations.ShapePayload => amf.shapes.client.platform.model.domain.operations.ShapePayload(s)
+    }
+    platform.registerWrapper(ShapeOperationModel) {
+      case s: amf.shapes.client.scala.model.domain.operations.ShapeOperation => amf.shapes.client.platform.model.domain.operations.ShapeOperation(s)
+    }
+    platform.registerWrapper(ShapeResponseModel) {
+      case s: amf.shapes.client.scala.model.domain.operations.ShapeResponse => amf.shapes.client.platform.model.domain.operations.ShapeResponse(s)
+    }
+    platform.registerWrapper(ShapeRequestModel) {
+      case s: amf.shapes.client.scala.model.domain.operations.ShapeRequest => amf.shapes.client.platform.model.domain.operations.ShapeRequest(s)
+    }
+    platform.registerWrapper(ShapeParameterModel) {
+      case s: amf.shapes.client.scala.model.domain.operations.ShapeParameter => amf.shapes.client.platform.model.domain.operations.ShapeParameter(s)
     }
   }
 

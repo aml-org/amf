@@ -45,7 +45,7 @@ case class AsyncOperationPartEmitter(operation: Operation, isTrait: Boolean, ord
         val bindingOrphanAnnotations =
           operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
         fs.entry(OperationModel.Bindings)
-          .map(f => tempResult += new AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
+          .map(f => tempResult += AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
         fs.entry(OperationModel.Tags)
           .map(f => tempResult += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
         if (!isTrait) {

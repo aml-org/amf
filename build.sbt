@@ -1,5 +1,7 @@
 
 import Common.snapshots
+import NpmOpsPlugin.autoImport._
+import NpmOpsPlugin.npmInstallDepsTask
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
@@ -30,7 +32,6 @@ lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
 lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")
 lazy val branch     = sys.env.getOrElse("BRANCH_NAME", "develop")
 
-//enablePlugins(ScalaJSBundlerPlugin)
 
 sonarProperties ++= Map(
   "sonar.login"                      -> sonarToken,
@@ -88,20 +89,23 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
     Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar"
   )
   .jsSettings(
-    jsDependencies += ProvidedJS / "ajv.min.js",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-shapes-module.js",
-    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+    scalacOptions += "-P:scalajs:suppressExportDeprecations",
+    npmDependencies += ("ajv", "6.12.6"),
+    npmPackageLoc := "amf-shapes/js"
   )
   .disablePlugins(SonarPlugin)
 
 lazy val shapesJVM =
-  shapes.jvm.in(file("./amf-shapes/jvm")).sourceDependency(amlJVMRef, amlLibJVM)
+  shapes.jvm.in(file("./amf-shapes/jvm"))
+    .sourceDependency(amlJVMRef, amlLibJVM)
 
 lazy val shapesJS =
   shapes.js
     .in(file("./amf-shapes/js"))
     .sourceDependency(amlJSRef, amlLibJS)
+
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 
@@ -130,16 +134,20 @@ lazy val apiContract = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-contract-module.js",
-    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+    scalacOptions += "-P:scalajs:suppressExportDeprecations",
+    npmDependencies += ("ajv", "6.12.6"),
+    npmPackageLoc := "amf-api-contract/js"
   )
   .disablePlugins(SonarPlugin)
 
 lazy val apiContractJVM =
   apiContract.jvm
     .in(file("./amf-api-contract/jvm"))
+
 lazy val apiContractJS =
   apiContract.js
     .in(file("./amf-api-contract/js"))
+
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 /** **********************************************
@@ -148,7 +156,7 @@ lazy val apiContractJS =
 
 lazy val antlrv4JVMRef = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJVM")
 lazy val antlrv4JSRef  = ProjectRef(Common.workspaceDirectory / "amf-antlr-ast", "antlrastJS")
-val antlrv4Version = "0.3.0-SNAPSHOT"
+val antlrv4Version = "0.4.0-SNAPSHOT"
 lazy val antlrv4LibJVM = "com.github.amlorg" %% "antlr-ast" % antlrv4Version
 lazy val antlrv4LibJS  = "com.github.amlorg" %% "antlr-ast_sjs0.6" % antlrv4Version
 
@@ -170,7 +178,9 @@ lazy val antlr = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += antlrv4LibJS,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-antlr-syntax.js",
-    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+    scalacOptions += "-P:scalajs:suppressExportDeprecations",
+    npmDependencies += ("ajv", "6.12.6"),
+    npmPackageLoc := "amf-antlr-syntax/js"
   )
   .disablePlugins(SonarPlugin)
 
@@ -178,6 +188,7 @@ lazy val antlrJVM =
   antlr.jvm
     .in(file("./amf-antlr-syntax/jvm"))
     .sourceDependency(antlrv4JVMRef, antlrv4LibJVM)
+
 lazy val antlrJS =
   antlr.js
     .in(file("./amf-antlr-syntax/js"))
@@ -204,16 +215,20 @@ lazy val grpc = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-grpc.js",
-    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+    scalacOptions += "-P:scalajs:suppressExportDeprecations",
+    npmDependencies += ("ajv", "6.12.6"),
+    npmPackageLoc := "amf-grpc/js"
   )
   .disablePlugins(SonarPlugin)
 
 lazy val grpcJVM =
   grpc.jvm
     .in(file("./amf-grpc/jvm"))
+
 lazy val grpcJS =
   grpc.js
     .in(file("./amf-grpc/js"))
+
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 /** **********************************************
@@ -236,16 +251,20 @@ lazy val graphql = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-graphql.js",
-    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+    scalacOptions += "-P:scalajs:suppressExportDeprecations",
+    npmDependencies += ("ajv", "6.12.6"),
+    npmPackageLoc := "amf-graphql/js"
   )
   .disablePlugins(SonarPlugin)
 
 lazy val graphqlJVM =
   graphql.jvm
     .in(file("./amf-graphql/jvm"))
+
 lazy val graphqlJS =
   graphql.js
     .in(file("./amf-graphql/js"))
+
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 /** **********************************************
@@ -254,7 +273,7 @@ lazy val graphqlJS =
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc)
+  .dependsOn(grpc,graphql)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
@@ -289,14 +308,18 @@ lazy val cli = crossProject(JSPlatform, JVMPlatform)
   )
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-client-module.js",
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "amf.js",
+    npmDependencies += ("ajv", "6.12.6"),
+    npmPackageLoc := "amf-cli/js"
   )
   .jsSettings(TypingGenerationSettings.settings:_*)
   .disablePlugins(SonarPlugin)
 
 lazy val cliJVM = cli.jvm.in(file("./amf-cli/jvm"))
   .sourceDependency(rdfJVMRef % "test", rdfLibJVM % "test")
+
 lazy val cliJS = cli.js.in(file("./amf-cli/js"))
+
   .sourceDependency(rdfJSRef % "test", rdfLibJS % "test")
 
 // Tasks
@@ -304,7 +327,7 @@ lazy val cliJS = cli.js.in(file("./amf-cli/js"))
 val buildJS = TaskKey[Unit]("buildJS", "Build npm module")
 buildJS := {
   val _ = (cliJS / Compile / fullOptJS).value
-  "./amf-cli/js/build-scripts/buildjs.sh" !
+  "./amf-cli/js/build-scripts/create-bundle.sh" !
 }
 
 
@@ -338,7 +361,7 @@ lazy val adhocCli = (project in file("adhoc-cli"))
     },
     addArtifact(assembly / artifact, assembly))
   .dependsOn(apiContractJVM)
-  .disablePlugins(SonarPlugin)
+  .disablePlugins(SonarPlugin, NpmOpsPlugin)
 
 
 addCommandAlias(

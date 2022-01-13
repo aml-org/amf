@@ -17,10 +17,16 @@ import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, Shap
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.FieldEntry
+import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.remote.{Oas20, Oas30, Spec}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters._
-import amf.shapes.internal.spec.common.emitter.annotations.{FacetsInstanceEmitter, OasFacetsInstanceEmitter}
+import amf.shapes.internal.spec.common.emitter.annotations.{
+  AnnotationEmitter,
+  FacetsInstanceEmitter,
+  OasAnnotationEmitter,
+  OasFacetsInstanceEmitter
+}
 import amf.shapes.internal.spec.common.emitter._
 import amf.shapes.internal.spec.common.{OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition, SchemaVersion}
 import amf.shapes.internal.spec.contexts.emitter.oas.{CompactableEmissionContext, OasCompactEmitterFactory}
@@ -30,7 +36,7 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
     extends OasLikeSpecEmitterFactory
     with OasCompactEmitterFactory {
 
-  protected override implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
+  protected override implicit val shapeCtx: OasLikeShapeEmitterContextAdapter = OasLikeShapeEmitterContextAdapter(spec)
 
   override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter =
     (link, _) => OasTagToReferenceEmitter(link)
@@ -136,8 +142,8 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) exte
 
 abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
                                      refEmitter: RefEmitter = OasRefEmitter,
-                                     options: RenderOptions = RenderOptions())
-    extends OasLikeSpecEmitterContext(eh, refEmitter, options)
+                                     renderConfig: RenderConfiguration)
+    extends OasLikeSpecEmitterContext(eh, refEmitter, renderConfig)
     with CompactableEmissionContext {
 
   def schemasDeclarationsPath: String
@@ -146,15 +152,10 @@ abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   override val factory: OasSpecEmitterFactory
-
-  override def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] =
-    super[CompactableEmissionContext].filterLocal(elements)
 }
 
-class Oas3SpecEmitterContext(eh: AMFErrorHandler,
-                             refEmitter: RefEmitter = OasRefEmitter,
-                             options: RenderOptions = RenderOptions())
-    extends OasSpecEmitterContext(eh, refEmitter, options) {
+class Oas3SpecEmitterContext(eh: AMFErrorHandler, refEmitter: RefEmitter = OasRefEmitter, config: RenderConfiguration)
+    extends OasSpecEmitterContext(eh, refEmitter, config) {
   override val anyOfKey: String                = "anyOf"
   val schemaVersion: SchemaVersion             = OAS30SchemaVersion(SchemaPosition.Schema)
   override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory(this)
@@ -162,10 +163,8 @@ class Oas3SpecEmitterContext(eh: AMFErrorHandler,
   override def schemasDeclarationsPath: String = "/components/schemas/"
 }
 
-class Oas2SpecEmitterContext(eh: AMFErrorHandler,
-                             refEmitter: RefEmitter = OasRefEmitter,
-                             options: RenderOptions = RenderOptions())
-    extends OasSpecEmitterContext(eh, refEmitter, options) {
+class Oas2SpecEmitterContext(eh: AMFErrorHandler, refEmitter: RefEmitter = OasRefEmitter, config: RenderConfiguration)
+    extends OasSpecEmitterContext(eh, refEmitter, config) {
   val schemaVersion: SchemaVersion             = OAS20SchemaVersion(SchemaPosition.Schema)
   override val factory: OasSpecEmitterFactory  = new Oas2SpecEmitterFactory(this)
   override val spec: Spec                      = Oas20

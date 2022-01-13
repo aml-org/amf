@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Uri Parameter Examples
+
+/{inlineUriParam}/{includedUriParam1}/{includedUriParam2}:
+  uriParameters:
+    inlineUriParam:
+      displayName: Inline URI parameter
+      description: inlineUriParam
+      type: string
+      example: "wibble"
+    includedUriParam1:
+      description: includedUriParam1
+      type: !include type.raml
+    includedUriParam2:
+      type: !include type.raml
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: object

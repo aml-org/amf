@@ -4,38 +4,20 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION}
-import org.mulesoft.antlrast.ast.Node
+import amf.shapes.client.scala.model.domain.operations.ShapeOperation
+import org.mulesoft.antlrast.ast.{ASTElement, Node}
 
 case class GraphQLFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
-  val property = PropertyShape(toAnnotations(ast))
 
-  def parse(adopt: PropertyShape => Unit): PropertyShape = {
-    parseName()
-    adopt(property)
-    parseDescription()
-    parseArguments()
-    // pareOutputType @TODO
-    property
-  }
-
-  private def parseName(): Unit = {
-    property.withName(findName(ast, "AnonymousField", "", "Missing name for field"))
-  }
-
-  private def parseDescription(): Unit = {
-    findDescription(ast).map(_.value).foreach(property.withDescription)
-  }
-
-  private def parseArguments() = {
-    collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION)).foreach { case argument: Node =>
-      parseArgument(argument)
+  def parse(adopt: Either[PropertyShape, ShapeOperation] => Unit): Unit = {
+    arguments() match {
+      case args if args.nonEmpty =>
+        GraphQLOperationFieldParser(ast).parse((operation) => adopt(Right(operation)))
+      case args if args.isEmpty  =>
+        GraphQLPropertyFieldParser(ast).parse((property) => adopt(Left(property)))
     }
   }
 
-  private def parseArgument(n: Node) = {
-    val name = findName(n, "AnonymousInputType", property.id, "Missing input type name" )
-    val description = findDescription(n)
-    val shape = parseType(n, property.id)
-    // add parameters to propertyShape model @TODO
-  }
+  private def arguments(): Seq[ASTElement] = collect(ast, Seq(ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION))
+
 }

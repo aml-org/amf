@@ -40,7 +40,7 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
       new ServerVariableExampleResolutionStage(),
       new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
       new AnnotationRemovalStage(),
-      SemanticExtensionFlatteningStage
+      new SemanticExtensionFlatteningStage
     ) ++ url :+ SourceInformationStage
 }
 

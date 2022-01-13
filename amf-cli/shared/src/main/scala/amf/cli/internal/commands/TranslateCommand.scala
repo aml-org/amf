@@ -6,6 +6,7 @@ import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.cli.internal.commands.ConfigProvider.configFor
 import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Platform, Spec}
 
@@ -14,7 +15,7 @@ import scala.util.{Failure, Success}
 
 class TranslateCommand(override val platform: Platform) extends CommandHelper {
 
-  def run(parserConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
+  def run(parserConfig: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val res: Future[Any] = for {
       _               <- AMFInit(configuration)
