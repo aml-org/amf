@@ -1,0 +1,22 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SE-23375"
+  },
+  "paths": {
+    "/bucket" : {
+      "get" : {
+        "responses": {
+
+          "200": {
+            "description": "falopa",
+            "schema": {
+              "$ref" : "exchange_modules/8fe5354c-e64c-4eaa-addc-b50906a0b48c/datamodel-tmforum/1.0.0/4.1.0/Customer/Bucket.schema.json"
+            }
+          }
+        }
+      }
+    }
+  }
+}

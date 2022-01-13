@@ -544,8 +544,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       parseResult2 <- client.parse(name2).asFuture
     } yield {
       parseResult.baseUnit shouldBe a[Document]
-      parseResult.baseUnit.id should be("file://api.raml")
-      parseResult2.baseUnit.id should be("file://api2")
+      parseResult.baseUnit.id should be("api.raml")
+      parseResult2.baseUnit.id should be("api2")
     }
   }
 
