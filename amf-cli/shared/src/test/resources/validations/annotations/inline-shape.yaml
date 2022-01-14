@@ -1,0 +1,14 @@
+asyncapi: 2.0.0
+channels:
+  channel:
+    subscribe:
+      message:
+        payload:
+          type: object
+          properties:
+            country:
+              enum: ["USA", "Canada"]
+          if:
+            properties:
+              country:
+                const: USA
