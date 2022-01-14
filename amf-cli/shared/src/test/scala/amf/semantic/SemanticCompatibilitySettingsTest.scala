@@ -1,12 +1,13 @@
 package amf.semantic
 
-import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, OASConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

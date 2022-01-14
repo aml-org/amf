@@ -1,5 +1,6 @@
 package amf.client.model.domain
 
+import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.platform.model.domain.bindings.amqp._
 import amf.apicontract.client.platform.model.domain.bindings.http.{HttpMessageBinding, HttpOperationBinding}
 import amf.apicontract.client.platform.model.domain.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
@@ -10,13 +11,14 @@ import amf.apicontract.client.platform.model.domain.bindings.mqtt.{
   MqttServerLastWill
 }
 import amf.apicontract.client.platform.model.domain.bindings.websockets.WebSocketsChannelBinding
-import amf.apicontract.client.platform.model.domain.bindings._
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.shapes.client.platform.model.domain.AnyShape
-import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class BindingsTest extends FunSuite with Matchers with BeforeAndAfterAll {
+class BindingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
   val s                                    = "test string"
   val stringSeq                            = Seq(s)

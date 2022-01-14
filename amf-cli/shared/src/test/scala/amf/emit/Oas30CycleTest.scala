@@ -1,6 +1,5 @@
 package amf.emit
 
-import amf.core.internal.remote.Syntax.Json
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 

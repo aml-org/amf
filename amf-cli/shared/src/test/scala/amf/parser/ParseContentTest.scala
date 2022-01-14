@@ -2,12 +2,13 @@ package amf.parser
 
 import amf.aml.client.scala.model.document.{Dialect, Vocabulary}
 import amf.apicontract.client.scala.APIConfiguration
-import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.document.Document
+import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Spec._
 import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

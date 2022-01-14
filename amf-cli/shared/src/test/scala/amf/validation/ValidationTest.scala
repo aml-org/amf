@@ -1,14 +1,13 @@
 package amf.validation
 
-import _root_.org.scalatest.AsyncFunSuite
 import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation._
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.remote.Raml10
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -3,16 +3,10 @@ package amf.validation
 import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.exception.{
-  UnsupportedDocumentException,
-  UnsupportedDomainForDocumentException,
-  UnsupportedMediaTypeException,
-  UnsupportedSyntaxForDocumentException
-}
+import amf.core.client.scala.exception.{UnsupportedDomainForDocumentException, UnsupportedSyntaxForDocumentException}
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Oas20, Raml10}
 import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.AsyncFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 

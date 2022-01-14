@@ -7,7 +7,8 @@ import amf.io.FileAssertionTest
 import amf.rdf.client.scala.RdfUnitConverter
 import amf.rdf.internal.unsafe.RdfPlatformSecrets
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
-import org.scalatest.{Assertion, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

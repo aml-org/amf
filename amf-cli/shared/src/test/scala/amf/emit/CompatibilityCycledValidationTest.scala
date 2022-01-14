@@ -1,12 +1,10 @@
 package amf.emit
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, RAMLConfiguration}
-import amf.apicontract.client.scala.{AMFConfiguration, OASConfiguration}
-import amf.core.client.common.validation._
-import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
-import amf.core.client.scala.model.document.BaseUnit
+import amf.apicontract.client.scala.{AMFConfiguration, AsyncAPIConfiguration, OASConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform._
-import amf.core.client.scala.transform.TransformationPipeline
+import amf.core.client.common.validation._
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote._
@@ -15,12 +13,12 @@ import amf.io.FunSuiteCycleTests
 import amf.testing.ConfigProvider.configFor
 import amf.testing.HintProvider.defaultHintFor
 import org.mulesoft.common.io.AsyncFile
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-class CompatibilityCycledValidationTest extends CompatibilityCycle {
+class CompatibilityCycledValidationTest extends CompatibilityCycle with Matchers {
 
   override val basePath = "amf-cli/shared/src/test/resources/compatibility/"
 
@@ -92,7 +90,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers with PlatformS
       .withErrorHandlerProvider(() => DefaultErrorHandler())
       .baseUnitClient()
       .transform(unit, PipelineId.Compatibility)
-    if(!result.conforms) {
+    if (!result.conforms) {
       throw new RuntimeException(s"Compatibility transformation does not conform: ${result.results.head.message}")
     }
     result.baseUnit

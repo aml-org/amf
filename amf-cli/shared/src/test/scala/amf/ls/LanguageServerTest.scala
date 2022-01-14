@@ -1,21 +1,22 @@
 package amf.ls
 
 import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
+import amf.apicontract.client.scala.transform.AbstractElementTransformer
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.templates.ParametrizedDeclaration
 import amf.core.internal.remote.Raml10YamlHint
-import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.client.scala.model.domain.templates.{ResourceType, Trait}
-import amf.apicontract.client.scala.transform.AbstractElementTransformer
 import amf.shapes.client.scala.model.domain.NodeShape
-import org.scalatest.AsyncFunSuite
-import org.scalatest.Matchers._
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 
-class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
+class LanguageServerTest extends AsyncFunSuite with Matchers with CompilerTestBuilder {
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   private val file = "file://amf-cli/shared/src/test/resources/ls/resource-type-trait.raml"

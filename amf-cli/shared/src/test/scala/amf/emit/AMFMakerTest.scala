@@ -8,11 +8,12 @@ import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.ConfigProvider
 import org.mulesoft.common.test.ListAssertions
-import org.scalatest.Matchers._
-import org.scalatest.{Assertion, FunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 import org.yaml.model.YMap
 
-class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions with PlatformSecrets {
+class AMFMakerTest extends AnyFunSuite with Matchers with AMFUnitFixtureTest with ListAssertions with PlatformSecrets {
 
   test("Test simple Raml generation") {
     val root = ast(`document/api/bare`, Raml10YamlHint)

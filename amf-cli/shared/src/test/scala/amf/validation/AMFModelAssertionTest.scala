@@ -1,8 +1,8 @@
 package amf.validation
 
 import amf.apicontract.client.scala._
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Response}
 import amf.apicontract.client.scala.model.domain.api.{AsyncApi, WebApi}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Response}
 import amf.core.client.common.position.Position
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
@@ -11,11 +11,14 @@ import amf.core.client.scala.model.domain.ExternalSourceElement
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath                        = "file://amf-cli/shared/src/test/resources/validations"
@@ -219,11 +222,11 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("inline shapes should not include range of parent key") {
     val api = s"$basePath/annotations/inline-shape.yaml"
     modelAssertion(api, transform = false) { bu =>
-      val components            = new BaseUnitComponents(false)
-      val payload               = components.getFirstPayload(bu)
-      val schema                = payload.schema.asInstanceOf[NodeShape]
-      val ifField               = schema.fields.fields().find(_.field.toString().endsWith("if")).get
-      val inlineShape           = ifField.value.value
+      val components             = new BaseUnitComponents(false)
+      val payload                = components.getFirstPayload(bu)
+      val schema                 = payload.schema.asInstanceOf[NodeShape]
+      val ifField                = schema.fields.fields().find(_.field.toString().endsWith("if")).get
+      val inlineShape            = ifField.value.value
       val inlineShapeAnnotations = inlineShape.annotations
       inlineShapeAnnotations.lexical().start shouldBe Position(12, 12)
       inlineShapeAnnotations.lexical().end shouldBe Position(14, 26)

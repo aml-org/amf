@@ -2,9 +2,10 @@ package amf.client.model
 
 import amf.core.client.platform.model.DataTypes
 import amf.shapes.client.platform.model.domain.ScalarShape
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class ScalarModelTest extends FunSuite with Matchers {
+class ScalarModelTest extends AnyFunSuite with Matchers {
 
   test("Double scalar fields") {
     val number = new ScalarShape()

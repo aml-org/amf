@@ -10,7 +10,7 @@ import amf.core.internal.parser.{AMFCompiler, CompilerConfiguration}
 import amf.core.internal.remote.{Cache, Context, FileNotFound}
 import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

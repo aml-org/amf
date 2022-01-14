@@ -2,20 +2,20 @@ package amf.resolution.stages
 
 import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.model.domain.EndPoint
-import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig}
 import amf.apicontract.client.scala.model.domain.templates.{ParametrizedTrait, Trait}
 import amf.apicontract.internal.spec.common.transformation.stage.DomainElementMerging
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.parser.LimitedParseConfig
 import amf.shapes.client.scala.model.domain.ScalarShape
-import org.scalatest.FunSuite
-import org.scalatest.Matchers._
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 /**
   * Created by pedro.colunga on 10/31/17.
   */
-class DomainElementMergingTest extends FunSuite {
+class DomainElementMergingTest extends AnyFunSuite with Matchers {
 
   test("Merge EndPoints") {
 

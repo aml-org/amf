@@ -2,9 +2,9 @@ package amf.cli.internal.commands
 
 import amf.apicontract.client.scala.{APIConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.remote.{Aml, Mimes, Oas20, Raml10}
+import amf.core.internal.remote.{Aml, Oas20, Raml10}
 import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.AsyncFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 

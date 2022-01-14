@@ -10,7 +10,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SchemaReference, SyamlParsedDocument}
 import amf.core.internal.parser.{LimitedParseConfig, Root}
-import amf.core.internal.remote.{Oas20, Platform, Spec}
+import amf.core.internal.remote.{Oas20, Platform}
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion

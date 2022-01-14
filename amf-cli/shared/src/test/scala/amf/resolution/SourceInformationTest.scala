@@ -4,7 +4,8 @@ import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.BaseUnit
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

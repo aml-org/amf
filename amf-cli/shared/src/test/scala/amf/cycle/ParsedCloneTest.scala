@@ -1,16 +1,16 @@
 package amf.cycle
 
+import amf.apicontract.client.scala.model.domain.security.{HttpSettings, SecurityScheme}
+import amf.apicontract.client.scala.model.domain.templates.Trait
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.DeclaresModel
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.annotations.ErrorDeclaration
-import amf.core.internal.remote.{Amf, AmfJsonHint, Oas30JsonHint, Raml10YamlHint}
+import amf.core.internal.remote.{AmfJsonHint, Oas30JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.apicontract.client.scala.model.domain.security.{HttpSettings, SecurityScheme}
-import amf.apicontract.client.scala.model.domain.templates.Trait
-import org.scalatest.Matchers._
+import org.scalatest.matchers.should.Matchers
 
-class ParsedCloneTest extends FunSuiteCycleTests {
+class ParsedCloneTest extends FunSuiteCycleTests with Matchers {
   override def basePath: String = "amf-cli/shared/src/test/resources/clone/"
 
   test("Test error trait clone") {

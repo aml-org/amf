@@ -8,45 +8,17 @@ import amf.apicontract.client.platform.model.domain.bindings.{
   OperationBindings,
   ServerBindings
 }
-import amf.apicontract.client.platform.model.domain.security.{
-  OAuth2Flow,
-  ParametrizedSecurityScheme,
-  Scope,
-  SecurityRequirement,
-  SecurityScheme,
-  Settings
-}
-import amf.apicontract.client.platform.model.domain.{
-  Callback,
-  CorrelationId,
-  Encoding,
-  EndPoint,
-  License,
-  Message,
-  Operation,
-  Organization,
-  Parameter,
-  Payload,
-  Request,
-  Response,
-  Server,
-  Tag,
-  TemplatedLink
-}
+import amf.apicontract.client.platform.model.domain.security._
+import amf.apicontract.client.platform.model.domain._
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
-import amf.shapes.client.platform.model.domain.{
-  AnyShape,
-  CreativeWork,
-  Example,
-  IriTemplateMapping,
-  PropertyDependencies,
-  XMLSerializer
-}
-import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
+import amf.shapes.client.platform.model.domain._
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class DomainModelTests extends FunSuite with Matchers with BeforeAndAfterAll {
+class DomainModelTests extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
   val s                                    = "test string"
   val clientStringList: ClientList[String] = Seq(s).asClient

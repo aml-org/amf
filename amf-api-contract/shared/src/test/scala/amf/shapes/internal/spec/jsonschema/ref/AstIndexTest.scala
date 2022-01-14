@@ -1,7 +1,6 @@
 package amf.shapes.internal.spec.jsonschema.ref
 
 import amf.aml.internal.registries.AMLRegistry
-import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.internal.spec.async.parser.context.Async20WebApiContext
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
@@ -16,12 +15,14 @@ import amf.shapes.internal.spec.common.{
   JSONSchemaDraft7SchemaVersion,
   JSONSchemaVersion
 }
-import org.scalatest.Matchers.convertToAnyShouldWrapper
-import org.scalatest.{Assertion, FunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 import org.yaml.model.{YMap, YNode}
 import org.yaml.parser.JsonParser
 
-class AstIndexTest extends FunSuite with Matchers with IndexHelper {
+class AstIndexTest extends AnyFunSuite with Matchers with IndexHelper {
 
   test("Json Schema Draft 4 - Id resolution test") {
     val pathToFile = "amf-api-contract/shared/src/test/resources/ast-index/draft-4-spec-example.json"

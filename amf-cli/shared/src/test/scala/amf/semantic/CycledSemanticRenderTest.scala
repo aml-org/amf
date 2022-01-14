@@ -1,18 +1,10 @@
 package amf.semantic
 
-import amf.apicontract.client.scala.{
-  AMFConfiguration,
-  APIConfiguration,
-  AsyncAPIConfiguration,
-  OASConfiguration,
-  RAMLConfiguration
-}
+import amf.apicontract.client.scala._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{AmfJsonHint, Async20YamlHint, Oas20YamlHint, Oas30YamlHint, Raml10YamlHint}
+import amf.core.internal.remote.{Async20YamlHint, Oas20YamlHint, Oas30YamlHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.Future
 

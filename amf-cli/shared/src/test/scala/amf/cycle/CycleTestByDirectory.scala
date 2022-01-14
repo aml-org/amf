@@ -6,7 +6,8 @@ import amf.core.internal.plugins.document.graph._
 import amf.core.internal.remote.{AmfJsonHint, Hint}
 import amf.io.{BuildCycleTests, JsonLdSerializationSuite}
 import org.mulesoft.common.io.{Fs, SyncFile}
-import org.scalatest.{Assertion, AsyncFreeSpec}
+import org.scalatest.Assertion
+import org.scalatest.freespec.AsyncFreeSpec
 
 import scala.concurrent.{ExecutionContext, Future}
 

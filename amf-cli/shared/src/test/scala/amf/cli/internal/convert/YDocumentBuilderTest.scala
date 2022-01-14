@@ -1,15 +1,12 @@
 package amf.cli.internal.convert
 
 import amf.apicontract.client.scala.AMFConfiguration
-import amf.apicontract.internal.transformation.Raml10EditingPipeline
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Amf, AmfJsonHint, Raml10YamlHint}
-import amf.core.internal.render.AMFSerializer
+import amf.core.internal.remote.{AmfJsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.testing.ConfigProvider
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.Assertion
 import org.yaml.builder.YDocumentBuilder
@@ -20,6 +17,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 // TODO add more test cases
 abstract class DocBuilderTest extends FunSuiteCycleTests {
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   override def basePath: String                            = "amf-cli/shared/src/test/resources/render/"
 

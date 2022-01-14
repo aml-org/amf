@@ -2,9 +2,9 @@ package amf.validation
 
 import amf.core.client.common.validation.Raml10Profile
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class AMFValidationReportTest extends FunSuite {
+class AMFValidationReportTest extends AnyFunSuite {
 
   test("Test to string report with null values in results") {
 

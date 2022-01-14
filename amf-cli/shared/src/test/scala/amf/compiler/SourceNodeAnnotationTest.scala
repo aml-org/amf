@@ -10,14 +10,16 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfObject, Shape}
 import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
-import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.mulesoft.lexer.InputRange
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 
 class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder with Matchers {
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def defaultConfig: AMFConfiguration =

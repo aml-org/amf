@@ -5,15 +5,16 @@ import amf.core.client.common.position.Range
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.Matchers._
-import org.scalatest.{AsyncFunSuite, Succeeded}
+import org.scalatest.Succeeded
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 
 /**
   * Created by pedro.colunga on 10/10/17.
   */
-class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
+class ForwardReferencesTest extends AsyncFunSuite with Matchers with PlatformSecrets {
 
   private val referencesPath = "file://amf-cli/shared/src/test/resources/references/"
   private val basePath       = "file://amf-cli/shared/src/test/resources/upanddown/"

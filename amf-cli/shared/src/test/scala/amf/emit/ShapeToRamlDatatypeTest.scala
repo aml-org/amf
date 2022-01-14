@@ -1,15 +1,15 @@
 package amf.emit
 
-import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.{APIConfiguration, RAMLConfiguration}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.client.scala.render.RamlShapeRenderer.toRamlDatatype
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -3,12 +3,13 @@ package amf.client.model.domain
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain._
-import amf.core.internal.convert.CoreRegister
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.platform.model.domain._
-import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class ShapesTest extends FunSuite with Matchers with PlatformSecrets with BeforeAndAfterAll {
+class ShapesTest extends AnyFunSuite with Matchers with PlatformSecrets with BeforeAndAfterAll {
 
   val s                                                     = "test string"
   val clientStringList: ClientList[String]                  = Seq(s).asClient

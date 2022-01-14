@@ -1,15 +1,17 @@
 package amf.cache
 
 import amf.apicontract.client.scala.model.domain.api.Api
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, RAMLConfiguration}
-import amf.core.client.common.transform.{PipelineId, PipelineName}
+import amf.apicontract.client.scala.{AMFConfiguration, RAMLConfiguration}
+import amf.core.client.common.transform.PipelineId
 import amf.core.client.platform.resource.ResourceNotFound
 import amf.core.client.scala.config.{CachedReference, UnitCache}
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.shapes.client.scala.model.domain.NodeShape
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -1,14 +1,12 @@
 package amf.validation
 
-import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
-import amf.core.client.common.validation.Raml10Profile
+import amf.apicontract.client.scala.RAMLConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.model.document.{Document, Module, PayloadFragment}
 import amf.core.client.scala.model.domain.ScalarNode
 import amf.core.client.scala.validation.AMFValidator
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
-import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.render.AMFSerializer
 import amf.io.FileAssertionTest
@@ -16,7 +14,8 @@ import amf.shapes.client.scala.model.domain.{NodeShape, ScalarShape}
 import amf.shapes.internal.spec.payload.PayloadRenderPlugin
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 

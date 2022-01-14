@@ -1,10 +1,10 @@
 package amf.emit
 
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.templates.{ParametrizedDeclaration, VariableValue}
-import amf.core.internal.remote.{Hint, Raml10, Raml10YamlHint, Spec}
+import amf.core.internal.remote.{Hint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.Assertion
 

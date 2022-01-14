@@ -1,6 +1,5 @@
 package amf.resolution.merge
 
-import amf.aml.internal.entities.AMLEntities
 import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.{Message, Operation}
@@ -17,9 +16,8 @@ import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DataNode, Scal
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.convert.BaseUnitConverter
-import amf.core.internal.parser.{CompilerConfiguration, _}
+import amf.core.internal.parser._
 import amf.core.internal.remote.AmfJsonHint
-import amf.core.internal.remote.Spec.AMF
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.emit.AMFRenderer
@@ -28,7 +26,8 @@ import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
 import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.mulesoft.common.io.Fs
-import org.scalatest.{Assertion, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.matchers.should.Matchers
 import org.yaml.model.{YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
