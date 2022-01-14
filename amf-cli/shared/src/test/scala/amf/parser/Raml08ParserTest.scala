@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.core.internal.remote.{Amf, AmfJsonHint, Raml08YamlHint}
+import amf.core.internal.remote.{AmfJsonHint, Raml08YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class Raml08ParserTest extends FunSuiteCycleTests {

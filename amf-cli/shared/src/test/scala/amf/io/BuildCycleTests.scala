@@ -10,7 +10,8 @@ import amf.core.internal.remote.{AmfJsonHint, Hint, Spec}
 import amf.rdf.client.scala.{RdfModel, RdfUnitConverter}
 import amf.testing.ConfigProvider.configFor
 import org.scalactic.Fail
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 

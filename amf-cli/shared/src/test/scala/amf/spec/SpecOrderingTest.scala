@@ -4,13 +4,13 @@ import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.internal.render.SpecOrdering.Lexical
 import amf.core.internal.render.emitters.Emitter
-import org.scalatest.FunSuite
-import org.scalatest.Matchers._
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 /**
   * Created by pedro.colunga on 8/23/17.
   */
-class SpecOrderingTest extends FunSuite {
+class SpecOrderingTest extends AnyFunSuite with Matchers {
 
   test("Test lexical spec ordering - with lexical") {
     val a = PosEmitter("a", Position(1, 0))

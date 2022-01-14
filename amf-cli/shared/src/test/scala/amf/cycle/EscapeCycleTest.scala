@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.core.internal.remote.{Raml10, Raml10YamlHint}
+import amf.core.internal.remote.Raml10YamlHint
 import amf.io.FunSuiteCycleTests
 
 class EscapeCycleTest extends FunSuiteCycleTests {

@@ -2,18 +2,18 @@ package amf.maker
 
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.document.{APIContractProcessingData, DataTypeFragment}
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
-import amf.core.client.scala.model.document.{BaseUnitSourceInformation, Document, Fragment, LocationInformation}
-import amf.core.client.scala.model.domain.AmfObject
-import amf.core.internal.remote._
-import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.internal.adoption.IdAdopter
+import amf.core.client.scala.model.document.{Document, Fragment}
+import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.metamodel.document.BaseUnitModel
+import amf.core.internal.remote._
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
 import amf.shapes.client.scala.model.domain.NodeShape
-import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -21,6 +21,7 @@ import scala.concurrent.{ExecutionContext, Future}
   *
   */
 class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with AmfObjectTestMatcher {
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Data type fragment test raml") {

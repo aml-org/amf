@@ -1,7 +1,7 @@
 package amf.cycle
 
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{Amf, AmfJsonHint, Raml10YamlHint}
+import amf.core.internal.remote.{AmfJsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class RamlArrayCycleTest extends FunSuiteCycleTests {

@@ -8,8 +8,9 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.traversal.iterator.{AmfElementStrategy, InstanceCollector}
 import amf.core.internal.remote.Spec
 import org.mulesoft.common.collections.FilterType
-import org.scalatest.Matchers.{fail, succeed}
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.Assertions.{fail, succeed}
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -51,7 +52,8 @@ class ResolvedModelDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest 
     val client = APIConfiguration.API().baseUnitClient()
     for {
       parseResult <- client.parse(path)
-      transformResult <- Future.successful(amfConfigFrom(parseResult.sourceSpec).baseUnitClient().transform(parseResult.baseUnit, PipelineId.Cache))
+      transformResult <- Future.successful(
+        amfConfigFrom(parseResult.sourceSpec).baseUnitClient().transform(parseResult.baseUnit, PipelineId.Cache))
     } yield {
       validateIds(transformResult.baseUnit)
     }
@@ -70,8 +72,9 @@ class ResolvedModelDuplicateIdsTest extends AsyncFunSuite with DuplicateIdsTest 
 trait DuplicateIdsTest {
 
   def validateIds(unit: BaseUnit): Assertion = {
-    val elements                    = unit
-      .iterator(strategy = AmfElementStrategy, fieldsFilter = All, visited = InstanceCollector()).toList
+    val elements = unit
+      .iterator(strategy = AmfElementStrategy, fieldsFilter = All, visited = InstanceCollector())
+      .toList
     val objs: Seq[AmfObject] = elements.filterType[AmfObject]
     validateUndefinedIds(objs)
     validateDuplicateIds(objs)
@@ -80,9 +83,10 @@ trait DuplicateIdsTest {
 
   private def validateDuplicateIds(objs: Seq[AmfObject]): Unit = {
     val groupedById = objs.groupBy(_.id)
-    groupedById.foreach { case (id, elems) =>
-      if (elems.size > 1)
-        fail(s"Duplicate id: $id")
+    groupedById.foreach {
+      case (id, elems) =>
+        if (elems.size > 1)
+          fail(s"Duplicate id: $id")
     }
   }
 

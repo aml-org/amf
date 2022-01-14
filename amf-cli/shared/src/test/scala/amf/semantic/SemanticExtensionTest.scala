@@ -7,7 +7,9 @@ import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Value
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -1,8 +1,8 @@
 package amf.validation
 
-import amf.apicontract.client.scala.RAMLConfiguration
-import amf.apicontract.client.scala.WebAPIConfiguration
-import org.scalatest.{AsyncFunSuite, Matchers}
+import amf.apicontract.client.scala.{RAMLConfiguration, WebAPIConfiguration}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 
@@ -26,9 +26,9 @@ class SingleConfigurationTest extends AsyncFunSuite with Matchers {
     val api    = "file://amf-cli/shared/src/test/resources/validations/raml/multiple-syaml-errors/api.raml"
     val client = RAMLConfiguration.RAML().baseUnitClient()
     for {
-      firstParsed   <- client.parse(api)
-      secondParsed   <- client.parse(api)
-      thirdParsed   <- client.parse(api)
+      firstParsed  <- client.parse(api)
+      secondParsed <- client.parse(api)
+      thirdParsed  <- client.parse(api)
     } yield {
       val amtOfErrors = firstParsed.results.size
       assert(amtOfErrors == 46)

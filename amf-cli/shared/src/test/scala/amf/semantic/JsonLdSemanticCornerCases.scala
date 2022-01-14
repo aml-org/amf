@@ -10,7 +10,8 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type._
 import amf.core.internal.remote.Mimes
 import amf.io.FileAssertionTest
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -3,7 +3,6 @@ package amf.semantic
 import amf.apicontract.client.scala._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests
 

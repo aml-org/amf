@@ -1,13 +1,12 @@
 package amf.cli.internal.convert
 
-import _root_.org.scalatest.{Assertion, Matchers}
+import _root_.org.scalatest.Assertion
 import amf.aml.client.platform.model.document.Vocabulary
 import amf.aml.client.platform.model.domain.{ClassTerm, DatatypePropertyTerm, PropertyTerm}
-import amf.aml.client.scala.AMLConfiguration
+import amf.apicontract.client.platform._
 import amf.apicontract.client.platform.model.document.TraitFragment
 import amf.apicontract.client.platform.model.domain.api.{Api, WebApi}
 import amf.apicontract.client.platform.model.domain.{Operation, Parameter}
-import amf.apicontract.client.platform._
 import amf.apicontract.client.scala.model.domain.CorrelationId
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.common.remote.Content
@@ -15,13 +14,11 @@ import amf.core.client.common.render.JSONSchemaVersions
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode
 import amf.core.client.platform.config.RenderOptions
-import amf.core.client.platform.model.AmfObjectWrapper
 import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.platform.model.domain._
 import amf.core.client.platform.parse.AMFParser
 import amf.core.client.platform.parse.AMFParser.parseStartingPoint
 import amf.core.client.platform.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
-import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.exception.UnsupportedVendorException
 import amf.core.client.scala.model.document.{Document => InternalDocument}
@@ -35,7 +32,6 @@ import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
-import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.convert.CoreClientConverters.{ClientFuture, _}
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote._
@@ -45,6 +41,7 @@ import amf.shapes.client.platform.ShapesConfiguration
 import amf.shapes.client.platform.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.client.platform.render.JsonSchemaShapeRenderer
 import org.mulesoft.common.test.Diff
+import org.scalatest.matchers.should.Matchers
 import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -1019,7 +1016,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     unit
   }
 
-
   private def resourceLoaderFor(url: String, content: String): ResourceLoader = {
     new ResourceLoader {
       override def fetch(resource: String): Future[Content] =
@@ -1305,7 +1301,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         val doc: Document = new Document()
         doc.withId("http://location.com/myfile")
         val shape = new ScalarShape().withName("scalarDeclared").withDataType(ns)
-        val wa = new WebApi().withName("test")
+        val wa    = new WebApi().withName("test")
         doc.withEncodes(wa)
         val annotationType =
           new CustomDomainProperty()
@@ -1354,7 +1350,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       val r = client.transform(a.baseUnit)
       val operations =
         r.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]].endPoints.asSeq.head.operations.asSeq
-      val getOp = operations.find(_.method.value().equals("get")).get
+      val getOp        = operations.find(_.method.value().equals("get")).get
       val getOpPayload = getOp.request.payloads.asSeq.head
       val option = getOp.request.payloads.asSeq.head.schema
         .asInstanceOf[AnyShape]
@@ -1363,9 +1359,9 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       option.isDefined should be(true)
       option.get.annotations().isTracked should be(true)
 
-      val postOp = operations.find(_.method.value().equals("post")).get
+      val postOp        = operations.find(_.method.value().equals("post")).get
       val postOpPayload = postOp.request.payloads.asSeq.head
-      val shape   = postOp.request.payloads.asSeq.head.schema.asInstanceOf[AnyShape]
+      val shape         = postOp.request.payloads.asSeq.head.schema.asInstanceOf[AnyShape]
       val option2 = shape
         .trackedExample(postOpPayload.id)
         .asOption
@@ -1971,7 +1967,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           .asSeq
           .find {
             case n: NodeShape => n.name.value() == "conditional-subschemas"
-            case _ => false
+            case _            => false
           }
           .get
           .asInstanceOf[NodeShape]

@@ -1,14 +1,15 @@
 package amf.semantic
 
-import amf.apicontract.client.scala.AsyncAPIConfiguration
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration, OASConfiguration, RAMLConfiguration}
+import amf.apicontract.client.scala._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
-import amf.core.client.scala.traversal.iterator.{AmfElementStrategy, InstanceCollector}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.traversal.iterator.InstanceCollector
 import org.mulesoft.common.collections.FilterType
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

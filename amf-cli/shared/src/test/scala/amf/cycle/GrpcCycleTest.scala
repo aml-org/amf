@@ -1,15 +1,11 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.{AMFConfiguration, APIConfiguration}
-import amf.core.client.scala.AMFGraphConfiguration
+import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
-import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.GrpcProtoHint
 import amf.grpc.client.scala.GRPCConfiguration
 import amf.io.FunSuiteCycleTests
-
-import scala.concurrent.Future
 
 class GrpcCycleTest extends FunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/cycle/grpc/"

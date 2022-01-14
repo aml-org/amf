@@ -1,11 +1,12 @@
 package amf.document.apicontract.validation.payload
 
-import amf.core.client.scala.model.domain.ScalarNode
 import amf.apicontract.internal.validation.payload.collector.EnumInShapesCollector
+import amf.core.client.scala.model.domain.ScalarNode
 import amf.shapes.client.scala.model.domain.NodeShape
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class ValidationCandidateCollectorTest extends FunSuite with Matchers {
+class ValidationCandidateCollectorTest extends AnyFunSuite with Matchers {
 
   test("generation of validation candidates for enums in shape") {
     val shape = NodeShape().withId("id")

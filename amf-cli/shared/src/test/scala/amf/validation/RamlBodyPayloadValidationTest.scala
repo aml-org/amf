@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.apicontract.client.scala.{AMFBaseUnitClient, WebAPIConfiguration}
+import amf.apicontract.client.scala.AMFBaseUnitClient
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.{StrictValidationMode, ValidationMode}
@@ -11,9 +11,9 @@ import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.MediaTypeMatcher
-import amf.testing.ConfigProvider
 import amf.testing.ConfigProvider.configFor
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

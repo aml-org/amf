@@ -4,9 +4,11 @@ import amf.apicontract.client.platform.model.domain.security._
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.internal.convert.ApiClientConverters._
 import amf.core.client.platform.model.domain.ScalarNode
-import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class SettingsTest extends FunSuite with Matchers with BeforeAndAfterAll {
+class SettingsTest extends AnyFunSuite with Matchers with BeforeAndAfterAll {
 
   val s                                    = "test string"
   val clientStringList: ClientList[String] = Seq(s).asClient

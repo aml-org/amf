@@ -1,4 +1,5 @@
 package amf.emit
+
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote._
 import amf.io.FunSuiteCycleTests

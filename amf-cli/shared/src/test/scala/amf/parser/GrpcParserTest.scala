@@ -3,7 +3,7 @@ package amf.parser
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler, UnhandledErrorHandler}
-import amf.core.internal.remote.{Amf, AmfJsonHint, GrpcProtoHint}
+import amf.core.internal.remote.{AmfJsonHint, GrpcProtoHint}
 import amf.grpc.client.scala.GRPCConfiguration
 import amf.io.FunSuiteCycleTests
 

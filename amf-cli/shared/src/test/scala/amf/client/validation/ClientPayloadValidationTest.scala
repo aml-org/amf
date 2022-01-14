@@ -11,7 +11,8 @@ import amf.core.internal.remote.Mimes._
 import amf.shapes.client.platform.ShapesConfiguration
 import amf.shapes.client.platform.model.domain._
 import amf.shapes.client.scala.model.domain.{ScalarShape => InternalScalarShape}
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 

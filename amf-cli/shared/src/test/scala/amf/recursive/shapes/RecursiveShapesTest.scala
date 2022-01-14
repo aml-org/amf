@@ -3,9 +3,8 @@ package amf.recursive.shapes
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.internal.transformation.ValidationTransformationPipeline
 import amf.core.client.common.validation.{ProfileName, Raml10Profile}
-import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Hint, Oas20, Oas20JsonHint, Raml10YamlHint}
+import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.validation.MultiPlatformReportGenTest
 import org.scalatest.Assertion

@@ -1,9 +1,11 @@
 package amf.spec
 
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.{isOasAnnotation, isRamlAnnotation, resolveAnnotation}
-import org.scalatest.{FunSuite, Inspectors, Matchers}
+import org.scalatest.Inspectors
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class AnnotationsTest extends FunSuite with Matchers with Inspectors {
+class AnnotationsTest extends AnyFunSuite with Matchers with Inspectors {
 
   private val ramlFixture = Seq(
     ("title", None),

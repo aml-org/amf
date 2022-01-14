@@ -1,9 +1,10 @@
 package amf.compiler
 
 import amf.core.client.scala.parse.document.ReferenceFragmentPartition
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class ReferenceFragmentPartitionTest extends WordSpec with Matchers{
+class ReferenceFragmentPartitionTest extends AnyWordSpec with Matchers {
 
 
   private case class ParsedFragmentUrl(base:String, path:String, fragment:Option[String])

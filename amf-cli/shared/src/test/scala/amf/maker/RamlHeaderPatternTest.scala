@@ -1,12 +1,12 @@
 package amf.maker
 
-import amf.apicontract.internal.spec.raml.RamlHeader
 import amf.apicontract.internal.spec.raml.RamlFragmentHeader.Raml10DataType
-import RamlHeader.{Raml08, Raml10, Raml10Library}
-import org.scalatest.FunSuite
-import org.scalatest.Matchers._
+import amf.apicontract.internal.spec.raml.RamlHeader
+import amf.apicontract.internal.spec.raml.RamlHeader.{Raml08, Raml10, Raml10Library}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class RamlHeaderPatternTest extends FunSuite {
+class RamlHeaderPatternTest extends AnyFunSuite with Matchers {
 
   case class HeaderCase(useCase: String, text: String, expected: Option[RamlHeader])
 

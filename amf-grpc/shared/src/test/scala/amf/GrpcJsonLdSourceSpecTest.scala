@@ -2,11 +2,13 @@ package amf
 
 import amf.core.internal.remote.{Mimes, Spec}
 import amf.grpc.client.scala.GRPCConfiguration
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class GrpcJsonLdSourceSpecTest extends AsyncFunSuite with Matchers {
+
   override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val path = "file://amf-cli/shared/src/test/resources/upanddown/grpc/google/empty.proto"

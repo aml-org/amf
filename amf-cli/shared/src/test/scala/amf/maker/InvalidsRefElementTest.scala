@@ -1,17 +1,17 @@
 package amf.maker
 
 import amf.apicontract.client.scala.AMFConfiguration
+import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.model.domain.security.SecurityScheme
+import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait}
+import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorResponse
 import amf.compiler.CompilerTestBuilder
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.remote.{Oas20YamlHint, Raml10YamlHint}
-import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorResponse
-import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.apicontract.client.scala.model.domain.security.SecurityScheme
-import amf.apicontract.client.scala.model.domain.templates.{ParametrizedResourceType, ParametrizedTrait}
 import amf.shapes.client.scala.model.domain.AnyShape
-import org.scalatest.AsyncFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContext.Implicits.global

@@ -8,9 +8,11 @@ import amf.core.internal.metamodel.{ModelDefaultBuilder, Obj}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.internal.entities.ShapeEntities
 import org.reflections.Reflections
-import org.scalatest.{Assertion, FunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class RegisteredMetaModelTest extends FunSuite with Matchers with PlatformSecrets {
+class RegisteredMetaModelTest extends AnyFunSuite with Matchers with PlatformSecrets {
 
   test("APIEntities contains all ApiContract domain entities") {
     check(new Reflections("amf.apicontract.internal.metamodel.domain"), APIEntities, blocked = List(BaseApiModel))
@@ -29,7 +31,7 @@ class RegisteredMetaModelTest extends FunSuite with Matchers with PlatformSecret
   }
 
   private def check(reflection: Reflections, entities: Entities, blocked: Seq[ModelDefaultBuilder] = Nil): Assertion = {
-    val models = getMetaModels(reflection)
+    val models         = getMetaModels(reflection)
     val actualBuilders = models.collect { case b: ModelDefaultBuilder => b }
     val missingEntities = actualBuilders
       .filter { model =>
