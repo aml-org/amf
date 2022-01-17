@@ -321,15 +321,6 @@ lazy val cliJS = cli.js.in(file("./amf-cli/js"))
 
   .sourceDependency(rdfJSRef % "test", rdfLibJS % "test")
 
-// Tasks
-
-val buildJS = TaskKey[Unit]("buildJS", "Build npm module")
-buildJS := {
-  val _ = (cliJS / Compile / fullOptJS).value
-  "./amf-cli/js/build-scripts/create-bundle.sh" !
-}
-
-
 /** **********************************************
   * AD-HOC CLI
   * ********************************************* */
