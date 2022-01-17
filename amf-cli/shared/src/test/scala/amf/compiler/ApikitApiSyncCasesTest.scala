@@ -142,6 +142,28 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     }
   }
 
+  // APIMF-3533
+  test("references to external yaml using './'") {
+    val mappings = Map(
+      "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:pure-member:1.0.0:oas:zip:pure-member-portal.yaml" -> CustomContentResult(
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/dot-slash-ref/pure-member-portal.yaml",
+        "jar:file:/1.0.0/pure-member-1.0.0-oas.zip!/pure-member-portal.yaml"
+      ),
+      "responses.yaml" -> CustomContentResult(
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/dot-slash-ref/responses.yaml",
+        "jar:file:/1.0.0/pure-member-1.0.0-oas.zip!/responses.yaml"
+      ),
+    )
+    val url = "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:pure-member:1.0.0:oas:zip:pure-member-portal.yaml"
+    val client = WebAPIConfiguration
+      .WebAPI()
+      .withResourceLoaders(List(new URNResourceLoader(mappings)))
+      .baseUnitClient()
+    client.parse(url).map { parseResult =>
+      parseResult.results should have size 0
+    }
+  }
+
   case class CustomContentResult(actualPath: String, customPath: String)
 
   object CustomContentResult {
