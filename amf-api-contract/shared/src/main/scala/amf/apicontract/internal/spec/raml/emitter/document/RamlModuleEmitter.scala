@@ -9,6 +9,7 @@ import amf.apicontract.internal.spec.raml.{RamlFragmentHeader, RamlHeader, emitt
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Fragment, Module}
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.remote.Raml10
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, traverse}

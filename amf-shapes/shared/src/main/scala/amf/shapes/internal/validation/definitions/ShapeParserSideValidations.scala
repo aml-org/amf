@@ -117,11 +117,6 @@ object ShapeParserSideValidations extends Validations {
     "Unable to parse shape extensions"
   )
 
-  val ExceededMaxYamlReferences = validation(
-    "max-yaml-references",
-    "Exceeded maximum yaml references threshold"
-  )
-
   val InvalidJsonSchemaType = validation(
     "invalid-json-schema-type",
     "Invalid json schema definition type"
@@ -340,7 +335,6 @@ object ShapeParserSideValidations extends Validations {
     UserDefinedFacetMatchesAncestorsTypeFacets,
     MissingRequiredUserDefinedFacet,
     UnableToParseShapeExtensions,
-    ExceededMaxYamlReferences,
     InvalidJsonSchemaType,
     InvalidContextNode,
     InvalidCharacteristicsNode,

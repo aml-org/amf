@@ -8,10 +8,10 @@ import amf.core.internal.remote.Spec
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.validation.RenderSideValidations.RenderValidation
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.oas.emitter
 import amf.shapes.internal.spec.raml.emitter.{RamlNamedTypeEmitter, RamlRecursiveShapeTypeEmitter}
-import amf.shapes.internal.validation.definitions.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.EntryBuilder
 
 case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(

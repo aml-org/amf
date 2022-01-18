@@ -4,7 +4,8 @@ import amf.aml.client.scala.{AMLConfiguration, AMLDialectResult}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 

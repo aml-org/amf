@@ -4,10 +4,10 @@ import amf.apicontract.internal.spec.common.parser.{WebApiContext, WebApiShapePa
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidAbstractDeclarationType
 import amf.core.client.scala.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.domain.templates.{ParametrizedDeclarationModel, VariableValueModel}
 import amf.core.internal.parser.YNodeLikeOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
-import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.yaml.model._
 
 object ParametrizedDeclarationParser {
@@ -43,15 +43,14 @@ case class ParametrizedDeclarationParser(
               .zipWithIndex
               .map {
                 case (variableEntry, index) =>
-                  val node = DataNodeParser(variableEntry.value)(
-                    WebApiShapeParserContextAdapter(ctx)).parse()
+                  val node = DataNodeParser(variableEntry.value)(WebApiShapeParserContextAdapter(ctx)).parse()
                   VariableValue(variableEntry)
                     .withName(variableEntry.key)
                     .setWithoutId(VariableValueModel.Value, node, Annotations(variableEntry.value))
               }
             declaration.setWithoutId(ParametrizedDeclarationModel.Variables,
-                            AmfArray(variables, Annotations(entry.value)),
-                            Annotations.inferred())
+                                     AmfArray(variables, Annotations(entry.value)),
+                                     Annotations.inferred())
         }
       case _ if node.tagType == YType.Str =>
         val declaration = fromStringNode(node)

@@ -9,12 +9,12 @@ import amf.apicontract.internal.spec.common.parser.{
   WebApiShapeParserContextAdapter
 }
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isOasAnnotation
-import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext)

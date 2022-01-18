@@ -3,12 +3,12 @@ package amf.apicontract.internal.spec.common.emitter
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
-import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
+import amf.core.internal.validation.RenderSideValidations.RenderValidation
 import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
-import amf.shapes.internal.validation.definitions.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 
