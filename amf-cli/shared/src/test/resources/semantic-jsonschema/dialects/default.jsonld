@@ -1,0 +1,300 @@
+{
+  "@graph": [
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      }
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/Child"
+        }
+      ]
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/SchemaNode"
+        },
+        {
+          "@id": "#/declarations/Child"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "amf-json-schema-generated-dialect",
+      "core:version": "1.0",
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declarations/SchemaNode",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode",
+      "shacl:property": [
+        {
+          "@id": "/property/property/favoriteMovie/shape/favoriteMovie/property/property/name"
+        },
+        {
+          "@id": "/property/property/favoriteMovie/shape/favoriteMovie/property/property/release"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Child",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "Child",
+      "shacl:property": [
+        {
+          "@id": "/property/property/name"
+        },
+        {
+          "@id": "/property/property/favoriteMovie"
+        },
+        {
+          "@id": "/property/property/nicknames"
+        }
+      ]
+    },
+    {
+      "@id": "/property/property/favoriteMovie/shape/favoriteMovie/property/property/name",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "name",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 1
+    },
+    {
+      "@id": "/property/property/favoriteMovie/shape/favoriteMovie/property/property/release",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "release",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minCount": 1
+    },
+    {
+      "@id": "/property/property/name",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "name",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 1,
+      "shacl:defaultValue": {
+        "@id": "/property/property/name/scalar/name/scalar_1"
+      }
+    },
+    {
+      "@id": "/property/property/favoriteMovie",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "favoriteMovie",
+      "shacl:node": {
+        "@id": "/property/property/favoriteMovie/list"
+      },
+      "shacl:minCount": 0,
+      "shacl:defaultValue": {
+        "@id": "/property/property/favoriteMovie/shape/favoriteMovie/object_1"
+      }
+    },
+    {
+      "@id": "/property/property/nicknames",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "nicknames",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0,
+      "meta:allowMultiple": true,
+      "shacl:defaultValue": {
+        "@id": "/property/property/nicknames/array/nicknames/array_1"
+      }
+    },
+    {
+      "@id": "/property/property/name/scalar/name/scalar_1",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "Carlitos",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_1"
+    },
+    {
+      "@id": "/property/property/favoriteMovie/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@id": "#/declarations/SchemaNode"
+      }
+    },
+    {
+      "@id": "/property/property/favoriteMovie/shape/favoriteMovie/object_1",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:name": {
+        "@id": "/property/property/favoriteMovie/shape/favoriteMovie/object_1/name_1"
+      },
+      "data:release": {
+        "@id": "/property/property/favoriteMovie/shape/favoriteMovie/object_1/release"
+      },
+      "core:name": "object_1"
+    },
+    {
+      "@id": "/property/property/nicknames/array/nicknames/array_1",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "/property/property/nicknames/array/nicknames/array_1/member/scalar_2"
+        },
+        {
+          "@id": "/property/property/nicknames/array/nicknames/array_1/member/scalar_3"
+        }
+      ],
+      "core:name": "array_1"
+    },
+    {
+      "@id": "/property/property/favoriteMovie/shape/favoriteMovie/object_1/name_1",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "Spider Man: No Way Home",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "name"
+    },
+    {
+      "@id": "/property/property/favoriteMovie/shape/favoriteMovie/object_1/release",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "2021",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "core:name": "release"
+    },
+    {
+      "@id": "/property/property/nicknames/array/nicknames/array_1/member/scalar_2",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "Carli\u00F1os",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_2"
+    },
+    {
+      "@id": "/property/property/nicknames/array/nicknames/array_1/member/scalar_3",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "Carl",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_3"
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/default.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

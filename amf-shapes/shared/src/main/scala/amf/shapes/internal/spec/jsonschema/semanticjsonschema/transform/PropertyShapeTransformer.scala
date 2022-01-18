@@ -39,7 +39,10 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
       case scalar: ScalarShape => transformScalarProperty(scalar)
       case obj: NodeShape      => transformObjectProperty(obj)
     }
+    Option(array.default).foreach(propertyMapping.withDefault)
   }
+
+  private def checkDefault(): Unit = Option(property.default).foreach(propertyMapping.withDefault)
 
   private def setMappingName(): Unit = propertyMapping.withName(property.name.value().replaceAll(" ", ""))
 
@@ -53,11 +56,13 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     setWhenPresent(scalar.pattern, propertyMapping.withPattern)
     setWhenPresent(scalar.minimum, propertyMapping.withMinimum)
     setWhenPresent(scalar.maximum, propertyMapping.withMaximum)
+    Option(scalar.default).foreach(propertyMapping.withDefault)
   }
 
   private def transformObjectProperty(obj: NodeShape): Unit = {
     val range = ShapeTransformation(obj, ctx).transform()
     propertyMapping.withObjectRange(Seq(range.id))
+    Option(obj.default).foreach(propertyMapping.withDefault)
   }
 
   private def transformAnyProperty(any: AnyShape): Unit = {
@@ -66,6 +71,7 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
       val range = ShapeTransformation(any, ctx).transform()
       propertyMapping.withObjectRange(Seq(range.id))
     }
+    Option(any.default).foreach(propertyMapping.withDefault)
   }
 
   private def sanitizeScalarRange(xsd: String): String = {
@@ -77,7 +83,7 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
   }
 
   private def checkMandatoriness(): Unit = {
-    setWhenPresent(property.minCount, propertyMapping.withMinCount)
+    setWhenPresent(property.minCount, propertyMapping.withMinCount _)
   }
 
   private def transformEnum(shape: PropertyShape, target: PropertyMapping) = {
@@ -137,6 +143,5 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
       case _ => // Ignore
     }
   }
-
-  private def setWhenPresent[T](field: ValueField[T], setValue: T => Unit) = field.option().foreach(setValue(_))
+  private def setWhenPresent[T](field: ValueField[T], setValue: T => Unit): Unit = field.option().foreach(setValue(_))
 }
