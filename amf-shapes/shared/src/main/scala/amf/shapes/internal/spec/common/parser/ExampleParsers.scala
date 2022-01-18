@@ -4,6 +4,7 @@ import amf.core.client.common.position.Range
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Annotation, DataNode}
 import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.errorhandling.WarningOnlyHandler
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, _}
 import amf.core.internal.parser.{YMapOps, YNodeLikeOps}
@@ -15,7 +16,6 @@ import amf.shapes.internal.domain.metamodel.ExampleModel
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.shapes.internal.spec.common._
-import amf.shapes.internal.spec.datanode.DataNodeParser
 import amf.shapes.internal.spec.oas.OasShapeDefinitions
 import amf.shapes.internal.spec.{RamlWebApiContextType, ShapeParserContext}
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
@@ -37,13 +37,13 @@ case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDom
       case (Some(exampleEntry), None) =>
         val examples = List(parseExample(exampleEntry.value))
         exemplifiedDomainElement.setWithoutId(ExamplesField.Examples,
-                                     AmfArray(examples, Annotations(exampleEntry)),
-                                     Annotations(exampleEntry))
+                                              AmfArray(examples, Annotations(exampleEntry)),
+                                              Annotations(exampleEntry))
       case (None, Some(examplesEntry)) =>
         val examples = Oas3NamedExamplesParser(examplesEntry, exemplifiedDomainElement.id).parse()
         exemplifiedDomainElement.setWithoutId(ExamplesField.Examples,
-                                     AmfArray(examples, Annotations(examplesEntry.value)),
-                                     Annotations(examplesEntry))
+                                              AmfArray(examples, Annotations(examplesEntry.value)),
+                                              Annotations(examplesEntry))
       case (Some(_), Some(_)) =>
         ctx.eh.violation(
           ExclusivePropertiesSpecification,
@@ -234,7 +234,8 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
 
   private val keyName = ScalarNode(entry.key)
 
-  private def setName(e: Example): Example = e.setWithoutId(ExampleModel.Name, keyName.string(), Annotations(entry.key))
+  private def setName(e: Example): Example =
+    e.setWithoutId(ExampleModel.Name, keyName.string(), Annotations(entry.key))
 
   private def newExample(ast: YPart): Example =
     setName(Example(entry))
@@ -251,7 +252,10 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
               .parse()
               .add(ExternalReferenceUrl(fullRef))
           case None =>
-            ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map.location)
+            ctx.eh.violation(CoreValidations.UnresolvedReference,
+                             "",
+                             s"Cannot find example reference $fullRef",
+                             map.location)
             val errorExample =
               setName(
                 error.ErrorNamedExample(name, map).link(AmfScalar(name), Annotations(map), Annotations.synthesized()))

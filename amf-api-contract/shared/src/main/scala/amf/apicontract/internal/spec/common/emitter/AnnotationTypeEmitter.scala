@@ -13,12 +13,12 @@ import amf.core.internal.parser.domain.{FieldEntry, Value}
 import amf.core.internal.render.BaseEmitters.ValueEmitter
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.core.internal.validation.RenderSideValidations.RenderValidation
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.oas.emitter.OasSchemaEmitter
 import amf.shapes.internal.spec.raml.emitter.{Raml10TypeEmitter, RamlRecursiveShapeEmitter}
-import amf.shapes.internal.validation.definitions.RenderSideValidations.RenderValidation
 import amf.shapes.internal.vocabulary.VocabularyMappings
 
 import scala.collection.mutable.ListBuffer

@@ -4,6 +4,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.{LexicalInformation, NilUnion}
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Bool
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
@@ -16,8 +17,6 @@ import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, FacetsEmitter}
 import amf.shapes.internal.spec.common.emitter.{
-  DataNodeEmitter,
-  EnumValuesEmitter,
   OasEntryCreativeWorkEmitter,
   OasLikeShapeEmitterContext,
   XMLSerializerEmitter

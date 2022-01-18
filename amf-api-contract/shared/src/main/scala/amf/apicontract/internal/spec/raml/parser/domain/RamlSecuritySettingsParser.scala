@@ -14,12 +14,12 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   UnknownScopeErrorSpecification
 }
 import amf.core.client.scala.model.domain.{AmfArray, DomainElement}
+import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, Lazy}
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.isRamlAnnotation
-import amf.shapes.internal.spec.datanode.DataNodeParser
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._
 

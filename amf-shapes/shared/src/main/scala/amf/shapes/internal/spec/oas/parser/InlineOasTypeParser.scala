@@ -7,6 +7,7 @@ import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.{ExplicitField, InferredProperty, NilUnion, SynthesizedField}
+import amf.core.internal.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
@@ -28,7 +29,6 @@ import amf.shapes.internal.spec.{SemanticContextParser, ShapeParserContext}
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common.parser._
 import amf.shapes.internal.spec.common._
-import amf.shapes.internal.spec.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.shapes.internal.spec.jsonschema.parser.{
   ContentParser,
   Draft2019ShapeDependenciesParser,

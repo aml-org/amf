@@ -2,7 +2,8 @@ package amf.semanticjsonschema
 
 import amf.core.client.scala.exception.UnsupportedDomainForDocumentException
 import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 

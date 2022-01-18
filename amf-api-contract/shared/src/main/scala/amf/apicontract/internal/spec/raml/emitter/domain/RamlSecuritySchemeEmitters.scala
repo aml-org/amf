@@ -12,6 +12,7 @@ import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DataNode
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.parser.domain.{FieldEntry, Fields}
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
@@ -20,7 +21,7 @@ import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter.ReferenceEmitterHelper.emitLinkOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
-import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, RamlShapeEmitterContext, ShapeEmitterContext}
+import amf.shapes.internal.spec.common.emitter.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import amf.shapes.internal.spec.raml.emitter.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
 import amf.shapes.internal.spec.raml.parser.RamlTagToReferenceEmitter

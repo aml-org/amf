@@ -6,13 +6,12 @@ import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{DomainElement, Shape}
 import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.SpecOrdering
-import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{Example, ScalarShape}
 import amf.shapes.internal.domain.metamodel.{ExampleModel, ScalarShapeModel}
-import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
 import amf.shapes.internal.spec.common.parser.NodeDataNodeParser
 import org.yaml.model.YDocument
 
