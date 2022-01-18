@@ -15,6 +15,7 @@ import amf.core.client.scala.model.domain.{AmfElement, DataNode, DomainElement, 
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.annotations._
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.parser.{LimitedParseConfig, ParseConfig}
 import amf.core.internal.parser.domain.{Annotations, FragmentRef}
 import amf.core.internal.render.SpecOrdering
@@ -22,7 +23,6 @@ import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.transform.stages.helpers.ResolvedNamedEntity
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.RamlWebApiContextType
-import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
 import org.yaml.model._
 
 import scala.collection.mutable

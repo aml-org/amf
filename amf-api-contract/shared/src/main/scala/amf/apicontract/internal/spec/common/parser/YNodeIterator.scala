@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.common.parser
 
 import amf.core.internal.utils.AliasCounter
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExceededMaxYamlReferences
+import amf.core.internal.validation.CoreValidations.ExceededMaxYamlReferences
 import org.yaml.model.{YMap, YNode, YSequence, YType}
 
 /**

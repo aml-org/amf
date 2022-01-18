@@ -8,8 +8,8 @@ import amf.core.internal.metamodel.Type.ArrayLike
 import amf.core.internal.metamodel.{Field, Obj, Type}
 import amf.core.internal.parser.domain.{ArrayNode, ScalarNode, _}
 import WellKnownAnnotation.isRamlAnnotation
+import amf.core.internal.datanode.DataNodeParserContext
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
-import amf.shapes.internal.spec.datanode.DataNodeParserContext
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   DuplicatedPropertySpecification,
   UnexpectedRamlScalarKey

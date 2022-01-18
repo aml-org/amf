@@ -1,14 +1,14 @@
 package amf.semanticjsonschema
 
 import amf.aml.client.scala.AMLDialectResult
-import amf.core.internal.remote.Hint
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationSpecification
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.SemanticJsonSchemaValidations
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.SemanticJsonSchemaValidations.UnsupportedConstraint
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

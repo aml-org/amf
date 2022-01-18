@@ -3,6 +3,7 @@ package amf.shapes.internal.spec.raml.emitter
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.model.domain.Shape
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, pos, traverse}
@@ -10,11 +11,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.shapes.internal.annotations.ExternalReferenceUrl
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.spec.common.emitter.{
-  DataNodeEmitter,
-  RamlExternalReferenceUrlEmitter,
-  RamlShapeEmitterContext
-}
+import amf.shapes.internal.spec.common.emitter.{RamlExternalReferenceUrlEmitter, RamlShapeEmitterContext}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YDocument.PartBuilder
 

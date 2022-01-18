@@ -15,17 +15,13 @@ import amf.core.client.scala.validation.payload.{
   ShapeValidationConfiguration
 }
 import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.internal.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.core.internal.parser.domain.{FragmentRef, JsonParserFactory, SearchScope}
-import amf.core.internal.plugins.render.EmptyRenderConfiguration
 import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlSyntaxRenderPlugin}
-import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.validation.ValidationConfiguration
 import amf.core.internal.validation.core.ValidationSpecification
-import amf.shapes.client.scala.model.domain.UnionShape
 import amf.shapes.client.scala.model.domain.{AnyShape, FileShape, ScalarShape, UnionShape}
 import amf.shapes.internal.spec.common.emitter.PayloadEmitter
-import amf.shapes.internal.spec.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import amf.shapes.internal.validation.definitions.ShapePayloadValidations.ExampleValidationErrorSpecification
 import amf.shapes.internal.validation.jsonschema.BaseJsonSchemaPayloadValidator.supportedMediaTypes

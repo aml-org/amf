@@ -2,6 +2,7 @@ package amf.shapes.internal.spec.raml.emitter
 
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ValueEmitter, pos}
@@ -13,7 +14,6 @@ import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.emitter
 import amf.shapes.internal.spec.common.emitter.annotations.{AnnotationsEmitter, FacetsEmitter}
 import amf.shapes.internal.spec.common.emitter.{
-  DataNodeEmitter,
   EnumValuesEmitter,
   OasEntryCreativeWorkEmitter,
   RamlShapeEmitterContext,

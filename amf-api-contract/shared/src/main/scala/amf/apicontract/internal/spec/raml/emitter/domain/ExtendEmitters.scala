@@ -6,12 +6,12 @@ import amf.core.client.common.position.Position
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.client.scala.model.domain.templates.{ParametrizedDeclaration, VariableValue}
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{pos, raw, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YMap
 
