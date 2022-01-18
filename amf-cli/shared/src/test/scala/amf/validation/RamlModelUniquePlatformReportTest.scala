@@ -682,4 +682,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("define authorization grant with null as value") {
     validate("raml08-authorization-grant-null-value.raml", Some("08/raml08-authorization-grant-null-value.report"))
   }
+
+  test("json with object as key throws violation") {
+    validate("/raml/json-example-with-object-as-key.raml", Some("json-example-with-object-as-key.report"))
+  }
 }

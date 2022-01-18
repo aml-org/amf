@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: api
+version: 1.0
+
+/sum:
+  post:
+    body:
+      application/json:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [{
+                {
+                  "message" : "hello"
+                }
+              }]
