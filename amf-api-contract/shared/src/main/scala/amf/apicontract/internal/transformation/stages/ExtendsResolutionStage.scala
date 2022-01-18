@@ -30,8 +30,7 @@ import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
-import amf.core.internal.validation.CoreValidations.TransformationValidation
-import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.ExceededMaxYamlReferences
+import amf.core.internal.validation.CoreValidations.{ExceededMaxYamlReferences, TransformationValidation}
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model._
 

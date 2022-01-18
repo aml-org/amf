@@ -2,8 +2,7 @@ package amf.apicontract.internal.spec.payload
 
 import amf.apicontract.internal.spec.common.parser.WebApiContext
 import amf.core.client.scala.model.document.PayloadFragment
-import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.datanode.DataNodeParser
+import amf.core.internal.datanode.DataNodeParser
 import org.yaml.model.{YDocument, YNode}
 
 class PayloadParser(document: YDocument, location: String, mediaType: String)(implicit ctx: WebApiContext) {

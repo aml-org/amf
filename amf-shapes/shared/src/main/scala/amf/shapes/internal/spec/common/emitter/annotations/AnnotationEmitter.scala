@@ -5,13 +5,14 @@ import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.{CustomizableElement, DataNode}
 import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationEmitter.ComputeName
 import amf.shapes.internal.spec.common.emitter.annotations.OasAnnotationEmitter.computeName
-import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, ShapeEmitterContext}
+import amf.shapes.internal.spec.common.emitter.ShapeEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
 /**

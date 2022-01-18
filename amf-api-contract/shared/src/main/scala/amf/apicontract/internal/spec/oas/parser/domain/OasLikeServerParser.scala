@@ -6,12 +6,12 @@ import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapt
 import amf.apicontract.internal.spec.oas.parser.context.OasLikeWebApiContext
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.IdCounter
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, QuickFieldParserOps, YMapEntryLike}
-import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.yaml.model.{YMap, YMapEntry}
 
 /**

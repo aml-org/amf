@@ -1,6 +1,5 @@
 package amf.apicontract.internal.spec.common.transformation
 
-import amf.aml.internal.entities.AMLEntities
 import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.model.document.{ResourceTypeFragment, TraitFragment}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
@@ -14,17 +13,16 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.client.scala.model.domain.{AmfElement, DataNode, DomainElement, NamedDomainElement}
 import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.adoption.IdAdopter
+import amf.core.internal.annotations._
+import amf.core.internal.datanode.DataNodeEmitter
+import amf.core.internal.parser.LimitedParseConfig
+import amf.core.internal.parser.domain.{Annotations, FragmentRef}
+import amf.core.internal.render.SpecOrdering
 import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.transform.stages.helpers.ResolvedNamedEntity
-import amf.core.internal.adoption.IdAdopter
-import amf.core.internal.annotations.{Aliases, LexicalInformation, ReferencedInfo, SourceAST, SourceLocation}
-import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig}
-import amf.core.internal.parser.domain.{Annotations, FragmentRef}
-import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
-import amf.core.internal.render.SpecOrdering
 import amf.core.internal.validation.CoreValidations
 import amf.shapes.internal.spec.RamlWebApiContextType
-import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
 import org.yaml.model._
 
 import scala.collection.mutable

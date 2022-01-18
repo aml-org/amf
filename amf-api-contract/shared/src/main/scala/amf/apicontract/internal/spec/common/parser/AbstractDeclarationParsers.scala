@@ -13,8 +13,9 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   InvalidAbstractDeclarationType,
   NullAbstractDeclaration
 }
+import amf.core.internal.datanode.DataNodeParser
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
-import amf.shapes.internal.spec.datanode.{AbstractVariables, DataNodeParser}
+import amf.shapes.internal.spec.datanode.AbstractVariables
 import org.yaml.model._
 
 /**
@@ -98,7 +99,9 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
         variables.ifNonEmpty(
           p =>
             declaration
-              .setWithoutId(AbstractDeclarationModel.Variables, AmfArray(p, Annotations(value.value)), Annotations(value)))
+              .setWithoutId(AbstractDeclarationModel.Variables,
+                            AmfArray(p, Annotations(value.value)),
+                            Annotations(value)))
 
         declaration
     }
