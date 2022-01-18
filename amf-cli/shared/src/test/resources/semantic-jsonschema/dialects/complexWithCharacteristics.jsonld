@@ -126,7 +126,10 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 1
+      "shacl:minCount": 1,
+      "shacl:defaultValue": {
+        "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader/scalar/credentialsOriginHasHttpBasicAuthenticationHeader/scalar_1"
+      }
     },
     {
       "@id": "/property/property/clientIdExpression",
@@ -146,7 +149,10 @@
         }
       ],
       "shacl:minCount": 1,
-      "shacl:pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+      "shacl:pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$",
+      "shacl:defaultValue": {
+        "@id": "/property/property/clientIdExpression/scalar/clientIdExpression/scalar_1"
+      }
     },
     {
       "@id": "/property/property/clientSecretExpression",
@@ -160,12 +166,61 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 0
+      "shacl:minCount": 0,
+      "shacl:defaultValue": {
+        "@id": "/property/property/clientSecretExpression/scalar/clientSecretExpression/scalar_1"
+      }
+    },
+    {
+      "@id": "/property/property/credentialsOriginHasHttpBasicAuthenticationHeader/scalar/credentialsOriginHasHttpBasicAuthenticationHeader/scalar_1",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "customExpression",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_1"
+    },
+    {
+      "@id": "/property/property/clientIdExpression/scalar/clientIdExpression/scalar_1",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "#[attributes.headers['client_id']]",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_1"
+    },
+    {
+      "@id": "/property/property/clientSecretExpression/scalar/clientSecretExpression/scalar_1",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "#[attributes.headers['client_secret']]",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_1"
     }
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/complexWithCharacteristics.json",
     "shacl": "http://www.w3.org/ns/shacl#",
+    "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
     "owl": "http://www.w3.org/2002/07/owl#",

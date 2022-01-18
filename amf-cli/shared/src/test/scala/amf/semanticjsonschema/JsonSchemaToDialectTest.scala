@@ -32,6 +32,7 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("Dialect generation from JSON schema with any type property", "any-property")
   multiOutputTest("Dialect generation from JSON schema with enum property", "enum")
   multiOutputTest("Dialect generation from JSON schema with const property", "const")
+  multiOutputTest("Dialect generation from JSON schema with default property", "default")
 
   private def multiOutputTest(label: String, filename: String): Unit = {
 

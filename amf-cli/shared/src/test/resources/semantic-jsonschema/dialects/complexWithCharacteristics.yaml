@@ -5,14 +5,17 @@ nodeMappings:
       credentialsOriginHasHttpBasicAuthenticationHeader:
         range: string
         mandatory: true
+        default: customExpression
       clientIdExpression:
         range: string
         propertyTerm: ns0.dataweaveExpression
         mandatory: true
         pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+        default: "#[attributes.headers['client_id']]"
       clientSecretExpression:
         range: string
         mandatory: false
+        default: "#[attributes.headers['client_secret']]"
 external:
   security: anypoint://vocabulary/policy.yaml#
   config: anypoint://vocabulary/policy.yaml#
