@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "title": "Child",
+  "type": "object",
+  "required": ["name"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "default": "Carlitos"
+    },
+    "favoriteMovie": {
+      "type": "object",
+      "required": ["name", "release"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "release": {
+          "type": "integer"
+        }
+      },
+      "default": {
+        "name": "Spider Man: No Way Home",
+        "release": 2021
+      }
+    },
+    "nicknames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "Carliños",
+        "Carl"
+      ]
+    }
+  }
+}
