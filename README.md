@@ -88,14 +88,8 @@ module in the ecosystem except the CLI. For AML adopters (with no Web API nor Cu
 adopt the `amf-aml` module which includes parsing, validation & resolution for AML documents only. For more details on 
 AML visit the [AML repository]("https://github.com/aml-org/amf-aml").
 
-### Legend:
-- **Circle**: module
-- **Dashed circle**: recommended modules for AMF and AML adopters respectively
-- **Light gray box**: modules that share the same version number
-
-<p align="center">
-    <img width="250" alt="module_graph" src="./amf-ecosystem-modules.png">
-</p>
+![AMF ecosystem modules](./amf-ecosystem-modules.png)
+The `amf-api-contract` and `amf-aml` are the recommended modules for AMF and AML adopters respectively.
 
 ## Contributing
 If you are interested in contributing to this project, please make sure to read our [contributing guidelines](./CONTRIBUTING.md).
