@@ -2078,6 +2078,7 @@ Types:
  | externallyLinkable | boolean | Marks this object property as supporting external links | http://a.ml/vocabularies/meta#externallyLinkable |
  | typeDiscriminatorName | string | Information about the field in the source AST to be used as discrimintaro in the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorName |
  | mergePolicy | string | Indication of how to merge this graph node when applying a patch document | http://a.ml/vocabularies/meta#mergePolicy |
+ | defaultValue | [DataNode](#datanode) | Default value parsed for a data shape property | http://www.w3.org/ns/shacl#defaultValue |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## PropertyShape

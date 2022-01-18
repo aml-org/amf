@@ -15,7 +15,6 @@ case class AnyShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)
     setMappingName(shape, nodeMapping)
     setMappingId(nodeMapping)
     updateContext(nodeMapping)
-
     val members = shape.xone.flatMap {
       case member: AnyShape =>
         ShapeTransformation(member, ctx).transform() match {
