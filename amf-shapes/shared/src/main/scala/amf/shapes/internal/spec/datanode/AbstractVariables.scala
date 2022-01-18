@@ -3,14 +3,14 @@ package amf.shapes.internal.spec.datanode
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.transform.VariableReplacer.VariableRegex
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
-import org.yaml.model.YNode
+import org.yaml.model.{IllegalTypeHandler, YNode}
 
 import scala.collection.mutable
 
 case class AbstractVariables() {
   private val variables: mutable.Map[String, Annotations] = mutable.Map()
 
-  def parseVariables(node: YNode): this.type = parseVariables(ScalarNode(node))
+  def parseVariables(node: YNode)(implicit handler: IllegalTypeHandler): this.type = parseVariables(ScalarNode(node))
 
   def parseVariables(scalarNode: ScalarNode): this.type = {
     VariableRegex
