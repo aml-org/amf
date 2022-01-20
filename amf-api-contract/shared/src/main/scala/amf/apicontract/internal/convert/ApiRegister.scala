@@ -71,10 +71,11 @@ import amf.core.internal.convert.CoreRegister
 /** Shared WebApi registrations. */
 private[amf] object ApiRegister extends PlatformSecrets {
 
-  // TODO ARM remove when APIMF-3000 is done
-  def register(): Unit = register(platform)
+  register()
 
-  def register(platform: Platform): Unit = {
+  private def register(): Unit = register(platform)
+
+  private def register(platform: Platform): Unit = {
 
     // shapes (domain)
     ShapesRegister.register(platform)

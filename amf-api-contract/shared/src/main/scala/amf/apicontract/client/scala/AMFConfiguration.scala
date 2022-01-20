@@ -58,7 +58,7 @@ trait APIConfigurationBuilder {
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
     val configuration = AMLConfiguration.predefined()
-    ApiRegister.register() // TODO ARM remove when APIMF-3000 is done
+    ApiRegister
     val coreEntities = AMFGraphConfiguration.predefined().getRegistry.getEntitiesRegistry.domainEntities
     val result = new AMFConfiguration(
       configuration.resolvers,

@@ -18,7 +18,6 @@ trait CommandHelper {
 
   def AMFInit(configuration: AMFGraphConfiguration): Future[Unit] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    ApiRegister.register(platform)
     VocabulariesRegister.register(platform) // validation dialect was not being parsed by static config.
     Future.successful {}
   }
@@ -109,7 +108,7 @@ trait CommandHelper {
   def effectiveMediaType(mediaType: Option[String], spec: Option[String]): String = {
     mediaType match {
       case Some(effectiveMediaType) => effectiveMediaType
-      case None => "*/*"
+      case None                     => "*/*"
     }
   }
 
