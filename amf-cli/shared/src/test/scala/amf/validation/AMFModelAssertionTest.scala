@@ -7,7 +7,8 @@ import amf.core.client.common.position.Position
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.client.scala.model.domain.ExternalSourceElement
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement}
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
@@ -230,6 +231,27 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val inlineShapeAnnotations = inlineShape.annotations
       inlineShapeAnnotations.lexical().start shouldBe Position(12, 12)
       inlineShapeAnnotations.lexical().end shouldBe Position(14, 26)
+    }
+  }
+
+  test("Property name value should have correct lexical") {
+    val api = s"$basePath/async20/object-schema.yaml"
+    modelAssertion(api, transform = false) { bu =>
+      val schema        = bu.asInstanceOf[Document].declares.head
+      val propertyField = schema.fields.fields().find(_.field.toString.endsWith("property")).get
+      val propertyNameField = propertyField.value.value
+        .asInstanceOf[AmfArray]
+        .values
+        .head
+        .asInstanceOf[PropertyShape]
+        .fields
+        .fields()
+        .find(_.field.toString.endsWith("name"))
+        .get
+      val nameFieldValue            = propertyNameField.value.value
+      val nameFieldValueAnnotations = nameFieldValue.annotations
+      nameFieldValueAnnotations.lexical().start shouldBe Position(15, 8)
+      nameFieldValueAnnotations.lexical().end shouldBe Position(15, 9)
     }
   }
 }

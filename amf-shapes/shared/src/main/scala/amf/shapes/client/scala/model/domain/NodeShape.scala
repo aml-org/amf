@@ -67,6 +67,12 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
     result
   }
 
+  def withProperty(name: String, nameAnnotations: Annotations): PropertyShape = {
+    val result = PropertyShape().withName(name, nameAnnotations)
+    add(Properties, result)
+    result
+  }
+
   def withInheritsObject(name: String): NodeShape = {
     val result = NodeShape().withName(name)
     add(Inherits, result)
