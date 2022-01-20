@@ -119,6 +119,52 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     }
   }
 
+  // APIMF-3600
+  test("exchange modules with multiple zip sources") {
+    val mappings = Map(
+      "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:se-23375:1.0.1:oas:zip:se-23375.json" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/exchange-modules/se-23375.json",
+        "jar:file:/se-23375-1.0.1-oas.zip!/se-23375.json"
+      ),
+      "exchange_modules/8fe5354c-e64c-4eaa-addc-b50906a0b48c/datamodel-tmforum/1.0.0/4.1.0/Customer/Bucket.schema.json" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/exchange-modules/Bucket.schema.json",
+        "jar:file:/datamodel-tmforum-1.0.0-raml-fragment.zip!/4.1.0/Customer/Bucket.schema.json"
+      ),
+    )
+    val url = "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:se-23375:1.0.1:oas:zip:se-23375.json"
+    val errorHandler = DefaultParserErrorHandler()
+    val loaders      = Seq(new URNResourceLoader(mappings))
+    val env          = Environment().withLoaders(loaders)
+    RuntimeCompiler
+      .apply(url, None, None, base = Context(platform), cache = Cache(), errorHandler = errorHandler, env = env)
+      .map { unit =>
+        errorHandler.getErrors should have size 0
+      }
+  }
+
+  // APIMF-3533
+  test("references to external yaml using './'") {
+    val mappings = Map(
+      "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:pure-member:1.0.0:oas:zip:pure-member-portal.yaml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/dot-slash-ref/pure-member-portal.yaml",
+        "jar:file:/1.0.0/pure-member-1.0.0-oas.zip!/pure-member-portal.yaml"
+      ),
+      "responses.yaml" -> CustomContentResult(
+        "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/dot-slash-ref/responses.yaml",
+        "jar:file:/1.0.0/pure-member-1.0.0-oas.zip!/responses.yaml"
+      ),
+    )
+    val url = "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:pure-member:1.0.0:oas:zip:pure-member-portal.yaml"
+    val errorHandler = DefaultParserErrorHandler()
+    val loaders      = Seq(new URNResourceLoader(mappings))
+    val env          = Environment().withLoaders(loaders)
+    RuntimeCompiler
+      .apply(url, None, None, base = Context(platform), cache = Cache(), errorHandler = errorHandler, env = env)
+      .map { unit =>
+        errorHandler.getErrors should have size 0
+      }
+  }
+
   case class CustomContentResult(actualPath: String, customPath: String)
 
   object CustomContentResult {

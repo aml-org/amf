@@ -1,0 +1,17 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: pure-member-portal
+paths:
+  /requestcoverages:
+    summary: "Initial Load"
+    description: "Get the initial payload including memberm, policy, coverage information"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "400":
+          $ref: "./responses.yaml#/components/responses/400BadRequest"
