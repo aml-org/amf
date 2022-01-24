@@ -279,5 +279,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/trait-definition-numeric-name.raml")
   }
 
+  test("Uri parameter merge with default parameters doesn't reduce merge error") {
+    checkValid("/raml/valid-default-uri-parameter-merge-error.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
