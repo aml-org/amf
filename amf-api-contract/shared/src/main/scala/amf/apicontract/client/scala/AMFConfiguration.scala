@@ -2,7 +2,6 @@ package amf.apicontract.client.scala
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
-import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.internal.annotations.{APISerializableAnnotations, WebAPISerializableAnnotations}
 import amf.apicontract.internal.convert.ApiRegister
@@ -22,8 +21,8 @@ import amf.apicontract.internal.validation.model.ApiEffectiveValidations._
 import amf.apicontract.internal.validation.model.ApiValidationProfiles._
 import amf.apicontract.internal.validation.payload.PayloadValidationPlugin
 import amf.apicontract.internal.validation.shacl.{ShaclModelValidationPlugin, ViolationModelValidationPlugin}
+import amf.core.client.common.validation.ProfileNames
 import amf.core.client.common.validation.ProfileNames._
-import amf.core.client.common.validation.{ProfileName, ProfileNames}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.ErrorHandlerProvider
