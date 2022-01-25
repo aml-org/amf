@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{LexicalInformation, SynthesizedField, VirtualElement}
+import amf.core.annotations.{DefaultNode, LexicalInformation, SynthesizedField, VirtualElement}
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
@@ -269,7 +269,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     if (operationsDefineParam) None
     else {
-      val pathParam = Parameter(Annotations.virtual())
+      val pathParam = Parameter(Annotations.virtual() += DefaultNode())
         .withSynthesizeName(variable)
         .set(ParameterModel.ParameterName, variable, Annotations.synthesized())
         .syntheticBinding("path")

@@ -361,7 +361,9 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
             if (field == EndPointModel.Operations) {
               ctx.mergeOperationContext(otherObj.id)
             }
-            if (!areSameJsonSchema(mainObjOption.get, otherObj)) {
+            if (mainObjOption.get.annotations.find(classOf[DefaultNode]).isDefined) {
+              target.add(field, adoptInner(target.id, o))
+            } else if (!areSameJsonSchema(mainObjOption.get, otherObj)) {
               val adopted = adoptInner(target.id, otherObj).asInstanceOf[DomainElement]
               merge(existing(value.scalar.value), adopted)
             }
