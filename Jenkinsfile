@@ -7,6 +7,9 @@ def color = '#FF8C00'
 def headerFlavour = "WARNING"
 
 pipeline {
+  options {
+    timeout(time: 30, unit: 'MINUTES')
+  }
   agent {
     dockerfile {
       filename 'Dockerfile'
