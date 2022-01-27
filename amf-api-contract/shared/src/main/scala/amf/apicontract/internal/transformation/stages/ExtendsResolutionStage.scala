@@ -1,6 +1,5 @@
 package amf.apicontract.internal.transformation.stages
 
-import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.model.domain.templates.{
   ParametrizedResourceType,
   ParametrizedTrait,
@@ -21,13 +20,13 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DataNode, DomainElement, ElementTree}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.client.scala.transform.TransformationStep
-import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.internal.metamodel.domain.DomainElementModel
-import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig, YNodeLikeOps}
+import amf.core.internal.parser.{ParseConfig, YNodeLikeOps}
 import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.render.SpecOrdering
+import amf.core.internal.transform.stages.ReferenceResolutionStage
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.AliasCounter
 import amf.core.internal.validation.CoreValidations.TransformationValidation
@@ -51,19 +50,21 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
   override def transform(model: BaseUnit,
                          errorHandler: AMFErrorHandler,
                          configuration: AMFGraphConfiguration): BaseUnit =
-    new ExtendsResolution(profile, keepEditingInfo, fromOverlay)(errorHandler).transform(model, configuration)
+    new ExtendsResolution(profile, keepEditingInfo, fromOverlay, config = configuration)(errorHandler)
+      .transform(model, configuration)
 
   class ExtendsResolution(profile: ProfileName,
                           val keepEditingInfo: Boolean,
                           val fromOverlay: Boolean = false,
-                          visited: mutable.Set[String] = mutable.Set())(implicit val errorHandler: AMFErrorHandler) {
+                          visited: mutable.Set[String] = mutable.Set(),
+                          config: AMFGraphConfiguration)(implicit val errorHandler: AMFErrorHandler) {
 
     /** Default to raml10 context. */
     def ctx(): RamlWebApiContext = profile match {
       case Raml08Profile =>
-        new Raml08WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler, AMLRegistry.empty)))
+        new Raml08WebApiContext("", Nil, ParserContext(config = ParseConfig(config, errorHandler)))
       case _ =>
-        new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler, AMLRegistry.empty)))
+        new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfig(config, errorHandler)))
     }
 
     def transform[T <: BaseUnit](model: T, configuration: AMFGraphConfiguration): T =
@@ -79,7 +80,8 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
           val node = rt.dataNode.copyNode()
           node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
             apiContext.eh.violation(TransformationValidation, r.id, None, message, r.position(), r.location()))
-          val extendsHelper = ExtendsHelper(profile, keepEditingInfo = keepEditingInfo, errorHandler, Some(apiContext))
+          val extendsHelper =
+            ExtendsHelper(profile, keepEditingInfo = keepEditingInfo, errorHandler, configuration, Some(apiContext))
           val result = extendsHelper.asEndpoint(
             context.model,
             node,
@@ -325,7 +327,8 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
                                           parameterized.location())
                 })
 
-                val extendsHelper = ExtendsHelper(profile, keepEditingInfo = true, errorHandler, Some(apiContext))
+                val extendsHelper =
+                  ExtendsHelper(profile, keepEditingInfo = true, errorHandler, configuration, Some(apiContext))
                 val op = extendsHelper.asOperation(
                   node,
                   context.model,

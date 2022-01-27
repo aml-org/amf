@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: Semantic extensions in traits and resource types
+resourceTypes:
+    myResourceType:
+        get:
+            responses:
+                200:
+                    (pagination):
+                        pageSize: 10
+                    description: A Response from a Resource Type
+traits:
+    myTrait:
+        responses:
+            200:
+                (pagination):
+                    pageSize: 12
+                description: A Response from Trait
+
+/endpoint_with_rt:
+    type: myResourceType
+
+/endpoint_with_trait:
+    get:
+        is:
+            - myTrait
