@@ -6,6 +6,7 @@ import amf.apicontract.client.scala.AMFConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{Mimes, Platform}
+import amf.core.internal.utils.UriUtils
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -44,7 +45,7 @@ class PatchCommand(override val platform: Platform) extends TranslateCommand(pla
         case patchInstance: DialectInstancePatch =>
           config.patchTarget match {
             case Some(location) =>
-              patchInstance.withExtendsModel(platform.resolvePath(location))
+              patchInstance.withExtendsModel(UriUtils.resolvePath(location))
             case _ => patchInstance
           }
         case _ =>
