@@ -694,8 +694,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       unit2 <- new RamlParser(environment).parseFileAsync(name2).asFuture
     } yield {
       unit shouldBe a[Document]
-      unit.id should be("file://api.raml")
-      unit2.id should be("file://api2")
+      unit.id should be("api.raml")
+      unit2.id should be("api2")
     }
   }
 
