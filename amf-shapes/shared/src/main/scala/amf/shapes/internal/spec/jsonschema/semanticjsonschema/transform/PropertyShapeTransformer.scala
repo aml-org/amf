@@ -5,10 +5,11 @@ import amf.aml.internal.metamodel.domain.PropertyMappingModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.{DataType, ValueField}
 import amf.core.client.scala.model.DataType._
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, ScalarNode}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, ScalarNode, Shape}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape, SemanticContext}
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.SemanticOps.getPrefixes
 import org.mulesoft.common.collections.FilterType
 
 case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext)(
@@ -41,8 +42,6 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     }
     Option(array.default).foreach(propertyMapping.withDefault)
   }
-
-  private def checkDefault(): Unit = Option(property.default).foreach(propertyMapping.withDefault)
 
   private def setMappingName(): Unit = propertyMapping.withName(property.name.value().replaceAll(" ", ""))
 
@@ -131,17 +130,26 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     }
     property.range match {
       case any: AnyShape =>
-        any.semanticContext.foreach { context =>
-          context.typeMappings
+        any.semanticContext.foreach { localContext =>
+          val context = ctx.semantics.merge(localContext).normalize()
+          localContext.typeMappings
             .flatMap(_.option())
-            .headOption
-            .foreach { iri =>
-              propertyMapping.withNodePropertyMapping(context.expand(iri))
-            }
+            .toList match {
+            case List(element) => propertyMapping.withNodePropertyMapping(context.expand(element))
+            case List(Nil)     => // ignore
+            case elements =>
+              extractPropertyTerm(context, elements)
+          }
         }
 
       case _ => // Ignore
     }
   }
+
+  private def extractPropertyTerm(context: SemanticContext, elements: List[String]) = {
+    val extractedTerm = ctx.vocabBuilder.loadIriSet(property.name.value(), elements.toSet, context)
+    propertyMapping.withNodePropertyMapping(extractedTerm)
+  }
+
   private def setWhenPresent[T](field: ValueField[T], setValue: T => Unit): Unit = field.option().foreach(setValue(_))
 }

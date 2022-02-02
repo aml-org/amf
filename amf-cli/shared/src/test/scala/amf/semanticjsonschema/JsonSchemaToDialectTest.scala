@@ -33,6 +33,9 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("Dialect generation from JSON schema with enum property", "enum")
   multiOutputTest("Dialect generation from JSON schema with const property", "const")
   multiOutputTest("Dialect generation from JSON schema with default property", "default")
+  multiOutputTest("Dialect generation from JSON schema with multiple characteristics in the same property",
+                  "multiple-characteristics")
+  multiOutputTest("Dialect generation from JSON schema with duplicate semantic terms", "duplicate-semantics")
 
   private def multiOutputTest(label: String, filename: String): Unit = {
 
@@ -70,6 +73,14 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   private def emit(dialect: Dialect, target: Hint)(implicit executionContext: ExecutionContext): String = {
     val options =
       RenderOptions().withCompactUris.withoutSourceMaps.withoutRawSourceMaps.withFlattenedJsonLd.withPrettyPrint
-    new AMFRenderer(dialect, target, options).renderToString
+    val references = dialect.references
+    if (target != AmfJsonHint) {
+      dialect.withReferences(List.empty)
+      val dialectAsString = new AMFRenderer(dialect, target, options).renderToString
+      val refsAsString    = references.map(ref => new AMFRenderer(ref, target, options).renderToString).toList
+      (dialectAsString :: refsAsString).mkString("---\n")
+    } else {
+      new AMFRenderer(dialect, target, options).renderToString
+    }
   }
 }

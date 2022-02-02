@@ -14,7 +14,11 @@ import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.contexts.parser.JsonSchemaContext
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.reference.SemanticContextReferenceHandler
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.{SchemaTransformer, TransformationResult}
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.{
+  SchemaTransformer,
+  SchemaTransformerOptions,
+  TransformationResult
+}
 import org.yaml.model.YMap
 
 import scala.collection.mutable
@@ -40,13 +44,14 @@ object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
     val newCtx = context(ctx.copyWithSonsReferences().copy(refs = document.references))
     val parsed = new JsonSchemaParser().parse(document, newCtx, ctx.parsingOptions)
     new IdAdopter(parsed, document.location).adoptFromRelative()
-    val transformed = SchemaTransformer(parsed)(ctx.eh).transform()
+    val transformed = SchemaTransformer(parsed, SchemaTransformerOptions.DEFAULT)(ctx.eh).transform()
     wrapTransformationResult(document.location, transformed)
   }
 
   private def wrapTransformationResult(location: String, transformed: TransformationResult): BaseUnit = {
     val documentMapping: DocumentsModel = createDocumentMapping(location, transformed)
     createDialectWith(location, transformed, documentMapping)
+      .withReferences(transformed.vocab.toList)
   }
 
   private def createDialectWith(location: String, transformed: TransformationResult, documentMapping: DocumentsModel) = {
