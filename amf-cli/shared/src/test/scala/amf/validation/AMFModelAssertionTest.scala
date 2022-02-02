@@ -254,4 +254,31 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       nameFieldValueAnnotations.lexical().end shouldBe Position(15, 9)
     }
   }
+
+  // github issue #1119
+  test("Applying a trait should not duplicate examples") {
+    modelAssertion(s"$basePath/duplicate-examples/trait.raml") { bu =>
+      val components = new BaseUnitComponents
+      val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
+      examples.size shouldBe 2
+    }
+  }
+
+  // github issue #1119 inverse case
+  test("Examples with same raw but different names should be present post transformation") {
+    modelAssertion(s"$basePath/duplicate-examples/different-names.raml") { bu =>
+      val components = new BaseUnitComponents
+      val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
+      examples.size shouldBe 4
+    }
+  }
+
+  // github issue #1119 complex case
+  test("unnamed example should not be equal to same example with name") {
+    modelAssertion(s"$basePath/duplicate-examples/unnamed-example.raml") { bu =>
+      val components = new BaseUnitComponents
+      val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
+      examples.size shouldBe 2
+    }
+  }
 }

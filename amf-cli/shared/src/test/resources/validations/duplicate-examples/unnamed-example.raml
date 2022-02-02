@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: Duplicate examples
+types:
+  errorType:
+    type: object
+    properties:
+      code: integer
+      message: string
+
+/b:
+  get:
+    responses:
+      404:
+        body:
+          application/json:
+            type: errorType
+            example:
+              code: 404
+              message: This is a 404 error.
+
+/a:
+  get:
+    responses:
+      404:
+        body:
+          application/json:
+            type: errorType
+            examples:
+              404-a:
+                code: 404
+                message: This is a 404 error.
+
