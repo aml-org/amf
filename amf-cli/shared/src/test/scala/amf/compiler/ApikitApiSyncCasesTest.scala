@@ -102,12 +102,10 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
   test("should accept content URLs starting with 'jar:'") {
     val mappings = Map(
       "resource::com.mycompany:consumer-api:1.0.0:oas:zip:consumer.yaml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/jar-protocol/consumer.yaml",
-        "jar:file:/zip/consumerYaml.zip!/consumer.yaml"
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/jar-protocol/consumer.yaml"
       ),
       "utility.yaml" -> CustomContentResult(
-        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/jar-protocol/utility.yaml",
-        "jar:file:/zip/consumerYaml.zip!/utility.yaml"
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/jar-protocol/utility.yaml"
       ),
     )
     val url = "resource::com.mycompany:consumer-api:1.0.0:oas:zip:consumer.yaml"
@@ -120,12 +118,47 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     }
   }
 
-  case class CustomContentResult(actualPath: String, customPath: String)
-
-  object CustomContentResult {
-    def apply(actualPath: String, customPath: String) = new CustomContentResult(actualPath, customPath)
-    def apply(actualPath: String)                     = new CustomContentResult(actualPath, actualPath)
+  // APIMF-3600
+  test("exchange modules with multiple zip sources") {
+    val mappings = Map(
+      "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:se-23375:1.0.1:oas:zip:se-23375.json" -> CustomContentResult(
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/exchange-modules/se-23375.json"
+      ),
+      "exchange_modules/8fe5354c-e64c-4eaa-addc-b50906a0b48c/datamodel-tmforum/1.0.0/4.1.0/Customer/Bucket.schema.json" -> CustomContentResult(
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/exchange-modules/Bucket.schema.json"
+      ),
+    )
+    val url = "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:se-23375:1.0.1:oas:zip:se-23375.json"
+    val client = WebAPIConfiguration
+      .WebAPI()
+      .withResourceLoaders(List(new URNResourceLoader(mappings)))
+      .baseUnitClient()
+    client.parse(url).map { parseResult =>
+      parseResult.results should have size 0
+    }
   }
+
+  // APIMF-3533
+  test("references to external yaml using './'") {
+    val mappings = Map(
+      "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:pure-member:1.0.0:oas:zip:pure-member-portal.yaml" -> CustomContentResult(
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/dot-slash-ref/pure-member-portal.yaml"
+      ),
+      "responses.yaml" -> CustomContentResult(
+        "file://amf-cli/shared/src/test/resources/compiler/apikit-apisync/dot-slash-ref/responses.yaml"
+      ),
+    )
+    val url = "resource::8fe5354c-e64c-4eaa-addc-b50906a0b48c:pure-member:1.0.0:oas:zip:pure-member-portal.yaml"
+    val client = WebAPIConfiguration
+      .WebAPI()
+      .withResourceLoaders(List(new URNResourceLoader(mappings)))
+      .baseUnitClient()
+    client.parse(url).map { parseResult =>
+      parseResult.results should have size 0
+    }
+  }
+
+  case class CustomContentResult(actualPath: String)
 
   class URNResourceLoader(mappings: Map[String, CustomContentResult]) extends ResourceLoader {
 
@@ -135,7 +168,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
         .map(url => {
           platform
             .fetchContent(url.actualPath, AMFGraphConfiguration.predefined())
-            .map(content => new Content(content.stream, url.customPath))
+            .map(content => Content(content.stream, resource)) // content result url provided by resource loader
         })
         .getOrElse(throw FileNotFound(new RuntimeException(s"Couldn't find resource $resource")))
     }

@@ -1,0 +1,59 @@
+components:
+  responses:
+    400BadRequest:
+      description: The request was invalid or cannot be otherwise served.
+      content:
+        application/json:
+          schema:
+            type: object
+    401Unauthorized:
+      description: Authentication credentials were missing or incorrect.
+      content:
+        application/json:
+          schema:
+            type: object
+    403Forbidden:
+      description: The request is understood, but it has been refused or access is
+        not allowed.
+      content:
+        application/json:
+          schema:
+            type: object
+    404NotFound:
+      description: The URI requested is invalid or the resource requested does not
+        exists.
+      content:
+        application/json:
+          schema:
+            type: object
+    409Conflict:
+      description: Any message which should help the user to resolve the conflict.
+      content:
+        application/json:
+          schema:
+            type: object
+    429TooManyRequests:
+      description: The request cannot be served due to the application’s rate limit
+        having been exhausted for the resource.
+      content:
+        application/json:
+          schema:
+            type: object
+    500InternalServerError:
+      description: Something is broken.
+      content:
+        application/json:
+          schema:
+            type: object
+    503ServiceUnavailable:
+      description: The server is up, but overloaded with requests. Try again later.
+      content:
+        application/json:
+          schema:
+            type: object
+    SuccessMessage:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
