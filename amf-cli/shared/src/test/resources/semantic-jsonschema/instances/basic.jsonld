@@ -1,0 +1,81 @@
+{
+  "@graph": [
+    {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:DialectInstanceProcessingData"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/basic.json"
+        }
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "amf-json-schema-generated-dialect 1.0"
+    },
+    {
+      "@id": "#/encodes",
+      "@type": [
+        "#/declarations/Person",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:name": "Pepito",
+      "data:age": 33,
+      "data:info": [
+        {
+          "@id": "#/encodes/info/0"
+        },
+        {
+          "@id": "#/encodes/info/1"
+        }
+      ]
+    },
+    {
+      "@id": "#/encodes/info/0",
+      "@type": [
+        "#/declarations/SchemaNode",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:note": "blablabalbalba"
+    },
+    {
+      "@id": "#/encodes/info/1",
+      "@type": [
+        "#/declarations/SchemaNode",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:note": "asdadsasdasdasd"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "meta:DialectInstance",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/basic.json"
+        }
+      ],
+      "doc:encodes": {
+        "@id": "#/encodes"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/basic.json",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

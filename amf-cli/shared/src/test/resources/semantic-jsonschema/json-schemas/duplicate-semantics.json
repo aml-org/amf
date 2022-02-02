@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#",
+    "security": "https://test.com/security#",
+    "somethingElse": "https://test.com/somethingElse#"
+  },
+  "title": "Some security thing",
+  "type": "object",
+  "required": [
+    "key_1",
+    "info_1"
+  ],
+  "properties": {
+    "key_1": {
+      "@context": {
+        "@characteristics":  [
+          "security:sensitive"
+        ]
+      },
+      "type": "string",
+      "pattern": "^[A-Za-z]*$"
+    },
+    "key_2": {
+      "@context": {
+        "@characteristics":  [
+          "security:sensitive"
+        ]
+      },
+      "type": "string",
+      "pattern": "^[A-Za-z]*$"
+    },
+    "info_1": {
+      "type": "integer",
+      "@context": {
+        "@characteristics":  [
+          "somethingElse:anything"
+        ]
+      }
+    },
+    "info_2": {
+      "type": "integer",
+      "@context": {
+        "@characteristics":  [
+          "somethingElse:anything"
+        ]
+      }
+    }
+  }
+}

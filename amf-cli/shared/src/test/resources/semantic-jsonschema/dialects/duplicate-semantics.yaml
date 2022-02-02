@@ -1,0 +1,48 @@
+#%Dialect 1.0
+nodeMappings:
+  Somesecuritything:
+    mapping:
+      key_1:
+        range: string
+        propertyTerm: semantics.key_1
+        mandatory: true
+        pattern: ^[A-Za-z]*$
+      key_2:
+        range: string
+        propertyTerm: semantics.key_2
+        mandatory: false
+        pattern: ^[A-Za-z]*$
+      info_1:
+        range: integer
+        propertyTerm: semantics.info_1
+        mandatory: true
+      info_2:
+        range: integer
+        propertyTerm: semantics.info_2
+        mandatory: false
+external:
+  somethingElse: https://test.com/somethingElse#
+  security: https://test.com/security#
+  ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Somesecuritything
+---
+#%Vocabulary 1.0
+external:
+  somethingElse: https://test.com/somethingElse#
+  security: https://test.com/security#
+base: https://a.ml/semantic-json-schema#
+vocabulary: Semantic JSON Schema Vocabulary
+propertyTerms:
+  info_1:
+    extends: somethingElse.anything
+  info_2:
+    extends: somethingElse.anything
+  key_1:
+    extends: security.sensitive
+  key_2:
+    extends: security.sensitive
