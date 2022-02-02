@@ -13,6 +13,7 @@ import amf.shapes.internal.domain.metamodel.{
   DefaultVocabularyModel,
   SemanticContextModel
 }
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.SemanticOps
 import org.yaml.model.YPart
 
 import scala.collection.mutable
@@ -274,21 +275,12 @@ class SemanticContext(override val fields: Fields, val annotations: Annotations)
     merged
   }
 
-  def expand(iri: String): String = {
-    val prefixes = prefixMap()
-    if (iri.contains(":") && !iri.contains("://")) {
-      val parts = iri.split(":")
-      if (parts(0) == "" && vocab.nonEmpty) {
-        s"${vocab.get}${parts(1)}"
-      } else if (prefixes.contains(parts(0))) {
-        s"${prefixes(parts(0))}${parts(1)}"
-      } else {
-        iri
-      }
-    } else {
-      iri
-    }
-  }
+  def prefixOf(iri: String): Option[String] = SemanticOps.findPrefix(iri, prefixMap())
+
+  def expand(iri: String, prefixes: Map[String, String]) =
+    SemanticOps.expandIri(iri, prefixes, vocab.flatMap(_.iri.option()))
+
+  def expand(iri: String): String = expand(iri, prefixMap())
 }
 
 object SemanticContext {

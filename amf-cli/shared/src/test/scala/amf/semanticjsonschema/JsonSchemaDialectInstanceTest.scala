@@ -1,6 +1,8 @@
 package amf.semanticjsonschema
 
 import amf.aml.client.scala.{AMLConfiguration, AMLDialectResult}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.Mimes
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
@@ -36,6 +38,14 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
     run("minimum-maximum")
   }
 
+  test("Dialect instance with duplicate-semantics JSON Schema") {
+    run("duplicate-semantics")
+  }
+
+  test("Dialect instance with multiple-characteristics JSON Schema") {
+    run("multiple-characteristics")
+  }
+
   // TODO review this validation. Is failing.
   ignore("Dialect instance validation with oneOf JSON schema") {
     run("oneOf")
@@ -45,14 +55,24 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
 
     val finalJsonschemaPath = s"$jsonSchemaPath$filename.json"
     val finalInstancePath   = s"$instancePath$filename.json"
+    val finalJsonLdPath     = s"$instancePath$filename.jsonld"
 
     for {
       dialect <- parseSchema(finalJsonschemaPath)
-      instance <- {
-        val amlConfig = AMLConfiguration.predefined().withDialect(dialect.dialect)
-        amlConfig.baseUnitClient().parseDialectInstance(finalInstancePath)
-      }
-    } yield assert(instance.conforms)
+      config <- Future.successful(
+        AMLConfiguration
+          .predefined()
+          .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
+          .withDialect(dialect.dialect))
+      instance <- config.baseUnitClient().parseDialectInstance(finalInstancePath)
+      jsonld <- Future.successful(
+        config.baseUnitClient().render(instance.dialectInstance, Mimes.`application/ld+json`))
+      tmp  <- writeTemporaryFile(finalJsonLdPath)(jsonld)
+      diff <- assertDifferences(tmp, finalJsonLdPath)
+    } yield {
+      assert(instance.conforms)
+      diff
+    }
   }
 
   private def parseSchema(path: String): Future[AMLDialectResult] = {
