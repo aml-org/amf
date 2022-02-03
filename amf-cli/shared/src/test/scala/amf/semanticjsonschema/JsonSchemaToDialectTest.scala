@@ -1,13 +1,11 @@
 package amf.semanticjsonschema
 
-import amf.aml.client.scala.AMLDialectResult
-import amf.aml.client.scala.model.document.Dialect
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, AmlHint, Hint}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
-import amf.shapes.client.scala.config.SemanticJsonSchemaConfiguration
+import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -53,31 +51,31 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
 
   private def run(schema: String, golden: String, hint: Hint): Future[Assertion] = {
     for {
-      dialectResult <- parseSchema(schema)
-      dialect <- {
-        assert(dialectResult.conforms)
-        Future(dialectResult.dialect)
+      result <- parseSchema(schema)
+      _ <- {
+        assert(result.conforms)
+        Future.successful(result)
       }
-      result <- {
-        val expected = emit(dialect, hint)
+      emitted <- {
+        val expected = emit(result, hint)
         writeTemporaryFile(golden)(expected).flatMap(s => assertDifferences(s, golden))
       }
-    } yield result
+    } yield emitted
   }
 
-  private def parseSchema(path: String): Future[AMLDialectResult] = {
+  private def parseSchema(path: String): Future[AMFSemanticSchemaResult] = {
     val config = SemanticJsonSchemaConfiguration.predefined()
-    config.baseUnitClient().parseDialect(path)
+    config.baseUnitClient().parseSemanticSchema(path)
   }
 
-  private def emit(dialect: Dialect, target: Hint)(implicit executionContext: ExecutionContext): String = {
+  private def emit(result: AMFSemanticSchemaResult, target: Hint)(
+      implicit executionContext: ExecutionContext): String = {
     val options =
       RenderOptions().withCompactUris.withoutSourceMaps.withoutRawSourceMaps.withFlattenedJsonLd.withPrettyPrint
-    val references = dialect.references
+    val AMFSemanticSchemaResult(dialect, vocab, _) = result
     if (target != AmfJsonHint) {
-      dialect.withReferences(List.empty)
       val dialectAsString = new AMFRenderer(dialect, target, options).renderToString
-      val refsAsString    = references.map(ref => new AMFRenderer(ref, target, options).renderToString).toList
+      val refsAsString    = vocab.map(ref => new AMFRenderer(ref, target, options).renderToString).toList
       (dialectAsString :: refsAsString).mkString("---\n")
     } else {
       new AMFRenderer(dialect, target, options).renderToString
