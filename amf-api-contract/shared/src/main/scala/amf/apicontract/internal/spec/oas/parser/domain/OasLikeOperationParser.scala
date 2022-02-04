@@ -188,8 +188,8 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
         operation.fields.setWithoutId(
           OperationModel.Request,
           AmfArray(Seq(Oas30RequestParser(entry.value.as[YMap], operation.id, entry).parse()),
-                   Annotations(entry.value)),
-          Annotations(entry)
+                   Annotations.virtual()),
+          Annotations.inferred()
         )
       }
     )
@@ -215,7 +215,6 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
       }
     )
 
-    if (operation.fields.exists(OperationModel.Request)) operation.request.annotations += VirtualElement()
     ctx.factory.serversParser(map, operation).parse()
 
     operation

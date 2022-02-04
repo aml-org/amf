@@ -18,9 +18,6 @@
             "$ref": "#/components/parameters/limitParam"
           }
         ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/someRequest"
-        },
         "responses": {
           "200": {
             "description": "Success"
@@ -31,6 +28,9 @@
           "default": {
             "$ref": "#/components/responses/Success"
           }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/someRequest"
         },
         "callbacks": {
           "someCallback": {
