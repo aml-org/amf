@@ -150,6 +150,42 @@ lazy val apiContractJS =
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 /** **********************************************
+  * AMF-API-Instance
+  * ********************************************* */
+lazy val apiInstance = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-api-instance"
+    ))
+  .in(file("./amf-api-instance"))
+  .settings(commonSettings)
+  .dependsOn(apiContract)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+    libraryDependencies += "org.reflections"                   % "reflections"            % "0.10.2" % Test,
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-instance-javadoc.jar",
+    Compile / packageBin / mappings += file("amf-apicontract.versions") -> "amf-apicontract.versions"
+  )
+  .jsSettings(
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-api-instance-module.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations",
+    npmDependencies += ("ajv", "6.12.6"),
+    npmPackageLoc := "amf-api-instance/js"
+  )
+  .disablePlugins(SonarPlugin)
+
+lazy val apiInstanceJVM =
+  apiInstance.jvm
+    .in(file("./amf-api-instance/jvm"))
+
+lazy val apiInstanceJS =
+  apiInstance.js
+    .in(file("./amf-api-instance/js"))
+
+    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
+
+/** **********************************************
   * AMF-ANTLR-SYNTAX
   * ********************************************* */
 
@@ -272,7 +308,7 @@ lazy val graphqlJS =
 lazy val cli = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-cli")
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
-  .dependsOn(grpc,graphql)
+  .dependsOn(grpc,graphql,apiInstance)
   .in(file("./amf-cli"))
   .settings(commonSettings)
   .settings(
