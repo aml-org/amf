@@ -3,15 +3,33 @@ package amf.adhoc.cli
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.client.scala.APIConfiguration
+import amf.core.client.common.remote.Content
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.resource.ResourceLoader
 import amf.core.internal.remote.Mimes
+import org.apache.commons.io.IOUtils
 
-import scala.concurrent.Await
+import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object Main {
+  case class JarResourceLoader() extends ResourceLoader {
+
+    /** Fetch specified resource and return associated content. Resource should have been previously accepted.
+      * If the resource doesn't exists, it returns a failed future caused by a ResourceNotFound exception. */
+    override def fetch(resource: String): Future[Content] = {
+      Future {
+        val bytes   = IOUtils.toByteArray(getClass.getResourceAsStream(resource.stripPrefix("jar://")))
+        val content = new String(bytes)
+        new Content(content, resource)
+      }
+    }
+
+    /** Checks if the resource loader accepts the specified resource. */
+    override def accepts(resource: String): Boolean = resource.startsWith("jar://")
+  }
 
   def main(args: Array[String]): Unit = {
     args(0) match {
@@ -21,10 +39,9 @@ object Main {
       case "validate" =>
         val configFuture = AMLConfiguration
           .predefined()
-          .withDialect(
-            "https://raw.githubusercontent.com/aml-org/models/master/src/main/dialects/validation-profile.yaml")
-          .flatMap(_.withDialect(
-            "https://raw.githubusercontent.com/aml-org/models/master/src/main/dialects/validation-report.yaml"))
+          .withResourceLoader(JarResourceLoader())
+          .withDialect("jar:///dialects/validation-profile.yaml")
+          .flatMap(_.withDialect("jar:///dialects/validation-report.yaml"))
 
         val config = Await.result(configFuture, Duration.Inf)
 
