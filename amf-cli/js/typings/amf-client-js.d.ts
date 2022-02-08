@@ -1362,7 +1362,7 @@ declare module 'amf-client-js' {
 
     objectRange(): Array<StrField>
 
-    domain(): StrField
+    domain(): Array<StrField>
 
     withPattern(pattern: string): AnnotationMapping
 
