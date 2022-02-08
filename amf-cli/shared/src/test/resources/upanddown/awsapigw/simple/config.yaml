@@ -1,0 +1,10 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: A sample template
+Resources:
+  MyApi:
+    Type: 'AWS::ApiGatewayV2::Api'
+    Properties:
+      Name: MyApi
+      ProtocolType: WEBSOCKET
+      RouteSelectionExpression: $request.body.action
+      ApiKeySelectionExpression: $request.header.x-api-key

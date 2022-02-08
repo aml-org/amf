@@ -1,0 +1,57 @@
+[
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/awsapigw/simple/config.yaml",
+"@type": [
+"http://a.ml/vocabularies/document#Document",
+"http://a.ml/vocabularies/document#Fragment",
+"http://a.ml/vocabularies/document#Module",
+"http://a.ml/vocabularies/document#Unit"
+],
+"http://a.ml/vocabularies/document#encodes": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/awsapigw/simple/config.yaml#/proxy",
+"@type": [
+"http://a.ml/vocabularies/apiInstance#Proxy",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiInstance#listeners": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/awsapigw/simple/config.yaml#/proxy/listeners/null",
+"@type": [
+"http://a.ml/vocabularies/apiInstance#ProtocolListener",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiContract#protocol": [
+{
+"@value": "TCP"
+}
+],
+"http://a.ml/vocabularies/apiInstance#networkPort": [
+{
+"@value": "80"
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document#root": [
+{
+"@value": true
+}
+],
+"http://a.ml/vocabularies/document#processingData": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/awsapigw/simple/config.yaml#/BaseUnitProcessingData",
+"@type": [
+"http://a.ml/vocabularies/document#BaseUnitProcessingData"
+],
+"http://a.ml/vocabularies/document#sourceSpec": [
+{
+"@value": "AWS API Gateway CF Config"
+}
+]
+}
+]
+}
+]

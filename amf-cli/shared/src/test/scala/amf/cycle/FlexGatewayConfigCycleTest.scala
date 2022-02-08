@@ -7,7 +7,7 @@ import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandle
 import amf.core.internal.remote.{AmfJsonHint, EnvoyHint}
 import amf.io.FunSuiteCycleTests
 
-trait EnvoyConfigFunSuiteCycleTests extends FunSuiteCycleTests {
+trait FlexGatewayConfigFunSuiteCycleTests extends FunSuiteCycleTests {
   override def buildConfig(options: Option[RenderOptions], eh: Option[AMFErrorHandler]): AMFConfiguration = {
     val amfConfig: AMFConfiguration = APIInstanceConfiguration.APIInstance()
     val renderedConfig: AMFConfiguration = options.fold(amfConfig.withRenderOptions(renderOptions()))(r => {
@@ -19,11 +19,10 @@ trait EnvoyConfigFunSuiteCycleTests extends FunSuiteCycleTests {
 }
 
 
-class EnvoyConfigCycleTest extends EnvoyConfigFunSuiteCycleTests {
-  override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/envoy/"
+class FlexGatewayConfigCycleTest extends FlexGatewayConfigFunSuiteCycleTests {
+  override def basePath: String = "amf-cli/shared/src/test/resources/upanddown/flex/"
 
-  test("Can parse a simple Envoy config") {
+  test("HERE_HERE Can parse a simple Flex config") {
     cycle("simple/config.yaml", "simple/config.jsonld", EnvoyHint, AmfJsonHint)
   }
-
 }

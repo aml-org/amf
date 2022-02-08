@@ -1,0 +1,67 @@
+[
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/flex/simple/config.yaml",
+"@type": [
+"http://a.ml/vocabularies/document#Document",
+"http://a.ml/vocabularies/document#Fragment",
+"http://a.ml/vocabularies/document#Module",
+"http://a.ml/vocabularies/document#Unit"
+],
+"http://a.ml/vocabularies/document#encodes": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/flex/simple/config.yaml#/proxy",
+"@type": [
+"http://a.ml/vocabularies/apiInstance#Proxy",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/apiInstance#listeners": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/flex/simple/config.yaml#/proxy/listeners/default",
+"@type": [
+"http://a.ml/vocabularies/apiInstance#ProtocolListener",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/core#name": [
+{
+"@value": "default"
+}
+],
+"http://a.ml/vocabularies/apiContract#protocol": [
+{
+"@value": "http"
+}
+],
+"http://a.ml/vocabularies/apiInstance#networkAddress": [
+{
+"@value": "0.0.0.0"
+}
+],
+"http://a.ml/vocabularies/apiInstance#networkPort": [
+{
+"@value": "8080"
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document#root": [
+{
+"@value": true
+}
+],
+"http://a.ml/vocabularies/document#processingData": [
+{
+"@id": "file://amf-cli/shared/src/test/resources/upanddown/flex/simple/config.yaml#/BaseUnitProcessingData",
+"@type": [
+"http://a.ml/vocabularies/document#BaseUnitProcessingData"
+],
+"http://a.ml/vocabularies/document#sourceSpec": [
+{
+"@value": "MuleSoft Flex Gateway Config"
+}
+]
+}
+]
+}
+]

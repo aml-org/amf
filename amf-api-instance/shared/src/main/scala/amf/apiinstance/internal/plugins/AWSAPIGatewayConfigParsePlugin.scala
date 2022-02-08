@@ -40,12 +40,17 @@ object AWSAPIGatewayConfigParsePlugin extends AMFParsePlugin with NodeTraverser 
   override def applies(root: Root): Boolean = {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
-        traverse(parsed.document)
-          .fetch("AWSTemplateFormatVersion").fetch("Resources").mapOr(false) { resources =>
-              resources.map.values.exists { resource =>
-                traverse(resource).fetch("Type").string().contains("AWS::ApiGatewayV2::Api")
-              }
+        val root = traverse(parsed.document.node)
+        if (root.fetch("AWSTemplateFormatVersion").string().isDefined) {
+          root.fetch("Resources").mapOr(false) { resources =>
+            resources.map.values.exists { resource =>
+              traverse(resource).fetch("Type").string().contains("AWS::ApiGatewayV2::Api")
+            }
           }
+        } else {
+          false
+        }
+
       case _              => false
     }
   }

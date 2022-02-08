@@ -1,7 +1,7 @@
 package amf.apiinstance.internal.plugins
 
-import amf.apiinstance.internal.spec.context.AWSAPIGWConfigContext
-import amf.apiinstance.internal.spec.document.EnvoyConfigDocumentParser
+import amf.apiinstance.internal.spec.context.FlexGWConfigContext
+import amf.apiinstance.internal.spec.document.FlexGatewayDocumentParser
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
@@ -11,17 +11,18 @@ import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.parser.domain.Declarations
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.Spec
-import org.yaml.model.YMap
+import amf.core.internal.remote.Spec._
+import org.yaml.model.{YMap, YScalar}
 
-object EnvoyConfigParsePlugin extends AMFParsePlugin {
-  override def spec: Spec = Spec.ENVOY
+object FlexGatewayConfigParserPlugin extends AMFParsePlugin {
+  override def spec: Spec = FLEXGW
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    EnvoyConfigDocumentParser(document)(context(document,ctx)).parseDocument()
+    FlexGatewayDocumentParser(document)(context(document,ctx)).parseDocument()
   }
 
-  private def context(document: Root, ctx: ParserContext): AWSAPIGWConfigContext = {
-    AWSAPIGWConfigContext(
+  private def context(document: Root, ctx: ParserContext): FlexGWConfigContext = {
+    FlexGWConfigContext(
       ctx.rootContextDocument,
       ctx.refs,
       ctx.parsingOptions,
@@ -32,7 +33,7 @@ object EnvoyConfigParsePlugin extends AMFParsePlugin {
   /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-  override def mediaTypes: Seq[String] = Seq(`application/yaml`)
+  override def mediaTypes: Seq[String] = Seq(`application/yaml`, `application/json`)
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = SimpleReferenceHandler
 
@@ -42,13 +43,25 @@ object EnvoyConfigParsePlugin extends AMFParsePlugin {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
         parsed.document.to[YMap] match {
-          case Right(map) =>
-            map.key("static_resources").isDefined
-          case Left(_) => false
+          case Right(m) =>
+            val isMuleSoft = m.key("apiVersion")match {
+              case Some(entry) =>
+                entry.value.as[YScalar].text == "gateway.mulesoft.com/v1alpha1"
+              case _           => false
+            }
+            val isApiInstance = m.key("kind")match {
+              case Some(entry) =>
+                entry.value.as[YScalar].text == "ApiInstance"
+              case _           => false
+            }
+            isMuleSoft && isApiInstance
+          case _        => false
         }
-      case _              => false
+      case _                           => false
+
     }
   }
 
   override def priority: PluginPriority = NormalPriority
+
 }

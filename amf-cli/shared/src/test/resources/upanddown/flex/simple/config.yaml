@@ -1,0 +1,19 @@
+apiVersion: gateway.mulesoft.com/v1alpha1
+kind: ApiInstance
+metadata:
+  name: jsonplaceholder-api
+spec:
+  address: http://0.0.0.0:8080
+  services:
+    jsonplaceholder:
+      address: https://jsonplaceholder.typicode.com:443/
+      routes:
+        - rules:
+            - path: /api(/users/.*)
+            - path: /api(/comments/.*)
+  policies:
+    - policyRef:
+        name: basic-authentication
+      config:
+        username: foo
+        password: bar

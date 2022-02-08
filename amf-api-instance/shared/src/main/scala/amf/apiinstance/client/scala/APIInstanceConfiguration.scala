@@ -1,8 +1,8 @@
 package amf.apiinstance.client.scala
 
 import amf.apicontract.client.scala.{AMFConfiguration, APIConfigurationBuilder}
-import amf.apiinstance.internal.plugins.{AWSAPIGatewayConfigParsePlugin, EnvoyConfigParsePlugin, KongDeclarativeConfigParsePlugin}
+import amf.apiinstance.internal.plugins.{AWSAPIGatewayConfigParsePlugin, EnvoyConfigParsePlugin, FlexGatewayConfigParserPlugin, KongDeclarativeConfigParsePlugin}
 
 object APIInstanceConfiguration extends APIConfigurationBuilder {
-  def APIInstance(): AMFConfiguration = common().withPlugins(List(EnvoyConfigParsePlugin, AWSAPIGatewayConfigParsePlugin, KongDeclarativeConfigParsePlugin))
+  def APIInstance(): AMFConfiguration = common().withPlugins(List(EnvoyConfigParsePlugin, AWSAPIGatewayConfigParsePlugin, KongDeclarativeConfigParsePlugin, FlexGatewayConfigParserPlugin))
 }
