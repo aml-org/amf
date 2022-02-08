@@ -2,6 +2,7 @@ package amf.semanticjsonschema
 
 import amf.aml.client.scala.{AMLConfiguration, AMLDialectResult}
 import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Mimes
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
@@ -47,7 +48,7 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
   }
 
   // TODO review this validation. Is failing.
-  ignore("Dialect instance validation with oneOf JSON schema") {
+  test("Dialect instance validation with oneOf JSON schema") {
     run("oneOf")
   }
 
@@ -63,6 +64,7 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
         AMLConfiguration
           .predefined()
           .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
+          .withErrorHandlerProvider(() => UnhandledErrorHandler)
           .withDialect(dialect.dialect))
       instance <- config.baseUnitClient().parseDialectInstance(finalInstancePath)
       jsonld <- Future.successful(
@@ -76,7 +78,7 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
   }
 
   private def parseSchema(path: String): Future[AMLDialectResult] = {
-    val config = SemanticJsonSchemaConfiguration.predefined()
+    val config = SemanticJsonSchemaConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler)
     config.baseUnitClient().parseDialect(path)
   }
 }
