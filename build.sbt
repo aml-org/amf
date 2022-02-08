@@ -328,7 +328,10 @@ lazy val cliJS = cli.js.in(file("./amf-cli/js"))
 lazy val adhocCli = (project in file("adhoc-cli"))
   .settings(
     version := "0.1-SNAPSHOT",
-    publishTo := Some(snapshots)
+    publishTo := Some(snapshots),
+    libraryDependencies += "com.github.amlorg" %% "amf-validation-profile-dialect" % "1.1.0-SNAPSHOT",
+    libraryDependencies += "com.github.amlorg" %% "amf-validation-report-dialect" % "1.1.0-SNAPSHOT",
+    libraryDependencies += "commons-io"        %  "commons-io"                    % "2.11.0"
   )
   .settings(
     assembly / aggregate := true,

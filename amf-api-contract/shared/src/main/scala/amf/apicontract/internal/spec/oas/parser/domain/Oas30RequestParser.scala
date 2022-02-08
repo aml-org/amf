@@ -22,7 +22,6 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
 
   private def adopt(request: Request) = {
     request
-      .add(Annotations(definitionEntry))
       .setWithoutId(RequestModel.Name, ScalarNode(definitionEntry.key).string(), Annotations(definitionEntry.key))
 
   }
@@ -32,7 +31,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
       case Left(fullRef) =>
         parseRef(fullRef)
       case Right(_) =>
-        val request = adopt(Request())
+        val request = adopt(Request(Annotations.virtual()))
 
         map.key("description", RequestModel.Description in request)
         map.key("required", RequestModel.Required in request)
@@ -60,7 +59,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
     val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "requestBodies")
     ctx.declarations
       .findRequestBody(name, SearchScope.Named)
-      .map(req => adopt(req.link(AmfScalar(name), Annotations(map), Annotations.synthesized())))
+      .map(req => adopt(req.link(AmfScalar(name), Annotations.virtual(), Annotations.synthesized())))
       .getOrElse {
         ctx.navigateToRemoteYNode(fullRef) match {
           case Some(navigation) =>

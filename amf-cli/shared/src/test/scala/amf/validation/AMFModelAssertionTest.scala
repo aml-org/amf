@@ -3,12 +3,15 @@ package amf.validation
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.{AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Response}
+import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.core.client.common.position.Position
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement}
+import amf.core.internal.annotations.{Inferred, VirtualElement, VirtualNode}
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
@@ -279,6 +282,22 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val components = new BaseUnitComponents
       val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
       examples.size shouldBe 2
+    }
+  }
+
+  test("Expects field should be inferred and Request should be virtual") {
+    def isTheOnlyAnnotation[T <: VirtualNode](annotation: Class[T], annotations: Annotations): Boolean = {
+      annotations.find(annotation).isDefined && annotations.size == 1
+    }
+
+    val api = s"$basePath/annotations/api-with-request.yaml"
+    modelAssertion(api, transform = false) { bu =>
+      val components   = new BaseUnitComponents
+      val op           = components.getFirstOperation(bu)
+      val expectsField = OperationModel.Request
+      isTheOnlyAnnotation(classOf[Inferred], op.fields.getValue(expectsField).annotations) shouldBe true
+      isTheOnlyAnnotation(classOf[VirtualElement], op.fields.get(expectsField).annotations) shouldBe true
+      isTheOnlyAnnotation(classOf[VirtualElement], op.request.annotations) shouldBe true
     }
   }
 }
