@@ -10,7 +10,10 @@ import amf.graphql.internal.spec.emitter.document.GraphQLDocumentEmitter
 object GraphQLRenderPlugin extends AMFRenderPlugin {
   override def defaultSyntax(): String = GraphQL.mediaType
 
-  override def emit[T](unit: BaseUnit, builder: ASTBuilder[T], renderConfiguration: RenderConfiguration): Boolean = {
+  override def emit[T](unit: BaseUnit,
+                       builder: ASTBuilder[T],
+                       renderConfiguration: RenderConfiguration,
+                       mediaType: String): Boolean = {
     builder match {
       case stringBuilder: StringDocBuilder =>
         new GraphQLDocumentEmitter(unit, stringBuilder).emit()
