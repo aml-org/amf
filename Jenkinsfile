@@ -29,7 +29,7 @@ pipeline {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
           script {
             try{
-              sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
+              sh 'sbt -mem 8192 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
             } catch (ignored) {
               failedStage = failedStage + " TEST "
               unstable "Failed tests"
