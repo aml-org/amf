@@ -3,20 +3,21 @@ package amf.parser
 import amf.apicontract.client.scala.RAMLConfiguration
 import amf.core.client.scala.model.document.Fragment
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.remote.{Mimes, Raml10}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
 import amf.shapes.internal.spec.common.TypeDef
+import amf.shapes.internal.spec.common.TypeDef._
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
-import org.scalatest.Matchers._
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
+class NumberFormatsTest extends AsyncFunSuite with Matchers with PlatformSecrets {
+
   implicit override def executionContext: ExecutionContext =
     scala.concurrent.ExecutionContext.Implicits.global
 

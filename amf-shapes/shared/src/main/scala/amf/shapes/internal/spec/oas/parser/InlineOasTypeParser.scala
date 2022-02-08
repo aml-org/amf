@@ -900,7 +900,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
   }
 
   case class PropertiesParser(map: YMap,
-                              producer: String => PropertyShape,
+                              producer: (String, Annotations) => PropertyShape,
                               requiredFields: Map[String, YNode],
                               patterned: Boolean = false) {
     def parse(): Seq[PropertyShape] = {
@@ -909,18 +909,18 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
   }
 
   case class PropertyShapeParser(entry: YMapEntry,
-                                 producer: String => PropertyShape,
+                                 producer: (String, Annotations) => PropertyShape,
                                  requiredFields: Map[String, YNode],
                                  patterned: Boolean) {
 
     def parse(): PropertyShape = {
 
-      val name     = entry.key.as[YScalar].text
-      val required = requiredFields.contains(name)
+      val name            = entry.key.as[YScalar].text
+      val nameAnnotations = Annotations(entry.key)
+      val required        = requiredFields.contains(name)
       val requiredAnnotations =
         requiredFields.get(name).map(node => Annotations(node)).getOrElse(synthesized())
-
-      val property = producer(name)
+      val property = producer(name, nameAnnotations)
         .add(Annotations(entry))
         .setWithoutId(PropertyShapeModel.MinCount,
                       AmfScalar(if (required) 1 else 0, synthesized()),

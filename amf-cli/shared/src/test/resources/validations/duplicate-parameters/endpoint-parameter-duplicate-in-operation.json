@@ -1,0 +1,32 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "api title"
+  },
+  "paths": {
+    "/somePath": {
+      "parameters": [
+        {
+          "name" : "queryParam",
+          "in" : "query",
+          "type" : "string"
+        }
+      ],
+      "get": {
+        "parameters": [
+          {
+            "name" : "queryParam",
+            "in" : "query",
+            "type" : "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "success"
+          }
+        }
+      }
+    }
+  }
+}

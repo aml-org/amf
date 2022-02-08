@@ -1,6 +1,6 @@
 package amf.extensions
 
-import amf.apicontract.client.scala.{AsyncAPIConfiguration, OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.client.scala.model.domain.security.SecurityScheme
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.ParsingOptions
@@ -9,7 +9,9 @@ import amf.core.internal.remote._
 import amf.core.internal.render.AMFSerializer
 import amf.io.FileAssertionTest
 import amf.testing.ConfigProvider
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

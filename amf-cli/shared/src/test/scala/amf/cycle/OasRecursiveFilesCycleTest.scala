@@ -7,7 +7,7 @@ import amf.io.FunSuiteCycleTests
 class OasRecursiveFilesCycleTest extends FunSuiteCycleTests {
   override def basePath: String = "amf-cli/shared/src/test/resources/references/oas/oas-references/"
 
-  override def renderOptions() = RenderOptions().withSourceMaps.withPrettyPrint.withoutFlattenedJsonLd
+  override def renderOptions(): RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint.withoutFlattenedJsonLd
   test("YAML OAS 2.0 with recursive file dependency doesn't output unresolved shape") {
     cycle("oas-2-root.yaml", "oas-2-root.jsonld", Oas20YamlHint, AmfJsonHint)
   }

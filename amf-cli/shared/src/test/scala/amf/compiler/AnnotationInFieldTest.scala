@@ -13,9 +13,9 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.annotations.{LexicalInformation, ReferenceTargets, SourceAST}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas20YamlHint, Raml10YamlHint}
-import amf.shapes.internal.annotations.ExternalJsonSchemaShape
 import amf.shapes.client.scala.model.domain.NodeShape
-import org.scalatest.AsyncFunSuite
+import amf.shapes.internal.annotations.ExternalJsonSchemaShape
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 

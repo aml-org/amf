@@ -7,13 +7,13 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, Document, Module}
-import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Spec}
+import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.testing.ConfigProvider
 import amf.testing.ConfigProvider.configFor
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 

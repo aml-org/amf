@@ -1,7 +1,6 @@
 package amf.javaparser.org.raml
 
 import amf.io.FunSuiteCycleTests
-import amf.resolution.ResolutionTest
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.compatible.Assertion
 

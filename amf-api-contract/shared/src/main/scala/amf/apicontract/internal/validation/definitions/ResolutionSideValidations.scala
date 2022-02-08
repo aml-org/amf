@@ -62,9 +62,15 @@ object ResolutionSideValidations extends Validations {
     "When schema is undefined, 'examples' facet is invalid as no content is returned as part of the response"
   )
 
+  val DuplicatedParameterWarning = validation(
+    "duplicated-parameter-warning",
+    "An operation's parameter with the same name and binding as one from the endpoint was found"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidTypeInheritanceWarningSpecification.id -> all(WARNING),
-    InvalidConsumesWithFileParameter.id -> all(WARNING)
+    InvalidConsumesWithFileParameter.id -> all(WARNING),
+    DuplicatedParameterWarning.id -> all(WARNING)
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -75,6 +81,7 @@ object ResolutionSideValidations extends Validations {
     UnsupportedPipeline,
     InvalidConsumesWithFileParameter,
     ExamplesWithInvalidMimeType,
-    ExamplesWithNoSchemaDefined
+    ExamplesWithNoSchemaDefined,
+    DuplicatedParameterWarning
   )
 }

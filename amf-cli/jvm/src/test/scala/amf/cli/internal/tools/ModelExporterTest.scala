@@ -1,7 +1,7 @@
 package amf.cli.internal.tools
 
 import amf.io.FileAssertionTest
-import org.scalatest.AsyncFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 
 class ModelExporterTest extends AsyncFunSuite with FileAssertionTest {
 

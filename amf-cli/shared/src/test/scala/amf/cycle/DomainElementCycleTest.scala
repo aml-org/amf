@@ -13,7 +13,8 @@ import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.model.domain.Example
 import amf.testing.ConfigProvider
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 import org.yaml.model.{YDocument, YNode}
 
 import java.io.StringWriter

@@ -1,7 +1,6 @@
 package amf.emit
 
 import amf.apicontract.client.scala.WebAPIConfiguration
-import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -10,8 +9,8 @@ import amf.core.client.scala.validation.AMFValidator
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.core.internal.resource.StringResourceLoader
 import amf.io.FileAssertionTest
-import amf.testing.HintProvider.defaultHintFor
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 

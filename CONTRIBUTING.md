@@ -21,7 +21,7 @@ behavior that is not occurring.
 
 ### Development Requirements
 * Scala 2.12.11
-* sbt 1.3.9
+* sbt 1.6.1
 * Node
 
 ### Version control branching
@@ -43,8 +43,8 @@ Writing tests before the implementation is strongly encouraged.
 To run tests:
 ```sh
 $ sbt test
-$ sbt clientJVM/testOnly // to run tests only for the JVM platform
-$ sbt clientJS/testOnly // to run tests only for the JS platform
+$ sbt cliJVM/testOnly // to run tests only for the JVM platform
+$ sbt cliJS/testOnly // to run tests only for the JS platform
 ```
 
 Code contributions must comply with a minimum of 80% coverage rate. 

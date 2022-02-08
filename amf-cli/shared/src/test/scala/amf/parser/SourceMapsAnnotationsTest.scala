@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.client.scala.parse.AMFParser
@@ -12,7 +12,8 @@ import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.internal.spec.raml.parser.expression.ExpressionMember
 import org.mulesoft.lexer.InputRange
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 

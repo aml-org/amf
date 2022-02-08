@@ -1,10 +1,12 @@
 package amf.error
 
-import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.APIConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers, Succeeded}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 

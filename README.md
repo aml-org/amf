@@ -1,60 +1,21 @@
-[![Build Status](https://jenkins.build.msap.io/buildStatus/icon?job=application/AMF/amf/master)](https://jenkins.build.msap.io/job/application/job/AMF/job/amf/job/master/)
+[![GitHub license](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/aml-org/amf/blob/master/LICENSE) [![Build Status](https://jenkins.build.msap.io/buildStatus/icon?job=application/AMF/amf/master)](https://jenkins.build.msap.io/job/application/job/AMF/job/amf/job/master/) [![Version](https://img.shields.io/github/v/release/aml-org/amf)](https://github.com/aml-org/amf/releases)
 
 # AML Modeling Framework
+AMF (AML Modeling Framework) is an open-source programming framework, capable of parsing, generating and validating metadata documents defined using [AML](https://a.ml/aml-spec). It can be used as a library in Scala, Java, or JavaScript projects. The modular design of AMF facilitates creating plugins capable of parsing other metadata syntaxes not defined by AML.
 
-AMF (AML Modeling Framework) is an open-source programming framework, capable of parsing, generating and validating metadata documents defined using [AML](https://a.ml/aml-spec). It can be used as a library in Java or JavaScript projects, or as a stand-alone command-line tool. The modular design of AMF facilitates creating plugins capable of parsing other metadata syntaxes not defined by AML.
 
-## Vision
-
-[AML](https://a.ml/aml-spec) allows users to formally describe different kinds of models, whether syntactic models (i.e. language/specification specific) or semantic models (i.e. domain/industry specific). AMF can parse and generate descriptions of those models as sets of modular documents and store those connected descriptions into a single unified data graph.
-
-## Goals
-
-- Support for multiple formats with a unified programming interface and model
-- Support for both syntactic and semantic model layers
-- Support for validation at both syntactic and semantic model layers
-- Produce formal specifications of any (specification) language
-- Extensible, single syntactic model for multiple semantic models
-- Ability to create consistent parsing behaviors across different syntactic models
-- Support for bi-directional transformation and export
-- Support for custom (parsing/resolution/generation) pipelines
-
-## Native support
-
-AMF natively supports the following formats:
-- YAML
-- JSON
-
-the following semantic models:
-- WebApi (or "Web APIs" as in "APIs accessible over the network")
-
-and the following syntactic models:
-- JSON-LD "AMF model"
-- RAML 0.8 / 1.0 (mapped to "WebApi")
-- OpenAPI (OAS) 2.0 / 3.0 (mapped to "WebApi")
-- AsyncAPI 2.0 (mapped to "AsyncApi")
-
-The models above and any other models may be extended and supported via custom [AML-defined models](https://a.ml/aml-spec). Other formats and models that cannot be expressed with AML may also be supported via plugins. 
-
-## Guaranteed output
-
-The **only** guaranteed output of AMF is the JSON-LD "AMF model". Any other output such as any output provided natively by the models listed under the section above may change at any time. This means that while the semantic representation of those outputs may remain unchanged, the syntactical expression such as the order in which the outputted metadata is expressed and any other syntax-related constructs may change from one version of AMF to another. If this is an issue for your use-case, you may consider using a custom resolution/generation pipeline.
-
-## Documentation
+# 📃 Documentation
 - [The AML Project](https://a.ml)
-- [What is AMF?](https://a.ml/docs)
-- [AMF model documentation](documentation/model.md)
-- [Validation insights](./documentation/validation.md)
-- [Basic use cases - parsing & validating an API](documentation/basic_use_cases.md)
-- [Code examples](https://github.com/aml-org/examples)
-- [More code examples](https://github.com/mulesoft/amf-examples)
+- [AMF Documentation website](https://a.ml/docs)
+- [AMF model documentation](./documentation/model.md)
+- [GitHub repository of AMF code examples](https://github.com/aml-org/examples)
 
-## Usage
+# 📦 Artifacts
+[![NPMJS](https://img.shields.io/npm/v/amf-client-js.svg)](https://www.npmjs.com/package/amf-client-js)
+[![github releases](https://img.shields.io/github/v/release/aml-org/amf?label=nexus)](https://repository-master.mulesoft.org/nexus/content/repositories/releases/com/github/amlorg/amf-api-contract_2.12)
 
-### Download JVM artifacts
 
-Gradle snippet:
-
+## Gradle
 ```groovy
 // add mulesoft repository
 repositories {
@@ -63,35 +24,27 @@ repositories {
     }
 }
 dependencies {
-    compile 'com.github.amlorg:amf-client_2.12:x.y.z'
+    compile 'com.github.amlorg:amf-api-contract_2.12:x.y.z'
 }
 ```
 
-Maven snippet:
-
+## Maven
 ```xml
 <dependency>
     <groupId>com.github.amlorg</groupId>
-    <artifactId>amf-client_2.12</artifactId>
+    <artifactId>amf-api-contract_2.12</artifactId>
     <version>x.y.z</version>
 </dependency>
 ```
 
 NOTE: you may use the `-SNAPSHOT` versions of the artifacts at your own risk since those snapshot versions may contain breaking changes.
 
-### JavaScript artifacts
-
-NPM:
+## JavaScript
 ```bash
 $ npm install --save amf-client-js
 ```
 
-Yarn:
-```bash
-$ yarn add --save amf-client-js
-```
-
-### To generate artifacts directly from cloned repository
+## Generate artifacts directly from cloned repository
 
 To build into a JVM jar:
 ```sh
@@ -99,82 +52,35 @@ sbt package
 ```
 To build into a JS bundle:
 ```sh
-sbt buildJS
+sh js-build.sh
 ```
 
-### Usage
+More info on how to add AMF to your project [here](https://a.ml/docs/amf/using-amf/amf_setup).
 
-To use AMF you must first initialize it
 
-With Node.js: 
-```javascript
-const amf = require('./lib/amf-client-module.js')
+# AMF Native support
 
-await AMF.init();
+AMF natively supports the following formats:
+- YAML
+- JSON
 
-// ... your code
-```
+the following semantic models:
+- WebApi (or "Web APIs" as in "APIs accessible over the network")
+- AsyncApi
 
-With Java:
-```java
-import amf.client.AMF;
+and the following syntactic models:
+- JSON-LD "AMF model"
+- RAML 0.8 / 1.0 (mapped to "WebApi")
+- OpenAPI (OAS) 2.0 / 3.0 (mapped to "WebApi")
+- AsyncAPI 2.0 (mapped to "AsyncApi")
 
-class App {
-    public static void main(String[] args){
-      AMF.init().thenApply(() -> {
-              // ... your code
-      });
-    }
-}
-```
+The models above and any other models may be extended and supported via custom [AML-defined models](https://a.ml/aml-spec). Other formats and models that cannot be expressed with AML may also be supported via plugins.
 
-### Command line usage
+## Guaranteed output
 
-You can build a standalone Java executable (JAR) running the following SBT target:
-```bash
-$ sbt buildCommandLine
-```
+The **only** guaranteed output of AMF is the JSON-LD "AMF model". Any other output such as any output provided natively by the models listed under the section above may change at any time. This means that while the semantic representation of those outputs may remain unchanged, the syntactical expression such as the order in which the outputted metadata is expressed and any other syntax-related constructs may change from one version of AMF to another. If this is an issue for your use-case, you may consider using a custom resolution/generation pipeline.
 
-This will generate an executable JAR at the top level directory that can be used to execute AMF from the command line.
-
-Alternatively, you can download the assembly JAR from nexus [releases](https://repository-master.mulesoft.org/nexus/content/repositories/releases/com/github/amlorg/amf-client_2.12/) 
-or [snapshots](https://repository-master.mulesoft.org/nexus/content/repositories/snapshots/com/github/amlorg/amf-client_2.12/), 
-select the desired version and download the `amf-client_2.12-x.y.z-assembly.jar` file. This JAR is already built and executable.
-
-Using AMFs JAR, you can run tasks from command line, for instance:
-```bash
-$ java -jar amf-x.y.z.jar parse -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
-```
-or 
-```bash
-$ java -jar amf-x.y.z.jar validate -in "RAML 1.0" -mime-in "application/yaml" -p "RAML" yourAPIfile
-```
-or
-```bash
-$ java -jar amf-x.y.z.jar translate  yourAPIOASfile --format-in "OAS 3.0" -mime-in "application/json" --format-out "RAML 1.0" -mime-out "application/raml+yaml"
-```
-To get all available options:
-```bash
-$ java -jar amf-x.y.z.jar
-```
-
-Using this JAR you can execute AMF by passing one of the following commands:
-
-- parse <input_file> -in FORMAT
-- translate <input_file> <output_file> -in FORMAT_IN -out FORMAT_OUT
-- validate <input_file> -in FORMAT_IN -p VALIDATION_PROFILE
-
-An interactive section can be started using the `repl` command.
-
-If you want to parse any AML dialect other than RAML 1.0, you can pass a list of dialects to be loaded in the parser through the `dialects` option.
-
-Refer to the usage of the application for additional commands and explanations.
-
-## AML Vocabulary
-
-The AML Vocabulary that could be found in this repository under the **vocabularies** directory has been migrated to the [amf metadata repository](https://github.com/aml-org/amf-metadata)
-
-## AMF ecosystem modules
+# AMF ecosystem modules
 The following image shows each module in the AMF ecosystem as a dependency graph. 
 
 For AMF adopters it is recommended to use the `amf-api-contract` module which contains transitive dependencies with every
@@ -182,12 +88,8 @@ module in the ecosystem except the CLI. For AML adopters (with no Web API nor Cu
 adopt the `amf-aml` module which includes parsing, validation & resolution for AML documents only. For more details on 
 AML visit the [AML repository]("https://github.com/aml-org/amf-aml").
 
-### Legend:
-- **Circle**: module
-- **Dashed circle**: recommended modules for AMF and AML adopters respectively
-- **Light gray box**: modules that share the same version number
-
-![Module graph](./amf-ecosystem-modules.png)
+![AMF ecosystem modules](./amf-ecosystem-modules.png)
+The `amf-api-contract` and `amf-aml` are the recommended modules for AMF and AML adopters respectively.
 
 ## Contributing
 If you are interested in contributing to this project, please make sure to read our [contributing guidelines](./CONTRIBUTING.md).

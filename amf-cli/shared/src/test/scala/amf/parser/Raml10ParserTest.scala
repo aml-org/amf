@@ -1,13 +1,11 @@
 package amf.parser
 
 import amf.apicontract.client.scala.RAMLConfiguration
-import amf.apicontract.client.scala.model.domain.Parameter
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
-import amf.core.internal.remote.{Amf, AmfJsonHint, Raml10YamlHint}
+import amf.core.internal.remote.{AmfJsonHint, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
-import amf.shapes.client.scala.model.domain.ScalarShape
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 
 class Raml10ParserTest extends FunSuiteCycleTests with Matchers {
 

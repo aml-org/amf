@@ -4,20 +4,16 @@ import amf.aml.internal.registries.AMLRegistry
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.apicontract.internal.spec.common.parser.WebApiShapeParserContextAdapter
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
-import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.SourceAST
-import amf.core.internal.parser.{CompilerConfiguration, LimitedParseConfig}
-import amf.core.internal.remote.Mimes
+import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.remote.Mimes._
 import amf.io.FileAssertionTest
-import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, Example}
 import amf.shapes.internal.spec.common.parser.{DefaultExampleOptions, RamlExamplesParser}
-import amf.shapes.internal.spec.payload.PayloadRenderPlugin
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.funsuite.AsyncFunSuite
 import org.yaml.model.{YDocument, YMap}
 
 import scala.concurrent.{ExecutionContext, Future}

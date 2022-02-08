@@ -1,17 +1,17 @@
 package amf.maker
 
-import amf.apicontract.client.scala.RAMLConfiguration
 import amf.compiler.CompilerTestBuilder
-import amf.core.client.common.validation.{ProfileName, Raml08Profile, Raml10Profile, SeverityLevels}
+import amf.core.client.common.validation.SeverityLevels
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Spec.{RAML08, RAML10}
 import amf.testing.ConfigProvider.configFor
-import org.scalatest.AsyncFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   private val basePath = "file://amf-cli/shared/src/test/resources/maker/deprecatedwarnings/"

@@ -1,12 +1,12 @@
 package amf.semantic
 
-import amf.aml.client.scala.AMLConfiguration
-import amf.aml.client.scala.model.document.DialectInstance
 import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.client.scala.model.domain.api.Api
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.Document
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

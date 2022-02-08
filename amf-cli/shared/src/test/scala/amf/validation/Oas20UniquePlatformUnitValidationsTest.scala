@@ -2,9 +2,10 @@ package amf.validation
 
 import amf.core.client.common.validation.Oas20Profile
 import amf.core.internal.remote.{Hint, Oas20JsonHint, Oas20YamlHint}
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 
 class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
+
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/oas2/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/oas2/"
   override val hint: Hint          = Oas20YamlHint

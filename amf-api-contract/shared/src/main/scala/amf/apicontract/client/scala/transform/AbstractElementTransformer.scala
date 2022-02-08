@@ -28,7 +28,7 @@ object AbstractElementTransformer {
       case _ =>
         Option(rt.dataNode)
           .map { dataNode =>
-            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration)
             extendsHelper.asEndpoint(unit, dataNode, rt.annotations, rt.name.value(), rt.id, configuration)
           }
           .getOrElse(EndPoint())
@@ -42,7 +42,7 @@ object AbstractElementTransformer {
                                      configuration: AMFGraphConfiguration,
                                      errorHandler: AMFErrorHandler = UnhandledErrorHandler,
                                      profile: ProfileName = Raml10Profile): EndPoint = {
-    val helper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+    val helper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration)
     helper.entryAsEndpoint(unit, node, rt.name.option().getOrElse(""), rt.id, entry, configuration)
   }
 
@@ -59,7 +59,7 @@ object AbstractElementTransformer {
       case _ =>
         Option(tr.dataNode)
           .map { dataNode =>
-            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration)
             extendsHelper.asOperation(
               dataNode,
               unit,
@@ -80,7 +80,7 @@ object AbstractElementTransformer {
                                       profile: ProfileName = Raml10Profile,
                                       errorHandler: AMFErrorHandler = UnhandledErrorHandler,
                                       ): Operation = {
-    val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+    val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler, configuration)
     extendsHelper.entryAsOperation(unit, tr.name.option().getOrElse(""), tr.id, entry, configuration)
   }
 }

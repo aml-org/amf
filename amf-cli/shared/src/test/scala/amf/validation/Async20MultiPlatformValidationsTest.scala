@@ -2,9 +2,10 @@ package amf.validation
 
 import amf.core.client.common.validation.Async20Profile
 import amf.core.internal.remote.{Async20YamlHint, Hint}
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 
 class Async20MultiPlatformValidationsTest extends MultiPlatformReportGenTest with Matchers {
+
   override val basePath: String    = "file://amf-cli/shared/src/test/resources/validations/async20/validations/"
   override val reportsPath: String = "amf-cli/shared/src/test/resources/validations/reports/async20/"
   override val hint: Hint          = Async20YamlHint

@@ -10,10 +10,10 @@ import amf.apicontract.client.scala.RAMLConfiguration.{
   RAML10 => RAML10Config
 }
 import amf.apicontract.client.scala.WebAPIConfiguration.WebAPI
-import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Spec._
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.language.postfixOps
 

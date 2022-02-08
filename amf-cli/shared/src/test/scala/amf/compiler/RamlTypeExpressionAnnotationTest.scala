@@ -7,11 +7,14 @@ import amf.core.client.scala.traversal.iterator.AmfElementStrategy
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Raml10YamlHint
-import org.scalatest.{Assertion, AsyncFlatSpec, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.flatspec.AsyncFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with CompilerTestBuilder {
+
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.global
 
   val rootPath = "file://amf-cli/shared/src/test/resources/nodes-annotations-examples/raml-type-expressions"

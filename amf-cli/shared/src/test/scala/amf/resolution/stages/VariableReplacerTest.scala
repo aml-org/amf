@@ -3,14 +3,16 @@ package amf.resolution.stages
 import amf.core.client.scala.model.domain.ScalarNode
 import amf.core.client.scala.model.domain.templates.Variable
 import amf.core.internal.transform.VariableReplacer
-import org.scalatest.{FunSuite, Inspectors, Matchers}
+import org.scalatest.Inspectors
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.mutable.ListBuffer
 
 /**
   *
   */
-class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
+class VariableReplacerTest extends AnyFunSuite with Matchers with Inspectors {
 
   case class ReplacerExamples(name: String, transformation: String, base: String, result: String)
 

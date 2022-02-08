@@ -1,13 +1,13 @@
 package amf.parser
 
-import org.scalatest.FunSuite
-import org.scalatest.Matchers._
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
 import scala.language.postfixOps
 
-class ParserTest extends FunSuite {
+class ParserTest extends AnyFunSuite with Matchers {
 
   private val `RAML/yaml`: String =
     """#%RAML 1.0

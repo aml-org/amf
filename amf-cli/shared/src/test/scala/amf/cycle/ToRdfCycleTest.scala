@@ -12,7 +12,8 @@ import amf.rdf.client.scala.RdfUnitConverter
 import amf.resolution.ResolutionCapabilities
 import amf.testing.ConfigProvider.configFor
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

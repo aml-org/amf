@@ -1,15 +1,7 @@
 package amf.compiler
 
-import amf.apicontract.client.scala.model.domain.Request
-import amf.apicontract.client.scala.{
-  AMFConfiguration,
-  APIConfiguration,
-  AsyncAPIConfiguration,
-  RAMLConfiguration,
-  WebAPIConfiguration
-}
 import amf.apicontract.client.scala.model.domain.api.WebApi
-import amf.core.client.common.validation.Raml10Profile
+import amf.apicontract.client.scala.{AMFConfiguration, RAMLConfiguration}
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, IgnoringErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.parse.document.{SyamlParsedDocument, UnspecifiedReference}
@@ -17,13 +9,14 @@ import amf.core.client.scala.validation.AMFValidator
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Syntax.{Syntax, Yaml}
 import amf.core.internal.remote._
-import org.scalatest.Matchers._
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 import org.yaml.model.{YMap, YMapEntry}
 
 import scala.concurrent.ExecutionContext
 
-class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
+class AMFCompilerTest extends AsyncFunSuite with Matchers with CompilerTestBuilder {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

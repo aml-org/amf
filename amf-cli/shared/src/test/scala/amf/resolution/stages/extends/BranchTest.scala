@@ -3,10 +3,10 @@ package amf.resolution.stages.`extends`
 import amf.apicontract.internal.transformation.stages.{Branch, BranchContainer, Key}
 import amf.core.client.scala.model.domain.templates.Variable
 import amf.core.client.scala.model.domain.{DataNode, ScalarNode}
-import org.scalatest.FunSuite
-import org.scalatest.Matchers._
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class BranchTest extends FunSuite {
+class BranchTest extends AnyFunSuite with Matchers {
 
   test("Test branch container flatten and merge") {
 

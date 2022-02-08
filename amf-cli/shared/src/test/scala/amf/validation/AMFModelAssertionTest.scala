@@ -1,19 +1,25 @@
 package amf.validation
 
 import amf.apicontract.client.scala._
-import amf.apicontract.client.scala.model.domain.api.WebApi
+import amf.apicontract.client.scala.model.domain.api.{AsyncApi, WebApi}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Response}
+import amf.core.client.common.position.Position
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
-import amf.core.client.scala.model.domain.ExternalSourceElement
+import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement}
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath                        = "file://amf-cli/shared/src/test/resources/validations"
@@ -38,17 +44,21 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     }
   }
 
-  def getWebApi(bu: BaseUnit) = bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+  class BaseUnitComponents(isWebApi: Boolean = true) {
+    def getApi(bu: BaseUnit) =
+      if (isWebApi) bu.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      else bu.asInstanceOf[Document].encodes.asInstanceOf[AsyncApi]
 
-  def getFirstEndpoint(bu: BaseUnit) = getWebApi(bu).endPoints.head
+    def getFirstEndpoint(bu: BaseUnit): EndPoint = getApi(bu).endPoints.head
 
-  def getFirstOperation(bu: BaseUnit) = getFirstEndpoint(bu).operations.head
+    def getFirstOperation(bu: BaseUnit): Operation = getFirstEndpoint(bu).operations.head
 
-  def getFirstResponse(bu: BaseUnit) = getFirstOperation(bu).responses.head
+    def getFirstResponse(bu: BaseUnit): Response = getFirstOperation(bu).responses.head
 
-  def getFirstPayload(bu: BaseUnit) = getFirstResponse(bu).payloads.head
+    def getFirstPayload(bu: BaseUnit): Payload = getFirstResponse(bu).payloads.head
 
-  def getFirstPayloadSchema(bu: BaseUnit) = getFirstPayload(bu).schema.asInstanceOf[ScalarShape]
+    def getFirstPayloadSchema(bu: BaseUnit): ScalarShape = getFirstPayload(bu).schema.asInstanceOf[ScalarShape]
+  }
 
   test("AMF should persist and restore the raw XML schema") {
     val api = s"$basePath/raml/raml-with-xml/api.raml"
@@ -133,10 +143,11 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   // github issue #1086
   test("AMF should not remove well known annotations") {
     modelAssertion(s"$basePath/raml/api-with-annotations.raml") { bu =>
-      val ramlAnnotations = getFirstOperation(bu).customDomainProperties
+      val components      = new BaseUnitComponents
+      val ramlAnnotations = components.getFirstOperation(bu).customDomainProperties
       ramlAnnotations.length shouldBe 2
       val oasTransformResult = oasClient.transform(bu, PipelineId.Compatibility)
-      val oasAnnotations     = getFirstOperation(oasTransformResult.baseUnit).customDomainProperties
+      val oasAnnotations     = components.getFirstOperation(oasTransformResult.baseUnit).customDomainProperties
       oasAnnotations.length shouldBe 2
     }
   }
@@ -188,10 +199,13 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     val api10 = s"$basePath/raml/empty-example.raml"
     raml08Client.parse(api08) flatMap { parseResult08 =>
       ramlClient.parse(api10) flatMap { parseResult10 =>
-        val examplesField08 = getFirstPayloadSchema(parseResult08.baseUnit).fields.get(AnyShapeModel.Examples)
-        val examplesField   = getFirstPayloadSchema(parseResult10.baseUnit).fields.get(AnyShapeModel.Examples)
-        val range08         = examplesField08.annotations.lexical()
-        val range           = examplesField.annotations.lexical()
+        val components = new BaseUnitComponents
+        val examplesField08 =
+          components.getFirstPayloadSchema(parseResult08.baseUnit).fields.get(AnyShapeModel.Examples)
+        val examplesField =
+          components.getFirstPayloadSchema(parseResult10.baseUnit).fields.get(AnyShapeModel.Examples)
+        val range08 = examplesField08.annotations.lexical()
+        val range   = examplesField.annotations.lexical()
         range08 shouldEqual range
       }
     }
@@ -203,6 +217,68 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val transformResult = ramlClient.transform(parseResult.baseUnit, PipelineId.Editing)
       // parsing or resolution results are not relevant
       ramlClient.validate(transformResult.baseUnit) map (report => report.results.size shouldBe 0)
+    }
+  }
+
+  test("inline shapes should not include range of parent key") {
+    val api = s"$basePath/annotations/inline-shape.yaml"
+    modelAssertion(api, transform = false) { bu =>
+      val components             = new BaseUnitComponents(false)
+      val payload                = components.getFirstPayload(bu)
+      val schema                 = payload.schema.asInstanceOf[NodeShape]
+      val ifField                = schema.fields.fields().find(_.field.toString().endsWith("if")).get
+      val inlineShape            = ifField.value.value
+      val inlineShapeAnnotations = inlineShape.annotations
+      inlineShapeAnnotations.lexical().start shouldBe Position(12, 12)
+      inlineShapeAnnotations.lexical().end shouldBe Position(14, 26)
+    }
+  }
+
+  test("Property name value should have correct lexical") {
+    val api = s"$basePath/async20/object-schema.yaml"
+    modelAssertion(api, transform = false) { bu =>
+      val schema        = bu.asInstanceOf[Document].declares.head
+      val propertyField = schema.fields.fields().find(_.field.toString.endsWith("property")).get
+      val propertyNameField = propertyField.value.value
+        .asInstanceOf[AmfArray]
+        .values
+        .head
+        .asInstanceOf[PropertyShape]
+        .fields
+        .fields()
+        .find(_.field.toString.endsWith("name"))
+        .get
+      val nameFieldValue            = propertyNameField.value.value
+      val nameFieldValueAnnotations = nameFieldValue.annotations
+      nameFieldValueAnnotations.lexical().start shouldBe Position(15, 8)
+      nameFieldValueAnnotations.lexical().end shouldBe Position(15, 9)
+    }
+  }
+
+  // github issue #1119
+  test("Applying a trait should not duplicate examples") {
+    modelAssertion(s"$basePath/duplicate-examples/trait.raml") { bu =>
+      val components = new BaseUnitComponents
+      val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
+      examples.size shouldBe 2
+    }
+  }
+
+  // github issue #1119 inverse case
+  test("Examples with same raw but different names should be present post transformation") {
+    modelAssertion(s"$basePath/duplicate-examples/different-names.raml") { bu =>
+      val components = new BaseUnitComponents
+      val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
+      examples.size shouldBe 4
+    }
+  }
+
+  // github issue #1119 complex case
+  test("unnamed example should not be equal to same example with name") {
+    modelAssertion(s"$basePath/duplicate-examples/unnamed-example.raml") { bu =>
+      val components = new BaseUnitComponents
+      val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
+      examples.size shouldBe 2
     }
   }
 }

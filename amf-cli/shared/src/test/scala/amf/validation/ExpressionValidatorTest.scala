@@ -1,9 +1,10 @@
 package amf.validation
 
 import amf.apicontract.internal.validation.runtimeexpression.{AsyncExpressionValidator, ExpressionValidator, Oas3ExpressionValidator}
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class ExpressionValidatorTest extends FunSuite with Matchers {
+class ExpressionValidatorTest extends AnyFunSuite with Matchers {
 
   val oas3Expressions: Seq[ExpressionTest] = Seq(
     ExpressionTest("server.com?id={$request.body#/id}&mail={$request.body}", expected = true),

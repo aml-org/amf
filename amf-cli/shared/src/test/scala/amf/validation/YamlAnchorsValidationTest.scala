@@ -1,21 +1,22 @@
 package amf.validation
 
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
-import amf.apicontract.client.scala.OASConfiguration
-import amf.apicontract.client.scala.RAMLConfiguration
+import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration}
 import amf.client.validation.PayloadValidationUtils
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.common.validation.ValidationMode.StrictValidationMode
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.validation.AMFValidationResult
-import amf.core.internal.convert.NativeOps
 import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes._
 import amf.shapes.client.scala.model.domain.ScalarShape
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with PayloadValidationUtils {
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   private val ramlConfig = RAMLConfiguration.RAML10().withParsingOptions(ParsingOptions().setMaxYamlReferences(50))

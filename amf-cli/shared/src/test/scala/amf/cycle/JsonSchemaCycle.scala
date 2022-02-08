@@ -1,12 +1,12 @@
 package amf.cycle
 
-import amf.apicontract.client.scala.{APIConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.apicontract.client.scala.APIConfiguration
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.plugins.render.EmptyRenderConfiguration
 import amf.core.internal.remote.Mimes._
-import amf.core.internal.remote.{Mimes, Spec}
+import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
 import amf.emit.AMFRenderer
@@ -14,7 +14,8 @@ import amf.io.FileAssertionTest
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.jsonschema.emitter.JsonSchemaEmitter
 import amf.testing.HintProvider
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 import org.yaml.render.JsonRender
 
 import scala.concurrent.{ExecutionContext, Future}

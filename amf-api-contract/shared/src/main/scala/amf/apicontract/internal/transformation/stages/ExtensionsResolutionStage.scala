@@ -23,7 +23,6 @@ import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.metamodel.domain.common.{DescriptionField, DisplayNameField, NameFieldSchema, NameFieldShacl}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.internal.metamodel.{Field, Type}
-import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
@@ -90,14 +89,6 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                        extensionId: String,
                        extensionLocation: Option[String]): Unit =
       setDomainElementArrayValue(target, field, o, extensionId, extensionLocation)
-  }
-
-  /** Default to raml10 context. */
-  implicit val ctx: RamlWebApiContext = profile match {
-    case Raml08Profile =>
-      new Raml08WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler, AMLRegistry.empty)))
-    case _ =>
-      new Raml10WebApiContext("", Nil, ParserContext(config = LimitedParseConfig(errorHandler, AMLRegistry.empty)))
   }
 
   def removeExtends(document: Document): BaseUnit = {
@@ -232,7 +223,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                         iriMerger: IriMerger,
                         extensionId: String,
                         extensionLocation: Option[String]): Unit = {
-    val declarations = WebApiDeclarations(master.declares, ctx.eh, EmptyFutureDeclarations())
+    val declarations = WebApiDeclarations(master.declares, errorHandler, EmptyFutureDeclarations())
 
     // Extension declarations will be added to master document. The ones with the same name will be merged.
     val mergingTracker = IdTracker()

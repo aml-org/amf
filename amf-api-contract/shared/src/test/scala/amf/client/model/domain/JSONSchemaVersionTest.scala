@@ -1,9 +1,10 @@
 package amf.client.model.domain
 
 import amf.shapes.internal.spec.common._
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class JSONSchemaVersionTest extends FunSuite with Matchers{
+class JSONSchemaVersionTest extends AnyFunSuite with Matchers {
 
   test("JsonSchemaVersion comparison is correct by ordered list") {
     val versions = Seq(

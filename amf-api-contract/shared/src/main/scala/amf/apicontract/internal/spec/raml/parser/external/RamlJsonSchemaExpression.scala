@@ -16,7 +16,7 @@ import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes.`application/json`
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.internal.utils.AmfStrings
+import amf.core.internal.utils.{AmfStrings, UriUtils}
 import amf.shapes.internal.annotations._
 import amf.shapes.client.scala.model.domain.{AnyShape, ScalarShape, SchemaShape, UnresolvedShape}
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, ScalarShapeModel}
@@ -86,7 +86,7 @@ case class RamlJsonSchemaExpression(key: YNode,
       case scalarShape: ScalarShape =>
         val inheritedDataType = scalarShape.dataType.value()
         wrapper.set(ScalarShapeModel.DataType, inheritedDataType)
-      case _  =>
+      case _ =>
     }
   }
 
@@ -124,8 +124,9 @@ case class RamlJsonSchemaExpression(key: YNode,
         val shape = s.copyShape().withName(key.as[String])
         ctx.declarations.fragments
           .get(basePath)
-          .foreach(e => shape.callAfterAdoption{ () =>
-            shape.withReference(e.encoded.id + localPath.getOrElse(""))
+          .foreach(e =>
+            shape.callAfterAdoption { () =>
+              shape.withReference(e.encoded.id + localPath.getOrElse(""))
           })
         if (shape.examples.nonEmpty) { // top level inlined shape, we don't want to reuse the ID, this must be an included JSON schema => EDGE CASE!
           shape.id = null // <-- suspicious
@@ -161,7 +162,10 @@ case class RamlJsonSchemaExpression(key: YNode,
     }
     ctx.declarations.fragments
       .get(basePath)
-      .foreach(e => shape.callAfterAdoption{ () => shape.withReference(e.encoded.id + localPath.get)})
+      .foreach(e =>
+        shape.callAfterAdoption { () =>
+          shape.withReference(e.encoded.id + localPath.get)
+      })
 
     shape.annotations += ExternalFragmentRef(localPath.get)
     shape
@@ -222,7 +226,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     }
     val schemaEntry       = YMapEntry(key, node)
     val jsonSchemaContext = getContext(valueAST, schemaEntry)
-    val fullRef           = platform.normalizePath(jsonSchemaContext.rootContextDocument)
+    val fullRef           = UriUtils.normalizePath(jsonSchemaContext.rootContextDocument)
 
     val tmpShape: UnresolvedShape =
       JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape),

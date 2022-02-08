@@ -1,14 +1,12 @@
 package amf.validation
 
-import amf.shapes.internal.convert.ShapeClientConverters._
 import amf.client.validation.PayloadValidationUtils
 import amf.core.client.scala.model.DataType.{Boolean, Date, DateTime, DateTimeOnly, Integer, Nil, Number, String}
-import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.core.internal.remote.Mimes
 import amf.core.internal.remote.Mimes.{`application/json`, `application/yaml`}
-import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape}
-import org.scalatest.{AsyncFunSuite, Matchers}
+import amf.shapes.internal.convert.ShapeClientConverters._
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 import scala.language.postfixOps

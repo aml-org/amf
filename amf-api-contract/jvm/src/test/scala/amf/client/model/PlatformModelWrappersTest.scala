@@ -1,16 +1,16 @@
 package amf.client.model
 
-import amf.apicontract.client.platform.model.domain.api.WebApi
 import amf.apicontract.client.scala.WebAPIConfiguration
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.internal.unsafe.PlatformSecrets
 import org.reflections.Reflections
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.JavaConverters.asScalaSetConverter
 
 
-class PlatformModelWrappersTest extends FunSuite with Matchers with PlatformSecrets {
+class PlatformModelWrappersTest extends AnyFunSuite with Matchers with PlatformSecrets {
 
   test("All models have platform wrappers registered") {
     WebAPIConfiguration.WebAPI() // registers all wrappers, remove when APIMF-3000 is done

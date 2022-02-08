@@ -8,12 +8,11 @@ import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.annotations.SourceLocation
 import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.internal.domain.resolution.elements.CompleteShapeTransformationPipeline
-import org.scalatest.FunSuite
-import org.scalatest.Matchers._
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class ShapeTransformationPipelineTest extends FunSuite {
+class ShapeTransformationPipelineTest extends AnyFunSuite with Matchers {
 
   test("test shape with linkable") {
     val ann = Annotations() += SourceLocation("file://location.com")

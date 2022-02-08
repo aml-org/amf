@@ -5,11 +5,16 @@ import amf.core.client.scala.config.{AMFEvent, GroupedEvent}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.io.FileAssertionTest
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 
-class AMFEventReportBuilderTest extends AsyncBeforeAndAfterEach with PlatformSecrets with Matchers with FileAssertionTest{
+class AMFEventReportBuilderTest
+    extends AsyncBeforeAndAfterEach
+    with PlatformSecrets
+    with Matchers
+    with FileAssertionTest {
+
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Report creation") {
@@ -25,7 +30,7 @@ class AMFEventReportBuilderTest extends AsyncBeforeAndAfterEach with PlatformSec
 
   test("Report printing") {
     val pathToReport = "amf-cli/shared/src/test/resources/event/event-report.golden.txt"
-    val report = AMFEventReportBuilder(events).build()
+    val report       = AMFEventReportBuilder(events).build()
     writeTemporaryFile(pathToReport)(report.toString()).flatMap { file =>
       assertDifferences(file, pathToReport)
     }
@@ -49,5 +54,5 @@ class AMFEventReportBuilderTest extends AsyncBeforeAndAfterEach with PlatformSec
   )
 
   case class MyMockGroupedEvent(name: String, groupKey: String) extends AMFEvent with GroupedEvent
-  case class MyMockLonelyEvent(name: String) extends AMFEvent
+  case class MyMockLonelyEvent(name: String)                    extends AMFEvent
 }

@@ -1,0 +1,16 @@
+asyncapi: "2.0.0"
+id: 'api'
+info:
+  title: AsyncAPI Sample App
+channels:
+  user/signedup:
+    description: a channel
+    publish:
+      description: publish
+components:
+  schemas:
+    objectSchema:
+      type: object
+      properties:
+        a:
+          type: string
