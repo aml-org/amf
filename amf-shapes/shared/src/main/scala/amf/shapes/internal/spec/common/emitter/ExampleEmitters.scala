@@ -3,6 +3,7 @@ package amf.shapes.internal.spec.common.emitter
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.annotations.SynthesizedField
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.common.NameFieldSchema
 import amf.core.internal.parser.domain.{FieldEntry, Fields}
@@ -83,11 +84,11 @@ case class Oas3ExampleValuesPartEmitter(example: Example, ordering: SpecOrdering
     fs.entry(ExampleModel.Description).foreach(f => results += RamlScalarEmitter("description", f))
     fs.entry(ExampleModel.ExternalValue).foreach(f => results += RamlScalarEmitter("externalValue", f))
     fs.entry(ExampleModel.StructuredValue)
-      .foreach(f => {
+      .foreach { f =>
         results += EntryPartEmitter("value",
                                     DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
                                     position = pos(f.value.annotations))
-      })
+      }
     results ++= AnnotationsEmitter(example, ordering).emitters
 
     results

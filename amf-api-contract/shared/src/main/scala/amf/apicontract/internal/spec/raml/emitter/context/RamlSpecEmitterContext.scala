@@ -27,7 +27,6 @@ import amf.apicontract.internal.spec.raml.emitter.document.{
 }
 import amf.apicontract.internal.spec.raml.emitter.domain._
 import amf.core.client.common.position.Position
-import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.scala.model.domain.extensions.{
@@ -44,13 +43,13 @@ import amf.core.internal.remote.{Raml08, Raml10, Spec}
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
+import amf.core.internal.validation.RenderSideValidations.RenderValidation
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.emitter._
 import amf.shapes.internal.spec.common.emitter.annotations._
 import amf.shapes.internal.spec.common.{RAML08SchemaVersion, RAML10SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.raml.emitter.{Raml08TypePartEmitter, Raml10TypePartEmitter, RamlTypePartEmitter}
 import amf.shapes.internal.spec.raml.parser.{RamlLocalReferenceEmitter, RamlTagToReferenceEmitter}
-import amf.shapes.internal.validation.definitions.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable

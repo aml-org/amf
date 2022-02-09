@@ -9,6 +9,7 @@ import amf.core.client.common.position.Position
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{Fragment, Module}
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.document.BaseUnitModel
 import amf.core.internal.remote.Oas20
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, _}
@@ -16,7 +17,6 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.spec.common.emitter.{
-  DataNodeEmitter,
   NamedExampleEmitter,
   OasCreativeWorkItemsEmitter,
   OasLikeShapeEmitterContext,

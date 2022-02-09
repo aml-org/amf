@@ -7,6 +7,7 @@ import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.{ExplicitField, InferredProperty, NilUnion, SynthesizedField}
+import amf.core.internal.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
@@ -15,19 +16,7 @@ import amf.core.internal.parser.domain.{Annotations, Fields, FutureDeclarations,
 import amf.core.internal.parser.{YMapOps, _}
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.utils.{IdCounter, _}
-import amf.shapes.client.scala.model.domain.{
-  AnyShape,
-  ArrayShape,
-  FileShape,
-  MatrixShape,
-  NodeShape,
-  ScalarShape,
-  SchemaShape,
-  TupleShape,
-  UnionShape,
-  UnresolvedShape,
-  _
-}
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.annotations.{CollectionFormatFromItems, JSONSchemaId, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
   DiscriminatorValue,
@@ -36,11 +25,10 @@ import amf.shapes.internal.domain.metamodel.DiscriminatorValueMappingModel.{
 import amf.shapes.internal.domain.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.parser.XsdTypeDefMapping
-import amf.shapes.internal.spec.ShapeParserContext
+import amf.shapes.internal.spec.{SemanticContextParser, ShapeParserContext}
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common.parser._
-import amf.shapes.internal.spec.common.{TypeDef, _}
-import amf.shapes.internal.spec.datanode.{DataNodeParser, ScalarNodeParser}
+import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.jsonschema.parser.{
   ContentParser,
   Draft2019ShapeDependenciesParser,
@@ -69,7 +57,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
   def parse(): Option[AnyShape] = {
 
-    if (detectDisjointUnion()) {
+    val parsedShape = if (detectDisjointUnion()) {
       validateUnionType()
       Some(parseDisjointUnionType())
     } else {
@@ -93,6 +81,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         case None => None
       }
     }
+
+    parsedShape
   }
 
   private def validateUnionType(): Unit =
@@ -287,6 +277,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
   }
 
   private def parseUnionType(): UnionShape = UnionShapeParser(entryOrNode, name).parse()
+
+  def parseSemanticContext(shape: AnyShape): Option[SemanticContext] =
+    SemanticContextParser(entryOrNode.asMap, shape).parse()
 
   trait CommonScalarParsingLogic {
     def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): TypeDef = {
@@ -626,7 +619,13 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     override val shape: AnyShape
     val options: ExampleOptions = ExampleOptions(strictDefault = true, quiet = false)
+
     override def parse(): AnyShape = {
+
+      val semanticContext = parseSemanticContext(shape)
+      semanticContext.foreach(shape.withSemanticContext)
+      if (ctx.getSemanticContext.isEmpty) ctx.withSemanticContext(semanticContext)
+
       super.parse()
       parseExample()
 

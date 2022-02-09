@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-12/schema",
+  "$id": "someID.json",
+  "type": "object",
+  "properties": {
+    "someProperty": {
+      "type": "string"
+    }
+  },
+  "required": ["someNonExistingProperty"]
+}

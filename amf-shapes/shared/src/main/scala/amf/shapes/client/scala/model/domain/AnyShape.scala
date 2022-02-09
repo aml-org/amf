@@ -2,15 +2,12 @@ package amf.shapes.client.scala.model.domain
 
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
-import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.annotations.{InlineDefinition, TypePropertyLexicalInfo}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.domain.metamodel.AnyShapeModel._
 import org.yaml.model.YPart
-
-import scala.collection.mutable
 
 class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = Annotations())
     extends Shape
@@ -24,6 +21,9 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
   def documentation: CreativeWork     = fields.field(Documentation)
   def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
   def comment: StrField               = fields.field(Comment)
+
+  def withSemanticContext(context: SemanticContext): this.type = set(AnyShapeModel.Semantics, context)
+  def semanticContext: Option[SemanticContext]                 = Option(fields.field(AnyShapeModel.Semantics))
 
   override def documentations: Seq[CreativeWork] = Seq(documentation)
 

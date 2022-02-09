@@ -12,6 +12,7 @@ import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.internal.annotations.{BasePathLexicalInformation, HostLexicalInformation, VirtualElement}
+import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.domain.{FieldEntry, Value}
 import amf.core.internal.render.BaseEmitters._
@@ -21,7 +22,7 @@ import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.domain.metamodel.ScalarShapeModel
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
-import amf.shapes.internal.spec.common.emitter.{DataNodeEmitter, EnumValuesEmitter, ShapeEmitterContext}
+import amf.shapes.internal.spec.common.emitter.{EnumValuesEmitter, ShapeEmitterContext}
 import amf.shapes.internal.spec.contexts.emitter.raml.RamlScalarEmitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder

@@ -13,12 +13,8 @@ import amf.core.internal.validation.core.{
   ValidationProfile,
   ValidationSpecification
 }
-import amf.core.internal.validation.{CoreParserValidations, CorePayloadValidations}
-import amf.shapes.internal.validation.definitions.{
-  RenderSideValidations,
-  ShapeParserSideValidations,
-  ShapePayloadValidations
-}
+import amf.core.internal.validation.{CoreParserValidations, CorePayloadValidations, RenderSideValidations}
+import amf.shapes.internal.validation.definitions.{ShapeParserSideValidations, ShapePayloadValidations}
 
 trait ImportUtils {
   protected def validationId(validation: AMFValidation): String =

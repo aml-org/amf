@@ -1,0 +1,31 @@
+#%Dialect 1.0
+nodeMappings:
+  Parent:
+    mapping:
+      name:
+        range: string
+        propertyTerm: foaf.name
+        mandatory: true
+      age:
+        range: number
+        mandatory: true
+      hey:
+        range: SchemaNode
+        mandatory: false
+        allowMultiple: true
+  SchemaNode:
+    classTerm: foaf.Verse
+    mapping:
+      ho:
+        range: string
+        propertyTerm: foaf.ho
+        mandatory: false
+external:
+  ns0: http://test.com/vocab#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  foaf: http://xmlns.com/foaf/0.1/
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Parent
