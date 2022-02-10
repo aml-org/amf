@@ -1,10 +1,11 @@
 package amf.shapes.internal.domain.metamodel.operations
 
-import amf.core.client.scala.vocabulary.Namespace.Shapes
+import amf.core.client.scala.vocabulary.Namespace.{ApiFederation, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.federation.FederatedAttribute
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.client.scala.model.domain.operations.ShapeOperation
@@ -14,23 +15,26 @@ import amf.shapes.client.scala.model.domain.operations.ShapeOperation
 // Option 2: move all model to amf-model new package. amf-model will contain all objects (including shapes? at least any shape will be needed) That module can be before amf-shapes or event before amf-aml solving the problem of json schema.
 
 object ShapeOperationModel
-    extends DomainElementModel
+    extends FederatedAttribute
     with KeyField
     with OptionalField
     with NameFieldSchema
-    with DescriptionField  {
+    with DescriptionField {
 
-  val Method: Field = Field(Str,
-                     Shapes + "method",
-                     ModelDoc(ModelVocabularies.ApiContract, "method", "Type of operation over a shape. It follows HTTP semantics"))
+  val Method: Field = Field(
+    Str,
+    Shapes + "method",
+    ModelDoc(ModelVocabularies.ApiContract, "method", "Type of operation over a shape. It follows HTTP semantics"))
 
-  val Request: Field = Field(ShapeRequestModel,
+  val Request: Field = Field(
+    ShapeRequestModel,
     Shapes + "expects",
     ModelDoc(ModelVocabularies.ApiContract, "expects", "Request information required by the operation"))
 
-  val Response: Field = Field(ShapeResponseModel,
-                        Shapes + "returns",
-                        ModelDoc(ModelVocabularies.ApiContract, "returns", "Response data returned by the operation"))
+  val Response: Field = Field(
+    ShapeResponseModel,
+    Shapes + "returns",
+    ModelDoc(ModelVocabularies.ApiContract, "returns", "Response data returned by the operation"))
 
   override val key: Field = Name
 
@@ -40,8 +44,8 @@ object ShapeOperationModel
     Name,
     Description,
     Request,
-    Response,
-  ) ++ DomainElementModel.fields
+    Response
+  ) ++ FederatedAttribute.fields
 
   override def modelInstance = ShapeOperation()
 
