@@ -1,11 +1,12 @@
 package amf.shapes.internal.domain.metamodel
 
-import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Shacl, Shapes}
+import amf.core.client.scala.vocabulary.Namespace.{ApiContract, ApiFederation, Shacl, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Bool, Int, Str}
 import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.internal.metamodel.domain.federation.EntityKeysModel
 import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.operations.ShapeOperationModel
@@ -111,7 +112,15 @@ trait NodeShapeModel extends AnyShapeModel {
   val IsAbstract: Field = Field(
     Bool,
     Shapes + "isAbstract",
-    ModelDoc(ModelVocabularies.Shapes, "isAbstract", "Marks this shape as an abstract node shape declared for pure re-use")
+    ModelDoc(ModelVocabularies.Shapes,
+             "isAbstract",
+             "Marks this shape as an abstract node shape declared for pure re-use")
+  )
+
+  val PrimaryKeys: Field = Field(
+    Array(EntityKeysModel),
+    ApiFederation + "EntityPrimaryKeys",
+    ModelDoc(ModelVocabularies.ApiFederation, "EntityPrimaryKeys", "List of primary keys for this schema")
   )
 
   val specificFields = List(
@@ -131,7 +140,8 @@ trait NodeShapeModel extends AnyShapeModel {
     SchemaDependencies,
     UnevaluatedProperties,
     UnevaluatedPropertiesSchema,
-    Operations
+    Operations,
+    PrimaryKeys
   )
 
   override val fields: List[Field] =

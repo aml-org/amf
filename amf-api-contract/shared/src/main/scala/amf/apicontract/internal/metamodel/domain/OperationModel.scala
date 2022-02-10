@@ -3,11 +3,12 @@ package amf.apicontract.internal.metamodel.domain
 import amf.apicontract.client.scala.model.domain.Operation
 import amf.apicontract.internal.metamodel.domain.bindings.OperationBindingsModel
 import amf.apicontract.internal.metamodel.domain.security.SecurityRequirementModel
-import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
+import amf.core.client.scala.vocabulary.Namespace.{ApiBinding, ApiContract, ApiFederation, Core}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.internal.metamodel.domain.federation.EntityProviderModel
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.shapes.internal.domain.metamodel.common.DocumentationField
@@ -90,6 +91,10 @@ object OperationModel
     ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this operation")
   )
 
+  val Provides = Field(EntityProviderModel,
+                       ApiFederation + "provides",
+                       ModelDoc(ModelVocabularies.ApiFederation, "provides", "External property"))
+
   override val key: Field = Method
 
   override val `type`: List[ValueType] = ApiContract + "Operation" :: DomainElementModel.`type`
@@ -112,7 +117,8 @@ object OperationModel
     Servers,
     Bindings,
     IsAbstract,
-    OperationId
+    OperationId,
+    Provides
   ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = Operation()
