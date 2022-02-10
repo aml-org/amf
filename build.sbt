@@ -331,7 +331,8 @@ lazy val adhocCli = (project in file("adhoc-cli"))
     publishTo := Some(snapshots),
     libraryDependencies += "com.github.amlorg" %% "amf-validation-profile-dialect" % "1.1.0-SNAPSHOT",
     libraryDependencies += "com.github.amlorg" %% "amf-validation-report-dialect" % "1.1.0-SNAPSHOT",
-    libraryDependencies += "commons-io"        %  "commons-io"                    % "2.11.0"
+    libraryDependencies += "commons-io"        %  "commons-io"                    % "2.11.0",
+    libraryDependencies += "org.mule.common" %%% "scala-common-test" % "0.0.10" % Test
   )
   .settings(
     assembly / aggregate := true,
