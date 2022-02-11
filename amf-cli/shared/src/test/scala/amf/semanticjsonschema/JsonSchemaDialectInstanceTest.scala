@@ -19,37 +19,20 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
   private val jsonSchemaPath = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/"
   private val instancePath   = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/"
 
-  test("Dialect instance validation with basic JSON schema") {
-    run("basic")
-  }
+  instanceValidation("basic")
+  instanceValidation("basic-with-characteristics")
+  instanceValidation("intermediate")
+  instanceValidation("allOf")
+  instanceValidation("minimum-maximum")
+  instanceValidation("duplicate-semantics")
+  instanceValidation("multiple-characteristics")
+  instanceValidation("oneOf")
 
-  test("Dialect instance validation with basic with characteristics JSON schema") {
-    run("basicWithCharacteristics")
-  }
-
-  test("Dialect instance validation with intermediate JSON schema") {
-    run("intermediate")
-  }
-
-  test("Dialect instance validation with allOf JSON schema") {
-    run("allOf")
-  }
-
-  test("Dialect instance validation with minimum and maximum JSON schema") {
-    run("minimum-maximum")
-  }
-
-  test("Dialect instance with duplicate-semantics JSON Schema") {
-    run("duplicate-semantics")
-  }
-
-  test("Dialect instance with multiple-characteristics JSON Schema") {
-    run("multiple-characteristics")
-  }
-
-  // TODO review this validation. Is failing.
-  test("Dialect instance validation with oneOf JSON schema") {
-    run("oneOf")
+  private def instanceValidation(filename: String): Unit = {
+    val label = s"Dialect instance validation with $filename JSON Schema"
+    test(label) {
+      run(filename)
+    }
   }
 
   private def run(filename: String): Future[Assertion] = {
