@@ -1,18 +1,10 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.reference
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.parse.document.{
-  CompilerReferenceCollector,
-  EmptyReferenceCollector,
-  LinkReference,
-  ParsedDocument,
-  ParserContext,
-  ReferenceHandler,
-  SyamlParsedDocument
-}
+import amf.core.client.scala.parse.document._
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.reference.SemanticContextReferenceHandler.SEMANTIC_CONTEXT_KEY
-import org.yaml.model.{YMap, YNode, YPart}
+import org.yaml.model.{YMap, YPart}
 
 object SemanticContextReferenceHandler {
   protected val SEMANTIC_CONTEXT_KEY = "@context"
@@ -21,7 +13,7 @@ object SemanticContextReferenceHandler {
 case class SemanticContextReferenceHandler(errorHandler: AMFErrorHandler) extends ReferenceHandler {
 
   /** Collect references on given document. */
-  private implicit val eh = new SyamlAMFErrorHandler(errorHandler)
+  private implicit val eh: SyamlAMFErrorHandler = new SyamlAMFErrorHandler(errorHandler)
 
   override def collect(document: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     document match {

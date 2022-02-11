@@ -19,32 +19,33 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   private val jsonSchemaPath = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/"
   private val dialectPath    = "file://amf-cli/shared/src/test/resources/semantic-jsonschema/dialects/"
 
-  multiOutputTest("Dialect generation from basic JSON schema", "basic")
-  multiOutputTest("Dialect generation from basic JSON schema with characteristics", "basicWithCharacteristics")
-  multiOutputTest("Dialect generation from JSON schema with characteristics", "complexWithCharacteristics")
-  multiOutputTest("Dialect generation from intermediate JSON schema", "intermediate")
-  multiOutputTest("Dialect generation from JSON schema with allOf", "allOf")
-  multiOutputTest("Dialect generation from JSON schema with oneOf", "oneOf")
-  multiOutputTest("Dialect generation from JSON schema with remote context", "remote-context")
-  multiOutputTest("Dialect generation from JSON schema with maximum and minimum", "minimum-maximum")
-  multiOutputTest("Dialect generation from JSON schema with any type property", "any-property")
-  multiOutputTest("Dialect generation from JSON schema with enum property", "enum")
-  multiOutputTest("Dialect generation from JSON schema with const property", "const")
-  multiOutputTest("Dialect generation from JSON schema with default property", "default")
-  multiOutputTest("Dialect generation from JSON schema with multiple characteristics in the same property",
-                  "multiple-characteristics")
-  multiOutputTest("Dialect generation from JSON schema with duplicate semantic terms", "duplicate-semantics")
+  multiOutputTest("basic")
+  multiOutputTest("basic-with-characteristics")
+  multiOutputTest("complex-with-characteristics")
+  multiOutputTest("intermediate")
+  multiOutputTest("allOf")
+  multiOutputTest("oneOf")
+  multiOutputTest("remote-context")
+  multiOutputTest("minimum-maximum")
+  multiOutputTest("any-property")
+  multiOutputTest("enum")
+  multiOutputTest("const")
+  multiOutputTest("default")
+  multiOutputTest("multiple-characteristics")
+  multiOutputTest("duplicate-semantics")
+  multiOutputTest("without-schema-key")
 
-  private def multiOutputTest(label: String, filename: String): Unit = {
+  private def multiOutputTest(filename: String): Unit = {
 
+    val finalLabel        = s"Dialect generation from JSON schema $filename"
     val finalPath         = s"$jsonSchemaPath$filename.json"
     val finalGoldenYaml   = s"$dialectPath$filename.yaml"
     val finalGoldenJsonLD = s"$dialectPath$filename.jsonld"
 
-    test(s"$label to JSON-LD") {
+    test(s"$finalLabel to JSON-LD") {
       run(finalPath, finalGoldenJsonLD, AmfJsonHint)
     }
-    test(s"$label to YAML") {
+    test(s"$finalLabel to YAML") {
       run(finalPath, finalGoldenYaml, AmlHint)
     }
   }

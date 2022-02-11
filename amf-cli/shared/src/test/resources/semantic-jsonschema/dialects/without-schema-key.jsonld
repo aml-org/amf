@@ -18,16 +18,6 @@
       }
     },
     {
-      "@id": "/externals/security",
-      "@type": [
-        "owl:Ontology",
-        "meta:ExternalVocabulary",
-        "doc:DomainElement"
-      ],
-      "core:displayName": "security",
-      "meta:base": "https://anypoint.mulesoft.com/security#"
-    },
-    {
       "@id": "/externals/ns0",
       "@type": [
         "owl:Ontology",
@@ -45,7 +35,7 @@
       ],
       "meta:encodedNode": [
         {
-          "@id": "#/declarations/Somesecuritything"
+          "@id": "#/declarations/Person"
         }
       ]
     },
@@ -53,7 +43,10 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#/declarations/Somesecuritything"
+          "@id": "#/declarations/SchemaNode"
+        },
+        {
+          "@id": "#/declarations/Person"
         }
       ],
       "@type": [
@@ -67,9 +60,6 @@
       "core:version": "1.0",
       "meta:externals": [
         {
-          "@id": "/externals/security"
-        },
-        {
           "@id": "/externals/ns0"
         }
       ],
@@ -82,16 +72,33 @@
       }
     },
     {
-      "@id": "#/declarations/Somesecuritything",
+      "@id": "#/declarations/SchemaNode",
       "@type": [
         "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "core:name": "Somesecuritything",
+      "core:name": "SchemaNode",
       "shacl:property": [
         {
-          "@id": "/property/property/key"
+          "@id": "/property/property/info/array/info/shape/items/property/property/note"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Person",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "Person",
+      "shacl:property": [
+        {
+          "@id": "/property/property/name"
+        },
+        {
+          "@id": "/property/property/age"
         },
         {
           "@id": "/property/property/info"
@@ -99,24 +106,46 @@
       ]
     },
     {
-      "@id": "/property/property/key",
+      "@id": "/property/property/info/array/info/shape/items/property/property/note",
       "@type": [
         "meta:NodePropertyMapping",
         "doc:DomainElement"
       ],
-      "shacl:path": [
-        {
-          "@id": "https://anypoint.mulesoft.com/security#sensitive"
-        }
-      ],
-      "core:name": "key",
+      "core:name": "note",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 1,
-      "shacl:pattern": "^[A-Za-z]*$"
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "/property/property/name",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "name",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 1
+    },
+    {
+      "@id": "/property/property/age",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "age",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minCount": 1
     },
     {
       "@id": "/property/property/info",
@@ -125,17 +154,24 @@
         "doc:DomainElement"
       ],
       "core:name": "info",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#integer"
-        }
-      ],
-      "shacl:minCount": 1
+      "shacl:node": {
+        "@id": "/property/property/info/list"
+      },
+      "shacl:minCount": 0,
+      "meta:allowMultiple": true
+    },
+    {
+      "@id": "/property/property/info/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@id": "#/declarations/SchemaNode"
+      }
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/basicWithCharacteristics.json",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/without-schema-key.json",
     "shacl": "http://www.w3.org/ns/shacl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
     "owl": "http://www.w3.org/2002/07/owl#",

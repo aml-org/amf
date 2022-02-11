@@ -246,18 +246,21 @@ abstract class JsonSchemaContext(ctx: ParserContext) extends ShapeParserContext(
 }
 
 object JsonSchemaContext {
-  def apply(ctx: ParserContext): ShapeParserContext = {
+  def apply(ctx: ParserContext, schemaVersion: Option[JSONSchemaVersion]): ShapeParserContext = {
     new JsonSchemaContext(ctx) {
       override var jsonSchemaIndex: Option[AstIndex]          = None
       override var globalSpace: mutable.Map[String, Any]      = mutable.Map()
       override var localJSONSchemaContext: Option[YNode]      = None
       override var indexCache: mutable.Map[String, AstIndex]  = mutable.Map()
       override def extensionsFacade: SemanticExtensionsFacade = SemanticExtensionsFacade.apply(ctx.config)
+      override val defaultSchemaVersion: JSONSchemaVersion    = schemaVersion.getOrElse(defaultSchemaVersion)
 
       override def makeJsonSchemaContextForParsing(url: String,
                                                    document: Root,
                                                    options: ParsingOptions): ShapeParserContext =
-        JsonSchemaContext(ctx)
+        JsonSchemaContext(ctx, schemaVersion)
     }
   }
+
+  def apply(ctx: ParserContext): ShapeParserContext = this.apply(ctx, None)
 }
