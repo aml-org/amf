@@ -54,15 +54,15 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withSchemes(schemes: Seq[String]): this.type              = set(Schemes, schemes.toList)
   def withAccepts(accepts: Seq[String]): this.type              = set(Accepts, accepts.toList)
   def withContentType(contentType: Seq[String]): this.type      = set(ContentType, contentType.toList)
-  def withRequest(request: Request): this.type =
-    setArray(OperationRequest, Seq(request))
-  def withResponses(responses: Seq[Response]): this.type   = setArray(Responses, responses)
-  def withTags(tags: Seq[Tag]): this.type                  = setArray(Tags, tags)
-  def withCallbacks(callbacks: Seq[Callback]): this.type   = setArray(Callbacks, callbacks)
-  def withServers(servers: Seq[Server]): this.type         = setArray(Servers, servers)
-  def withAbstract(abs: Boolean): this.type                = set(IsAbstract, abs)
-  def withBindings(bindings: OperationBindings): this.type = set(Bindings, bindings)
-  def withOperationId(operationId: String): this.type      = set(OperationId, operationId)
+  def withRequest(request: Request): this.type                  = setArray(OperationRequest, Seq(request))
+  def withRequests(request: Seq[Request]): this.type            = setArray(OperationRequest, request)
+  def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
+  def withTags(tags: Seq[Tag]): this.type                       = setArray(Tags, tags)
+  def withCallbacks(callbacks: Seq[Callback]): this.type        = setArray(Callbacks, callbacks)
+  def withServers(servers: Seq[Server]): this.type              = setArray(Servers, servers)
+  def withAbstract(abs: Boolean): this.type                     = set(IsAbstract, abs)
+  def withBindings(bindings: OperationBindings): this.type      = set(Bindings, bindings)
+  def withOperationId(operationId: String): this.type           = set(OperationId, operationId)
 
   override def removeServers(): Unit = fields.removeField(OperationModel.Servers)
   def removeName(): fields.type      = fields.removeField(OperationModel.Name)
@@ -79,7 +79,7 @@ case class Operation(fields: Fields, annotations: Annotations)
     request
   }
 
-  def withInferredRequest() = {
+  def withInferredRequest(): Request = {
     val request = Request()
     fields.set(id, OperationRequest, AmfArray(Seq(request), Annotations.inferred()), Annotations.inferred())
     request
@@ -104,10 +104,10 @@ case class Operation(fields: Fields, annotations: Annotations)
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String = {
     val methodName = method.option().getOrElse("default-operation").urlComponentEncoded
-    val opId = operationId.option().map(id => "/" + id.urlComponentEncoded).getOrElse("")
+    val opId       = operationId.option().map(id => "/" + id.urlComponentEncoded).getOrElse("")
     "/" + methodName + opId
   }
-  override def nameField: Field    = Name
+  override def nameField: Field = Name
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Operation.apply
 }

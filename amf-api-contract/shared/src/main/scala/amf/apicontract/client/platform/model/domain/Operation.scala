@@ -103,6 +103,12 @@ case class Operation(override private[amf] val _internal: InternalOperation)
     this
   }
 
+  /** Set requests property of this Operation. */
+  def withRequests(requests: ClientList[Request]): this.type = {
+    _internal.withRequests(requests.asInternal)
+    this
+  }
+
   /** Set responses property of this Operation. */
   def withResponses(responses: ClientList[Response]): this.type = {
     _internal.withResponses(responses.asInternal)
