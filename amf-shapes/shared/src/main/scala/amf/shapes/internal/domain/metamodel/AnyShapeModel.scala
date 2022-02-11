@@ -8,7 +8,12 @@ import amf.core.internal.metamodel.domain.{ExternalSourceElementModel, ModelDoc,
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.common.{DocumentationField, ExamplesField}
 
-trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with ExamplesField with DocumentationField with WithSemanticContext {
+trait AnyShapeModel
+    extends ShapeModel
+    with ExternalSourceElementModel
+    with ExamplesField
+    with DocumentationField
+    with WithSemanticContext {
 
   val XMLSerialization = Field(
     XMLSerializerModel,

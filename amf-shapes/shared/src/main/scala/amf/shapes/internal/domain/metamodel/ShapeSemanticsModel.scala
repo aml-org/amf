@@ -32,6 +32,12 @@ object BaseIRIModel extends DomainElementModel with WithIri {
   override def modelInstance: AmfObject = BaseIri()
 
   override def fields: List[Field] = List(IRI, Nulled)
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.Meta,
+    "baseIRIModel",
+    "Encodes information about the base document IRI for the model element @ids"
+  )
 }
 
 /**
@@ -44,6 +50,12 @@ object DefaultVocabularyModel extends DomainElementModel with WithIri {
   override def modelInstance: AmfObject = DefaultVocabulary()
 
   override def fields: List[Field] = List(IRI)
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.Meta,
+    "defaultVocabularyModel",
+    "Encodes information about the base vocabulary to map by default properties and types in the model"
+  )
 }
 
 /**
@@ -61,6 +73,12 @@ object CuriePrefixModel extends DomainElementModel with WithIri {
   override def modelInstance: AmfObject = CuriePrefix()
 
   override def fields: List[Field] = List(Alias, IRI)
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.Meta,
+    "curiePrefixModel",
+    "Stores information about a CURIE prefix defined in the context"
+  )
 }
 
 /**
@@ -87,6 +105,12 @@ object ContextMappingModel extends DomainElementModel with WithIri {
   override def fields: List[Field] = List(Alias, IRI, Coercion, Nulled)
 
   override def modelInstance: AmfObject = ContextMapping()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.Meta,
+    "contextMappingModel",
+    "Stores information about mapping rules for a property in the model"
+  )
 }
 
 /**
@@ -128,6 +152,11 @@ object SemanticContextModel extends DomainElementModel {
 
   override def modelInstance: AmfObject = SemanticContext()
 
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.Meta,
+    "semanticContextModel",
+    "Set of semantic contextual information that can be attached to a schema"
+  )
 }
 
 trait WithSemanticContext {

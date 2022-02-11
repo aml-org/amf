@@ -483,7 +483,7 @@ Types:
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## BaseIRI
-
+Encodes information about the base document IRI for the model element @ids
 Types:
 * http://a.ml/vocabularies/meta#ContextBaseIri
 
@@ -601,7 +601,7 @@ Types:
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## ContextMapping
-
+Stores information about mapping rules for a property in the model
 Types:
 * http://a.ml/vocabularies/meta#ContextMapping
 
@@ -645,7 +645,7 @@ Types:
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
 
 ## CuriePrefix
-
+Stores information about a CURIE prefix defined in the context
 Types:
 * http://a.ml/vocabularies/meta#ContextCuriePrefix
 
@@ -724,7 +724,7 @@ Types:
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## DefaultVocabulary
-
+Encodes information about the base vocabulary to map by default properties and types in the model
 Types:
 * http://a.ml/vocabularies/meta#ContextDefaultVocabulary
 
@@ -2459,7 +2459,7 @@ Types:
  | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
 ## SemanticContext
-
+Set of semantic contextual information that can be attached to a schema
 Types:
 * http://a.ml/vocabularies/meta#SemanticContext
 
