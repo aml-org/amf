@@ -5154,6 +5154,8 @@ declare module 'amf-client-js' {
 
     withRequest(request: Request): this
 
+    withRequests(requests: Array<Request>): this
+
     withId(id: string): this
 
     withRequest(): Request
