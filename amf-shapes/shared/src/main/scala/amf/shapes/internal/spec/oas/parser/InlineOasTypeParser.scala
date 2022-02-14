@@ -960,10 +960,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           )
         )
 
-      parser
-        .OasTypeParser(entry, shape => Unit, version)
-        .parse()
-        .foreach(property.setWithoutId(PropertyShapeModel.Range, _, Annotations.inferred()))
+      var shape = AnyShape()
+      parser.OasTypeParser(entry, shape => Unit, version).parse().foreach(shape = _)
+      property.setWithoutId(PropertyShapeModel.Range, shape, Annotations.inferred())
 
       if (patterned) property.withPatternName(name)
 

@@ -65,3 +65,5 @@ case class ExternalReferenceUrl(url: String) extends Annotation
 case class CollectionFormatFromItems() extends Annotation
 
 case class ForceEntry() extends Annotation
+
+case class BooleanSchema() extends Annotation
