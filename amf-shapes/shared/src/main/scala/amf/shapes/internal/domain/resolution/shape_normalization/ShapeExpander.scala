@@ -2,16 +2,15 @@ package amf.shapes.internal.domain.resolution.shape_normalization
 
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.traversal.{ModelTraversalRegistry, ShapeTraversalRegistry}
+import amf.core.client.scala.traversal.ShapeTraversalRegistry
 import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.CoreValidations.TransformationValidation
+import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.resolution.recursion.{LinkableRegisterCriteria, RecursionErrorRegister}
-import amf.shapes.client.scala.model.domain.UnresolvedShape
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, FileShape, MatrixShape, NilShape, NodeShape, ScalarShape, TupleShape, UnionShape, UnresolvedShape}
 
 private[resolution] object ShapeExpander {
   def apply(s: Shape, context: NormalizationContext, recursionRegister: RecursionErrorRegister): Shape =
@@ -239,9 +238,9 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
   private def traverseOptionalShapeFacet(shape: Shape, from: Shape) = shape match {
     case _ if shape.inherits.nonEmpty =>
-      traversal.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
+      traversal.allow(shape.inherits.map(_.id).toSet + root.id)(() => normalize(shape))
     case _: RecursiveShape => shape
-    case _                 => traversal.recursionAllowed(() => normalize(shape), from.id)
+    case _                 => traversal.allow(traversal.currentPath + from.id)(() => normalize(shape))
   }
 
   protected def expandUnion(union: UnionShape): Shape = {
@@ -249,7 +248,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     val oldAnyOf = union.fields.getValue(UnionShapeModel.AnyOf)
     if (Option(oldAnyOf).isDefined) {
       val newAnyOf = union.anyOf.map { u =>
-        val unionMember = traversal.recursionAllowed(() => recursiveNormalization(u), u.id)
+        val unionMember = traversal.allow(traversal.currentPath + u.id)(() => recursiveNormalization(u))
         unionMember
       }
       union.setArrayWithoutId(UnionShapeModel.AnyOf, newAnyOf, oldAnyOf.annotations)
