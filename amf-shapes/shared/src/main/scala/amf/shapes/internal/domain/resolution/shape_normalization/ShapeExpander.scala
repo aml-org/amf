@@ -10,7 +10,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain._
 import amf.shapes.internal.domain.metamodel._
-import amf.shapes.internal.domain.resolution.recursion.{LinkableRegisterCriteria, RecursionErrorRegister}
+import amf.shapes.internal.domain.resolution.recursion.{LinkableCriteria, RecursionErrorRegister}
 
 private[resolution] object ShapeExpander {
   def apply(s: Shape, context: NormalizationContext, recursionRegister: RecursionErrorRegister): Shape =
@@ -42,14 +42,19 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   override def normalizeAction(shape: Shape): Shape = {
     shape match {
       case l: Linkable if l.isLink =>
-        recursionRegister.recursionAndError(root,
-                                            Some(root.id),
-                                            shape,
-                                            traversal,
-                                            LinkableRegisterCriteria(root, shape))
+        // TODO: Why do we create a recursive shape when we find a linkable? Shouldn't this be subject only to traversals?
+        val recursiveShape = recursionRegister.buildRecursion(Some(root.id), shape)
+        recursionRegister.checkRecursionError(root,
+                                              recursiveShape,
+                                              traversal,
+                                              Some(root.id),
+                                              LinkableCriteria(root, shape))
+        recursiveShape
 
-      case _ if traversal.shouldFailIfRecursive(root, shape) && !shape.isInstanceOf[RecursiveShape] =>
-        recursionRegister.recursionAndError(root, None, shape, traversal)
+      case _ if traversal.foundRecursion(root, shape) && !shape.isInstanceOf[RecursiveShape] =>
+        val recursiveShape = recursionRegister.buildRecursion(None, shape)
+        recursionRegister.checkRecursionError(root, recursiveShape, traversal, Some(root.id))
+        recursiveShape
 
       case _ if traversal.wasVisited(shape.id) => shape
 
@@ -67,7 +72,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
             case fileShape: FileShape      => expandAny(fileShape)
             case nil: NilShape             => nil
             case node: NodeShape           => expandNode(node)
-            case recursive: RecursiveShape => recursionRegister.recursionError(recursive, recursive, traversal)
+            case recursive: RecursiveShape => recursionRegister.checkRecursionError(recursive, recursive, traversal)
             case any: AnyShape             => expandAny(any)
           }
         })
@@ -80,7 +85,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       // in this case i use the father shape id and position, because the inheritance could be a recursive shape already
       val newInherits = shape.inherits.map {
         case r: RecursiveShape if r.fixpoint.option().exists(_.equals(shape.id)) =>
-          recursionRegister.recursionError(shape, r, traversal) // direct recursion
+          recursionRegister.checkRecursionError(shape, r, traversal) // direct recursion
         case r: RecursiveShape =>
           r
         case parent =>
@@ -140,7 +145,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (mandatory)
       array.inherits.collect({ case arr: ArrayShape if arr.items.isInstanceOf[RecursiveShape] => arr }).foreach { f =>
         val r = f.items.asInstanceOf[RecursiveShape]
-        recursionRegister.recursionError(array, r, traversal, Some(array.id))
+        recursionRegister.checkRecursionError(array, r, traversal, Some(array.id))
       }
     if (Option(oldItems).isDefined) {
       val newItems = if (mandatory) {

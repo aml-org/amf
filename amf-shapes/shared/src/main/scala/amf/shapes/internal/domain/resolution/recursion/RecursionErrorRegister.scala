@@ -10,60 +10,53 @@ import scala.collection.mutable.ListBuffer
 class RecursionErrorRegister(errorHandler: AMFErrorHandler) {
   private val errorRegister = ListBuffer[String]()
 
-  private def buildRecursion(base: Option[String], s: Shape): RecursiveShape = {
+  def buildRecursion(base: Option[String], s: Shape): RecursiveShape = {
     val fixPointId = base.getOrElse(s.id)
     val r          = RecursiveShape(s).withFixPoint(fixPointId)
     r
   }
 
-  def recursionAndError(root: Shape,
-                        base: Option[String],
-                        s: Shape,
-                        traversal: ShapeTraversalRegistry,
-                        criteria: RegisterCriteria = DefaultRegisterCriteria()): RecursiveShape = {
-    val recursion = buildRecursion(base, s)
-    recursionError(root, recursion, traversal: ShapeTraversalRegistry, Some(root.id), criteria)
-  }
-
-  def avoidError(traversal: ShapeTraversalRegistry, r: RecursiveShape, checkId: Option[String] = None): Boolean = {
+  def allowedInTraversal(traversal: ShapeTraversalRegistry,
+                         r: RecursiveShape,
+                         checkId: Option[String] = None): Boolean = {
     val recursiveShapeIsAllowListed = traversal.isAllowListed(r.id)
     val fixpointIsAllowListed       = r.fixpoint.option().exists(traversal.isAllowListed)
     val checkIdIsAllowListed        = checkId.exists(traversal.isAllowListed)
     recursiveShapeIsAllowListed || fixpointIsAllowListed || checkIdIsAllowListed
   }
 
-  def recursionError(original: Shape,
-                     r: RecursiveShape,
-                     traversal: ShapeTraversalRegistry,
-                     checkId: Option[String] = None,
-                     criteria: RegisterCriteria = DefaultRegisterCriteria()): RecursiveShape = {
+  def checkRecursionError(root: Shape,
+                          r: RecursiveShape,
+                          traversal: ShapeTraversalRegistry,
+                          checkId: Option[String] = None,
+                          criteria: ThrowRecursionValidationCriteria = DefaultCriteria()): RecursiveShape = {
 
     val hasNotRegisteredItYet = !errorRegister.contains(r.id)
-    if (criteria.decide(r) && !avoidError(traversal, r, checkId) && hasNotRegisteredItYet) {
+    if (criteria.shouldThrowFor(r) && !allowedInTraversal(traversal, r, checkId) && hasNotRegisteredItYet) {
       errorHandler.violation(
         RecursiveShapeSpecification,
-        original.id,
+        root.id,
         None,
         "Error recursive shape",
-        original.position(),
-        original.location()
+        root.position(),
+        root.location()
       )
       errorRegister += r.id
-    } else if (avoidError(traversal, r, checkId)) r.withSupportsRecursion(true)
+    } else if (allowedInTraversal(traversal, r, checkId)) r.withSupportsRecursion(true)
     r
   }
 }
 
-trait RegisterCriteria {
-  def decide(r: RecursiveShape): Boolean
+trait ThrowRecursionValidationCriteria {
+  def shouldThrowFor(r: RecursiveShape): Boolean
 }
 
-case class DefaultRegisterCriteria() extends RegisterCriteria {
-  override def decide(r: RecursiveShape): Boolean = !r.supportsRecursion.option().getOrElse(false)
+case class DefaultCriteria() extends ThrowRecursionValidationCriteria {
+  override def shouldThrowFor(r: RecursiveShape): Boolean = !r.supportsRecursion.option().getOrElse(false)
 }
 
-case class LinkableRegisterCriteria(root: Shape, linkable: Shape) extends RegisterCriteria {
-  override def decide(r: RecursiveShape): Boolean = linkable.linkTarget match {
+case class LinkableCriteria(root: Shape, linkable: Shape) extends ThrowRecursionValidationCriteria {
+  override def shouldThrowFor(r: RecursiveShape): Boolean = linkable.linkTarget match {
     case Some(element) => element.id.equals(root.id)
     case None          => false
   }
