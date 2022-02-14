@@ -2,7 +2,7 @@ package amf.shapes.internal.domain.resolution.recursion
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
-import amf.core.client.scala.traversal.ModelTraversalRegistry
+import amf.core.client.scala.traversal.{ModelTraversalRegistry, ShapeTraversalRegistry}
 import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
 
 import scala.collection.mutable.ListBuffer
@@ -19,13 +19,13 @@ class RecursionErrorRegister(errorHandler: AMFErrorHandler) {
   def recursionAndError(root: Shape,
                         base: Option[String],
                         s: Shape,
-                        traversal: ModelTraversalRegistry,
+                        traversal: ShapeTraversalRegistry,
                         criteria: RegisterCriteria = DefaultRegisterCriteria()): RecursiveShape = {
     val recursion = buildRecursion(base, s)
-    recursionError(root, recursion, traversal: ModelTraversalRegistry, Some(root.id), criteria)
+    recursionError(root, recursion, traversal: ShapeTraversalRegistry, Some(root.id), criteria)
   }
 
-  def avoidError(traversal: ModelTraversalRegistry, r: RecursiveShape, checkId: Option[String] = None): Boolean = {
+  def avoidError(traversal: ShapeTraversalRegistry, r: RecursiveShape, checkId: Option[String] = None): Boolean = {
     val recursiveShapeIsAllowListed = traversal.isAllowListed(r.id)
     val fixpointIsAllowListed       = r.fixpoint.option().exists(traversal.isAllowListed)
     val checkIdIsAllowListed        = checkId.exists(traversal.isAllowListed)
@@ -34,7 +34,7 @@ class RecursionErrorRegister(errorHandler: AMFErrorHandler) {
 
   def recursionError(original: Shape,
                      r: RecursiveShape,
-                     traversal: ModelTraversalRegistry,
+                     traversal: ShapeTraversalRegistry,
                      checkId: Option[String] = None,
                      criteria: RegisterCriteria = DefaultRegisterCriteria()): RecursiveShape = {
 

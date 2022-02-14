@@ -2,7 +2,7 @@ package amf.shapes.internal.domain.resolution.shape_normalization
 
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.traversal.ModelTraversalRegistry
+import amf.core.client.scala.traversal.{ModelTraversalRegistry, ShapeTraversalRegistry}
 import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
@@ -11,18 +11,7 @@ import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.internal.domain.metamodel._
 import amf.shapes.internal.domain.resolution.recursion.{LinkableRegisterCriteria, RecursionErrorRegister}
 import amf.shapes.client.scala.model.domain.UnresolvedShape
-import amf.shapes.client.scala.model.domain.{
-  AnyShape,
-  ArrayShape,
-  FileShape,
-  MatrixShape,
-  NilShape,
-  NodeShape,
-  ScalarShape,
-  TupleShape,
-  UnionShape,
-  UnresolvedShape
-}
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, FileShape, MatrixShape, NilShape, NodeShape, ScalarShape, TupleShape, UnionShape, UnresolvedShape}
 
 private[resolution] object ShapeExpander {
   def apply(s: Shape, context: NormalizationContext, recursionRegister: RecursionErrorRegister): Shape =
@@ -35,8 +24,8 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
   def normalize(): Shape = normalize(root)
 
-  protected val traversal: ModelTraversalRegistry =
-    ModelTraversalRegistry().withAllowedCyclesInstances(Seq(classOf[UnresolvedShape]))
+  protected val traversal: ShapeTraversalRegistry =
+    ShapeTraversalRegistry().withAllowedCyclesInstances(Seq(classOf[UnresolvedShape]))
 
   protected def ensureHasId(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {
