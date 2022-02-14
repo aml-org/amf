@@ -25,6 +25,13 @@ class RecursionErrorRegister(errorHandler: AMFErrorHandler) {
     recursionError(root, recursion, traversal: ModelTraversalRegistry, Some(root.id), criteria)
   }
 
+  def avoidError(traversal: ModelTraversalRegistry, r: RecursiveShape, checkId: Option[String] = None): Boolean = {
+    val recursiveShapeIsAllowListed = traversal.isAllowListed(r.id)
+    val fixpointIsAllowListed       = r.fixpoint.option().exists(traversal.isAllowListed)
+    val checkIdIsAllowListed        = checkId.exists(traversal.isAllowListed)
+    recursiveShapeIsAllowListed || fixpointIsAllowListed || checkIdIsAllowListed
+  }
+
   def recursionError(original: Shape,
                      r: RecursiveShape,
                      traversal: ModelTraversalRegistry,
@@ -32,7 +39,7 @@ class RecursionErrorRegister(errorHandler: AMFErrorHandler) {
                      criteria: RegisterCriteria = DefaultRegisterCriteria()): RecursiveShape = {
 
     val hasNotRegisteredItYet = !errorRegister.contains(r.id)
-    if (criteria.decide(r) && !traversal.avoidError(r, checkId) && hasNotRegisteredItYet) {
+    if (criteria.decide(r) && !avoidError(traversal, r, checkId) && hasNotRegisteredItYet) {
       errorHandler.violation(
         RecursiveShapeSpecification,
         original.id,
@@ -42,7 +49,7 @@ class RecursionErrorRegister(errorHandler: AMFErrorHandler) {
         original.location()
       )
       errorRegister += r.id
-    } else if (traversal.avoidError(r, checkId)) r.withSupportsRecursion(true)
+    } else if (avoidError(traversal, r, checkId)) r.withSupportsRecursion(true)
     r
   }
 }
