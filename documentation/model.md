@@ -490,7 +490,7 @@ Types:
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | iri | url | Base IRI for all the elements in the model | http://a.ml/vocabularies/meta#iri |
- | null | boolean | Marks the baseIRI as null, preventing generation of absolute IRIs in the model | http://a.ml/vocabularies/meta#null |
+ | nulled | boolean | Marks the baseIRI as null, preventing generation of absolute IRIs in the model | http://a.ml/vocabularies/meta#nulled |
 
 ## BaseUnit
 Base class for every single document model unit. After parsing a document the parser generate parsing Units. Units encode the domain elements and can reference other units to re-use descriptions.
@@ -610,7 +610,7 @@ Types:
  | contextAlias | string | lexical value of the alias in the context | http://a.ml/vocabularies/meta#contextAlias |
  | iri | url | Base IRI for all the elements in the model | http://a.ml/vocabularies/meta#iri |
  | coercion | string | Type to coerce the mapped model | http://a.ml/vocabularies/meta#coercion |
- | null | boolean | Marks the baseIRI as null, preventing generation of absolute IRIs in the model | http://a.ml/vocabularies/meta#null |
+ | nulled | boolean | Marks the baseIRI as null, preventing generation of absolute IRIs in the model | http://a.ml/vocabularies/meta#nulled |
 
 ## CorrelationId
 Model defining an identifier that can used for message tracing and correlation
