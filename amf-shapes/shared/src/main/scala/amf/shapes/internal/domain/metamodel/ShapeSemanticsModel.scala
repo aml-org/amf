@@ -24,9 +24,9 @@ object BaseIRIModel extends DomainElementModel with WithIri {
 
   val Nulled =
     Field(Bool,
-          Meta + "null",
+          Meta + "nulled",
           ModelDoc(ModelVocabularies.Meta,
-                   "null",
+                   "nulled",
                    "Marks the baseIRI as null, preventing generation of absolute IRIs in the model"))
 
   override def modelInstance: AmfObject = BaseIri()
@@ -97,9 +97,9 @@ object ContextMappingModel extends DomainElementModel with WithIri {
 
   val Nulled =
     Field(Bool,
-          Meta + "null",
+          Meta + "nulled",
           ModelDoc(ModelVocabularies.Meta,
-                   "null",
+                   "nulled",
                    "Marks the baseIRI as null, preventing generation of absolute IRIs in the model"))
 
   override def fields: List[Field] = List(Alias, IRI, Coercion, Nulled)
