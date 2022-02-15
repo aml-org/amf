@@ -18,6 +18,10 @@ class SemanticBaseUnitClient private[amf] (override protected val configuration:
   def parseSemanticSchema(url: String): Future[AMFSemanticSchemaResult] = {
     SemanticSchemaParser.parse(url, configuration)
   }
+
+  def parseSemanticSchemaContent(content: String): Future[AMFSemanticSchemaResult] = {
+    SemanticSchemaParser.parseContent(content, configuration)
+  }
 }
 
 class AMFSemanticSchemaResult(override val baseUnit: Dialect,

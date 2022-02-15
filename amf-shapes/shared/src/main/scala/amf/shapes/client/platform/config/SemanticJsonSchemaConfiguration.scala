@@ -1,7 +1,7 @@
 package amf.shapes.client.platform.config
 
+import amf.aml.client.platform.AMLConfigurationState
 import amf.aml.client.platform.model.document.{Dialect, DialectInstance}
-import amf.aml.client.platform.{AMLBaseUnitClient, AMLConfigurationState, AMLElementClient}
 import amf.aml.internal.convert.VocabulariesClientConverter.{ClientFuture, ClientList}
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
@@ -10,15 +10,15 @@ import amf.core.client.platform.reference.UnitCache
 import amf.core.client.platform.resource.ResourceLoader
 import amf.core.client.platform.transform.TransformationPipeline
 import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
+import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
-import amf.shapes.client.platform.{BaseShapesConfiguration, ShapesConfiguration, ShapesElementClient}
+import amf.core.internal.convert.TransformationPipelineConverter._
+import amf.shapes.client.platform.{BaseShapesConfiguration, ShapesConfiguration}
 import amf.shapes.client.scala.config.{
-  SemanticJsonSchemaConfiguration => InternalSemanticJsonSchemaConfiguration,
-  SemanticBaseUnitClient => InternalSemanticBaseUnitClient
+  SemanticBaseUnitClient => InternalSemanticBaseUnitClient,
+  SemanticJsonSchemaConfiguration => InternalSemanticJsonSchemaConfiguration
 }
 import amf.shapes.internal.convert.ShapeClientConverters._
-import amf.core.internal.convert.TransformationPipelineConverter._
-import amf.core.internal.convert.ClientErrorHandlerConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

@@ -12,16 +12,23 @@ object SemanticSchemaParser {
   def parse(uri: String, config: SemanticJsonSchemaConfiguration): Future[AMFSemanticSchemaResult] = {
     implicit val executionContext: ExecutionContext = config.getExecutionContext
 
-    val client = config.baseUnitClient()
-    client.parseDialect(uri).map { result =>
-      val AMLDialectResult(dialect: Dialect, results) = result
-      val maybeVocab                                  = getVocabularyFromReferences(dialect)
-      dialect.withReferences(Nil) // remove references to avoid emission with "uses" as it is harder to use
-      AMFSemanticSchemaResult(dialect, maybeVocab, results)
-    }
+    config.baseUnitClient().parseDialect(uri).map(processResult)
+  }
+
+  def parseContent(content: String, config: SemanticJsonSchemaConfiguration): Future[AMFSemanticSchemaResult] = {
+    implicit val executionContext: ExecutionContext = config.getExecutionContext
+
+    config.baseUnitClient().parseContent(content).map(processResult)
   }
 
   private def getVocabularyFromReferences(dialect: Dialect): Option[Vocabulary] = {
     dialect.references.headOption.collect { case vocab: Vocabulary => vocab }
+  }
+
+  private def processResult(result: AMFResult): AMFSemanticSchemaResult = {
+    val AMLDialectResult(dialect: Dialect, results) = result
+    val maybeVocab                                  = getVocabularyFromReferences(dialect)
+    dialect.withReferences(Nil) // remove references to avoid emission with "uses" as it is harder to use
+    AMFSemanticSchemaResult(dialect, maybeVocab, results)
   }
 }

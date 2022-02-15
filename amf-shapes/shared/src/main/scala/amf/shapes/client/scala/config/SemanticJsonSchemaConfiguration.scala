@@ -3,7 +3,7 @@ package amf.shapes.client.scala.config
 import amf.aml.client.scala.AMLConfigurationState
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.internal.registries.AMLRegistry
-import amf.core.client.scala.config.{AMFEventListener, AMFOptions, ParsingOptions, RenderOptions, UnitCache}
+import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{DefaultErrorHandlerProvider, ErrorHandlerProvider}
 import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
@@ -17,7 +17,7 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
-import amf.shapes.client.scala.{ShapesBaseUnitClient, ShapesConfiguration, ShapesElementClient}
+import amf.shapes.client.scala.{ShapesConfiguration, ShapesElementClient}
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.JsonSchemaDialectParsePlugin
 
 import scala.concurrent.{ExecutionContext, Future}
