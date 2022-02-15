@@ -22,7 +22,7 @@ ThisBuild / scalaVersion := "2.12.11"
 ThisBuild / resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Common.public, Resolver.mavenLocal, Resolver.mavenCentral)
 ThisBuild / credentials ++= Common.credentials()
 
-val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model")
+val apiContractModelVersion = settingKey[String]("Version of the AMF API Contract Model").withRank(KeyRanks.Invisible)
 
 publish := {}
 
