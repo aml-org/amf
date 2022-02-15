@@ -670,6 +670,7 @@ declare module 'amf-client-js' {
   export class SemanticBaseUnitClient extends AMLBaseUnitClient  {
     parseSemanticSchema(url: string): Promise<AMFSemanticSchemaResult>
 
+    parseSemanticSchemaContent(content: string): Promise<AMFSemanticSchemaResult>
 
   }
   export interface ValidationResult  {

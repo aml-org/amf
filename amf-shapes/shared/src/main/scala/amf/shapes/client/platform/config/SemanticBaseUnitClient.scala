@@ -20,6 +20,10 @@ class SemanticBaseUnitClient private[amf] (private val _internal: InternalSemant
   def parseSemanticSchema(url: String): ClientFuture[AMFSemanticSchemaResult] = {
     _internal.parseSemanticSchema(url).asClient
   }
+
+  def parseSemanticSchemaContent(content: String): ClientFuture[AMFSemanticSchemaResult] = {
+    _internal.parseSemanticSchemaContent(content).asClient
+  }
 }
 
 @JSExportAll
