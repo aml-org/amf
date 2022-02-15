@@ -42,7 +42,13 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   override def normalizeAction(shape: Shape): Shape = {
     shape match {
       case l: Linkable if l.isLink =>
-        // TODO: Why do we create a recursive shape when we find a linkable? Shouldn't this be subject only to traversals?
+        /***
+          * TODO: (Refactor needed)
+          * Why do we create a recursive shape when we find a linkable? Shouldn't this be subject only to traversals?
+          * The motivation is not explicit in the code. There is for sure some corner case where this case is needed.
+          * After finding the cocrete case please extract this to a function and make explicit the conditions where
+          * this is needed, otherwise delete this code.
+          */
         val recursiveShape = recursionRegister.buildRecursion(Some(root.id), shape)
         recursionRegister.checkRecursionError(root,
                                               recursiveShape,
