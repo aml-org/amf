@@ -2,7 +2,7 @@ package amf.shapes.client.scala.model.domain
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{Linkable, RecursiveShape, Shape}
-import amf.core.client.scala.traversal.ModelTraversalRegistry
+import amf.core.client.scala.traversal.{ModelTraversalRegistry, ShapeTraversalRegistry}
 import amf.core.internal.annotations.ExplicitField
 import amf.core.internal.validation.CoreValidations.RecursiveShapeSpecification
 import amf.shapes.internal.annotations.ParsedFromTypeExpression
@@ -32,7 +32,7 @@ trait ShapeHelpers { this: Shape =>
 
   def cloneShape(recursionErrorHandler: Option[AMFErrorHandler],
                  withRecursionBase: Option[String] = None,
-                 traversal: ModelTraversalRegistry = ModelTraversalRegistry(),
+                 traversal: ShapeTraversalRegistry = ShapeTraversalRegistry(),
                  cloneExamples: Boolean = false): this.type = {
     if (traversal.isInCurrentPath(this.id)) {
       buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler).asInstanceOf[this.type]
