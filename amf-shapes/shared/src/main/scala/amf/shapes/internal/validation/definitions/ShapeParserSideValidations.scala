@@ -307,6 +307,11 @@ object ShapeParserSideValidations extends Validations {
     "the text must conform the IRI format"
   )
 
+  val InvalidBooleanSchemaForSchemaVersion = validation(
+    "invalid-required-boolean-for-schema-version",
+    "Boolean schemas not supported in JSON Schema below version draft-6"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id           -> all(WARNING),
     JsonSchemaInheritanceWarning.id -> all(WARNING),

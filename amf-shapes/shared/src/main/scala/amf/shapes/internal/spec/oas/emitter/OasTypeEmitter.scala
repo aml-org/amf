@@ -9,8 +9,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.render.BaseEmitters.pos
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter}
-import amf.shapes.internal.annotations.ExternalJsonSchemaShape
-import amf.shapes.client.scala.model.domain._
+import amf.shapes.internal.annotations.{BooleanSchema, ExternalJsonSchemaShape}
 import amf.shapes.client.scala.model.domain.{
   AnyShape,
   ArrayShape,
@@ -51,7 +50,8 @@ case class OasTypeEmitter(shape: Shape,
     }
 
     shape match {
-      case l: Linkable if l.isLink => Seq(OasShapeReferenceEmitter(l))
+      case l: Linkable if l.isLink     => Seq(OasShapeReferenceEmitter(l))
+      case _ if isBooleanSchema(shape) => Seq(BooleanSchemaEmitter(shape))
       case _ if shape.annotations.contains(classOf[ExternalJsonSchemaShape]) =>
         Seq(ExternalJsonSchemaShapeEmitter(shape))
       case schema: SchemaShape =>
@@ -107,6 +107,8 @@ case class OasTypeEmitter(shape: Shape,
 
   def nilUnion(union: UnionShape): Boolean =
     union.anyOf.size == 1 && union.anyOf.head.annotations.contains(classOf[NilUnion])
+
+  private def isBooleanSchema(shape: Shape): Boolean = shape.annotations.contains(classOf[BooleanSchema])
 
 }
 
