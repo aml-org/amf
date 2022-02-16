@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema
 
-import amf.aml.client.scala.AMLDialectResult
 import amf.aml.client.scala.model.document.{Dialect, Vocabulary}
 import amf.core.client.scala.AMFResult
 import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
@@ -26,9 +25,9 @@ object SemanticSchemaParser {
   }
 
   private def processResult(result: AMFResult): AMFSemanticSchemaResult = {
-    val AMLDialectResult(dialect: Dialect, results) = result
-    val maybeVocab                                  = getVocabularyFromReferences(dialect)
+    val dialect    = result.baseUnit.asInstanceOf[Dialect]
+    val maybeVocab = getVocabularyFromReferences(dialect)
     dialect.withReferences(Nil) // remove references to avoid emission with "uses" as it is harder to use
-    AMFSemanticSchemaResult(dialect, maybeVocab, results)
+    AMFSemanticSchemaResult(dialect, maybeVocab, result.results)
   }
 }
