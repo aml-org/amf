@@ -754,7 +754,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
   private def createLink(shape: AnyShape, label: String, linkId: String): Shape = {
     shape
-      .link(AmfScalar(label), Annotations(node), Annotations.synthesized())
+      .link(AmfScalar(label), Annotations(ast), Annotations.synthesized())
       .asInstanceOf[Shape]
       .withName(name, nameAnnotations) // we setup the local reference in the name
       .withId(linkId)

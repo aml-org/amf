@@ -300,4 +300,13 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       isTheOnlyAnnotation(classOf[VirtualElement], op.request.annotations) shouldBe true
     }
   }
+
+  test("Shape's lexical should not only include the referenced type") {
+    val api = s"$basePath/annotations/type-reference.raml"
+    modelAssertion(api, transform = false) { bu =>
+      val typeWithReference = bu.asInstanceOf[Document].declares.last
+      typeWithReference.annotations.lexical().start shouldBe Position(6, 2)
+      typeWithReference.annotations.lexical().end shouldBe Position(7, 0)
+    }
+  }
 }
