@@ -1,7 +1,7 @@
 package amf.apiinstance.client.scala.model.domain
 
 import amf.apiinstance.internal.metamodel.domain.ProxyModel
-import amf.apiinstance.internal.metamodel.domain.ProxyModel.ProtocolListeners
+import amf.apiinstance.internal.metamodel.domain.ProxyModel.{ProtocolListeners, UpstreamServices}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.metamodel.Obj
 import amf.core.internal.parser.domain.{Annotations, Fields}
@@ -17,6 +17,14 @@ case class Proxy(fields: Fields, annotations: Annotations) extends DomainElement
     val newListeners = protocolListeners ++ Seq(listener)
     withProtocolListeners(newListeners)
   }
+
+  def upstreamServices: Seq[UpstreamService] = fields.field(UpstreamServices)
+  def withUpstreamServices(upstreams: Seq[UpstreamService]) = setArray(UpstreamServices, upstreams)
+  def withUpstreamService(upstream: UpstreamService) = {
+    val newUpstreams = upstreamServices ++ Seq(upstream)
+    withUpstreamServices(newUpstreams)
+  }
+
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override private[amf] def componentId = "/proxy"
 }

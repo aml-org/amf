@@ -1,22 +1,23 @@
 package amf.apiinstance.internal.spec.document
 
-import amf.apiinstance.client.scala.model.domain.{ProtocolListener, Proxy}
-import amf.apiinstance.internal.spec.context.{FlexGWConfigContext, KongDeclarativeConfigContext}
+import amf.apiinstance.client.scala.model.domain.{FilterChain, ProtocolListener, Proxy}
+import amf.apiinstance.internal.spec.context.FlexGWConfigContext
+import amf.apiinstance.internal.spec.domain.flex.{FlexGatewayPolicyParser, FlexGatewayUpstreamServiceParser, FlexRuleParser}
 import amf.apiinstance.internal.utils.NodeTraverser
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, BaseUnitProcessingData, Document}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Spec.FLEXGW
-import amf.core.internal.remote.{KongConfig, Spec}
-import jdk.jfr.FlightRecorder.addListener
-import org.yaml.model.YMap
-
+import org.yaml.model.{YMap, YScalar, YSequence}
 
 case class FlexGatewayDocumentParser(root: Root)(implicit ctx: FlexGWConfigContext) extends NodeTraverser {
 
   val doc: Document = Document()
+
   private def proxy = doc.encodes.asInstanceOf[Proxy]
+
+  private def listener = proxy.protocolListeners.head
 
   def parseDocument(): BaseUnit = {
     doc
@@ -25,10 +26,51 @@ case class FlexGatewayDocumentParser(root: Root)(implicit ctx: FlexGWConfigConte
 
     val rootNode = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     doc.withEncodes(Proxy(rootNode))
+    parseListeners(rootNode)
+    parsePolicies(rootNode)
+    parseServices(rootNode)
+    doc
+  }
+
+  def parsePolicies(rootNode: YMap): Unit = {
+    traverse(rootNode).errorFor(listener).fetch("spec").fetch("policies").arrayOr(()) { policiesNode: YSequence =>
+      val filters = FilterChain(policiesNode)
+      listener.withFilters(Seq(filters))
+
+      policiesNode.nodes.foreach { policyNode =>
+        traverse(policyNode).map {
+          case Some(policyMap) =>
+            FlexGatewayPolicyParser(policyMap).parse { parsedPolicy =>
+              filters.withPolicy(parsedPolicy)
+            }
+            FlexRuleParser(policyMap).parse { parsedRule =>
+              filters.withRule(parsedRule)
+            }
+          case _ => // TODO: record violation
+        }
+      }
+    }
+  }
+
+  def parseServices(rootNode: YMap): Unit = {
+    traverse(rootNode).errorFor(proxy).fetch("spec").fetch("services").mapOr(()) { servciesNode: YMap =>
+      servciesNode.entries.foreach { serviceNodeEntry =>
+        traverse(serviceNodeEntry.value) map {
+          case Some(serviceMap) =>
+            FlexGatewayUpstreamServiceParser(serviceMap).parse { parsedServiceUpstream =>
+              parsedServiceUpstream.withName(serviceNodeEntry.key.as[YScalar].text)
+              proxy.withUpstreamService(parsedServiceUpstream)
+            }
+          case _ => // TODO: record violation
+        }
+      }
+    }
+  }
+
+  def parseListeners(rootNode: YMap): Unit = {
     traverse(rootNode).errorFor(proxy).fetch("spec").mapOr(()) { spec =>
       addListener(spec)
     }
-    doc
   }
 
   def addListener(spec: YMap): Unit = {
@@ -37,7 +79,7 @@ case class FlexGatewayDocumentParser(root: Root)(implicit ctx: FlexGWConfigConte
     val address = traverse(spec).errorFor(listener).fetch("address").stringOr("http://0.0.0.0")
     val parts = address.split("://")
     if (address.contains("://")) {
-      val protocol  = parts.head
+      val protocol = parts.head
       listener.withProtocol(protocol)
     }
     if (parts.last.contains(":")) {

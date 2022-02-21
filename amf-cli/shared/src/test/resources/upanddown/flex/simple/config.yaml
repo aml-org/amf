@@ -17,3 +17,9 @@ spec:
       config:
         username: foo
         password: bar
+      rules:
+        - host: test.com
+          headers:
+            - x-forwarded-by
+        - methods: post
+          path: /app

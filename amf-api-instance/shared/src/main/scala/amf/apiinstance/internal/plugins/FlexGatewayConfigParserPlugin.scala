@@ -1,7 +1,9 @@
 package amf.apiinstance.internal.plugins
 
 import amf.apiinstance.internal.spec.context.FlexGWConfigContext
+import amf.apiinstance.internal.spec.document
 import amf.apiinstance.internal.spec.document.FlexGatewayDocumentParser
+import amf.apiinstance.internal.spec.domain.flex
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit

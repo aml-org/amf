@@ -5,7 +5,7 @@ import amf.apiinstance.client.scala.model.domain.ProtocolListener
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.{ApiInstance, ApiContract}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.Type.{Str,Array}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 
@@ -37,6 +37,10 @@ object ProtocolListenerModel extends DomainElementModel with NameFieldSchema wit
     ApiInstance + "pipeMode",
     ModelDoc(ModelVocabularies.ApiInstance, "pipeMode", "FS mode for the pipe file"))
 
+  val Filters: Field = Field(Array(FilterChainModel),
+    ApiInstance + "filters",
+    ModelDoc(ModelVocabularies.ApiInstance, "filters", "Filter chains associated to this protocol listener"))
+
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiInstance,
     "ProtocolListener",
@@ -53,6 +57,7 @@ object ProtocolListenerModel extends DomainElementModel with NameFieldSchema wit
     NetworkPort,
     NamedNetworkPort,
     Pipe,
-    PipeMode
-  )
+    PipeMode,
+    Filters
+  ) ++ DomainElementModel.fields
 }

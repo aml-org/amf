@@ -19,15 +19,25 @@ object ProxyModel extends DomainElementModel with NameFieldSchema with Descripti
     )
 
 
+  val UpstreamServices =
+    Field(Array(UpstreamServiceModel),
+      ApiInstance + "upstreamServices",
+      ModelDoc(ModelVocabularies.ApiInstance, "upstreamService", "Set of services where the proxy can send filtered and managed traffic")
+    )
+
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiInstance,
     "Proxy",
     "API instance acting as a proxy for an API"
   )
 
+
   override val `type`: List[ValueType] = ApiInstance + "Proxy" :: DomainElementModel.`type`
 
   override def fields: List[Field] = List(
-    ProtocolListeners
-  )
+    Name,
+    Description,
+    ProtocolListeners,
+    UpstreamServices
+  ) ++ DomainElementModel.fields
 }
