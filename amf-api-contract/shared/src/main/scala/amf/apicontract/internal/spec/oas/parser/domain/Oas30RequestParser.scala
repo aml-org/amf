@@ -11,7 +11,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.internal.annotations.ExternalReferenceUrl
+import amf.shapes.internal.annotations.{BaseVirtualNode, ExternalReferenceUrl}
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YMapEntry}
 
@@ -31,7 +31,8 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
       case Left(fullRef) =>
         parseRef(fullRef)
       case Right(_) =>
-        val request = adopt(Request(Annotations.virtual()))
+        val annotations = Annotations.virtual() += BaseVirtualNode(definitionEntry)
+        val request     = adopt(Request(annotations))
 
         map.key("description", RequestModel.Description in request)
         map.key("required", RequestModel.Required in request)
@@ -59,7 +60,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
     val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "requestBodies")
     ctx.declarations
       .findRequestBody(name, SearchScope.Named)
-      .map(req => adopt(req.link(AmfScalar(name), Annotations.virtual(), Annotations.synthesized())))
+      .map(req => adopt(req.link(AmfScalar(name), Annotations(map), Annotations.synthesized())))
       .getOrElse {
         ctx.navigateToRemoteYNode(fullRef) match {
           case Some(navigation) =>
