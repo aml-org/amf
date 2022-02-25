@@ -1,7 +1,7 @@
 package amf.shapes.internal.annotations
 
 import amf.core.client.scala.model.domain._
-import org.yaml.model.YMapEntry
+import org.yaml.model.{YMapEntry, YPart}
 
 case class InlineDefinition() extends Annotation
 
@@ -67,3 +67,5 @@ case class CollectionFormatFromItems() extends Annotation
 case class ForceEntry() extends Annotation
 
 case class BooleanSchema() extends Annotation
+
+case class BaseVirtualNode(ast: YPart) extends Annotation
