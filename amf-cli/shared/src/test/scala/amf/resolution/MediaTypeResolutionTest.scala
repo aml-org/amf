@@ -70,5 +70,14 @@ class MediaTypeResolutionTest extends ResolutionTest {
           transformWith = Some(Oas20))
   }
 
+  multiGoldenTest("Security Schemes use global mediaType if not overridden ", "security-scheme-use-global-mediatype.raml.%s") { config =>
+    cycle("security-scheme-use-global-mediatype.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = AmfJsonHint,
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10))
+  }
+
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }
