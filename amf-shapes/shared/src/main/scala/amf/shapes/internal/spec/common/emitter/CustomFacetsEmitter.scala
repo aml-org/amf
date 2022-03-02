@@ -1,6 +1,5 @@
 package amf.shapes.internal.spec.common.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.PropertyShape
 import amf.core.internal.parser.domain.FieldEntry
@@ -9,6 +8,7 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.internal.spec.oas.emitter.OasPropertyShapeEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 
 case class OasCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit

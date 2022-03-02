@@ -1,6 +1,6 @@
 package amf.apicontract.internal.spec.common.emitter
 
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.templates.AbstractDeclaration
 import amf.core.internal.datanode.DataNodeEmitter

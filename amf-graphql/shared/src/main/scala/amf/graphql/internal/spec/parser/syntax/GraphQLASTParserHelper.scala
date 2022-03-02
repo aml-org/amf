@@ -6,8 +6,8 @@ import amf.core.internal.parser.domain.SearchScope
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain._
-import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
-import org.mulesoft.lexer.SourceLocation
+import org.mulesoft.antlrast.ast.{ASTNode, Node, Terminal}
+import org.mulesoft.common.client.lexical.ASTElement
 
 case class NullableShape(isNullable: Boolean, shape: AnyShape)
 
@@ -26,8 +26,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
       case _ => NullableShape(isNullable = false, shape)
     }
   }
-
-  def findDescription(n: ASTElement): Option[Terminal] = {
+  def findDescription(n: ASTNode): Option[Terminal] = {
     collect(n, Seq(DESCRIPTION, STRING_VALUE)).headOption.flatMap {
       case n: Node => n.children.collectFirst({ case t: Terminal => t })
       case _       => None
@@ -151,7 +150,7 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
     maybeNullable(t, parseFn)
   }
 
-  def findOrLinkType(typeName: String, t: ASTElement)(implicit ctx: GraphQLWebApiContext): AnyShape = {
+  def findOrLinkType(typeName: String, t: ASTNode)(implicit ctx: GraphQLWebApiContext): AnyShape = {
     ctx.declarations.findType(typeName, SearchScope.All) match {
       case Some(s: ScalarShape) =>
         s.link(typeName, toAnnotations(t)).asInstanceOf[ScalarShape].withName(typeName, toAnnotations(t))
@@ -188,18 +187,15 @@ trait GraphQLASTParserHelper extends AntlrASTParserHelper {
 
   def cleanDocumentation(doc: String): String = doc.replaceAll("\"\"\"", "").trim
 
-  def elementSourceLocation(t: ASTElement): SourceLocation =
-    new SourceLocation(t.file, 0, 0, t.start.line, t.start.column, t.end.line, t.end.column)
-
   def trimQuotes(value: String): String = {
     if (value.startsWith("\"") && value.endsWith("\"")) value.substring(1, value.length - 1)
     else value
   }
 
-  def unresolvedShape(typeName: String, element: ASTElement)(implicit ctx: GraphQLWebApiContext): UnresolvedShape = {
+  def unresolvedShape(typeName: String, element: ASTNode)(implicit ctx: GraphQLWebApiContext): UnresolvedShape = {
     val shape = UnresolvedShape(typeName, toAnnotations(element))
     shape.withContext(ctx)
-    shape.unresolved(typeName, Nil, Some(elementSourceLocation(element)))
+    shape.unresolved(typeName, Nil, Some(element.location))
     shape
   }
 }

@@ -4,7 +4,6 @@ import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.{Api, AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.internal.metamodel.domain.OperationModel
-import amf.core.client.common.position.{Position, Range}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -16,6 +15,7 @@ import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, S
 import amf.shapes.internal.annotations.BaseVirtualNode
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
+import org.mulesoft.common.client.lexical.{Position, PositionRange}
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -357,7 +357,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     modelAssertion(api, transform = false) { bu =>
       val declaredXmlSchema = bu.asInstanceOf[Document].declares.head
       declaredXmlSchema.annotations.location().isDefined shouldBe true
-      declaredXmlSchema.annotations.lexical() shouldEqual Range(Position(6, 2), Position(9, 0))
+      declaredXmlSchema.annotations.lexical() shouldEqual PositionRange((6, 2), (9, 0))
     }
   }
 
@@ -367,7 +367,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val components           = new BaseUnitComponents
       val xmlSchemaAnnotations = components.getFirstRequestPayload(bu).schema.asInstanceOf[SchemaShape].annotations
       xmlSchemaAnnotations.location().isDefined shouldBe true
-      xmlSchemaAnnotations.lexical() shouldEqual Range(Position(8, 6), Position(10, 49))
+      xmlSchemaAnnotations.lexical() shouldEqual PositionRange((8, 6), (10, 49))
     }
   }
 

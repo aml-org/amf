@@ -1,7 +1,5 @@
 package amf.shapes.internal.spec.common.emitter
 
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{RecursiveShape, Shape}
 import amf.core.internal.remote.Spec
@@ -12,6 +10,8 @@ import amf.core.internal.validation.RenderSideValidations.RenderValidation
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.oas.emitter
 import amf.shapes.internal.spec.raml.emitter.{RamlNamedTypeEmitter, RamlRecursiveShapeTypeEmitter}
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.EntryBuilder
 
 case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(implicit

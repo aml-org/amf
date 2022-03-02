@@ -17,7 +17,7 @@ import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
 import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
 import amf.shapes.internal.spec.raml.parser.{DefaultType, RamlTypeParser, TypeInfo}
-import org.mulesoft.lexer.SourceLocation
+import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model._
 
 import scala.collection.mutable

@@ -13,7 +13,7 @@ import amf.apicontract.internal.spec.spec.OasDefinitions.{
   appendParameterDefinitionsPrefix,
   appendResponsesDefinitionsPrefix
 }
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.BaseEmitters.pos
 import amf.shapes.internal.spec.common.emitter.ShapeReferenceEmitter

@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.raml.emitter.domain
 
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.render.BaseEmitters.{pos, traverse}

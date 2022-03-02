@@ -26,7 +26,7 @@ import amf.apicontract.internal.spec.raml.emitter.document.{
   RamlRootLevelEmitters
 }
 import amf.apicontract.internal.spec.raml.emitter.domain._
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.client.scala.model.domain.extensions.{

@@ -1,12 +1,12 @@
 package amf.compiler
 
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Annotation
 import amf.core.client.scala.traversal.iterator.AmfElementStrategy
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Raml10YamlHint
+import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Assertion
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -21,16 +21,16 @@ class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with 
 
   behavior of "RAML type expression annotations"
 
-  private val aArray       = LexicalInformation(Range((7, 10), (7, 15)))
-  private val aUnionA      = LexicalInformation(Range((8, 10), (8, 16)))
-  private val aUnionB      = LexicalInformation(Range((8, 19), (8, 21)))
-  private val aUnion2A     = LexicalInformation(Range((9, 11), (9, 17)))
-  private val aUnion2B     = LexicalInformation(Range((9, 26), (9, 28)))
-  private val tripleUnionA = LexicalInformation(Range((10, 16), (10, 21)))
-  private val tripleUnionB = LexicalInformation(Range((10, 24), (10, 29)))
-  private val tripleUnionC = LexicalInformation(Range((10, 32), (10, 34)))
-  private val unionArrayA  = LexicalInformation(Range((11, 15), (11, 20)))
-  private val unionArrayB  = LexicalInformation(Range((11, 23), (11, 28)))
+  private val aArray       = LexicalInformation(PositionRange((7, 10), (7, 15)))
+  private val aUnionA      = LexicalInformation(PositionRange((8, 10), (8, 16)))
+  private val aUnionB      = LexicalInformation(PositionRange((8, 19), (8, 21)))
+  private val aUnion2A     = LexicalInformation(PositionRange((9, 11), (9, 17)))
+  private val aUnion2B     = LexicalInformation(PositionRange((9, 26), (9, 28)))
+  private val tripleUnionA = LexicalInformation(PositionRange((10, 16), (10, 21)))
+  private val tripleUnionB = LexicalInformation(PositionRange((10, 24), (10, 29)))
+  private val tripleUnionC = LexicalInformation(PositionRange((10, 32), (10, 34)))
+  private val unionArrayA  = LexicalInformation(PositionRange((11, 15), (11, 20)))
+  private val unionArrayB  = LexicalInformation(PositionRange((11, 23), (11, 28)))
 
   private val fBu: Future[BaseUnit] = build(s"$rootPath/many-expressions-01.raml", Raml10YamlHint)
 

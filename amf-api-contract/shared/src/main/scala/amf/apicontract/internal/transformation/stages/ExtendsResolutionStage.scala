@@ -20,7 +20,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DataNode, DomainElement, ElementTree}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.client.scala.transform.TransformationStep
-import amf.core.internal.annotations.{ErrorDeclaration, SourceAST}
+import amf.core.internal.annotations.{ErrorDeclaration, SourceAST, SourceYPart}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.{ParseConfig, YNodeLikeOps}
 import amf.core.internal.plugins.render.RenderConfiguration
@@ -98,15 +98,13 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
           result
 
         case _ =>
-          apiContext.eh.violation(
-            TransformationValidation,
-            r.id,
-            None,
-            s"Cannot find target for parametrized resource type ${r.id}",
-            r.position(),
-            r.location()
-          )
-          ErrorEndPoint(r.id, r.annotations.find(classOf[SourceAST]).map(_.ast).getOrElse(YNode.Null))
+          apiContext.eh.violation(TransformationValidation,
+                                  r.id,
+                                  None,
+                                  s"Cannot find target for parametrized resource type ${r.id}",
+                                  r.position(),
+                                  r.location())
+          ErrorEndPoint(r.id, r.annotations.find(classOf[SourceYPart]).map(_.ast).getOrElse(YNode.Null))
       }
     }
 
@@ -413,7 +411,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
       def build(): ElementTree = {
         val node: YNode =
-          element.annotations.find(classOf[SourceAST]).map(_.ast).collectFirst({ case e: YMapEntry => e }) match {
+          element.annotations.find(classOf[SourceYPart]).map(_.ast).collectFirst({ case e: YMapEntry => e }) match {
             case Some(entry) => entry.value
             case _           => astFromEmition
           }

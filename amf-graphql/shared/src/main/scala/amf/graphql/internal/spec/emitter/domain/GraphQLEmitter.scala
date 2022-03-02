@@ -1,6 +1,5 @@
 package amf.graphql.internal.spec.emitter.domain
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.plugins.syntax.StringDocBuilder
@@ -8,6 +7,7 @@ import amf.graphql.internal.spec.parser.syntax.NullableShape
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.plugins.parse.GraphQLParsePlugin._
 import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, ScalarShape, UnionShape}
+import org.mulesoft.common.client.lexical.Position
 
 trait GraphQLEmitter {
 

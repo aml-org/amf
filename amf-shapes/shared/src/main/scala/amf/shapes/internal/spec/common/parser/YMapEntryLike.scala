@@ -1,7 +1,7 @@
 package amf.shapes.internal.spec.common.parser
 
 import amf.core.internal.parser.domain.Annotations
-import org.mulesoft.lexer.{Position, SourceLocation}
+import org.mulesoft.common.client.lexical.{Position, SourceLocation}
 import org.yaml.model._
 
 object YMapEntryLike {

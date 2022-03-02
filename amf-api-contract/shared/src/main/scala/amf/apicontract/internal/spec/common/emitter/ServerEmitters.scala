@@ -8,7 +8,7 @@ import amf.apicontract.internal.spec.oas.emitter.context.{Oas3SpecEmitterFactory
 import amf.apicontract.internal.spec.oas.parser.domain.BaseUriSplitter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.spec.toRaml
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.internal.annotations.{BasePathLexicalInformation, HostLexicalInformation, VirtualElement}

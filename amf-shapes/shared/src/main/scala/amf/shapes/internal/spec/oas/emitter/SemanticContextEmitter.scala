@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.oas.emitter
 
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.render.BaseEmitters.{EntryPartEmitter, ScalarEmitter, pos}
 import amf.core.internal.render.SpecOrdering
@@ -52,12 +52,10 @@ case class SemanticContextEmitter(context: SemanticContext, ordering: SpecOrderi
 
   def emitPrefixes(): List[EntryEmitter] = {
     context.curies.map { prefix =>
-      EntryPartEmitter(
-        prefix.alias.value(),
-        ScalarEmitter(AmfScalar(prefix.iri.value())),
-        YType.Str,
-        pos(prefix.annotations)
-      )
+      EntryPartEmitter(prefix.alias.value(),
+                       ScalarEmitter(AmfScalar(prefix.iri.value())),
+                       YType.Str,
+                       pos(prefix.annotations))
     } toList
   }
 
@@ -71,9 +69,9 @@ case class SemanticContextEmitter(context: SemanticContext, ordering: SpecOrderi
 
 }
 
-private case class SemanticContextBasePartEmitter(base: BaseIri, ordering: SpecOrdering)(implicit
-    spec: ShapeEmitterContext
-) extends EntryEmitter {
+private case class SemanticContextBasePartEmitter(base: BaseIri, ordering: SpecOrdering)(
+    implicit spec: ShapeEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     base.nulled.option().foreach { nulled =>
@@ -92,9 +90,9 @@ private case class SemanticContextBasePartEmitter(base: BaseIri, ordering: SpecO
 
 }
 
-private case class SemanticContextVocabPartEmitter(vocab: DefaultVocabulary, ordering: SpecOrdering)(implicit
-    spec: ShapeEmitterContext
-) extends EntryEmitter {
+private case class SemanticContextVocabPartEmitter(vocab: DefaultVocabulary, ordering: SpecOrdering)(
+    implicit spec: ShapeEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     vocab.iri.option().foreach { iri =>
@@ -108,9 +106,9 @@ private case class SemanticContextVocabPartEmitter(vocab: DefaultVocabulary, ord
 
 }
 
-private case class SemanticContextTypeMappingPartEmitter(types: Seq[String], ordering: SpecOrdering)(implicit
-    spec: ShapeEmitterContext
-) extends EntryEmitter {
+private case class SemanticContextTypeMappingPartEmitter(types: Seq[String], ordering: SpecOrdering)(
+    implicit spec: ShapeEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     if (types.size == 1) {
@@ -133,13 +131,12 @@ private case class SemanticContextTypeMappingPartEmitter(types: Seq[String], ord
 
 }
 
-private case class SemanticContextMappingPartEmitter(mapping: ContextMapping, ordering: SpecOrdering)(implicit
-    spec: ShapeEmitterContext
-) extends EntryEmitter {
+private case class SemanticContextMappingPartEmitter(mapping: ContextMapping, ordering: SpecOrdering)(
+    implicit spec: ShapeEmitterContext)
+    extends EntryEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     b.entry(
-      mapping.alias.value(),
-      { f =>
+      mapping.alias.value(), { f =>
         if (mapping.coercion.nonEmpty && mapping.iri.nonEmpty) {
           f.obj { obj =>
             obj.entry("@id", YNode(mapping.iri.value()))

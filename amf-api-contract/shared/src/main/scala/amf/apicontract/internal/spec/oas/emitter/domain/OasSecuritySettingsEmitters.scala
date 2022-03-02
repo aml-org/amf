@@ -4,7 +4,7 @@ import amf.apicontract.client.scala.model.domain.security._
 import amf.apicontract.internal.metamodel.domain.security._
 import amf.apicontract.internal.spec.common.emitter.{AgnosticShapeEmitterContextAdapter, SpecEmitterContext}
 import amf.apicontract.internal.spec.raml.emitter.domain.{RamlApiKeySettingsEmitters, RamlOAuth1SettingsEmitters}
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.domain.DataNode
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.internal.datanode.DataNodeEmitter

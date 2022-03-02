@@ -20,13 +20,12 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   UnusedBaseUriParameter
 }
 import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.NestedEndpoint
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.{DefaultNode, LexicalInformation, VirtualElement}
+import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.parser.{CompilerConfiguration, YMapOps}
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.internal.spec.RamlWebApiContextType
@@ -136,7 +135,7 @@ abstract class RamlEndpointParser(
               endpoint,
               None,
               s"Nested endpoint in resourceType: '$nestedEndpointName'",
-              Some(LexicalInformation(Range(entry.key.range))),
+              Some(LexicalInformation(entry.key.range)),
               Some(map.sourceName)
             )
           }
@@ -271,12 +270,10 @@ abstract class RamlEndpointParser(
     map.key(
       "type",
       entry => {
-        endpoint.annotations += EndPointResourceTypeEntry(Range(entry.range))
-        val declaration = ParametrizedDeclarationParser(
-          entry.value,
-          (name: String) => ParametrizedResourceType().withName(name),
-          ctx.declarations.findResourceTypeOrError(entry.value)
-        )
+        endpoint.annotations += EndPointResourceTypeEntry(entry.range)
+        val declaration = ParametrizedDeclarationParser(entry.value,
+                                                        (name: String) => ParametrizedResourceType().withName(name),
+                                                        ctx.declarations.findResourceTypeOrError(entry.value))
           .parse()
         endpoint.setWithoutId(
           EndPointModel.Extends,
@@ -292,7 +289,7 @@ abstract class RamlEndpointParser(
     map.key(
       "is",
       (e: YMapEntry) => {
-        endpoint.annotations += EndPointTraitEntry(Range(e.range))
+        endpoint.annotations += EndPointTraitEntry(e.range)
         (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
           .parse(endpoint.withTrait)).allowingSingleValue.optional(e)
       }

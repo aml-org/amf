@@ -1,6 +1,7 @@
 package amf.graphql.internal.spec.document
 
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
+import amf.antlr.client.scala.parse.syntax.SourceASTElement
 import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
@@ -8,6 +9,7 @@ import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.Spec
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
@@ -15,7 +17,7 @@ import amf.graphql.internal.spec.domain._
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnionShape}
-import org.mulesoft.antlrast.ast.{ASTElement, Node, Terminal}
+import org.mulesoft.antlrast.ast.{AST, ASTNode, Node, Terminal}
 
 case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
 
@@ -32,7 +34,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
 
   def parseDocument(): Document = {
     val ast = root.parsed.asInstanceOf[AntlrParsedDocument].ast
-    parseWebAPI()
+    parseWebAPI(ast)
     ast.current() match {
       case node: Node =>
         processTypes(node)
@@ -46,10 +48,11 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
           ctx.declarations.annotations.values.toList
       )
       .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
+
   }
 
-  private def parseWebAPI(): Unit = {
-    val webApi = WebApi()
+  private def parseWebAPI(ast: AST): Unit = {
+    val webApi = WebApi(Annotations(SourceASTElement(ast.current())))
     webApi.withName(root.location.split("/").last)
     doc.withLocation(root.location).withEncodes(webApi)
   }
@@ -159,7 +162,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     }
   }
 
-  private def parseSchemaNode(schemaNode: ASTElement): Unit = {
+  private def parseSchemaNode(schemaNode: ASTNode): Unit = {
     GraphQLDirectiveApplicationParser(schemaNode.asInstanceOf[Node], webapi).parse()
     findDescription(schemaNode) match {
       case Some(terminal: Terminal) => // the description of the schema is set at the API level

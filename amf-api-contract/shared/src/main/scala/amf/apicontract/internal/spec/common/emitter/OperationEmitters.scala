@@ -9,7 +9,7 @@ import amf.apicontract.internal.spec.raml.emitter.RamlShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.raml.emitter.context.RamlSpecEmitterContext
 import amf.apicontract.internal.spec.raml.emitter.domain.{ExtendsEmitter, RamlResponsesEmitter}
 import amf.apicontract.internal.spec.spec.toOas
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.annotations.SynthesizedField

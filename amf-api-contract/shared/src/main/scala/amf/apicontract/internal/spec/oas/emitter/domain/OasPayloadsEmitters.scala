@@ -10,8 +10,8 @@ import amf.apicontract.internal.spec.oas.emitter.context.{
   OasSpecEmitterContext
 }
 import amf.apicontract.internal.spec.oas.parser.domain.OasEncodingsEmitter
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.render.BaseEmitters._

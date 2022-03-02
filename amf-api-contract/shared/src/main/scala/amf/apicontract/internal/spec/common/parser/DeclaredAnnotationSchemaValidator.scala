@@ -9,7 +9,7 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
-import org.mulesoft.lexer.SourceLocation
+import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model.YNode
 
 case class DeclaredAnnotationSchemaValidator(override val annotationIndex: Map[String, CustomDomainProperty])

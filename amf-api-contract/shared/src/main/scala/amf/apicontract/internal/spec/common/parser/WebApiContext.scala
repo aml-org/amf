@@ -26,8 +26,8 @@ import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
-import amf.shapes.internal.spec.jsonschema.ref.{AstIndex, AstIndexBuilder, JsonSchemaInference}
-import org.mulesoft.lexer.SourceLocation
+import amf.shapes.internal.spec.jsonschema.ref.{AstFinder, AstIndex, AstIndexBuilder, JsonSchemaInference}
+import org.mulesoft.common.client.lexical.SourceLocation
 import org.yaml.model._
 import scala.collection.mutable
 

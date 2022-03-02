@@ -9,7 +9,6 @@ import amf.apicontract.internal.spec.oas.parser.domain.{OasLikeServerParser, Oas
 import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
 import amf.apicontract.internal.spec.spec.{toOas, toRaml}
 import amf.apicontract.internal.validation.definitions.ParserSideValidations._
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.internal.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
@@ -41,11 +40,9 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         checkForUndefinedVersion(entry, variables)
         parseBaseUriParameters(server, TemplateUri.variables(value))
 
-        api.setWithoutId(
-          WebApiModel.Servers,
-          AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
-          Annotations(entry)
-        )
+        api.setWithoutId(WebApiModel.Servers,
+                         AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
+                         Annotations(entry))
       case None =>
         map
           .key("baseUriParameters")
@@ -60,11 +57,9 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
             val server = Server()
             parseBaseUriParameters(server, Nil)
 
-            api.setWithoutId(
-              WebApiModel.Servers,
-              AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
-              Annotations(entry)
-            )
+            api.setWithoutId(WebApiModel.Servers,
+                             AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
+                             Annotations(entry))
           }
     }
 
@@ -181,7 +176,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
       val annotations = Annotations.synthesized()
 
       map.key("basePath").foreach { entry =>
-        annotations += BasePathLexicalInformation(Range(entry.range))
+        annotations += BasePathLexicalInformation(entry.range)
         basePath = entry.value.as[String]
 
         if (!basePath.startsWith("/")) {
@@ -190,7 +185,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         }
       }
       map.key("host").foreach { entry =>
-        annotations += HostLexicalInformation(Range(entry.range))
+        annotations += HostLexicalInformation(entry.range)
         host = entry.value.as[String]
       }
 

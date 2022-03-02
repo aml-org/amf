@@ -1,6 +1,6 @@
 package amf.grpc.internal.spec.emitter.domain
 
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
@@ -33,8 +33,9 @@ case class GrpcMessageEmitter(shape: NodeShape, builder: StringDocBuilder, ctx: 
   def messageNamePos: Position = pos(shape.displayName.annotations())
 
   def emitOneOf(builder: StringDocBuilder): Unit = {
-    shape.and.foreach { case union: UnionShape =>
-      GrpcOneOfEmitter(union, builder, ctx).emit()
+    shape.and.foreach {
+      case union: UnionShape =>
+        GrpcOneOfEmitter(union, builder, ctx).emit()
     }
   }
 

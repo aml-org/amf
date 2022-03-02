@@ -1,7 +1,5 @@
 package amf.shapes.internal.spec.oas.emitter
 
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.Shape
 import amf.core.internal.metamodel.Field
@@ -9,6 +7,8 @@ import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.internal.spec.common.emitter.OasLikeShapeEmitterContext
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.PartBuilder
 
 case class OasTypePartEmitter(

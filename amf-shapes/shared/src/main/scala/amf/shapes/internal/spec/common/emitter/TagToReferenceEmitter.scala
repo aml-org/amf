@@ -1,12 +1,12 @@
 package amf.shapes.internal.spec.common.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.annotations.DeclaredElement
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, pos}
 import amf.core.internal.render.emitters.PartEmitter
 import amf.shapes.internal.spec.oas.OasShapeDefinitions.appendSchemasPrefix
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YNode
 

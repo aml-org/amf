@@ -1,7 +1,7 @@
 package amf.apicontract.internal.spec.common.emitter
 
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter

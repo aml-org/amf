@@ -3,7 +3,7 @@ package amf.apicontract.internal.spec.async.emitters.domain
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Parameter}
 import amf.apicontract.internal.metamodel.domain.EndPointModel
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.render.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering

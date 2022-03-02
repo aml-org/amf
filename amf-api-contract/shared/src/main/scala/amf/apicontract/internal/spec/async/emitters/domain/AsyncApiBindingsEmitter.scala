@@ -10,8 +10,8 @@ import amf.apicontract.internal.spec.async.emitters.bindings.{
 import amf.apicontract.internal.spec.common.emitter.AgnosticShapeEmitterContextAdapter
 import amf.apicontract.internal.spec.oas.emitter.context.OasLikeSpecEmitterContext
 import amf.apicontract.internal.spec.oas.emitter.domain.OasTagToReferenceEmitter
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.client.scala.model.domain.{AmfElement, DomainElement, Linkable, NamedDomainElement}
 import amf.core.internal.render.BaseEmitters.{EmptyMapEmitter, pos, traverse}

@@ -1,16 +1,15 @@
 package amf.shapes.internal.spec.jsonschema.emitter
 
-import amf.core.client.common.position.Position
 import amf.core.client.scala.model.domain.{AmfScalar, Shape}
 import amf.core.internal.render.BaseEmitters.{ScalarEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.model.domain.SchemaDependencies
 import amf.shapes.client.scala.model.domain.{Dependencies, NodeShape, PropertyDependencies, SchemaDependencies}
 import amf.shapes.internal.domain.metamodel.NodeShapeModel.Dependencies
 import amf.shapes.internal.domain.metamodel.{NodeShapeModel, PropertyDependenciesModel, SchemaDependenciesModel}
 import amf.shapes.internal.spec.oas.emitter.OasTypeEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 trait TypeEmitterFactory {

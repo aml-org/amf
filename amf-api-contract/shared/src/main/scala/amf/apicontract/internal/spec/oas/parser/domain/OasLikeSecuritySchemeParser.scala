@@ -11,7 +11,6 @@ import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
   CrossSecurityWarningSpecification,
   MissingSecuritySchemeErrorSpecification
 }
-import amf.core.client.common.position.Range
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.YMapOps
@@ -93,7 +92,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
             scheme,
             Some(SecuritySchemeModel.Type.value.iri()),
             "Security Scheme must have a mandatory value from 'oauth2', 'basic' or 'apiKey'",
-            Some(LexicalInformation(Range(map.range))),
+            Some(LexicalInformation(map.range)),
             Some(ctx.rootContextDocument)
           )
         }

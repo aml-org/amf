@@ -1,6 +1,6 @@
 package amf.error
 
-import amf.core.client.common.position.Range
+import org.mulesoft.common.client.lexical.PositionRange
 
 class OasParserErrorTest extends ParserErrorTest {
 
@@ -10,7 +10,7 @@ class OasParserErrorTest extends ParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("Unexpected $ref with $ref: ")
-        violation.position.map(_.range) should be(Some(Range((14, 9), (14, 9))))
+        violation.position.map(_.range) should be(Some(PositionRange((14, 9), (14, 9))))
       }
     )
   }
@@ -21,12 +21,12 @@ class OasParserErrorTest extends ParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("Invalid parameter binding 'bo'")
-        violation.position.map(_.range) should be(Some(Range((13, 18), (13, 22))))
+        violation.position.map(_.range) should be(Some(PositionRange((13, 18), (13, 22))))
       },
       refViolation => {
         refViolation.severityLevel should be("Violation")
         refViolation.message should be("Invalid parameter binding 'qu'")
-        refViolation.position.map(_.range) should be(Some(Range((25, 18), (25, 22))))
+        refViolation.position.map(_.range) should be(Some(PositionRange((25, 18), (25, 22))))
       }
     )
   }
@@ -37,7 +37,7 @@ class OasParserErrorTest extends ParserErrorTest {
       violation => {
         violation.severityLevel should be("Violation")
         violation.message should be("Cannot declare more than one 'body' parameter for a request or a resource")
-        violation.position.map(_.range) should be(Some(Range((22, 13), (33, 11))))
+        violation.position.map(_.range) should be(Some(PositionRange((22, 13), (33, 11))))
       }
     )
   }
@@ -47,8 +47,9 @@ class OasParserErrorTest extends ParserErrorTest {
       "/warning/ignored-pattern-property.json",
       warning => {
         warning.severityLevel should be("Warning")
-        warning.message should be("Pattern property may be ignored if format 'byte' already defines a standard pattern")
-        warning.position.map(_.range) should be(Some(Range((12, 6), (12, 30))))
+        warning.message should be(
+          "Pattern property may be ignored if format 'byte' already defines a standard pattern")
+        warning.position.map(_.range) should be(Some(PositionRange((12, 6), (12, 30))))
       }
     )
   }

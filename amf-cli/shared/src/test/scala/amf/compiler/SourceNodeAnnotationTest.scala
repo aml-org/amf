@@ -1,17 +1,17 @@
 package amf.compiler
 
+import amf.antlr.client.scala.parse.syntax.SourceASTElement
 import amf.apicontract.client.scala.AMFConfiguration
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.client.scala.model.domain.{Parameter, Response}
-import amf.core.client.common.position.{Range => PositionRange}
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject, Shape}
-import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode}
+import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceNode, SourceYPart}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.remote.{Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
-import org.mulesoft.lexer.InputRange
+import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -211,8 +211,10 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
       nodeRange: Option[PositionRange] = None
   ): Assertion = {
     annotations.foreach {
-      case ast: SourceAST =>
+      case ast: SourceYPart =>
         assertRange(id, ast.ast.range, sourceRange)
+      case ast: SourceASTElement =>
+        assertRange(id, ast.ast.location.range, sourceRange)
       case lex: LexicalInformation =>
         assertRange(id, lex.range, sourceRange)
       case node: SourceNode =>
@@ -227,10 +229,6 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
     annotations.contains(classOf[LexicalInformation]) &&
     annotations.contains(classOf[SourceAST]) &&
     annotations.contains(classOf[SourceNode])
-  }
-
-  private def assertRange(id: String, actual: InputRange, expected: PositionRange): Assertion = {
-    assertRange(id, PositionRange((actual.lineFrom, actual.columnFrom), (actual.lineTo, actual.columnTo)), expected)
   }
 
   private def assertRange(id: String, actual: PositionRange, expected: PositionRange): Assertion = {

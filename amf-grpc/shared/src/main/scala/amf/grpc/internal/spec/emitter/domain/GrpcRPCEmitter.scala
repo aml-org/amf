@@ -1,7 +1,7 @@
 package amf.grpc.internal.spec.emitter.domain
 
 import amf.apicontract.client.scala.model.domain.Operation
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.plugins.syntax.StringDocBuilder
 import amf.core.internal.render.BaseEmitters.pos
 import amf.grpc.internal.spec.emitter.context.GrpcEmitterContext
@@ -28,18 +28,21 @@ case class GrpcRPCEmitter(operation: Operation, builder: StringDocBuilder, ctx: 
 
   def operationPos: Position = pos(operation.annotations)
 
-  def name: String = operation.operationId
-    .option()
-    .orElse(operation.name.option())
-    .getOrElse(s"operation${operation.method.value()}")
+  def name: String =
+    operation.operationId
+      .option()
+      .orElse(operation.name.option())
+      .getOrElse(s"operation${operation.method.value()}")
 
-  def request: String = operation.request.payloads.headOption.map { schema =>
-    fieldRange(schema.schema)
-  } getOrElse ("UnknownMessage")
+  def request: String =
+    operation.request.payloads.headOption.map { schema =>
+      fieldRange(schema.schema)
+    } getOrElse ("UnknownMessage")
 
-  def response: String = operation.responses.head.payloads.headOption.map { schema =>
-    fieldRange(schema.schema)
-  } getOrElse ("UnknownMessage")
+  def response: String =
+    operation.responses.head.payloads.headOption.map { schema =>
+      fieldRange(schema.schema)
+    } getOrElse ("UnknownMessage")
 
   def streamRequest: String = operation.method.option().getOrElse("") match {
     case "publish" => "stream "

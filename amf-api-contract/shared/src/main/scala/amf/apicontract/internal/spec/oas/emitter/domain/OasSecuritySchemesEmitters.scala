@@ -7,7 +7,7 @@ import amf.apicontract.internal.spec.oas.emitter.context.OasSpecEmitterContext
 import amf.apicontract.internal.spec.oas.{OasLikeSecuritySchemeTypeMappings, OasSecuritySchemeType, SecuritySchemeType}
 import amf.apicontract.internal.spec.raml.emitter.domain.Raml10DescribedByEmitter
 import amf.apicontract.internal.spec.spec.toRaml
-import amf.core.client.common.position.Position
+import org.mulesoft.common.client.lexical.Position
 import amf.core.internal.parser.domain.Fields
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering

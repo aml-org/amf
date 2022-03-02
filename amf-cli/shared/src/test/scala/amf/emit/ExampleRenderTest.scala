@@ -7,7 +7,7 @@ import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
 import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.{BaseUnit, ExternalFragment}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.annotations.SourceAST
+import amf.core.internal.annotations.{SourceAST, SourceYPart}
 import amf.core.internal.parser.LimitedParseConfig
 import amf.core.internal.remote.Mimes._
 import amf.io.FileAssertionTest
@@ -93,7 +93,7 @@ class ExampleRenderTest extends AsyncFunSuite with FileAssertionTest {
 
   private def findExample(unit: BaseUnit, removeRaw: Boolean): Future[Example] = unit match {
     case _: ExternalFragment =>
-      val sourceAst: Option[SourceAST] = unit.annotations.find(_.isInstanceOf[SourceAST])
+      val sourceAst: Option[SourceYPart] = unit.annotations.find(_.isInstanceOf[SourceYPart])
       sourceAst match {
         case Some(a) =>
           val ast = a.ast.asInstanceOf[YDocument].as[YMap]
