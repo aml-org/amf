@@ -1,15 +1,13 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
-import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
+import amf.aml.client.scala.model.domain.PropertyMapping
 import amf.aml.internal.metamodel.domain.PropertyMappingModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.{DataType, ValueField}
 import amf.core.client.scala.model.DataType._
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, ScalarNode, Shape}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, NodeShape, ScalarShape, SemanticContext}
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.SemanticOps.getPrefixes
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DataNode, ScalarNode}
+import amf.core.client.scala.model.{DataType, ValueField}
+import amf.shapes.client.scala.model.domain._
 import org.mulesoft.common.collections.FilterType
 
 case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformationContext)(
@@ -34,11 +32,12 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     propertyMapping
   }
 
-  private def transformArray(array: ArrayShape) = {
+  private def transformArray(array: ArrayShape): Unit = {
     propertyMapping.withAllowMultiple(true)
     array.items match {
       case scalar: ScalarShape => transformScalarProperty(scalar)
       case obj: NodeShape      => transformObjectProperty(obj)
+      case any: AnyShape       => transformAnyProperty(any)
     }
     Option(array.default).foreach(propertyMapping.withDefault)
   }
@@ -77,12 +76,12 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
     if (xsd.endsWith("#long")) {
       xsd.replace("#long", "#float")
     } else {
-      xsd;
+      xsd
     }
   }
 
   private def checkMandatoriness(): Unit = {
-    setWhenPresent(property.minCount, propertyMapping.withMinCount _)
+    setWhenPresent(property.minCount, propertyMapping.withMinCount)
   }
 
   private def transformEnum(shape: PropertyShape, target: PropertyMapping) = {
