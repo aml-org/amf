@@ -1,0 +1,28 @@
+{
+  "title": "Jwt-policy-validation",
+  "description": "Policy to validate JWT scopes",
+  "type": "object",
+  "properties": {
+    "scopeheader": {
+      "title": "Request Header Scope Parameter",
+      "description": "Name of the header parameter to validate.",
+      "type": "string"
+    },
+    "scopelist": {
+      "title": "Allowed scopes",
+      "description": "A list of allowed scopes.",
+      "type": "array"
+    }
+  },
+  "required": [
+    "scopeheader",
+    "scopelist"
+  ],
+  "@context": {
+    "@vocab": "anypoint://vocabulary/policy.yaml#",
+    "security": "anypoint://vocabulary/policy.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#"
+  },
+  "$id": "Jwt-policy-validation.json",
+  "$schema": "https://json-schema.org/draft/2019-09/schema"
+}
