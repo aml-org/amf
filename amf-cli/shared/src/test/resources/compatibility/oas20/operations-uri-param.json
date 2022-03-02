@@ -1,0 +1,57 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Some tittle",
+    "version": "1"
+  },
+  "paths": {
+    "/something/{someOtherThing}": {
+      "get": {
+        "operationId": "someOtherThingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "someOtherThing",
+            "in": "path",
+            "description": "someOtherThing",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "someOtherThingPUT",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "someOtherThing",
+            "in": "path",
+            "description": "someOtherThing",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

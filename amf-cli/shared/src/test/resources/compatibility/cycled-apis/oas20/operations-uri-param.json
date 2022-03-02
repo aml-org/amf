@@ -1,0 +1,59 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Some tittle",
+    "version": "1"
+  },
+  "paths": {
+    "/something/{someOtherThing}": {
+      "get": {
+        "operationId": "someOtherThingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "someOtherThing",
+            "description": "someOtherThing",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "someOtherThingPUT",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "someOtherThing",
+            "description": "someOtherThing",
+            "required": true,
+            "in": "path",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
