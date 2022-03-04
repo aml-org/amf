@@ -108,6 +108,39 @@ lazy val shapesJS =
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 
+
+//************************ new semantic json schema module *********************
+
+lazy val semanticJsonSchema = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-jsonld-schema"
+    ))
+  .in(file("./amf-jsonld-schema"))
+  .dependsOn(shapes)
+  .settings(commonSettings)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
+    libraryDependencies += "org.json"                          % "json"                   % "20211205",
+    Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-jsonld-schema-javadoc.jar"
+  )
+  .jsSettings(
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-jsonld-schema-module.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations",
+    npmDependencies += ("ajv", "6.12.6"),
+    npmPackageLoc := "amf-jsonld-schema/js"
+  )
+  .disablePlugins(SonarPlugin)
+
+lazy val semanticJsonSchemaJVM = shapes.jvm.in(file("./amf-jsonld-schema/jvm"))
+
+lazy val semanticJsonSchemaJS = shapes.js.in(file("./amf-jsonld-schema/js")).disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
+
+
+/*****************************************************************************/
+
 /** **********************************************
   * AMF-Api-contract
   * ********************************************* */

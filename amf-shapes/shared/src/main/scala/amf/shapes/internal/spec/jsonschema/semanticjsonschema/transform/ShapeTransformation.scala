@@ -2,7 +2,7 @@ package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
-import amf.shapes.client.scala.model.domain.{AnyShape, CuriePrefix, NodeShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, CuriePrefix, NodeShape}
 
 case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(implicit errorHandler: AMFErrorHandler) {
 
@@ -13,7 +13,9 @@ case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(imp
       updateContext { ctx =>
         shape match {
           case node: NodeShape if node.properties.nonEmpty => NodeShapeTransformer(node, ctx).transform()
-          case any: AnyShape                               => AnyShapeTransformer(any, ctx).transform()
+          case a: ArrayShape if a.items.isInstanceOf[NodeShape] => // hack for root array
+            NodeShapeTransformer(a.items.asInstanceOf[NodeShape], ctx).transform()
+          case any: AnyShape => AnyShapeTransformer(any, ctx).transform()
         }
       }
     }

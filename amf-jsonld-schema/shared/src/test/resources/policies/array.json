@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "@vocab": "anypoint://vocabulary/policy.yaml#",
+    "security": "anypoint://vocabulary/policy.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#",
+    "@characteristics": ["config:arrayAsObject"]
+  },
+  "$id": "message-logging.json",
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "minItems": 1,
+  "title": "Message Logging",
+  "description": "Logs custom messages between policies and flow.\nWarning: If the payload is used as part of the logging message or conditional expression while using non repeatable streams, the payload will be consumed by the policy.",
+  "type": "array",
+  "items": {
+    "properties": {
+      "itemName": {
+        "type": "string"
+      },
+      "itemData": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "description": "Mule Expression for extracting information from the message to log.\ne.g. #[attributes.headers['id']]\n",
+            "@context": {
+              "@characteristics": [
+                "config:dataweaveExpression"
+              ]
+            },
+            "type": "string",
+            "pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+          },
+          "conditional": {
+            "title": "Conditional",
+            "description": "Mule Expression to filter which messages to log.\ne.g. #[attributes.headers['id']==1]\n",
+            "@context": {
+              "@characteristics": [
+                "config:dataweaveExpression"
+              ]
+            },
+            "type": "string",
+            "pattern": "^$|^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+          },
+          "category": {
+            "title": "Category",
+            "description": "Prefix in the log sentence that usually contains package + class where the log is executed. The category will be\norg.mule.runtime.logging.policy-<policy id> plus this field value if any\n",
+            "type": "string"
+          },
+          "level": {
+            "title": "Level",
+            "description": "INFO, WARN, ERROR or DEBUG\n",
+            "default": "INFO",
+            "type": "string"
+          },
+          "firstSection": {
+            "title": "Before Calling API",
+            "default": true,
+            "type": "boolean"
+          },
+          "secondSection": {
+            "title": "After Calling API",
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "level",
+          "firstSection",
+          "secondSection"
+        ]
+      }
+    }
+  }
+}
