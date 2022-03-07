@@ -283,6 +283,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
   trait CommonScalarParsingLogic {
     def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): TypeDef = {
+      checkPatternAndFormatCombination(map, shape)
+
       typeDef match {
         case TypeDef.StrType | TypeDef.FileType =>
           map.key("pattern", ScalarShapeModel.Pattern in shape)
@@ -319,6 +321,21 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         val value = amf.core.internal.parser.domain.ScalarNode(entry.value)
         shape.setWithoutId(field, value.text(), Annotations(entry))
       })
+  }
+
+  private def checkPatternAndFormatCombination(map: YMap, shape: Shape): Unit = {
+    val pattern = map.key("pattern")
+    val format  = map.key("format")
+
+    if (pattern.isDefined && format.isDefined) {
+      val formatName = format.get.value.as[YScalar].text
+      ctx.eh.warning(
+        PossiblyIgnoredPatternWarning,
+        shape,
+        s"Pattern property may be ignored if format '$formatName' already defines a standard pattern",
+        pattern.get.location
+      )
+    }
   }
 
   case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
