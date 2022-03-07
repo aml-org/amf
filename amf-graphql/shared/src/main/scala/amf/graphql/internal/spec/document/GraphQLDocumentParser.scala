@@ -1,14 +1,22 @@
 package amf.graphql.internal.spec.document
 
 import amf.antlr.client.scala.parse.document.AntlrParsedDocument
+import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.EndPoint
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.model.document.Document
 import amf.core.internal.parser.Root
+import amf.core.internal.remote.Spec
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
-import amf.graphql.internal.spec.domain.{GraphQLInputTypeParser, GraphQLNestedEnumParser, GraphQLNestedTypeParser, GraphQLNestedUnionParser, GraphQLRootTypeParser}
+import amf.graphql.internal.spec.domain.{
+  GraphQLInputTypeParser,
+  GraphQLNestedEnumParser,
+  GraphQLNestedTypeParser,
+  GraphQLNestedUnionParser,
+  GraphQLRootTypeParser
+}
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.shapes.client.scala.model.domain.{ScalarShape, UnionShape}
@@ -21,7 +29,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   var SUBSCRIPTION_TYPE = "Subscription"
   var MUTATION_TYPE     = "Mutation"
 
-  val doc: Document  = Document()
+  val doc: Document          = Document()
   private def webapi: WebApi = doc.encodes.asInstanceOf[WebApi]
 
   def parseDocument(): Document = {
@@ -34,17 +42,19 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
 
     }
     ctx.declarations.futureDeclarations.resolve()
-    doc.withDeclares(
-      ctx.declarations.shapes.values.toList ++
-        ctx.declarations.annotations.values.toList
-    )
+    doc
+      .withDeclares(
+        ctx.declarations.shapes.values.toList ++
+          ctx.declarations.annotations.values.toList
+      )
+      .withProcessingData(APIContractProcessingData().withSourceSpec(Spec.GRAPHQL))
   }
 
   private def parseWebAPI(): Unit = {
     val webApi = WebApi()
     webApi.withName(root.location.split("/").last)
     doc.adopted(root.location).withLocation(root.location).withEncodes(webApi)
-    webApi.withId(webApi.id.replace(webApi.componentId,s"#${webApi.componentId}"))
+    webApi.withId(webApi.id.replace(webApi.componentId, s"#${webApi.componentId}"))
   }
 
   private def parseNestedType(objTypeDef: Node): Unit = {
@@ -63,7 +73,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   }
 
   private def parseUnionType(unionTypeDef: Node): Unit = {
-    val shape:UnionShape = new GraphQLNestedUnionParser(unionTypeDef).parse(doc.id)
+    val shape: UnionShape = new GraphQLNestedUnionParser(unionTypeDef).parse(doc.id)
     ctx.declarations += shape
   }
 
@@ -83,10 +93,11 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, OBJECT_TYPE_DEFINITION)) foreach {
       case objTypeDef: Node =>
         searchName(objTypeDef) match {
-          case Some(query)        if query == QUERY_TYPE               => parseTopLevelType(objTypeDef, RootTypes.Query)
-          case Some(subscription) if subscription == SUBSCRIPTION_TYPE => parseTopLevelType(objTypeDef, RootTypes.Subscription)
-          case Some(mutation)     if mutation == MUTATION_TYPE         => parseTopLevelType(objTypeDef, RootTypes.Mutation)
-          case _                                                       => parseNestedType(objTypeDef)
+          case Some(query) if query == QUERY_TYPE => parseTopLevelType(objTypeDef, RootTypes.Query)
+          case Some(subscription) if subscription == SUBSCRIPTION_TYPE =>
+            parseTopLevelType(objTypeDef, RootTypes.Subscription)
+          case Some(mutation) if mutation == MUTATION_TYPE => parseTopLevelType(objTypeDef, RootTypes.Mutation)
+          case _                                           => parseNestedType(objTypeDef)
         }
     }
 
@@ -146,10 +157,10 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
                   case "subscription" => SUBSCRIPTION_TYPE = targetType
                   case v              => astError(webapi.id, s"Unknown root-level operation type ${v}", toAnnotations(t))
                 }
-              case _               =>
+              case _ =>
                 astError(webapi.id,
-                  "Cannot find operation type for top-level schema root operation type definition",
-                  toAnnotations(n))
+                         "Cannot find operation type for top-level schema root operation type definition",
+                         toAnnotations(n))
             }
           case _ =>
             astError(webapi.id,
