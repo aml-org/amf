@@ -526,6 +526,8 @@ declare module 'amf-client-js' {
 
 
   }
+  export class UnitCacheHitEvent  {
+  }
   export interface TransformationStep  {
     transform(model: BaseUnit, errorHandler: ClientErrorHandler, configuration: AMFGraphConfiguration): BaseUnit
 
@@ -1354,6 +1356,8 @@ declare module 'amf-client-js' {
     externallyLinkable(): BoolField
 
     withTypeDiscriminatorName(name: string): AnnotationMapping
+
+    withDomain(domains: Array<string>): AnnotationMapping
 
     sorted(): BoolField
 
@@ -3568,6 +3572,7 @@ declare module 'amf-client-js' {
     static readonly SelectedParsePlugin: 'SelectedParsePlugin'
     static readonly DetectedSyntaxMediaType: 'DetectedSyntaxMediaType'
     static readonly SkippedValidationPlugin: 'SkippedValidationPlugin'
+    static readonly UnitCacheHit: 'UnitCacheHit'
 
   }
   export class AnyShape implements Shape  {
@@ -6053,6 +6058,7 @@ declare module 'amf-client-js' {
     static readonly AML: Spec
     static readonly JSONSCHEMA: Spec
     static readonly GRPC: Spec
+    static readonly GRAPHQL: Spec
     static readonly JSONSCHEMADIALECT: Spec
 
     static apply(name: string): Spec
