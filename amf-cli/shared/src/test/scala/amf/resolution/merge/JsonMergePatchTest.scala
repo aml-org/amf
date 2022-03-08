@@ -16,15 +16,14 @@ import amf.core.client.scala.model.domain.{AmfElement, AmfObject, DataNode, Scal
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.adoption.IdAdopter
 import amf.core.internal.convert.BaseUnitConverter
+import amf.core.internal.datanode.{DataNodeEmitter, DataNodeParser}
 import amf.core.internal.parser._
 import amf.core.internal.remote.AmfJsonHint
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.emit.AMFRenderer
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
-import amf.shapes.internal.spec.common.emitter.DataNodeEmitter
 import amf.shapes.internal.spec.common.parser.YMapEntryLike
-import amf.shapes.internal.spec.datanode.DataNodeParser
 import org.mulesoft.common.io.Fs
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers

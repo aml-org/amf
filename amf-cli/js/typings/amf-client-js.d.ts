@@ -165,9 +165,9 @@ declare module 'amf-client-js' {
   export class StartedTransformationStepEvent  {
   }
   export class BoolField implements ValueField<boolean>  {
-    nonNull: boolean
-    isNull: boolean
     readonly option: undefined | boolean
+    isNull: boolean
+    nonNull: boolean
     toString: string
 
     annotations(): Annotations
@@ -191,6 +191,11 @@ declare module 'amf-client-js' {
 
     getExtensions(): Array<SemanticExtension>
 
+
+  }
+  export class AMFSemanticSchemaResult extends AMFParseResult  {
+    baseUnit: Dialect
+    vocabulary: undefined | Vocabulary
 
   }
   export class SkippedValidationPluginEvent  {
@@ -374,9 +379,9 @@ declare module 'amf-client-js' {
 
   }
   export class IntField implements ValueField<number>  {
-    nonNull: boolean
-    isNull: boolean
     readonly option: undefined | number
+    isNull: boolean
+    nonNull: boolean
     toString: string
 
     annotations(): Annotations
@@ -392,9 +397,9 @@ declare module 'amf-client-js' {
 
   }
   export class AnyField implements ValueField<any>  {
-    nonNull: boolean
-    isNull: boolean
     readonly option: undefined | any
+    isNull: boolean
+    nonNull: boolean
     toString: string
 
     annotations(): Annotations
@@ -521,15 +526,17 @@ declare module 'amf-client-js' {
 
 
   }
+  export class UnitCacheHitEvent  {
+  }
   export interface TransformationStep  {
     transform(model: BaseUnit, errorHandler: ClientErrorHandler, configuration: AMFGraphConfiguration): BaseUnit
 
 
   }
   export class DoubleField implements ValueField<number>  {
-    nonNull: boolean
-    isNull: boolean
     readonly option: undefined | number
+    isNull: boolean
+    nonNull: boolean
     toString: string
 
     annotations(): Annotations
@@ -574,9 +581,9 @@ declare module 'amf-client-js' {
 
   }
   export class FloatField implements ValueField<number>  {
-    nonNull: boolean
-    isNull: boolean
     readonly option: undefined | number
+    isNull: boolean
+    nonNull: boolean
     toString: string
 
     annotations(): Annotations
@@ -660,6 +667,12 @@ declare module 'amf-client-js' {
   }
   export class FinishedValidationPluginEvent  {
     result: AMFValidationReport
+
+  }
+  export class SemanticBaseUnitClient extends AMLBaseUnitClient  {
+    parseSemanticSchema(url: string): Promise<AMFSemanticSchemaResult>
+
+    parseSemanticSchemaContent(content: string): Promise<AMFSemanticSchemaResult>
 
   }
   export interface ValidationResult  {
@@ -1344,9 +1357,9 @@ declare module 'amf-client-js' {
 
     withTypeDiscriminatorName(name: string): AnnotationMapping
 
-    sorted(): BoolField
+    withDomain(domains: Array<string>): AnnotationMapping
 
-    withDomain(domainIri: string): AnnotationMapping
+    sorted(): BoolField
 
     minimum(): DoubleField
 
@@ -2492,6 +2505,30 @@ declare module 'amf-client-js' {
 
 
   }
+  export class ShapeOperation implements DomainElement  {
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+
+    constructor()
+
+    withName(name: string): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
+
+
+  }
   export class Callback implements DomainElement  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
@@ -2748,6 +2785,30 @@ declare module 'amf-client-js' {
     constructor()
 
     linkCopy(): NilShape
+
+
+  }
+  export class ShapeResponse implements DomainElement  {
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+
+    constructor()
+
+    withName(name: string): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
 
 
   }
@@ -3366,6 +3427,30 @@ declare module 'amf-client-js' {
 
 
   }
+  export class ShapeRequest implements DomainElement  {
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+
+    constructor()
+
+    withName(name: string): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
+
+
+  }
   export class LowPriority extends PluginPriority  {
   }
   export class OASConfiguration  {
@@ -3487,6 +3572,7 @@ declare module 'amf-client-js' {
     static readonly SelectedParsePlugin: 'SelectedParsePlugin'
     static readonly DetectedSyntaxMediaType: 'DetectedSyntaxMediaType'
     static readonly SkippedValidationPlugin: 'SkippedValidationPlugin'
+    static readonly UnitCacheHit: 'UnitCacheHit'
 
   }
   export class AnyShape implements Shape  {
@@ -3649,6 +3735,7 @@ declare module 'amf-client-js' {
 
   }
   export class NodeShape extends AnyShape  {
+    isAbstract: BoolField
     minProperties: IntField
     maxProperties: IntField
     closed: BoolField
@@ -3666,6 +3753,8 @@ declare module 'amf-client-js' {
     unevaluatedPropertiesSchema: Shape
 
     constructor()
+
+    withIsAbstract(isAbstract: boolean): this
 
     withMinProperties(min: number): this
 
@@ -4644,6 +4733,55 @@ declare module 'amf-client-js' {
 
 
   }
+  export class ConditionalNodeMapping implements DomainElement, Linkable  {
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    linkTarget: undefined | DomainElement
+    isLink: boolean
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    linkLabel: StrField
+    extendsNode: Array<DomainElement>
+
+    constructor()
+
+    withIfMapping(ifMapping: string): ConditionalNodeMapping
+
+    link<T>(label: string): T
+
+    linkCopy(): ConditionalNodeMapping
+
+    withName(name: string): ConditionalNodeMapping
+
+    ifMapping(): StrField
+
+    graph(): Graph
+
+    thenMapping(): StrField
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withLinkLabel(label: string): this
+
+    withThenMapping(thenMapping: string): ConditionalNodeMapping
+
+    elseMapping(): StrField
+
+    withElseMapping(elseMapping: string): ConditionalNodeMapping
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    link<T>(): T
+
+    withLinkTarget(target: undefined): this
+
+    withId(id: string): this
+
+
+  }
   export class CorrelationId implements DomainElement, Linkable  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
@@ -5022,6 +5160,8 @@ declare module 'amf-client-js' {
 
     withRequest(request: Request): this
 
+    withRequests(requests: Array<Request>): this
+
     withId(id: string): this
 
     withRequest(): Request
@@ -5342,6 +5482,30 @@ declare module 'amf-client-js' {
 
 
   }
+  export class ShapeParameter implements DomainElement  {
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+
+    constructor()
+
+    withName(name: string): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
+
+
+  }
   export class SemanticExtension implements DomainElement  {
     customDomainProperties: Array<DomainExtension>
     isExternalLink: BoolField
@@ -5438,6 +5602,7 @@ declare module 'amf-client-js' {
     isAmfJsonLdSerialization: boolean
     isPrettyPrint: boolean
     isEmitNodeIds: boolean
+    isRawFieldEmission: boolean
 
     constructor()
 
@@ -5472,6 +5637,8 @@ declare module 'amf-client-js' {
     withoutCompactedEmission(): RenderOptions
 
     withSchemaVersion(version: JSONSchemaVersion): RenderOptions
+
+    withRawFieldEmission(): RenderOptions
 
 
   }
@@ -5557,6 +5724,30 @@ declare module 'amf-client-js' {
   }
   export class ResourceLoaderFactory  {
     static create(loader: ClientResourceLoader): any
+
+
+  }
+  export class ShapePayload implements DomainElement  {
+    name: StrField
+    customDomainProperties: Array<DomainExtension>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+
+    constructor()
+
+    withName(name: string): this
+
+    graph(): Graph
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withId(id: string): this
 
 
   }
@@ -5867,6 +6058,8 @@ declare module 'amf-client-js' {
     static readonly AML: Spec
     static readonly JSONSCHEMA: Spec
     static readonly GRPC: Spec
+    static readonly GRAPHQL: Spec
+    static readonly JSONSCHEMADIALECT: Spec
 
     static apply(name: string): Spec
 
@@ -6085,6 +6278,41 @@ declare module 'amf-client-js' {
     static empty(): AMLConfiguration
 
     static predefined(): AMLConfiguration
+
+
+  }
+  export class SemanticJsonSchemaConfiguration extends BaseShapesConfiguration  {
+    baseUnitClient(): SemanticBaseUnitClient
+
+    configurationState(): AMLConfigurationState
+
+    withParsingOptions(parsingOptions: ParsingOptions): SemanticJsonSchemaConfiguration
+
+    withRenderOptions(renderOptions: RenderOptions): SemanticJsonSchemaConfiguration
+
+    withErrorHandlerProvider(provider: ErrorHandlerProvider): SemanticJsonSchemaConfiguration
+
+    withResourceLoader(rl: ResourceLoader): SemanticJsonSchemaConfiguration
+
+    withResourceLoaders(rl: Array<ResourceLoader>): SemanticJsonSchemaConfiguration
+
+    withUnitCache(cache: UnitCache): SemanticJsonSchemaConfiguration
+
+    withTransformationPipeline(pipeline: TransformationPipeline): SemanticJsonSchemaConfiguration
+
+    withEventListener(listener: AMFEventListener): SemanticJsonSchemaConfiguration
+
+    withDialect(dialect: Dialect): SemanticJsonSchemaConfiguration
+
+    withDialect(url: string): Promise<SemanticJsonSchemaConfiguration>
+
+    forInstance(url: string): Promise<SemanticJsonSchemaConfiguration>
+
+    withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): SemanticJsonSchemaConfiguration
+
+    static empty(): SemanticJsonSchemaConfiguration
+
+    static predefined(): SemanticJsonSchemaConfiguration
 
 
   }

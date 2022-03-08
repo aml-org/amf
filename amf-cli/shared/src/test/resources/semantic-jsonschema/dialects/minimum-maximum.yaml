@@ -1,0 +1,19 @@
+#%Dialect 1.0
+nodeMappings:
+  Person:
+    mapping:
+      name:
+        range: string
+        mandatory: true
+      age:
+        range: number
+        mandatory: true
+        minimum: 0.5
+        maximum: 150.2
+external:
+  ns0: http://test.com/vocab#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Person

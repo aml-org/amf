@@ -11,7 +11,7 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.internal.annotations.ExternalReferenceUrl
+import amf.shapes.internal.annotations.{BaseVirtualNode, ExternalReferenceUrl}
 import amf.shapes.internal.spec.common.parser.AnnotationParser
 import org.yaml.model.{YMap, YMapEntry}
 
@@ -22,7 +22,6 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
 
   private def adopt(request: Request) = {
     request
-      .add(Annotations(definitionEntry))
       .setWithoutId(RequestModel.Name, ScalarNode(definitionEntry.key).string(), Annotations(definitionEntry.key))
 
   }
@@ -32,7 +31,8 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
       case Left(fullRef) =>
         parseRef(fullRef)
       case Right(_) =>
-        val request = adopt(Request())
+        val annotations = Annotations.virtual() += BaseVirtualNode(definitionEntry)
+        val request     = adopt(Request(annotations))
 
         map.key("description", RequestModel.Description in request)
         map.key("required", RequestModel.Required in request)

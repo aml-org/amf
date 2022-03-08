@@ -3,13 +3,17 @@ package amf.validation
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.{AsyncApi, WebApi}
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Response}
+import amf.apicontract.internal.metamodel.domain.OperationModel
 import amf.core.client.common.position.Position
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
 import amf.core.client.scala.model.domain.extensions.PropertyShape
-import amf.core.client.scala.model.domain.{AmfArray, ExternalSourceElement}
+import amf.core.client.scala.model.domain.{AmfArray, Annotation, ExternalSourceElement}
+import amf.core.internal.annotations.{Inferred, VirtualElement, VirtualNode}
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape, SchemaShape}
+import amf.shapes.internal.annotations.BaseVirtualNode
 import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.testing.ConfigProvider.configFor
 import org.scalatest.Assertion
@@ -42,6 +46,10 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
         assertion(transformResult.baseUnit)
       }
     }
+  }
+
+  def hasAnnotation[T <: Annotation](annotation: Class[T], annotations: Annotations): Boolean = {
+    annotations.find(annotation).isDefined
   }
 
   class BaseUnitComponents(isWebApi: Boolean = true) {
@@ -279,6 +287,52 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val components = new BaseUnitComponents
       val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
       examples.size shouldBe 2
+    }
+  }
+
+  test("Expects field should be inferred and Request should be virtual") {
+    def isTheOnlyAnnotation[T <: VirtualNode](annotation: Class[T], annotations: Annotations): Boolean = {
+      hasAnnotation(annotation, annotations) && annotations.size == 1
+    }
+
+    val api = s"$basePath/annotations/api-with-request.yaml"
+    modelAssertion(api, transform = false) { bu =>
+      val components   = new BaseUnitComponents
+      val op           = components.getFirstOperation(bu)
+      val expectsField = OperationModel.Request
+
+      isTheOnlyAnnotation(classOf[Inferred], op.fields.getValue(expectsField).annotations) shouldBe true
+      isTheOnlyAnnotation(classOf[VirtualElement], op.fields.get(expectsField).annotations) shouldBe true
+
+      hasAnnotation(classOf[VirtualElement], op.request.annotations) shouldBe true
+      hasAnnotation(classOf[BaseVirtualNode], op.request.annotations) shouldBe true
+
+      val requestBodyAnnotations = op.request.annotations.find(classOf[BaseVirtualNode]).get
+      requestBodyAnnotations.ast.location.lineFrom shouldBe 13
+      requestBodyAnnotations.ast.location.columnFrom shouldBe 6
+      requestBodyAnnotations.ast.location.lineTo shouldBe 22
+      requestBodyAnnotations.ast.location.columnTo shouldBe 0
+    }
+  }
+
+  test("When Request has a reference it should have its annotations and should not be virtual") {
+    val api = s"$basePath/annotations/api-with-referenced-request.yaml"
+    modelAssertion(api, transform = false) { bu =>
+      val components = new BaseUnitComponents
+      val request    = components.getFirstOperation(bu).request
+
+      request.annotations.lexical().start shouldBe Position(9, 0)
+      request.annotations.lexical().end shouldBe Position(10, 0)
+      hasAnnotation(classOf[VirtualElement], request.annotations) shouldBe false
+    }
+  }
+
+  test("Shape's lexical should not only include the referenced type") {
+    val api = s"$basePath/annotations/type-reference.raml"
+    modelAssertion(api, transform = false) { bu =>
+      val typeWithReference = bu.asInstanceOf[Document].declares.last
+      typeWithReference.annotations.lexical().start shouldBe Position(6, 2)
+      typeWithReference.annotations.lexical().end shouldBe Position(7, 0)
     }
   }
 }

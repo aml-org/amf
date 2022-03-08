@@ -18,6 +18,7 @@ import amf.core.internal.annotations.{
   SourceNode,
   SynthesizedField
 }
+import amf.core.internal.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.core.internal.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.internal.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.internal.parser.domain.{Annotations, ScalarNode => ParserScalarNode, _}
@@ -33,7 +34,6 @@ import amf.shapes.internal.spec.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.shapes.internal.spec.common.TypeDef._
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.common.parser._
-import amf.shapes.internal.spec.datanode.{DataNodeParser, ScalarNodeParser}
 import amf.shapes.internal.spec.jsonschema.parser.Draft4ShapeDependenciesParser
 import amf.shapes.internal.spec.raml.parser.RamlTypeDetection.parseFormat
 import amf.shapes.internal.spec.raml.parser.expression.RamlExpressionParser
@@ -754,7 +754,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
   private def createLink(shape: AnyShape, label: String, linkId: String): Shape = {
     shape
-      .link(AmfScalar(label), Annotations(node), Annotations.synthesized())
+      .link(AmfScalar(label), Annotations(ast), Annotations.synthesized())
       .asInstanceOf[Shape]
       .withName(name, nameAnnotations) // we setup the local reference in the name
       .withId(linkId)

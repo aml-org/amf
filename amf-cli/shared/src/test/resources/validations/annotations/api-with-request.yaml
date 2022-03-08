@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  title: Sample Pet Store App
+paths:
+  /path:
+    get:
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/x-www-form-urlencoded':
+            schema:
+              properties:
+                name:
+                  type: string
+              required:
+                - status

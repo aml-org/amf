@@ -1,24 +1,19 @@
 package amf.shapes.internal.spec.common.parser
 
-import amf.aml.internal.parse.common.AnnotationsParser
 import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.core.client.scala.model.domain.{AmfArray, AmfObject, DomainElement}
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParserContext}
+import amf.core.internal.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
+import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{LimitedParseConfig, YMapOps}
-import amf.core.internal.parser.domain.{Annotations, _}
 import amf.shapes.internal.annotations.OrphanOasExtension
 import amf.shapes.internal.spec.ShapeParserContext
 import amf.shapes.internal.spec.common.parser.AnnotationParser.parseExtensions
-import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.{
-  isOasAnnotation,
-  isRamlAnnotation,
-  resolveAnnotation
-}
-import amf.shapes.internal.spec.datanode.{DataNodeParser, DataNodeParserContext}
+import amf.shapes.internal.spec.common.parser.WellKnownAnnotation.resolveAnnotation
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.InvalidAnnotationTarget
 import amf.shapes.internal.vocabulary.VocabularyMappings
 import org.yaml.model._

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#",
+    "security": "https://anypoint.mulesoft.com/security#"
+  },
+  "title": "Some security thing",
+  "type": "object",
+  "required": [
+    "key",
+    "info"
+  ],
+  "properties": {
+    "key": {
+      "@context": {
+        "@characteristics":  [
+          "security:sensitive"
+        ]
+      },
+      "type": "string",
+      "pattern": "^[A-Za-z]*$"
+    },
+    "info": {
+      "type": "integer"
+    }
+  }
+}

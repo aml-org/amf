@@ -12,7 +12,7 @@ import amf.shapes.internal.spec.common.parser.{QuickFieldParserOps, YMapEntryLik
 import amf.shapes.internal.spec.common._
 import amf.shapes.internal.spec.oas.parser
 import amf.shapes.internal.spec.oas.parser.TypeDetector.LinkCriteria
-import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YPart, YScalar}
+import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YNode, YPart, YScalar, YType}
 
 /**
   * OpenAPI Type Parser.
@@ -27,24 +27,24 @@ object OasTypeParser {
     new OasTypeParser(
       YMapEntryLike(entry),
       key(entry),
-      entry.value.as[YMap],
+      entry.value,
       adopt,
       getSchemaVersion(ctx)
     )
 
   def apply(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
       implicit ctx: ShapeParserContext): OasTypeParser =
-    new OasTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
+    new OasTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value, adopt, version)
 
   def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: SchemaVersion)(
       implicit ctx: ShapeParserContext): OasTypeParser =
-    new OasTypeParser(node, name, node.asMap, adopt, version)
+    new OasTypeParser(node, name, node.value, adopt, version)
 
   def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: ShapeParserContext): OasTypeParser =
     new OasTypeParser(
       YMapEntryLike(entry),
       key(entry),
-      entry.value.as[YMap],
+      entry.value,
       adopt,
       getSchemaVersion(ctx),
       true
@@ -61,19 +61,26 @@ object OasTypeParser {
 
 case class OasTypeParser(entryOrNode: YMapEntryLike,
                          name: String,
-                         map: YMap,
+                         node: YNode,
                          adopt: Shape => Unit,
                          version: SchemaVersion,
                          isDeclaration: Boolean = false)(implicit val ctx: ShapeParserContext)
     extends QuickFieldParserOps {
 
   def parse(): Option[AnyShape] = {
+    if (isBooleanSchema(entryOrNode.value)) BooleanSchemaParser(entryOrNode, node, version) else parseType
+  }
+
+  private def parseType = {
+    val map = node.as[YMap]
     if (version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
       Draft2019TypeParser(entryOrNode, name, map, adopt, version, isDeclaration).parse
     } else {
       Draft4TypeParser(entryOrNode, name, map, adopt, version, isDeclaration).parse
     }
   }
+
+  private def isBooleanSchema(node: YNode) = node.tagType == YType.Bool
 }
 
 case class Draft2019TypeParser(entryOrNode: YMapEntryLike,

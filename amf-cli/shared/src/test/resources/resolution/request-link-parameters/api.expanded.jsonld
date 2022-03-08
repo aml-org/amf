@@ -474,9 +474,6 @@
                     "smaps": {
                       "declared-element": {
                         "#21": ""
-                      },
-                      "lexical": {
-                        "#21": "[(8,4)-(13,0)]"
                       }
                     }
                   }
@@ -575,8 +572,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(52,6)-(59,0)]",
-                    "#17": "[(44,4)-(59,0)]",
-                    "apiContract:expects": "[(50,6)-(52,0)]"
+                    "#17": "[(44,4)-(59,0)]"
                   }
                 }
               }
@@ -611,7 +607,7 @@
         ],
         "apiContract:modelVersion": [
           {
-            "@value": "3.3.0"
+            "@value": "3.4.0"
           }
         ],
         "doc:transformed": [
@@ -1233,12 +1229,11 @@
           }
         ],
         "smaps": {
+          "lexical": {
+            "core:name": "[(8,4)-(8,13)]"
+          },
           "declared-element": {
             "#12": ""
-          },
-          "lexical": {
-            "core:name": "[(8,4)-(8,13)]",
-            "#12": "[(8,4)-(13,0)]"
           }
         }
       }

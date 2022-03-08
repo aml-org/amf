@@ -1,0 +1,56 @@
+{
+  "@graph": [
+    {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:DialectInstanceProcessingData"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/basic-with-characteristics.json"
+        }
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "amf-json-schema-generated-dialect 1.0"
+    },
+    {
+      "@id": "#/encodes",
+      "@type": [
+        "#/declarations/Somesecuritything",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "security:sensitive": "someSecurityThing",
+      "data:info": 1234
+    },
+    {
+      "@id": "",
+      "@type": [
+        "meta:DialectInstance",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/basic-with-characteristics.json"
+        }
+      ],
+      "doc:encodes": {
+        "@id": "#/encodes"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/basic-with-characteristics.json",
+    "security": "https://anypoint.mulesoft.com/security#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "@graph": [
+    {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:DialectInstanceProcessingData"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/intermediate.json"
+        }
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "amf-json-schema-generated-dialect 1.0"
+    },
+    {
+      "@id": "#/encodes",
+      "@type": [
+        "#/declarations/Parent",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "foaf:name": "Pepito",
+      "data:age": 33.0,
+      "data:hey": [
+        {
+          "@id": "#/encodes/hey/0"
+        },
+        {
+          "@id": "#/encodes/hey/1"
+        }
+      ]
+    },
+    {
+      "@id": "#/encodes/hey/0",
+      "@type": [
+        "foaf:Verse",
+        "#/declarations/SchemaNode",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "foaf:ho": "blablabalbalba"
+    },
+    {
+      "@id": "#/encodes/hey/1",
+      "@type": [
+        "foaf:Verse",
+        "#/declarations/SchemaNode",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "foaf:ho": "asdadsasdasdasd"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "meta:DialectInstance",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/intermediate.json"
+        }
+      ],
+      "doc:encodes": {
+        "@id": "#/encodes"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/intermediate.json",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "foaf": "http://xmlns.com/foaf/0.1/"
+  }
+}

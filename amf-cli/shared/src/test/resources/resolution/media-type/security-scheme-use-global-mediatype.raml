@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: "Pets store"
+version: "v1"
+protocols:
+  - HTTPS
+baseUri: https://example.com/api
+mediaType: application/json
+
+securitySchemes:
+  oauth_2_0:
+    type: OAuth 2.0
+    describedBy:
+      responses:
+        401:
+          description: Missing or invalid token
+          body:
+            properties:
+
+/pets:
+  get:
+    securedBy: [oauth_2_0]
+    displayName: Get pets list.
+    responses:
+      200:
+        description: Not Found
+        body:
+          properties:

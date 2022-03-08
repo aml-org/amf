@@ -5,7 +5,10 @@ import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.shapes.client.platform.model.domain
 import amf.shapes.client.platform.{ShapesConfiguration => ClientShapesConfiguration}
+import amf.shapes.client.platform.config.{SemanticJsonSchemaConfiguration => ClientSemanticJsonSchemaConfiguration}
 import amf.shapes.client.scala.ShapesConfiguration
+import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
+import amf.shapes.client.platform.config.{AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult}
 import amf.shapes.client.scala.model.domain._
 
 trait ShapesBaseConverter
@@ -27,6 +30,8 @@ trait ShapesBaseConverter
     with IriTemplateMappingConverter
     with DiscriminatorValueMappingConverter
     with ShapesConfigurationConverter
+    with SemanticSchemaConfigurationConverter
+    with AMFSemanticSchemaResultConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -169,5 +174,26 @@ trait ShapesConfigurationConverter {
     override def asClient(from: ShapesConfiguration): ClientShapesConfiguration = new ClientShapesConfiguration(from)
 
     override def asInternal(from: ClientShapesConfiguration): ShapesConfiguration = from._internal
+  }
+}
+
+trait SemanticSchemaConfigurationConverter {
+  implicit object SemanticSchemaConfigurationMatcher
+      extends BidirectionalMatcher[SemanticJsonSchemaConfiguration, ClientSemanticJsonSchemaConfiguration] {
+    override def asClient(from: SemanticJsonSchemaConfiguration): ClientSemanticJsonSchemaConfiguration =
+      new ClientSemanticJsonSchemaConfiguration(from)
+
+    override def asInternal(from: ClientSemanticJsonSchemaConfiguration): SemanticJsonSchemaConfiguration =
+      from._internal
+  }
+}
+
+trait AMFSemanticSchemaResultConverter {
+  implicit object AMFSemanticSchemaResultMatcher
+      extends BidirectionalMatcher[AMFSemanticSchemaResult, ClientAMFSemanticSchemaResult] {
+    override def asInternal(from: ClientAMFSemanticSchemaResult): AMFSemanticSchemaResult = from._internal
+
+    override def asClient(from: AMFSemanticSchemaResult): ClientAMFSemanticSchemaResult =
+      new ClientAMFSemanticSchemaResult(from)
   }
 }

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "name": {
+      "@id": "foaf:name",
+      "@type": "xsd:string"
+    }
+  },
+  "title": "Parent",
+  "type": "object",
+  "required": [
+    "name",
+    "age"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "age": {
+      "type": "number"
+    },
+    "hey": {
+      "type": "array",
+      "items":
+        {
+          "@context": {
+            "@type": "foaf:Verse",
+            "ho": {
+              "@id": "foaf:ho"
+            }
+          },
+          "type": "object",
+          "properties": {
+            "ho": {
+              "type": "string"
+            }
+          }
+        }
+    }
+  }
+}

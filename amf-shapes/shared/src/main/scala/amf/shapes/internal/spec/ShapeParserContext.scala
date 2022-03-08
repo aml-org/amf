@@ -5,16 +5,16 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, UnresolvedComponents}
+import amf.core.internal.datanode.DataNodeParserContext
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{Annotations, Declarations, FutureDeclarations, SearchScope}
 import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import amf.core.internal.remote.Spec
-import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
+import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example, SemanticContext}
 import amf.shapes.internal.spec.RamlWebApiContextType.RamlWebApiContextType
 import amf.shapes.internal.spec.common.SchemaVersion
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
-import amf.shapes.internal.spec.datanode.DataNodeParserContext
 import amf.shapes.internal.spec.raml.parser.external.RamlExternalTypesParser
 import amf.shapes.internal.spec.raml.parser.{DefaultType, RamlTypeParser, TypeInfo}
 import org.mulesoft.lexer.SourceLocation
@@ -30,6 +30,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
     with UnresolvedComponents {
 
   val syamleh                                                            = new SyamlAMFErrorHandler(eh)
+  private var semanticContext: Option[SemanticContext]                   = None
   override def handle[T](error: YError, defaultValue: T): T              = syamleh.handle(error, defaultValue)
   override def handle(location: SourceLocation, e: SyamlException): Unit = syamleh.handle(location, e)
 
@@ -82,6 +83,9 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   def setJsonSchemaAST(value: YNode): Unit
   def jsonSchemaRefGuide: JsonSchemaRefGuide
   def validateRefFormatWithError(ref: String): Boolean
+  // Implement copy and return new context
+  def getSemanticContext: Option[SemanticContext]            = semanticContext
+  def withSemanticContext(sc: Option[SemanticContext]): Unit = semanticContext = sc
 }
 
 trait RamlExternalSchemaExpressionFactory {

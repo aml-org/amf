@@ -33,6 +33,13 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     cycle("draft-2019-09/defs.json", "draft-2019-09/cycled/defs.json", DRAFT_2019_09_EMITTER, `application/json`)
   }
 
+  test("Draft 2019-09 with semantics") {
+    cycle("draft-2019-09/semantics.json",
+          "draft-2019-09/cycled/semantics.json",
+          DRAFT_2019_09_EMITTER,
+          `application/json`)
+  }
+
   test("Draft 2019-09 duration and uuid formats") {
     cycle("draft-2019-09/duration-uuid-format.json",
           "draft-2019-09/cycled/duration-uuid-format.json",
@@ -173,6 +180,14 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     cycle("draft-2019-09/with-id.json", "draft-2019-09/jsonld/with-id.jsonld", JsonLdEmitter, `application/json`)
   }
 
+  test("Draft 6 boolean schema parse test") {
+    cycle("draft-6/boolean-schemas.json", "draft-6/jsonld/boolean-schemas.jsonld", JsonLdEmitter, `application/json`)
+  }
+
+  test("Draft 6 boolean schema emission test") {
+    cycle("draft-6/boolean-schemas.json", "draft-6/cycled/boolean-schemas.json", DRAFT_6_EMITTER, `application/json`)
+  }
+
   private def cycle(path: String,
                     golden: String,
                     emitter: SchemaEmitter,
@@ -205,6 +220,7 @@ object JsonLdEmitter extends SchemaEmitter {
 object JsonSchemaTestEmitters {
   val DRAFT_2019_09_EMITTER: JsonSchemaTestEmitter = JsonSchemaTestEmitter(JSONSchemaDraft201909SchemaVersion)
   val DRAFT_7_EMITTER: JsonSchemaTestEmitter       = JsonSchemaTestEmitter(JSONSchemaDraft7SchemaVersion)
+  val DRAFT_6_EMITTER: JsonSchemaTestEmitter       = JsonSchemaTestEmitter(JSONSchemaDraft6SchemaVersion)
 }
 
 case class JsonSchemaTestEmitter(to: JSONSchemaVersion) extends SchemaEmitter {

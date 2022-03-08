@@ -1,0 +1,58 @@
+{
+  "@graph": [
+    {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:DialectInstanceProcessingData"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/allOf.json"
+        }
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "amf-json-schema-generated-dialect 1.0"
+    },
+    {
+      "@id": "#/encodes",
+      "@type": [
+        "foaf:Person",
+        "#/declarations/Child",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:name": "Jose",
+      "data:age": 33.0,
+      "foaf:displayName": "Pepito"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "meta:DialectInstance",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/allOf.json"
+        }
+      ],
+      "doc:encodes": {
+        "@id": "#/encodes"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/allOf.json",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "foaf": "http://xmlns.com/foaf/0.1/"
+  }
+}

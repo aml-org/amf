@@ -1,7 +1,8 @@
 package amf.apicontract.internal.spec.common.transformation.stage
 
 import amf.apicontract.client.scala.model.domain.api.Api
-import amf.apicontract.client.scala.model.domain.{Payload, Request}
+import amf.apicontract.client.scala.model.domain.security.SecurityScheme
+import amf.apicontract.client.scala.model.domain.{Operation, Payload, Request}
 import amf.apicontract.internal.metamodel.domain.api.BaseApiModel
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel, PayloadModel, RequestModel}
 import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.InvalidConsumesWithFileParameter
@@ -32,7 +33,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         propagatePayloads(doc.encodes.asInstanceOf[Api])
-        resolveMediaTypes(doc.encodes.asInstanceOf[Api])(errorHandler)
+        resolveMediaTypes(doc)(errorHandler)
       case _ =>
     }
     model
@@ -56,9 +57,20 @@ class MediaTypeResolutionStage(profile: ProfileName,
     }
   }
 
-  def resolveMediaTypes(api: Api)(implicit errorHandler: AMFErrorHandler): Unit = {
+  def resolveMediaTypes(doc: Document)(implicit errorHandler: AMFErrorHandler): Unit = {
+    val api             = doc.encodes.asInstanceOf[Api]
     val rootAccepts     = getAndRemove(api, BaseApiModel.Accepts, keepMediaTypesInModel)
     val rootContentType = getAndRemove(api, BaseApiModel.ContentType, keepMediaTypesInModel)
+
+    resolveOperationsMediaTypes(api, rootAccepts, rootContentType)
+    resolveSecuritySchemesMediaTypes(securitySchemes(doc.declares), rootContentType)
+
+  }
+
+  private def resolveOperationsMediaTypes(
+      api: Api,
+      rootAccepts: Option[Seq[String]],
+      rootContentType: Option[Seq[String]])(implicit errorHandler: AMFErrorHandler): Unit = {
 
     api.endPoints.foreach { endPoint =>
       endPoint.operations.foreach { operation =>
@@ -69,28 +81,53 @@ class MediaTypeResolutionStage(profile: ProfileName,
         val accepts     = overrideWith(rootAccepts, opAccepts)
         val contentType = overrideWith(rootContentType, opContentType)
 
-        Option(operation.request).foreach { request =>
-          // Use accepts field.
-          accepts match {
-            case Some(a) =>
-              if (!isValidation && profile == Oas20Profile) operation.set(OperationModel.Accepts, a)
-              request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id))
-            case None =>
-          }
-          if (profile == Oas20Profile) validateFilePayloads(request)
-        }
-
-        operation.responses.foreach { response =>
-          // Use contentType field.
-          contentType match {
-            case Some(ct) =>
-              if (!isValidation && profile == Oas20Profile) operation.set(OperationModel.ContentType, ct)
-              response.setArray(RequestModel.Payloads, payloads(response.payloads, ct, response.id))
-            case None =>
-          }
-        }
+        resolveRequestMediaTypes(operation, accepts)
+        resolveResponseMediaTypes(operation, contentType)
       }
     }
+  }
+
+  private def resolveResponseMediaTypes(operation: Operation, contentType: Option[Seq[String]]): Unit = {
+    operation.responses.foreach { response =>
+      // Use contentType field.
+      contentType match {
+        case Some(ct) =>
+          if (!isValidation && profile == Oas20Profile) operation.set(OperationModel.ContentType, ct)
+          response.setArray(RequestModel.Payloads, payloads(response.payloads, ct, response.id))
+        case None =>
+      }
+    }
+  }
+
+  private def resolveRequestMediaTypes(operation: Operation, accepts: Option[Seq[String]])(
+      implicit errorHandler: AMFErrorHandler): Unit = {
+    Option(operation.request).foreach { request =>
+      // Use accepts field.
+      accepts match {
+        case Some(a) =>
+          if (!isValidation && profile == Oas20Profile) operation.set(OperationModel.Accepts, a)
+          request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id))
+        case None =>
+      }
+      if (profile == Oas20Profile) validateFilePayloads(request)
+    }
+  }
+
+  private def resolveSecuritySchemesMediaTypes(securitySchemes: Seq[SecurityScheme],
+                                              contentType: Option[Seq[String]]): Unit = {
+    securitySchemes.foreach(scheme => {
+      scheme.responses.foreach { response =>
+        contentType match {
+          case Some(ct) =>
+            response.setArray(RequestModel.Payloads, payloads(response.payloads, ct, response.id))
+          case None =>
+        }
+      }
+    })
+  }
+
+  private def securitySchemes(elements: Seq[DomainElement]) = {
+    elements.filter(_.isInstanceOf[SecurityScheme]).map(_.asInstanceOf[SecurityScheme])
   }
 
   private def keepMediaTypesInModel = () => !isValidation && !keepEditingInfo

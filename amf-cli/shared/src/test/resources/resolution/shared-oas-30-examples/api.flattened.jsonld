@@ -5,7 +5,7 @@
       "@type": [
         "doc:APIContractProcessingData"
       ],
-      "apiContract:modelVersion": "3.3.0",
+      "apiContract:modelVersion": "3.4.0",
       "doc:transformed": true,
       "doc:sourceSpec": "OAS 3.0"
     },
@@ -92,8 +92,7 @@
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(27,6)-(37,0)]",
-          "#32": "[(7,4)-(37,0)]",
-          "apiContract:expects": "[(19,6)-(27,0)]"
+          "#32": "[(7,4)-(37,0)]"
         }
       }
     },
@@ -117,8 +116,7 @@
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(43,6)-(47,0)]",
-          "#37": "[(38,4)-(47,0)]",
-          "apiContract:expects": "[(41,6)-(43,0)]"
+          "#37": "[(38,4)-(47,0)]"
         }
       }
     },
@@ -143,7 +141,6 @@
       "smaps": {
         "lexical": {
           "core:name": "[(19,6)-(19,17)]",
-          "#34": "[(19,6)-(27,0)]",
           "apiContract:parameter": "[(8,6)-(19,0)]"
         }
       }
@@ -193,9 +190,6 @@
       "smaps": {
         "declared-element": {
           "#39": ""
-        },
-        "lexical": {
-          "#39": "[(73,4)-(81,0)]"
         }
       }
     },
@@ -774,12 +768,11 @@
         }
       ],
       "smaps": {
+        "lexical": {
+          "core:name": "[(73,4)-(73,13)]"
+        },
         "declared-element": {
           "#28": ""
-        },
-        "lexical": {
-          "core:name": "[(73,4)-(73,13)]",
-          "#28": "[(73,4)-(81,0)]"
         }
       }
     }

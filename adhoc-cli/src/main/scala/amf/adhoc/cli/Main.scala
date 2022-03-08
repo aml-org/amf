@@ -3,11 +3,15 @@ package amf.adhoc.cli
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.client.scala.APIConfiguration
+import amf.core.client.common.remote.Content
 import amf.core.client.common.transform.PipelineId
+import amf.core.client.scala.AMFResult
 import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.resource.{ClasspathResourceLoader, ResourceLoader}
 import amf.core.internal.remote.Mimes
+import org.apache.commons.io.IOUtils
 
-import scala.concurrent.Await
+import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -19,21 +23,7 @@ object Main {
         apiParse(args)
 
       case "validate" =>
-        val configFuture = AMLConfiguration
-          .predefined()
-          .withDialect(
-            "https://raw.githubusercontent.com/aml-org/models/master/src/main/dialects/validation-profile.yaml")
-          .flatMap(_.withDialect(
-            "https://raw.githubusercontent.com/aml-org/models/master/src/main/dialects/validation-report.yaml"))
-
-        val config = Await.result(configFuture, Duration.Inf)
-
-        val client = config.baseUnitClient()
-
-        val parsing    = Await.result(client.parseDialectInstance(s"file://${args(1)}"), Duration.Inf)
-        val validation = Await.result(client.validate(parsing.baseUnit), Duration.Inf)
-
-        val merged = parsing.merge(validation)
+        val merged: AMFResult = validateInstance(args(1))
         println(merged.toString)
         if (merged.conforms) {
           System.exit(0)
@@ -97,4 +87,37 @@ object Main {
         .render(baseUnit, Mimes.`application/ld+json`)
     }
   }
+
+  def validateInstance(path: String): AMFResult = {
+    val configFuture = for {
+      jarConfig <- Future.successful(
+        AMLConfiguration.predefined().withResourceLoaders(List(AdaptedClassPathResourceLoader())))
+      profileDialect <- jarConfig.baseUnitClient().parseDialect("file:///dialects/validation-profile.yaml")
+      reportDialect  <- jarConfig.baseUnitClient().parseDialect("file:///dialects/validation-report.yaml")
+    } yield {
+      AMLConfiguration.predefined().withDialect(profileDialect.dialect).withDialect(reportDialect.dialect)
+    }
+
+    val config = Await.result(configFuture, Duration.Inf)
+
+    val client = config.baseUnitClient()
+
+    val parsing    = Await.result(client.parseDialectInstance(s"file://${path}"), Duration.Inf)
+    val validation = Await.result(client.validate(parsing.dialectInstance), Duration.Inf)
+
+    parsing.merge(validation)
+  }
+}
+
+case class AdaptedClassPathResourceLoader() extends ResourceLoader {
+
+  override def fetch(resource: String): Future[Content] = {
+    val strippedPrefix  = resource.stripPrefix("file://")
+    val eventualContent = ClasspathResourceLoader.fetch(strippedPrefix)
+    eventualContent.map { c =>
+      c.copy(url = resource)
+    }
+  }
+
+  override def accepts(resource: String): Boolean = true
 }

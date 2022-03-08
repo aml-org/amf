@@ -2,11 +2,11 @@ package amf.shapes.internal.spec.common.parser
 
 import amf.core.client.scala.model.domain.Shape
 import amf.core.client.scala.model.domain.extensions.ShapeExtension
+import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.remote.{Oas, Raml}
 import amf.shapes.internal.spec.ShapeParserContext
-import amf.shapes.internal.spec.datanode.DataNodeParser
 import amf.shapes.internal.spec.raml.parser.TypeInfo
 import amf.shapes.internal.validation.definitions.ShapeParserSideValidations.{
   MissingRequiredUserDefinedFacet,
@@ -47,7 +47,10 @@ case class ShapeExtensionParser(shape: Shape,
           shape.add(ShapeModel.CustomShapeProperties, extension)
         case None if directlyInherited.contains(shapeExtensionDefinition) =>
           if (shapeExtensionDefinition.minCount.option().exists(_ > 0)) {
-            ctx.eh.violation(MissingRequiredUserDefinedFacet, shape, s"Missing required facet '$extensionKey'", map.location)
+            ctx.eh.violation(MissingRequiredUserDefinedFacet,
+                             shape,
+                             s"Missing required facet '$extensionKey'",
+                             map.location)
           }
         case _ =>
       }

@@ -1,0 +1,34 @@
+#%Dialect 1.0
+nodeMappings:
+  Child:
+    mapping:
+      name:
+        range: string
+        mandatory: true
+        default: Carlitos
+      favoriteMovie:
+        range: SchemaNode
+        mandatory: false
+        default:
+          name: "Spider Man: No Way Home"
+          release: 2021
+      nicknames:
+        range: string
+        mandatory: false
+        allowMultiple: true
+        default:
+          - Carliños
+          - Carl
+  SchemaNode:
+    mapping:
+      name:
+        range: string
+        mandatory: true
+      release:
+        range: integer
+        mandatory: true
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Child

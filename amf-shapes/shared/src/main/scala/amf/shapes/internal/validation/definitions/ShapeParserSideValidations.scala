@@ -117,11 +117,6 @@ object ShapeParserSideValidations extends Validations {
     "Unable to parse shape extensions"
   )
 
-  val ExceededMaxYamlReferences = validation(
-    "max-yaml-references",
-    "Exceeded maximum yaml references threshold"
-  )
-
   val InvalidJsonSchemaType = validation(
     "invalid-json-schema-type",
     "Invalid json schema definition type"
@@ -292,6 +287,31 @@ object ShapeParserSideValidations extends Validations {
     "'schemas' and 'types' properties are mutually exclusive"
   )
 
+  val InvalidContextNode = validation(
+    "@context-must-be-object-or-string",
+    "@context value must be object or string"
+  )
+
+  val InvalidCharacteristicsNode = validation(
+    "@characteristics-must-be-a-seq",
+    "@characteristics value must be a sequence of strings"
+  )
+
+  val InvalidPrefixReference = validation(
+    "@invalid-prefix-reference",
+    "the referenced prefix could not be found in the @context declarations"
+  )
+
+  val InvalidIri = validation(
+    "@invalid-iri-text",
+    "the text must conform the IRI format"
+  )
+
+  val InvalidBooleanSchemaForSchemaVersion = validation(
+    "invalid-required-boolean-for-schema-version",
+    "Boolean schemas not supported in JSON Schema below version draft-6"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id           -> all(WARNING),
     JsonSchemaInheritanceWarning.id -> all(WARNING),
@@ -320,7 +340,10 @@ object ShapeParserSideValidations extends Validations {
     UserDefinedFacetMatchesAncestorsTypeFacets,
     MissingRequiredUserDefinedFacet,
     UnableToParseShapeExtensions,
-    ExceededMaxYamlReferences,
-    InvalidJsonSchemaType
+    InvalidJsonSchemaType,
+    InvalidContextNode,
+    InvalidCharacteristicsNode,
+    InvalidPrefixReference,
+    InvalidIri
   )
 }

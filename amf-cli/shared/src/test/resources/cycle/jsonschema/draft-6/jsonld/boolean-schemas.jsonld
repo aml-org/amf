@@ -1,0 +1,121 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "OAS 2.0"
+    },
+    {
+      "@id": "#/shape/schema",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/shape/schema/property/property/name"
+        },
+        {
+          "@id": "#/shape/schema/property/property/age"
+        }
+      ],
+      "shacl:name": "schema"
+    },
+    {
+      "@id": "#/shape/schema/property/property/name",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#name"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/shape/schema/property/property/name/any/default-any"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "name"
+    },
+    {
+      "@id": "#/shape/schema/property/property/age",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#age"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/shape/schema/property/property/age/any/default-any"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "age"
+    },
+    {
+      "@id": "#/shape/schema/property/property/name/any/default-any",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "#/shape/schema/property/property/age/any/default-any",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:not": {
+        "@id": "#/shape/schema/property/property/age/any/default-any/any/default-any"
+      }
+    },
+    {
+      "@id": "#/shape/schema/property/property/age/any/default-any/any/default-any",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-shapes:DataTypeFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/shape/schema"
+      },
+      "doc:root": false,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf-cli/shared/src/test/resources/cycle/jsonschema/draft-6/boolean-schemas.json",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "doc": "http://a.ml/vocabularies/document#"
+  }
+}

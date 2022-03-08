@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "@vocab": "anypoint://vocabulary/policy.yaml#",
+    "security": "anypoint://vocabulary/policy.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#"
+  },
+  "$schema": "https://json-schema.org/draft/2019-12/schema",
+  "$id": "skywalker-saga.json",
+  "description": "All calls to the API must include a client ID and client secret for an application that is registered to use the API.\n\nThis policy will require updates to the RAML/OAS definition in order to function.\nYou can obtain the RAML/OAS snippet and learn more [here](https://docs.mulesoft.com/anypoint-platform-for-apis/client-id-based-policies).\n",
+  "type": "object",
+  "properties": {
+    "credentialsOriginHasHttpBasicAuthenticationHeader": {
+      "title": "Credentials origin",
+      "description": "Origin of the Client ID and Client Secret credentials.",
+      "default": "customExpression",
+      "oneOf": [
+        {
+          "title": "HTTP Basic Authentication Header",
+          "const": "httpBasicAuthenticationHeader"
+        },
+        { "title": "Custom Expression", "const": "customExpression" }
+      ],
+      "type": "string"
+    },
+    "clientIdExpression": {
+      "title": "Client ID Expression",
+      "description": "Mule Expression to be used to extract the Client ID from API requests",
+      "default": "#[attributes.headers['client_id']]",
+      "@context": { "@characteristics": ["config:dataweaveExpression"] },
+      "type": "string",
+      "pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+    },
+    "clientSecretExpression": {
+      "title": "Client Secret Expression",
+      "description": "Mule Expression to be used to extract the Client Secret from API requests",
+      "default": "#[attributes.headers['client_secret']]",
+      "type": "string"
+    }
+  },
+  "required": [
+    "credentialsOriginHasHttpBasicAuthenticationHeader",
+    "clientIdExpression"
+  ]
+}
