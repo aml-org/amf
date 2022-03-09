@@ -12,11 +12,13 @@ nodeMappings:
         range: SchemaNode
         mandatory: false
         allowMultiple: true
+    additionalProperties: true
   SchemaNode:
     mapping:
       note:
         range: string
         mandatory: false
+    additionalProperties: true
 external:
   ns0: http://test.com/vocab#
 dialect: amf-json-schema-generated-dialect

@@ -10,12 +10,14 @@ nodeMappings:
         range: number
         mandatory: true
     extends: SchemaNode
+    additionalProperties: true
   SchemaNode:
     mapping:
       displayName:
         range: string
         propertyTerm: foaf.displayName
         mandatory: false
+    additionalProperties: true
 external:
   ns0: http://test.com/vocab#
   xsd: http://www.w3.org/2001/XMLSchema#

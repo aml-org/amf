@@ -20,10 +20,19 @@ case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContex
       PropertyShapeTransformer(property, ctx).transform()
     }
     nodeMapping.withPropertiesMapping(propertyMappings)
+    nodeMapping.withClosed(false)
 
+    checkAdditionalProperties()
     checkInheritance()
     checkSemantics()
     nodeMapping
+  }
+
+  private def checkAdditionalProperties() = {
+    shape.closed.option() match {
+      case Some(value) => nodeMapping.withClosed(value)
+      case None        => nodeMapping.withClosed(false)
+    }
   }
 
   private def checkInheritance(): Unit = {

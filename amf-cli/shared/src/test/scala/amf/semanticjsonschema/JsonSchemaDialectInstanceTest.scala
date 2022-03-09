@@ -27,6 +27,7 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
   instanceValidation("duplicate-semantics")
   instanceValidation("multiple-characteristics")
   instanceValidation("oneOf")
+  instanceValidation("basic-with-extra-properties")
 
   private def instanceValidation(filename: String): Unit = {
     val label = s"Dialect instance validation with $filename JSON Schema"

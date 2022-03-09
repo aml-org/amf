@@ -79,9 +79,12 @@
       "shacl:property": [
         {
           "@id": "/property/property/name"
+        },
+        {
+          "@id": "/property/property/age"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": true
     },
     {
       "@id": "/property/property/name",
@@ -95,36 +98,29 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 0,
-      "shacl:in": {
-        "@id": "/property/property/name/list"
-      }
+      "shacl:minCount": 1
     },
     {
-      "@id": "/property/property/name/list",
-      "@type": "rdfs:Seq",
-      "rdfs:_1": {
-        "@value": "A",
-        "@type": "xsd:string"
-      },
-      "rdfs:_2": {
-        "@value": "5",
-        "@type": "xsd:integer"
-      },
-      "rdfs:_3": {
-        "@value": "false",
-        "@type": "xsd:boolean"
-      }
+      "@id": "/property/property/age",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "age",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minCount": 1
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/enum.json",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/additional-properties.json",
     "shacl": "http://www.w3.org/ns/shacl#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
     "owl": "http://www.w3.org/2002/07/owl#",
-    "meta": "http://a.ml/vocabularies/meta#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

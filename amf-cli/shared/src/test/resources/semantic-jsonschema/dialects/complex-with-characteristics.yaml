@@ -16,6 +16,7 @@ nodeMappings:
         range: string
         mandatory: false
         default: "#[attributes.headers['client_secret']]"
+    additionalProperties: true
 external:
   security: anypoint://vocabulary/policy.yaml#
   config: anypoint://vocabulary/policy.yaml#

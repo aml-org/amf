@@ -13,6 +13,7 @@ nodeMappings:
         range: SchemaNode
         mandatory: false
         allowMultiple: true
+    additionalProperties: true
   SchemaNode:
     classTerm: foaf.Verse
     mapping:
@@ -20,6 +21,7 @@ nodeMappings:
         range: string
         propertyTerm: foaf.ho
         mandatory: false
+    additionalProperties: true
 external:
   ns0: http://test.com/vocab#
   xsd: http://www.w3.org/2001/XMLSchema#
