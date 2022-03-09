@@ -1,14 +1,15 @@
 #!groovy
 @Library('amf-jenkins-library') _
 
-def slackChannel = '#amf-jenkins'
-def failedStage = ""
+def SLACK_CHANNEL = '#amf-jenkins'
+def lastStage = ""
 def color = '#FF8C00'
 def headerFlavour = "WARNING"
 
 pipeline {
   options {
     timeout(time: 30, unit: 'MINUTES')
+    ansiColor('xterm')
   }
   agent {
     dockerfile {
@@ -26,15 +27,9 @@ pipeline {
   stages {
     stage('Test') {
       steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          script {
-            try{
-              sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
-            } catch (ignored) {
-              failedStage = failedStage + " TEST "
-              unstable "Failed tests"
-            }
-          }
+        script {
+          lastStage = env.STAGE_NAME
+          sh 'sbt -mem 6144 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
         }
       }
     }
@@ -46,18 +41,10 @@ pipeline {
         }
       }
       steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sonarqube-official', passwordVariable: 'SONAR_SERVER_TOKEN', usernameVariable: 'SONAR_SERVER_URL']]) {
-            script {
-              try {
-                if (failedStage.isEmpty()) {
-                  sh 'sbt -Dsonar.host.url=${SONAR_SERVER_URL} sonarScan'
-                }
-              } catch (ignored) {
-                failedStage = failedStage + " COVERAGE "
-                unstable "Failed coverage"
-              }
-            }
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sonarqube-official', passwordVariable: 'SONAR_SERVER_TOKEN', usernameVariable: 'SONAR_SERVER_URL']]) {
+          script {
+            lastStage = env.STAGE_NAME
+            sh 'sbt -Dsonar.host.url=${SONAR_SERVER_URL} sonarScan'
           }
         }
       }
@@ -70,21 +57,9 @@ pipeline {
         }
       }
       steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          script {
-            try{
-              if (failedStage.isEmpty()) {
-              sh '''
-                  echo "about to publish in sbt"
-                  sbt publish
-                  echo "sbt publishing successful"
-              '''
-              }
-            } catch(ignored) {
-              failedStage = failedStage + " PUBLISH "
-              unstable "Failed publication"
-            }
-          }
+        script {
+          lastStage = env.STAGE_NAME
+          sh 'sbt publish'
         }
       }
     }
@@ -98,15 +73,9 @@ pipeline {
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-salt', passwordVariable: 'GITHUB_PASS', usernameVariable: 'GITHUB_USER']]) {
           script {
-            try{
-              if (failedStage.isEmpty()) {
-                def version = sbtArtifactVersion("apiContractJVM")
-                tagCommitToGithub(version)
-              }
-            } catch(ignored) {
-              failedStage = failedStage + " TAGGING "
-              unstable "Failed publication"
-            }
+            lastStage = env.STAGE_NAME
+            def version = sbtArtifactVersion("apiContractJVM")
+            tagCommitToGithub(version)
           }
         }
       }
@@ -120,17 +89,9 @@ pipeline {
         }
       }
       steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          script {
-            try{
-              if (failedStage.isEmpty()){
-                sh './gradlew nexusIq'
-              }
-            } catch(ignored) {
-              failedStage = failedStage + " NEXUSIQ "
-              unstable "Failed Nexus IQ"
-            }
-          }
+        script {
+          lastStage = env.STAGE_NAME
+          sh './gradlew nexusIq'
         }
       }
     }
@@ -143,29 +104,40 @@ pipeline {
       }
       steps {
         script {
-          try {
-            if (failedStage.isEmpty()){
-              echo "Starting TCKutor Applications/AMF/amfTCKutor/master"
-              build job: 'application/AMF/amfTCKutor/master', wait: false
+          lastStage = env.STAGE_NAME
+          echo "Starting TCKutor Applications/AMF/amfTCKutor/master"
+          build job: 'application/AMF/amfTCKutor/master', wait: false
 
-              echo "Starting Amf Examples Applications/AMF/amfexamples/master"
-              build job: 'application/AMF/amf-examples/snapshot', wait: false
+          echo "Starting Amf Examples Applications/AMF/amfexamples/master"
+          build job: 'application/AMF/amf-examples/snapshot', wait: false
 
-              echo "Starting Amf Interface Tests Applications/AMF/amfinterfacetests/master"
-              build job: 'application/AMF/amf-interface-tests/master', wait: false
+          echo "Starting Amf Interface Tests Applications/AMF/amfinterfacetests/master"
+          build job: 'application/AMF/amf-interface-tests/master', wait: false
 
-              if (env.BRANCH_NAME == 'develop') {
-                build job: "application/AMF/amf-metadata/${env.BRANCH_NAME}", wait: false
-              } else {
-                echo "Skipping Amf Metadata Tests Build Trigger as env.BRANCH_NAME is not master or develop"
-              }
-              def newAmfVersion = sbtArtifactVersion("apiContractJVM")
-              echo "Starting ApiQuery hook API-Query/api-query-amf-integration/master with amf version: ${newAmfVersion}"
-              build job: "API-Query-new/api-query-amf-integration/master", wait: false, parameters: [[$class: 'StringParameterValue', name: 'AMF_NEW_VERSION', value: newAmfVersion]]
-            }
-          } catch(ignored) {
-            failedStage = failedStage + " JOBS TRIGGER "
-            unstable "Failed triggering downstream jobs"
+          if (env.BRANCH_NAME == 'develop') {
+            build job: "application/AMF/amf-metadata/${env.BRANCH_NAME}", wait: false
+          } else {
+            echo "Skipping Amf Metadata Tests Build Trigger as env.BRANCH_NAME is not master or develop"
+          }
+          def newAmfVersion = sbtArtifactVersion("apiContractJVM")
+          echo "Starting ApiQuery hook API-Query/api-query-amf-integration/master with amf version: ${newAmfVersion}"
+          build job: "API-Query-new/api-query-amf-integration/master", wait: false, parameters: [[$class: 'StringParameterValue', name: 'AMF_NEW_VERSION', value: newAmfVersion]]
+        }
+      }
+    }
+    post {
+      unsuccessful {
+        script {
+//           if (isMaster() || isDevelop()) {
+//             sendBuildErrorSlackMessage(lastStage, SLACK_CHANNEL)
+//           }
+          sendBuildErrorSlackMessage(lastStage, SLACK_CHANNEL)
+        }
+      }
+      success {
+        script {
+          if (isMaster()) {
+            sendSuccessfulSlackMessage(SLACK_CHANNEL)
           }
         }
       }
@@ -186,10 +158,10 @@ pipeline {
             } else if (env.BRANCH_NAME == 'develop') {
               color = '#FFD700'
             }
-            slackSend color: color, channel: "${slackChannel}", message: ":alert: ${headerFlavour}! :alert: Build failed!. \n\tBranch: ${env.BRANCH_NAME}\n\tStage:${failedStage}\n(See ${env.BUILD_URL})\n"
+            slackSend color: color, channel: "${SLACK_CHANNEL}", message: ":alert: ${headerFlavour}! :alert: Build failed!. \n\tBranch: ${env.BRANCH_NAME}\n\tStage:${failedStage}\n(See ${env.BUILD_URL})\n"
             currentBuild.status = "FAILURE"
           } else if (env.BRANCH_NAME == 'master') {
-            slackSend color: '#00FF00', channel: "${slackChannel}", message: ":ok_hand: Master Publish OK! :ok_hand:"
+            slackSend color: '#00FF00', channel: "${SLACK_CHANNEL}", message: ":ok_hand: Master Publish OK! :ok_hand:"
           }
         }
       }
@@ -199,4 +171,28 @@ pipeline {
 
 Boolean isDevelop() {
   env.BRANCH_NAME == "develop"
+}
+
+Boolean isMaster() {
+  env.BRANCH_NAME == "master"
+}
+
+def sendBuildErrorSlackMessage(String lastStage, String slackChannel) {
+  def color = '#FF8C00'
+  def headerFlavour = 'WARNING'
+  if (isMaster()) {
+    color = '#FF0000'
+    headerFlavour = "RED ALERT"
+  } else if (isDevelop()) {
+    color = '#FFD700'
+  }
+  def message = """:alert: ${headerFlavour}! :alert: Build failed!.
+                  |Branch: ${env.BRANCH_NAME}
+                  |Stage: ${lastStage}
+                  |Build URL: ${env.BUILD_URL}""".stripMargin().stripIndent()
+  slackSend color: color, channel: "${slackChannel}", message: message
+}
+
+def sendSuccessfulSlackMessage(String slackChannel) {
+  slackSend color: '#00FF00', channel: "${slackChannel}", message: ":ok_hand: APB Master Publish OK! :ok_hand:"
 }
