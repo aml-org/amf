@@ -1669,6 +1669,7 @@ Types:
  | uriTemplate | string | URI template that will be used to generate the URI of the parsed nodeds in the graph | http://a.ml/vocabularies/apiContract#uriTemplate |
  | mergePolicy | string | Indication of how to merge this graph node when applying a patch document | http://a.ml/vocabularies/meta#mergePolicy |
  | resolvedExtends | [url] |  | http://a.ml/vocabularies/meta#resolvedExtends |
+ | closed | boolean | Additional properties in the input node accepted constraint | http://www.w3.org/ns/shacl#closed |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
