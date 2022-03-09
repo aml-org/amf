@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+# Fail entire script at the first command that fails
+set -e
+
 echo "Running fullOpt"
 sbt cliJS/fullOptJS
 echo "Finished fullOpt"

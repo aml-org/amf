@@ -2,6 +2,7 @@
 @Library('amf-jenkins-library') _
 
 def SLACK_CHANNEL = '#amf-jenkins'
+def PRODUCT_NAME = "AMF"
 def lastStage = ""
 def color = '#FF8C00'
 def headerFlavour = "WARNING"
@@ -23,6 +24,8 @@ pipeline {
     NEXUSIQ = credentials('nexus-iq')
     GITHUB_ORG = 'aml-org'
     GITHUB_REPO = 'amf'
+    NPM_TOKEN = credentials('aml-org-bot-npm-token')
+    NPM_CONFIG_PRODUCTION = true
   }
   stages {
     stage('Test') {
@@ -49,7 +52,22 @@ pipeline {
         }
       }
     }
-    stage('Publish') {
+    stage('Build JS Package') {
+      when {
+        anyOf {
+          branch 'master'
+          branch 'develop'
+        }
+      }
+      steps {
+        script {
+          lastStage = env.STAGE_NAME
+          sh 'chmod +x js-build.sh'
+          sh './js-build.sh'
+        }
+      }
+    }
+    stage('Publish JVM Artifact') {
       when {
         anyOf {
           branch 'master'
@@ -60,6 +78,24 @@ pipeline {
         script {
           lastStage = env.STAGE_NAME
           sh 'sbt publish'
+        }
+      }
+    }
+    stage("Publish JS Package") {
+      when {
+        anyOf {
+          branch 'master'
+          branch 'develop'
+        }
+      }
+      steps {
+        script {
+          lastStage = env.STAGE_NAME
+          // They are separate commands because we want an earlyExit in case one of them doesnt end with exit code 0
+          sh 'chmod +x ./scripts/setup-npmrc.sh'
+          sh './scripts/setup-npmrc.sh'
+          sh 'chmod +x ./js-publish.sh'
+          sh './js-publish.sh'
         }
       }
     }
@@ -125,44 +161,24 @@ pipeline {
         }
       }
     }
-    post {
-      unsuccessful {
-        script {
-//           if (isMaster() || isDevelop()) {
-//             sendBuildErrorSlackMessage(lastStage, SLACK_CHANNEL)
-//           }
-          sendBuildErrorSlackMessage(lastStage, SLACK_CHANNEL)
-        }
-      }
-      success {
-        script {
-          if (isMaster()) {
-            sendSuccessfulSlackMessage(SLACK_CHANNEL)
-          }
+  }
+  post {
+    unsuccessful {
+      script {
+        if (isMaster() || isDevelop()) {
+          sendBuildErrorSlackMessage(lastStage, SLACK_CHANNEL, PRODUCT_NAME)
+        } else {
+          echo "Unsuccessful build: skipping slack message notification as branch is not master or develop"
         }
       }
     }
-    stage("Report to Slack") {
-      when {
-        anyOf {
-          branch 'master'
-          branch 'develop'
-        }
-      }
-      steps {
-        script {
-          if (!failedStage.isEmpty()) {
-            if (env.BRANCH_NAME == 'master') {
-              color = '#FF0000'
-              headerFlavour = "RED ALERT"
-            } else if (env.BRANCH_NAME == 'develop') {
-              color = '#FFD700'
-            }
-            slackSend color: color, channel: "${SLACK_CHANNEL}", message: ":alert: ${headerFlavour}! :alert: Build failed!. \n\tBranch: ${env.BRANCH_NAME}\n\tStage:${failedStage}\n(See ${env.BUILD_URL})\n"
-            currentBuild.status = "FAILURE"
-          } else if (env.BRANCH_NAME == 'master') {
-            slackSend color: '#00FF00', channel: "${SLACK_CHANNEL}", message: ":ok_hand: Master Publish OK! :ok_hand:"
-          }
+    success {
+      script {
+      echo "SUCCESSFULL BUILD"
+        if (isMaster()) {
+          sendSuccessfulSlackMessage(lastStage, SLACK_CHANNEL, PRODUCT_NAME)
+        } else {
+          echo "Successful build: skipping slack message notification as branch is not master"
         }
       }
     }
@@ -177,7 +193,7 @@ Boolean isMaster() {
   env.BRANCH_NAME == "master"
 }
 
-def sendBuildErrorSlackMessage(String lastStage, String slackChannel) {
+def sendBuildErrorSlackMessage(String lastStage, String slackChannel, String productName) {
   def color = '#FF8C00'
   def headerFlavour = 'WARNING'
   if (isMaster()) {
@@ -194,5 +210,5 @@ def sendBuildErrorSlackMessage(String lastStage, String slackChannel) {
 }
 
 def sendSuccessfulSlackMessage(String slackChannel) {
-  slackSend color: '#00FF00', channel: "${slackChannel}", message: ":ok_hand: APB Master Publish OK! :ok_hand:"
+  slackSend color: '#00FF00', channel: "${slackChannel}", message: ":ok_hand: ${productName} Master Publish OK! :ok_hand:"
 }
