@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Fail entire script at the first command that fails
+set -e
+
 PROPERTY_FILE=amf-apicontract.versions
 
 function getProperty {
@@ -9,7 +12,7 @@ function getProperty {
 }
 
 echo "Reading property version from $PROPERTY_FILE"
-PROJECT_VERSION=$(getProperty "nexus.repository.url")
+PROJECT_VERSION=$(getProperty)
 
 if [[ ${PROJECT_VERSION} == *-SNAPSHOT ]]; then
     IS_SNAPSHOT=true
