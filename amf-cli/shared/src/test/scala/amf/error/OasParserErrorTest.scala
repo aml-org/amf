@@ -42,5 +42,16 @@ class OasParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Ignored pattern property") {
+    validate(
+      "/warning/ignored-pattern-property.json",
+      warning => {
+        warning.severityLevel should be("Warning")
+        warning.message should be("Pattern property may be ignored if format 'byte' already defines a standard pattern")
+        warning.position.map(_.range) should be(Some(Range((12, 6), (12, 30))))
+      }
+    )
+  }
+
   override protected val basePath: String = "file://amf-cli/shared/src/test/resources/parser-results/oas"
 }
