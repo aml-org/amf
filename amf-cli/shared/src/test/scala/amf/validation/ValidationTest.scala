@@ -104,7 +104,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Custom validaton problems 1") {
+  test("Test missing raml annotation mapping (warning report)") {
     for {
 
       client      <- Future.successful(RAMLConfiguration.RAML10().baseUnitClient())
@@ -114,8 +114,11 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
       report <- client.validate(transformResult.baseUnit)
     } yield {
-      assert(!report.conforms)
+      assert(report.conforms)
       assert(report.results.size == 1)
+      val warning = report.results.head
+      assert(warning.severityLevel == SeverityLevels.WARNING)
+      assert(warning.message == "type is recommended for a RAML annotationType")
     }
   }
 

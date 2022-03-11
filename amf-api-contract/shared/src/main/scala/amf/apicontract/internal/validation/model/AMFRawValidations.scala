@@ -800,8 +800,9 @@ object AMFRawValidations {
         owlProperty = shape("schema"),
         constraint = minCount,
         value = "1",
-        ramlErrorMessage = "type is mandatory for a RAML annotationType",
-        openApiErrorMessage = "schema is mandatory for an extension type"
+        ramlErrorMessage = "type is recommended for a RAML annotationType",
+        openApiErrorMessage = "schema is recommended for an extension type",
+        severity = SeverityLevels.WARNING
       ),
       AMFValidation(
         message =
