@@ -64,8 +64,8 @@ case class AnnotationEmitter(element: CustomizableElement,
   }
 
   private def emitSemanticExtension(b: EntryBuilder): Unit = {
-    SemanticExtensionsFacade(spec.config)
-      .render(computeName(domainExtension), domainExtension, element.typeIris, ordering, spec.options)
+    SemanticExtensionsFacade(computeName(domainExtension), spec.config)
+      .render(domainExtension, element.typeIris, ordering, spec.options)
       .foreach(_.emit(b))
   }
 

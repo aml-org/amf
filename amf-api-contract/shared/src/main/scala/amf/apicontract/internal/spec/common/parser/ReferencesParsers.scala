@@ -1,5 +1,7 @@
 package amf.apicontract.internal.spec.common.parser
 
+import amf.aml.client.scala.model.document.Dialect
+import amf.apicontract.internal.spec.common.WebApiDeclarations
 import amf.apicontract.internal.spec.raml.parser.document
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.InvalidModuleType
 import amf.core.client.scala.model.document._
@@ -19,9 +21,18 @@ case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideE
       case d: Module =>
         val library = ctx.declarations.getOrCreateLibrary(alias)
         d.declares.foreach(library += _)
+        collectExtensions(library, d)
       case fragment: Fragment => ctx.declarations += (alias -> fragment)
       case _                  => // ignore
     }
+  }
+
+  private def collectExtensions(library: WebApiDeclarations, l: Module): Unit = {
+    l.references
+      .collect({ case d: Dialect => d })
+      .foreach { d =>
+        library += d.extensionIndex
+      }
   }
 }
 
@@ -41,8 +52,11 @@ abstract class CommonReferencesParser(references: Seq[ParsedReference])(implicit
   protected def parseLibraries(declarations: ReferenceCollector[BaseUnit]): Unit
 }
 
-case class ReferencesParser(baseUnit: BaseUnit, rootLoc: String, key: String, map: YMap, references: Seq[ParsedReference])(
-    implicit ctx: WebApiContext)
+case class ReferencesParser(baseUnit: BaseUnit,
+                            rootLoc: String,
+                            key: String,
+                            map: YMap,
+                            references: Seq[ParsedReference])(implicit ctx: WebApiContext)
     extends CommonReferencesParser(references) {
 
   private def target(url: String): Option[BaseUnit] =
@@ -74,13 +88,15 @@ case class ReferencesParser(baseUnit: BaseUnit, rootLoc: String, key: String, ma
               })
           case YType.Null =>
           case _ =>
-            ctx.eh.violation(InvalidModuleType, rootLoc, s"Invalid ast type for uses: ${entry.value.tagType}", entry.value.location)
+            ctx.eh.violation(InvalidModuleType,
+                             rootLoc,
+                             s"Invalid ast type for uses: ${entry.value.tagType}",
+                             entry.value.location)
       }
     )
   }
 
-  private def collectAlias(module: BaseUnit,
-                           alias: (Aliases.Alias, ReferencedInfo)): BaseUnit = {
+  private def collectAlias(module: BaseUnit, alias: (Aliases.Alias, ReferencedInfo)): BaseUnit = {
     module.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         module.annotations.reject(_.isInstanceOf[Aliases])

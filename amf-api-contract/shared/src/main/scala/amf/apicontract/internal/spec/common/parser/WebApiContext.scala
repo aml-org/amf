@@ -1,7 +1,9 @@
 package amf.apicontract.internal.spec.common.parser
 
+import amf.aml.client.scala.model.document.Dialect
 import amf.aml.internal.parse.common.DeclarationContext
-import amf.aml.internal.semantic.SemanticExtensionsFacade
+import amf.aml.internal.registries.AMLRegistry
+import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
 import amf.apicontract.internal.spec.common.{OasParameter, WebApiDeclarations}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
@@ -20,7 +22,7 @@ import amf.core.internal.parser.domain.{Annotations, FragmentRef, SearchScope}
 import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlAMFErrorHandler}
 import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.core.internal.utils.{AliasCounter, IdCounter}
+import amf.core.internal.utils.{AliasCounter, IdCounter, QName}
 import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, SchemaVersion}
@@ -40,8 +42,16 @@ abstract class ExtensionsContext(val loc: String,
     extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.config)
     with DataNodeParserContext {
 
+  private def getExtensionsMap: Map[String, Dialect] = wrapped.config.registryContext.getRegistry match {
+    case amlRegistry: AMLRegistry => amlRegistry.getExtensionRegistry
+    case _                        => Map.empty
+  }
+
   val declarations: WebApiDeclarations = declarationsOption.getOrElse(
-    new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
+    new WebApiDeclarations(None,
+                           errorHandler = eh,
+                           futureDeclarations = futureDeclarations,
+                           extensions = getExtensionsMap))
 
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] =
     declarations.findAnnotation(key, scope)
@@ -76,7 +86,7 @@ abstract class WebApiContext(loc: String,
   val syntax: SpecSyntax
   val spec: Spec
 
-  val extensionsFacade: SemanticExtensionsFacade = SemanticExtensionsFacade(wrapped.config)
+  val extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = WebApiSemanticExtensionsFacadeBuilder()
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
@@ -209,4 +219,16 @@ abstract class WebApiContext(loc: String,
                                       isWarning: Boolean = false): Unit =
     if (isWarning) eh.warning(ClosedShapeSpecificationWarning, node, message, entry.location)
     else eh.violation(ClosedShapeSpecification, node, message, entry.location)
+
+  case class WebApiSemanticExtensionsFacadeBuilder() extends SemanticExtensionsFacadeBuilder {
+    override def extensionName(name: String): SemanticExtensionsFacade = {
+      val fqn = QName(name)
+      val dialect = if (fqn.isQualified) {
+        val maybeDeclarations: Option[WebApiDeclarations] =
+          declarations.libraries.get(fqn.qualification).collectFirst({ case w: WebApiDeclarations => w })
+        maybeDeclarations.flatMap(_.extensions.get(fqn.name))
+      } else declarations.extensions.get(name)
+      dialect.map(SemanticExtensionsFacade(fqn.name, _)).getOrElse(SemanticExtensionsFacade(name, wrapped.config))
+    }
+  }
 }
