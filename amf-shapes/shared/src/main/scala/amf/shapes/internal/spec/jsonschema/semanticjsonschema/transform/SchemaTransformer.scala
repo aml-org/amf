@@ -1,15 +1,13 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
 import amf.aml.client.scala.model.document.Vocabulary
-import amf.aml.client.scala.model.domain.{NodeMapping, PropertyMapping, UnionNodeMapping}
+import amf.aml.client.scala.model.domain.{NodeMapping, PropertyMapping}
 import amf.aml.internal.metamodel.domain.NodeMappableModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
-import amf.shapes.client.scala.model.domain.{AnyShape, CuriePrefix, SemanticContext}
+import amf.shapes.client.scala.model.domain.AnyShape
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.SchemaTransformerOptions.DEFAULT
-import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.SemanticOps.{expandIri, findPrefix}
-
-import scala.collection.mutable
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.SemanticOps.findPrefix
 
 case class TransformationResult(encoded: DomainElement,
                                 declared: Seq[DomainElement],
@@ -17,10 +15,10 @@ case class TransformationResult(encoded: DomainElement,
                                 vocab: Option[Vocabulary] = None)
 
 object SchemaTransformerOptions {
-  val DEFAULT = SchemaTransformerOptions("semantic_vocabulary",
-                                         "https://a.ml/semantic-json-schema#",
-                                         "Semantic JSON Schema Vocabulary",
-                                         "semantics")
+  val DEFAULT: SchemaTransformerOptions = SchemaTransformerOptions("semantic_vocabulary",
+                                                                   "https://a.ml/semantic-json-schema#",
+                                                                   "Semantic JSON Schema Vocabulary",
+                                                                   "semantics")
 }
 
 case class SchemaTransformerOptions(vocabId: String, vocabBase: String, vocabName: String, termPrefix: String)

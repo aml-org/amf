@@ -1,7 +1,6 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
-import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
-import amf.aml.client.scala.model.domain.{NodeMapping, UnionNodeMapping}
+import amf.aml.client.scala.model.domain.{ConditionalNodeMapping, NodeMapping, UnionNodeMapping}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
@@ -33,8 +32,9 @@ abstract class ExtendedSchemaTransformer(shape: AnyShape, ctx: ShapeTransformati
   }
 
   def toLink(mapping: DomainElement): DomainElement = mapping match {
-    case nm: NodeMapping       => nm.link[NodeMapping](nm.name.value())
-    case unm: UnionNodeMapping => unm.link[UnionNodeMapping](unm.name.value())
+    case nm: NodeMapping             => nm.link[NodeMapping](nm.name.value())
+    case unm: UnionNodeMapping       => unm.link[UnionNodeMapping](unm.name.value())
+    case cnm: ConditionalNodeMapping => cnm.link[ConditionalNodeMapping](cnm.name.value())
   }
 
   def addExtendedSchema(element: DomainElement): Unit =
@@ -45,9 +45,11 @@ abstract class ExtendedSchemaTransformer(shape: AnyShape, ctx: ShapeTransformati
     element.withExtends(finalExtensions)
   }
 
+  // Should this always return the id?
   def getIri(element: DomainElement): Seq[String] = element match {
-    case nm: NodeMapping       => Seq(nm.id)
-    case unm: UnionNodeMapping => unm.objectRange().map(_.value())
+    case nm: NodeMapping             => Seq(nm.id)
+    case unm: UnionNodeMapping       => unm.objectRange().map(_.value())
+    case cnm: ConditionalNodeMapping => Seq(cnm.id)
   }
 
 }
