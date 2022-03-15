@@ -3,7 +3,6 @@ package amf.apicontract.internal.transformation.compatibility
 import amf.apicontract.internal.transformation.Oas20TransformationPipeline
 import amf.apicontract.internal.transformation.compatibility.common.SemanticFlattenFilter
 import amf.apicontract.internal.transformation.compatibility.oas._
-import amf.apicontract.internal.transformation.compatibility.oas3.CleanRepeatedOperationIds
 import amf.core.client.common.transform._
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 
