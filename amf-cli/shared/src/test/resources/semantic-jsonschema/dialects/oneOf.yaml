@@ -11,6 +11,7 @@ nodeMappings:
         range: string
         propertyTerm: foaf.address
         mandatory: false
+    additionalProperties: true
   SchemaNode:
     classTerm: foaf.Something
     mapping:
@@ -18,6 +19,7 @@ nodeMappings:
         range: string
         propertyTerm: foaf.displayName
         mandatory: false
+    additionalProperties: true
 external:
   foaf: http://xmlns.com/foaf/0.1/
 dialect: amf-json-schema-generated-dialect

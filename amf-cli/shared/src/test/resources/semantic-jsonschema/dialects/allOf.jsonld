@@ -109,7 +109,8 @@
         {
           "@id": "/and/shape/Parent1/property/property/displayName"
         }
-      ]
+      ],
+      "shacl:closed": false
     },
     {
       "@id": "#/declarations/Child",
@@ -132,6 +133,7 @@
           "@id": "/property/property/age"
         }
       ],
+      "shacl:closed": false,
       "doc:extends": [
         {
           "@id": "#/declarations/Child/null"

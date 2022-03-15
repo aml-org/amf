@@ -8,6 +8,7 @@ nodeMappings:
       age:
         range: integer
         mandatory: true
+    additionalProperties: true
 external:
   ns0: http://test.com/my_test_vocabulary#
 dialect: amf-json-schema-generated-dialect

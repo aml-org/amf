@@ -8,6 +8,7 @@ nodeMappings:
       someNonExistingProperty:
         range: any
         mandatory: true
+    additionalProperties: true
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:
