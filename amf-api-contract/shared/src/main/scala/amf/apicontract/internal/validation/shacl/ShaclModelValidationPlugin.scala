@@ -24,21 +24,18 @@ case class ShaclModelValidationPlugin(profile: ProfileName)
 
   override protected def specificValidate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
-    validateWithShacl(unit, options: ValidationOptions)
+    Future(validateWithShacl(unit, options: ValidationOptions))
   }
 
   private def validateWithShacl(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+      implicit executionContext: ExecutionContext): AMFValidationReport = {
 
     val validator = new CustomShaclValidator(functions, profile.messageStyle)
     val validations =
       withSemanticExtensionsConstraints(effectiveOrException(options.config, profile), options.config.constraints)
 
-    validator
-      .validate(unit, validations.effective.values.toSeq)
-      .map { report =>
-        adaptToAmfReport(unit, profile, report, validations)
-      }
+    val report = validator.validate(unit, validations.effective.values.toSeq)
+    adaptToAmfReport(unit, profile, report, validations)
   }
 
   private val functions: CustomShaclFunctions = CustomShaclFunctions.functions

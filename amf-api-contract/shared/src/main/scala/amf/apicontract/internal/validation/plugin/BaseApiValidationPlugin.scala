@@ -1,12 +1,11 @@
 package amf.apicontract.internal.validation.plugin
 
-import amf.aml.internal.utils.DialectRegister
 import amf.core.client.common.validation._
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.plugins.validation.{AMFValidatePlugin, ValidationInfo, ValidationOptions, ValidationResult}
-import amf.core.internal.validation.{EffectiveValidations, ValidationConfiguration, core}
+import amf.core.internal.validation.{EffectiveValidations, ValidationConfiguration}
 
 import scala.concurrent.{ExecutionContext, Future}
 

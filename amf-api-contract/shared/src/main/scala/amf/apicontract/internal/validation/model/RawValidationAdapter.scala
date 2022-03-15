@@ -39,7 +39,7 @@ object RawValidationAdapter extends ImportUtils {
       case SHACL_TARGET_OBJECTS_OF_IRI =>
         Seq(
           spec.copy(
-            targetObject = Seq(validation.owlProperty),
+            targetObject = Set(validation.owlProperty),
             nodeConstraints = Seq(NodeConstraint(validation.constraint, validation.value))
           ))
       case _ => throw new Exception(s"Unknown validation target ${validation.target}")
@@ -53,7 +53,7 @@ object RawValidationAdapter extends ImportUtils {
       severity = amfToShaclSeverity(validation.severity),
       ramlMessage = Some(validation.ramlErrorMessage),
       oasMessage = Some(validation.openApiErrorMessage),
-      targetClass = Seq(validation.owlClass)
+      targetClass = Set(validation.owlClass)
     )
 
   private def specWithFunctionConstraint(validation: AMFValidation, spec: ValidationSpecification, sh: ValueType) = {
