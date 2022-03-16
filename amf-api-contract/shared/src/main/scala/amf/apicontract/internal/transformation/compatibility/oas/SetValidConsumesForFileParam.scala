@@ -1,4 +1,4 @@
-package amf.apicontract.internal.transformation.compatibility.oas3
+package amf.apicontract.internal.transformation.compatibility.oas
 
 import amf.apicontract.client.scala.model.domain.Operation
 import amf.core.client.scala.AMFGraphConfiguration
