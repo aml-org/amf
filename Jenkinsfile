@@ -57,7 +57,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'sem-json-schema-publish'
         }
       }
       steps {
@@ -73,6 +72,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'sem-json-schema-publish'
         }
       }
       steps {
