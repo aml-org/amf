@@ -1,10 +1,12 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
+import amf.aml.client.scala.model.domain.NodeMapping
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.DomainElement
-import amf.shapes.client.scala.model.domain.{AnyShape, CuriePrefix, NodeShape}
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape}
+import amf.shapes.internal.spec.jsonschema.semanticjsonschema.SemanticJsonSchemaValidations.UnsupportedConstraint
 
-case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(implicit errorHandler: AMFErrorHandler) {
+case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(implicit eh: AMFErrorHandler) {
 
   val shape: AnyShape = s.linkTarget.getOrElse(s).asInstanceOf[AnyShape]
 
@@ -12,8 +14,16 @@ case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(imp
     ensureNotTransformed {
       updateContext { ctx =>
         shape match {
+          case _: ScalarShape                  => shapeErrorAndDummyMapping("Scalar at this level is not supported")
+          case any: AnyShape if any.isAnyType  => shapeErrorAndDummyMapping("Any at this level is not supported")
+          case not: AnyShape if not.isNot      => shapeErrorAndDummyMapping("Not is not supported")
+          case anyOf: AnyShape if anyOf.isOr   => shapeErrorAndDummyMapping("AnyOf is not supported")
+          case oneOf: AnyShape if oneOf.isXOne => OneOfShapeTransformer(oneOf, ctx).transform()
+          case allOf: AnyShape if allOf.isAnd  => AllOfShapeTransformer(allOf, ctx).transform()
+          case conditional: AnyShape if conditional.isConditional =>
+            ConditionalShapeTransformer(conditional, ctx).transform()
           case node: NodeShape if node.properties.nonEmpty => NodeShapeTransformer(node, ctx).transform()
-          case any: AnyShape                               => AnyShapeTransformer(any, ctx).transform()
+          case _                                           => shapeErrorAndDummyMapping("Non supported schema type")
         }
       }
     }
@@ -31,5 +41,10 @@ case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(imp
       case Some(semantics) => f(ctx.updateSemanticContext(semantics))
       case _               => f(ctx)
     }
+  }
+
+  private def shapeErrorAndDummyMapping(errorMessage: String): NodeMapping = {
+    eh.violation(UnsupportedConstraint, shape.id, errorMessage)
+    NodeMapping(shape.annotations).withId(shape.id)
   }
 }

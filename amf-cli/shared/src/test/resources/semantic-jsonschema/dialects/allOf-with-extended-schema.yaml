@@ -1,0 +1,39 @@
+#%Dialect 1.0
+nodeMappings:
+  Child:
+    extends:
+      - SchemaNode
+      - SchemaNode_1
+      - SchemaNode_2
+      - extension_Child
+  extension_Child:
+    mapping:
+      d:
+        range: number
+        mandatory: true
+    additionalProperties: true
+  SchemaNode:
+    mapping:
+      a:
+        range: string
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_1:
+    mapping:
+      b:
+        range: integer
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_2:
+    mapping:
+      c:
+        range: boolean
+        mandatory: false
+    additionalProperties: true
+external:
+  ns0: http://test.com/vocab#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Child

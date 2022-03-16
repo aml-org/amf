@@ -4,24 +4,27 @@ nodeMappings:
     union:
       - SchemaNode
       - SchemaNode_1
-  SchemaNode_1:
-    classTerm: foaf.Location
+      - SchemaNode_2
+  SchemaNode:
     mapping:
-      address:
+      a:
         range: string
-        propertyTerm: foaf.address
         mandatory: false
     additionalProperties: true
-  SchemaNode:
-    classTerm: foaf.Something
+  SchemaNode_1:
     mapping:
-      displayName:
-        range: string
-        propertyTerm: foaf.displayName
+      b:
+        range: integer
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_2:
+    mapping:
+      c:
+        range: boolean
         mandatory: false
     additionalProperties: true
 external:
-  foaf: http://xmlns.com/foaf/0.1/
+  ns0: http://test.com/vocab#
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:

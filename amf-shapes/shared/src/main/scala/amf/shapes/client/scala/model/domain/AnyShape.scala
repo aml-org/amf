@@ -62,14 +62,21 @@ class AnyShape private[amf] (val fields: Fields, val annotations: Annotations = 
   // Method to check that the AnyShape is an any type
   protected[amf] def isAnyType: Boolean =
     this.getClass == classOf[AnyShape] &&
-      !fields.exists(AnyShapeModel.Xone) &&
-      !fields.exists(AnyShapeModel.Or) &&
-      !fields.exists(AnyShapeModel.And) &&
-      !fields.exists(AnyShapeModel.Not) &&
-      !fields.exists(AnyShapeModel.If) &&
-      !fields.exists(AnyShapeModel.Else) &&
-      !fields.exists(AnyShapeModel.Then) &&
+      !isXOne &&
+      !isOr &&
+      !isAnd &&
+      !isNot &&
+      !isConditional &&
       !fields.exists(AnyShapeModel.Inherits)
+
+  protected[amf] def isXOne: Boolean = fields.exists(AnyShapeModel.Xone) && xone.nonEmpty
+  protected[amf] def isOr: Boolean   = fields.exists(AnyShapeModel.Or) && or.nonEmpty
+  protected[amf] def isAnd: Boolean  = fields.exists(AnyShapeModel.And) && and.nonEmpty
+  protected[amf] def isNot: Boolean  = fields.exists(AnyShapeModel.Not)
+  protected[amf] def isConditional: Boolean =
+    fields.exists(AnyShapeModel.If) ||
+      fields.exists(AnyShapeModel.Else) ||
+      fields.exists(AnyShapeModel.Then)
 }
 
 object AnyShape {

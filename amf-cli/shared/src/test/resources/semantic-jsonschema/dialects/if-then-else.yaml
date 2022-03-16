@@ -1,0 +1,37 @@
+#%Dialect 1.0
+nodeMappings:
+  Conditional:
+    conditional:
+      if: SchemaNode
+      then: SchemaNode_1
+      else: SchemaNode_2
+  SchemaNode:
+    mapping:
+      a:
+        range: any
+        mandatory: false
+        enum:
+          - condition
+    additionalProperties: true
+  SchemaNode_1:
+    mapping:
+      a:
+        range: string
+        propertyTerm: config.sensitive
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_2:
+    mapping:
+      a:
+        range: string
+        propertyTerm: config.dataweaveExpression
+        mandatory: false
+    additionalProperties: true
+external:
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: http://test.com/vocab#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Conditional

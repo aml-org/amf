@@ -1,0 +1,187 @@
+{
+  "@graph": [
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      }
+    },
+    {
+      "@id": "/externals/foaf",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "foaf",
+      "meta:base": "http://xmlns.com/foaf/0.1/"
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/Child"
+        }
+      ]
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/SchemaNode"
+        },
+        {
+          "@id": "#/declarations/Child"
+        },
+        {
+          "@id": "#/declarations/SchemaNode_1"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "amf-json-schema-generated-dialect",
+      "core:version": "1.0",
+      "meta:externals": [
+        {
+          "@id": "/externals/foaf"
+        }
+      ],
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declarations/SchemaNode",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:targetClass": [
+        {
+          "@id": "http://xmlns.com/foaf/0.1/Something"
+        }
+      ],
+      "core:name": "SchemaNode",
+      "shacl:property": [
+        {
+          "@id": "/exclusiveOr/shape/Parent1/property/property/displayName"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "#/declarations/Child",
+      "@type": [
+        "meta:UnionNodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "Child",
+      "shacl:node": {
+        "@id": "#/declarations/Child/list"
+      }
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:targetClass": [
+        {
+          "@id": "http://xmlns.com/foaf/0.1/Location"
+        }
+      ],
+      "core:name": "SchemaNode_1",
+      "shacl:property": [
+        {
+          "@id": "/exclusiveOr/shape/item1/property/property/address"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "/exclusiveOr/shape/Parent1/property/property/displayName",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://xmlns.com/foaf/0.1/displayName"
+        }
+      ],
+      "core:name": "displayName",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "#/declarations/Child/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@id": "#/declarations/SchemaNode"
+      },
+      "rdfs:_2": {
+        "@id": "#/declarations/SchemaNode_1"
+      }
+    },
+    {
+      "@id": "/exclusiveOr/shape/item1/property/property/address",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://xmlns.com/foaf/0.1/address"
+        }
+      ],
+      "core:name": "address",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/oneOf-custom.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}
