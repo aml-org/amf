@@ -1,0 +1,54 @@
+{
+  "@graph": [
+    {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:DialectInstanceProcessingData"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\""
+        }
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "amf-json-schema-generated-dialect 1.0"
+    },
+    {
+      "@id": "#/encodes",
+      "@type": [
+        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/SchemaNode_2",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "config:dataweaveExpression": "not-condition"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "meta:DialectInstance",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\""
+        }
+      ],
+      "doc:encodes": {
+        "@id": "#/encodes"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/if-then-else-else.json",
+    "config": "anypoint://vocabulary/policy.yaml#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

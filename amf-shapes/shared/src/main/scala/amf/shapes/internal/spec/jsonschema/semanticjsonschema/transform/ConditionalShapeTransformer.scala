@@ -23,9 +23,6 @@ case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformation
     processConditionalComponent(AnyShapeModel.Then, ConditionalNodeMappingModel.Then)
     processConditionalComponent(AnyShapeModel.Else, ConditionalNodeMappingModel.Else)
 
-    // Could I add the extended schema directly to the root node? This could be done also for the Union
-//    addExtendedSchema(conditionalMapping)
-
     conditionalMapping
   }
 
@@ -33,7 +30,7 @@ case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformation
     Option(shape.fields.get(fieldShape)).foreach {
       case component: AnyShape =>
         val transformed = ShapeTransformation(component, ctx).transform()
-        addExtendedSchema(transformed)
-        conditionalMapping.set(fieldDialect, getIri(transformed))
+        if (fieldShape != AnyShapeModel.If) addExtendedSchema(transformed)
+        conditionalMapping.set(fieldDialect, getIri(transformed).head)
     }
 }

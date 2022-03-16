@@ -1,0 +1,291 @@
+{
+  "@graph": [
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      }
+    },
+    {
+      "@id": "/externals/ns0",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "ns0",
+      "meta:base": "http://test.com/vocab#"
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/Child"
+        }
+      ]
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/SchemaNode_2"
+        },
+        {
+          "@id": "#/declarations/SchemaNode"
+        },
+        {
+          "@id": "#/declarations/Child"
+        },
+        {
+          "@id": "#/declarations/SchemaNode_1"
+        },
+        {
+          "@id": "#/declarations/extension_Child"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "amf-json-schema-generated-dialect",
+      "core:version": "1.0",
+      "meta:externals": [
+        {
+          "@id": "/externals/ns0"
+        }
+      ],
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declarations/SchemaNode_2",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_2",
+      "shacl:property": [
+        {
+          "@id": "/exclusiveOr/shape/item2/property/property/c"
+        }
+      ],
+      "shacl:closed": false,
+      "doc:extends": [
+        {
+          "@id": "#/declarations/SchemaNode_2/null"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode",
+      "shacl:property": [
+        {
+          "@id": "/exclusiveOr/shape/item0/property/property/a"
+        }
+      ],
+      "shacl:closed": false,
+      "doc:extends": [
+        {
+          "@id": "#/declarations/SchemaNode/null"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Child",
+      "@type": [
+        "meta:UnionNodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "Child",
+      "shacl:node": {
+        "@id": "#/declarations/Child/list"
+      }
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_1",
+      "shacl:property": [
+        {
+          "@id": "/exclusiveOr/shape/item1/property/property/b"
+        }
+      ],
+      "shacl:closed": false,
+      "doc:extends": [
+        {
+          "@id": "#/declarations/SchemaNode_1/null"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/extension_Child",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "extension_Child",
+      "shacl:property": [
+        {
+          "@id": "/property/property/d"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "/exclusiveOr/shape/item2/property/property/c",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "c",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "#/declarations/SchemaNode_2/null",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "#/declarations/extension_Child"
+        }
+      ],
+      "doc:link-label": "extension_Child"
+    },
+    {
+      "@id": "/exclusiveOr/shape/item0/property/property/a",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "a",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "#/declarations/SchemaNode/null",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "#/declarations/extension_Child"
+        }
+      ],
+      "doc:link-label": "extension_Child"
+    },
+    {
+      "@id": "#/declarations/Child/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@id": "#/declarations/SchemaNode"
+      },
+      "rdfs:_2": {
+        "@id": "#/declarations/SchemaNode_1"
+      },
+      "rdfs:_3": {
+        "@id": "#/declarations/SchemaNode_2"
+      }
+    },
+    {
+      "@id": "/exclusiveOr/shape/item1/property/property/b",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "b",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1/null",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "#/declarations/extension_Child"
+        }
+      ],
+      "doc:link-label": "extension_Child"
+    },
+    {
+      "@id": "/property/property/d",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "d",
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "shacl:minCount": 1
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/oneOf-with-extended-schema.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

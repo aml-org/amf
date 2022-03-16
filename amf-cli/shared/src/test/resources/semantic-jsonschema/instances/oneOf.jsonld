@@ -7,7 +7,7 @@
       ],
       "meta:definedBy": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/oneOf.json"
+          "@id": "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\""
         }
       ],
       "doc:transformed": false,
@@ -16,12 +16,11 @@
     {
       "@id": "#/encodes",
       "@type": [
-        "foaf:Something",
-        "#/declarations/SchemaNode",
+        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/SchemaNode",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
-      "foaf:displayName": "Pepito"
+      "data:a": "Pepito"
     },
     {
       "@id": "",
@@ -34,7 +33,7 @@
       ],
       "meta:definedBy": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/oneOf.json"
+          "@id": "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\""
         }
       ],
       "doc:encodes": {
@@ -48,8 +47,8 @@
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/oneOf.json",
+    "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
-    "meta": "http://a.ml/vocabularies/meta#",
-    "foaf": "http://xmlns.com/foaf/0.1/"
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

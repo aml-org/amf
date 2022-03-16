@@ -1,27 +1,30 @@
 #%Dialect 1.0
 nodeMappings:
   Child:
-    classTerm: foaf.Person
-    mapping:
-      name:
-        range: string
-        mandatory: true
-      age:
-        range: number
-        mandatory: true
-    extends: SchemaNode
-    additionalProperties: true
+    extends:
+      - SchemaNode
+      - SchemaNode_1
+      - SchemaNode_2
   SchemaNode:
     mapping:
-      displayName:
+      a:
         range: string
-        propertyTerm: foaf.displayName
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_1:
+    mapping:
+      b:
+        range: integer
+        mandatory: false
+    additionalProperties: true
+  SchemaNode_2:
+    mapping:
+      c:
+        range: boolean
         mandatory: false
     additionalProperties: true
 external:
   ns0: http://test.com/vocab#
-  xsd: http://www.w3.org/2001/XMLSchema#
-  foaf: http://xmlns.com/foaf/0.1/
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:

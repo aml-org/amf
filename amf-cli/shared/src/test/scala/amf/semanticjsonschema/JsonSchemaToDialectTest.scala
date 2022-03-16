@@ -23,8 +23,6 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("basic-with-characteristics")
   multiOutputTest("complex-with-characteristics")
   multiOutputTest("intermediate")
-  multiOutputTest("allOf")
-  multiOutputTest("oneOf")
   multiOutputTest("remote-context")
   multiOutputTest("minimum-maximum")
   multiOutputTest("any-property")
@@ -36,6 +34,14 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("without-schema-key")
   multiOutputTest("any-array")
   multiOutputTest("additional-properties")
+  multiOutputTest("oneOf")
+  multiOutputTest("oneOf-with-extended-schema")
+  multiOutputTest("oneOf-custom")
+  multiOutputTest("allOf")
+  multiOutputTest("allOf-with-extended-schema")
+  multiOutputTest("allOf-custom")
+  multiOutputTest("if-then-else")
+  multiOutputTest("if-then-else-with-extended-schema")
 
   private def multiOutputTest(filename: String): Unit = {
 

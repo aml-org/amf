@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#"
+  },
+  "title": "Child",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "b": {
+          "type": "integer"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "c": {
+          "type": "boolean"
+        }
+      }
+    }
+  ],
+  "type": "object",
+  "properties": {
+    "d": {
+      "type": "number"
+    }
+  },
+  "required": ["d"]
+}
