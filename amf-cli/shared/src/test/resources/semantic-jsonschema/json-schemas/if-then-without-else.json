@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#"
+  },
+  "title": "Conditional",
+  "if": {
+    "properties": {
+      "country": {
+        "const": "United States of America"
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "postal_code": {
+        "pattern": "[0-9]{5}(-[0-9]{4})?"
+      }
+    }
+  }
+}

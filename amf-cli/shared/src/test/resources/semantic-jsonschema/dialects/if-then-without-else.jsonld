@@ -1,0 +1,196 @@
+{
+  "@graph": [
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      }
+    },
+    {
+      "@id": "/externals/ns0",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "ns0",
+      "meta:base": "http://test.com/vocab#"
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/Conditional"
+        }
+      ]
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/SchemaNode_2"
+        },
+        {
+          "@id": "#/declarations/SchemaNode"
+        },
+        {
+          "@id": "#/declarations/Conditional"
+        },
+        {
+          "@id": "#/declarations/SchemaNode_1"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "amf-json-schema-generated-dialect",
+      "core:version": "1.0",
+      "meta:externals": [
+        {
+          "@id": "/externals/ns0"
+        }
+      ],
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declarations/SchemaNode_2",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_2",
+      "shacl:property": [],
+      "shacl:closed": false
+    },
+    {
+      "@id": "#/declarations/SchemaNode",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode",
+      "shacl:property": [
+        {
+          "@id": "/shape/if/property/property/country"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "#/declarations/Conditional",
+      "@type": [
+        "meta:ConditionalNodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "Conditional",
+      "http://a.ml/vocabularies/amf/aml#if": [
+        {
+          "@id": "#/declarations/SchemaNode"
+        }
+      ],
+      "http://a.ml/vocabularies/amf/aml#then": [
+        {
+          "@id": "#/declarations/SchemaNode_1"
+        }
+      ],
+      "http://a.ml/vocabularies/amf/aml#else": [
+        {
+          "@id": "#/declarations/SchemaNode_2"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_1",
+      "shacl:property": [
+        {
+          "@id": "/shape/then/property/property/postal_code"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "/shape/if/property/property/country",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "country",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#anyType"
+        }
+      ],
+      "shacl:minCount": 0,
+      "shacl:in": {
+        "@id": "/shape/if/property/property/country/list"
+      }
+    },
+    {
+      "@id": "/shape/then/property/property/postal_code",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "postal_code",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0,
+      "shacl:pattern": "[0-9]{5}(-[0-9]{4})?"
+    },
+    {
+      "@id": "/shape/if/property/property/country/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@value": "United States of America",
+        "@type": "xsd:string"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/if-then-without-else.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  }
+}

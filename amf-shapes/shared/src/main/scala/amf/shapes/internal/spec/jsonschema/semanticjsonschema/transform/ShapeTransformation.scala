@@ -22,8 +22,8 @@ case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(imp
           case allOf: AnyShape if allOf.isAnd  => AllOfShapeTransformer(allOf, ctx).transform()
           case conditional: AnyShape if conditional.isConditional =>
             ConditionalShapeTransformer(conditional, ctx).transform()
-          case node: NodeShape if node.properties.nonEmpty => NodeShapeTransformer(node, ctx).transform()
-          case _                                           => shapeErrorAndDummyMapping("Non supported schema type")
+          case node: NodeShape => NodeShapeTransformer(node, ctx).transform()
+          case _               => shapeErrorAndDummyMapping("Non supported schema type")
         }
       }
     }
@@ -45,6 +45,6 @@ case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(imp
 
   private def shapeErrorAndDummyMapping(errorMessage: String): NodeMapping = {
     eh.violation(UnsupportedConstraint, shape.id, errorMessage)
-    NodeMapping(shape.annotations).withId(shape.id)
+    TransformationHelper.dummyMapping(shape)
   }
 }

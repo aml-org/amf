@@ -16,11 +16,11 @@
     {
       "@id": "#/encodes",
       "@type": [
-        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/SchemaNode_2",
+        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/SchemaNode_1",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
-      "config:dataweaveExpression": "not-condition"
+      "data:postal_code": "20500"
     },
     {
       "@id": "",
@@ -46,8 +46,8 @@
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/if-then-else-else.json",
-    "config": "anypoint://vocabulary/policy.yaml#",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/if-then-without-else-match.json",
+    "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
     "meta": "http://a.ml/vocabularies/meta#"
   }
