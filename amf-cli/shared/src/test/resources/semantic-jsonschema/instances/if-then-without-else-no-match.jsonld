@@ -16,11 +16,10 @@
     {
       "@id": "#/encodes",
       "@type": [
-        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/SchemaNode_1",
+        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/SchemaNode_2",
         "meta:DialectDomainElement",
         "doc:DomainElement"
-      ],
-      "config:sensitive": "condition"
+      ]
     },
     {
       "@id": "",
@@ -46,8 +45,7 @@
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/if-then-else-then.json",
-    "config": "anypoint://vocabulary/policy.yaml#",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/instances/if-then-without-else-no-match.json",
     "doc": "http://a.ml/vocabularies/document#",
     "meta": "http://a.ml/vocabularies/meta#"
   }

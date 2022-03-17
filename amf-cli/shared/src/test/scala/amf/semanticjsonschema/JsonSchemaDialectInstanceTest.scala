@@ -33,9 +33,15 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
   instanceValidation("allOf")
   instanceValidation("allOf-with-extended-schema")
   instanceValidation("allOf-custom")
-  instanceValidation("if-then-else", Some("if-then-else-then"))
-  instanceValidation("if-then-else", Some("if-then-else-else"))
+  instanceValidation("if-then-else", Some("if-then-else-match"))
+  instanceValidation("if-then-else", Some("if-then-else-no-match"))
   instanceValidation("if-then-else-with-extended-schema")
+  instanceValidation("if-then-without-else", Some("if-then-without-else-match"))
+  instanceValidation("if-then-without-else", Some("if-then-without-else-no-match"))
+  instanceValidation("if-then-without-else-with-extended-schema",
+                     Some("if-then-without-else-with-extended-schema-match"))
+  instanceValidation("if-then-without-else-with-extended-schema",
+                     Some("if-then-without-else-with-extended-schema-no-match"))
 
   private def instanceValidation(schemaName: String, instanceName: Option[String] = None): Unit = {
     val instanceFinal = instanceName.getOrElse(schemaName)

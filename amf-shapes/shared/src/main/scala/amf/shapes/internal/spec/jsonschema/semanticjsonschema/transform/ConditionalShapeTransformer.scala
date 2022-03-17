@@ -1,11 +1,8 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
-import amf.aml.client.scala.model.domain.{ConditionalNodeMapping, NodeMapping}
-import amf.aml.internal.metamodel.domain.ConditionalNodeMappingModel
+import amf.aml.client.scala.model.domain.ConditionalNodeMapping
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.internal.metamodel.Field
 import amf.shapes.client.scala.model.domain.AnyShape
-import amf.shapes.internal.domain.metamodel.AnyShapeModel
 
 case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)(implicit eh: AMFErrorHandler)
     extends ExtendedSchemaTransformer(shape, ctx)
@@ -19,18 +16,34 @@ case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformation
     setMappingId(conditionalMapping)
     updateContext(conditionalMapping)
 
-    processConditionalComponent(AnyShapeModel.If, ConditionalNodeMappingModel.If)
-    processConditionalComponent(AnyShapeModel.Then, ConditionalNodeMappingModel.Then)
-    processConditionalComponent(AnyShapeModel.Else, ConditionalNodeMappingModel.Else)
+    Option(shape.ifShape).foreach {
+      case ifShape: AnyShape =>
+        val transformed = ShapeTransformation(ifShape, ctx).transform()
+        conditionalMapping.withIfMapping(getIri(transformed).head)
+    }
+
+    val transformedThen = Option(shape.thenShape) match {
+      case Some(thenShape) if thenShape.isInstanceOf[AnyShape] =>
+        val transformed = ShapeTransformation(thenShape.asInstanceOf[AnyShape], ctx).transform()
+        addExtendedSchema(transformed)
+        transformed
+      case None =>
+        extendedSchema.getOrElse(
+          ShapeTransformation(TransformationHelper.dummyShape(conditionalMapping.id + "/then"), ctx).transform())
+    }
+    conditionalMapping.withThenMapping(getIri(transformedThen).head)
+
+    val transformedElse = Option(shape.elseShape) match {
+      case Some(elseShape) if elseShape.isInstanceOf[AnyShape] =>
+        val transformed = ShapeTransformation(elseShape.asInstanceOf[AnyShape], ctx).transform()
+        addExtendedSchema(transformed)
+        transformed
+      case None =>
+        extendedSchema.getOrElse(
+          ShapeTransformation(TransformationHelper.dummyShape(conditionalMapping.id + "/else"), ctx).transform())
+    }
+    conditionalMapping.withElseMapping(getIri(transformedElse).head)
 
     conditionalMapping
   }
-
-  private def processConditionalComponent(fieldShape: Field, fieldDialect: Field): Unit =
-    Option(shape.fields.get(fieldShape)).foreach {
-      case component: AnyShape =>
-        val transformed = ShapeTransformation(component, ctx).transform()
-        if (fieldShape != AnyShapeModel.If) addExtendedSchema(transformed)
-        conditionalMapping.set(fieldDialect, getIri(transformed).head)
-    }
 }

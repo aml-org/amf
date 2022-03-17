@@ -1,8 +1,8 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
-import amf.aml.client.scala.model.domain.{NodeMapping, UnionNodeMapping}
+import amf.aml.client.scala.model.domain.NodeMapping
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
+import amf.shapes.client.scala.model.domain.NodeShape
 
 case class NodeShapeTransformer(shape: NodeShape, ctx: ShapeTransformationContext)(
     implicit errorHandler: AMFErrorHandler)
