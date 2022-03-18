@@ -1,0 +1,13 @@
+#%Dialect 1.0
+nodeMappings:
+  change-headers:
+    additionalProperties: true
+external:
+  security: anypoint://vocabulary/policy.yaml#
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: anypoint://vocabulary/policy.yaml#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: change-headers
