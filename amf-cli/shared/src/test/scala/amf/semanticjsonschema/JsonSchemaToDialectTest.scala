@@ -44,6 +44,7 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("if-then-else-with-extended-schema")
   multiOutputTest("if-then-without-else")
   multiOutputTest("if-then-without-else-with-extended-schema")
+  multiOutputTest("empty-object")
 
   private def multiOutputTest(filename: String): Unit = {
 
