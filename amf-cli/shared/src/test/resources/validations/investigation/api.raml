@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: mediatype-test-in-conversion-api
+version: v1
+mediaType: application/json
+
+/default-media-type:
+  description: This endpoint is inheriting media-type set on the root
+  post:
+    description: A
+    body:
+      type: array
+
+/specified-media-type:
+  description: This endpoint is settings it's own media-type
+  post:
+    description: B
+    body:
+      multipart/form-data:
+        type: object

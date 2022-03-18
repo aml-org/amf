@@ -34,6 +34,8 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   val raml08Client: AMFBaseUnitClient = raml08Config.baseUnitClient()
   val oasConfig: AMFConfiguration     = OASConfiguration.OAS30().withRenderOptions(ro)
   val oasClient: AMFBaseUnitClient    = oasConfig.baseUnitClient()
+  val oas2Config: AMFConfiguration    = OASConfiguration.OAS20().withRenderOptions(ro)
+  val oas2Client: AMFBaseUnitClient   = oas2Config.baseUnitClient()
 
   def modelAssertion(path: String, pipelineId: String = PipelineId.Default, transform: Boolean = true)(
       assertion: BaseUnit => Assertion): Future[Assertion] = {
@@ -333,6 +335,44 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       val typeWithReference = bu.asInstanceOf[Document].declares.last
       typeWithReference.annotations.lexical().start shouldBe Position(6, 2)
       typeWithReference.annotations.lexical().end shouldBe Position(7, 0)
+    }
+  }
+
+  test("investigation W-10845475") {
+    val api = s"$basePath/investigation/api.raml"
+    modelAssertion(api, transform = false) { bu =>
+      val transformResult = oasClient.transform(bu, PipelineId.Compatibility)
+      val baseUnit        = transformResult.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      val operation       = baseUnit.endPoints.last.operations.head
+
+      // which of these 3 should have the correct mediatype?
+      val mediaType   = operation.request.payloads.head.mediaType
+      val accepts     = operation.accepts
+      val contentType = operation.contentType
+
+      val renderResult = oasClient.render(transformResult.baseUnit)
+      print(renderResult)
+      mediaType.value() shouldBe "multipart/form-data"
+    }
+  }
+
+  test("investigation W-10845475 OAS 2.0") {
+    val api = s"$basePath/investigation/api.raml"
+    modelAssertion(api, transform = false) { bu =>
+      val transformResult = oas2Client.transform(bu, PipelineId.Compatibility)
+      val baseUnit        = transformResult.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      val operation       = baseUnit.endPoints.last.operations.head
+
+      // which of these 3 should have the correct mediatype?
+      val mediaType   = operation.request.payloads.head.mediaType
+      val accepts     = operation.accepts
+      val contentType = operation.contentType
+
+      val renderResult = oas2Client.render(transformResult.baseUnit)
+      print(renderResult)
+      mediaType.value() shouldBe "multipart/form-data"
+//      contentType.head.value() shouldBe "multipart/form-data"
+      accepts.head.value() shouldBe "multipart/form-data"
     }
   }
 }
