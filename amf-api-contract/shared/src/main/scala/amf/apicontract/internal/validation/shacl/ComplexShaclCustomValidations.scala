@@ -52,7 +52,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "raml-shapes.xmlWrapped",
           name = "raml-shapes.xmlWrapped",
-          in = ArrayBuffer("false"),
+          in = Set("false"),
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar")
@@ -151,7 +151,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "raml-shapes.xmlAttribute",
           name = "raml-shapes.xmlAttribute",
-          in = ArrayBuffer("false"),
+          in = Set("false"),
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute")
@@ -227,7 +227,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "http://a.ml/vocabularies/apiContract#binding",
           name = "apiContract.binding",
-          in = ArrayBuffer("formData"),
+          in = Set("formData"),
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
@@ -290,7 +290,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "http://a.ml/vocabularies/apiContract#required",
           name = "apiContract.required",
-          in = ArrayBuffer("true"),
+          in = Set("true"),
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#path-parameter-required")
@@ -304,7 +304,7 @@ object ComplexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "apiContract:binding",
           name = "apiContract:binding",
-          in = ArrayBuffer("path"),
+          in = Set("path"),
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#path-parameter-required")
