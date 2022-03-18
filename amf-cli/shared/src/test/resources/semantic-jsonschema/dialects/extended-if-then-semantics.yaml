@@ -23,6 +23,7 @@ nodeMappings:
     conditional:
       if: SchemaNode_1
       then: SchemaNode_2
+      else: SchemaNode_3
   SchemaNode_1:
     mapping:
       logStatistics:
@@ -36,6 +37,8 @@ nodeMappings:
       statisticsIdentifier:
         range: string
         mandatory: false
+    additionalProperties: true
+  SchemaNode_3:
     additionalProperties: true
 external:
   security: anypoint://vocabulary/policy.yaml#

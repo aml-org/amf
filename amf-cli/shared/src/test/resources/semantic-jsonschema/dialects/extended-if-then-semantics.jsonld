@@ -85,6 +85,9 @@
           "@id": "#/declarations/SomePolicy"
         },
         {
+          "@id": "#/declarations/SchemaNode_3"
+        },
+        {
           "@id": "#/declarations/extension_SomePolicy"
         }
       ],
@@ -151,6 +154,11 @@
         {
           "@id": "#/declarations/SchemaNode_2"
         }
+      ],
+      "http://a.ml/vocabularies/amf/aml#else": [
+        {
+          "@id": "#/declarations/SchemaNode_3"
+        }
       ]
     },
     {
@@ -184,6 +192,17 @@
           "@id": "#/declarations/SomePolicy/null"
         }
       ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_3",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_3",
+      "shacl:property": [],
+      "shacl:closed": false
     },
     {
       "@id": "#/declarations/extension_SomePolicy",
