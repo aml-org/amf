@@ -1,0 +1,60 @@
+#%Dialect 1.0
+nodeMappings:
+  SomePolicy:
+    extends:
+      - SchemaNode
+      - extension_SomePolicy
+  extension_SomePolicy:
+    mapping:
+      thisApiName:
+        range: string
+        propertyTerm: semantics.thisApiName
+        mandatory: true
+        pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+        default: "#[p('applicationName')]"
+      thisApiVersion:
+        range: string
+        propertyTerm: semantics.thisApiVersion
+        mandatory: true
+        pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+        default: "#[p('applicationVersion')]"
+    additionalProperties: true
+  SchemaNode:
+    conditional:
+      if: SchemaNode_1
+      then: SchemaNode_2
+  SchemaNode_1:
+    mapping:
+      logStatistics:
+        range: any
+        mandatory: true
+        enum:
+          - true
+    additionalProperties: true
+  SchemaNode_2:
+    mapping:
+      statisticsIdentifier:
+        range: string
+        mandatory: false
+    additionalProperties: true
+external:
+  security: anypoint://vocabulary/policy.yaml#
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: anypoint://vocabulary/policy.yaml#
+  semantics: https://a.ml/semantic-json-schema#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: SomePolicy
+---
+#%Vocabulary 1.0
+external:
+  security: anypoint://vocabulary/policy.yaml#
+base: https://a.ml/semantic-json-schema#
+vocabulary: Semantic JSON Schema Vocabulary
+propertyTerms:
+  thisApiName:
+    extends: security.dataweaveExpression
+  thisApiVersion:
+    extends: security.dataweaveExpression
