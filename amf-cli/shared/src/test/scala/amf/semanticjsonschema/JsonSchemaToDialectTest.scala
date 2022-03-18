@@ -1,12 +1,15 @@
 package amf.semanticjsonschema
 
+import amf.aml.client.scala.AMLConfiguration
+import amf.aml.client.scala.model.document.Dialect
+import amf.core.client.scala.AMFParseResult
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{AmfJsonHint, AmlHint, Hint}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
 import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
-import org.scalatest.Assertion
+import org.scalatest.{Assertion, Succeeded}
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -45,6 +48,9 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("if-then-without-else")
   multiOutputTest("if-then-without-else-with-extended-schema")
   multiOutputTest("empty-object")
+  // This test breaks if we use a Seq instead of a List in ShapeTransformationContext.transform()
+  // Couldn't figure out why
+  multiOutputTest("extended-if-then-semantics")
 
   private def multiOutputTest(filename: String): Unit = {
 
@@ -52,6 +58,10 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
     val finalPath         = s"$jsonSchemaPath$filename.json"
     val finalGoldenYaml   = s"$dialectPath$filename.yaml"
     val finalGoldenJsonLD = s"$dialectPath$filename.jsonld"
+
+    test(s"$finalLabel cycle") {
+      cycle(finalPath)
+    }
 
     test(s"$finalLabel to JSON-LD") {
       run(finalPath, finalGoldenJsonLD, AmfJsonHint)
@@ -61,13 +71,19 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
     }
   }
 
+  private def cycle(schema: String): Future[Assertion] = {
+    for {
+      result      <- parseSchema(schema)
+      cycleResult <- cycleDialect(result.baseUnit)
+    } yield {
+      val assertions = Seq(assert(result.conforms), assert(cycleResult.conforms))
+      assert(assertions.forall(_ == Succeeded))
+    }
+  }
+
   private def run(schema: String, golden: String, hint: Hint): Future[Assertion] = {
     for {
       result <- parseSchema(schema)
-      _ <- {
-        assert(result.conforms)
-        Future.successful(result)
-      }
       emitted <- {
         val expected = emit(result, hint)
         writeTemporaryFile(golden)(expected).flatMap(s => assertDifferences(s, golden))
@@ -79,6 +95,12 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
     val config = SemanticJsonSchemaConfiguration.predefined()
     config.baseUnitClient().parseSemanticSchema(path)
   }
+
+  private def cycleDialect(dialect: Dialect): Future[AMFParseResult] =
+    AMLConfiguration
+      .predefined()
+      .baseUnitClient()
+      .parseContent(AMLConfiguration.predefined().baseUnitClient().render(dialect))
 
   private def emit(result: AMFSemanticSchemaResult, target: Hint)(
       implicit executionContext: ExecutionContext): String = {
