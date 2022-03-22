@@ -335,4 +335,15 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
       typeWithReference.annotations.lexical().end shouldBe Position(7, 0)
     }
   }
+
+  test("Endpoint parameters with default annotation should be replaced during transformation") {
+    val api = s"$basePath/parameters/param-in-resource-types.raml"
+    modelAssertion(api) { bu =>
+      val components = new BaseUnitComponents
+      val endpoint = components.getFirstEndpoint(bu)
+      val parameters = endpoint.parameters.toList
+      parameters.size shouldBe 1
+      parameters.head.description.value() shouldBe "Name of the logger whose level is to be changed."
+    }
+  }
 }
