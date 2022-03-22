@@ -63,7 +63,7 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
   }
 
   private def parseInputType(objTypeDef: Node): Unit = {
-    val shape = new GraphQLInputTypeParser(objTypeDef).parse(doc.id)
+    val shape = GraphQLInputTypeParser(objTypeDef).parse(doc.id)
     ctx.declarations += shape
   }
 

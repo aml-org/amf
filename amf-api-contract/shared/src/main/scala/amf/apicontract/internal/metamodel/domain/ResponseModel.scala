@@ -1,17 +1,22 @@
 package amf.apicontract.internal.metamodel.domain
 
 import amf.apicontract.client.scala.model.domain.Response
-import amf.core.client.scala.vocabulary.Namespace.ApiContract
+import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Core}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.shapes.internal.domain.metamodel.`abstract`.{AbstractPayloadModel, AbstractResponseModel}
 
 /**
   * Response metamodel.
   */
-object ResponseModel extends DomainElementModel with KeyField with OptionalField with MessageModel {
+object ResponseModel extends AbstractResponseModel with MessageModel with OptionalField {
+
+  override val Payload: Field = Field(PayloadModel,
+                                      Core + "payload",
+                                      ModelDoc(ModelVocabularies.Core, "payload", "Payload for a Request/Response"))
 
   val StatusCode = Field(
     Str,

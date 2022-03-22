@@ -10,21 +10,20 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.DocumentedElement
+import amf.shapes.client.scala.model.domain.operations.{AbstractOperation, AbstractRequest, AbstractResponse}
 import amf.shapes.client.scala.model.domain.{CreativeWork, DocumentedElement}
 
 /**
   * Operation internal model.
   */
 case class Operation(fields: Fields, annotations: Annotations)
-    extends NamedDomainElement
+    extends AbstractOperation(fields, annotations)
     with SecuredElement
     with ExtensibleWebApiDomainElement
     with ServerContainer
     with DocumentedElement
     with Linkable {
 
-  def method: StrField      = fields.field(Method)
-  def description: StrField = fields.field(Description)
   def deprecated: BoolField = fields.field(Deprecated)
   def summary: StrField     = fields.field(Summary)
   // TODO: should return Option has field can be null
@@ -32,7 +31,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   def schemes: Seq[StrField]      = fields.field(Schemes)
   def accepts: Seq[StrField]      = fields.field(Accepts)
   def contentType: Seq[StrField]  = fields.field(ContentType)
-  def request: Request            = requests.headOption.orNull
+  override def request: Request   = requests.headOption.orNull
   def requests: Seq[Request]      = fields.field(OperationRequest)
   def responses: Seq[Response]    = fields.field(Responses)
   def tags: Seq[Tag]              = fields.field(Tags)
@@ -42,12 +41,14 @@ case class Operation(fields: Fields, annotations: Annotations)
   def bindings: OperationBindings = fields.field(Bindings)
   def operationId: StrField       = fields.field(OperationId)
 
+  override protected def buildRequest: Request = Request()
+
+  override protected def buildResponse: Response = Response()
+
   override def documentations: Seq[CreativeWork] = Seq(documentation)
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
-  def withMethod(method: String): this.type                     = set(Method, method)
-  def withDescription(description: String): this.type           = set(Description, description)
   def withDeprecated(deprecated: Boolean): this.type            = set(Deprecated, deprecated)
   def withSummary(summary: String): this.type                   = set(Summary, summary)
   def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
@@ -67,10 +68,8 @@ case class Operation(fields: Fields, annotations: Annotations)
   override def removeServers(): Unit = fields.removeField(OperationModel.Servers)
   def removeName(): fields.type      = fields.removeField(OperationModel.Name)
 
-  def withResponse(name: String): Response = {
-    val result = Response().withName(name).withStatusCode(if (name == "default") "200" else name)
-    add(Responses, result)
-    result
+  override def withResponse(name: String): Response = {
+    super.withResponse(name).asInstanceOf[Response]
   }
 
   def withRequest(): Request = {

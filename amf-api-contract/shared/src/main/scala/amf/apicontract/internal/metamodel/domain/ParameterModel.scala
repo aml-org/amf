@@ -8,29 +8,13 @@ import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
+import amf.shapes.internal.domain.metamodel.`abstract`.AbstractParameterModel
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 
 /**
   * Parameter metaModel.
   */
-object ParameterModel
-    extends DomainElementModel
-    with LinkableElementModel
-    with KeyField
-    with NameFieldSchema
-    with OptionalField
-    with ExamplesField
-    with DescriptionField {
-
-  val ParameterName = Field(
-    Str,
-    ApiContract + "paramName",
-    ModelDoc(ModelVocabularies.ApiContract, "paramName", "Name of a parameter", Seq((Namespace.Core + "name").iri())))
-
-  val Required =
-    Field(Bool,
-          ApiContract + "required",
-          ModelDoc(ModelVocabularies.ApiContract, "required", "Marks the parameter as required"))
+object ParameterModel extends AbstractParameterModel with OptionalField with ExamplesField {
 
   val Deprecated = Field(Bool,
                          Document + "deprecated",
@@ -50,22 +34,8 @@ object ParameterModel
   val AllowReserved =
     Field(Bool, ApiContract + "allowReserved", ModelDoc(ModelVocabularies.ApiContract, "allowReserved", ""))
 
-  val Binding = Field(
-    Str,
-    ApiContract + "binding",
-    ModelDoc(ModelVocabularies.ApiContract,
-             "binding",
-             "Part of the Request model where the parameter can be encoded (header, path, query param, etc.)")
-  )
-
-  val Schema = Field(ShapeModel,
-                     Shapes + "schema",
-                     ModelDoc(ModelVocabularies.Shapes, "schema", "Schema the parameter value must validate"))
-
   val Payloads =
     Field(Array(PayloadModel), ApiContract + "payload", ModelDoc(ModelVocabularies.ApiContract, "payload", ""))
-
-  override val key: Field = Name
 
   override val `type`: List[ValueType] = ApiContract + "Parameter" :: DomainElementModel.`type`
 

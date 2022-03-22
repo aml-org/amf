@@ -5,7 +5,7 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.client.scala.model.{BoolField, IntField, StrField}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.model.domain.operations.ShapeOperation
+import amf.shapes.client.scala.model.domain.operations.AbstractOperation
 import amf.shapes.internal.domain.metamodel.NodeShapeModel._
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, NodeShapeModel}
 import org.yaml.model.YPart
@@ -26,7 +26,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def discriminatorValueMapping: Seq[DiscriminatorValueMapping] =
     fields.field(NodeShapeModel.DiscriminatorValueMapping)
   def properties: Seq[PropertyShape]              = fields.field(Properties)
-  def operations: Seq[ShapeOperation]              = fields.field(Operations)
+  def operations: Seq[AbstractOperation]          = fields.field(Operations)
   def dependencies: Seq[PropertyDependencies]     = fields.field(Dependencies)
   def schemaDependencies: Seq[SchemaDependencies] = fields.field(NodeShapeModel.SchemaDependencies)
   def additionalPropertiesSchema: Shape           = fields.field(AdditionalPropertiesSchema)
@@ -47,7 +47,7 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   def discriminatorValueMapping(mappings: Seq[DiscriminatorValueMapping]): NodeShape.this.type =
     setArray(NodeShapeModel.DiscriminatorValueMapping, mappings)
   def withProperties(properties: Seq[PropertyShape]): this.type            = setArray(Properties, properties)
-  def withOperations(operations: Seq[ShapeOperation]): this.type            = setArray(Operations, operations)
+  def withOperations(operations: Seq[AbstractOperation]): this.type        = setArray(Operations, operations)
   def withDependencies(dependencies: Seq[PropertyDependencies]): this.type = setArray(Dependencies, dependencies)
   def withSchemaDependencies(dependencies: Seq[SchemaDependencies]): this.type =
     setArray(NodeShapeModel.SchemaDependencies, dependencies)
@@ -85,12 +85,6 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
     result
   }
 
-  def withOperation(name: String): ShapeOperation = {
-    val result = ShapeOperation().withName(name)
-    add(NodeShapeModel.Operations, result)
-    result
-  }
-
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     val isCycle = cycle.contains(id)
     if (Option(parent).exists(_.contains("#")))
@@ -120,7 +114,8 @@ case class NodeShape private[amf] (override val fields: Fields, override val ann
   override val meta: AnyShapeModel = NodeShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/shape/" + name.option().getOrElse("default-node").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/shape/" + name.option().getOrElse("default-node").urlComponentEncoded
 
   private[amf] override val ramlSyntaxKey: String = "nodeShape"
 

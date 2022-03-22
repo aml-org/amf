@@ -1,10 +1,16 @@
 package amf.graphql.internal.spec.domain
 
 import amf.apicontract.client.scala.model.domain.{EndPoint, Operation}
+import amf.graphql.client.scala.model.domain.QueryOperation
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
-import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENTS_DEFINITION, FIELDS_DEFINITION, FIELD_DEFINITION, INPUT_VALUE_DEFINITION}
+import amf.graphql.internal.spec.parser.syntax.TokenTypes.{
+  ARGUMENTS_DEFINITION,
+  FIELDS_DEFINITION,
+  FIELD_DEFINITION,
+  INPUT_VALUE_DEFINITION
+}
 import org.mulesoft.antlrast.ast.{Node, Terminal}
 
 case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit val ctx: GraphQLWebApiContext)
@@ -25,8 +31,8 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
 
   private def path(fieldName: String): String = {
     queryType match {
-      case RootTypes.Query => s"/query/$fieldName"
-      case RootTypes.Mutation => s"/mutation/$fieldName"
+      case RootTypes.Query        => s"/query/$fieldName"
+      case RootTypes.Mutation     => s"/mutation/$fieldName"
       case RootTypes.Subscription => s"/subscription/$fieldName"
     }
   }
@@ -68,7 +74,7 @@ case class GraphQLRootTypeParser(ast: Node, queryType: RootTypes.Value)(implicit
         }
 
         unpackNilUnion(parseType(argumentNode, queryParam.id)) match {
-          case NullableShape(true, shape)  =>
+          case NullableShape(true, shape) =>
             queryParam.withSchema(shape).withRequired(false)
           case NullableShape(false, shape) =>
             queryParam.withSchema(shape).withRequired(true)

@@ -5,16 +5,22 @@ import amf.apicontract.internal.metamodel.domain.ResponseModel._
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain._
 import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.Example
+import amf.shapes.client.scala.model.domain.operations.AbstractResponse
 import org.yaml.model.YMapEntry
 
 /**
   * Response internal model.
   */
 class Response(override val fields: Fields, override val annotations: Annotations)
-    extends Message(fields: Fields, annotations: Annotations) {
+    extends Message(fields: Fields, annotations: Annotations)
+    with AbstractResponse {
+
+  override def payload: Payload                = fields.field(ResponseModel.Payload)
+  def withPayload(payload: Payload): this.type = super.withPayload(payload)
 
   def statusCode: StrField      = fields.field(StatusCode)
   def links: Seq[TemplatedLink] = fields.field(Links)
@@ -63,12 +69,13 @@ class Response(override val fields: Fields, override val annotations: Annotation
     cloned.asInstanceOf[this.type]
   }
 
-  override def meta: ResponseModel.type = ResponseModel
+  override def meta: DomainElementModel = ResponseModel
 
   override def linkCopy(): Response = Response().withId(id)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/resp/" + name.option().getOrElse("default-response").urlComponentEncoded
+  private[amf] override def componentId: String =
+    "/resp/" + name.option().getOrElse("default-response").urlComponentEncoded
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Response.apply

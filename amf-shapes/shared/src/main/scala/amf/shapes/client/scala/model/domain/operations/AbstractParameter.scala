@@ -3,20 +3,21 @@ package amf.shapes.client.scala.model.domain.operations
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.{ExemplifiedDomainElement, NodeShape, ScalarShape}
-import amf.shapes.internal.domain.metamodel.operations.ShapeParameterModel
-import amf.shapes.internal.domain.metamodel.operations.ShapeParameterModel._
+import amf.shapes.internal.domain.metamodel.`abstract`.AbstractParameterModel
+import amf.shapes.internal.domain.metamodel.`abstract`.AbstractParameterModel.{Binding, Description, ParameterName, Required, Schema}
 import org.yaml.model.YPart
 
 /**
   * ShapeParameter internal model.
   */
-case class ShapeParameter(override val fields: Fields, override val annotations: Annotations)
+abstract class AbstractParameter(override val fields: Fields, override val annotations: Annotations)
   extends NamedDomainElement {
 
-  def parameterName: StrField    = fields.field(ParameterName)
+  def parameterName: StrField    = fields.field(AbstractParameterModel.ParameterName)
   def description: StrField      = fields.field(Description)
   def required: BoolField        = fields.field(Required)
   def schema: Shape              = fields.field(Schema)
@@ -32,18 +33,20 @@ case class ShapeParameter(override val fields: Fields, override val annotations:
 
   def withObjectSchema(name: String): NodeShape = {
     val node = NodeShape().withName(name)
-    set(ShapeParameterModel.Schema, node)
+    set(AbstractParameterModel.Schema, node)
     node
   }
 
   def withScalarSchema(name: String): ScalarShape = {
     val scalar = ScalarShape().withName(name)
-    set(ShapeParameterModel.Schema, scalar, Annotations.synthesized())
+    set(AbstractParameterModel.Schema, scalar, Annotations.synthesized())
     scalar
   }
 
-  def cloneParameter(parent: String): ShapeParameter = {
-    val parameter: ShapeParameter = ShapeParameter(Annotations(annotations))
+  protected def buildParameter(ann:Annotations) : AbstractParameter
+
+  def cloneParameter(parent: String): AbstractParameter = {
+    val parameter: AbstractParameter = buildParameter(Annotations(annotations))
     val cloned               = parameter.withName(name.value()).adopted(parent)
 
     this.fields.foreach {
@@ -59,7 +62,7 @@ case class ShapeParameter(override val fields: Fields, override val annotations:
     cloned.asInstanceOf[this.type]
   }
 
-  override def meta: ShapeParameterModel.type = ShapeParameterModel
+  override def meta: DomainElementModel = AbstractParameterModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   private[amf] override def componentId: String =
@@ -67,16 +70,6 @@ case class ShapeParameter(override val fields: Fields, override val annotations:
 
   private def encoded(value: StrField, default: String) = value.option().map(_.urlComponentEncoded).getOrElse(default)
 
-  override def nameField: Field  = ShapeParameterModel.Name
-}
-
-object ShapeParameter {
-  def apply(): ShapeParameter = apply(Annotations())
-
-  def apply(ast: YPart): ShapeParameter = apply(Annotations(ast))
-
-  def apply(annotations: Annotations): ShapeParameter = new ShapeParameter(Fields(), annotations)
-
-  def apply(fields: Fields, annotations: Annotations): ShapeParameter = new ShapeParameter(fields, annotations)
+  override def nameField: Field  = AbstractParameterModel.Name
 }
 

@@ -1,15 +1,16 @@
 package amf.graphql.internal.spec.domain
 
+import amf.graphql.client.scala.model.domain.{QueryOperation, QueryPayload, QueryRequest}
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.TokenTypes._
 import amf.graphql.internal.spec.parser.syntax.{GraphQLASTParserHelper, NullableShape}
-import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapePayload, ShapeRequest}
 import org.mulesoft.antlrast.ast.Node
 
-case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
-  val operation: ShapeOperation = ShapeOperation(toAnnotations(ast))
+case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext)
+    extends GraphQLASTParserHelper {
+  val operation: QueryOperation = QueryOperation(toAnnotations(ast))
 
-  def parse(adopt: ShapeOperation => Unit): Unit = {
+  def parse(adopt: QueryOperation => Unit): Unit = {
     parseName()
     adopt(operation)
     parseDescription()
@@ -25,7 +26,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
     }
   }
 
-  private def parseArgument(n: Node, request: ShapeRequest) = {
+  private def parseArgument(n: Node, request: QueryRequest) = {
     val name = findName(n, "AnonymousInputType", request.id, "Missing input type name")
 
     val param = request.withQueryParameter(name).withBinding("query")
@@ -49,7 +50,7 @@ case class GraphQLOperationFieldParser(ast: Node)(implicit val ctx: GraphQLWebAp
 
   private def parseRange(): Unit = {
     val response = operation.withResponse("default")
-    val payload = ShapePayload().withName("default")
+    val payload  = QueryPayload().withName("default")
     payload.adopted(response.id).withSchema(parseType(ast, operation.id))
     response.withPayload(payload)
   }

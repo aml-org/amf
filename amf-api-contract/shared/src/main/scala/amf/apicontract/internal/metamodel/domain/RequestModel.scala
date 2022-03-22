@@ -7,11 +7,12 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Bool}
 import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.shapes.internal.domain.metamodel.`abstract`.{AbstractParameterModel, AbstractRequestModel}
 
 /**
   * Request metaModel.
   */
-object RequestModel extends DomainElementModel with ParametersFieldModel with MessageModel with KeyField {
+object RequestModel extends AbstractRequestModel with MessageModel {
 
   val Required = Field(Bool,
                        ApiContract + "required",
@@ -21,6 +22,12 @@ object RequestModel extends DomainElementModel with ParametersFieldModel with Me
     Field(Array(ParameterModel),
           ApiContract + "cookieParameter",
           ModelDoc(ModelVocabularies.ApiContract, "cookieParameter", ""))
+
+  override val QueryParameters = Field(
+    Array(ParameterModel),
+    ApiContract + "parameter",
+    ModelDoc(ModelVocabularies.Core, "parameter", "Parameters associated to the communication model")
+  )
 
   override val `type`: List[ValueType] = ApiContract + "Request" :: MessageModel.`type`
 

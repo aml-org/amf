@@ -1,19 +1,20 @@
 package amf.graphql.internal.spec.domain
 
 import amf.core.client.scala.model.domain.extensions.PropertyShape
+import amf.graphql.client.scala.model.domain.QueryOperation
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.parser.syntax.GraphQLASTParserHelper
 import amf.graphql.internal.spec.parser.syntax.TokenTypes.{ARGUMENTS_DEFINITION, INPUT_VALUE_DEFINITION}
-import amf.shapes.client.scala.model.domain.operations.ShapeOperation
+import amf.shapes.client.scala.model.domain.operations.AbstractOperation
 import org.mulesoft.antlrast.ast.{ASTElement, Node}
 
 case class GraphQLFieldParser(ast: Node)(implicit val ctx: GraphQLWebApiContext) extends GraphQLASTParserHelper {
 
-  def parse(adopt: Either[PropertyShape, ShapeOperation] => Unit): Unit = {
+  def parse(adopt: Either[PropertyShape, QueryOperation] => Unit): Unit = {
     arguments() match {
       case args if args.nonEmpty =>
         GraphQLOperationFieldParser(ast).parse((operation) => adopt(Right(operation)))
-      case args if args.isEmpty  =>
+      case args if args.isEmpty =>
         GraphQLPropertyFieldParser(ast).parse((property) => adopt(Left(property)))
     }
   }

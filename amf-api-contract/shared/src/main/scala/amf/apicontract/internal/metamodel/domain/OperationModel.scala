@@ -10,25 +10,18 @@ import amf.core.internal.metamodel.Type.{Array, Bool, Str}
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.shapes.internal.domain.metamodel.`abstract`.AbstractOperationModel
 import amf.shapes.internal.domain.metamodel.common.DocumentationField
 
 /**
   * Operation meta model.
   */
 object OperationModel
-    extends DomainElementModel
-    with KeyField
-    with OptionalField
-    with NameFieldSchema
-    with DescriptionField
+    extends AbstractOperationModel
     with DocumentationField
     with TagsModel
     with AbstractModel
     with LinkableElementModel {
-
-  val Method = Field(Str,
-                     ApiContract + "method",
-                     ModelDoc(ModelVocabularies.ApiContract, "method", "HTTP method required to invoke the operation"))
 
   val OperationId = Field(Str,
                           ApiContract + "operationId",
@@ -60,7 +53,7 @@ object OperationModel
                           Core + "mediaType",
                           ModelDoc(ModelVocabularies.Core, "mediaType", "Media types returned by a API response"))
 
-  val Request = Field(
+  override val Request = Field(
     Array(RequestModel),
     ApiContract + "expects",
     ModelDoc(ModelVocabularies.ApiContract, "expects", "Request information required by the operation"))
@@ -90,22 +83,15 @@ object OperationModel
     ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this operation")
   )
 
-  override val key: Field = Method
-
-  override val `type`: List[ValueType] = ApiContract + "Operation" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "Operation" :: AbstractOperationModel.`type`
 
   override val fields: List[Field] = List(
-    Method,
-    Name,
-    Description,
     Deprecated,
     Summary,
     Documentation,
     Schemes,
     Accepts,
     ContentType,
-    Request,
-    Responses,
     Security,
     Tags,
     Callbacks,
@@ -113,7 +99,7 @@ object OperationModel
     Bindings,
     IsAbstract,
     OperationId
-  ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+  ) ++ LinkableElementModel.fields ++ DomainElementModel.fields ++ AbstractOperationModel.fields
 
   override def modelInstance = Operation()
 

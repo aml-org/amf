@@ -8,19 +8,13 @@ import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain._
 import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
+import amf.shapes.internal.domain.metamodel.`abstract`.AbstractPayloadModel
 import amf.shapes.internal.domain.metamodel.common.ExamplesField
 
 /**
   * Payload metamodel.
   */
-object PayloadModel
-    extends DomainElementModel
-    with KeyField
-    with OptionalField
-    with NameFieldSchema
-    with DescriptionField
-    with LinkableElementModel
-    with ExamplesField {
+object PayloadModel extends AbstractPayloadModel with OptionalField with LinkableElementModel {
 
   val MediaType = Field(Str,
                         Core + "mediaType",
@@ -30,11 +24,6 @@ object PayloadModel
     Str,
     ApiContract + "schemaMediaType",
     ModelDoc(ModelVocabularies.ApiContract, "schemaMediaType", "Defines the format of the payload schema"))
-
-  val Schema =
-    Field(ShapeModel,
-          Shapes + "schema",
-          ModelDoc(ModelVocabularies.Shapes, "schema", "Schema associated to this payload"))
 
   val Encoding =
     Field(
