@@ -1,13 +1,15 @@
 package amf.resolution.stages
 
 import amf.aml.internal.registries.AMLRegistry
-import amf.apicontract.client.scala.model.domain.EndPoint
+import amf.apicontract.client.scala.model.domain.{EndPoint, Parameter}
 import amf.apicontract.client.scala.model.domain.templates.{ParametrizedTrait, Trait}
 import amf.apicontract.internal.spec.common.transformation.stage.DomainElementMerging
 import amf.apicontract.internal.spec.raml.parser.context.Raml10WebApiContext
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.annotations.DefaultNode
 import amf.core.internal.parser.LimitedParseConfig
+import amf.core.internal.parser.domain.Annotations
 import amf.shapes.client.scala.model.domain.ScalarShape
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -103,6 +105,64 @@ class DomainElementMergingTest extends AnyFunSuite with Matchers {
 
     main.extend.size should be(1)
     main.extend.head should be(a)
+  }
+
+  test("Replace parameter with default annotation") {
+
+    val main = EndPoint()
+      .withName("Main")
+      .withPath("/{defaultParam}")
+
+    val defaultParam = Parameter(Annotations() += DefaultNode())
+      .withName("defaultParam")
+
+    main.withParameters(Seq(defaultParam))
+
+    val other = EndPoint()
+      .withName("Other")
+      .withPath("/{defaultParam}")
+
+    val realParam = Parameter()
+      .withName("defaultParam")
+      .withDescription("A description.")
+
+    other.withParameters(Seq(realParam))
+
+    DomainElementMerging()(ctx).merge(main, other)
+
+    main.parameters.size should be(1)
+    main.parameters.head.description.value() shouldBe "A description."
+  }
+
+  test("Replace parameter with default annotation and keep not default ones") {
+
+    val main = EndPoint()
+      .withName("Main")
+      .withPath("/{defaultParam}/{nonDefaultParam}")
+
+    val defaultParam = Parameter(Annotations() += DefaultNode())
+      .withName("defaultParam")
+
+    val nonDefaultParam = Parameter()
+      .withName("nonDefaultParam")
+
+    main.withParameters(Seq(nonDefaultParam, defaultParam))
+
+    val other = EndPoint()
+      .withName("Other")
+      .withPath("/{defaultParam}/{nonDefaultParam}")
+
+    val realParam = Parameter()
+      .withName("defaultParam")
+      .withDescription("A description.")
+
+    other.withParameters(Seq(realParam))
+
+    DomainElementMerging()(ctx).merge(main, other)
+
+    main.parameters.size should be(2)
+    main.parameters.exists(_.name.value() == "nonDefaultParam") shouldBe true
+    main.parameters.exists(_.name.value() == "defaultParam") shouldBe true
   }
 
   private def ctx: Raml10WebApiContext = {

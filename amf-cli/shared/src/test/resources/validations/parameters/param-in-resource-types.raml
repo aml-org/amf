@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: storm-storefinder-xp-api
+/logLevel/{loggerName}:
+  type: logLevel
+
+resourceTypes:
+  logLevel:
+    uriParameters:
+      loggerName:
+        description: Name of the logger whose level is to be changed.
+        type: string
+        required: true
