@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Something
+uses:
+  lib: extension.raml
+/sample:
+  get:
+    responses:
+      "200":
+        (lib.pagination):
+          pageSize: 5
+        description: A Response

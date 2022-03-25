@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.common.parser
 
-import amf.aml.internal.semantic.SemanticExtensionsFacade
+import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParserContext}
@@ -21,7 +21,8 @@ import org.yaml.model._
 case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(
     implicit val ctx: ShapeParserContext) {
   def parse(): Unit = {
-    val extensions = parseExtensions(Some(element), map, target, Some(ctx.extensionsFacade))
+
+    val extensions = parseExtensions(Some(element), map, target, Some(ctx.extensionsFacadeBuilder))
     setExtensions(extensions)
   }
 
@@ -54,24 +55,23 @@ object AnnotationParser {
   def parseExtensions(parent: Option[AmfObject],
                       map: YMap,
                       target: List[String] = Nil,
-                      semanticParser: Option[SemanticExtensionsFacade] = None)(
+                      semanticParserBuilder: Option[SemanticExtensionsFacadeBuilder] = None)(
       implicit ctx: ErrorHandlingContext with DataNodeParserContext with IllegalTypeHandler): Seq[DomainExtension] =
     map.entries.flatMap { entry =>
       resolveAnnotation(entryKey(entry)).map { annotation =>
         val elementTypes = parent.map(_.meta.`type`.map(_.iri())).getOrElse(List.empty)
-        parseSemantic(annotation, entry, elementTypes, semanticParser)
+        parseSemantic(entry, elementTypes, semanticParserBuilder.map(_.extensionName(annotation)))
           .getOrElse(ExtensionParser(annotation, parent, entry, target).parse().add(Annotations(entry)))
       }
     }
 
-  private def parseSemantic(annotation: String,
-                            entry: YMapEntry,
+  private def parseSemantic(entry: YMapEntry,
                             elementTypes: Seq[String],
                             semanticParser: Option[SemanticExtensionsFacade])(
       implicit ctx: ErrorHandlingContext): Option[DomainExtension] = {
     semanticParser.flatMap { parser =>
       val nextCtx = ParserContext(config = LimitedParseConfig(ctx.eh, parser.registry))
-      parser.parse(annotation, elementTypes, entry, nextCtx, "nonImportantId")
+      parser.parse(elementTypes, entry, nextCtx, "nonImportantId")
     }
   }
 
