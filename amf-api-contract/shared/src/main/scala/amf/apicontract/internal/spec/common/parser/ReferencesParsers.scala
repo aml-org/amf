@@ -9,6 +9,7 @@ import amf.core.client.scala.parse.document._
 import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.validation.CoreValidations.ExpectedModule
+import org.mulesoft.common.collections.FilterType
 import org.yaml.model.{YMap, YScalar, YType}
 
 /**
@@ -29,7 +30,7 @@ case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideE
 
   private def collectExtensions(library: WebApiDeclarations, l: Module): Unit = {
     l.references
-      .collect({ case d: Dialect => d })
+      .filterType[Dialect]
       .foreach { d =>
         library += d.extensionIndex
       }
