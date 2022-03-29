@@ -118,18 +118,18 @@
         "doc:DomainElement"
       ],
       "core:name": "Child",
-      "doc:extends": [
+      "http://a.ml/vocabularies/amf/aml#and": [
         {
-          "@id": "#/declarations/Child/null"
+          "@id": "#/declarations/SchemaNode"
         },
         {
-          "@id": "#/declarations/Child/null"
+          "@id": "#/declarations/SchemaNode_1"
         },
         {
-          "@id": "#/declarations/Child/null"
+          "@id": "#/declarations/SchemaNode_2"
         },
         {
-          "@id": "#/declarations/Child/null"
+          "@id": "#/declarations/extension_Child"
         }
       ]
     },
@@ -190,20 +190,6 @@
         }
       ],
       "shacl:minCount": 0
-    },
-    {
-      "@id": "#/declarations/Child/null",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "doc:link-target": [
-        {
-          "@id": "#/declarations/SchemaNode"
-        }
-      ],
-      "doc:link-label": "SchemaNode"
     },
     {
       "@id": "/and/shape/item1/property/property/b",

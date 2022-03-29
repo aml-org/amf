@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform
 
-import amf.aml.client.scala.model.domain.UnionNodeMapping
+import amf.aml.client.scala.model.domain.NodeMapping
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.shapes.client.scala.model.domain.AnyShape
 
@@ -8,21 +8,22 @@ case class OneOfShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContex
     extends ExtendedSchemaTransformer(shape, ctx)
     with ShapeTransformer {
 
-  val nodeMapping: UnionNodeMapping = UnionNodeMapping(shape.annotations).withId(shape.id)
+  val nodeMapping: NodeMapping = NodeMapping(shape.annotations).withId(shape.id)
 
-  def transform(): UnionNodeMapping = {
+  def transform(): NodeMapping = {
 
     setMappingName(shape, nodeMapping)
     setMappingId(nodeMapping)
     updateContext(nodeMapping)
 
-    val members = shape.xone.flatMap {
+    val members = shape.xone.map {
       case member: AnyShape =>
         val transformed = ShapeTransformation(member, ctx).transform()
         addExtendedSchema(transformed)
-        getIri(transformed)
+        transformed.id
     }
 
-    nodeMapping.withObjectRange(members)
+    nodeMapping.withOr(members)
+    nodeMapping
   }
 }

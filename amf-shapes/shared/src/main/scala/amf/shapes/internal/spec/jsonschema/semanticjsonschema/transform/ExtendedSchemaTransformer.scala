@@ -53,16 +53,4 @@ abstract class ExtendedSchemaTransformer(shape: AnyShape, ctx: ShapeTransformati
   def addExtendedSchema(element: DomainElement): Unit =
     extendedSchema.foreach(es => element.withExtends(Seq(toLink(es))))
 
-  def addExtendedSchema(element: DomainElement, otherExtensions: Seq[DomainElement]): Unit = {
-    val finalExtensions = otherExtensions ++ extendedSchema.map(toLink)
-    element.withExtends(finalExtensions)
-  }
-
-  // TODO review inheritance of non NodeMapping elements
-  def getIri(element: DomainElement): Seq[String] = element match {
-    case nm: NodeMapping             => Seq(nm.id)
-    case unm: UnionNodeMapping       => unm.objectRange().map(_.value())
-    case cnm: ConditionalNodeMapping => Seq(cnm.id)
-  }
-
 }

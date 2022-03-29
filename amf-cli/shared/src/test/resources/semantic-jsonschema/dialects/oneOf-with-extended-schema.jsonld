@@ -123,14 +123,22 @@
     {
       "@id": "#/declarations/Child",
       "@type": [
-        "meta:UnionNodeMapping",
+        "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
       "core:name": "Child",
-      "shacl:node": {
-        "@id": "#/declarations/Child/list"
-      }
+      "http://a.ml/vocabularies/amf/aml#or": [
+        {
+          "@id": "#/declarations/SchemaNode"
+        },
+        {
+          "@id": "#/declarations/SchemaNode_1"
+        },
+        {
+          "@id": "#/declarations/SchemaNode_2"
+        }
+      ]
     },
     {
       "@id": "#/declarations/SchemaNode_1",
@@ -224,19 +232,6 @@
       "doc:link-label": "extension_Child"
     },
     {
-      "@id": "#/declarations/Child/list",
-      "@type": "rdfs:Seq",
-      "rdfs:_1": {
-        "@id": "#/declarations/SchemaNode"
-      },
-      "rdfs:_2": {
-        "@id": "#/declarations/SchemaNode_1"
-      },
-      "rdfs:_3": {
-        "@id": "#/declarations/SchemaNode_2"
-      }
-    },
-    {
       "@id": "/exclusiveOr/shape/item1/property/property/b",
       "@type": [
         "meta:NodePropertyMapping",
@@ -282,7 +277,6 @@
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/oneOf-with-extended-schema.json",
     "shacl": "http://www.w3.org/ns/shacl#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
     "owl": "http://www.w3.org/2002/07/owl#",

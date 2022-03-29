@@ -19,11 +19,15 @@ case class AllOfShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContex
     val members = shape.and.map {
       case member: AnyShape =>
         val transformed = ShapeTransformation(member, ctx).transform()
-        toLink(transformed)
+        transformed.id
     }
 
-    addExtendedSchema(nodeMapping, members)
+    val extension = extendedSchema match {
+      case Some(ex) => Seq(ex.id)
+      case None     => Nil
+    }
 
+    nodeMapping.withAnd(members ++ extension)
     nodeMapping
   }
 }
