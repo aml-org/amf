@@ -51,6 +51,7 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   // This test breaks if we use a Seq instead of a List in ShapeTransformationContext.transform()
   // Couldn't figure out why
   multiOutputTest("extended-if-then-semantics")
+  multiOutputTest("allOf-complex")
 
   private def multiOutputTest(filename: String): Unit = {
 

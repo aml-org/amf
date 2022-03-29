@@ -1,7 +1,7 @@
 #%Dialect 1.0
 nodeMappings:
   Child:
-    extends:
+    allOf:
       - SchemaNode
       - extension_Child
   extension_Child:

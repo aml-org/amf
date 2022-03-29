@@ -18,16 +18,6 @@
       }
     },
     {
-      "@id": "/externals/security",
-      "@type": [
-        "owl:Ontology",
-        "meta:ExternalVocabulary",
-        "doc:DomainElement"
-      ],
-      "core:displayName": "security",
-      "meta:base": "anypoint://vocabulary/policy.yaml#"
-    },
-    {
       "@id": "/externals/config",
       "@type": [
         "owl:Ontology",
@@ -45,17 +35,7 @@
         "doc:DomainElement"
       ],
       "core:displayName": "ns0",
-      "meta:base": "anypoint://vocabulary/policy.yaml#"
-    },
-    {
-      "@id": "/externals/semantics",
-      "@type": [
-        "owl:Ontology",
-        "meta:ExternalVocabulary",
-        "doc:DomainElement"
-      ],
-      "core:displayName": "semantics",
-      "meta:base": "https://a.ml/semantic-json-schema#"
+      "meta:base": "http://test.com/vocab#"
     },
     {
       "@id": "#/documents/root",
@@ -65,7 +45,7 @@
       ],
       "meta:encodedNode": [
         {
-          "@id": "#/declarations/SomePolicy"
+          "@id": "#/declarations/allOf-Complex"
         }
       ]
     },
@@ -79,16 +59,28 @@
           "@id": "#/declarations/SchemaNode"
         },
         {
+          "@id": "#/declarations/SchemaNode_5"
+        },
+        {
+          "@id": "#/declarations/SchemaNode_7"
+        },
+        {
           "@id": "#/declarations/SchemaNode_1"
         },
         {
-          "@id": "#/declarations/SomePolicy"
+          "@id": "#/declarations/SchemaNode_4"
+        },
+        {
+          "@id": "#/declarations/allOf-Complex"
         },
         {
           "@id": "#/declarations/SchemaNode_3"
         },
         {
-          "@id": "#/declarations/extension_SomePolicy"
+          "@id": "#/declarations/SchemaNode_6"
+        },
+        {
+          "@id": "#/declarations/extension_allOf-Complex"
         }
       ],
       "@type": [
@@ -102,16 +94,10 @@
       "core:version": "1.0",
       "meta:externals": [
         {
-          "@id": "/externals/security"
-        },
-        {
           "@id": "/externals/config"
         },
         {
           "@id": "/externals/ns0"
-        },
-        {
-          "@id": "/externals/semantics"
         }
       ],
       "meta:documents": {
@@ -132,7 +118,7 @@
       "core:name": "SchemaNode_2",
       "shacl:property": [
         {
-          "@id": "/and/any/item0/shape/then/property/property/statisticsIdentifier"
+          "@id": "/and/any/item1/shape/if/property/property/a"
         }
       ],
       "shacl:closed": false
@@ -140,56 +126,109 @@
     {
       "@id": "#/declarations/SchemaNode",
       "@type": [
-        "meta:ConditionalNodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "core:name": "SchemaNode",
-      "http://a.ml/vocabularies/amf/aml#if": [
-        {
-          "@id": "#/declarations/SchemaNode_1"
-        }
-      ],
-      "http://a.ml/vocabularies/amf/aml#then": [
-        {
-          "@id": "#/declarations/SchemaNode_2"
-        }
-      ],
-      "http://a.ml/vocabularies/amf/aml#else": [
-        {
-          "@id": "#/declarations/SchemaNode_3"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/SchemaNode_1",
-      "@type": [
         "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "core:name": "SchemaNode_1",
+      "core:name": "SchemaNode",
       "shacl:property": [
         {
-          "@id": "/and/any/item0/shape/if/property/property/logStatistics"
+          "@id": "/and/shape/item0/property/property/a"
         }
       ],
       "shacl:closed": false
     },
     {
-      "@id": "#/declarations/SomePolicy",
+      "@id": "#/declarations/SchemaNode_5",
       "@type": [
         "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "core:name": "SomePolicy",
+      "core:name": "SchemaNode_5",
+      "http://a.ml/vocabularies/amf/aml#or": [
+        {
+          "@id": "#/declarations/SchemaNode_6"
+        },
+        {
+          "@id": "#/declarations/SchemaNode_7"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_7",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_7",
+      "shacl:property": [
+        {
+          "@id": "/and/any/item2/exclusiveOr/shape/item1/property/property/c"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "#/declarations/SchemaNode_1",
+      "@type": [
+        "meta:ConditionalNodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_1",
+      "http://a.ml/vocabularies/amf/aml#if": [
+        {
+          "@id": "#/declarations/SchemaNode_2"
+        }
+      ],
+      "http://a.ml/vocabularies/amf/aml#then": [
+        {
+          "@id": "#/declarations/SchemaNode_3"
+        }
+      ],
+      "http://a.ml/vocabularies/amf/aml#else": [
+        {
+          "@id": "#/declarations/SchemaNode_4"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/SchemaNode_4",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_4",
+      "shacl:property": [
+        {
+          "@id": "/and/any/item1/shape/else/property/property/a"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "#/declarations/allOf-Complex",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "allOf-Complex",
       "http://a.ml/vocabularies/amf/aml#and": [
         {
           "@id": "#/declarations/SchemaNode"
         },
         {
-          "@id": "#/declarations/extension_SomePolicy"
+          "@id": "#/declarations/SchemaNode_1"
+        },
+        {
+          "@id": "#/declarations/SchemaNode_5"
+        },
+        {
+          "@id": "#/declarations/extension_allOf-Complex"
         }
       ]
     },
@@ -201,34 +240,67 @@
         "doc:DomainElement"
       ],
       "core:name": "SchemaNode_3",
-      "shacl:property": [],
-      "shacl:closed": false
-    },
-    {
-      "@id": "#/declarations/extension_SomePolicy",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "core:name": "extension_SomePolicy",
       "shacl:property": [
         {
-          "@id": "/property/property/thisApiName"
-        },
-        {
-          "@id": "/property/property/thisApiVersion"
+          "@id": "/and/any/item1/shape/then/property/property/a"
         }
       ],
       "shacl:closed": false
     },
     {
-      "@id": "/and/any/item0/shape/then/property/property/statisticsIdentifier",
+      "@id": "#/declarations/SchemaNode_6",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_6",
+      "shacl:property": [
+        {
+          "@id": "/and/any/item2/exclusiveOr/shape/item0/property/property/b"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "#/declarations/extension_allOf-Complex",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "extension_allOf-Complex",
+      "shacl:property": [
+        {
+          "@id": "/property/property/d"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "/and/any/item1/shape/if/property/property/a",
       "@type": [
         "meta:NodePropertyMapping",
         "doc:DomainElement"
       ],
-      "core:name": "statisticsIdentifier",
+      "core:name": "a",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#anyType"
+        }
+      ],
+      "shacl:minCount": 0,
+      "shacl:in": {
+        "@id": "/and/any/item1/shape/if/property/property/a/list"
+      }
+    },
+    {
+      "@id": "/and/shape/item0/property/property/a",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "a",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
@@ -237,111 +309,97 @@
       "shacl:minCount": 0
     },
     {
-      "@id": "/and/any/item0/shape/if/property/property/logStatistics",
+      "@id": "/and/any/item2/exclusiveOr/shape/item1/property/property/c",
       "@type": [
         "meta:NodePropertyMapping",
         "doc:DomainElement"
       ],
-      "core:name": "logStatistics",
+      "core:name": "c",
       "shacl:datatype": [
         {
-          "@id": "http://www.w3.org/2001/XMLSchema#anyType"
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
         }
       ],
-      "shacl:minCount": 1,
-      "shacl:in": {
-        "@id": "/and/any/item0/shape/if/property/property/logStatistics/list"
-      }
+      "shacl:minCount": 0
     },
     {
-      "@id": "/property/property/thisApiName",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "shacl:path": [
-        {
-          "@id": "https://a.ml/semantic-json-schema#thisApiName"
-        }
-      ],
-      "core:name": "thisApiName",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:minCount": 1,
-      "shacl:pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$",
-      "shacl:defaultValue": {
-        "@id": "/property/property/thisApiName/scalar/thisApiName/scalar_1"
-      }
-    },
-    {
-      "@id": "/property/property/thisApiVersion",
+      "@id": "/and/any/item1/shape/else/property/property/a",
       "@type": [
         "meta:NodePropertyMapping",
         "doc:DomainElement"
       ],
       "shacl:path": [
         {
-          "@id": "https://a.ml/semantic-json-schema#thisApiVersion"
+          "@id": "anypoint://vocabulary/policy.yaml#dataweaveExpression"
         }
       ],
-      "core:name": "thisApiVersion",
+      "core:name": "a",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 1,
-      "shacl:pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$",
-      "shacl:defaultValue": {
-        "@id": "/property/property/thisApiVersion/scalar/thisApiVersion/scalar_1"
-      }
+      "shacl:minCount": 0
     },
     {
-      "@id": "/and/any/item0/shape/if/property/property/logStatistics/list",
+      "@id": "/and/any/item1/shape/then/property/property/a",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "anypoint://vocabulary/policy.yaml#sensitive"
+        }
+      ],
+      "core:name": "a",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "/and/any/item2/exclusiveOr/shape/item0/property/property/b",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "b",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "/property/property/d",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "d",
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "shacl:minCount": 1
+    },
+    {
+      "@id": "/and/any/item1/shape/if/property/property/a/list",
       "@type": "rdfs:Seq",
       "rdfs:_1": {
-        "@value": "true",
-        "@type": "xsd:boolean"
+        "@value": "condition",
+        "@type": "xsd:string"
       }
-    },
-    {
-      "@id": "/property/property/thisApiName/scalar/thisApiName/scalar_1",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:value": "#[p('applicationName')]",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "scalar_1"
-    },
-    {
-      "@id": "/property/property/thisApiVersion/scalar/thisApiVersion/scalar_1",
-      "@type": [
-        "data:Scalar",
-        "data:Node",
-        "doc:DomainElement"
-      ],
-      "data:value": "#[p('applicationVersion')]",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "scalar_1"
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/extended-if-then-semantics.json",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/allOf-complex.json",
     "shacl": "http://www.w3.org/ns/shacl#",
-    "data": "http://a.ml/vocabularies/data#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
