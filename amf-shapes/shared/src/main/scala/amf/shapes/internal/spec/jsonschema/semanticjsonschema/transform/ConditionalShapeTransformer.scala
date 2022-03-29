@@ -19,7 +19,7 @@ case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformation
     Option(shape.ifShape).foreach {
       case ifShape: AnyShape =>
         val transformed = ShapeTransformation(ifShape, ctx).transform()
-        conditionalMapping.withIfMapping(getIri(transformed).head)
+        conditionalMapping.withIfMapping(transformed.id)
     }
 
     val transformedThen = Option(shape.thenShape) match {
@@ -31,7 +31,7 @@ case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformation
         extendedSchema.getOrElse(
           ShapeTransformation(TransformationHelper.dummyShape(conditionalMapping.id + "/then"), ctx).transform())
     }
-    conditionalMapping.withThenMapping(getIri(transformedThen).head)
+    conditionalMapping.withThenMapping(transformedThen.id)
 
     val transformedElse = Option(shape.elseShape) match {
       case Some(elseShape) if elseShape.isInstanceOf[AnyShape] =>
@@ -42,7 +42,7 @@ case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformation
         extendedSchema.getOrElse(
           ShapeTransformation(TransformationHelper.dummyShape(conditionalMapping.id + "/else"), ctx).transform())
     }
-    conditionalMapping.withElseMapping(getIri(transformedElse).head)
+    conditionalMapping.withElseMapping(transformedElse.id)
 
     conditionalMapping
   }

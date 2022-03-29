@@ -1,7 +1,7 @@
 #%Dialect 1.0
 nodeMappings:
   SomePolicy:
-    extends:
+    allOf:
       - SchemaNode
       - extension_SomePolicy
   extension_SomePolicy:
