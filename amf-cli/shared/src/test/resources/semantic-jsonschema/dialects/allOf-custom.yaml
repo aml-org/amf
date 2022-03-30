@@ -3,8 +3,6 @@ nodeMappings:
   Child:
     allOf:
       - SchemaNode
-      - extension_Child
-  extension_Child:
     classTerm: foaf.Person
     mapping:
       name:

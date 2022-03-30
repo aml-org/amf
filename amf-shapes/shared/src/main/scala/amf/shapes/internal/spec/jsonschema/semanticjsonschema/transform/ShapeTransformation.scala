@@ -14,16 +14,16 @@ case class ShapeTransformation(s: AnyShape, ctx: ShapeTransformationContext)(imp
     ensureNotTransformed {
       updateContext { ctx =>
         shape match {
-          case _: ScalarShape                  => shapeErrorAndDummyMapping("Scalar at this level is not supported")
-          case any: AnyShape if any.isAnyType  => shapeErrorAndDummyMapping("Any at this level is not supported")
-          case not: AnyShape if not.isNot      => shapeErrorAndDummyMapping("Not is not supported")
-          case anyOf: AnyShape if anyOf.isOr   => shapeErrorAndDummyMapping("AnyOf is not supported")
-          case oneOf: AnyShape if oneOf.isXOne => OneOfShapeTransformer(oneOf, ctx).transform()
-          case allOf: AnyShape if allOf.isAnd  => AllOfShapeTransformer(allOf, ctx).transform()
+          case _: ScalarShape                 => shapeErrorAndDummyMapping("Scalar at this level is not supported")
+          case any: AnyShape if any.isAnyType => shapeErrorAndDummyMapping("Any at this level is not supported")
+          case not: AnyShape if not.isNot     => shapeErrorAndDummyMapping("Not is not supported")
+          case anyOf: AnyShape if anyOf.isOr  => shapeErrorAndDummyMapping("AnyOf is not supported")
           case conditional: AnyShape if conditional.isConditional =>
             ConditionalShapeTransformer(conditional, ctx).transform()
           case node: NodeShape => NodeShapeTransformer(node, ctx).transform()
-          case _               => shapeErrorAndDummyMapping("Non supported schema type")
+          case combining: AnyShape if combining.isAnd || combining.isXOne =>
+            AnyShapeTransformer(combining, ctx).transform()
+          case _ => shapeErrorAndDummyMapping("Non supported schema type")
         }
       }
     }

@@ -53,9 +53,6 @@
         },
         {
           "@id": "#/declarations/SchemaNode_1"
-        },
-        {
-          "@id": "#/declarations/extension_Child"
         }
       ],
       "@type": [
@@ -118,6 +115,12 @@
         "doc:DomainElement"
       ],
       "core:name": "Child",
+      "shacl:property": [
+        {
+          "@id": "/property/property/d"
+        }
+      ],
+      "shacl:closed": false,
       "http://a.ml/vocabularies/amf/aml#and": [
         {
           "@id": "#/declarations/SchemaNode"
@@ -127,9 +130,6 @@
         },
         {
           "@id": "#/declarations/SchemaNode_2"
-        },
-        {
-          "@id": "#/declarations/extension_Child"
         }
       ]
     },
@@ -144,21 +144,6 @@
       "shacl:property": [
         {
           "@id": "/and/shape/item1/property/property/b"
-        }
-      ],
-      "shacl:closed": false
-    },
-    {
-      "@id": "#/declarations/extension_Child",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "core:name": "extension_Child",
-      "shacl:property": [
-        {
-          "@id": "/property/property/d"
         }
       ],
       "shacl:closed": false
@@ -192,20 +177,6 @@
       "shacl:minCount": 0
     },
     {
-      "@id": "/and/shape/item1/property/property/b",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "core:name": "b",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#integer"
-        }
-      ],
-      "shacl:minCount": 0
-    },
-    {
       "@id": "/property/property/d",
       "@type": [
         "meta:NodePropertyMapping",
@@ -218,6 +189,20 @@
         }
       ],
       "shacl:minCount": 1
+    },
+    {
+      "@id": "/and/shape/item1/property/property/b",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "b",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minCount": 0
     }
   ],
   "@context": {

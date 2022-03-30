@@ -4,22 +4,23 @@ import amf.aml.client.scala.model.domain.ConditionalNodeMapping
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.shapes.client.scala.model.domain.AnyShape
 
-case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformationContext)(implicit eh: AMFErrorHandler)
+class ConditionalShapeTransformer(shape: AnyShape, override val ctx: ShapeTransformationContext)(
+    implicit eh: AMFErrorHandler)
     extends ExtendedSchemaTransformer(shape, ctx)
     with ShapeTransformer {
 
-  val conditionalMapping: ConditionalNodeMapping = ConditionalNodeMapping(shape.annotations).withId(shape.id)
+  val mapping: ConditionalNodeMapping = ConditionalNodeMapping(shape.annotations).withId(shape.id)
 
   def transform(): ConditionalNodeMapping = {
 
-    setMappingName(shape, conditionalMapping)
-    setMappingId(conditionalMapping)
-    updateContext(conditionalMapping)
+    setMappingName(shape, mapping)
+    setMappingId(mapping)
+    updateContext(mapping)
 
     Option(shape.ifShape).foreach {
       case ifShape: AnyShape =>
         val transformed = ShapeTransformation(ifShape, ctx).transform()
-        conditionalMapping.withIfMapping(transformed.id)
+        mapping.withIfMapping(transformed.id)
     }
 
     val transformedThen = Option(shape.thenShape) match {
@@ -29,9 +30,9 @@ case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformation
         transformed
       case None =>
         extendedSchema.getOrElse(
-          ShapeTransformation(TransformationHelper.dummyShape(conditionalMapping.id + "/then"), ctx).transform())
+          ShapeTransformation(TransformationHelper.dummyShape(mapping.id + "/then"), ctx).transform())
     }
-    conditionalMapping.withThenMapping(transformedThen.id)
+    mapping.withThenMapping(transformedThen.id)
 
     val transformedElse = Option(shape.elseShape) match {
       case Some(elseShape) if elseShape.isInstanceOf[AnyShape] =>
@@ -40,10 +41,15 @@ case class ConditionalShapeTransformer(shape: AnyShape, ctx: ShapeTransformation
         transformed
       case None =>
         extendedSchema.getOrElse(
-          ShapeTransformation(TransformationHelper.dummyShape(conditionalMapping.id + "/else"), ctx).transform())
+          ShapeTransformation(TransformationHelper.dummyShape(mapping.id + "/else"), ctx).transform())
     }
-    conditionalMapping.withElseMapping(transformedElse.id)
+    mapping.withElseMapping(transformedElse.id)
 
-    conditionalMapping
+    mapping
   }
+}
+
+object ConditionalShapeTransformer {
+  def apply(shape: AnyShape, ctx: ShapeTransformationContext)(implicit eh: AMFErrorHandler) =
+    new ConditionalShapeTransformer(shape, ctx)
 }

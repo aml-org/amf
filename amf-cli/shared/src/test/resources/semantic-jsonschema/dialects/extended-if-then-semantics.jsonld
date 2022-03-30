@@ -86,9 +86,6 @@
         },
         {
           "@id": "#/declarations/SchemaNode_3"
-        },
-        {
-          "@id": "#/declarations/extension_SomePolicy"
         }
       ],
       "@type": [
@@ -184,12 +181,18 @@
         "doc:DomainElement"
       ],
       "core:name": "SomePolicy",
+      "shacl:property": [
+        {
+          "@id": "/property/property/thisApiName"
+        },
+        {
+          "@id": "/property/property/thisApiVersion"
+        }
+      ],
+      "shacl:closed": false,
       "http://a.ml/vocabularies/amf/aml#and": [
         {
           "@id": "#/declarations/SchemaNode"
-        },
-        {
-          "@id": "#/declarations/extension_SomePolicy"
         }
       ]
     },
@@ -201,25 +204,6 @@
         "doc:DomainElement"
       ],
       "core:name": "SchemaNode_3",
-      "shacl:property": [],
-      "shacl:closed": false
-    },
-    {
-      "@id": "#/declarations/extension_SomePolicy",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "core:name": "extension_SomePolicy",
-      "shacl:property": [
-        {
-          "@id": "/property/property/thisApiName"
-        },
-        {
-          "@id": "/property/property/thisApiVersion"
-        }
-      ],
       "shacl:closed": false
     },
     {

@@ -3,8 +3,6 @@ nodeMappings:
   SomePolicy:
     allOf:
       - SchemaNode
-      - extension_SomePolicy
-  extension_SomePolicy:
     mapping:
       thisApiName:
         range: string

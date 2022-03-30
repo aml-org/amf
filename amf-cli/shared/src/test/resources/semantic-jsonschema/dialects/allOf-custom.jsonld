@@ -67,9 +67,6 @@
         },
         {
           "@id": "#/declarations/Child"
-        },
-        {
-          "@id": "#/declarations/extension_Child"
         }
       ],
       "@type": [
@@ -122,29 +119,12 @@
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "core:name": "Child",
-      "http://a.ml/vocabularies/amf/aml#and": [
-        {
-          "@id": "#/declarations/SchemaNode"
-        },
-        {
-          "@id": "#/declarations/extension_Child"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/extension_Child",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
       "shacl:targetClass": [
         {
           "@id": "http://xmlns.com/foaf/0.1/Person"
         }
       ],
-      "core:name": "extension_Child",
+      "core:name": "Child",
       "shacl:property": [
         {
           "@id": "/property/property/name"
@@ -153,7 +133,12 @@
           "@id": "/property/property/age"
         }
       ],
-      "shacl:closed": false
+      "shacl:closed": false,
+      "http://a.ml/vocabularies/amf/aml#and": [
+        {
+          "@id": "#/declarations/SchemaNode"
+        }
+      ]
     },
     {
       "@id": "/and/shape/Parent1/property/property/displayName",
