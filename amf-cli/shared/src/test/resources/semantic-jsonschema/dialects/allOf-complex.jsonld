@@ -78,9 +78,6 @@
         },
         {
           "@id": "#/declarations/SchemaNode_6"
-        },
-        {
-          "@id": "#/declarations/extension_allOf-Complex"
         }
       ],
       "@type": [
@@ -173,7 +170,7 @@
     {
       "@id": "#/declarations/SchemaNode_1",
       "@type": [
-        "meta:ConditionalNodeMapping",
+        "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
@@ -217,6 +214,12 @@
         "doc:DomainElement"
       ],
       "core:name": "allOf-Complex",
+      "shacl:property": [
+        {
+          "@id": "/property/property/d"
+        }
+      ],
+      "shacl:closed": false,
       "http://a.ml/vocabularies/amf/aml#and": [
         {
           "@id": "#/declarations/SchemaNode"
@@ -226,9 +229,6 @@
         },
         {
           "@id": "#/declarations/SchemaNode_5"
-        },
-        {
-          "@id": "#/declarations/extension_allOf-Complex"
         }
       ]
     },
@@ -258,21 +258,6 @@
       "shacl:property": [
         {
           "@id": "/and/any/item2/exclusiveOr/shape/item0/property/property/b"
-        }
-      ],
-      "shacl:closed": false
-    },
-    {
-      "@id": "#/declarations/extension_allOf-Complex",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "core:name": "extension_allOf-Complex",
-      "shacl:property": [
-        {
-          "@id": "/property/property/d"
         }
       ],
       "shacl:closed": false
@@ -342,6 +327,20 @@
       "shacl:minCount": 0
     },
     {
+      "@id": "/property/property/d",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "d",
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "shacl:minCount": 1
+    },
+    {
       "@id": "/and/any/item1/shape/then/property/property/a",
       "@type": [
         "meta:NodePropertyMapping",
@@ -373,20 +372,6 @@
         }
       ],
       "shacl:minCount": 0
-    },
-    {
-      "@id": "/property/property/d",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "core:name": "d",
-      "shacl:datatype": [
-        {
-          "@id": "http://a.ml/vocabularies/shapes#number"
-        }
-      ],
-      "shacl:minCount": 1
     },
     {
       "@id": "/and/any/item1/shape/if/property/property/a/list",

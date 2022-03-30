@@ -4,8 +4,7 @@ nodeMappings:
     conditional:
       if: SchemaNode
       then: SchemaNode_1
-      else: extension_Conditional
-  extension_Conditional:
+      else: SchemaNode_2
     mapping:
       street_address:
         range: string
@@ -32,7 +31,8 @@ nodeMappings:
         range: string
         mandatory: false
         pattern: "[0-9]{5}(-[0-9]{4})?"
-    extends: extension_Conditional
+    additionalProperties: true
+  SchemaNode_2:
     additionalProperties: true
 external:
   ns0: http://test.com/vocab#

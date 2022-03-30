@@ -27,7 +27,7 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
   instanceValidation("duplicate-semantics")
   instanceValidation("multiple-characteristics")
   instanceValidation("basic-with-extra-properties")
-  // TODO uncomment when W-10881317 is done
+  // TODO uncomment tests when W-10881317 is done
 //  instanceValidation("oneOf")
 //  instanceValidation("oneOf-with-extended-schema")
 //  instanceValidation("oneOf-custom")
@@ -36,13 +36,13 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
 //  instanceValidation("allOf-custom")
   instanceValidation("if-then-else", Some("if-then-else-match"))
   instanceValidation("if-then-else", Some("if-then-else-no-match"))
-  instanceValidation("if-then-else-with-extended-schema")
+//  instanceValidation("if-then-else-with-extended-schema")
   instanceValidation("if-then-without-else", Some("if-then-without-else-match"))
   instanceValidation("if-then-without-else", Some("if-then-without-else-no-match"))
-  instanceValidation("if-then-without-else-with-extended-schema",
-                     Some("if-then-without-else-with-extended-schema-match"))
-  instanceValidation("if-then-without-else-with-extended-schema",
-                     Some("if-then-without-else-with-extended-schema-no-match"))
+//  instanceValidation("if-then-without-else-with-extended-schema",
+//                     Some("if-then-without-else-with-extended-schema-match"))
+//  instanceValidation("if-then-without-else-with-extended-schema",
+//                     Some("if-then-without-else-with-extended-schema-no-match"))
   instanceValidation("empty-object")
 
   private def instanceValidation(schemaName: String, instanceName: Option[String] = None): Unit = {

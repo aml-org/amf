@@ -53,9 +53,6 @@
         },
         {
           "@id": "#/declarations/SchemaNode_1"
-        },
-        {
-          "@id": "#/declarations/extension_Conditional"
         }
       ],
       "@type": [
@@ -93,12 +90,7 @@
           "@id": "/shape/else/property/property/postal_code"
         }
       ],
-      "shacl:closed": false,
-      "doc:extends": [
-        {
-          "@id": "#/declarations/SchemaNode_2/null"
-        }
-      ]
+      "shacl:closed": false
     },
     {
       "@id": "#/declarations/SchemaNode",
@@ -118,11 +110,20 @@
     {
       "@id": "#/declarations/Conditional",
       "@type": [
-        "meta:ConditionalNodeMapping",
+        "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
       "core:name": "Conditional",
+      "shacl:property": [
+        {
+          "@id": "/property/property/street_address"
+        },
+        {
+          "@id": "/property/property/country"
+        }
+      ],
+      "shacl:closed": false,
       "http://a.ml/vocabularies/amf/aml#if": [
         {
           "@id": "#/declarations/SchemaNode"
@@ -152,29 +153,6 @@
           "@id": "/shape/then/property/property/postal_code"
         }
       ],
-      "shacl:closed": false,
-      "doc:extends": [
-        {
-          "@id": "#/declarations/SchemaNode_1/null"
-        }
-      ]
-    },
-    {
-      "@id": "#/declarations/extension_Conditional",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "core:name": "extension_Conditional",
-      "shacl:property": [
-        {
-          "@id": "/property/property/street_address"
-        },
-        {
-          "@id": "/property/property/country"
-        }
-      ],
       "shacl:closed": false
     },
     {
@@ -193,20 +171,6 @@
       "shacl:pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
     },
     {
-      "@id": "#/declarations/SchemaNode_2/null",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "doc:link-target": [
-        {
-          "@id": "#/declarations/extension_Conditional"
-        }
-      ],
-      "doc:link-label": "extension_Conditional"
-    },
-    {
       "@id": "/shape/if/property/property/country",
       "@type": [
         "meta:NodePropertyMapping",
@@ -222,35 +186,6 @@
       "shacl:in": {
         "@id": "/shape/if/property/property/country/list"
       }
-    },
-    {
-      "@id": "/shape/then/property/property/postal_code",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "core:name": "postal_code",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:minCount": 0,
-      "shacl:pattern": "[0-9]{5}(-[0-9]{4})?"
-    },
-    {
-      "@id": "#/declarations/SchemaNode_1/null",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "doc:link-target": [
-        {
-          "@id": "#/declarations/extension_Conditional"
-        }
-      ],
-      "doc:link-label": "extension_Conditional"
     },
     {
       "@id": "/property/property/street_address",
@@ -285,6 +220,21 @@
       "shacl:defaultValue": {
         "@id": "/property/property/country/any/country/scalar_1"
       }
+    },
+    {
+      "@id": "/shape/then/property/property/postal_code",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "postal_code",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0,
+      "shacl:pattern": "[0-9]{5}(-[0-9]{4})?"
     },
     {
       "@id": "/shape/if/property/property/country/list",

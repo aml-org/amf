@@ -11,4 +11,6 @@ object TransformationHelper {
 
   def dummyShape(id: String): NodeShape = NodeShape().withId(id)
 
+  def emptyMapping(id: String): NodeMapping = NodeMapping().withId(id).withClosed(false)
+
 }
