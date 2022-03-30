@@ -26,7 +26,6 @@ AMF Model Documentation
 * [ChannelBinding](#channelbinding)
 * [ChannelBindings](#channelbindings)
 * [ClassTerm](#classterm)
-* [ConditionalNodeMapping](#conditionalnodemapping)
 * [ContextMapping](#contextmapping)
 * [CorrelationId](#correlationid)
 * [CreativeWork](#creativework)
@@ -322,6 +321,9 @@ Types:
  | and | [url] | Logical and composition of data | http://a.ml/vocabularies/amf/aml#and |
  | or | [url] | Logical or composition of data | http://a.ml/vocabularies/amf/aml#or |
  | components | [url] | Array of component mappings in case of component combination generated mapping | http://a.ml/vocabularies/amf/aml#components |
+ | if | url | Conditional constraint if over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#if |
+ | then | url | Conditional constraint then over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#then |
+ | else | url | Conditional constraint else over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#else |
 
 ## AnyShape
 Base class for all shapes stored in the graph model
@@ -595,27 +597,6 @@ Types:
  | properties | [url] | Properties that have the ClassTerm in the domain | http://a.ml/vocabularies/meta#properties |
  | subClassOf | [url] | Subsumption relationship across terms | http://www.w3.org/2000/01/rdf-schema#subClassOf |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
-
-## ConditionalNodeMapping
-
-Types:
-* http://a.ml/vocabularies/meta#ConditionalNodeMapping
-* http://www.w3.org/ns/shacl#Shape
-* http://a.ml/vocabularies/document#DomainElement
-
- | Name | Value | Documentation | Namespace |
- | ------ | ------ | ------ | ------ |
- | name | string | Name of the node mappable element | http://a.ml/vocabularies/core#name |
- | if | url | Conditional constraint if over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#if |
- | then | url | Conditional constraint then over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#then |
- | else | url | Conditional constraint else over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#else |
- | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
- | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
- | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
- | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
- | and | [url] | Logical and composition of data | http://a.ml/vocabularies/amf/aml#and |
- | or | [url] | Logical or composition of data | http://a.ml/vocabularies/amf/aml#or |
- | components | [url] | Array of component mappings in case of component combination generated mapping | http://a.ml/vocabularies/amf/aml#components |
 
 ## ContextMapping
 Stores information about mapping rules for a property in the model
@@ -1694,6 +1675,9 @@ Types:
  | and | [url] | Logical and composition of data | http://a.ml/vocabularies/amf/aml#and |
  | or | [url] | Logical or composition of data | http://a.ml/vocabularies/amf/aml#or |
  | components | [url] | Array of component mappings in case of component combination generated mapping | http://a.ml/vocabularies/amf/aml#components |
+ | if | url | Conditional constraint if over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#if |
+ | then | url | Conditional constraint then over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#then |
+ | else | url | Conditional constraint else over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#else |
 
 ## NodeShape
 Shape that validates a record of fields, like a JS object
@@ -2822,6 +2806,9 @@ Types:
  | and | [url] | Logical and composition of data | http://a.ml/vocabularies/amf/aml#and |
  | or | [url] | Logical or composition of data | http://a.ml/vocabularies/amf/aml#or |
  | components | [url] | Array of component mappings in case of component combination generated mapping | http://a.ml/vocabularies/amf/aml#components |
+ | if | url | Conditional constraint if over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#if |
+ | then | url | Conditional constraint then over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#then |
+ | else | url | Conditional constraint else over the type of the mapped graph property | http://a.ml/vocabularies/amf/aml#else |
 
 ## UnionShape
 Shape representing the union of many alternative data shapes
