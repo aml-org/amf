@@ -1,0 +1,690 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/web-api",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "is-output-type-object-fields.api.graphql"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#endpoint": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/web-api/%2Fquery%2Fname",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/name"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.name"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/web-api/%2Fquery%2Fname/query",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.name"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/web-api/%2Fquery%2Fname/query/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default/union/default-union",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#UnionShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#anyOf": [
+                              {
+                                "@id": "null/nullwrapper/nil/default-nil",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#NilShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "null/nullwrapper/scalar/default-scalar",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.name"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.4.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "GraphQL"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Interface",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#isAbstract": [
+          {
+            "@value": true
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Interface/property/name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Interface/property/name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "name"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Interface"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/scalar/default-scalar",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Enum"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#in": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/scalar/default-scalar/list",
+            "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+            "http://www.w3.org/2000/01/rdf-schema#_1": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/scalar/default-scalar/A",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Scalar",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#value": [
+                  {
+                    "@value": "A"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "A"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#_2": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/scalar/default-scalar/B",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Scalar",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#value": [
+                  {
+                    "@value": "B"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "B"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/RootObject",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/RootObject/property/objectField",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object1/link-734316919",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object1"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "Object1"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "objectField"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/RootObject/property/interfaceField",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Interface/link--155012276",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Interface"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "Interface"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "interfaceField"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/RootObject/property/unionField",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/union/default-union/link--1978959250",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#UnionShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/union/default-union"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "Union"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "unionField"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/RootObject/property/scalarField",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/RootObject/property/scalarField/unresolved",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "scalarField"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/RootObject/property/enumField",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/scalar/default-scalar/link-415757530",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#link-target": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/scalar/default-scalar"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#link-label": [
+                  {
+                    "@value": "Enum"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "enumField"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "RootObject"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object1",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object1/property/success",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object1/property/success/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "success"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Object1"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object2",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object2/property/success",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object2/property/success/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "success"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Object2"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/union/default-union",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#UnionShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#anyOf": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/union/default-union#/shape/Object1",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object1"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Object1"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Object1"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql/union/default-union#/shape/Object2",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-output-type-object-fields.api.graphql#/shape/Object2"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Object2"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Object2"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Union"
+          }
+        ]
+      }
+    ]
+  }
+]

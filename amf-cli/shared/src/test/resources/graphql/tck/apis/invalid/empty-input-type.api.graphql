@@ -1,0 +1,19 @@
+schema {
+    mutation: Mutation
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+type Mutation {
+    changeUserStatus(input: InputType!): OutputType
+}
+
+input InputType {
+}
+
+type OutputType {
+    success: Boolean
+}

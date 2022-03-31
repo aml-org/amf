@@ -1,0 +1,11 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+interface Person {
+    relationship: Person!
+}

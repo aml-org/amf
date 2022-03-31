@@ -1,0 +1,15 @@
+type Query {
+
+  text: String
+}
+type Person implements HasName {
+  name : String!
+  surname : String!
+}
+type Dog implements HasName {
+  name : String!
+  breed : String!
+}
+interface HasName {
+  name : String!
+}

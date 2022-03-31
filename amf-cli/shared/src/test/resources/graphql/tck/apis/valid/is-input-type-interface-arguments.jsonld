@@ -1,0 +1,207 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/web-api",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "is-input-type-interface-arguments.graphql"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#endpoint": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/web-api/%2Fquery%2Fa",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/a"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.a"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/web-api/%2Fquery%2Fa/query",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.a"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/web-api/%2Fquery%2Fa/query/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/web-api/%2Fquery%2Fa/query/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/web-api/%2Fquery%2Fa/query/resp/default/default/union/default-union",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#UnionShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#anyOf": [
+                              {
+                                "@id": "null/nullwrapper/nil/default-nil",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#NilShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "null/nullwrapper/scalar/default-scalar",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.a"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.4.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "GraphQL"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/shape/InputType",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "InputType"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/is-input-type-interface-arguments.graphql#/shape/Interface",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#isAbstract": [
+          {
+            "@value": true
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Interface"
+          }
+        ]
+      }
+    ]
+  }
+]

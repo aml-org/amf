@@ -1,0 +1,422 @@
+[
+  {
+    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/web-api",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "types-union.api.graphql"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#endpoint": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/web-api/%2Fquery%2FsearchResult",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#path": [
+              {
+                "@value": "/query/searchResult"
+              }
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Query.searchResult"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/web-api/%2Fquery%2FsearchResult/query",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#method": [
+                  {
+                    "@value": "query"
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "Query.searchResult"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#expects": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/web-api/%2Fquery%2FsearchResult/query/request",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#returns": [
+                  {
+                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/web-api/%2Fquery%2FsearchResult/query/resp/default",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/web-api/%2Fquery%2FsearchResult/query/resp/default/default",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/web-api/%2Fquery%2FsearchResult/query/resp/default/default/union/default-union",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#UnionShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#anyOf": [
+                              {
+                                "@id": "null/nullwrapper/nil/default-nil",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#NilShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql/union/default-union/link-839168396",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#UnionShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document#link-target": [
+                                  {
+                                    "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql/union/default-union"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#link-label": [
+                                  {
+                                    "@value": "SearchResult"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Query.searchResult"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#APIContractProcessingData"
+        ],
+        "http://a.ml/vocabularies/apiContract#modelVersion": [
+          {
+            "@value": "3.4.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "GraphQL"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Person",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Person/property/name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Person/property/name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Person/property/surname",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Person/property/surname/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "surname"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Person"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Dog",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Dog/property/name",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Dog/property/name/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "name"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Dog/property/breed",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Dog/property/breed/scalar/default-scalar",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "breed"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Dog"
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql/union/default-union",
+        "@type": [
+          "http://a.ml/vocabularies/shapes#UnionShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/shapes#anyOf": [
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql/union/default-union#/shape/Person",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Person"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Person"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Person"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql/union/default-union#/shape/Dog",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-union.api.graphql#/shape/Dog"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Dog"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "Dog"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "SearchResult"
+          }
+        ]
+      }
+    ]
+  }
+]

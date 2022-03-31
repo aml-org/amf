@@ -1,0 +1,11 @@
+type Query {
+
+  person: Person
+}
+type Person implements HasName {
+  name : String
+  surname : String
+}
+interface HasName {
+  name : String
+}

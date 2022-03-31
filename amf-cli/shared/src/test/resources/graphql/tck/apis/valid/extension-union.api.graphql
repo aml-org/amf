@@ -1,0 +1,26 @@
+schema {
+    query: Query
+}
+
+type Query {
+    searchResult: SearchResult
+}
+
+type Person {
+    name: String!
+    surname: String!
+}
+
+type Dog {
+    name: String!
+    breed: String!
+}
+
+type Cat {
+    name: String!
+    color: String!
+}
+
+union SearchResult = Person | Dog
+
+extend union SearchResult = Cat

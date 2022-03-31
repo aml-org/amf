@@ -1,0 +1,22 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+input Input {
+    recursion: Input
+    recursionList: [Input!]!
+}
+
+interface Interface {
+    recursion: Interface
+    recursionList: [Interface!]!
+}
+
+type Type {
+    recursion: Type
+    recursionList: [Type!]!
+}

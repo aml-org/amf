@@ -1,0 +1,19 @@
+schema {
+    query: Query
+}
+
+type Query {
+    text: String
+}
+
+input Person {
+    name: String
+}
+
+extend input Person {
+    id: ID
+}
+
+extend input Person {
+    id: String
+}

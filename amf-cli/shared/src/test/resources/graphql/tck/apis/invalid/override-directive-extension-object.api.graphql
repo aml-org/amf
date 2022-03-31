@@ -1,0 +1,18 @@
+schema {
+    query: Query
+}
+
+type Query {
+    location: Location
+}
+
+type Location @example {
+    long: Float
+    lat: Float
+}
+
+extend type Location @example {
+    mapUrl: String
+}
+
+directive @example on OBJECT
