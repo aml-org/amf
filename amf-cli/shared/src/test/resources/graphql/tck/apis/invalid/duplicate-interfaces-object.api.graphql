@@ -1,0 +1,16 @@
+schema {
+    query: Query
+}
+
+type Query {
+    text: String
+}
+
+type Person implements HasName & HasName {
+    name: String!
+    surname: String!
+}
+
+interface HasName {
+    name: String!
+}

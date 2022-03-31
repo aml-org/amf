@@ -1,0 +1,28 @@
+schema {
+    query: Query
+}
+
+type Query {
+    text: String
+}
+
+type DogOwner implements PetOwner {
+    name: String
+    pet: Dog
+    otherPets: [Dog]
+}
+
+type Dog {
+    name: String
+    breed: String
+}
+
+interface PetOwner {
+    name: String!
+    pet: Pet
+    otherPets: [Pet]
+}
+
+interface Pet {
+    name: String
+}

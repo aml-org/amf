@@ -1,0 +1,14 @@
+schema {
+    query: Query
+}
+
+type Query {
+    person: Person
+}
+
+type Person implements HasId {
+    name: String
+}
+
+interface HasId {
+}

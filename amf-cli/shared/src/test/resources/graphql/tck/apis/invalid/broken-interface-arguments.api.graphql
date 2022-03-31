@@ -1,0 +1,23 @@
+schema {
+    query: Query
+}
+
+type Query {
+    person: Person
+}
+
+type MissingArguments implements HasWeight {
+    weight: Float
+}
+
+type BrokenInvariance implements HasWeight {
+    weight(unit: Int = 0): Float
+}
+
+type NonNullableAdditionalArguments implements HasWeight {
+    weight(unit: String! = "KG", other: String!): Float
+}
+
+interface HasWeight {
+    weight(unit: String! = "KG"): Float
+}

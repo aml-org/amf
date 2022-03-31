@@ -1,0 +1,25 @@
+schema {
+    query: Query
+}
+
+type Query{
+    a: String
+}
+
+type Object {
+    queryInputType(input: InputType): String
+    queryEnum(input: Enum): String
+    queryScalar(input: String): String
+    queryCustomScalar(input: Pepe): String
+}
+
+input InputType {
+    name: String
+}
+
+enum Enum {
+    A
+    B
+}
+
+scalar Pepe

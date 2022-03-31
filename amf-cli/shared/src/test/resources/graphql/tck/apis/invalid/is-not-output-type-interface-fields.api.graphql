@@ -1,0 +1,15 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+interface Interface {
+    inputReturnField: InputType
+}
+
+input InputType {
+    randomText: String
+}

@@ -1,0 +1,25 @@
+schema {
+    query: Query
+}
+
+type Query{
+    a: String
+}
+
+
+directive @testInputType(input: InputType) on SCHEMA
+directive @testEnum(input: Enum) on SCHEMA
+directive @testScalar(input: String) on SCHEMA
+directive @testCustomScalar(input: Pepe) on SCHEMA
+
+
+input InputType {
+    name: String
+}
+
+enum Enum {
+    A
+    B
+}
+
+scalar Pepe

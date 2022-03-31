@@ -1,0 +1,19 @@
+schema {
+    query: Query
+}
+
+type Query {
+    text: String
+}
+
+enum Planets {
+    MERCURY
+}
+
+extend enum Planets {
+    EARTH
+}
+
+extend enum Planets {
+    EARTH
+}
