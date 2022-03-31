@@ -18234,7 +18234,7 @@ type Mutation {
     """
     Parameters for AbortQueuedMigrations
     """
-    input: AbortQueuedMigrationsInput!
+    input_: AbortQueuedMigrationsInput!
   ): AbortQueuedMigrationsPayload
 
   """
@@ -18244,7 +18244,7 @@ type Mutation {
     """
     Parameters for AcceptEnterpriseAdministratorInvitation
     """
-    input: AcceptEnterpriseAdministratorInvitationInput!
+    input_: AcceptEnterpriseAdministratorInvitationInput!
   ): AcceptEnterpriseAdministratorInvitationPayload
 
   """
@@ -18254,7 +18254,7 @@ type Mutation {
     """
     Parameters for AcceptTopicSuggestion
     """
-    input: AcceptTopicSuggestionInput!
+    input_: AcceptTopicSuggestionInput!
   ): AcceptTopicSuggestionPayload
 
   """
@@ -18264,7 +18264,7 @@ type Mutation {
     """
     Parameters for AddAssigneesToAssignable
     """
-    input: AddAssigneesToAssignableInput!
+    input_: AddAssigneesToAssignableInput!
   ): AddAssigneesToAssignablePayload
 
   """
@@ -18274,7 +18274,7 @@ type Mutation {
     """
     Parameters for AddComment
     """
-    input: AddCommentInput!
+    input_: AddCommentInput!
   ): AddCommentPayload
 
   """
@@ -18284,7 +18284,7 @@ type Mutation {
     """
     Parameters for AddDiscussionComment
     """
-    input: AddDiscussionCommentInput!
+    input_: AddDiscussionCommentInput!
   ): AddDiscussionCommentPayload
 
   """
@@ -18294,7 +18294,7 @@ type Mutation {
     """
     Parameters for AddEnterpriseSupportEntitlement
     """
-    input: AddEnterpriseSupportEntitlementInput!
+    input_: AddEnterpriseSupportEntitlementInput!
   ): AddEnterpriseSupportEntitlementPayload
 
   """
@@ -18304,7 +18304,7 @@ type Mutation {
     """
     Parameters for AddLabelsToLabelable
     """
-    input: AddLabelsToLabelableInput!
+    input_: AddLabelsToLabelableInput!
   ): AddLabelsToLabelablePayload
 
   """
@@ -18314,7 +18314,7 @@ type Mutation {
     """
     Parameters for AddProjectCard
     """
-    input: AddProjectCardInput!
+    input_: AddProjectCardInput!
   ): AddProjectCardPayload
 
   """
@@ -18324,7 +18324,7 @@ type Mutation {
     """
     Parameters for AddProjectColumn
     """
-    input: AddProjectColumnInput!
+    input_: AddProjectColumnInput!
   ): AddProjectColumnPayload
 
   """
@@ -18334,7 +18334,7 @@ type Mutation {
     """
     Parameters for AddProjectNextItem
     """
-    input: AddProjectNextItemInput!
+    input_: AddProjectNextItemInput!
   ): AddProjectNextItemPayload
 
   """
@@ -18344,7 +18344,7 @@ type Mutation {
     """
     Parameters for AddPullRequestReview
     """
-    input: AddPullRequestReviewInput!
+    input_: AddPullRequestReviewInput!
   ): AddPullRequestReviewPayload
 
   """
@@ -18354,7 +18354,7 @@ type Mutation {
     """
     Parameters for AddPullRequestReviewComment
     """
-    input: AddPullRequestReviewCommentInput!
+    input_: AddPullRequestReviewCommentInput!
   ): AddPullRequestReviewCommentPayload
 
   """
@@ -18364,7 +18364,7 @@ type Mutation {
     """
     Parameters for AddPullRequestReviewThread
     """
-    input: AddPullRequestReviewThreadInput!
+    input_: AddPullRequestReviewThreadInput!
   ): AddPullRequestReviewThreadPayload
 
   """
@@ -18374,7 +18374,7 @@ type Mutation {
     """
     Parameters for AddReaction
     """
-    input: AddReactionInput!
+    input_: AddReactionInput!
   ): AddReactionPayload
 
   """
@@ -18384,7 +18384,7 @@ type Mutation {
     """
     Parameters for AddStar
     """
-    input: AddStarInput!
+    input_: AddStarInput!
   ): AddStarPayload
 
   """
@@ -18394,7 +18394,7 @@ type Mutation {
     """
     Parameters for AddUpvote
     """
-    input: AddUpvoteInput!
+    input_: AddUpvoteInput!
   ): AddUpvotePayload
 
   """
@@ -18404,7 +18404,7 @@ type Mutation {
     """
     Parameters for AddVerifiableDomain
     """
-    input: AddVerifiableDomainInput!
+    input_: AddVerifiableDomainInput!
   ): AddVerifiableDomainPayload
 
   """
@@ -18414,7 +18414,7 @@ type Mutation {
     """
     Parameters for ApproveDeployments
     """
-    input: ApproveDeploymentsInput!
+    input_: ApproveDeploymentsInput!
   ): ApproveDeploymentsPayload
 
   """
@@ -18424,7 +18424,7 @@ type Mutation {
     """
     Parameters for ApproveVerifiableDomain
     """
-    input: ApproveVerifiableDomainInput!
+    input_: ApproveVerifiableDomainInput!
   ): ApproveVerifiableDomainPayload
 
   """
@@ -18434,7 +18434,7 @@ type Mutation {
     """
     Parameters for ArchiveRepository
     """
-    input: ArchiveRepositoryInput!
+    input_: ArchiveRepositoryInput!
   ): ArchiveRepositoryPayload
 
   """
@@ -18444,7 +18444,7 @@ type Mutation {
     """
     Parameters for CancelEnterpriseAdminInvitation
     """
-    input: CancelEnterpriseAdminInvitationInput!
+    input_: CancelEnterpriseAdminInvitationInput!
   ): CancelEnterpriseAdminInvitationPayload
 
   """
@@ -18454,7 +18454,7 @@ type Mutation {
     """
     Parameters for CancelSponsorship
     """
-    input: CancelSponsorshipInput!
+    input_: CancelSponsorshipInput!
   ): CancelSponsorshipPayload
 
   """
@@ -18464,7 +18464,7 @@ type Mutation {
     """
     Parameters for ChangeUserStatus
     """
-    input: ChangeUserStatusInput!
+    input_: ChangeUserStatusInput!
   ): ChangeUserStatusPayload
 
   """
@@ -18474,7 +18474,7 @@ type Mutation {
     """
     Parameters for ClearLabelsFromLabelable
     """
-    input: ClearLabelsFromLabelableInput!
+    input_: ClearLabelsFromLabelableInput!
   ): ClearLabelsFromLabelablePayload
 
   """
@@ -18484,7 +18484,7 @@ type Mutation {
     """
     Parameters for CloneProject
     """
-    input: CloneProjectInput!
+    input_: CloneProjectInput!
   ): CloneProjectPayload
 
   """
@@ -18494,7 +18494,7 @@ type Mutation {
     """
     Parameters for CloneTemplateRepository
     """
-    input: CloneTemplateRepositoryInput!
+    input_: CloneTemplateRepositoryInput!
   ): CloneTemplateRepositoryPayload
 
   """
@@ -18504,7 +18504,7 @@ type Mutation {
     """
     Parameters for CloseIssue
     """
-    input: CloseIssueInput!
+    input_: CloseIssueInput!
   ): CloseIssuePayload
 
   """
@@ -18514,7 +18514,7 @@ type Mutation {
     """
     Parameters for ClosePullRequest
     """
-    input: ClosePullRequestInput!
+    input_: ClosePullRequestInput!
   ): ClosePullRequestPayload
 
   """
@@ -18524,7 +18524,7 @@ type Mutation {
     """
     Parameters for ConvertProjectCardNoteToIssue
     """
-    input: ConvertProjectCardNoteToIssueInput!
+    input_: ConvertProjectCardNoteToIssueInput!
   ): ConvertProjectCardNoteToIssuePayload
 
   """
@@ -18534,7 +18534,7 @@ type Mutation {
     """
     Parameters for ConvertPullRequestToDraft
     """
-    input: ConvertPullRequestToDraftInput!
+    input_: ConvertPullRequestToDraftInput!
   ): ConvertPullRequestToDraftPayload
 
   """
@@ -18544,7 +18544,7 @@ type Mutation {
     """
     Parameters for CreateBranchProtectionRule
     """
-    input: CreateBranchProtectionRuleInput!
+    input_: CreateBranchProtectionRuleInput!
   ): CreateBranchProtectionRulePayload
 
   """
@@ -18554,7 +18554,7 @@ type Mutation {
     """
     Parameters for CreateCheckRun
     """
-    input: CreateCheckRunInput!
+    input_: CreateCheckRunInput!
   ): CreateCheckRunPayload
 
   """
@@ -18564,7 +18564,7 @@ type Mutation {
     """
     Parameters for CreateCheckSuite
     """
-    input: CreateCheckSuiteInput!
+    input_: CreateCheckSuiteInput!
   ): CreateCheckSuitePayload
 
   """
@@ -18615,7 +18615,7 @@ type Mutation {
     """
     Parameters for CreateCommitOnBranch
     """
-    input: CreateCommitOnBranchInput!
+    input_: CreateCommitOnBranchInput!
   ): CreateCommitOnBranchPayload
 
   """
@@ -18625,7 +18625,7 @@ type Mutation {
     """
     Parameters for CreateDeployment
     """
-    input: CreateDeploymentInput!
+    input_: CreateDeploymentInput!
   ): CreateDeploymentPayload @preview(toggledBy: "flash-preview")
 
   """
@@ -18635,7 +18635,7 @@ type Mutation {
     """
     Parameters for CreateDeploymentStatus
     """
-    input: CreateDeploymentStatusInput!
+    input_: CreateDeploymentStatusInput!
   ): CreateDeploymentStatusPayload @preview(toggledBy: "flash-preview")
 
   """
@@ -18645,7 +18645,7 @@ type Mutation {
     """
     Parameters for CreateDiscussion
     """
-    input: CreateDiscussionInput!
+    input_: CreateDiscussionInput!
   ): CreateDiscussionPayload
 
   """
@@ -18655,7 +18655,7 @@ type Mutation {
     """
     Parameters for CreateEnterpriseOrganization
     """
-    input: CreateEnterpriseOrganizationInput!
+    input_: CreateEnterpriseOrganizationInput!
   ): CreateEnterpriseOrganizationPayload
 
   """
@@ -18665,7 +18665,7 @@ type Mutation {
     """
     Parameters for CreateEnvironment
     """
-    input: CreateEnvironmentInput!
+    input_: CreateEnvironmentInput!
   ): CreateEnvironmentPayload
 
   """
@@ -18675,7 +18675,7 @@ type Mutation {
     """
     Parameters for CreateIpAllowListEntry
     """
-    input: CreateIpAllowListEntryInput!
+    input_: CreateIpAllowListEntryInput!
   ): CreateIpAllowListEntryPayload
 
   """
@@ -18685,7 +18685,7 @@ type Mutation {
     """
     Parameters for CreateIssue
     """
-    input: CreateIssueInput!
+    input_: CreateIssueInput!
   ): CreateIssuePayload
 
   """
@@ -18695,7 +18695,7 @@ type Mutation {
     """
     Parameters for CreateLabel
     """
-    input: CreateLabelInput!
+    input_: CreateLabelInput!
   ): CreateLabelPayload @preview(toggledBy: "bane-preview")
 
   """
@@ -18705,7 +18705,7 @@ type Mutation {
     """
     Parameters for CreateMigrationSource
     """
-    input: CreateMigrationSourceInput!
+    input_: CreateMigrationSourceInput!
   ): CreateMigrationSourcePayload
 
   """
@@ -18715,7 +18715,7 @@ type Mutation {
     """
     Parameters for CreateProject
     """
-    input: CreateProjectInput!
+    input_: CreateProjectInput!
   ): CreateProjectPayload
 
   """
@@ -18725,7 +18725,7 @@ type Mutation {
     """
     Parameters for CreatePullRequest
     """
-    input: CreatePullRequestInput!
+    input_: CreatePullRequestInput!
   ): CreatePullRequestPayload
 
   """
@@ -18735,7 +18735,7 @@ type Mutation {
     """
     Parameters for CreateRef
     """
-    input: CreateRefInput!
+    input_: CreateRefInput!
   ): CreateRefPayload
 
   """
@@ -18745,7 +18745,7 @@ type Mutation {
     """
     Parameters for CreateRepository
     """
-    input: CreateRepositoryInput!
+    input_: CreateRepositoryInput!
   ): CreateRepositoryPayload
 
   """
@@ -18755,7 +18755,7 @@ type Mutation {
     """
     Parameters for CreateSponsorship
     """
-    input: CreateSponsorshipInput!
+    input_: CreateSponsorshipInput!
   ): CreateSponsorshipPayload
 
   """
@@ -18765,7 +18765,7 @@ type Mutation {
     """
     Parameters for CreateTeamDiscussion
     """
-    input: CreateTeamDiscussionInput!
+    input_: CreateTeamDiscussionInput!
   ): CreateTeamDiscussionPayload
 
   """
@@ -18775,7 +18775,7 @@ type Mutation {
     """
     Parameters for CreateTeamDiscussionComment
     """
-    input: CreateTeamDiscussionCommentInput!
+    input_: CreateTeamDiscussionCommentInput!
   ): CreateTeamDiscussionCommentPayload
 
   """
@@ -18785,7 +18785,7 @@ type Mutation {
     """
     Parameters for DeclineTopicSuggestion
     """
-    input: DeclineTopicSuggestionInput!
+    input_: DeclineTopicSuggestionInput!
   ): DeclineTopicSuggestionPayload
 
   """
@@ -18795,7 +18795,7 @@ type Mutation {
     """
     Parameters for DeleteBranchProtectionRule
     """
-    input: DeleteBranchProtectionRuleInput!
+    input_: DeleteBranchProtectionRuleInput!
   ): DeleteBranchProtectionRulePayload
 
   """
@@ -18805,7 +18805,7 @@ type Mutation {
     """
     Parameters for DeleteDeployment
     """
-    input: DeleteDeploymentInput!
+    input_: DeleteDeploymentInput!
   ): DeleteDeploymentPayload
 
   """
@@ -18815,7 +18815,7 @@ type Mutation {
     """
     Parameters for DeleteDiscussion
     """
-    input: DeleteDiscussionInput!
+    input_: DeleteDiscussionInput!
   ): DeleteDiscussionPayload
 
   """
@@ -18825,7 +18825,7 @@ type Mutation {
     """
     Parameters for DeleteDiscussionComment
     """
-    input: DeleteDiscussionCommentInput!
+    input_: DeleteDiscussionCommentInput!
   ): DeleteDiscussionCommentPayload
 
   """
@@ -18835,7 +18835,7 @@ type Mutation {
     """
     Parameters for DeleteEnvironment
     """
-    input: DeleteEnvironmentInput!
+    input_: DeleteEnvironmentInput!
   ): DeleteEnvironmentPayload
 
   """
@@ -18845,7 +18845,7 @@ type Mutation {
     """
     Parameters for DeleteIpAllowListEntry
     """
-    input: DeleteIpAllowListEntryInput!
+    input_: DeleteIpAllowListEntryInput!
   ): DeleteIpAllowListEntryPayload
 
   """
@@ -18855,7 +18855,7 @@ type Mutation {
     """
     Parameters for DeleteIssue
     """
-    input: DeleteIssueInput!
+    input_: DeleteIssueInput!
   ): DeleteIssuePayload
 
   """
@@ -18865,7 +18865,7 @@ type Mutation {
     """
     Parameters for DeleteIssueComment
     """
-    input: DeleteIssueCommentInput!
+    input_: DeleteIssueCommentInput!
   ): DeleteIssueCommentPayload
 
   """
@@ -18875,7 +18875,7 @@ type Mutation {
     """
     Parameters for DeleteLabel
     """
-    input: DeleteLabelInput!
+    input_: DeleteLabelInput!
   ): DeleteLabelPayload @preview(toggledBy: "bane-preview")
 
   """
@@ -18885,7 +18885,7 @@ type Mutation {
     """
     Parameters for DeletePackageVersion
     """
-    input: DeletePackageVersionInput!
+    input_: DeletePackageVersionInput!
   ): DeletePackageVersionPayload @preview(toggledBy: "package-deletes-preview")
 
   """
@@ -18895,7 +18895,7 @@ type Mutation {
     """
     Parameters for DeleteProject
     """
-    input: DeleteProjectInput!
+    input_: DeleteProjectInput!
   ): DeleteProjectPayload
 
   """
@@ -18905,7 +18905,7 @@ type Mutation {
     """
     Parameters for DeleteProjectCard
     """
-    input: DeleteProjectCardInput!
+    input_: DeleteProjectCardInput!
   ): DeleteProjectCardPayload
 
   """
@@ -18915,7 +18915,7 @@ type Mutation {
     """
     Parameters for DeleteProjectColumn
     """
-    input: DeleteProjectColumnInput!
+    input_: DeleteProjectColumnInput!
   ): DeleteProjectColumnPayload
 
   """
@@ -18925,7 +18925,7 @@ type Mutation {
     """
     Parameters for DeleteProjectNextItem
     """
-    input: DeleteProjectNextItemInput!
+    input_: DeleteProjectNextItemInput!
   ): DeleteProjectNextItemPayload
 
   """
@@ -18935,7 +18935,7 @@ type Mutation {
     """
     Parameters for DeletePullRequestReview
     """
-    input: DeletePullRequestReviewInput!
+    input_: DeletePullRequestReviewInput!
   ): DeletePullRequestReviewPayload
 
   """
@@ -18945,7 +18945,7 @@ type Mutation {
     """
     Parameters for DeletePullRequestReviewComment
     """
-    input: DeletePullRequestReviewCommentInput!
+    input_: DeletePullRequestReviewCommentInput!
   ): DeletePullRequestReviewCommentPayload
 
   """
@@ -18955,7 +18955,7 @@ type Mutation {
     """
     Parameters for DeleteRef
     """
-    input: DeleteRefInput!
+    input_: DeleteRefInput!
   ): DeleteRefPayload
 
   """
@@ -18965,7 +18965,7 @@ type Mutation {
     """
     Parameters for DeleteTeamDiscussion
     """
-    input: DeleteTeamDiscussionInput!
+    input_: DeleteTeamDiscussionInput!
   ): DeleteTeamDiscussionPayload
 
   """
@@ -18975,7 +18975,7 @@ type Mutation {
     """
     Parameters for DeleteTeamDiscussionComment
     """
-    input: DeleteTeamDiscussionCommentInput!
+    input_: DeleteTeamDiscussionCommentInput!
   ): DeleteTeamDiscussionCommentPayload
 
   """
@@ -18985,7 +18985,7 @@ type Mutation {
     """
     Parameters for DeleteVerifiableDomain
     """
-    input: DeleteVerifiableDomainInput!
+    input_: DeleteVerifiableDomainInput!
   ): DeleteVerifiableDomainPayload
 
   """
@@ -18995,7 +18995,7 @@ type Mutation {
     """
     Parameters for DisablePullRequestAutoMerge
     """
-    input: DisablePullRequestAutoMergeInput!
+    input_: DisablePullRequestAutoMergeInput!
   ): DisablePullRequestAutoMergePayload
 
   """
@@ -19005,7 +19005,7 @@ type Mutation {
     """
     Parameters for DismissPullRequestReview
     """
-    input: DismissPullRequestReviewInput!
+    input_: DismissPullRequestReviewInput!
   ): DismissPullRequestReviewPayload
 
   """
@@ -19015,7 +19015,7 @@ type Mutation {
     """
     Parameters for DismissRepositoryVulnerabilityAlert
     """
-    input: DismissRepositoryVulnerabilityAlertInput!
+    input_: DismissRepositoryVulnerabilityAlertInput!
   ): DismissRepositoryVulnerabilityAlertPayload
 
   """
@@ -19025,7 +19025,7 @@ type Mutation {
     """
     Parameters for EnablePullRequestAutoMerge
     """
-    input: EnablePullRequestAutoMergeInput!
+    input_: EnablePullRequestAutoMergeInput!
   ): EnablePullRequestAutoMergePayload
 
   """
@@ -19035,7 +19035,7 @@ type Mutation {
     """
     Parameters for FollowUser
     """
-    input: FollowUserInput!
+    input_: FollowUserInput!
   ): FollowUserPayload
 
   """
@@ -19045,7 +19045,7 @@ type Mutation {
     """
     Parameters for GrantEnterpriseOrganizationsMigratorRole
     """
-    input: GrantEnterpriseOrganizationsMigratorRoleInput!
+    input_: GrantEnterpriseOrganizationsMigratorRoleInput!
   ): GrantEnterpriseOrganizationsMigratorRolePayload
 
   """
@@ -19055,7 +19055,7 @@ type Mutation {
     """
     Parameters for GrantMigratorRole
     """
-    input: GrantMigratorRoleInput!
+    input_: GrantMigratorRoleInput!
   ): GrantMigratorRolePayload
 
   """
@@ -19065,7 +19065,7 @@ type Mutation {
     """
     Parameters for ImportProject
     """
-    input: ImportProjectInput!
+    input_: ImportProjectInput!
   ): ImportProjectPayload @preview(toggledBy: "slothette-preview")
 
   """
@@ -19075,7 +19075,7 @@ type Mutation {
     """
     Parameters for InviteEnterpriseAdmin
     """
-    input: InviteEnterpriseAdminInput!
+    input_: InviteEnterpriseAdminInput!
   ): InviteEnterpriseAdminPayload
 
   """
@@ -19085,7 +19085,7 @@ type Mutation {
     """
     Parameters for LinkRepositoryToProject
     """
-    input: LinkRepositoryToProjectInput!
+    input_: LinkRepositoryToProjectInput!
   ): LinkRepositoryToProjectPayload
 
   """
@@ -19095,7 +19095,7 @@ type Mutation {
     """
     Parameters for LockLockable
     """
-    input: LockLockableInput!
+    input_: LockLockableInput!
   ): LockLockablePayload
 
   """
@@ -19105,7 +19105,7 @@ type Mutation {
     """
     Parameters for MarkDiscussionCommentAsAnswer
     """
-    input: MarkDiscussionCommentAsAnswerInput!
+    input_: MarkDiscussionCommentAsAnswerInput!
   ): MarkDiscussionCommentAsAnswerPayload
 
   """
@@ -19115,7 +19115,7 @@ type Mutation {
     """
     Parameters for MarkFileAsViewed
     """
-    input: MarkFileAsViewedInput!
+    input_: MarkFileAsViewedInput!
   ): MarkFileAsViewedPayload
 
   """
@@ -19125,7 +19125,7 @@ type Mutation {
     """
     Parameters for MarkPullRequestReadyForReview
     """
-    input: MarkPullRequestReadyForReviewInput!
+    input_: MarkPullRequestReadyForReviewInput!
   ): MarkPullRequestReadyForReviewPayload
 
   """
@@ -19135,7 +19135,7 @@ type Mutation {
     """
     Parameters for MergeBranch
     """
-    input: MergeBranchInput!
+    input_: MergeBranchInput!
   ): MergeBranchPayload
 
   """
@@ -19145,7 +19145,7 @@ type Mutation {
     """
     Parameters for MergePullRequest
     """
-    input: MergePullRequestInput!
+    input_: MergePullRequestInput!
   ): MergePullRequestPayload
 
   """
@@ -19155,7 +19155,7 @@ type Mutation {
     """
     Parameters for MinimizeComment
     """
-    input: MinimizeCommentInput!
+    input_: MinimizeCommentInput!
   ): MinimizeCommentPayload
 
   """
@@ -19165,7 +19165,7 @@ type Mutation {
     """
     Parameters for MoveProjectCard
     """
-    input: MoveProjectCardInput!
+    input_: MoveProjectCardInput!
   ): MoveProjectCardPayload
 
   """
@@ -19175,7 +19175,7 @@ type Mutation {
     """
     Parameters for MoveProjectColumn
     """
-    input: MoveProjectColumnInput!
+    input_: MoveProjectColumnInput!
   ): MoveProjectColumnPayload
 
   """
@@ -19185,7 +19185,7 @@ type Mutation {
     """
     Parameters for PinIssue
     """
-    input: PinIssueInput!
+    input_: PinIssueInput!
   ): PinIssuePayload
 
   """
@@ -19195,7 +19195,7 @@ type Mutation {
     """
     Parameters for RegenerateEnterpriseIdentityProviderRecoveryCodes
     """
-    input: RegenerateEnterpriseIdentityProviderRecoveryCodesInput!
+    input_: RegenerateEnterpriseIdentityProviderRecoveryCodesInput!
   ): RegenerateEnterpriseIdentityProviderRecoveryCodesPayload
 
   """
@@ -19205,7 +19205,7 @@ type Mutation {
     """
     Parameters for RegenerateVerifiableDomainToken
     """
-    input: RegenerateVerifiableDomainTokenInput!
+    input_: RegenerateVerifiableDomainTokenInput!
   ): RegenerateVerifiableDomainTokenPayload
 
   """
@@ -19215,7 +19215,7 @@ type Mutation {
     """
     Parameters for RejectDeployments
     """
-    input: RejectDeploymentsInput!
+    input_: RejectDeploymentsInput!
   ): RejectDeploymentsPayload
 
   """
@@ -19225,7 +19225,7 @@ type Mutation {
     """
     Parameters for RemoveAssigneesFromAssignable
     """
-    input: RemoveAssigneesFromAssignableInput!
+    input_: RemoveAssigneesFromAssignableInput!
   ): RemoveAssigneesFromAssignablePayload
 
   """
@@ -19235,7 +19235,7 @@ type Mutation {
     """
     Parameters for RemoveEnterpriseAdmin
     """
-    input: RemoveEnterpriseAdminInput!
+    input_: RemoveEnterpriseAdminInput!
   ): RemoveEnterpriseAdminPayload
 
   """
@@ -19245,7 +19245,7 @@ type Mutation {
     """
     Parameters for RemoveEnterpriseIdentityProvider
     """
-    input: RemoveEnterpriseIdentityProviderInput!
+    input_: RemoveEnterpriseIdentityProviderInput!
   ): RemoveEnterpriseIdentityProviderPayload
 
   """
@@ -19255,7 +19255,7 @@ type Mutation {
     """
     Parameters for RemoveEnterpriseOrganization
     """
-    input: RemoveEnterpriseOrganizationInput!
+    input_: RemoveEnterpriseOrganizationInput!
   ): RemoveEnterpriseOrganizationPayload
 
   """
@@ -19265,7 +19265,7 @@ type Mutation {
     """
     Parameters for RemoveEnterpriseSupportEntitlement
     """
-    input: RemoveEnterpriseSupportEntitlementInput!
+    input_: RemoveEnterpriseSupportEntitlementInput!
   ): RemoveEnterpriseSupportEntitlementPayload
 
   """
@@ -19275,7 +19275,7 @@ type Mutation {
     """
     Parameters for RemoveLabelsFromLabelable
     """
-    input: RemoveLabelsFromLabelableInput!
+    input_: RemoveLabelsFromLabelableInput!
   ): RemoveLabelsFromLabelablePayload
 
   """
@@ -19285,7 +19285,7 @@ type Mutation {
     """
     Parameters for RemoveOutsideCollaborator
     """
-    input: RemoveOutsideCollaboratorInput!
+    input_: RemoveOutsideCollaboratorInput!
   ): RemoveOutsideCollaboratorPayload
 
   """
@@ -19295,7 +19295,7 @@ type Mutation {
     """
     Parameters for RemoveReaction
     """
-    input: RemoveReactionInput!
+    input_: RemoveReactionInput!
   ): RemoveReactionPayload
 
   """
@@ -19305,7 +19305,7 @@ type Mutation {
     """
     Parameters for RemoveStar
     """
-    input: RemoveStarInput!
+    input_: RemoveStarInput!
   ): RemoveStarPayload
 
   """
@@ -19315,7 +19315,7 @@ type Mutation {
     """
     Parameters for RemoveUpvote
     """
-    input: RemoveUpvoteInput!
+    input_: RemoveUpvoteInput!
   ): RemoveUpvotePayload
 
   """
@@ -19325,7 +19325,7 @@ type Mutation {
     """
     Parameters for ReopenIssue
     """
-    input: ReopenIssueInput!
+    input_: ReopenIssueInput!
   ): ReopenIssuePayload
 
   """
@@ -19335,7 +19335,7 @@ type Mutation {
     """
     Parameters for ReopenPullRequest
     """
-    input: ReopenPullRequestInput!
+    input_: ReopenPullRequestInput!
   ): ReopenPullRequestPayload
 
   """
@@ -19345,7 +19345,7 @@ type Mutation {
     """
     Parameters for RequestReviews
     """
-    input: RequestReviewsInput!
+    input_: RequestReviewsInput!
   ): RequestReviewsPayload
 
   """
@@ -19355,7 +19355,7 @@ type Mutation {
     """
     Parameters for RerequestCheckSuite
     """
-    input: RerequestCheckSuiteInput!
+    input_: RerequestCheckSuiteInput!
   ): RerequestCheckSuitePayload
 
   """
@@ -19365,7 +19365,7 @@ type Mutation {
     """
     Parameters for ResolveReviewThread
     """
-    input: ResolveReviewThreadInput!
+    input_: ResolveReviewThreadInput!
   ): ResolveReviewThreadPayload
 
   """
@@ -19375,7 +19375,7 @@ type Mutation {
     """
     Parameters for RevokeEnterpriseOrganizationsMigratorRole
     """
-    input: RevokeEnterpriseOrganizationsMigratorRoleInput!
+    input_: RevokeEnterpriseOrganizationsMigratorRoleInput!
   ): RevokeEnterpriseOrganizationsMigratorRolePayload
 
   """
@@ -19385,7 +19385,7 @@ type Mutation {
     """
     Parameters for RevokeMigratorRole
     """
-    input: RevokeMigratorRoleInput!
+    input_: RevokeMigratorRoleInput!
   ): RevokeMigratorRolePayload
 
   """
@@ -19395,7 +19395,7 @@ type Mutation {
     """
     Parameters for SetEnterpriseIdentityProvider
     """
-    input: SetEnterpriseIdentityProviderInput!
+    input_: SetEnterpriseIdentityProviderInput!
   ): SetEnterpriseIdentityProviderPayload
 
   """
@@ -19405,7 +19405,7 @@ type Mutation {
     """
     Parameters for SetOrganizationInteractionLimit
     """
-    input: SetOrganizationInteractionLimitInput!
+    input_: SetOrganizationInteractionLimitInput!
   ): SetOrganizationInteractionLimitPayload
 
   """
@@ -19415,7 +19415,7 @@ type Mutation {
     """
     Parameters for SetRepositoryInteractionLimit
     """
-    input: SetRepositoryInteractionLimitInput!
+    input_: SetRepositoryInteractionLimitInput!
   ): SetRepositoryInteractionLimitPayload
 
   """
@@ -19425,7 +19425,7 @@ type Mutation {
     """
     Parameters for SetUserInteractionLimit
     """
-    input: SetUserInteractionLimitInput!
+    input_: SetUserInteractionLimitInput!
   ): SetUserInteractionLimitPayload
 
   """
@@ -19435,7 +19435,7 @@ type Mutation {
     """
     Parameters for StartRepositoryMigration
     """
-    input: StartRepositoryMigrationInput!
+    input_: StartRepositoryMigrationInput!
   ): StartRepositoryMigrationPayload
 
   """
@@ -19445,7 +19445,7 @@ type Mutation {
     """
     Parameters for SubmitPullRequestReview
     """
-    input: SubmitPullRequestReviewInput!
+    input_: SubmitPullRequestReviewInput!
   ): SubmitPullRequestReviewPayload
 
   """
@@ -19455,7 +19455,7 @@ type Mutation {
     """
     Parameters for TransferIssue
     """
-    input: TransferIssueInput!
+    input_: TransferIssueInput!
   ): TransferIssuePayload
 
   """
@@ -19465,7 +19465,7 @@ type Mutation {
     """
     Parameters for UnarchiveRepository
     """
-    input: UnarchiveRepositoryInput!
+    input_: UnarchiveRepositoryInput!
   ): UnarchiveRepositoryPayload
 
   """
@@ -19475,7 +19475,7 @@ type Mutation {
     """
     Parameters for UnfollowUser
     """
-    input: UnfollowUserInput!
+    input_: UnfollowUserInput!
   ): UnfollowUserPayload
 
   """
@@ -19485,7 +19485,7 @@ type Mutation {
     """
     Parameters for UnlinkRepositoryFromProject
     """
-    input: UnlinkRepositoryFromProjectInput!
+    input_: UnlinkRepositoryFromProjectInput!
   ): UnlinkRepositoryFromProjectPayload
 
   """
@@ -19495,7 +19495,7 @@ type Mutation {
     """
     Parameters for UnlockLockable
     """
-    input: UnlockLockableInput!
+    input_: UnlockLockableInput!
   ): UnlockLockablePayload
 
   """
@@ -19505,7 +19505,7 @@ type Mutation {
     """
     Parameters for UnmarkDiscussionCommentAsAnswer
     """
-    input: UnmarkDiscussionCommentAsAnswerInput!
+    input_: UnmarkDiscussionCommentAsAnswerInput!
   ): UnmarkDiscussionCommentAsAnswerPayload
 
   """
@@ -19515,7 +19515,7 @@ type Mutation {
     """
     Parameters for UnmarkFileAsViewed
     """
-    input: UnmarkFileAsViewedInput!
+    input_: UnmarkFileAsViewedInput!
   ): UnmarkFileAsViewedPayload
 
   """
@@ -19525,7 +19525,7 @@ type Mutation {
     """
     Parameters for UnmarkIssueAsDuplicate
     """
-    input: UnmarkIssueAsDuplicateInput!
+    input_: UnmarkIssueAsDuplicateInput!
   ): UnmarkIssueAsDuplicatePayload
 
   """
@@ -19535,7 +19535,7 @@ type Mutation {
     """
     Parameters for UnminimizeComment
     """
-    input: UnminimizeCommentInput!
+    input_: UnminimizeCommentInput!
   ): UnminimizeCommentPayload
 
   """
@@ -19545,7 +19545,7 @@ type Mutation {
     """
     Parameters for UnpinIssue
     """
-    input: UnpinIssueInput!
+    input_: UnpinIssueInput!
   ): UnpinIssuePayload
 
   """
@@ -19555,7 +19555,7 @@ type Mutation {
     """
     Parameters for UnresolveReviewThread
     """
-    input: UnresolveReviewThreadInput!
+    input_: UnresolveReviewThreadInput!
   ): UnresolveReviewThreadPayload
 
   """
@@ -19565,7 +19565,7 @@ type Mutation {
     """
     Parameters for UpdateBranchProtectionRule
     """
-    input: UpdateBranchProtectionRuleInput!
+    input_: UpdateBranchProtectionRuleInput!
   ): UpdateBranchProtectionRulePayload
 
   """
@@ -19575,7 +19575,7 @@ type Mutation {
     """
     Parameters for UpdateCheckRun
     """
-    input: UpdateCheckRunInput!
+    input_: UpdateCheckRunInput!
   ): UpdateCheckRunPayload
 
   """
@@ -19585,7 +19585,7 @@ type Mutation {
     """
     Parameters for UpdateCheckSuitePreferences
     """
-    input: UpdateCheckSuitePreferencesInput!
+    input_: UpdateCheckSuitePreferencesInput!
   ): UpdateCheckSuitePreferencesPayload
 
   """
@@ -19595,7 +19595,7 @@ type Mutation {
     """
     Parameters for UpdateDiscussion
     """
-    input: UpdateDiscussionInput!
+    input_: UpdateDiscussionInput!
   ): UpdateDiscussionPayload
 
   """
@@ -19605,7 +19605,7 @@ type Mutation {
     """
     Parameters for UpdateDiscussionComment
     """
-    input: UpdateDiscussionCommentInput!
+    input_: UpdateDiscussionCommentInput!
   ): UpdateDiscussionCommentPayload
 
   """
@@ -19615,7 +19615,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseAdministratorRole
     """
-    input: UpdateEnterpriseAdministratorRoleInput!
+    input_: UpdateEnterpriseAdministratorRoleInput!
   ): UpdateEnterpriseAdministratorRolePayload
 
   """
@@ -19625,7 +19625,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseAllowPrivateRepositoryForkingSetting
     """
-    input: UpdateEnterpriseAllowPrivateRepositoryForkingSettingInput!
+    input_: UpdateEnterpriseAllowPrivateRepositoryForkingSettingInput!
   ): UpdateEnterpriseAllowPrivateRepositoryForkingSettingPayload
 
   """
@@ -19635,7 +19635,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseDefaultRepositoryPermissionSetting
     """
-    input: UpdateEnterpriseDefaultRepositoryPermissionSettingInput!
+    input_: UpdateEnterpriseDefaultRepositoryPermissionSettingInput!
   ): UpdateEnterpriseDefaultRepositoryPermissionSettingPayload
 
   """
@@ -19645,7 +19645,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseMembersCanChangeRepositoryVisibilitySetting
     """
-    input: UpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingInput!
+    input_: UpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingInput!
   ): UpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingPayload
 
   """
@@ -19655,7 +19655,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseMembersCanCreateRepositoriesSetting
     """
-    input: UpdateEnterpriseMembersCanCreateRepositoriesSettingInput!
+    input_: UpdateEnterpriseMembersCanCreateRepositoriesSettingInput!
   ): UpdateEnterpriseMembersCanCreateRepositoriesSettingPayload
 
   """
@@ -19665,7 +19665,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseMembersCanDeleteIssuesSetting
     """
-    input: UpdateEnterpriseMembersCanDeleteIssuesSettingInput!
+    input_: UpdateEnterpriseMembersCanDeleteIssuesSettingInput!
   ): UpdateEnterpriseMembersCanDeleteIssuesSettingPayload
 
   """
@@ -19675,7 +19675,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseMembersCanDeleteRepositoriesSetting
     """
-    input: UpdateEnterpriseMembersCanDeleteRepositoriesSettingInput!
+    input_: UpdateEnterpriseMembersCanDeleteRepositoriesSettingInput!
   ): UpdateEnterpriseMembersCanDeleteRepositoriesSettingPayload
 
   """
@@ -19685,7 +19685,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseMembersCanInviteCollaboratorsSetting
     """
-    input: UpdateEnterpriseMembersCanInviteCollaboratorsSettingInput!
+    input_: UpdateEnterpriseMembersCanInviteCollaboratorsSettingInput!
   ): UpdateEnterpriseMembersCanInviteCollaboratorsSettingPayload
 
   """
@@ -19695,7 +19695,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseMembersCanMakePurchasesSetting
     """
-    input: UpdateEnterpriseMembersCanMakePurchasesSettingInput!
+    input_: UpdateEnterpriseMembersCanMakePurchasesSettingInput!
   ): UpdateEnterpriseMembersCanMakePurchasesSettingPayload
 
   """
@@ -19705,7 +19705,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseMembersCanUpdateProtectedBranchesSetting
     """
-    input: UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingInput!
+    input_: UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingInput!
   ): UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingPayload
 
   """
@@ -19715,7 +19715,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseMembersCanViewDependencyInsightsSetting
     """
-    input: UpdateEnterpriseMembersCanViewDependencyInsightsSettingInput!
+    input_: UpdateEnterpriseMembersCanViewDependencyInsightsSettingInput!
   ): UpdateEnterpriseMembersCanViewDependencyInsightsSettingPayload
 
   """
@@ -19725,7 +19725,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseOrganizationProjectsSetting
     """
-    input: UpdateEnterpriseOrganizationProjectsSettingInput!
+    input_: UpdateEnterpriseOrganizationProjectsSettingInput!
   ): UpdateEnterpriseOrganizationProjectsSettingPayload
 
   """
@@ -19735,7 +19735,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseOwnerOrganizationRole
     """
-    input: UpdateEnterpriseOwnerOrganizationRoleInput!
+    input_: UpdateEnterpriseOwnerOrganizationRoleInput!
   ): UpdateEnterpriseOwnerOrganizationRolePayload
 
   """
@@ -19745,7 +19745,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseProfile
     """
-    input: UpdateEnterpriseProfileInput!
+    input_: UpdateEnterpriseProfileInput!
   ): UpdateEnterpriseProfilePayload
 
   """
@@ -19755,7 +19755,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseRepositoryProjectsSetting
     """
-    input: UpdateEnterpriseRepositoryProjectsSettingInput!
+    input_: UpdateEnterpriseRepositoryProjectsSettingInput!
   ): UpdateEnterpriseRepositoryProjectsSettingPayload
 
   """
@@ -19765,7 +19765,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseTeamDiscussionsSetting
     """
-    input: UpdateEnterpriseTeamDiscussionsSettingInput!
+    input_: UpdateEnterpriseTeamDiscussionsSettingInput!
   ): UpdateEnterpriseTeamDiscussionsSettingPayload
 
   """
@@ -19775,7 +19775,7 @@ type Mutation {
     """
     Parameters for UpdateEnterpriseTwoFactorAuthenticationRequiredSetting
     """
-    input: UpdateEnterpriseTwoFactorAuthenticationRequiredSettingInput!
+    input_: UpdateEnterpriseTwoFactorAuthenticationRequiredSettingInput!
   ): UpdateEnterpriseTwoFactorAuthenticationRequiredSettingPayload
 
   """
@@ -19785,7 +19785,7 @@ type Mutation {
     """
     Parameters for UpdateEnvironment
     """
-    input: UpdateEnvironmentInput!
+    input_: UpdateEnvironmentInput!
   ): UpdateEnvironmentPayload
 
   """
@@ -19795,7 +19795,7 @@ type Mutation {
     """
     Parameters for UpdateIpAllowListEnabledSetting
     """
-    input: UpdateIpAllowListEnabledSettingInput!
+    input_: UpdateIpAllowListEnabledSettingInput!
   ): UpdateIpAllowListEnabledSettingPayload
 
   """
@@ -19805,7 +19805,7 @@ type Mutation {
     """
     Parameters for UpdateIpAllowListEntry
     """
-    input: UpdateIpAllowListEntryInput!
+    input_: UpdateIpAllowListEntryInput!
   ): UpdateIpAllowListEntryPayload
 
   """
@@ -19815,7 +19815,7 @@ type Mutation {
     """
     Parameters for UpdateIpAllowListForInstalledAppsEnabledSetting
     """
-    input: UpdateIpAllowListForInstalledAppsEnabledSettingInput!
+    input_: UpdateIpAllowListForInstalledAppsEnabledSettingInput!
   ): UpdateIpAllowListForInstalledAppsEnabledSettingPayload
 
   """
@@ -19825,7 +19825,7 @@ type Mutation {
     """
     Parameters for UpdateIssue
     """
-    input: UpdateIssueInput!
+    input_: UpdateIssueInput!
   ): UpdateIssuePayload
 
   """
@@ -19835,7 +19835,7 @@ type Mutation {
     """
     Parameters for UpdateIssueComment
     """
-    input: UpdateIssueCommentInput!
+    input_: UpdateIssueCommentInput!
   ): UpdateIssueCommentPayload
 
   """
@@ -19845,7 +19845,7 @@ type Mutation {
     """
     Parameters for UpdateLabel
     """
-    input: UpdateLabelInput!
+    input_: UpdateLabelInput!
   ): UpdateLabelPayload @preview(toggledBy: "bane-preview")
 
   """
@@ -19855,7 +19855,7 @@ type Mutation {
     """
     Parameters for UpdateNotificationRestrictionSetting
     """
-    input: UpdateNotificationRestrictionSettingInput!
+    input_: UpdateNotificationRestrictionSettingInput!
   ): UpdateNotificationRestrictionSettingPayload
 
   """
@@ -19865,7 +19865,7 @@ type Mutation {
     """
     Parameters for UpdateOrganizationAllowPrivateRepositoryForkingSetting
     """
-    input: UpdateOrganizationAllowPrivateRepositoryForkingSettingInput!
+    input_: UpdateOrganizationAllowPrivateRepositoryForkingSettingInput!
   ): UpdateOrganizationAllowPrivateRepositoryForkingSettingPayload
 
   """
@@ -19875,7 +19875,7 @@ type Mutation {
     """
     Parameters for UpdateProject
     """
-    input: UpdateProjectInput!
+    input_: UpdateProjectInput!
   ): UpdateProjectPayload
 
   """
@@ -19885,7 +19885,7 @@ type Mutation {
     """
     Parameters for UpdateProjectCard
     """
-    input: UpdateProjectCardInput!
+    input_: UpdateProjectCardInput!
   ): UpdateProjectCardPayload
 
   """
@@ -19895,7 +19895,7 @@ type Mutation {
     """
     Parameters for UpdateProjectColumn
     """
-    input: UpdateProjectColumnInput!
+    input_: UpdateProjectColumnInput!
   ): UpdateProjectColumnPayload
 
   """
@@ -19905,7 +19905,7 @@ type Mutation {
     """
     Parameters for UpdateProjectNext
     """
-    input: UpdateProjectNextInput!
+    input_: UpdateProjectNextInput!
   ): UpdateProjectNextPayload
 
   """
@@ -19915,7 +19915,7 @@ type Mutation {
     """
     Parameters for UpdateProjectNextItemField
     """
-    input: UpdateProjectNextItemFieldInput!
+    input_: UpdateProjectNextItemFieldInput!
   ): UpdateProjectNextItemFieldPayload
 
   """
@@ -19925,7 +19925,7 @@ type Mutation {
     """
     Parameters for UpdatePullRequest
     """
-    input: UpdatePullRequestInput!
+    input_: UpdatePullRequestInput!
   ): UpdatePullRequestPayload
 
   """
@@ -19935,7 +19935,7 @@ type Mutation {
     """
     Parameters for UpdatePullRequestBranch
     """
-    input: UpdatePullRequestBranchInput!
+    input_: UpdatePullRequestBranchInput!
   ): UpdatePullRequestBranchPayload
 
   """
@@ -19945,7 +19945,7 @@ type Mutation {
     """
     Parameters for UpdatePullRequestReview
     """
-    input: UpdatePullRequestReviewInput!
+    input_: UpdatePullRequestReviewInput!
   ): UpdatePullRequestReviewPayload
 
   """
@@ -19955,7 +19955,7 @@ type Mutation {
     """
     Parameters for UpdatePullRequestReviewComment
     """
-    input: UpdatePullRequestReviewCommentInput!
+    input_: UpdatePullRequestReviewCommentInput!
   ): UpdatePullRequestReviewCommentPayload
 
   """
@@ -19965,7 +19965,7 @@ type Mutation {
     """
     Parameters for UpdateRef
     """
-    input: UpdateRefInput!
+    input_: UpdateRefInput!
   ): UpdateRefPayload
 
   """
@@ -19992,7 +19992,7 @@ type Mutation {
     """
     Parameters for UpdateRefs
     """
-    input: UpdateRefsInput!
+    input_: UpdateRefsInput!
   ): UpdateRefsPayload @preview(toggledBy: "update-refs-preview")
 
   """
@@ -20002,7 +20002,7 @@ type Mutation {
     """
     Parameters for UpdateRepository
     """
-    input: UpdateRepositoryInput!
+    input_: UpdateRepositoryInput!
   ): UpdateRepositoryPayload
 
   """
@@ -20012,7 +20012,7 @@ type Mutation {
     """
     Parameters for UpdateSponsorshipPreferences
     """
-    input: UpdateSponsorshipPreferencesInput!
+    input_: UpdateSponsorshipPreferencesInput!
   ): UpdateSponsorshipPreferencesPayload
 
   """
@@ -20022,7 +20022,7 @@ type Mutation {
     """
     Parameters for UpdateSubscription
     """
-    input: UpdateSubscriptionInput!
+    input_: UpdateSubscriptionInput!
   ): UpdateSubscriptionPayload
 
   """
@@ -20032,7 +20032,7 @@ type Mutation {
     """
     Parameters for UpdateTeamDiscussion
     """
-    input: UpdateTeamDiscussionInput!
+    input_: UpdateTeamDiscussionInput!
   ): UpdateTeamDiscussionPayload
 
   """
@@ -20042,7 +20042,7 @@ type Mutation {
     """
     Parameters for UpdateTeamDiscussionComment
     """
-    input: UpdateTeamDiscussionCommentInput!
+    input_: UpdateTeamDiscussionCommentInput!
   ): UpdateTeamDiscussionCommentPayload
 
   """
@@ -20052,7 +20052,7 @@ type Mutation {
     """
     Parameters for UpdateTeamReviewAssignment
     """
-    input: UpdateTeamReviewAssignmentInput!
+    input_: UpdateTeamReviewAssignmentInput!
   ): UpdateTeamReviewAssignmentPayload @preview(toggledBy: "stone-crop-preview")
 
   """
@@ -20062,7 +20062,7 @@ type Mutation {
     """
     Parameters for UpdateTopics
     """
-    input: UpdateTopicsInput!
+    input_: UpdateTopicsInput!
   ): UpdateTopicsPayload
 
   """
@@ -20072,7 +20072,7 @@ type Mutation {
     """
     Parameters for VerifyVerifiableDomain
     """
-    input: VerifyVerifiableDomainInput!
+    input_: VerifyVerifiableDomainInput!
   ): VerifyVerifiableDomainPayload
 }
 

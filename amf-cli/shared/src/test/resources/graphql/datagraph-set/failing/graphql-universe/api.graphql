@@ -3788,190 +3788,190 @@ type Money {
 
 type Mutation {
   """Accept Transfer"""
-  acceptTransfer(input: TransferAcceptInput!): TransferAcceptPayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `transferAccept`")
+  acceptTransfer(input_: TransferAcceptInput!): TransferAcceptPayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `transferAccept`")
 
   """Create AddOn"""
-  addOnCreate(input: AddOnCreateInput!): AddOnCreatePayload
+  addOnCreate(input_: AddOnCreateInput!): AddOnCreatePayload
 
   """Delete AddOn"""
-  addOnDelete(input: AddOnDeleteInput!): AddOnDeletePayload
+  addOnDelete(input_: AddOnDeleteInput!): AddOnDeletePayload
 
   """Update Addon"""
-  addOnUpdate(input: AddOnUpdateInput!): AddOnUpdatePayload
+  addOnUpdate(input_: AddOnUpdateInput!): AddOnUpdatePayload
 
   """Message event attendees"""
-  attendeesMessage(input: AttendeesMessageInput!): AttendeesMessagePayload
+  attendeesMessage(input_: AttendeesMessageInput!): AttendeesMessagePayload
 
   """Update the time slot for orders"""
-  bulkOrderTimeSlotUpdate(input: BulkOrderTimeSlotUpdateInput!): BulkOrderTimeSlotUpdatePayload
+  bulkOrderTimeSlotUpdate(input_: BulkOrderTimeSlotUpdateInput!): BulkOrderTimeSlotUpdatePayload
 
   """Create AddOn"""
-  createAddOn(input: AddOnCreateInput!): AddOnCreatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `addOnCreate`")
+  createAddOn(input_: AddOnCreateInput!): AddOnCreatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `addOnCreate`")
 
   """Create Custom Report"""
-  createCustomReport(input: CustomReportCreateInput!): CustomReportCreatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `customReportCreate`")
+  createCustomReport(input_: CustomReportCreateInput!): CustomReportCreatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `customReportCreate`")
 
   """Create Event"""
-  createEvent(input: EventCreateInput!): EventCreatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventCreate`")
+  createEvent(input_: EventCreateInput!): EventCreatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventCreate`")
 
   """Create Tax"""
-  createTax(input: TaxCreateInput!): TaxCreatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `taxCreate`")
+  createTax(input_: TaxCreateInput!): TaxCreatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `taxCreate`")
 
   """Create Custom Report"""
-  customReportCreate(input: CustomReportCreateInput!): CustomReportCreatePayload
+  customReportCreate(input_: CustomReportCreateInput!): CustomReportCreatePayload
 
   """Delete Custom Report"""
-  customReportDelete(input: CustomReportDeleteInput!): CustomReportDeletePayload
+  customReportDelete(input_: CustomReportDeleteInput!): CustomReportDeletePayload
 
   """Update Custom Report"""
-  customReportUpdate(input: CustomReportUpdateInput!): CustomReportUpdatePayload
+  customReportUpdate(input_: CustomReportUpdateInput!): CustomReportUpdatePayload
 
   """Decline Transfer"""
-  declineTransfer(input: TransferDeclineInput!): TransferDeclinePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `transferDecline`")
+  declineTransfer(input_: TransferDeclineInput!): TransferDeclinePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `transferDecline`")
 
   """Delete AddOn"""
-  deleteAddOn(input: AddOnDeleteInput!): AddOnDeletePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `addOnDelete`")
+  deleteAddOn(input_: AddOnDeleteInput!): AddOnDeletePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `addOnDelete`")
 
   """Delete Custom Report"""
-  deleteCustomReport(input: CustomReportDeleteInput!): CustomReportDeletePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `customReportDelete`")
+  deleteCustomReport(input_: CustomReportDeleteInput!): CustomReportDeletePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `customReportDelete`")
 
   """Delete Event"""
-  deleteEvent(input: EventDeleteInput!): EventDeletePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventDelete`")
+  deleteEvent(input_: EventDeleteInput!): EventDeletePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventDelete`")
 
   """Create Discount belonging to this user"""
-  discountCreate(input: DiscountCreateInput!): DiscountCreatePayload
+  discountCreate(input_: DiscountCreateInput!): DiscountCreatePayload
 
   """Delete Discount"""
-  discountDelete(input: DiscountDeleteInput!): DiscountDeletePayload
+  discountDelete(input_: DiscountDeleteInput!): DiscountDeletePayload
 
   """Bulk create account level discount codes"""
-  discountsCreate(input: DiscountsCreateInput!): DiscountsCreatePayload
+  discountsCreate(input_: DiscountsCreateInput!): DiscountsCreatePayload
 
   """Update many Discounts at once"""
-  discountsUpdate(input: DiscountsUpdateInput!): DiscountsUpdatePayload
+  discountsUpdate(input_: DiscountsUpdateInput!): DiscountsUpdatePayload
 
   """Duplicate Event"""
-  duplicateEvent(input: EventDuplicateInput!): EventDuplicatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventDuplicate`")
+  duplicateEvent(input_: EventDuplicateInput!): EventDuplicatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventDuplicate`")
 
   """Create Event"""
-  eventCreate(input: EventCreateInput!): EventCreatePayload
+  eventCreate(input_: EventCreateInput!): EventCreatePayload
 
   """Delete Event"""
-  eventDelete(input: EventDeleteInput!): EventDeletePayload
+  eventDelete(input_: EventDeleteInput!): EventDeletePayload
 
   """Duplicate Event"""
-  eventDuplicate(input: EventDuplicateInput!): EventDuplicatePayload
+  eventDuplicate(input_: EventDuplicateInput!): EventDuplicatePayload
 
   """Publish Event"""
-  eventPublish(input: EventPublishInput!): EventPublishPayload
+  eventPublish(input_: EventPublishInput!): EventPublishPayload
 
   """Report Event"""
-  eventReport(input: EventReportInput!): EventReportPayload
+  eventReport(input_: EventReportInput!): EventReportPayload
 
   """Save Event"""
-  eventSave(input: EventSaveInput!): EventSavePayload
+  eventSave(input_: EventSaveInput!): EventSavePayload
 
   """Report Event Set"""
-  eventSetReport(input: EventSetReportInput!): EventSetReportPayload
+  eventSetReport(input_: EventSetReportInput!): EventSetReportPayload
 
   """Unpublish Event"""
-  eventUnpublish(input: EventUnpublishInput!): EventUnpublishPayload
+  eventUnpublish(input_: EventUnpublishInput!): EventUnpublishPayload
 
   """Update Event"""
-  eventUpdate(input: EventUpdateInput!): EventUpdatePayload
+  eventUpdate(input_: EventUpdateInput!): EventUpdatePayload
 
   """Update host google analytics integration"""
-  hostGaIntegrationUpdate(input: HostGaIntegrationUpdateInput!): HostGaIntegrationUpdatePayload
+  hostGaIntegrationUpdate(input_: HostGaIntegrationUpdateInput!): HostGaIntegrationUpdatePayload
 
   """Change locale for current Viewer"""
-  localeChange(input: LocaleChangeInput!): LocaleChangePayload
+  localeChange(input_: LocaleChangeInput!): LocaleChangePayload
 
   """Approves a pending order"""
-  orderApprove(input: OrderApproveInput!): OrderApprovePayload
+  orderApprove(input_: OrderApproveInput!): OrderApprovePayload
 
   """Change the buyer info for an order"""
-  orderBuyerInfoChange(input: OrderBuyerInfoChangeInput!): OrderBuyerInfoChangePayload
+  orderBuyerInfoChange(input_: OrderBuyerInfoChangeInput!): OrderBuyerInfoChangePayload
 
   """Declines a pending order"""
-  orderDecline(input: OrderDeclineInput!): OrderDeclinePayload
+  orderDecline(input_: OrderDeclineInput!): OrderDeclinePayload
 
   """Change the attendee info for an order item"""
-  orderItemAttendeeInfoChange(input: OrderItemAttendeeInfoChangeInput!): OrderItemAttendeeInfoChangePayload
+  orderItemAttendeeInfoChange(input_: OrderItemAttendeeInfoChangeInput!): OrderItemAttendeeInfoChangePayload
 
   """Check in an order item"""
-  orderItemCheckIn(input: OrderItemCheckInInput!): OrderItemCheckInPayload
+  orderItemCheckIn(input_: OrderItemCheckInInput!): OrderItemCheckInPayload
 
   """Check out an order item"""
-  orderItemCheckOut(input: OrderItemCheckOutInput!): OrderItemCheckOutPayload
+  orderItemCheckOut(input_: OrderItemCheckOutInput!): OrderItemCheckOutPayload
 
   """Update external metadata field on OrderItem"""
-  orderItemExternalMetadataUpdate(input: ExternalMetadataUpdateInput!): ExternalMetadataUpdatePayload
+  orderItemExternalMetadataUpdate(input_: ExternalMetadataUpdateInput!): ExternalMetadataUpdatePayload
 
   """Resend email with order item details"""
-  orderItemResend(input: OrderItemResendInput!): OrderItemResendPayload
+  orderItemResend(input_: OrderItemResendInput!): OrderItemResendPayload
 
   """Marks an order that was purchased using an invoice as 'Paid'"""
-  orderMarkInvoiceAsPaid(input: MarkInvoiceAsPaidInput!): MarkInvoiceAsPaidPayload
+  orderMarkInvoiceAsPaid(input_: MarkInvoiceAsPaidInput!): MarkInvoiceAsPaidPayload
 
   """Refund order items"""
-  orderRefund(input: OrderRefundInput!): OrderRefundPayload
+  orderRefund(input_: OrderRefundInput!): OrderRefundPayload
 
   """Resend email with order details"""
-  orderResend(input: OrderResendInput!): OrderResendPayload
+  orderResend(input_: OrderResendInput!): OrderResendPayload
 
   """Update the time slot for an order"""
-  orderTimeSlotUpdate(input: OrderTimeSlotUpdateInput!): OrderTimeSlotUpdatePayload
+  orderTimeSlotUpdate(input_: OrderTimeSlotUpdateInput!): OrderTimeSlotUpdatePayload
 
   """Upgrade order items"""
-  orderUpgrade(input: OrderUpgradeInput!): OrderUpgradePayload
+  orderUpgrade(input_: OrderUpgradeInput!): OrderUpgradePayload
 
   """Publish Event"""
-  publishEvent(input: EventPublishInput!): EventPublishPayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventPublish`")
+  publishEvent(input_: EventPublishInput!): EventPublishPayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventPublish`")
 
   """Create a ticket"""
-  rateCreate(input: RateCreateInput!): RateCreatePayload
+  rateCreate(input_: RateCreateInput!): RateCreatePayload
 
   """Update a single rate"""
-  rateUpdate(input: RateUpdateInput!): RateUpdatePayload
+  rateUpdate(input_: RateUpdateInput!): RateUpdatePayload
 
   """Update multiple rates"""
-  ratesUpdate(input: RatesUpdateInput!): RatesUpdatePayload
+  ratesUpdate(input_: RatesUpdateInput!): RatesUpdatePayload
 
   """Save Event"""
-  saveEvent(input: EventSaveInput!): EventSavePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventSave`")
+  saveEvent(input_: EventSaveInput!): EventSavePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `eventSave`")
 
   """Makes API call to Seats.io to publish a seating map"""
-  seatsPublishDraft(input: SeatsPublishDraftInput!): SeatsPublishDraftPayload
+  seatsPublishDraft(input_: SeatsPublishDraftInput!): SeatsPublishDraftPayload
 
   """Synchronize rates with seats chart for reserved seated events"""
-  seatsSyncRates(input: SeatsSyncRatesInput!): SeatsSyncRatesPayload
+  seatsSyncRates(input_: SeatsSyncRatesInput!): SeatsSyncRatesPayload
 
   """Create Tax"""
-  taxCreate(input: TaxCreateInput!): TaxCreatePayload
+  taxCreate(input_: TaxCreateInput!): TaxCreatePayload
 
   """Add or update a timeslot ticket customization"""
-  timeSlotRateCustomization(input: TimeslotRateCustomizationInput!): TimeslotRateCustomizationPayload
+  timeSlotRateCustomization(input_: TimeslotRateCustomizationInput!): TimeslotRateCustomizationPayload
 
   """Updates a TimeSlot"""
-  timeSlotUpdate(input: TimeSlotUpdateInput!): TimeSlotUpdatePayload
+  timeSlotUpdate(input_: TimeSlotUpdateInput!): TimeSlotUpdatePayload
 
   """Accept Transfer"""
-  transferAccept(input: TransferAcceptInput!): TransferAcceptPayload
+  transferAccept(input_: TransferAcceptInput!): TransferAcceptPayload
 
   """Decline Transfer"""
-  transferDecline(input: TransferDeclineInput!): TransferDeclinePayload
+  transferDecline(input_: TransferDeclineInput!): TransferDeclinePayload
 
   """Update Addon"""
-  updateAddOn(input: AddOnUpdateInput!): AddOnUpdatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `addOnUpdate`")
+  updateAddOn(input_: AddOnUpdateInput!): AddOnUpdatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `addOnUpdate`")
 
   """Update Custom Report"""
-  updateCustomReport(input: CustomReportUpdateInput!): CustomReportUpdatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `customReportUpdate`")
+  updateCustomReport(input_: CustomReportUpdateInput!): CustomReportUpdatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `customReportUpdate`")
 
   """Update a single rate"""
-  updateRate(input: RateUpdateInput!): RateUpdatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `rateUpdate`")
+  updateRate(input_: RateUpdateInput!): RateUpdatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `rateUpdate`")
 
   """Update multiple rates"""
-  updateRates(input: RatesUpdateInput!): RatesUpdatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `ratesUpdate`")
+  updateRates(input_: RatesUpdateInput!): RatesUpdatePayload @deprecated(reason: "Mutations should conform to the `subjectAction` format, please use `ratesUpdate`")
 }
 
 """Input type for a new answer."""

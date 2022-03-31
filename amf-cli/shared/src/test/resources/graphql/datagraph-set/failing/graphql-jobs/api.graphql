@@ -655,10 +655,10 @@ input LocationsInput {
 }
 
 type Mutation {
-  subscribe(input: SubscribeInput!): User!
-  postJob(input: PostJobInput!): Job!
-  updateJob(input: UpdateJobInput!, adminSecret: String!): Job!
-  updateCompany(input: UpdateCompanyInput!, adminSecret: String!): Company!
+  subscribe(input_: SubscribeInput!): User!
+  postJob(input_: PostJobInput!): Job!
+  updateJob(input_: UpdateJobInput!, adminSecret: String!): Job!
+  updateCompany(input_: UpdateCompanyInput!, adminSecret: String!): Company!
 }
 
 input PostJobInput {
@@ -672,12 +672,12 @@ input PostJobInput {
 }
 
 type Query {
-  jobs(input: JobsInput): [Job!]!
-  job(input: JobInput!): Job!
-  locations(input: LocationsInput!): [Location!]!
-  city(input: LocationInput!): City!
-  country(input: LocationInput!): Country!
-  remote(input: LocationInput!): Remote!
+  jobs(input_: JobsInput): [Job!]!
+  job(input_: JobInput!): Job!
+  locations(input_: LocationsInput!): [Location!]!
+  city(input_: LocationInput!): City!
+  country(input_: LocationInput!): Country!
+  remote(input_: LocationInput!): Remote!
   commitments: [Commitment!]!
   cities: [City!]!
   countries: [Country!]!

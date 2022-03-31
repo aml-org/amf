@@ -16854,85 +16854,85 @@ enum MoveType {
 type Mutation {
   addProjectToSecurityDashboard(
     """Parameters for AddProjectToSecurityDashboard"""
-    input: AddProjectToSecurityDashboardInput!
+    input_: AddProjectToSecurityDashboardInput!
   ): AddProjectToSecurityDashboardPayload
   adminSidekiqQueuesDeleteJobs(
     """Parameters for AdminSidekiqQueuesDeleteJobs"""
-    input: AdminSidekiqQueuesDeleteJobsInput!
+    input_: AdminSidekiqQueuesDeleteJobsInput!
   ): AdminSidekiqQueuesDeleteJobsPayload
   alertSetAssignees(
     """Parameters for AlertSetAssignees"""
-    input: AlertSetAssigneesInput!
+    input_: AlertSetAssigneesInput!
   ): AlertSetAssigneesPayload
   alertTodoCreate(
     """Parameters for AlertTodoCreate"""
-    input: AlertTodoCreateInput!
+    input_: AlertTodoCreateInput!
   ): AlertTodoCreatePayload
   apiFuzzingCiConfigurationCreate(
     """Parameters for ApiFuzzingCiConfigurationCreate"""
-    input: ApiFuzzingCiConfigurationCreateInput!
+    input_: ApiFuzzingCiConfigurationCreateInput!
   ): ApiFuzzingCiConfigurationCreatePayload
   awardEmojiAdd(
     """Parameters for AwardEmojiAdd"""
-    input: AwardEmojiAddInput!
+    input_: AwardEmojiAddInput!
   ): AwardEmojiAddPayload
   awardEmojiRemove(
     """Parameters for AwardEmojiRemove"""
-    input: AwardEmojiRemoveInput!
+    input_: AwardEmojiRemoveInput!
   ): AwardEmojiRemovePayload
   awardEmojiToggle(
     """Parameters for AwardEmojiToggle"""
-    input: AwardEmojiToggleInput!
+    input_: AwardEmojiToggleInput!
   ): AwardEmojiTogglePayload
   boardEpicCreate(
     """Parameters for BoardEpicCreate"""
-    input: BoardEpicCreateInput!
+    input_: BoardEpicCreateInput!
   ): BoardEpicCreatePayload
   boardListCreate(
     """Parameters for BoardListCreate"""
-    input: BoardListCreateInput!
+    input_: BoardListCreateInput!
   ): BoardListCreatePayload
   boardListUpdateLimitMetrics(
     """Parameters for BoardListUpdateLimitMetrics"""
-    input: BoardListUpdateLimitMetricsInput!
+    input_: BoardListUpdateLimitMetricsInput!
   ): BoardListUpdateLimitMetricsPayload
 
   """**BETA** This endpoint is subject to change without notice."""
   bulkEnableDevopsAdoptionNamespaces(
     """Parameters for BulkEnableDevopsAdoptionNamespaces"""
-    input: BulkEnableDevopsAdoptionNamespacesInput!
+    input_: BulkEnableDevopsAdoptionNamespacesInput!
   ): BulkEnableDevopsAdoptionNamespacesPayload
   ciCdSettingsUpdate(
     """Parameters for CiCdSettingsUpdate"""
-    input: CiCdSettingsUpdateInput!
+    input_: CiCdSettingsUpdateInput!
   ): CiCdSettingsUpdatePayload
   ciJobTokenScopeAddProject(
     """Parameters for CiJobTokenScopeAddProject"""
-    input: CiJobTokenScopeAddProjectInput!
+    input_: CiJobTokenScopeAddProjectInput!
   ): CiJobTokenScopeAddProjectPayload
   ciJobTokenScopeRemoveProject(
     """Parameters for CiJobTokenScopeRemoveProject"""
-    input: CiJobTokenScopeRemoveProjectInput!
+    input_: CiJobTokenScopeRemoveProjectInput!
   ): CiJobTokenScopeRemoveProjectPayload
   clusterAgentDelete(
     """Parameters for ClusterAgentDelete"""
-    input: ClusterAgentDeleteInput!
+    input_: ClusterAgentDeleteInput!
   ): ClusterAgentDeletePayload
   clusterAgentTokenCreate(
     """Parameters for ClusterAgentTokenCreate"""
-    input: ClusterAgentTokenCreateInput!
+    input_: ClusterAgentTokenCreateInput!
   ): ClusterAgentTokenCreatePayload
   clusterAgentTokenDelete(
     """Parameters for ClusterAgentTokenDelete"""
-    input: ClusterAgentTokenDeleteInput!
+    input_: ClusterAgentTokenDeleteInput!
   ): ClusterAgentTokenDeletePayload @deprecated(reason: "Tokens must be revoked with ClusterAgentTokenRevoke. Deprecated in 14.7.")
   clusterAgentTokenRevoke(
     """Parameters for ClusterAgentTokenRevoke"""
-    input: ClusterAgentTokenRevokeInput!
+    input_: ClusterAgentTokenRevokeInput!
   ): ClusterAgentTokenRevokePayload
   commitCreate(
     """Parameters for CommitCreate"""
-    input: CommitCreateInput!
+    input_: CommitCreateInput!
   ): CommitCreatePayload
 
   """
@@ -16943,7 +16943,7 @@ type Mutation {
   """
   configureContainerScanning(
     """Parameters for ConfigureContainerScanning"""
-    input: ConfigureContainerScanningInput!
+    input_: ConfigureContainerScanningInput!
   ): ConfigureContainerScanningPayload
 
   """
@@ -16954,7 +16954,7 @@ type Mutation {
   """
   configureDependencyScanning(
     """Parameters for ConfigureDependencyScanning"""
-    input: ConfigureDependencyScanningInput!
+    input_: ConfigureDependencyScanningInput!
   ): ConfigureDependencyScanningPayload
 
   """
@@ -16965,7 +16965,7 @@ type Mutation {
   """
   configureSast(
     """Parameters for ConfigureSast"""
-    input: ConfigureSastInput!
+    input_: ConfigureSastInput!
   ): ConfigureSastPayload
 
   """
@@ -16977,7 +16977,7 @@ type Mutation {
   """
   configureSastIac(
     """Parameters for ConfigureSastIac"""
-    input: ConfigureSastIacInput!
+    input_: ConfigureSastIacInput!
   ): ConfigureSastIacPayload
 
   """
@@ -16989,38 +16989,38 @@ type Mutation {
   """
   configureSecretDetection(
     """Parameters for ConfigureSecretDetection"""
-    input: ConfigureSecretDetectionInput!
+    input_: ConfigureSecretDetectionInput!
   ): ConfigureSecretDetectionPayload
 
   """ Available only when feature flag `corpus_management` is enabled. This flag is enabled by default.
   """
   corpusCreate(
     """Parameters for CorpusCreate"""
-    input: CorpusCreateInput!
+    input_: CorpusCreateInput!
   ): CorpusCreatePayload
   createAlertIssue(
     """Parameters for CreateAlertIssue"""
-    input: CreateAlertIssueInput!
+    input_: CreateAlertIssueInput!
   ): CreateAlertIssuePayload
   createAnnotation(
     """Parameters for CreateAnnotation"""
-    input: CreateAnnotationInput!
+    input_: CreateAnnotationInput!
   ): CreateAnnotationPayload
   createBoard(
     """Parameters for CreateBoard"""
-    input: CreateBoardInput!
+    input_: CreateBoardInput!
   ): CreateBoardPayload
   createBranch(
     """Parameters for CreateBranch"""
-    input: CreateBranchInput!
+    input_: CreateBranchInput!
   ): CreateBranchPayload
   createClusterAgent(
     """Parameters for CreateClusterAgent"""
-    input: CreateClusterAgentInput!
+    input_: CreateClusterAgentInput!
   ): CreateClusterAgentPayload
   createComplianceFramework(
     """Parameters for CreateComplianceFramework"""
-    input: CreateComplianceFrameworkInput!
+    input_: CreateComplianceFrameworkInput!
   ): CreateComplianceFrameworkPayload
 
   """
@@ -17030,151 +17030,151 @@ type Mutation {
   """
   createCustomEmoji(
     """Parameters for CreateCustomEmoji"""
-    input: CreateCustomEmojiInput!
+    input_: CreateCustomEmojiInput!
   ): CreateCustomEmojiPayload
   createDiffNote(
     """Parameters for CreateDiffNote"""
-    input: CreateDiffNoteInput!
+    input_: CreateDiffNoteInput!
   ): CreateDiffNotePayload
   createEpic(
     """Parameters for CreateEpic"""
-    input: CreateEpicInput!
+    input_: CreateEpicInput!
   ): CreateEpicPayload
   createImageDiffNote(
     """Parameters for CreateImageDiffNote"""
-    input: CreateImageDiffNoteInput!
+    input_: CreateImageDiffNoteInput!
   ): CreateImageDiffNotePayload
   createIssue(
     """Parameters for CreateIssue"""
-    input: CreateIssueInput!
+    input_: CreateIssueInput!
   ): CreateIssuePayload
   createIteration(
     """Parameters for CreateIteration"""
-    input: CreateIterationInput!
+    input_: CreateIterationInput!
   ): CreateIterationPayload @deprecated(reason: "Use iterationCreate. Deprecated in 14.0.")
   createNote(
     """Parameters for CreateNote"""
-    input: CreateNoteInput!
+    input_: CreateNoteInput!
   ): CreateNotePayload
   createRequirement(
     """Parameters for CreateRequirement"""
-    input: CreateRequirementInput!
+    input_: CreateRequirementInput!
   ): CreateRequirementPayload
   createSnippet(
     """Parameters for CreateSnippet"""
-    input: CreateSnippetInput!
+    input_: CreateSnippetInput!
   ): CreateSnippetPayload
   createTestCase(
     """Parameters for CreateTestCase"""
-    input: CreateTestCaseInput!
+    input_: CreateTestCaseInput!
   ): CreateTestCasePayload
   customerRelationsContactCreate(
     """Parameters for CustomerRelationsContactCreate"""
-    input: CustomerRelationsContactCreateInput!
+    input_: CustomerRelationsContactCreateInput!
   ): CustomerRelationsContactCreatePayload
   customerRelationsContactUpdate(
     """Parameters for CustomerRelationsContactUpdate"""
-    input: CustomerRelationsContactUpdateInput!
+    input_: CustomerRelationsContactUpdateInput!
   ): CustomerRelationsContactUpdatePayload
   customerRelationsOrganizationCreate(
     """Parameters for CustomerRelationsOrganizationCreate"""
-    input: CustomerRelationsOrganizationCreateInput!
+    input_: CustomerRelationsOrganizationCreateInput!
   ): CustomerRelationsOrganizationCreatePayload
   customerRelationsOrganizationUpdate(
     """Parameters for CustomerRelationsOrganizationUpdate"""
-    input: CustomerRelationsOrganizationUpdateInput!
+    input_: CustomerRelationsOrganizationUpdateInput!
   ): CustomerRelationsOrganizationUpdatePayload
   dastOnDemandScanCreate(
     """Parameters for DastOnDemandScanCreate"""
-    input: DastOnDemandScanCreateInput!
+    input_: DastOnDemandScanCreateInput!
   ): DastOnDemandScanCreatePayload
   dastProfileCreate(
     """Parameters for DastProfileCreate"""
-    input: DastProfileCreateInput!
+    input_: DastProfileCreateInput!
   ): DastProfileCreatePayload
   dastProfileDelete(
     """Parameters for DastProfileDelete"""
-    input: DastProfileDeleteInput!
+    input_: DastProfileDeleteInput!
   ): DastProfileDeletePayload
   dastProfileRun(
     """Parameters for DastProfileRun"""
-    input: DastProfileRunInput!
+    input_: DastProfileRunInput!
   ): DastProfileRunPayload
   dastProfileUpdate(
     """Parameters for DastProfileUpdate"""
-    input: DastProfileUpdateInput!
+    input_: DastProfileUpdateInput!
   ): DastProfileUpdatePayload
   dastScannerProfileCreate(
     """Parameters for DastScannerProfileCreate"""
-    input: DastScannerProfileCreateInput!
+    input_: DastScannerProfileCreateInput!
   ): DastScannerProfileCreatePayload
   dastScannerProfileDelete(
     """Parameters for DastScannerProfileDelete"""
-    input: DastScannerProfileDeleteInput!
+    input_: DastScannerProfileDeleteInput!
   ): DastScannerProfileDeletePayload
   dastScannerProfileUpdate(
     """Parameters for DastScannerProfileUpdate"""
-    input: DastScannerProfileUpdateInput!
+    input_: DastScannerProfileUpdateInput!
   ): DastScannerProfileUpdatePayload
   dastSiteProfileCreate(
     """Parameters for DastSiteProfileCreate"""
-    input: DastSiteProfileCreateInput!
+    input_: DastSiteProfileCreateInput!
   ): DastSiteProfileCreatePayload
   dastSiteProfileDelete(
     """Parameters for DastSiteProfileDelete"""
-    input: DastSiteProfileDeleteInput!
+    input_: DastSiteProfileDeleteInput!
   ): DastSiteProfileDeletePayload
   dastSiteProfileUpdate(
     """Parameters for DastSiteProfileUpdate"""
-    input: DastSiteProfileUpdateInput!
+    input_: DastSiteProfileUpdateInput!
   ): DastSiteProfileUpdatePayload
   dastSiteTokenCreate(
     """Parameters for DastSiteTokenCreate"""
-    input: DastSiteTokenCreateInput!
+    input_: DastSiteTokenCreateInput!
   ): DastSiteTokenCreatePayload
   dastSiteValidationCreate(
     """Parameters for DastSiteValidationCreate"""
-    input: DastSiteValidationCreateInput!
+    input_: DastSiteValidationCreateInput!
   ): DastSiteValidationCreatePayload
   dastSiteValidationRevoke(
     """Parameters for DastSiteValidationRevoke"""
-    input: DastSiteValidationRevokeInput!
+    input_: DastSiteValidationRevokeInput!
   ): DastSiteValidationRevokePayload
   deleteAnnotation(
     """Parameters for DeleteAnnotation"""
-    input: DeleteAnnotationInput!
+    input_: DeleteAnnotationInput!
   ): DeleteAnnotationPayload
   designManagementDelete(
     """Parameters for DesignManagementDelete"""
-    input: DesignManagementDeleteInput!
+    input_: DesignManagementDeleteInput!
   ): DesignManagementDeletePayload
   designManagementMove(
     """Parameters for DesignManagementMove"""
-    input: DesignManagementMoveInput!
+    input_: DesignManagementMoveInput!
   ): DesignManagementMovePayload
   designManagementUpload(
     """Parameters for DesignManagementUpload"""
-    input: DesignManagementUploadInput!
+    input_: DesignManagementUploadInput!
   ): DesignManagementUploadPayload
   destroyBoard(
     """Parameters for DestroyBoard"""
-    input: DestroyBoardInput!
+    input_: DestroyBoardInput!
   ): DestroyBoardPayload
   destroyBoardList(
     """Parameters for DestroyBoardList"""
-    input: DestroyBoardListInput!
+    input_: DestroyBoardListInput!
   ): DestroyBoardListPayload
   destroyComplianceFramework(
     """Parameters for DestroyComplianceFramework"""
-    input: DestroyComplianceFrameworkInput!
+    input_: DestroyComplianceFrameworkInput!
   ): DestroyComplianceFrameworkPayload
   destroyContainerRepository(
     """Parameters for DestroyContainerRepository"""
-    input: DestroyContainerRepositoryInput!
+    input_: DestroyContainerRepositoryInput!
   ): DestroyContainerRepositoryPayload
   destroyContainerRepositoryTags(
     """Parameters for DestroyContainerRepositoryTags"""
-    input: DestroyContainerRepositoryTagsInput!
+    input_: DestroyContainerRepositoryTagsInput!
   ): DestroyContainerRepositoryTagsPayload
 
   """
@@ -17184,39 +17184,39 @@ type Mutation {
   """
   destroyCustomEmoji(
     """Parameters for DestroyCustomEmoji"""
-    input: DestroyCustomEmojiInput!
+    input_: DestroyCustomEmojiInput!
   ): DestroyCustomEmojiPayload
   destroyEpicBoard(
     """Parameters for DestroyEpicBoard"""
-    input: DestroyEpicBoardInput!
+    input_: DestroyEpicBoardInput!
   ): DestroyEpicBoardPayload
   destroyNote(
     """Parameters for DestroyNote"""
-    input: DestroyNoteInput!
+    input_: DestroyNoteInput!
   ): DestroyNotePayload
   destroyPackage(
     """Parameters for DestroyPackage"""
-    input: DestroyPackageInput!
+    input_: DestroyPackageInput!
   ): DestroyPackagePayload
   destroyPackageFile(
     """Parameters for DestroyPackageFile"""
-    input: DestroyPackageFileInput!
+    input_: DestroyPackageFileInput!
   ): DestroyPackageFilePayload
   destroySnippet(
     """Parameters for DestroySnippet"""
-    input: DestroySnippetInput!
+    input_: DestroySnippetInput!
   ): DestroySnippetPayload
 
   """**BETA** This endpoint is subject to change without notice."""
   disableDevopsAdoptionNamespace(
     """Parameters for DisableDevopsAdoptionNamespace"""
-    input: DisableDevopsAdoptionNamespaceInput!
+    input_: DisableDevopsAdoptionNamespaceInput!
   ): DisableDevopsAdoptionNamespacePayload
 
   """Toggles the resolved state of a discussion"""
   discussionToggleResolve(
     """Parameters for DiscussionToggleResolve"""
-    input: DiscussionToggleResolveInput!
+    input_: DiscussionToggleResolveInput!
   ): DiscussionToggleResolvePayload
 
   """
@@ -17228,211 +17228,211 @@ type Mutation {
   """
   echoCreate(
     """Parameters for EchoCreate"""
-    input: EchoCreateInput!
+    input_: EchoCreateInput!
   ): EchoCreatePayload
 
   """**BETA** This endpoint is subject to change without notice."""
   enableDevopsAdoptionNamespace(
     """Parameters for EnableDevopsAdoptionNamespace"""
-    input: EnableDevopsAdoptionNamespaceInput!
+    input_: EnableDevopsAdoptionNamespaceInput!
   ): EnableDevopsAdoptionNamespacePayload
   environmentsCanaryIngressUpdate(
     """Parameters for EnvironmentsCanaryIngressUpdate"""
-    input: EnvironmentsCanaryIngressUpdateInput!
+    input_: EnvironmentsCanaryIngressUpdateInput!
   ): EnvironmentsCanaryIngressUpdatePayload
   epicAddIssue(
     """Parameters for EpicAddIssue"""
-    input: EpicAddIssueInput!
+    input_: EpicAddIssueInput!
   ): EpicAddIssuePayload
   epicBoardCreate(
     """Parameters for EpicBoardCreate"""
-    input: EpicBoardCreateInput!
+    input_: EpicBoardCreateInput!
   ): EpicBoardCreatePayload
   epicBoardListCreate(
     """Parameters for EpicBoardListCreate"""
-    input: EpicBoardListCreateInput!
+    input_: EpicBoardListCreateInput!
   ): EpicBoardListCreatePayload
 
   """Destroys an epic board list."""
   epicBoardListDestroy(
     """Parameters for EpicBoardListDestroy"""
-    input: EpicBoardListDestroyInput!
+    input_: EpicBoardListDestroyInput!
   ): EpicBoardListDestroyPayload
   epicBoardUpdate(
     """Parameters for EpicBoardUpdate"""
-    input: EpicBoardUpdateInput!
+    input_: EpicBoardUpdateInput!
   ): EpicBoardUpdatePayload
   epicMoveList(
     """Parameters for EpicMoveList"""
-    input: EpicMoveListInput!
+    input_: EpicMoveListInput!
   ): EpicMoveListPayload
   epicSetSubscription(
     """Parameters for EpicSetSubscription"""
-    input: EpicSetSubscriptionInput!
+    input_: EpicSetSubscriptionInput!
   ): EpicSetSubscriptionPayload
   epicTreeReorder(
     """Parameters for EpicTreeReorder"""
-    input: EpicTreeReorderInput!
+    input_: EpicTreeReorderInput!
   ): EpicTreeReorderPayload
   escalationPolicyCreate(
     """Parameters for EscalationPolicyCreate"""
-    input: EscalationPolicyCreateInput!
+    input_: EscalationPolicyCreateInput!
   ): EscalationPolicyCreatePayload
   escalationPolicyDestroy(
     """Parameters for EscalationPolicyDestroy"""
-    input: EscalationPolicyDestroyInput!
+    input_: EscalationPolicyDestroyInput!
   ): EscalationPolicyDestroyPayload
   escalationPolicyUpdate(
     """Parameters for EscalationPolicyUpdate"""
-    input: EscalationPolicyUpdateInput!
+    input_: EscalationPolicyUpdateInput!
   ): EscalationPolicyUpdatePayload
   exportRequirements(
     """Parameters for ExportRequirements"""
-    input: ExportRequirementsInput!
+    input_: ExportRequirementsInput!
   ): ExportRequirementsPayload
   externalAuditEventDestinationCreate(
     """Parameters for ExternalAuditEventDestinationCreate"""
-    input: ExternalAuditEventDestinationCreateInput!
+    input_: ExternalAuditEventDestinationCreateInput!
   ): ExternalAuditEventDestinationCreatePayload
   externalAuditEventDestinationDestroy(
     """Parameters for ExternalAuditEventDestinationDestroy"""
-    input: ExternalAuditEventDestinationDestroyInput!
+    input_: ExternalAuditEventDestinationDestroyInput!
   ): ExternalAuditEventDestinationDestroyPayload
   externalAuditEventDestinationUpdate(
     """Parameters for ExternalAuditEventDestinationUpdate"""
-    input: ExternalAuditEventDestinationUpdateInput!
+    input_: ExternalAuditEventDestinationUpdateInput!
   ): ExternalAuditEventDestinationUpdatePayload
   gitlabSubscriptionActivate(
     """Parameters for GitlabSubscriptionActivate"""
-    input: GitlabSubscriptionActivateInput!
+    input_: GitlabSubscriptionActivateInput!
   ): GitlabSubscriptionActivatePayload
   groupUpdate(
     """Parameters for GroupUpdate"""
-    input: GroupUpdateInput!
+    input_: GroupUpdateInput!
   ): GroupUpdatePayload
   httpIntegrationCreate(
     """Parameters for HttpIntegrationCreate"""
-    input: HttpIntegrationCreateInput!
+    input_: HttpIntegrationCreateInput!
   ): HttpIntegrationCreatePayload
   httpIntegrationDestroy(
     """Parameters for HttpIntegrationDestroy"""
-    input: HttpIntegrationDestroyInput!
+    input_: HttpIntegrationDestroyInput!
   ): HttpIntegrationDestroyPayload
   httpIntegrationResetToken(
     """Parameters for HttpIntegrationResetToken"""
-    input: HttpIntegrationResetTokenInput!
+    input_: HttpIntegrationResetTokenInput!
   ): HttpIntegrationResetTokenPayload
   httpIntegrationUpdate(
     """Parameters for HttpIntegrationUpdate"""
-    input: HttpIntegrationUpdateInput!
+    input_: HttpIntegrationUpdateInput!
   ): HttpIntegrationUpdatePayload
   issueMove(
     """Parameters for IssueMove"""
-    input: IssueMoveInput!
+    input_: IssueMoveInput!
   ): IssueMovePayload
   issueMoveList(
     """Parameters for IssueMoveList"""
-    input: IssueMoveListInput!
+    input_: IssueMoveListInput!
   ): IssueMoveListPayload
   issueSetAssignees(
     """Parameters for IssueSetAssignees"""
-    input: IssueSetAssigneesInput!
+    input_: IssueSetAssigneesInput!
   ): IssueSetAssigneesPayload
   issueSetConfidential(
     """Parameters for IssueSetConfidential"""
-    input: IssueSetConfidentialInput!
+    input_: IssueSetConfidentialInput!
   ): IssueSetConfidentialPayload
   issueSetCrmContacts(
     """Parameters for IssueSetCrmContacts"""
-    input: IssueSetCrmContactsInput!
+    input_: IssueSetCrmContactsInput!
   ): IssueSetCrmContactsPayload
   issueSetDueDate(
     """Parameters for IssueSetDueDate"""
-    input: IssueSetDueDateInput!
+    input_: IssueSetDueDateInput!
   ): IssueSetDueDatePayload
   issueSetEpic(
     """Parameters for IssueSetEpic"""
-    input: IssueSetEpicInput!
+    input_: IssueSetEpicInput!
   ): IssueSetEpicPayload
   issueSetEscalationPolicy(
     """Parameters for IssueSetEscalationPolicy"""
-    input: IssueSetEscalationPolicyInput!
+    input_: IssueSetEscalationPolicyInput!
   ): IssueSetEscalationPolicyPayload
   issueSetEscalationStatus(
     """Parameters for IssueSetEscalationStatus"""
-    input: IssueSetEscalationStatusInput!
+    input_: IssueSetEscalationStatusInput!
   ): IssueSetEscalationStatusPayload
   issueSetIteration(
     """Parameters for IssueSetIteration"""
-    input: IssueSetIterationInput!
+    input_: IssueSetIterationInput!
   ): IssueSetIterationPayload
   issueSetLocked(
     """Parameters for IssueSetLocked"""
-    input: IssueSetLockedInput!
+    input_: IssueSetLockedInput!
   ): IssueSetLockedPayload
   issueSetSeverity(
     """Parameters for IssueSetSeverity"""
-    input: IssueSetSeverityInput!
+    input_: IssueSetSeverityInput!
   ): IssueSetSeverityPayload
   issueSetSubscription(
     """Parameters for IssueSetSubscription"""
-    input: IssueSetSubscriptionInput!
+    input_: IssueSetSubscriptionInput!
   ): IssueSetSubscriptionPayload
   issueSetWeight(
     """Parameters for IssueSetWeight"""
-    input: IssueSetWeightInput!
+    input_: IssueSetWeightInput!
   ): IssueSetWeightPayload
   iterationCadenceCreate(
     """Parameters for IterationCadenceCreate"""
-    input: IterationCadenceCreateInput!
+    input_: IterationCadenceCreateInput!
   ): IterationCadenceCreatePayload
   iterationCadenceDestroy(
     """Parameters for IterationCadenceDestroy"""
-    input: IterationCadenceDestroyInput!
+    input_: IterationCadenceDestroyInput!
   ): IterationCadenceDestroyPayload
   iterationCadenceUpdate(
     """Parameters for IterationCadenceUpdate"""
-    input: IterationCadenceUpdateInput!
+    input_: IterationCadenceUpdateInput!
   ): IterationCadenceUpdatePayload
   iterationCreate(
     """Parameters for iterationCreate"""
-    input: iterationCreateInput!
+    input_: iterationCreateInput!
   ): iterationCreatePayload
   iterationDelete(
     """Parameters for IterationDelete"""
-    input: IterationDeleteInput!
+    input_: IterationDeleteInput!
   ): IterationDeletePayload
   jiraImportStart(
     """Parameters for JiraImportStart"""
-    input: JiraImportStartInput!
+    input_: JiraImportStartInput!
   ): JiraImportStartPayload
   jiraImportUsers(
     """Parameters for JiraImportUsers"""
-    input: JiraImportUsersInput!
+    input_: JiraImportUsersInput!
   ): JiraImportUsersPayload
   jobCancel(
     """Parameters for JobCancel"""
-    input: JobCancelInput!
+    input_: JobCancelInput!
   ): JobCancelPayload
   jobPlay(
     """Parameters for JobPlay"""
-    input: JobPlayInput!
+    input_: JobPlayInput!
   ): JobPlayPayload
   jobRetry(
     """Parameters for JobRetry"""
-    input: JobRetryInput!
+    input_: JobRetryInput!
   ): JobRetryPayload
   jobUnschedule(
     """Parameters for JobUnschedule"""
-    input: JobUnscheduleInput!
+    input_: JobUnscheduleInput!
   ): JobUnschedulePayload
   labelCreate(
     """Parameters for LabelCreate"""
-    input: LabelCreateInput!
+    input_: LabelCreateInput!
   ): LabelCreatePayload
   markAsSpamSnippet(
     """Parameters for MarkAsSpamSnippet"""
-    input: MarkAsSpamSnippetInput!
+    input_: MarkAsSpamSnippetInput!
   ): MarkAsSpamSnippetPayload
 
   """
@@ -17443,139 +17443,139 @@ type Mutation {
   """
   mergeRequestAccept(
     """Parameters for MergeRequestAccept"""
-    input: MergeRequestAcceptInput!
+    input_: MergeRequestAcceptInput!
   ): MergeRequestAcceptPayload
   mergeRequestCreate(
     """Parameters for MergeRequestCreate"""
-    input: MergeRequestCreateInput!
+    input_: MergeRequestCreateInput!
   ): MergeRequestCreatePayload
   mergeRequestReviewerRereview(
     """Parameters for MergeRequestReviewerRereview"""
-    input: MergeRequestReviewerRereviewInput!
+    input_: MergeRequestReviewerRereviewInput!
   ): MergeRequestReviewerRereviewPayload
   mergeRequestSetAssignees(
     """Parameters for MergeRequestSetAssignees"""
-    input: MergeRequestSetAssigneesInput!
+    input_: MergeRequestSetAssigneesInput!
   ): MergeRequestSetAssigneesPayload
   mergeRequestSetDraft(
     """Parameters for MergeRequestSetDraft"""
-    input: MergeRequestSetDraftInput!
+    input_: MergeRequestSetDraftInput!
   ): MergeRequestSetDraftPayload
   mergeRequestSetLabels(
     """Parameters for MergeRequestSetLabels"""
-    input: MergeRequestSetLabelsInput!
+    input_: MergeRequestSetLabelsInput!
   ): MergeRequestSetLabelsPayload
   mergeRequestSetLocked(
     """Parameters for MergeRequestSetLocked"""
-    input: MergeRequestSetLockedInput!
+    input_: MergeRequestSetLockedInput!
   ): MergeRequestSetLockedPayload
   mergeRequestSetMilestone(
     """Parameters for MergeRequestSetMilestone"""
-    input: MergeRequestSetMilestoneInput!
+    input_: MergeRequestSetMilestoneInput!
   ): MergeRequestSetMilestonePayload
   mergeRequestSetSubscription(
     """Parameters for MergeRequestSetSubscription"""
-    input: MergeRequestSetSubscriptionInput!
+    input_: MergeRequestSetSubscriptionInput!
   ): MergeRequestSetSubscriptionPayload
 
   """Update attributes of a merge request"""
   mergeRequestUpdate(
     """Parameters for MergeRequestUpdate"""
-    input: MergeRequestUpdateInput!
+    input_: MergeRequestUpdateInput!
   ): MergeRequestUpdatePayload
   namespaceIncreaseStorageTemporarily(
     """Parameters for NamespaceIncreaseStorageTemporarily"""
-    input: NamespaceIncreaseStorageTemporarilyInput!
+    input_: NamespaceIncreaseStorageTemporarilyInput!
   ): NamespaceIncreaseStorageTemporarilyPayload
   oncallRotationCreate(
     """Parameters for OncallRotationCreate"""
-    input: OncallRotationCreateInput!
+    input_: OncallRotationCreateInput!
   ): OncallRotationCreatePayload
   oncallRotationDestroy(
     """Parameters for OncallRotationDestroy"""
-    input: OncallRotationDestroyInput!
+    input_: OncallRotationDestroyInput!
   ): OncallRotationDestroyPayload
   oncallRotationUpdate(
     """Parameters for OncallRotationUpdate"""
-    input: OncallRotationUpdateInput!
+    input_: OncallRotationUpdateInput!
   ): OncallRotationUpdatePayload
   oncallScheduleCreate(
     """Parameters for OncallScheduleCreate"""
-    input: OncallScheduleCreateInput!
+    input_: OncallScheduleCreateInput!
   ): OncallScheduleCreatePayload
   oncallScheduleDestroy(
     """Parameters for OncallScheduleDestroy"""
-    input: OncallScheduleDestroyInput!
+    input_: OncallScheduleDestroyInput!
   ): OncallScheduleDestroyPayload
   oncallScheduleUpdate(
     """Parameters for OncallScheduleUpdate"""
-    input: OncallScheduleUpdateInput!
+    input_: OncallScheduleUpdateInput!
   ): OncallScheduleUpdatePayload
   pipelineCancel(
     """Parameters for PipelineCancel"""
-    input: PipelineCancelInput!
+    input_: PipelineCancelInput!
   ): PipelineCancelPayload
   pipelineDestroy(
     """Parameters for PipelineDestroy"""
-    input: PipelineDestroyInput!
+    input_: PipelineDestroyInput!
   ): PipelineDestroyPayload
   pipelineRetry(
     """Parameters for PipelineRetry"""
-    input: PipelineRetryInput!
+    input_: PipelineRetryInput!
   ): PipelineRetryPayload
 
   """Assign (or unset) a compliance framework to a project."""
   projectSetComplianceFramework(
     """Parameters for ProjectSetComplianceFramework"""
-    input: ProjectSetComplianceFrameworkInput!
+    input_: ProjectSetComplianceFrameworkInput!
   ): ProjectSetComplianceFrameworkPayload
   projectSetLocked(
     """Parameters for ProjectSetLocked"""
-    input: ProjectSetLockedInput!
+    input_: ProjectSetLockedInput!
   ): ProjectSetLockedPayload
   prometheusIntegrationCreate(
     """Parameters for PrometheusIntegrationCreate"""
-    input: PrometheusIntegrationCreateInput!
+    input_: PrometheusIntegrationCreateInput!
   ): PrometheusIntegrationCreatePayload
   prometheusIntegrationResetToken(
     """Parameters for PrometheusIntegrationResetToken"""
-    input: PrometheusIntegrationResetTokenInput!
+    input_: PrometheusIntegrationResetTokenInput!
   ): PrometheusIntegrationResetTokenPayload
   prometheusIntegrationUpdate(
     """Parameters for PrometheusIntegrationUpdate"""
-    input: PrometheusIntegrationUpdateInput!
+    input_: PrometheusIntegrationUpdateInput!
   ): PrometheusIntegrationUpdatePayload
   promoteToEpic(
     """Parameters for PromoteToEpic"""
-    input: PromoteToEpicInput!
+    input_: PromoteToEpicInput!
   ): PromoteToEpicPayload
   releaseAssetLinkCreate(
     """Parameters for ReleaseAssetLinkCreate"""
-    input: ReleaseAssetLinkCreateInput!
+    input_: ReleaseAssetLinkCreateInput!
   ): ReleaseAssetLinkCreatePayload
   releaseAssetLinkDelete(
     """Parameters for ReleaseAssetLinkDelete"""
-    input: ReleaseAssetLinkDeleteInput!
+    input_: ReleaseAssetLinkDeleteInput!
   ): ReleaseAssetLinkDeletePayload
   releaseAssetLinkUpdate(
     """Parameters for ReleaseAssetLinkUpdate"""
-    input: ReleaseAssetLinkUpdateInput!
+    input_: ReleaseAssetLinkUpdateInput!
   ): ReleaseAssetLinkUpdatePayload
   releaseCreate(
     """Parameters for ReleaseCreate"""
-    input: ReleaseCreateInput!
+    input_: ReleaseCreateInput!
   ): ReleaseCreatePayload
   releaseDelete(
     """Parameters for ReleaseDelete"""
-    input: ReleaseDeleteInput!
+    input_: ReleaseDeleteInput!
   ): ReleaseDeletePayload
   releaseUpdate(
     """Parameters for ReleaseUpdate"""
-    input: ReleaseUpdateInput!
+    input_: ReleaseUpdateInput!
   ): ReleaseUpdatePayload
   removeProjectFromSecurityDashboard(
     """Parameters for RemoveProjectFromSecurityDashboard"""
-    input: RemoveProjectFromSecurityDashboardInput!
+    input_: RemoveProjectFromSecurityDashboardInput!
   ): RemoveProjectFromSecurityDashboardPayload
 
   """
@@ -17583,19 +17583,19 @@ type Mutation {
   """
   repositionImageDiffNote(
     """Parameters for RepositionImageDiffNote"""
-    input: RepositionImageDiffNoteInput!
+    input_: RepositionImageDiffNoteInput!
   ): RepositionImageDiffNotePayload
   runnerDelete(
     """Parameters for RunnerDelete"""
-    input: RunnerDeleteInput!
+    input_: RunnerDeleteInput!
   ): RunnerDeletePayload
   runnerUpdate(
     """Parameters for RunnerUpdate"""
-    input: RunnerUpdateInput!
+    input_: RunnerUpdateInput!
   ): RunnerUpdatePayload
   runnersRegistrationTokenReset(
     """Parameters for RunnersRegistrationTokenReset"""
-    input: RunnersRegistrationTokenResetInput!
+    input_: RunnersRegistrationTokenResetInput!
   ): RunnersRegistrationTokenResetPayload
 
   """
@@ -17603,7 +17603,7 @@ type Mutation {
   """
   scanExecutionPolicyCommit(
     """Parameters for ScanExecutionPolicyCommit"""
-    input: ScanExecutionPolicyCommitInput!
+    input_: ScanExecutionPolicyCommitInput!
   ): ScanExecutionPolicyCommitPayload
 
   """
@@ -17614,7 +17614,7 @@ type Mutation {
   """
   securityPolicyProjectAssign(
     """Parameters for SecurityPolicyProjectAssign"""
-    input: SecurityPolicyProjectAssignInput!
+    input_: SecurityPolicyProjectAssignInput!
   ): SecurityPolicyProjectAssignPayload
 
   """
@@ -17622,7 +17622,7 @@ type Mutation {
   """
   securityPolicyProjectCreate(
     """Parameters for SecurityPolicyProjectCreate"""
-    input: SecurityPolicyProjectCreateInput!
+    input_: SecurityPolicyProjectCreateInput!
   ): SecurityPolicyProjectCreatePayload
 
   """
@@ -17630,99 +17630,99 @@ type Mutation {
   """
   securityPolicyProjectUnassign(
     """Parameters for SecurityPolicyProjectUnassign"""
-    input: SecurityPolicyProjectUnassignInput!
+    input_: SecurityPolicyProjectUnassignInput!
   ): SecurityPolicyProjectUnassignPayload
   securityTrainingUpdate(
     """Parameters for SecurityTrainingUpdate"""
-    input: SecurityTrainingUpdateInput!
+    input_: SecurityTrainingUpdateInput!
   ): SecurityTrainingUpdatePayload
   terraformStateDelete(
     """Parameters for TerraformStateDelete"""
-    input: TerraformStateDeleteInput!
+    input_: TerraformStateDeleteInput!
   ): TerraformStateDeletePayload
   terraformStateLock(
     """Parameters for TerraformStateLock"""
-    input: TerraformStateLockInput!
+    input_: TerraformStateLockInput!
   ): TerraformStateLockPayload
   terraformStateUnlock(
     """Parameters for TerraformStateUnlock"""
-    input: TerraformStateUnlockInput!
+    input_: TerraformStateUnlockInput!
   ): TerraformStateUnlockPayload
   timelineEventCreate(
     """Parameters for TimelineEventCreate"""
-    input: TimelineEventCreateInput!
+    input_: TimelineEventCreateInput!
   ): TimelineEventCreatePayload
   timelineEventDestroy(
     """Parameters for TimelineEventDestroy"""
-    input: TimelineEventDestroyInput!
+    input_: TimelineEventDestroyInput!
   ): TimelineEventDestroyPayload
   timelineEventPromoteFromNote(
     """Parameters for TimelineEventPromoteFromNote"""
-    input: TimelineEventPromoteFromNoteInput!
+    input_: TimelineEventPromoteFromNoteInput!
   ): TimelineEventPromoteFromNotePayload
   timelineEventUpdate(
     """Parameters for TimelineEventUpdate"""
-    input: TimelineEventUpdateInput!
+    input_: TimelineEventUpdateInput!
   ): TimelineEventUpdatePayload
   todoCreate(
     """Parameters for TodoCreate"""
-    input: TodoCreateInput!
+    input_: TodoCreateInput!
   ): TodoCreatePayload
   todoMarkDone(
     """Parameters for TodoMarkDone"""
-    input: TodoMarkDoneInput!
+    input_: TodoMarkDoneInput!
   ): TodoMarkDonePayload
   todoRestore(
     """Parameters for TodoRestore"""
-    input: TodoRestoreInput!
+    input_: TodoRestoreInput!
   ): TodoRestorePayload
   todoRestoreMany(
     """Parameters for TodoRestoreMany"""
-    input: TodoRestoreManyInput!
+    input_: TodoRestoreManyInput!
   ): TodoRestoreManyPayload
   todosMarkAllDone(
     """Parameters for TodosMarkAllDone"""
-    input: TodosMarkAllDoneInput!
+    input_: TodosMarkAllDoneInput!
   ): TodosMarkAllDonePayload
   updateAlertStatus(
     """Parameters for UpdateAlertStatus"""
-    input: UpdateAlertStatusInput!
+    input_: UpdateAlertStatusInput!
   ): UpdateAlertStatusPayload
   updateBoard(
     """Parameters for UpdateBoard"""
-    input: UpdateBoardInput!
+    input_: UpdateBoardInput!
   ): UpdateBoardPayload
   updateBoardEpicUserPreferences(
     """Parameters for UpdateBoardEpicUserPreferences"""
-    input: UpdateBoardEpicUserPreferencesInput!
+    input_: UpdateBoardEpicUserPreferencesInput!
   ): UpdateBoardEpicUserPreferencesPayload
   updateBoardList(
     """Parameters for UpdateBoardList"""
-    input: UpdateBoardListInput!
+    input_: UpdateBoardListInput!
   ): UpdateBoardListPayload
   updateComplianceFramework(
     """Parameters for UpdateComplianceFramework"""
-    input: UpdateComplianceFrameworkInput!
+    input_: UpdateComplianceFrameworkInput!
   ): UpdateComplianceFrameworkPayload
   updateContainerExpirationPolicy(
     """Parameters for UpdateContainerExpirationPolicy"""
-    input: UpdateContainerExpirationPolicyInput!
+    input_: UpdateContainerExpirationPolicyInput!
   ): UpdateContainerExpirationPolicyPayload
   updateDependencyProxyImageTtlGroupPolicy(
     """Parameters for UpdateDependencyProxyImageTtlGroupPolicy"""
-    input: UpdateDependencyProxyImageTtlGroupPolicyInput!
+    input_: UpdateDependencyProxyImageTtlGroupPolicyInput!
   ): UpdateDependencyProxyImageTtlGroupPolicyPayload
   updateDependencyProxySettings(
     """Parameters for UpdateDependencyProxySettings"""
-    input: UpdateDependencyProxySettingsInput!
+    input_: UpdateDependencyProxySettingsInput!
   ): UpdateDependencyProxySettingsPayload
   updateEpic(
     """Parameters for UpdateEpic"""
-    input: UpdateEpicInput!
+    input_: UpdateEpicInput!
   ): UpdateEpicPayload
   updateEpicBoardList(
     """Parameters for UpdateEpicBoardList"""
-    input: UpdateEpicBoardListInput!
+    input_: UpdateEpicBoardListInput!
   ): UpdateEpicBoardListPayload
 
   """
@@ -17735,19 +17735,19 @@ type Mutation {
   """
   updateImageDiffNote(
     """Parameters for UpdateImageDiffNote"""
-    input: UpdateImageDiffNoteInput!
+    input_: UpdateImageDiffNoteInput!
   ): UpdateImageDiffNotePayload
   updateIssue(
     """Parameters for UpdateIssue"""
-    input: UpdateIssueInput!
+    input_: UpdateIssueInput!
   ): UpdateIssuePayload
   updateIteration(
     """Parameters for UpdateIteration"""
-    input: UpdateIterationInput!
+    input_: UpdateIterationInput!
   ): UpdateIterationPayload
   updateNamespacePackageSettings(
     """Parameters for UpdateNamespacePackageSettings"""
-    input: UpdateNamespacePackageSettingsInput!
+    input_: UpdateNamespacePackageSettingsInput!
   ): UpdateNamespacePackageSettingsPayload
 
   """
@@ -17759,55 +17759,55 @@ type Mutation {
   """
   updateNote(
     """Parameters for UpdateNote"""
-    input: UpdateNoteInput!
+    input_: UpdateNoteInput!
   ): UpdateNotePayload
   updateRequirement(
     """Parameters for UpdateRequirement"""
-    input: UpdateRequirementInput!
+    input_: UpdateRequirementInput!
   ): UpdateRequirementPayload
   updateSnippet(
     """Parameters for UpdateSnippet"""
-    input: UpdateSnippetInput!
+    input_: UpdateSnippetInput!
   ): UpdateSnippetPayload
   userCalloutCreate(
     """Parameters for UserCalloutCreate"""
-    input: UserCalloutCreateInput!
+    input_: UserCalloutCreateInput!
   ): UserCalloutCreatePayload
   userPreferencesUpdate(
     """Parameters for UserPreferencesUpdate"""
-    input: UserPreferencesUpdateInput!
+    input_: UserPreferencesUpdateInput!
   ): UserPreferencesUpdatePayload
   vulnerabilityConfirm(
     """Parameters for VulnerabilityConfirm"""
-    input: VulnerabilityConfirmInput!
+    input_: VulnerabilityConfirmInput!
   ): VulnerabilityConfirmPayload
   vulnerabilityCreate(
     """Parameters for VulnerabilityCreate"""
-    input: VulnerabilityCreateInput!
+    input_: VulnerabilityCreateInput!
   ): VulnerabilityCreatePayload
   vulnerabilityDismiss(
     """Parameters for VulnerabilityDismiss"""
-    input: VulnerabilityDismissInput!
+    input_: VulnerabilityDismissInput!
   ): VulnerabilityDismissPayload
   vulnerabilityExternalIssueLinkCreate(
     """Parameters for VulnerabilityExternalIssueLinkCreate"""
-    input: VulnerabilityExternalIssueLinkCreateInput!
+    input_: VulnerabilityExternalIssueLinkCreateInput!
   ): VulnerabilityExternalIssueLinkCreatePayload
   vulnerabilityExternalIssueLinkDestroy(
     """Parameters for VulnerabilityExternalIssueLinkDestroy"""
-    input: VulnerabilityExternalIssueLinkDestroyInput!
+    input_: VulnerabilityExternalIssueLinkDestroyInput!
   ): VulnerabilityExternalIssueLinkDestroyPayload
   vulnerabilityFindingDismiss(
     """Parameters for VulnerabilityFindingDismiss"""
-    input: VulnerabilityFindingDismissInput!
+    input_: VulnerabilityFindingDismissInput!
   ): VulnerabilityFindingDismissPayload
   vulnerabilityResolve(
     """Parameters for VulnerabilityResolve"""
-    input: VulnerabilityResolveInput!
+    input_: VulnerabilityResolveInput!
   ): VulnerabilityResolvePayload
   vulnerabilityRevertToDetected(
     """Parameters for VulnerabilityRevertToDetected"""
-    input: VulnerabilityRevertToDetectedInput!
+    input_: VulnerabilityRevertToDetectedInput!
   ): VulnerabilityRevertToDetectedPayload
 
   """
@@ -17816,7 +17816,7 @@ type Mutation {
   """
   workItemCreate(
     """Parameters for WorkItemCreate"""
-    input: WorkItemCreateInput!
+    input_: WorkItemCreateInput!
   ): WorkItemCreatePayload
 
   """
@@ -17826,7 +17826,7 @@ type Mutation {
   """
   workItemCreateFromTask(
     """Parameters for WorkItemCreateFromTask"""
-    input: WorkItemCreateFromTaskInput!
+    input_: WorkItemCreateFromTaskInput!
   ): WorkItemCreateFromTaskPayload
 
   """
@@ -17835,7 +17835,7 @@ type Mutation {
   """
   workItemDelete(
     """Parameters for WorkItemDelete"""
-    input: WorkItemDeleteInput!
+    input_: WorkItemDeleteInput!
   ): WorkItemDeletePayload
 
   """
@@ -17845,7 +17845,7 @@ type Mutation {
   """
   workItemUpdate(
     """Parameters for WorkItemUpdate"""
-    input: WorkItemUpdateInput!
+    input_: WorkItemUpdateInput!
   ): WorkItemUpdatePayload
 }
 
