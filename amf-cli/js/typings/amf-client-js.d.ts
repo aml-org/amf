@@ -788,6 +788,9 @@ declare module 'amf-client-js' {
 
   }
   export class FoundReferencesEvent  {
+    root: string
+    amount: number
+
   }
   export class AMFGraphElementClient  {
     getConfiguration(): AMFGraphConfiguration
@@ -855,6 +858,37 @@ declare module 'amf-client-js' {
   }
   export class AMLDialectResult extends AMFResult  {
     dialect: Dialect
+
+  }
+  export class AnyMapping implements DomainElement  {
+    customDomainProperties: Array<DomainExtension>
+    isExternalLink: BoolField
+    id: string
+    position: Range
+    extendsNode: Array<DomainElement>
+
+    or(): Array<StrField>
+
+    and(): Array<StrField>
+
+    components(): Array<StrField>
+
+    withComponents(components: Array<string>): AnyMapping
+
+    graph(): Graph
+
+    withOr(orMappings: Array<string>): AnyMapping
+
+    withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+    withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+    withAnd(andMappings: Array<string>): AnyMapping
+
+    withId(id: string): this
+
 
   }
   export interface JsTransformationStep  {
@@ -4263,9 +4297,10 @@ declare module 'amf-client-js' {
 
 
   }
-  export class NodeMapping implements DomainElement, Linkable  {
+  export class NodeMapping extends AnyMapping implements Linkable  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
+    closed: BoolField
     idTemplate: StrField
     linkTarget: undefined | DomainElement
     isLink: boolean
@@ -4733,7 +4768,7 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ConditionalNodeMapping implements DomainElement, Linkable  {
+  export class ConditionalNodeMapping extends AnyMapping implements Linkable  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
     linkTarget: undefined | DomainElement
@@ -5299,7 +5334,7 @@ declare module 'amf-client-js' {
 
 
   }
-  export class UnionNodeMapping implements DomainElement, Linkable  {
+  export class UnionNodeMapping extends AnyMapping implements Linkable  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
     linkTarget: undefined | DomainElement
