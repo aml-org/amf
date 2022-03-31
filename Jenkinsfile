@@ -174,9 +174,9 @@ pipeline {
     }
     success {
       script {
-      echo "SUCCESSFULL BUILD"
+        echo "SUCCESSFULL BUILD"
         if (isMaster()) {
-          sendSuccessfulSlackMessage(lastStage, SLACK_CHANNEL, PRODUCT_NAME)
+          sendSuccessfulSlackMessage(SLACK_CHANNEL, PRODUCT_NAME)
         } else {
           echo "Successful build: skipping slack message notification as branch is not master"
         }
@@ -205,10 +205,11 @@ def sendBuildErrorSlackMessage(String lastStage, String slackChannel, String pro
   def message = """:alert: ${headerFlavour}! :alert: Build failed!.
                   |Branch: ${env.BRANCH_NAME}
                   |Stage: ${lastStage}
+                  |Product: ${productName}
                   |Build URL: ${env.BUILD_URL}""".stripMargin().stripIndent()
   slackSend color: color, channel: "${slackChannel}", message: message
 }
 
-def sendSuccessfulSlackMessage(String slackChannel) {
+def sendSuccessfulSlackMessage(String slackChannel, String productName) {
   slackSend color: '#00FF00', channel: "${slackChannel}", message: ":ok_hand: ${productName} Master Publish OK! :ok_hand:"
 }
