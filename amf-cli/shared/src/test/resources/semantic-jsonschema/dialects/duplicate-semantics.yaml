@@ -20,6 +20,7 @@ nodeMappings:
         range: integer
         propertyTerm: semantics.info_2
         mandatory: false
+    additionalProperties: true
 external:
   somethingElse: https://test.com/somethingElse#
   security: https://test.com/security#

@@ -1,6 +1,6 @@
 package amf.shapes.internal.spec
 
-import amf.aml.internal.semantic.SemanticExtensionsFacade
+import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
@@ -34,7 +34,7 @@ abstract class ShapeParserContext(eh: AMFErrorHandler)
   override def handle[T](error: YError, defaultValue: T): T              = syamleh.handle(error, defaultValue)
   override def handle(location: SourceLocation, e: SyamlException): Unit = syamleh.handle(location, e)
 
-  def extensionsFacade: SemanticExtensionsFacade
+  def extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder
 
   def toOasNext: ShapeParserContext
   def findExample(key: String, scope: SearchScope.Scope): Option[Example]

@@ -85,7 +85,7 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
   }
 
   private def transformEnum(shape: PropertyShape, target: PropertyMapping) = {
-    val enumValues = literalValues(shape.range.values).map(AmfScalar(_))
+    val enumValues = scalarValues(shape.range.values)
     enumValues match {
       case scala.collection.immutable.Nil => // ignore
       case other                          => target.set(PropertyMappingModel.Enum, AmfArray(other))
@@ -93,11 +93,11 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
   }
 
   // @TODO: advanced types of enums
-  private def literalValues(values: Seq[DataNode]): List[Any] = {
+  private def scalarValues(values: Seq[DataNode]): List[AmfScalar] = {
     values
       .filterType[ScalarNode]
       .collect {
-        case node: ScalarNode if is(node, String)  => node.value.option()
+        case node: ScalarNode if is(node, String)  => convert(node, value => value)
         case node: ScalarNode if is(node, Number)  => convert(node, _.toDouble)
         case node: ScalarNode if is(node, Double)  => convert(node, _.toDouble)
         case node: ScalarNode if is(node, Float)   => convert(node, _.toFloat)
@@ -109,7 +109,11 @@ case class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransform
       .toList
   }
 
-  private def convert(node: ScalarNode, conversion: String => Any) = node.value.option().map(conversion)
+  private def convert(node: ScalarNode, conversion: String => Any): Option[AmfScalar] =
+    node.value
+      .option()
+      .map(conversion)
+      .map(value => AmfScalar(value, node.annotations))
 
   private def is(node: ScalarNode, dataType: String) = node.dataType.option().contains(dataType)
 

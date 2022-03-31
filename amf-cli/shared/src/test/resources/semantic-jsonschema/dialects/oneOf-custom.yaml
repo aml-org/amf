@@ -1,0 +1,29 @@
+#%Dialect 1.0
+nodeMappings:
+  Child:
+    union:
+      - SchemaNode
+      - SchemaNode_1
+  SchemaNode_1:
+    classTerm: foaf.Location
+    mapping:
+      address:
+        range: string
+        propertyTerm: foaf.address
+        mandatory: false
+    additionalProperties: true
+  SchemaNode:
+    classTerm: foaf.Something
+    mapping:
+      displayName:
+        range: string
+        propertyTerm: foaf.displayName
+        mandatory: false
+    additionalProperties: true
+external:
+  foaf: http://xmlns.com/foaf/0.1/
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: Child

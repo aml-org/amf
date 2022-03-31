@@ -21,7 +21,8 @@ class Oas3CompatibilityPipeline private (override val name: String)
       new Oas30SecuritySettingsMapper(),
       new MandatoryPathParameters(),
       new AddItemsToArrayType(),
-      new CleanRepeatedOperationIds()
+      new CleanRepeatedOperationIds(),
+      new DeclareUndeclaredSecuritySchemes()
     )
 }
 

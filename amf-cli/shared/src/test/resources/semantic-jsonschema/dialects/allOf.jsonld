@@ -28,26 +28,6 @@
       "meta:base": "http://test.com/vocab#"
     },
     {
-      "@id": "/externals/xsd",
-      "@type": [
-        "owl:Ontology",
-        "meta:ExternalVocabulary",
-        "doc:DomainElement"
-      ],
-      "core:displayName": "xsd",
-      "meta:base": "http://www.w3.org/2001/XMLSchema#"
-    },
-    {
-      "@id": "/externals/foaf",
-      "@type": [
-        "owl:Ontology",
-        "meta:ExternalVocabulary",
-        "doc:DomainElement"
-      ],
-      "core:displayName": "foaf",
-      "meta:base": "http://xmlns.com/foaf/0.1/"
-    },
-    {
       "@id": "#/documents/root",
       "@type": [
         "meta:DocumentMapping",
@@ -63,10 +43,16 @@
       "@id": "",
       "doc:declares": [
         {
+          "@id": "#/declarations/SchemaNode_2"
+        },
+        {
           "@id": "#/declarations/SchemaNode"
         },
         {
           "@id": "#/declarations/Child"
+        },
+        {
+          "@id": "#/declarations/SchemaNode_1"
         }
       ],
       "@type": [
@@ -81,12 +67,6 @@
       "meta:externals": [
         {
           "@id": "/externals/ns0"
-        },
-        {
-          "@id": "/externals/xsd"
-        },
-        {
-          "@id": "/externals/foaf"
         }
       ],
       "meta:documents": {
@@ -98,6 +78,21 @@
       }
     },
     {
+      "@id": "#/declarations/SchemaNode_2",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_2",
+      "shacl:property": [
+        {
+          "@id": "/and/shape/item2/property/property/c"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
       "@id": "#/declarations/SchemaNode",
       "@type": [
         "meta:NodeMapping",
@@ -107,9 +102,10 @@
       "core:name": "SchemaNode",
       "shacl:property": [
         {
-          "@id": "/and/shape/Parent1/property/property/displayName"
+          "@id": "/and/shape/item0/property/property/a"
         }
-      ]
+      ],
+      "shacl:closed": false
     },
     {
       "@id": "#/declarations/Child",
@@ -118,72 +114,61 @@
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "shacl:targetClass": [
-        {
-          "@id": "http://xmlns.com/foaf/0.1/Person"
-        }
-      ],
       "core:name": "Child",
-      "shacl:property": [
+      "doc:extends": [
         {
-          "@id": "/property/property/name"
+          "@id": "#/declarations/Child/null"
         },
         {
-          "@id": "/property/property/age"
-        }
-      ],
-      "doc:extends": [
+          "@id": "#/declarations/Child/null"
+        },
         {
           "@id": "#/declarations/Child/null"
         }
       ]
     },
     {
-      "@id": "/and/shape/Parent1/property/property/displayName",
+      "@id": "#/declarations/SchemaNode_1",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "SchemaNode_1",
+      "shacl:property": [
+        {
+          "@id": "/and/shape/item1/property/property/b"
+        }
+      ],
+      "shacl:closed": false
+    },
+    {
+      "@id": "/and/shape/item2/property/property/c",
       "@type": [
         "meta:NodePropertyMapping",
         "doc:DomainElement"
       ],
-      "shacl:path": [
+      "core:name": "c",
+      "shacl:datatype": [
         {
-          "@id": "http://xmlns.com/foaf/0.1/displayName"
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
         }
       ],
-      "core:name": "displayName",
+      "shacl:minCount": 0
+    },
+    {
+      "@id": "/and/shape/item0/property/property/a",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "a",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
       "shacl:minCount": 0
-    },
-    {
-      "@id": "/property/property/name",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "core:name": "name",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:minCount": 1
-    },
-    {
-      "@id": "/property/property/age",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "core:name": "age",
-      "shacl:datatype": [
-        {
-          "@id": "http://a.ml/vocabularies/shapes#number"
-        }
-      ],
-      "shacl:minCount": 1
     },
     {
       "@id": "#/declarations/Child/null",
@@ -198,6 +183,20 @@
         }
       ],
       "doc:link-label": "SchemaNode"
+    },
+    {
+      "@id": "/and/shape/item1/property/property/b",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "b",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minCount": 0
     }
   ],
   "@context": {

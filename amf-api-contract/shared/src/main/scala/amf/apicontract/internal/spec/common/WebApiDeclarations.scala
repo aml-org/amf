@@ -1,5 +1,6 @@
 package amf.apicontract.internal.spec.common
 
+import amf.aml.client.scala.model.document.Dialect
 import amf.apicontract.client.scala.model.document.DataTypeFragment
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.bindings.{
@@ -27,6 +28,7 @@ import amf.core.client.scala.model.domain.{DataNode, DomainElement, ObjectNode, 
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.internal.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.internal.parser.domain._
+import amf.core.internal.utils.QName
 import amf.shapes.client.scala.model.domain.Example
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, Example}
 import amf.shapes.internal.domain.metamodel.CreativeWorkModel
@@ -36,33 +38,35 @@ import org.yaml.model.{YNode, YPart}
 /**
   * Declarations object.
   */
-class WebApiDeclarations(val alias: Option[String],
-                         var libs: Map[String, WebApiDeclarations] = Map(),
-                         var frags: Map[String, FragmentRef] = Map(),
-                         var shapes: Map[String, Shape] = Map(),
-                         var anns: Map[String, CustomDomainProperty] = Map(),
-                         var resourceTypes: Map[String, ResourceType] = Map(),
-                         var parameters: Map[String, Parameter] = Map(),
-                         var payloads: Map[String, Payload] = Map(),
-                         var traits: Map[String, Trait] = Map(),
-                         var securitySchemes: Map[String, SecurityScheme] = Map(),
-                         var responses: Map[String, Response] = Map(),
-                         var examples: Map[String, Example] = Map(),
-                         var requests: Map[String, Request] = Map(),
-                         var headers: Map[String, Parameter] = Map(),
-                         var links: Map[String, TemplatedLink] = Map(),
-                         var correlationIds: Map[String, CorrelationId] = Map(),
-                         var callbacks: Map[String, List[Callback]] = Map(),
-                         var messages: Map[String, Message] = Map(),
-                         var messageBindings: Map[String, MessageBindings] = Map(),
-                         var operationBindings: Map[String, OperationBindings] = Map(),
-                         var channelBindings: Map[String, ChannelBindings] = Map(),
-                         var serverBindings: Map[String, ServerBindings] = Map(),
-                         var operationTraits: Map[String, Operation] = Map(),
-                         var messageTraits: Map[String, Message] = Map(),
-                         val errorHandler: AMFErrorHandler,
-                         val futureDeclarations: FutureDeclarations,
-                         var others: Map[String, BaseUnit] = Map())
+class WebApiDeclarations(
+    val alias: Option[String],
+    var libs: Map[String, WebApiDeclarations] = Map(), // TODO: sync this with libraries, is confusing and we end having tw different maps (one of them is not being filled)
+    var frags: Map[String, FragmentRef] = Map(),
+    var shapes: Map[String, Shape] = Map(),
+    var anns: Map[String, CustomDomainProperty] = Map(),
+    var resourceTypes: Map[String, ResourceType] = Map(),
+    var parameters: Map[String, Parameter] = Map(),
+    var payloads: Map[String, Payload] = Map(),
+    var traits: Map[String, Trait] = Map(),
+    var securitySchemes: Map[String, SecurityScheme] = Map(),
+    var responses: Map[String, Response] = Map(),
+    var examples: Map[String, Example] = Map(),
+    var requests: Map[String, Request] = Map(),
+    var headers: Map[String, Parameter] = Map(),
+    var links: Map[String, TemplatedLink] = Map(),
+    var correlationIds: Map[String, CorrelationId] = Map(),
+    var callbacks: Map[String, List[Callback]] = Map(),
+    var messages: Map[String, Message] = Map(),
+    var messageBindings: Map[String, MessageBindings] = Map(),
+    var operationBindings: Map[String, OperationBindings] = Map(),
+    var channelBindings: Map[String, ChannelBindings] = Map(),
+    var serverBindings: Map[String, ServerBindings] = Map(),
+    var operationTraits: Map[String, Operation] = Map(),
+    var messageTraits: Map[String, Message] = Map(),
+    val errorHandler: AMFErrorHandler,
+    val futureDeclarations: FutureDeclarations,
+    var others: Map[String, BaseUnit] = Map(),
+    var extensions: Map[String, Dialect] = Map())
     extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
 
   def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape = {
@@ -81,32 +85,33 @@ class WebApiDeclarations(val alias: Option[String],
   }
 
   protected def mergeParts(other: WebApiDeclarations, merged: WebApiDeclarations): Unit = {
-    libs.foreach { case (k, s)                  => merged.libs += (k            -> s) }
-    other.libs.foreach { case (k, s)            => merged.libs += (k            -> s) }
-    frags.foreach { case (k, s)                 => merged.frags += (k           -> s) }
-    other.frags.foreach { case (k, s)           => merged.frags += (k           -> s) }
-    libraries.foreach { case (k, s)             => merged.libraries += (k       -> s) }
-    other.libraries.foreach { case (k, s)       => merged.libraries += (k       -> s) }
-    fragments.foreach { case (k, s)             => merged.fragments += (k       -> s) }
-    other.fragments.foreach { case (k, s)       => merged.fragments += (k       -> s) }
-    shapes.foreach { case (k, s)                => merged.shapes += (k          -> s) }
-    other.shapes.foreach { case (k, s)          => merged.shapes += (k          -> s) }
-    anns.foreach { case (k, s)                  => merged.anns += (k            -> s) }
-    other.anns.foreach { case (k, s)            => merged.anns += (k            -> s) }
-    annotations.foreach { case (k, s)           => merged.annotations += (k     -> s) }
-    other.annotations.foreach { case (k, s)     => merged.annotations += (k     -> s) }
-    resourceTypes.foreach { case (k, s)         => merged.resourceTypes += (k   -> s) }
-    other.resourceTypes.foreach { case (k, s)   => merged.resourceTypes += (k   -> s) }
-    parameters.foreach { case (k, s)            => merged.parameters += (k      -> s) }
-    other.parameters.foreach { case (k, s)      => merged.parameters += (k      -> s) }
-    payloads.foreach { case (k, s)              => merged.payloads += (k        -> s) }
-    other.payloads.foreach { case (k, s)        => merged.payloads += (k        -> s) }
-    traits.foreach { case (k, s)                => merged.traits += (k          -> s) }
-    other.traits.foreach { case (k, s)          => merged.traits += (k          -> s) }
+    libs.foreach { case (k, s)                  => merged.libs += (k -> s) }
+    other.libs.foreach { case (k, s)            => merged.libs += (k -> s) }
+    frags.foreach { case (k, s)                 => merged.frags += (k -> s) }
+    other.frags.foreach { case (k, s)           => merged.frags += (k -> s) }
+    libraries.foreach { case (k, s)             => merged.libraries += (k -> s) }
+    other.libraries.foreach { case (k, s)       => merged.libraries += (k -> s) }
+    fragments.foreach { case (k, s)             => merged.fragments += (k -> s) }
+    other.fragments.foreach { case (k, s)       => merged.fragments += (k -> s) }
+    shapes.foreach { case (k, s)                => merged.shapes += (k -> s) }
+    other.shapes.foreach { case (k, s)          => merged.shapes += (k -> s) }
+    anns.foreach { case (k, s)                  => merged.anns += (k -> s) }
+    other.anns.foreach { case (k, s)            => merged.anns += (k -> s) }
+    annotations.foreach { case (k, s)           => merged.annotations += (k -> s) }
+    other.annotations.foreach { case (k, s)     => merged.annotations += (k -> s) }
+    resourceTypes.foreach { case (k, s)         => merged.resourceTypes += (k -> s) }
+    other.resourceTypes.foreach { case (k, s)   => merged.resourceTypes += (k -> s) }
+    parameters.foreach { case (k, s)            => merged.parameters += (k -> s) }
+    other.parameters.foreach { case (k, s)      => merged.parameters += (k -> s) }
+    payloads.foreach { case (k, s)              => merged.payloads += (k -> s) }
+    other.payloads.foreach { case (k, s)        => merged.payloads += (k -> s) }
+    traits.foreach { case (k, s)                => merged.traits += (k -> s) }
+    other.traits.foreach { case (k, s)          => merged.traits += (k -> s) }
     securitySchemes.foreach { case (k, s)       => merged.securitySchemes += (k -> s) }
     other.securitySchemes.foreach { case (k, s) => merged.securitySchemes += (k -> s) }
-    responses.foreach { case (k, s)             => merged.responses += (k       -> s) }
-    other.responses.foreach { case (k, s)       => merged.responses += (k       -> s) }
+    responses.foreach { case (k, s)             => merged.responses += (k -> s) }
+    other.responses.foreach { case (k, s)       => merged.responses += (k -> s) }
+    extensions.foreach { case (k, s)            => merged.extensions = merged.extensions + (k -> s) }
   }
 
   def merge(other: WebApiDeclarations): WebApiDeclarations = {
@@ -121,6 +126,11 @@ class WebApiDeclarations(val alias: Option[String],
   protected def addSchema(s: Shape): Unit = {
     futureDeclarations.resolveRef(aliased(s.name.value()), s)
     shapes = shapes + (s.name.value() -> s)
+  }
+
+  def +=(extension: Map[String, Dialect]): WebApiDeclarations = {
+    extensions = extensions ++ extension
+    this
   }
 
   override def +=(element: DomainElement): WebApiDeclarations = {
@@ -297,6 +307,14 @@ class WebApiDeclarations(val alias: Option[String],
     findForType(key, _.asInstanceOf[WebApiDeclarations].operationTraits, scope) collect {
       case o: Operation => o
     }
+
+  def findDialect(key: String): Option[Dialect] = {
+    val fqn = QName(key)
+    if (fqn.isQualified) {
+      val maybeDeclarations: Option[WebApiDeclarations] = libs.get(fqn.qualification)
+      maybeDeclarations.flatMap(_.findDialect(fqn.name))
+    } else extensions.get(key)
+  }
 
   def findMessageTrait(key: String, scope: SearchScope.Scope): Option[Message] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].messageTraits, scope) collect {

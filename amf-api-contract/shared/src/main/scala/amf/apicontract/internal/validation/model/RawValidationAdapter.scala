@@ -39,7 +39,7 @@ object RawValidationAdapter extends ImportUtils {
       case SHACL_TARGET_OBJECTS_OF_IRI =>
         Seq(
           spec.copy(
-            targetObject = Seq(validation.owlProperty),
+            targetObject = Set(validation.owlProperty),
             nodeConstraints = Seq(NodeConstraint(validation.constraint, validation.value))
           ))
       case _ => throw new Exception(s"Unknown validation target ${validation.target}")
@@ -53,7 +53,7 @@ object RawValidationAdapter extends ImportUtils {
       severity = amfToShaclSeverity(validation.severity),
       ramlMessage = Some(validation.ramlErrorMessage),
       oasMessage = Some(validation.openApiErrorMessage),
-      targetClass = Seq(validation.owlClass)
+      targetClass = Set(validation.owlClass)
     )
 
   private def specWithFunctionConstraint(validation: AMFValidation, spec: ValidationSpecification, sh: ValueType) = {
@@ -99,7 +99,7 @@ object RawValidationAdapter extends ImportUtils {
       case "http://www.w3.org/ns/shacl#maxInclusive" => constraint.copy(maxInclusive = Some(validation.value))
       case "http://www.w3.org/ns/shacl#minLength"    => constraint.copy(minLength = Some(validation.value))
       case "http://www.w3.org/ns/shacl#maxLength"    => constraint.copy(maxLength = Some(validation.value))
-      case "http://www.w3.org/ns/shacl#in"           => constraint.copy(in = validation.value.split("\\s*,\\s*"))
+      case "http://www.w3.org/ns/shacl#in"           => constraint.copy(in = validation.value.split("\\s*,\\s*").toSet)
       case "http://www.w3.org/ns/shacl#node"         => constraint.copy(node = Some(validation.value))
       case "http://www.w3.org/ns/shacl#datatype"     => constraint.copy(datatype = Some(validation.value))
       case "http://www.w3.org/ns/shacl#class"        => constraint.copy(`class` = Seq(validation.value))

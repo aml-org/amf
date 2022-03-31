@@ -10,6 +10,7 @@ nodeMappings:
         mandatory: true
         minimum: 0.5
         maximum: 150.2
+    additionalProperties: true
 external:
   ns0: http://test.com/vocab#
 dialect: amf-json-schema-generated-dialect

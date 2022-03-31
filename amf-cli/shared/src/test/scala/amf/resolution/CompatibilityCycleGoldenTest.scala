@@ -1,17 +1,7 @@
 package amf.resolution
 
 import amf.core.client.common.transform._
-import amf.core.internal.remote.Syntax.Json
-import amf.core.internal.remote.{
-  Oas20,
-  Oas20JsonHint,
-  Oas20YamlHint,
-  Oas30,
-  Oas30JsonHint,
-  Oas30YamlHint,
-  Raml10,
-  Raml10YamlHint
-}
+import amf.core.internal.remote._
 
 import scala.concurrent.ExecutionContext
 
@@ -222,6 +212,24 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
       Oas20JsonHint,
       transformWith = Some(Oas20)
     )
+  }
+
+  test("Raml with security scheme from library translated to OAS 2.0") {
+    cycle(
+      "raml10/security-scheme-from-library.raml",
+      "cycled-apis/oas20/security-scheme-from-library.json",
+      Raml10YamlHint,
+      Oas20JsonHint,
+      transformWith = Some(Oas20))
+  }
+
+  test("Raml with security scheme from library translated to OAS 3.0") {
+    cycle(
+      "raml10/security-scheme-from-library.raml",
+      "cycled-apis/oas30/security-scheme-from-library.json",
+      Raml10YamlHint,
+      Oas30JsonHint,
+      transformWith = Some(Oas30))
   }
 
 }

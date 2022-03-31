@@ -13,7 +13,7 @@ import amf.shapes.internal.domain.metamodel.operations.ShapeOperationModel
 /**
   * Node shape metaModel.
   */
-trait NodeShapeModel extends AnyShapeModel {
+trait NodeShapeModel extends AnyShapeModel with ClosedModel {
 
   val MinProperties: Field = Field(
     Int,
@@ -24,11 +24,6 @@ trait NodeShapeModel extends AnyShapeModel {
     Int,
     Shapes + "maxProperties",
     ModelDoc(ModelVocabularies.Shapes, "maxProperties", "Maximum number of properties in the input node constraint"))
-
-  val Closed: Field = Field(
-    Bool,
-    Shacl + "closed",
-    ModelDoc(ExternalModelVocabularies.Shacl, "closed", "Additional properties in the input node accepted constraint"))
 
   val AdditionalPropertiesSchema: Field = Field(
     ShapeModel,
@@ -111,7 +106,9 @@ trait NodeShapeModel extends AnyShapeModel {
   val IsAbstract: Field = Field(
     Bool,
     Shapes + "isAbstract",
-    ModelDoc(ModelVocabularies.Shapes, "isAbstract", "Marks this shape as an abstract node shape declared for pure re-use")
+    ModelDoc(ModelVocabularies.Shapes,
+             "isAbstract",
+             "Marks this shape as an abstract node shape declared for pure re-use")
   )
 
   val specificFields = List(

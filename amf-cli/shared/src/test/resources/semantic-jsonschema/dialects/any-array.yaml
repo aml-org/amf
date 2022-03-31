@@ -9,6 +9,7 @@ nodeMappings:
         range: any
         mandatory: true
         allowMultiple: true
+    additionalProperties: true
 external:
   security: anypoint://vocabulary/policy.yaml#
   config: anypoint://vocabulary/policy.yaml#

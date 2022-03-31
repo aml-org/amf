@@ -7,7 +7,7 @@
       ],
       "meta:definedBy": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/intermediate.json"
+          "@id": "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\""
         }
       ],
       "doc:transformed": false,
@@ -16,12 +16,10 @@
     {
       "@id": "#/encodes",
       "@type": [
-        "#/declarations/Parent",
+        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/Parent",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
-      "foaf:name": "Pepito",
-      "data:age": 33.0,
       "data:hey": [
         {
           "@id": "#/encodes/hey/0"
@@ -29,13 +27,15 @@
         {
           "@id": "#/encodes/hey/1"
         }
-      ]
+      ],
+      "foaf:name": "Pepito",
+      "data:age": 33.0
     },
     {
       "@id": "#/encodes/hey/0",
       "@type": [
         "foaf:Verse",
-        "#/declarations/SchemaNode",
+        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/SchemaNode",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
@@ -45,7 +45,7 @@
       "@id": "#/encodes/hey/1",
       "@type": [
         "foaf:Verse",
-        "#/declarations/SchemaNode",
+        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/SchemaNode",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
@@ -62,7 +62,7 @@
       ],
       "meta:definedBy": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/intermediate.json"
+          "@id": "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\""
         }
       ],
       "doc:encodes": {

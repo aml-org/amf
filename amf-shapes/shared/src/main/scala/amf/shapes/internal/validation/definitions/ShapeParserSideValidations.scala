@@ -312,9 +312,15 @@ object ShapeParserSideValidations extends Validations {
     "Boolean schemas not supported in JSON Schema below version draft-6"
   )
 
+  val PossiblyIgnoredPatternWarning = validation(
+    "possibly-ignored-pattern-warning",
+    "Pattern property may be ignored if format already defines a standard pattern"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
-    InvalidShapeFormat.id           -> all(WARNING),
-    JsonSchemaInheritanceWarning.id -> all(WARNING),
+    InvalidShapeFormat.id            -> all(WARNING),
+    JsonSchemaInheritanceWarning.id  -> all(WARNING),
+    PossiblyIgnoredPatternWarning.id -> all(WARNING),
     PatternPropertiesOnClosedNodeSpecification.id -> Map(
       Raml10Profile -> VIOLATION,
       Raml08Profile -> VIOLATION,

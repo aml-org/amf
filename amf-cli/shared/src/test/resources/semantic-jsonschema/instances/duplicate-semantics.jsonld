@@ -7,7 +7,7 @@
       ],
       "meta:definedBy": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/duplicate-semantics.json"
+          "@id": "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\""
         }
       ],
       "doc:transformed": false,
@@ -16,14 +16,14 @@
     {
       "@id": "#/encodes",
       "@type": [
-        "#/declarations/Somesecuritything",
+        "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\"#/declarations/Somesecuritything",
         "meta:DialectDomainElement",
         "doc:DomainElement"
       ],
-      "semantics:key_1": "Something",
+      "semantics:info_2": 5,
       "semantics:key_2": "SomethingElse",
       "semantics:info_1": 4,
-      "semantics:info_2": 5
+      "semantics:key_1": "Something"
     },
     {
       "@id": "",
@@ -36,7 +36,7 @@
       ],
       "meta:definedBy": [
         {
-          "@id": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/duplicate-semantics.json"
+          "@id": "http://a.ml/amf/default_document/amf-json-schema-generated-dialect/\"1.0\""
         }
       ],
       "doc:encodes": {

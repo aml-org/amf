@@ -6,7 +6,8 @@ nodeMappings:
         range: string
         mandatory: false
         enum:
-          - "555"
+          - 555
+    additionalProperties: true
 external:
   ns0: http://test.com/vocab#
 dialect: amf-json-schema-generated-dialect

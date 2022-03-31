@@ -11,6 +11,7 @@ AMF Model Documentation
 * [Amqp091Queue](#amqp091queue)
 * [AnnotationMapping](#annotationmapping)
 * [AnnotationTypeDeclarationFragment](#annotationtypedeclarationfragment)
+* [AnyMapping](#anymapping)
 * [AnyShape](#anyshape)
 * [ApiKeySettings](#apikeysettings)
 * [ArrayNode](#arraynode)
@@ -309,6 +310,19 @@ Types:
  | processingData | [BaseUnitProcessingData](#baseunitprocessingdata) | Field with utility data to be used in Base Unit processing | http://a.ml/vocabularies/document#processingData |
  | sourceInformation | [BaseUnitSourceInformation](#baseunitsourceinformation) | Contains information of the source from which the base unit was generated | http://a.ml/vocabularies/document#sourceInformation |
 
+## AnyMapping
+Base class for all mappings stored in the AML graph model
+Types:
+* http://a.ml/vocabularies/meta#AnyMapping
+* http://www.w3.org/ns/shacl#Shape
+* http://a.ml/vocabularies/document#DomainElement
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | and | [url] | Logical and composition of data | http://a.ml/vocabularies/amf/aml#and |
+ | or | [url] | Logical or composition of data | http://a.ml/vocabularies/amf/aml#or |
+ | components | [url] | Array of component mappings in case of component combination generated mapping | http://a.ml/vocabularies/amf/aml#components |
+
 ## AnyShape
 Base class for all shapes stored in the graph model
 Types:
@@ -599,6 +613,9 @@ Types:
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+ | and | [url] | Logical and composition of data | http://a.ml/vocabularies/amf/aml#and |
+ | or | [url] | Logical or composition of data | http://a.ml/vocabularies/amf/aml#or |
+ | components | [url] | Array of component mappings in case of component combination generated mapping | http://a.ml/vocabularies/amf/aml#components |
 
 ## ContextMapping
 Stores information about mapping rules for a property in the model
@@ -1669,10 +1686,14 @@ Types:
  | uriTemplate | string | URI template that will be used to generate the URI of the parsed nodeds in the graph | http://a.ml/vocabularies/apiContract#uriTemplate |
  | mergePolicy | string | Indication of how to merge this graph node when applying a patch document | http://a.ml/vocabularies/meta#mergePolicy |
  | resolvedExtends | [url] |  | http://a.ml/vocabularies/meta#resolvedExtends |
+ | closed | boolean | Additional properties in the input node accepted constraint | http://www.w3.org/ns/shacl#closed |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+ | and | [url] | Logical and composition of data | http://a.ml/vocabularies/amf/aml#and |
+ | or | [url] | Logical or composition of data | http://a.ml/vocabularies/amf/aml#or |
+ | components | [url] | Array of component mappings in case of component combination generated mapping | http://a.ml/vocabularies/amf/aml#components |
 
 ## NodeShape
 Shape that validates a record of fields, like a JS object
@@ -2798,6 +2819,9 @@ Types:
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+ | and | [url] | Logical and composition of data | http://a.ml/vocabularies/amf/aml#and |
+ | or | [url] | Logical or composition of data | http://a.ml/vocabularies/amf/aml#or |
+ | components | [url] | Array of component mappings in case of component combination generated mapping | http://a.ml/vocabularies/amf/aml#components |
 
 ## UnionShape
 Shape representing the union of many alternative data shapes

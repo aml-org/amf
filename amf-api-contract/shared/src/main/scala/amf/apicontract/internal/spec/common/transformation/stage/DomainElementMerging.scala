@@ -1,8 +1,12 @@
 package amf.apicontract.internal.spec.common.transformation.stage
 
 import amf.apicontract.client.scala.model.domain._
+import amf.apicontract.internal.annotations.AnnotationSyntax._
 import amf.apicontract.internal.annotations.EmptyPayload
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, OperationModel, RequestModel}
+import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnusedBaseUriParameter
+import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.UnequalMediaTypeDefinitionsInExtendsPayloads
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.DataNodeOps.adoptTree
@@ -12,21 +16,15 @@ import amf.core.internal.metamodel.domain.ShapeModel.{Extends, Sources}
 import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.internal.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
 import amf.core.internal.metamodel.{Field, Type}
-import amf.core.internal.parser.domain.{FieldEntry, Value}
+import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
 import amf.core.internal.utils.EqInstances._
 import amf.core.internal.utils.EqSyntax._
 import amf.core.internal.utils.TemplateUri
 import amf.core.internal.validation.CoreValidations
-import amf.apicontract.internal.annotations.AnnotationSyntax._
-import amf.apicontract.internal.spec.raml.parser.context.RamlWebApiContext
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.UnusedBaseUriParameter
-import amf.apicontract.internal.validation.definitions.ResolutionSideValidations.UnequalMediaTypeDefinitionsInExtendsPayloads
-import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
-import amf.shapes.internal.domain.resolution.ExampleTracking
-import amf.shapes.client.scala.model.domain.ScalarShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel.AnyShapeModel.Examples
 import amf.shapes.internal.domain.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
+import amf.shapes.internal.domain.resolution.ExampleTracking
 
 import scala.collection.mutable
 
@@ -140,45 +138,15 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         main.set(otherField, adoptInner(main.id, cloned))
         shouldMerge = false
       } else if (mainValueIsDefault) {
+        handleDefaultValue(main, mainFieldEntry, otherFieldEntry, otherField, otherValue, mainValue)
+        shouldMerge = false
+      } else if (mainValueIsArrayWithDefaultValue(mainValue)) {
+        // Some elements are default
+        val nonDefaultValues = extractNonDefaultValues(mainValue)
 
-        /**
-          * Existing element (mainValue) has an inferred default type. In the AST level merge, when the "type"
-          * node is on the trait side it should be merged
-          */
-        otherField.`type` match {
-          case t: OptionalField if isOptional(t, otherValue.value.asInstanceOf[DomainElement]) =>
-          // Do nothing (Case 2)
-          case Type.ArrayLike(otherElement) =>
-            adoptNonOptionalArrayElements(main, otherField, otherValue, otherElement)
-          case _: DomainElementModel =>
-            mainValue.value match {
-              // This case is for default type String (in parameters)
-              case s: ScalarShape if s.dataType.value() == DataType.String =>
-                otherValue.value match {
-                  // if both parts are scalar strings, then just merge the dataNodes
-                  case sc: ScalarShape if sc.dataType.value() == DataType.String =>
-                    merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
-                  // if other is an scalar with a different datatype
-                  case sc: ScalarShape =>
-                    s.set(ScalarShapeModel.DataType, sc.dataType.value())
-                    merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
-                  // if other is an array or an object
-                  case a: AnyShape =>
-                    val examples = s.examples
-                    main.set(otherField, adoptInner(main.id, a))
-                    if (examples.nonEmpty)
-                      main.fields
-                        .entry(otherField)
-                        .foreach(_.value.value.asInstanceOf[AnyShape].withExamples(examples))
-                  // else override the shape
-                  case x => main.set(otherField, adoptInner(main.id, x))
-                }
-              // This case is for default type AnyShape (in payload in an endpoint)
-              case _: AnyShape => merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
-              case _           => main.set(otherField, adoptInner(main.id, otherValue.value))
-            }
-          case _ => main.set(otherField, adoptInner(main.id, otherValue.value))
-        }
+        // Main value is treated as default
+        handleDefaultValue(main, mainFieldEntry, otherFieldEntry, otherField, otherValue, mainValue)
+        mergeNonDefaultValues(main, otherField, nonDefaultValues)
         shouldMerge = false
       }
       // Defaults to fallback (shouldMerge = true)
@@ -201,6 +169,77 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       }
     }
     shouldMerge
+  }
+
+  private def mainValueIsArrayWithDefaultValue(mainValue: Value) = {
+    mainValue.value.isInstanceOf[AmfArray] && mainValue.value
+      .asInstanceOf[AmfArray]
+      .values
+      .exists(_.annotations.contains(classOf[DefaultNode]))
+  }
+
+  private def mergeNonDefaultValues[T <: DomainElement](main: T,
+                                                        otherField: Field,
+                                                        nonDefaultValues: Seq[AmfElement]): Unit = {
+    val newMainValue = main.fields.getValue(otherField)
+    otherField.`type` match {
+      case Type.ArrayLike(element) =>
+        mergeByValue(main, otherField, element, newMainValue, Value(AmfArray(nonDefaultValues), Annotations.empty))
+    }
+  }
+
+  private def extractNonDefaultValues(mainValue: Value) = {
+    mainValue.value
+      .asInstanceOf[AmfArray]
+      .values
+      .filter(!_.annotations.contains(classOf[DefaultNode]))
+  }
+
+  private def handleDefaultValue[T <: DomainElement](main: T,
+                                                     mainFieldEntry: FieldEntry,
+                                                     otherFieldEntry: FieldEntry,
+                                                     otherField: Field,
+                                                     otherValue: Value,
+                                                     mainValue: Value) = {
+
+    /**
+      * Existing element (mainValue) has an inferred default type. In the AST level merge, when the "type"
+      * node is on the trait side it should be merged
+      */
+    otherField.`type` match {
+      case t: OptionalField if isOptional(t, otherValue.value.asInstanceOf[DomainElement]) =>
+      // Do nothing (Case 2)
+      case Type.ArrayLike(otherElement) =>
+        adoptNonOptionalArrayElements(main, otherField, otherValue, otherElement)
+      case _: DomainElementModel =>
+        mainValue.value match {
+          // This case is for default type String (in parameters)
+          case s: ScalarShape if s.dataType.value() == DataType.String =>
+            otherValue.value match {
+              // if both parts are scalar strings, then just merge the dataNodes
+              case sc: ScalarShape if sc.dataType.value() == DataType.String =>
+                merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
+              // if other is an scalar with a different datatype
+              case sc: ScalarShape =>
+                s.set(ScalarShapeModel.DataType, sc.dataType.value())
+                merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
+              // if other is an array or an object
+              case a: AnyShape =>
+                val examples = s.examples
+                main.set(otherField, adoptInner(main.id, a))
+                if (examples.nonEmpty)
+                  main.fields
+                    .entry(otherField)
+                    .foreach(_.value.value.asInstanceOf[AnyShape].withExamples(examples))
+              // else override the shape
+              case x => main.set(otherField, adoptInner(main.id, x))
+            }
+          // This case is for default type AnyShape (in payload in an endpoint)
+          case _: AnyShape => merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
+          case _           => main.set(otherField, adoptInner(main.id, otherValue.value))
+        }
+      case _ => main.set(otherField, adoptInner(main.id, otherValue.value))
+    }
   }
 
   // We need this because the same JSON schema references do not produce identical objects

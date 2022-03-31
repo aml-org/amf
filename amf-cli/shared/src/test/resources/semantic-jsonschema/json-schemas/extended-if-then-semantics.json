@@ -1,0 +1,61 @@
+{
+  "title": "Some Policy",
+  "type": "object",
+  "properties": {
+    "thisApiName": {
+      "title": "Api Name",
+      "default": "#[p('applicationName')]",
+      "@context": {
+        "@characteristics": [
+          "config:dataweaveExpression"
+        ]
+      },
+      "type": "string",
+      "pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+    },
+    "thisApiVersion": {
+      "title": "Api Version",
+      "default": "#[p('applicationVersion')]",
+      "@context": {
+        "@characteristics": [
+          "config:dataweaveExpression"
+        ]
+      },
+      "type": "string",
+      "pattern": "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+    }
+  },
+  "required": [
+    "thisApiName",
+    "thisApiVersion"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "logStatistics": {
+            "const": true
+          }
+        },
+        "required": [
+          "logStatistics"
+        ]
+      },
+      "then": {
+        "properties": {
+          "statisticsIdentifier": {
+            "title": "Statistics Identifier",
+            "type": "string"
+          }
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@vocab": "anypoint://vocabulary/policy.yaml#",
+    "security": "anypoint://vocabulary/policy.yaml#",
+    "config": "anypoint://vocabulary/policy.yaml#"
+  },
+  "$id": "some.json",
+  "$schema": "https://json-schema.org/draft/2019-09/schema"
+}

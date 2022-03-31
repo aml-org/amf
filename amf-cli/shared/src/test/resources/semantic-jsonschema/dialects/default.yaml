@@ -19,6 +19,7 @@ nodeMappings:
         default:
           - Carliños
           - Carl
+    additionalProperties: true
   SchemaNode:
     mapping:
       name:
@@ -27,6 +28,7 @@ nodeMappings:
       release:
         range: integer
         mandatory: true
+    additionalProperties: true
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:
