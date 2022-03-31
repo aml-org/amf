@@ -11,7 +11,7 @@ type Capsule {
   original_launch: Date
   reuse_count: Int
   status: String
-  type: String
+  type_: String
   dragon: Dragon
 }
 
@@ -27,7 +27,7 @@ input CapsulesFind {
   original_launch: Date
   reuse_count: Int
   status: String
-  type: String
+  type_: String
 }
 
 """conflict action"""
@@ -100,7 +100,7 @@ type Dragon {
   sidewall_angle_deg: Float
   thrusters: [DragonThrust]
   trunk: DragonTrunk
-  type: String
+  type_: String
   wikipedia: String
 }
 
@@ -121,7 +121,7 @@ type DragonThrust {
   fuel_2: String
   pods: Int
   thrust: Force
-  type: String
+  type_: String
 }
 
 type DragonTrunk {
@@ -647,13 +647,13 @@ type Rocket {
   second_stage: RocketSecondStage
   stages: Int
   success_rate_pct: Int
-  type: String
+  type_: String
   wikipedia: String
 }
 
 type RocketEngines {
   number: Int
-  type: String
+  type_: String
   version: String
   layout: String
   engine_loss_max: String
@@ -727,7 +727,7 @@ type Ship {
   speed_kn: Float
   status: String
   successful_landings: Int
-  type: String
+  type_: String
   url: String
   weight_kg: Int
   weight_lbs: Int
@@ -748,7 +748,7 @@ input ShipsFind {
   id: ID
   name: String
   model: String
-  type: String
+  type_: String
   role: String
   active: Boolean
   imo: Int

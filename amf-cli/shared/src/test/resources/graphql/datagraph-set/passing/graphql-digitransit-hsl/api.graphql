@@ -462,7 +462,7 @@ type elevationProfileComponent {
 }
 
 type fare {
-  type: String
+  type_: String
 
   """ISO 4217 currency code"""
   currency: String
@@ -1926,7 +1926,7 @@ type Route implements Node {
   https://developers.google.com/transit/gtfs/reference/#routestxt and
   https://developers.google.com/transit/gtfs/reference/extended-route-types
   """
-  type: Int
+  type_: Int
   desc: String
   url: String
 

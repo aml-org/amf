@@ -3,7 +3,7 @@ type City {
   name: String!
   slug: String!
   country: Country!
-  type: String!
+  type_: String!
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -68,7 +68,7 @@ input CityWhereInput {
   slug_ends_with: String
   slug_not_ends_with: String
   country: CountryWhereInput
-  type: String
+  type_: String
   type_not: String
   type_in: [String!]
   type_not_in: [String!]
@@ -310,7 +310,7 @@ type Country {
   id: ID!
   name: String!
   slug: String!
-  type: String!
+  type_: String!
   isoCode: String
   cities(where: CityWhereInput, orderBy: CityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [City!]
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
@@ -378,7 +378,7 @@ input CountryWhereInput {
   slug_not_starts_with: String
   slug_ends_with: String
   slug_not_ends_with: String
-  type: String
+  type_: String
   type_not: String
   type_in: [String!]
   type_not_in: [String!]
@@ -489,7 +489,7 @@ enum JobOrderByInput {
 }
 
 input JobsInput {
-  type: String
+  type_: String
   slug: String
 }
 
@@ -643,7 +643,7 @@ type Location {
   id: ID!
   slug: String!
   name: String!
-  type: String!
+  type_: String!
 }
 
 input LocationInput {
@@ -689,7 +689,7 @@ type Remote {
   id: ID!
   name: String!
   slug: String!
-  type: String!
+  type_: String!
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -753,7 +753,7 @@ input RemoteWhereInput {
   slug_not_starts_with: String
   slug_ends_with: String
   slug_not_ends_with: String
-  type: String
+  type_: String
   type_not: String
   type_in: [String!]
   type_not_in: [String!]

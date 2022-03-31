@@ -6303,7 +6303,7 @@ input CreateMigrationSourceInput {
   """
   The Octoshift migration source type.
   """
-  type: MigrationSourceType!
+  type_: MigrationSourceType!
 
   """
   The Octoshift migration source URL.
@@ -8387,7 +8387,7 @@ type DeploymentProtectionRule {
   """
   The type of protection rule.
   """
-  type: DeploymentProtectionRuleType!
+  type_: DeploymentProtectionRuleType!
 }
 
 """
@@ -17683,7 +17683,7 @@ type MigrationSource implements Node {
   """
   The Octoshift migration source type.
   """
-  type: MigrationSourceType!
+  type_: MigrationSourceType!
 
   """
   The Octoshift migration source URL.
@@ -23392,7 +23392,7 @@ type Organization implements Actor & MemberStatusable & Node & PackageOwner & Pr
     """
     Filter to only a particular kind of pinnable item.
     """
-    type: PinnableItemType
+    type_: PinnableItemType
   ): Boolean!
 
   """
@@ -26395,7 +26395,7 @@ interface ProfileOwner {
     """
     Filter to only a particular kind of pinnable item.
     """
-    type: PinnableItemType
+    type_: PinnableItemType
   ): Boolean!
 
   """
@@ -30934,7 +30934,7 @@ type Query {
     """
     The types of search items to search within.
     """
-    type: SearchType!
+    type_: SearchType!
   ): SearchResultItemConnection!
 
   """
@@ -39210,7 +39210,7 @@ type SecurityAdvisoryIdentifier {
   """
   The identifier type, e.g. GHSA, CVE
   """
-  type: String!
+  type_: String!
 
   """
   The identifier
@@ -39225,7 +39225,7 @@ input SecurityAdvisoryIdentifierFilter {
   """
   The identifier type.
   """
-  type: SecurityAdvisoryIdentifierType!
+  type_: SecurityAdvisoryIdentifierType!
 
   """
   The identifier string. Supports exact or partial matching.
@@ -43841,7 +43841,7 @@ type TreeEntry {
   """
   Entry file type.
   """
-  type: String!
+  type_: String!
 }
 
 """
@@ -46668,7 +46668,7 @@ type User implements Actor & Node & PackageOwner & ProfileOwner & ProjectNextOwn
     """
     Filter to only a particular kind of pinnable item.
     """
-    type: PinnableItemType
+    type_: PinnableItemType
   ): Boolean!
 
   """
@@ -48235,7 +48235,7 @@ type UserEmailMetadata {
   """
   Type of email
   """
-  type: String
+  type_: String
 
   """
   Email id

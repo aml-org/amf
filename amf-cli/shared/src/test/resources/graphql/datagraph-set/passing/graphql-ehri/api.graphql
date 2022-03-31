@@ -11,7 +11,7 @@ type AccessPoint {
   name: String
 
   """The access point's type"""
-  type: AccessPointType!
+  type_: AccessPointType!
 }
 
 """Access point types"""
@@ -66,7 +66,7 @@ interface Annotatable {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """This item's annotations"""
   annotations: [Annotation]
@@ -78,7 +78,7 @@ type Annotation implements Entity & Annotatable {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """The text of the annotation"""
   body: String
@@ -131,7 +131,7 @@ type AuthoritativeSet implements Entity & Annotatable {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """The set's local identifier"""
   identifier: String
@@ -229,7 +229,7 @@ type Country implements Entity & Annotatable {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """The country's ISO639-2 code"""
   identifier: String
@@ -289,7 +289,7 @@ type CvocConcept implements Entity & Described & Linkable & Annotatable {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """The concept's local identifier"""
   identifier: String
@@ -413,7 +413,7 @@ type CvocVocabulary implements Entity & Annotatable {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """The vocabulary's local identifier"""
   identifier: String
@@ -472,7 +472,7 @@ interface Described {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """
   Fetch the description at given the given index, or that with the given
@@ -521,7 +521,7 @@ type DocumentaryUnit implements Entity & Described & Linkable & Annotatable & Te
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """The item's local identifier"""
   identifier: String
@@ -759,7 +759,7 @@ interface Entity {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 }
 
 """An historical agent"""
@@ -768,7 +768,7 @@ type HistoricalAgent implements Entity & Described & Linkable & Annotatable & Te
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """The historical agent's EHRI identifier"""
   identifier: String
@@ -926,7 +926,7 @@ type Link implements Entity & Annotatable {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """Textual information which may add context to this link"""
   description: String
@@ -956,7 +956,7 @@ interface Linkable {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """This item's links"""
   links: [Link]
@@ -1139,7 +1139,7 @@ type Repository implements Entity & Described & Linkable & Annotatable {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """The repository's EHRI identifier"""
   identifier: String
@@ -1541,7 +1541,7 @@ interface Temporal {
   id: String!
 
   """The item's EHRI type"""
-  type: String!
+  type_: String!
 
   """The item's local identifier"""
   identifier: String

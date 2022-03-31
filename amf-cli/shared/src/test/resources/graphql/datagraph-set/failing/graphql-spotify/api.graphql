@@ -10,7 +10,7 @@ type Album {
   popularity: Int
   release_date: String
   release_date_precision: String
-  type: String
+  type_: String
   uri: String
   images: [Image]
   tracks(throttle: Int, continueOnError: Int, limit: Int): [Track]
@@ -22,7 +22,7 @@ type Artist {
   href: String
   name: String
   popularity: Int
-  type: String
+  type_: String
   uri: String
   images: [Image]
   top_tracks(country: String): [Track]
@@ -54,7 +54,7 @@ type Device {
   is_active: Boolean
   is_restricted: Boolean
   name: String
-  type: String
+  type_: String
   volume_percent: Int
 }
 
@@ -77,7 +77,7 @@ type Player {
 
 type PlayerContext {
   href: String
-  type: String
+  type_: String
   uri: String
 }
 
@@ -162,7 +162,7 @@ type SimplifiedAlbum {
   href: String
   label: String
   name: String
-  type: String
+  type_: String
   uri: String
 }
 
@@ -170,7 +170,7 @@ type SimplifiedArtist {
   id: String
   href: String
   name: String
-  type: String
+  type_: String
   uri: String
 }
 
@@ -189,7 +189,7 @@ type Track {
   popularity: Int
   preview_url: String
   track_number: Int
-  type: String
+  type_: String
   uri: String
 }
 

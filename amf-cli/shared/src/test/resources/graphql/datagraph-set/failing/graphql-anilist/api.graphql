@@ -7,7 +7,7 @@ type ActivityLikeNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the activity which was liked"""
   activityId: Int!
@@ -36,7 +36,7 @@ type ActivityMentionNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the activity where mentioned"""
   activityId: Int!
@@ -63,7 +63,7 @@ type ActivityMessageNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the activity message"""
   activityId: Int!
@@ -123,7 +123,7 @@ type ActivityReplyLikeNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the activity where the reply which was liked"""
   activityId: Int!
@@ -152,7 +152,7 @@ type ActivityReplyNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the activity which was replied too"""
   activityId: Int!
@@ -181,7 +181,7 @@ type ActivityReplySubscribedNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the activity which was replied too"""
   activityId: Int!
@@ -232,7 +232,7 @@ type AiringNotification {
   id: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the aired anime"""
   animeId: Int!
@@ -379,7 +379,7 @@ type Character {
   """Media that includes the character"""
   media(
     sort: [MediaSort]
-    type: MediaType
+    type_: MediaType
     onList: Boolean
 
     """The page"""
@@ -634,7 +634,7 @@ type FollowingNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The notification context text"""
   context: String
@@ -701,7 +701,7 @@ type InternalPage {
     status: SubmissionStatus
 
     """Filter by the media's type"""
-    type: MediaType
+    type_: MediaType
 
     """The order the results will be returned in"""
     sort: [SubmissionSort]
@@ -795,7 +795,7 @@ type InternalPage {
     seasonYear: Int
 
     """Filter by the media's type"""
-    type: MediaType
+    type_: MediaType
 
     """Filter by the media's format"""
     format: MediaFormat
@@ -1053,7 +1053,7 @@ type InternalPage {
     userName: String
 
     """Filter by the list entries media type"""
-    type: MediaType
+    type_: MediaType
 
     """Filter by the watching/reading status"""
     status: MediaListStatus
@@ -1258,7 +1258,7 @@ type InternalPage {
   ): [MediaTrend]
   notifications(
     """Filter by the type of notifications"""
-    type: NotificationType
+    type_: NotificationType
 
     """Reset the unread notification count to 0 on load"""
     resetNotificationCount: Boolean
@@ -1294,7 +1294,7 @@ type InternalPage {
     mediaId: Int
 
     """Filter by the type of activity"""
-    type: ActivityType
+    type_: ActivityType
 
     """
     Filter activity to users who are being followed by the authenticated user
@@ -1461,7 +1461,7 @@ type InternalPage {
     likeableId: Int
 
     """The type of model the id applies to"""
-    type: LikeableType
+    type_: LikeableType
   ): [User]
 }
 
@@ -1487,7 +1487,7 @@ type ListActivity {
   userId: Int
 
   """The type of activity"""
-  type: ActivityType
+  type_: ActivityType
 
   """The number of activity replies"""
   replyCount: Int!
@@ -1547,7 +1547,7 @@ type Media {
   title: MediaTitle
 
   """The type of the media; anime or manga"""
-  type: MediaType
+  type_: MediaType
 
   """The format the media was released in"""
   format: MediaFormat
@@ -1819,7 +1819,7 @@ type MediaDataChangeNotification {
   id: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the media that received data changes"""
   mediaId: Int!
@@ -1845,7 +1845,7 @@ type MediaDeletionNotification {
   id: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The title of the deleted media"""
   deletedMediaTitle: String
@@ -2195,7 +2195,7 @@ type MediaMergeNotification {
   id: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the media that was merged into"""
   mediaId: Int!
@@ -2227,7 +2227,7 @@ type MediaRank {
   rank: Int!
 
   """The type of ranking"""
-  type: MediaRankType!
+  type_: MediaRankType!
 
   """The format the media is ranked within"""
   format: MediaFormat!
@@ -2653,7 +2653,7 @@ type MessageActivity {
   messengerId: Int
 
   """The type of the activity"""
-  type: ActivityType
+  type_: ActivityType
 
   """The number of activity replies"""
   replyCount: Int!
@@ -2705,7 +2705,7 @@ type ModAction {
   id: Int!
   user: User
   mod: User
-  type: ModActionType
+  type_: ModActionType
   objectId: Int
   objectType: String
   data: String
@@ -2922,7 +2922,7 @@ type Mutation {
     customList: String
 
     """The media list type of the custom list"""
-    type: MediaType
+    type_: MediaType
   ): Deleted
 
   """Create or update text activity for the currently authenticated user"""
@@ -3012,7 +3012,7 @@ type Mutation {
     id: Int
 
     """The type of model to be un/liked"""
-    type: LikeableType
+    type_: LikeableType
   ): [User]
 
   """Add or remove a like from a likeable type."""
@@ -3021,7 +3021,7 @@ type Mutation {
     id: Int
 
     """The type of model to be un/liked"""
-    type: LikeableType
+    type_: LikeableType
   ): LikeableUnion
 
   """Toggle the un/following of a user"""
@@ -3200,7 +3200,7 @@ type Mutation {
 """Notification option"""
 type NotificationOption {
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """Whether this type of notification is enabled"""
   enabled: Boolean
@@ -3209,7 +3209,7 @@ type NotificationOption {
 """Notification option input"""
 input NotificationOptionInput {
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """Whether this type of notification is enabled"""
   enabled: Boolean
@@ -3320,7 +3320,7 @@ type Page {
     seasonYear: Int
 
     """Filter by the media's type"""
-    type: MediaType
+    type_: MediaType
 
     """Filter by the media's format"""
     format: MediaFormat
@@ -3578,7 +3578,7 @@ type Page {
     userName: String
 
     """Filter by the list entries media type"""
-    type: MediaType
+    type_: MediaType
 
     """Filter by the watching/reading status"""
     status: MediaListStatus
@@ -3783,7 +3783,7 @@ type Page {
   ): [MediaTrend]
   notifications(
     """Filter by the type of notifications"""
-    type: NotificationType
+    type_: NotificationType
 
     """Reset the unread notification count to 0 on load"""
     resetNotificationCount: Boolean
@@ -3819,7 +3819,7 @@ type Page {
     mediaId: Int
 
     """Filter by the type of activity"""
-    type: ActivityType
+    type_: ActivityType
 
     """
     Filter activity to users who are being followed by the authenticated user
@@ -3986,7 +3986,7 @@ type Page {
     likeableId: Int
 
     """The type of model the id applies to"""
-    type: LikeableType
+    type_: LikeableType
   ): [User]
 }
 
@@ -4047,7 +4047,7 @@ type Query {
     seasonYear: Int
 
     """Filter by the media's type"""
-    type: MediaType
+    type_: MediaType
 
     """Filter by the media's format"""
     format: MediaFormat
@@ -4430,7 +4430,7 @@ type Query {
     userName: String
 
     """Filter by the list entries media type"""
-    type: MediaType
+    type_: MediaType
 
     """Filter by the watching/reading status"""
     status: MediaListStatus
@@ -4512,7 +4512,7 @@ type Query {
     userName: String
 
     """Filter by the list entries media type"""
-    type: MediaType
+    type_: MediaType
 
     """Filter by the watching/reading status"""
     status: MediaListStatus
@@ -4604,7 +4604,7 @@ type Query {
   """Notification query"""
   Notification(
     """Filter by the type of notifications"""
-    type: NotificationType
+    type_: NotificationType
 
     """Reset the unread notification count to 0 on load"""
     resetNotificationCount: Boolean
@@ -4667,7 +4667,7 @@ type Query {
     mediaId: Int
 
     """Filter by the type of activity"""
-    type: ActivityType
+    type_: ActivityType
 
     """
     Filter activity to users who are being followed by the authenticated user
@@ -4846,7 +4846,7 @@ type Query {
     likeableId: Int
 
     """The type of model the id applies to"""
-    type: LikeableType
+    type_: LikeableType
   ): User
 
   """Provide AniList markdown to be converted to html (Requires auth)"""
@@ -4915,7 +4915,7 @@ type RelatedMediaAdditionNotification {
   id: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the new media"""
   mediaId: Int!
@@ -5260,7 +5260,7 @@ type Staff {
   """Media where the staff member has a production role"""
   staffMedia(
     sort: [MediaSort]
-    type: MediaType
+    type_: MediaType
     onList: Boolean
 
     """The page"""
@@ -5621,7 +5621,7 @@ type TextActivity {
   userId: Int
 
   """The type of activity"""
-  type: ActivityType
+  type_: ActivityType
 
   """The number of activity replies"""
   replyCount: Int!
@@ -5800,7 +5800,7 @@ type ThreadCommentLikeNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the activity which was liked"""
   commentId: Int!
@@ -5832,7 +5832,7 @@ type ThreadCommentMentionNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the comment where mentioned"""
   commentId: Int!
@@ -5862,7 +5862,7 @@ type ThreadCommentReplyNotification {
   userId: Int!
 
   """The type of notification"""
-  type: NotificationType
+  type_: NotificationType
 
   """The id of the reply comment"""
   commentId: Int!

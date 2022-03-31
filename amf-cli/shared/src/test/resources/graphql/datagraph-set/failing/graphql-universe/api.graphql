@@ -186,7 +186,7 @@ type AddOnRate {
   state: RateState
 
   """The type of rate"""
-  type: String!
+  type_: String!
 
   """Whether an add on rate has sold add-ons or not"""
   used: Boolean!
@@ -3651,7 +3651,7 @@ type ManageTicketsRate {
   """UNIX Timestamp"""
   startStamp: Int
   state: RateState!
-  type: RateType!
+  type_: RateType!
 
   """If rate has sold order items"""
   used: Boolean!
@@ -5212,7 +5212,7 @@ type Question {
   subType: String
 
   """Type of the question, have no idea which values it can have"""
-  type: AnswerType!
+  type_: AnswerType!
 }
 
 """Input type for an question."""
@@ -5286,7 +5286,7 @@ type Rate {
   state: RateState!
 
   """Rate type I.E Ticket, Pass, or Add-on"""
-  type: RateType
+  type_: RateType
 }
 
 """Capacity for a Rate within a Time Slot"""
@@ -5305,7 +5305,7 @@ type RateCapacity {
   rate: Rate!
   rateId: ID!
   timeSlotId: ID
-  type: String!
+  type_: String!
 }
 
 type RateCapacityConnection {
@@ -5374,7 +5374,7 @@ input RateCreateAttributes {
   releaseOffset: ReleaseOffset
 
   """Ticket type"""
-  type: RateCreateType
+  type_: RateCreateType
 
   """Access key for locked rates"""
   accessKey: AccessKeyInputType
@@ -5537,7 +5537,7 @@ input RateUpdateAttributes {
   releaseOffset: ReleaseOffset
 
   """Ticket type"""
-  type: RateCreateType
+  type_: RateCreateType
 
   """Access key for locked rates"""
   accessKey: AccessKeyInputType
@@ -5610,7 +5610,7 @@ enum RefundOffsetType {
 """Rule describing when ticket refunds should be allowed"""
 type RefundPolicy {
   offset: RefundOffset!
-  type: RefundOffsetType!
+  type_: RefundOffsetType!
 }
 
 """Attributes that define a template for a refund policy"""
@@ -5619,7 +5619,7 @@ input RefundPolicyAttributes {
   offset: RefundOffset
 
   """Time scope"""
-  type: RefundOffsetType
+  type_: RefundOffsetType
 }
 
 """Properties for a Refund policy on event creation"""

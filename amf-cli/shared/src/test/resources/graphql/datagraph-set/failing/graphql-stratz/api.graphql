@@ -64,7 +64,7 @@ type AbilityLearnEventsType {
 
 type AbilityStatType {
   abilityId: Short
-  type: Int
+  type_: Int
   behavior: Long
   unitTargetType: Long
   unitTargetTeam: Int
@@ -893,7 +893,7 @@ type FeedType {
   steamAccount: SteamAccountType
   league: LeagueType
   targetSteamAccountId: Long
-  type: Byte
+  type_: Byte
   matchId: Long
   heroId: Int!
   date: Long
@@ -3596,7 +3596,7 @@ enum MatchLaneType {
 type MatchLiveBuildingDetailType {
   time: Int!
   indexId: Int
-  type: BuildingType
+  type_: BuildingType
   isAlive: Boolean!
   positionX: Int
   positionY: Int
@@ -3904,7 +3904,7 @@ type MatchmakingStatsType {
 type MatchPlaybackDataBuildingEventType {
   time: Int!
   indexId: Int
-  type: BuildingType
+  type_: BuildingType
   hp: Int
   maxHp: Int
   positionX: Int
@@ -4422,7 +4422,7 @@ type MatchPlayerStatsType {
 
 type MatchPlayerStatsWardEventType {
   time: Int!
-  type: Int!
+  type_: Int!
   positionX: Int
   positionY: Int
 }
@@ -4704,7 +4704,7 @@ type MatchReplayUploadTeamType {
 
 type MatchStatsChatEventType {
   time: Int
-  type: Int
+  type_: Int
   fromHeroId: Short
   toHeroId: Short
   value: Short

@@ -28,7 +28,7 @@ type CarEquipment {
 
 type Facility {
   description: String
-  type: FacilityType!
+  type_: FacilityType!
   state: FacilityState!
   equipmentNumber: Int
   location: Location
@@ -55,7 +55,7 @@ type FlinksterBike {
   attributes: BikeAttributes!
   address: MailingAddress!
   rentalModel: String!
-  type: String!
+  type_: String!
   providerRentalObjectId: Int!
   parkingArea: FlinksterParkingArea!
   bookingUrl: String!
@@ -85,7 +85,7 @@ type FlinksterParkingArea {
   locationDescription: String
   publicTransport: String
   provider: FlinksterProvider!
-  type: String!
+  type_: String!
   position: Location!
   GeoJSON: GeoJSON
 }
@@ -97,18 +97,18 @@ type FlinksterProvider {
 }
 
 type GeoFeature {
-  type: String!
+  type_: String!
   properties: GeoProperties!
   geometry: GeoPolygon!
 }
 
 type GeoJSON {
-  type: String!
+  type_: String!
   features: [GeoFeature!]!
 }
 
 type GeoPolygon {
-  type: String!
+  type_: String!
   coordinates: [[[[Float]]]]!
 }
 
@@ -164,7 +164,7 @@ type OperationLocation {
   abbrev: String!
   name: String!
   shortName: String!
-  type: String!
+  type_: String!
   status: String
   locationCode: String
   UIC: String!
@@ -182,7 +182,7 @@ type ParkingPriceOption {
 }
 
 type ParkingSpace {
-  type: String
+  type_: String
   id: Int!
   name: String
   label: String
@@ -249,7 +249,7 @@ type Picture {
 
 type PriceOption {
   interval: Int
-  type: String!
+  type_: String!
   grossamount: Float!
   currency: String!
   taxrate: Float!
@@ -369,7 +369,7 @@ type Track {
 }
 
 type TrainInStation {
-  type: String!
+  type_: String!
   trainNumber: String!
   platform: String!
   time: String!
@@ -380,7 +380,7 @@ type TravelCenter {
   id: Int
   name: String
   address: MailingAddress
-  type: String
+  type_: String
   location: Location
 }
 

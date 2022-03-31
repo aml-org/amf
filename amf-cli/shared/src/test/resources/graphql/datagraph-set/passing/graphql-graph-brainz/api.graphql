@@ -30,7 +30,7 @@ type Alias {
   The type or purpose of the alias – whether it is a variant,
   search hint, etc.
   """
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -85,7 +85,7 @@ type Area implements Node & Entity {
   The type of area (country, city, etc. – see the [possible
   values](https://musicbrainz.org/doc/Area)).
   """
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -108,7 +108,7 @@ type Area implements Node & Entity {
   """A list of releases linked to this entity."""
   releases(
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
 
     """Filter by one or more release statuses."""
     status: [ReleaseStatus]
@@ -245,7 +245,7 @@ type Artist implements Node & Entity {
   genderID: MBID
 
   """Whether an artist is a person, a group, or something else."""
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -271,7 +271,7 @@ type Artist implements Node & Entity {
   """A list of releases linked to this entity."""
   releases(
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
 
     """Filter by one or more release statuses."""
     status: [ReleaseStatus]
@@ -282,7 +282,7 @@ type Artist implements Node & Entity {
   """A list of release groups linked to this entity."""
   releaseGroups(
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
     after: String
     first: Int
   ): ReleaseGroupConnection
@@ -318,7 +318,7 @@ type Artist implements Node & Entity {
     The type of URL relationship that will be selected to find images. See
     the possible [Artist-URL relationship types](https://musicbrainz.org/relationships/artist-url).
     """
-    type: String = "image"
+    type_: String = "image"
   ): [MediaWikiImage]!
 
   """
@@ -581,7 +581,7 @@ type BrowseQuery {
     trackArtist: MBID
 
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
 
     """Filter by one or more release statuses."""
     status: [ReleaseStatus]
@@ -601,7 +601,7 @@ type BrowseQuery {
     release: MBID
 
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
     after: String
     first: Int
   ): ReleaseGroupConnection
@@ -645,7 +645,7 @@ type Collection implements Node & Entity {
   entityType: String!
 
   """The type of collection."""
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -677,7 +677,7 @@ type Collection implements Node & Entity {
   """The list of releases found in this collection."""
   releases(
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
 
     """Filter by one or more release statuses."""
     status: [ReleaseStatus]
@@ -688,7 +688,7 @@ type Collection implements Node & Entity {
   """The list of release groups found in this collection."""
   releaseGroups(
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
     after: String
     first: Int
   ): ReleaseGroupConnection
@@ -1030,7 +1030,7 @@ type DiscogsImage {
   url: URLString!
 
   """The image type, primary or secondary."""
-  type: DiscogsImageType!
+  type_: DiscogsImageType!
 
   """The image width in pixels."""
   width: Int!
@@ -1326,7 +1326,7 @@ type Event implements Node & Entity {
   setlist: String
 
   """What kind of event the event is, e.g. concert, festival, etc."""
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -1548,7 +1548,7 @@ type Instrument implements Node & Entity {
   created, similar to the [Hornbostel-Sachs](https://en.wikipedia.org/wiki/Hornbostel%E2%80%93Sachs)
   classification.
   """
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -1575,7 +1575,7 @@ type Instrument implements Node & Entity {
     The type of URL relationship that will be selected to find images. See the
     possible [Instrument-URL relationship types](https://musicbrainz.org/relationships/instrument-url).
     """
-    type: String = "image"
+    type_: String = "image"
   ): [MediaWikiImage]!
 }
 
@@ -1709,7 +1709,7 @@ type Label implements Node & Entity {
   A type describing the main activity of the label, e.g.
   imprint, production, distributor, rights society, etc.
   """
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -1720,7 +1720,7 @@ type Label implements Node & Entity {
   """A list of releases linked to this entity."""
   releases(
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
 
     """Filter by one or more release statuses."""
     status: [ReleaseStatus]
@@ -1756,7 +1756,7 @@ type Label implements Node & Entity {
     The type of URL relationship that will be selected to find images. See the
     possible [Label-URL relationship types](https://musicbrainz.org/relationships/label-url).
     """
-    type: String = "logo"
+    type_: String = "logo"
   ): [MediaWikiImage]!
 
   """Information about the label on Discogs."""
@@ -2543,7 +2543,7 @@ type Place implements Node & Entity {
   The type categorises the place based on its primary
   function.
   """
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -2573,7 +2573,7 @@ type Place implements Node & Entity {
     The type of URL relationship that will be selected to find images. See the
     possible [Place-URL relationship types](https://musicbrainz.org/relationships/place-url).
     """
-    type: String = "image"
+    type_: String = "image"
   ): [MediaWikiImage]!
 }
 
@@ -2716,7 +2716,7 @@ type Recording implements Node & Entity {
   """A list of releases linked to this entity."""
   releases(
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
 
     """Filter by one or more release statuses."""
     status: [ReleaseStatus]
@@ -2840,7 +2840,7 @@ type Relationship {
   attributes: [String]
 
   """The type of relationship."""
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -2893,7 +2893,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -2912,7 +2912,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -2931,7 +2931,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -2950,7 +2950,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -2969,7 +2969,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -2988,7 +2988,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -3007,7 +3007,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -3026,7 +3026,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -3045,7 +3045,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -3064,7 +3064,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -3083,7 +3083,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -3102,7 +3102,7 @@ type Relationships {
     direction: String
 
     """Filter by the relationship type."""
-    type: String
+    type_: String
 
     """
     The MBID associated with the value of the `type`
@@ -3219,7 +3219,7 @@ type Release implements Node & Entity {
   """A list of release groups linked to this entity."""
   releaseGroups(
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
     after: String
     first: Int
   ): ReleaseGroupConnection
@@ -3375,7 +3375,7 @@ type ReleaseGroup implements Node & Entity {
   """A list of releases linked to this entity."""
   releases(
     """Filter by one or more release group types."""
-    type: [ReleaseGroupType]
+    type_: [ReleaseGroupType]
 
     """Filter by one or more release statuses."""
     status: [ReleaseStatus]
@@ -3741,7 +3741,7 @@ type Series implements Node & Entity {
   The type primarily describes what type of entity the series
   contains.
   """
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`
@@ -4041,7 +4041,7 @@ type SpotifyCopyright {
   Whether the copyright is for the work itself or the sound recording
   (performance).
   """
-  type: SpotifyCopyrightType!
+  type_: SpotifyCopyrightType!
 }
 
 """The type of copyright."""
@@ -4056,7 +4056,7 @@ enum SpotifyCopyrightType {
 """A value for identifying an entity with some third party."""
 type SpotifyExternalID {
   """The identifier type, for example “isrc”, “ean”, “upc”."""
-  type: String!
+  type_: String!
 
   """The identifier value."""
   id: String!
@@ -4065,7 +4065,7 @@ type SpotifyExternalID {
 """A URL for linking to an entity with some third party."""
 type SpotifyExternalURL {
   """The type of the URL, for example “spotify”."""
-  type: String!
+  type_: String!
 
   """An external, public URL to the object."""
   url: URLString!
@@ -4619,7 +4619,7 @@ type Work implements Node & Entity {
   language: String
 
   """The type of work."""
-  type: String
+  type_: String
 
   """
   The MBID associated with the value of the `type`

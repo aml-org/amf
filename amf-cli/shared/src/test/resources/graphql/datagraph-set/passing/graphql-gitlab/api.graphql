@@ -289,7 +289,7 @@ type AlertManagementAlert implements NoteableInterface {
     state: [TodoStateEnum!]
 
     """Type of the todo."""
-    type: [TodoTargetEnum!]
+    type_: [TodoTargetEnum!]
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -463,7 +463,7 @@ type AlertManagementHttpIntegration implements AlertManagementIntegration {
   token: String
 
   """Type of integration."""
-  type: AlertManagementIntegrationType!
+  type_: AlertManagementIntegrationType!
 
   """Endpoint which accepts alert notifications."""
   url: String
@@ -516,7 +516,7 @@ interface AlertManagementIntegration {
   token: String
 
   """Type of integration."""
-  type: AlertManagementIntegrationType!
+  type_: AlertManagementIntegrationType!
 
   """Endpoint which accepts alert notifications."""
   url: String
@@ -561,7 +561,7 @@ type AlertManagementPayloadAlertField {
   path: [PayloadAlertFieldPathSegment!]
 
   """Type of the parsed value."""
-  type: AlertManagementPayloadAlertFieldType
+  type_: AlertManagementPayloadAlertFieldType
 }
 
 """
@@ -578,7 +578,7 @@ input AlertManagementPayloadAlertFieldInput {
   label: String
 
   """Type of the parsed value."""
-  type: AlertManagementPayloadAlertFieldType!
+  type_: AlertManagementPayloadAlertFieldType!
 }
 
 """Values for alert field names used in the custom mapping"""
@@ -640,7 +640,7 @@ type AlertManagementPayloadAlertMappingField {
   path: [PayloadAlertFieldPathSegment!]
 
   """Type of the parsed value."""
-  type: AlertManagementPayloadAlertFieldType
+  type_: AlertManagementPayloadAlertFieldType
 }
 
 """
@@ -665,7 +665,7 @@ type AlertManagementPrometheusIntegration implements AlertManagementIntegration 
   token: String
 
   """Type of integration."""
-  type: AlertManagementIntegrationType!
+  type_: AlertManagementIntegrationType!
 
   """Endpoint which accepts alert notifications."""
   url: String
@@ -937,7 +937,7 @@ type ApprovalRule {
   sourceRule: ApprovalRule
 
   """Type of the rule."""
-  type: ApprovalRuleType
+  type_: ApprovalRuleType
 
   """List of users added as approvers for the rule."""
   users(
@@ -985,7 +985,7 @@ type AssetType {
   name: String!
 
   """Type of the asset."""
-  type: String!
+  type_: String!
 
   """URL of the asset."""
   url: String!
@@ -1150,7 +1150,7 @@ type BaseService implements Service {
   serviceType: ServiceType
 
   """Class name of the service."""
-  type: String
+  type_: String
 }
 
 """
@@ -1182,7 +1182,7 @@ type Blob implements Entry {
   sha: String!
 
   """Type of tree entry."""
-  type: EntryType!
+  type_: EntryType!
 
   """Web path of the blob."""
   webPath: String
@@ -1233,7 +1233,7 @@ type BlobViewer {
   tooLarge: Boolean!
 
   """Type of blob viewer."""
-  type: BlobViewersType!
+  type_: BlobViewersType!
 }
 
 """Types of blob viewers"""
@@ -4912,7 +4912,7 @@ input CreateIssueInput {
   locked: Boolean
 
   """Type of the issue."""
-  type: IssueType
+  type_: IssueType
 
   """Project full path the issue is associated with."""
   projectPath: ID!
@@ -5208,7 +5208,7 @@ type CurrentLicense {
   startsAt: Date
 
   """Type of the license."""
-  type: String!
+  type_: String!
 
   """Number of paid users in the license."""
   usersInLicenseCount: Int
@@ -8002,7 +8002,7 @@ interface Entry {
   sha: String!
 
   """Type of tree entry."""
-  type: EntryType!
+  type_: EntryType!
 }
 
 """Type of a tree entry"""
@@ -9163,7 +9163,7 @@ type EpicIssue implements NoteableInterface & CurrentUserTodos {
   totalTimeSpent: Int!
 
   """Type of the issue."""
-  type: IssueType
+  type_: IssueType
 
   """Timestamp of when the issue was last updated."""
   updatedAt: Time!
@@ -11204,7 +11204,7 @@ type Group {
     status: CiRunnerStatus
 
     """Filter runners by type."""
-    type: CiRunnerType
+    type_: CiRunnerType
 
     """Filter by tags associated with the runner (comma-separated or array)."""
     tagList: [String!]
@@ -12475,7 +12475,7 @@ type Issue implements NoteableInterface & CurrentUserTodos {
   totalTimeSpent: Int!
 
   """Type of the issue."""
-  type: IssueType
+  type_: IssueType
 
   """Timestamp of when the issue was last updated."""
   updatedAt: Time!
@@ -13703,7 +13703,7 @@ type JiraService implements Service {
   serviceType: ServiceType
 
   """Class name of the service."""
-  type: String
+  type_: String
 }
 
 type JiraUser {
@@ -14134,7 +14134,7 @@ type LicenseHistoryEntry {
   startsAt: Date
 
   """Type of the license."""
-  type: String!
+  type_: String!
 
   """Number of paid users in the license."""
   usersInLicenseCount: Int
@@ -15280,7 +15280,7 @@ type MergeRequestAssignee implements User {
     visibility: VisibilityScopesEnum
 
     """Type of snippet."""
-    type: TypeEnum
+    type_: TypeEnum
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -15387,7 +15387,7 @@ type MergeRequestAssignee implements User {
     state: [TodoStateEnum!]
 
     """Type of the todo."""
-    type: [TodoTargetEnum!]
+    type_: [TodoTargetEnum!]
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -16023,7 +16023,7 @@ type MergeRequestReviewer implements User {
     visibility: VisibilityScopesEnum
 
     """Type of snippet."""
-    type: TypeEnum
+    type_: TypeEnum
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -16130,7 +16130,7 @@ type MergeRequestReviewer implements User {
     state: [TodoStateEnum!]
 
     """Type of the todo."""
-    type: [TodoTargetEnum!]
+    type_: [TodoTargetEnum!]
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -18866,7 +18866,7 @@ type PackageComposerJsonType {
   name: String
 
   """Type set in the Composer JSON file."""
-  type: String
+  type_: String
 
   """Version set in the Composer JSON file."""
   version: String
@@ -19337,7 +19337,7 @@ type PackageHelmMetadataType {
   tags: String
 
   """Type of the chart."""
-  type: String
+  type_: String
 
   """Version of the chart."""
   version: String!
@@ -21793,7 +21793,7 @@ type Project {
     active: Boolean
 
     """Type of integration."""
-    type: ServiceType
+    type_: ServiceType
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -22861,7 +22861,7 @@ type Query {
     status: CiRunnerStatus
 
     """Filter runners by type."""
-    type: CiRunnerType
+    type_: CiRunnerType
 
     """Filter by tags associated with the runner (comma-separated or array)."""
     tagList: [String!]
@@ -22904,7 +22904,7 @@ type Query {
     projectId: ProjectID
 
     """Type of snippet."""
-    type: TypeEnum
+    type_: TypeEnum
 
     """Explore personal snippets."""
     explore: Boolean
@@ -24337,7 +24337,7 @@ type RunnerSetup {
 """Autogenerated input type of RunnersRegistrationTokenReset"""
 input RunnersRegistrationTokenResetInput {
   """Scope of the object to reset the token for."""
-  type: CiRunnerType!
+  type_: CiRunnerType!
 
   """
   ID of the project or group to reset the token for. Omit if resetting instance runner token.
@@ -24566,7 +24566,7 @@ type SastCiConfigurationEntity {
   size: SastUiComponentSize
 
   """Type of the field value."""
-  type: String
+  type_: String
 
   """Current value of the entity."""
   value: String
@@ -25159,7 +25159,7 @@ type SentryDetailedError {
   title: String!
 
   """Type of the error."""
-  type: String!
+  type_: String!
 
   """Count of users affected by the error."""
   userCount: Int!
@@ -25213,7 +25213,7 @@ type SentryError {
   title: String!
 
   """Type of the error."""
-  type: String!
+  type_: String!
 
   """Count of users affected by the error."""
   userCount: Int!
@@ -25364,7 +25364,7 @@ interface Service {
   serviceType: ServiceType
 
   """Class name of the service."""
-  type: String
+  type_: String
 }
 
 """The connection type for Service."""
@@ -25740,7 +25740,7 @@ type SnippetBlobViewer {
   tooLarge: Boolean!
 
   """Type of blob viewer."""
-  type: BlobViewersType!
+  type_: BlobViewersType!
 }
 
 """The connection type for Snippet."""
@@ -25910,7 +25910,7 @@ type Submodule implements Entry {
   treeUrl: String
 
   """Type of tree entry."""
-  type: EntryType!
+  type_: EntryType!
 
   """Web URL for the sub-module."""
   webUrl: String
@@ -25978,7 +25978,7 @@ type SubscriptionFutureEntry {
   startsAt: Date
 
   """Type of license the subscription will yield."""
-  type: String!
+  type_: String!
 
   """Number of paid user seats."""
   usersInLicenseCount: Int
@@ -27079,7 +27079,7 @@ type TreeEntry implements Entry {
   sha: String!
 
   """Type of tree entry."""
-  type: EntryType!
+  type_: EntryType!
 
   """Web path for the tree entry (directory)."""
   webPath: String
@@ -27519,7 +27519,7 @@ input UpdateIssueInput {
   locked: Boolean
 
   """Type of the issue."""
-  type: IssueType
+  type_: IssueType
 
   """Title of the issue."""
   title: String
@@ -28235,7 +28235,7 @@ interface User {
     visibility: VisibilityScopesEnum
 
     """Type of snippet."""
-    type: TypeEnum
+    type_: TypeEnum
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -28342,7 +28342,7 @@ interface User {
     state: [TodoStateEnum!]
 
     """Type of the todo."""
-    type: [TodoTargetEnum!]
+    type_: [TodoTargetEnum!]
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -28946,7 +28946,7 @@ type UserCore implements User {
     visibility: VisibilityScopesEnum
 
     """Type of snippet."""
-    type: TypeEnum
+    type_: TypeEnum
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -29053,7 +29053,7 @@ type UserCore implements User {
     state: [TodoStateEnum!]
 
     """Type of the todo."""
-    type: [TodoTargetEnum!]
+    type_: [TodoTargetEnum!]
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String

@@ -47,7 +47,7 @@ type Contact {
   aboutShort: String
   company: String
   image: Image!
-  type: [ContactType!]!
+  type_: [ContactType!]!
   social: Social!
   keywords: [String!]
   location: Location!
@@ -165,7 +165,7 @@ type Series {
 }
 
 type Session {
-  type: SessionType!
+  type_: SessionType!
   level: Level!
   title: String!
   hasTitle: Boolean!

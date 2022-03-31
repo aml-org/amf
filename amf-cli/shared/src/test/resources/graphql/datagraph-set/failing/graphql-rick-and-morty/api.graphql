@@ -19,7 +19,7 @@ type Character {
   species: String
 
   """The type or subspecies of the character."""
-  type: String
+  type_: String
 
   """
   The gender of the character ('Female', 'Male', 'Genderless' or 'unknown').
@@ -79,7 +79,7 @@ input FilterCharacter {
   name: String
   status: String
   species: String
-  type: String
+  type_: String
   gender: String
 }
 
@@ -90,7 +90,7 @@ input FilterEpisode {
 
 input FilterLocation {
   name: String
-  type: String
+  type_: String
   dimension: String
 }
 
@@ -116,7 +116,7 @@ type Location {
   name: String
 
   """The type of the location."""
-  type: String
+  type_: String
 
   """The dimension in which the location is located."""
   dimension: String
