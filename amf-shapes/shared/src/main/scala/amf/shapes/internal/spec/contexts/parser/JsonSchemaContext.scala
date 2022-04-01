@@ -5,6 +5,7 @@ import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.annotations.SourceAST
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.{
   Annotations,

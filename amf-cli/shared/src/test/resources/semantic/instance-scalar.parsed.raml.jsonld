@@ -62,6 +62,11 @@
     },
     {
       "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declares/pageSize"
+        }
+      ],
       "@type": [
         "doc:Document",
         "doc:Fragment",
@@ -75,12 +80,37 @@
       "doc:processingData": {
         "@id": "#/BaseUnitProcessingData"
       }
+    },
+    {
+      "@id": "#/declares/pageSize",
+      "@type": [
+        "doc:DomainProperty",
+        "rdf:Property",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:schema": {
+        "@id": "#/declares/pageSize/any/schema"
+      },
+      "core:name": "pageSize"
+    },
+    {
+      "@id": "#/declares/pageSize/any/schema",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "schema"
     }
   ],
   "@context": {
     "@base": "file://amf-cli/shared/src/test/resources/semantic/api-scalar.raml",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   }
 }
