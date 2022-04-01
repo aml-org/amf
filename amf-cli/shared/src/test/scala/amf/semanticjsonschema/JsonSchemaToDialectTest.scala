@@ -48,10 +48,11 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("if-then-without-else")
   multiOutputTest("if-then-without-else-with-extended-schema")
   multiOutputTest("empty-object")
-  // This test breaks if we use a Seq instead of a List in ShapeTransformationContext.transform()
-  // Couldn't figure out why
+//  // This test breaks if we use a Seq instead of a List in ShapeTransformationContext.transform()
+//  // Couldn't figure out why
   multiOutputTest("extended-if-then-semantics")
   multiOutputTest("allOf-complex")
+  multiOutputTest("duplicated-semantics-combining")
 
   private def multiOutputTest(filename: String): Unit = {
 
@@ -67,6 +68,7 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
     test(s"$finalLabel to JSON-LD") {
       run(finalPath, finalGoldenJsonLD, AmfJsonHint)
     }
+
     test(s"$finalLabel to YAML") {
       run(finalPath, finalGoldenYaml, AmlHint)
     }

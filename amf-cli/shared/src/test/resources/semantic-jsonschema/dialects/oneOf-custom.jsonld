@@ -18,6 +18,16 @@
       }
     },
     {
+      "@id": "/externals/semantics",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "semantics",
+      "meta:base": "https://a.ml/semantic-json-schema#"
+    },
+    {
       "@id": "/externals/foaf",
       "@type": [
         "owl:Ontology",
@@ -62,6 +72,9 @@
       "core:name": "amf-json-schema-generated-dialect",
       "core:version": "1.0",
       "meta:externals": [
+        {
+          "@id": "/externals/semantics"
+        },
         {
           "@id": "/externals/foaf"
         }

@@ -138,20 +138,17 @@ class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformation
           localContext.typeMappings
             .flatMap(_.option())
             .toList match {
+            // If there is only one semantic, I will set it
             case List(element) => mapping.withNodePropertyMapping(context.expand(element))
             case List(Nil)     => // ignore
+            // If there is more than one, I will collect it to generate a vocab a the end of the process
             case elements =>
-              extractPropertyTerm(context, elements)
+              ctx.termsToExtract += CandidateProperty(mapping, elements)
           }
         }
 
       case _ => // Ignore
     }
-  }
-
-  private def extractPropertyTerm(context: SemanticContext, elements: List[String]) = {
-    val extractedTerm = ctx.vocabBuilder.loadIriSet(property.name.value(), elements.toSet, context)
-    mapping.withNodePropertyMapping(extractedTerm)
   }
 
   private def setWhenPresent[T](field: ValueField[T], setValue: T => Unit): Unit = field.option().foreach(setValue(_))

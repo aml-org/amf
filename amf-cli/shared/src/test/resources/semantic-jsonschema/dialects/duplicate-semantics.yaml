@@ -4,21 +4,21 @@ nodeMappings:
     mapping:
       key_1:
         range: string
-        propertyTerm: semantics.key_1
+        propertyTerm: semantics.key_1_3
         mandatory: true
         pattern: ^[A-Za-z]*$
       key_2:
         range: string
-        propertyTerm: semantics.key_2
+        propertyTerm: semantics.key_2_4
         mandatory: false
         pattern: ^[A-Za-z]*$
       info_1:
         range: integer
-        propertyTerm: semantics.info_1
+        propertyTerm: semantics.info_1_1
         mandatory: true
       info_2:
         range: integer
-        propertyTerm: semantics.info_2
+        propertyTerm: semantics.info_2_2
         mandatory: false
     additionalProperties: true
 external:
@@ -36,14 +36,16 @@ documents:
 external:
   somethingElse: https://test.com/somethingElse#
   security: https://test.com/security#
+  ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
 base: https://a.ml/semantic-json-schema#
 vocabulary: Semantic JSON Schema Vocabulary
 propertyTerms:
-  info_1:
+  info_1_1:
     extends: somethingElse.anything
-  info_2:
+  info_2_2:
     extends: somethingElse.anything
-  key_1:
+  key_1_3:
     extends: security.sensitive
-  key_2:
+  key_2_4:
     extends: security.sensitive

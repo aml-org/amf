@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "@context": {
+    "@base": "http://test.com/adocument.jsonld",
+    "@vocab": "http://test.com/vocab#",
+    "config": "anypoint://vocabulary/policy.yaml#"
+  },
+  "title": "duplicated-semantics-in-combining",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "a": {
+          "@context": { "@characteristics": ["config:sensitive"] },
+          "type": "string"
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "b": {
+            "const": "condition"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "b": {
+            "@context": { "@characteristics": ["config:sensitive"] },
+            "type": "string"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "b": {
+            "@context": { "@characteristics": ["config:dataweaveExpression"] },
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "c": {
+              "type": "integer",
+              "@context": { "@characteristics": ["config:dataweaveExpression"] }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "d": {
+              "type": "boolean",
+              "@context": { "@characteristics": ["config:sensitive"] }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "f": {
+              "type": "boolean",
+              "@context": { "@characteristics": ["config:sensitive","config:dataweaveExpression"] }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
