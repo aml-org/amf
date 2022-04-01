@@ -27,22 +27,21 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
   instanceValidation("duplicate-semantics")
   instanceValidation("multiple-characteristics")
   instanceValidation("basic-with-extra-properties")
-  // TODO uncomment tests when W-10881317 is done
-//  instanceValidation("oneOf")
-//  instanceValidation("oneOf-with-extended-schema")
-//  instanceValidation("oneOf-custom")
-//  instanceValidation("allOf")
-//  instanceValidation("allOf-with-extended-schema")
-//  instanceValidation("allOf-custom")
+  instanceValidation("oneOf")
+  instanceValidation("oneOf-with-extended-schema")
+  instanceValidation("oneOf-custom")
+  instanceValidation("allOf")
+  instanceValidation("allOf-with-extended-schema")
+  instanceValidation("allOf-custom")
   instanceValidation("if-then-else", Some("if-then-else-match"))
   instanceValidation("if-then-else", Some("if-then-else-no-match"))
-//  instanceValidation("if-then-else-with-extended-schema")
+  instanceValidation("if-then-else-with-extended-schema")
   instanceValidation("if-then-without-else", Some("if-then-without-else-match"))
   instanceValidation("if-then-without-else", Some("if-then-without-else-no-match"))
-//  instanceValidation("if-then-without-else-with-extended-schema",
-//                     Some("if-then-without-else-with-extended-schema-match"))
-//  instanceValidation("if-then-without-else-with-extended-schema",
-//                     Some("if-then-without-else-with-extended-schema-no-match"))
+  instanceValidation("if-then-without-else-with-extended-schema",
+                     Some("if-then-without-else-with-extended-schema-match"))
+  instanceValidation("if-then-without-else-with-extended-schema",
+                     Some("if-then-without-else-with-extended-schema-no-match"))
   instanceValidation("empty-object")
 
   private def instanceValidation(schemaName: String, instanceName: Option[String] = None): Unit = {
@@ -74,6 +73,7 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
           .withDialect(dialectCycled.baseUnit.asInstanceOf[Dialect]))
       instance <- config.baseUnitClient().parseDialectInstance(instanceFinalPath)
+      report   <- config.baseUnitClient().validate(instance.dialectInstance.cloneUnit())
       jsonld <- Future.successful(
         config.baseUnitClient().render(instance.dialectInstance, Mimes.`application/ld+json`))
       tmpLD     <- writeTemporaryFile(jsonLdFinalPath)(jsonld)
@@ -82,7 +82,7 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
       tmpCycle  <- writeTemporaryFile(instanceCycleFinalPath)(cycled)
       diffCycle <- assertDifferences(tmpCycle, instanceCycleFinalPath)
     } yield {
-      val assertions = Seq(assert(instance.conforms), diffLD, diffCycle)
+      val assertions = Seq(assert(instance.conforms), diffLD, diffCycle, assert(report.conforms))
       assert(assertions.forall(_ == Succeeded))
     }
   }
