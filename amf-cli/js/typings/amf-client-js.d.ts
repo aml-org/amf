@@ -72,6 +72,8 @@ declare module 'amf-client-js' {
     elseShape: Shape
     thenShape: Shape
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     withDisplayName(name: string): this
@@ -168,7 +170,8 @@ declare module 'amf-client-js' {
     readonly option: undefined | boolean
     isNull: boolean
     nonNull: boolean
-    toString: string
+
+    toString(): string
 
     annotations(): Annotations
 
@@ -382,7 +385,8 @@ declare module 'amf-client-js' {
     readonly option: undefined | number
     isNull: boolean
     nonNull: boolean
-    toString: string
+
+    toString(): string
 
     annotations(): Annotations
 
@@ -400,7 +404,8 @@ declare module 'amf-client-js' {
     readonly option: undefined | any
     isNull: boolean
     nonNull: boolean
-    toString: string
+
+    toString(): string
 
     annotations(): Annotations
 
@@ -432,6 +437,8 @@ declare module 'amf-client-js' {
     position: Range
     linkLabel: StrField
     extendsNode: Array<DomainElement>
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -537,7 +544,8 @@ declare module 'amf-client-js' {
     readonly option: undefined | number
     isNull: boolean
     nonNull: boolean
-    toString: string
+
+    toString(): string
 
     annotations(): Annotations
 
@@ -584,7 +592,8 @@ declare module 'amf-client-js' {
     readonly option: undefined | number
     isNull: boolean
     nonNull: boolean
-    toString: string
+
+    toString(): string
 
     annotations(): Annotations
 
@@ -723,6 +732,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
     and: Array<Shape>
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     withValues(values: Array<DataNode>): this
@@ -838,7 +849,8 @@ declare module 'amf-client-js' {
     readonly option: undefined | string
     nonEmpty: boolean
     isNullOrEmpty: boolean
-    toString: string
+
+    toString(): string
 
     annotations(): Annotations
 
@@ -971,6 +983,8 @@ declare module 'amf-client-js' {
     position: Range
     isExternalLink: BoolField
 
+    annotations(): Annotations
+
     withCustomDomainProperties(extensions: Array<DomainExtension>): this
 
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
@@ -998,6 +1012,8 @@ declare module 'amf-client-js' {
     range: StrField
     position: Range
     extendsNode: Array<DomainElement>
+
+    annotations(): Annotations
 
     withName(name: string): PropertyTerm
 
@@ -1121,7 +1137,8 @@ declare module 'amf-client-js' {
     readonly option: undefined | T
     isNull: boolean
     nonNull: boolean
-    toString: string
+
+    toString(): string
 
     value(): T
 
@@ -1166,6 +1183,8 @@ declare module 'amf-client-js' {
     accepts: Array<StrField>
     position: Range
     extendsNode: Array<DomainElement>
+
+    annotations(): Annotations
 
     withDocumentationTitle(title: string): CreativeWork
 
@@ -1296,6 +1315,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     withHeaderSchema(schema: NodeShape): this
@@ -1372,6 +1393,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     maximum(): DoubleField
 
@@ -1652,6 +1675,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     withHeaders(headers: Array<Parameter>): this
@@ -1845,6 +1870,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     withDeliveryMode(deliveryMode: number): this
@@ -1899,6 +1926,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withName(name: string): this
 
@@ -1966,6 +1995,8 @@ declare module 'amf-client-js' {
     minCount: IntField
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -2057,6 +2088,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): PublicNodeMapping
 
     mappedNode(): StrField
@@ -2087,6 +2120,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withName(name: string): this
 
@@ -2122,6 +2157,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withDefinedBy(definedBy: PropertyShape): this
 
     graph(): Graph
@@ -2155,6 +2192,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withName(name: string): ClassTerm
 
@@ -2192,6 +2231,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withFlow(flow: string): this
 
     withScopes(scopes: Array<Scope>): this
@@ -2227,6 +2268,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -2285,6 +2328,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): MqttOperationBinding
@@ -2324,6 +2369,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withSchemaTarget(schema: Shape): this
 
     withPropertySource(propertySource: string): this
@@ -2355,6 +2402,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withEncoding(name: string): Encoding
 
@@ -2417,6 +2466,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withRetain(retain: boolean): this
 
@@ -2549,6 +2600,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     graph(): Graph
@@ -2574,6 +2627,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withExpression(expression: string): this
 
@@ -2653,6 +2708,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withPropertySource(propertySource: string): this
 
@@ -2749,6 +2806,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     withScheme(): ParametrizedSecurityScheme
@@ -2782,6 +2841,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -2831,6 +2892,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withName(name: string): this
 
@@ -2890,6 +2953,8 @@ declare module 'amf-client-js' {
     summary: StrField
 
     constructor()
+
+    annotations(): Annotations
 
     withSecurity(security: Array<SecurityRequirement>): this
 
@@ -3059,6 +3124,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): ChannelBindings
@@ -3104,6 +3171,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -3176,6 +3245,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -3338,6 +3409,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     withDurable(durable: boolean): this
@@ -3371,6 +3444,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withName(name: string): this
 
@@ -3443,6 +3518,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withDescription(description: string): this
 
     withTitle(title: string): this
@@ -3470,6 +3547,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withName(name: string): this
 
@@ -3501,6 +3580,7 @@ declare module 'amf-client-js' {
   export class Content  {
     constructor(stream: string, url: string)
     constructor(stream: string, url: string, mime: string)
+    readonly url: string
 
   }
   export class DatatypePropertyTerm extends PropertyTerm  {
@@ -3534,6 +3614,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withPayloads(payloads: Array<Payload>): this
 
@@ -3645,6 +3727,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     withValues(values: Array<DataNode>): this
@@ -3742,6 +3826,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     withBindings(bindings: Array<ServerBinding>): this
@@ -3787,6 +3873,8 @@ declare module 'amf-client-js' {
     unevaluatedPropertiesSchema: Shape
 
     constructor()
+
+    annotations(): Annotations
 
     withIsAbstract(isAbstract: boolean): this
 
@@ -3906,6 +3994,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     graph(): Graph
@@ -3933,6 +4023,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withName(name: string): this
 
@@ -3976,6 +4068,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     graph(): Graph
@@ -4003,6 +4097,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withEmail(email: string): this
 
@@ -4034,6 +4130,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     graph(): Graph
@@ -4062,6 +4160,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withAlias(alias: string): VocabularyReference
 
@@ -4100,6 +4200,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     declarationsPath(): StrField
 
@@ -4172,6 +4274,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -4279,6 +4383,8 @@ declare module 'amf-client-js' {
     constructor()
     constructor(alias: string, value: string)
 
+    annotations(): Annotations
+
     withAlias(alias: string): this
 
     withName(name: string): this
@@ -4313,6 +4419,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -4378,6 +4486,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): CustomDomainProperty
@@ -4425,6 +4535,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): EmptyBinding
@@ -4462,6 +4574,8 @@ declare module 'amf-client-js' {
     namespace: StrField
 
     constructor()
+
+    annotations(): Annotations
 
     withName(name: string): this
 
@@ -4570,6 +4684,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): KafkaOperationBinding
@@ -4609,6 +4725,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     graph(): Graph
@@ -4644,6 +4762,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     maximum(): DoubleField
 
@@ -4740,6 +4860,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withSecurity(security: Array<SecurityRequirement>): this
 
     withVariables(variables: Array<Parameter>): this
@@ -4780,6 +4902,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withIfMapping(ifMapping: string): ConditionalNodeMapping
 
@@ -4832,6 +4956,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): CorrelationId
@@ -4880,6 +5006,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): HttpMessageBinding
@@ -4925,6 +5053,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -5032,6 +5162,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): MqttMessageBinding
@@ -5079,6 +5211,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -5138,6 +5272,8 @@ declare module 'amf-client-js' {
     responses: Array<Response>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -5222,6 +5358,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withAlias(alias: string): External
 
     graph(): Graph
@@ -5257,6 +5395,8 @@ declare module 'amf-client-js' {
     value: StrField
 
     constructor()
+
+    annotations(): Annotations
 
     withTargetShape(shape: Shape): this
 
@@ -5304,6 +5444,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): HttpOperationBinding
@@ -5346,6 +5488,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -5411,6 +5555,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withRequestBody(requestBody: string): this
 
@@ -5495,6 +5641,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     withDurable(durable: boolean): this
@@ -5527,6 +5675,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     graph(): Graph
@@ -5549,6 +5699,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     extensionName(): StrField
 
@@ -5582,6 +5734,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     withDefinedBy(property: CustomDomainProperty): this
@@ -5610,6 +5764,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     graph(): Graph
 
@@ -5685,6 +5841,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withDeclaredNodes(declarations: Array<PublicNodeMapping>): DocumentMapping
 
@@ -5772,6 +5930,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     graph(): Graph
@@ -5828,6 +5988,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     link<T>(label: string): T
 
     linkCopy(): Example
@@ -5879,6 +6041,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     link<T>(label: string): T
 
@@ -5953,6 +6117,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withRaw(raw: string): this
 
     graph(): Graph
@@ -6010,6 +6176,8 @@ declare module 'amf-client-js' {
 
     constructor()
 
+    annotations(): Annotations
+
     withName(name: string): this
 
     withDescription(description: string): this
@@ -6058,6 +6226,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withAdditionalProperties(properties: DataNode): this
 
@@ -6233,9 +6403,10 @@ declare module 'amf-client-js' {
   export class ProfileName  {
     profile: string
     messageStyle: MessageStyle
-    toString: string
 
     constructor(profile: string)
+
+    toString(): string
 
     isOas(): boolean
 
@@ -6258,6 +6429,8 @@ declare module 'amf-client-js' {
 
     constructor()
     constructor(value: string, dataType: string)
+
+    annotations(): Annotations
 
     withName(name: string): this
 
