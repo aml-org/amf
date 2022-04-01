@@ -2,9 +2,9 @@ package amf.validation
 
 import amf.apicontract.client.scala._
 import amf.apicontract.client.scala.model.domain.api.{AsyncApi, WebApi}
-import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Response}
+import amf.apicontract.client.scala.model.domain.{EndPoint, Operation, Payload, Request, Response}
 import amf.apicontract.internal.metamodel.domain.OperationModel
-import amf.core.client.common.position.Position
+import amf.core.client.common.position.{Position, Range}
 import amf.core.client.common.transform.PipelineId
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, Document}
@@ -61,11 +61,15 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
 
     def getFirstOperation(bu: BaseUnit): Operation = getFirstEndpoint(bu).operations.head
 
+    def getFirstRequest(bu: BaseUnit): Request = getFirstOperation(bu).requests.head
+
     def getFirstResponse(bu: BaseUnit): Response = getFirstOperation(bu).responses.head
 
-    def getFirstPayload(bu: BaseUnit): Payload = getFirstResponse(bu).payloads.head
+    def getFirstRequestPayload(bu: BaseUnit): Payload = getFirstRequest(bu).payloads.head
 
-    def getFirstPayloadSchema(bu: BaseUnit): ScalarShape = getFirstPayload(bu).schema.asInstanceOf[ScalarShape]
+    def getFirstResponsePayload(bu: BaseUnit): Payload = getFirstResponse(bu).payloads.head
+
+    def getFirstPayloadSchema(bu: BaseUnit): ScalarShape = getFirstResponsePayload(bu).schema.asInstanceOf[ScalarShape]
   }
 
   test("AMF should persist and restore the raw XML schema") {
@@ -232,7 +236,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     val api = s"$basePath/annotations/inline-shape.yaml"
     modelAssertion(api, transform = false) { bu =>
       val components             = new BaseUnitComponents(false)
-      val payload                = components.getFirstPayload(bu)
+      val payload                = components.getFirstResponsePayload(bu)
       val schema                 = payload.schema.asInstanceOf[NodeShape]
       val ifField                = schema.fields.fields().find(_.field.toString().endsWith("if")).get
       val inlineShape            = ifField.value.value
@@ -267,7 +271,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("Applying a trait should not duplicate examples") {
     modelAssertion(s"$basePath/duplicate-examples/trait.raml") { bu =>
       val components = new BaseUnitComponents
-      val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
+      val examples   = components.getFirstResponsePayload(bu).schema.asInstanceOf[NodeShape].examples
       examples.size shouldBe 2
     }
   }
@@ -276,7 +280,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("Examples with same raw but different names should be present post transformation") {
     modelAssertion(s"$basePath/duplicate-examples/different-names.raml") { bu =>
       val components = new BaseUnitComponents
-      val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
+      val examples   = components.getFirstResponsePayload(bu).schema.asInstanceOf[NodeShape].examples
       examples.size shouldBe 4
     }
   }
@@ -285,7 +289,7 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
   test("unnamed example should not be equal to same example with name") {
     modelAssertion(s"$basePath/duplicate-examples/unnamed-example.raml") { bu =>
       val components = new BaseUnitComponents
-      val examples   = components.getFirstPayload(bu).schema.asInstanceOf[NodeShape].examples
+      val examples   = components.getFirstResponsePayload(bu).schema.asInstanceOf[NodeShape].examples
       examples.size shouldBe 2
     }
   }
@@ -340,10 +344,29 @@ class AMFModelAssertionTest extends AsyncFunSuite with Matchers {
     val api = s"$basePath/parameters/param-in-resource-types.raml"
     modelAssertion(api) { bu =>
       val components = new BaseUnitComponents
-      val endpoint = components.getFirstEndpoint(bu)
+      val endpoint   = components.getFirstEndpoint(bu)
       val parameters = endpoint.parameters.toList
       parameters.size shouldBe 1
       parameters.head.description.value() shouldBe "Name of the logger whose level is to be changed."
+    }
+  }
+
+  test("xml shape from type should have location annotation") {
+    val api = s"$basePath/annotations/xml/api.raml"
+    modelAssertion(api, transform = false) { bu =>
+      val declaredXmlSchema = bu.asInstanceOf[Document].declares.head
+      declaredXmlSchema.annotations.location().isDefined shouldBe true
+      declaredXmlSchema.annotations.lexical() shouldEqual Range(Position(6, 2), Position(9, 0))
+    }
+  }
+
+  test("xml shape from payload should have location annotation") {
+    val api = "file://amf-cli/shared/src/test/resources/resolution/08/included-schema-and-example/api.raml"
+    modelAssertion(api, transform = false) { bu =>
+      val components           = new BaseUnitComponents
+      val xmlSchemaAnnotations = components.getFirstRequestPayload(bu).schema.asInstanceOf[SchemaShape].annotations
+      xmlSchemaAnnotations.location().isDefined shouldBe true
+      xmlSchemaAnnotations.lexical() shouldEqual Range(Position(8, 6), Position(10, 49))
     }
   }
 }

@@ -1,6 +1,50 @@
 #%RAML 1.0
 title: testXML
 version: "1.0"
+types:
+  Request:
+    example: |-
+      <?xml version="1.0" encoding="UTF-8"?>
+      <tns1:Request xmlns:tns1="http://a.ml/subdir1/request"
+                    xmlns:tns2="http://a.ml/subdir2/message"
+                    xmlns:tns3="http://a.ml/subdir2/user"
+                    xmlns:tns4="http://a.ml/subdir2/person">
+          <tns1:Header>
+              <tns2:User>
+                  <tns3:Id>ramluserid</tns3:Id>
+                  <tns3:Gender>MA</tns3:Gender>
+                  <tns3:EmailAddresses>
+                      <tns4:EmailAddress>
+                          <tns4:EmailAddress>user@a.ml</tns4:EmailAddress>
+                      </tns4:EmailAddress>
+                  </tns3:EmailAddresses>
+              </tns2:User>
+          </tns1:Header>
+          <tns1:Payload>
+              <tns2:Content>This is the content</tns2:Content>
+              <tns2:Type>Enum3</tns2:Type>
+          </tns1:Payload>
+      </tns1:Request>
+    type: |-
+      <?xml version="1.0" encoding="UTF-8"?>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://a.ml/subdir1/request"
+                 xmlns:tns="http://a.ml/subdir1/request"
+                 xmlns:message="http://a.ml/subdir2/message"
+                 elementFormDefault="qualified">
+
+          <xs:import namespace="http://a.ml/subdir2/message" schemaLocation="../subdir2/message.xsd" />
+
+          <xs:element name="Request">
+              <xs:complexType>
+                  <xs:sequence>
+                      <xs:element name="Header" type="message:Header" />
+                      <xs:element name="Payload" type="message:Payload" />
+                  </xs:sequence>
+              </xs:complexType>
+          </xs:element>
+
+      </xs:schema>
 /api/request:
   post:
     body:
@@ -47,47 +91,3 @@ version: "1.0"
               </xs:element>
 
           </xs:schema>
-types:
-  Request:
-    example: |-
-      <?xml version="1.0" encoding="UTF-8"?>
-      <tns1:Request xmlns:tns1="http://a.ml/subdir1/request"
-                    xmlns:tns2="http://a.ml/subdir2/message"
-                    xmlns:tns3="http://a.ml/subdir2/user"
-                    xmlns:tns4="http://a.ml/subdir2/person">
-          <tns1:Header>
-              <tns2:User>
-                  <tns3:Id>ramluserid</tns3:Id>
-                  <tns3:Gender>MA</tns3:Gender>
-                  <tns3:EmailAddresses>
-                      <tns4:EmailAddress>
-                          <tns4:EmailAddress>user@a.ml</tns4:EmailAddress>
-                      </tns4:EmailAddress>
-                  </tns3:EmailAddresses>
-              </tns2:User>
-          </tns1:Header>
-          <tns1:Payload>
-              <tns2:Content>This is the content</tns2:Content>
-              <tns2:Type>Enum3</tns2:Type>
-          </tns1:Payload>
-      </tns1:Request>
-    type: |-
-      <?xml version="1.0" encoding="UTF-8"?>
-      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                 targetNamespace="http://a.ml/subdir1/request"
-                 xmlns:tns="http://a.ml/subdir1/request"
-                 xmlns:message="http://a.ml/subdir2/message"
-                 elementFormDefault="qualified">
-
-          <xs:import namespace="http://a.ml/subdir2/message" schemaLocation="../subdir2/message.xsd" />
-
-          <xs:element name="Request">
-              <xs:complexType>
-                  <xs:sequence>
-                      <xs:element name="Header" type="message:Header" />
-                      <xs:element name="Payload" type="message:Payload" />
-                  </xs:sequence>
-              </xs:complexType>
-          </xs:element>
-
-      </xs:schema>
