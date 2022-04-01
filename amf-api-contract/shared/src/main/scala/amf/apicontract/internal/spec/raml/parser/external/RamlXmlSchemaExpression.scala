@@ -34,6 +34,7 @@ case class RamlXmlSchemaExpression(key: YNode,
     extends RamlExternalTypesParser {
 
   override val shapeCtx: ShapeParserContext = WebApiShapeParserContextAdapter(ctx)
+  private val shapeAst                      = YMapEntry(key, value)
 
   override def parseValue(origin: ValueAndOrigin): SchemaShape = {
     val parsed = value.tagType match {
@@ -63,7 +64,7 @@ case class RamlXmlSchemaExpression(key: YNode,
           val optionalReference = ctx.declarations.fragments.get(uriWithoutFragment)
           optionalReference match {
             case Some(ref) =>
-              parsed.callAfterAdoption{() =>
+              parsed.callAfterAdoption { () =>
                 val refId = ref.encoded.id + fragment.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse("")
                 parsed.withReference(refId)
               }
@@ -83,8 +84,10 @@ case class RamlXmlSchemaExpression(key: YNode,
   }
 
   private def buildSchemaShapeFrom(scalar: YScalar) = {
-    val shape = SchemaShape()
-      .setWithoutId(ExternalSourceElementModel.Raw, AmfScalar(scalar.text, Annotations(scalar)), Annotations.inferred())
+    val shape = SchemaShape(shapeAst)
+      .setWithoutId(ExternalSourceElementModel.Raw,
+                    AmfScalar(scalar.text, Annotations(scalar)),
+                    Annotations.inferred())
       .set(SchemaShapeModel.MediaType, `application/xml`, Annotations.synthesized())
     shape.withName(key.as[String])
     adopt(shape)
@@ -109,7 +112,7 @@ case class RamlXmlSchemaExpression(key: YNode,
   }
 
   private def buildSchemaShapeFrom(typeEntry: YMapEntry) = {
-    val shape = SchemaShape()
+    val shape = SchemaShape(shapeAst)
     shape
       .set(ExternalSourceElementModel.Raw,
            AmfScalar(typeEntry.value.toString, Annotations(typeEntry.value)),
@@ -128,7 +131,7 @@ case class RamlXmlSchemaExpression(key: YNode,
   }
 
   private def emptySchemaShape = {
-    val shape = SchemaShape()
+    val shape = SchemaShape(shapeAst)
     adopt(shape)
     shape
   }
