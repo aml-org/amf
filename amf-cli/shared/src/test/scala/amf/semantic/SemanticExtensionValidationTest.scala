@@ -67,11 +67,28 @@ class SemanticExtensionValidationTest extends MultiPlatformReportGenTest {
     }
   }
 
+  test("Validate missing annotation definition at a RAML 1.0 SemEx") {
+    getConfig("dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
+      validate("api-without-schema.raml",
+               Some("api-without-schema.raml.report"),
+               overridedHint = Some(Raml10YamlHint),
+               configOverride = Some(config))
+    }
+  }
+
+  test("Validate invalid (not any) annotation definition at a RAML 1.0 SemEx") {
+    getConfig("dialect.yaml", RAMLConfiguration.RAML10()).flatMap { config =>
+      validate("api-not-any-schema.raml",
+               Some("api-not-any-schema.raml.report"),
+               overridedHint = Some(Raml10YamlHint),
+               configOverride = Some(config))
+    }
+  }
+
   private def getConfig(dialect: String,
                         baseConfig: AMFConfiguration = APIConfiguration.API()): Future[AMFConfiguration] = {
     baseConfig
       .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
-      .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .withDialect(s"$basePath" + dialect)
   }
 }
