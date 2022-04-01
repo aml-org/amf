@@ -48,8 +48,9 @@ class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformation
 
   private def transformScalarProperty(scalar: ScalarShape): Unit = {
     // datatype
-    val scalarRangeDatatype = sanitizeScalarRange(scalar.dataType.value())
-    mapping.withLiteralRange(scalarRangeDatatype)
+    scalar.dataType.option().foreach { dataType =>
+      mapping.withLiteralRange(sanitizeScalarRange(dataType))
+    }
     // pattern
     setWhenPresent(scalar.pattern, mapping.withPattern)
     setWhenPresent(scalar.minimum, mapping.withMinimum)
@@ -72,12 +73,10 @@ class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformation
     Option(any.default).foreach(mapping.withDefault)
   }
 
-  private def sanitizeScalarRange(xsd: String): String = {
-    if (xsd.endsWith("#long")) {
-      xsd.replace("#long", "#float")
-    } else {
-      xsd
-    }
+  private def sanitizeScalarRange(range: String): String = {
+    if (range == DataType.Long) DataType.Float
+    else if (range == DataType.Number) DataType.Double
+    else range
   }
 
   private def checkMandatoriness(): Unit = {

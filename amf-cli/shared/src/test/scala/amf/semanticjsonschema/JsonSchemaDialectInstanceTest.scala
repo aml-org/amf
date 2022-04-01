@@ -43,6 +43,7 @@ class JsonSchemaDialectInstanceTest extends AsyncFunSuite with PlatformSecrets w
   instanceValidation("if-then-without-else-with-extended-schema",
                      Some("if-then-without-else-with-extended-schema-no-match"))
   instanceValidation("empty-object")
+  instanceValidation("number-range-to-double")
 
   private def instanceValidation(schemaName: String, instanceName: Option[String] = None): Unit = {
     val instanceFinal = instanceName.getOrElse(schemaName)
