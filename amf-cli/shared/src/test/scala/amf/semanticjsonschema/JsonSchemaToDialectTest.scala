@@ -38,6 +38,7 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("any-array")
   multiOutputTest("additional-properties")
   multiOutputTest("oneOf")
+  multiOutputTest("number-range-to-double")
   multiOutputTest("oneOf-with-extended-schema")
   multiOutputTest("oneOf-custom")
   multiOutputTest("allOf")

@@ -18,6 +18,26 @@
       }
     },
     {
+      "@id": "/externals/security",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "security",
+      "meta:base": "anypoint://vocabulary/policy.yaml#"
+    },
+    {
+      "@id": "/externals/config",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "config",
+      "meta:base": "anypoint://vocabulary/policy.yaml#"
+    },
+    {
       "@id": "/externals/ns0",
       "@type": [
         "owl:Ontology",
@@ -25,7 +45,7 @@
         "doc:DomainElement"
       ],
       "core:displayName": "ns0",
-      "meta:base": "http://test.com/vocab#"
+      "meta:base": "anypoint://vocabulary/policy.yaml#"
     },
     {
       "@id": "/externals/semantics",
@@ -45,7 +65,7 @@
       ],
       "meta:encodedNode": [
         {
-          "@id": "#/declarations/Person"
+          "@id": "#/declarations/NumbertoDouble"
         }
       ]
     },
@@ -53,7 +73,7 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#/declarations/Person"
+          "@id": "#/declarations/NumbertoDouble"
         }
       ],
       "@type": [
@@ -66,6 +86,12 @@
       "core:name": "amf-json-schema-generated-dialect",
       "core:version": "1.0",
       "meta:externals": [
+        {
+          "@id": "/externals/security"
+        },
+        {
+          "@id": "/externals/config"
+        },
         {
           "@id": "/externals/ns0"
         },
@@ -82,56 +108,43 @@
       }
     },
     {
-      "@id": "#/declarations/Person",
+      "@id": "#/declarations/NumbertoDouble",
       "@type": [
         "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "core:name": "Person",
+      "core:name": "NumbertoDouble",
       "shacl:property": [
         {
-          "@id": "/property/property/name"
-        },
-        {
-          "@id": "/property/property/age"
+          "@id": "/property/property/a"
         }
       ],
       "shacl:closed": false
     },
     {
-      "@id": "/property/property/name",
+      "@id": "/property/property/a",
       "@type": [
         "meta:NodePropertyMapping",
         "doc:DomainElement"
       ],
-      "core:name": "name",
-      "shacl:datatype": [
+      "shacl:path": [
         {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
+          "@id": "anypoint://vocabulary/policy.yaml#timePeriod"
         }
       ],
-      "shacl:minCount": 1
-    },
-    {
-      "@id": "/property/property/age",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "core:name": "age",
+      "core:name": "a",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#double"
         }
       ],
-      "shacl:minCount": 1,
-      "shacl:minInclusive": 0.5,
-      "shacl:maxInclusive": 150.2
+      "shacl:minCount": 0,
+      "shacl:minInclusive": 1.0
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/minimum-maximum.json",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/number-range-to-double.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
