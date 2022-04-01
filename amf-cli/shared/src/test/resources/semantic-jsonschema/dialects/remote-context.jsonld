@@ -28,6 +28,16 @@
       "meta:base": "http://test.com/my_test_vocabulary#"
     },
     {
+      "@id": "/externals/semantics",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "semantics",
+      "meta:base": "https://a.ml/semantic-json-schema#"
+    },
+    {
       "@id": "#/documents/root",
       "@type": [
         "meta:DocumentMapping",
@@ -58,6 +68,9 @@
       "meta:externals": [
         {
           "@id": "/externals/ns0"
+        },
+        {
+          "@id": "/externals/semantics"
         }
       ],
       "meta:documents": {

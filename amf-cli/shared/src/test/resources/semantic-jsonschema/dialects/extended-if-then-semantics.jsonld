@@ -18,7 +18,7 @@
       }
     },
     {
-      "@id": "/externals/security",
+      "@id": "semantic_vocabulary/externals/security",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -28,7 +28,7 @@
       "meta:base": "anypoint://vocabulary/policy.yaml#"
     },
     {
-      "@id": "/externals/config",
+      "@id": "semantic_vocabulary/externals/config",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -38,7 +38,7 @@
       "meta:base": "anypoint://vocabulary/policy.yaml#"
     },
     {
-      "@id": "/externals/ns0",
+      "@id": "semantic_vocabulary/externals/ns0",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -48,7 +48,7 @@
       "meta:base": "anypoint://vocabulary/policy.yaml#"
     },
     {
-      "@id": "/externals/semantics",
+      "@id": "semantic_vocabulary/externals/semantics",
       "@type": [
         "owl:Ontology",
         "meta:ExternalVocabulary",
@@ -99,16 +99,16 @@
       "core:version": "1.0",
       "meta:externals": [
         {
-          "@id": "/externals/security"
+          "@id": "semantic_vocabulary/externals/security"
         },
         {
-          "@id": "/externals/config"
+          "@id": "semantic_vocabulary/externals/config"
         },
         {
-          "@id": "/externals/ns0"
+          "@id": "semantic_vocabulary/externals/ns0"
         },
         {
-          "@id": "/externals/semantics"
+          "@id": "semantic_vocabulary/externals/semantics"
         }
       ],
       "meta:documents": {
@@ -245,7 +245,7 @@
       ],
       "shacl:path": [
         {
-          "@id": "https://a.ml/semantic-json-schema#thisApiName"
+          "@id": "https://a.ml/semantic-json-schema#thisApiName_1"
         }
       ],
       "core:name": "thisApiName",
@@ -268,7 +268,7 @@
       ],
       "shacl:path": [
         {
-          "@id": "https://a.ml/semantic-json-schema#thisApiVersion"
+          "@id": "https://a.ml/semantic-json-schema#thisApiVersion_2"
         }
       ],
       "core:name": "thisApiVersion",
