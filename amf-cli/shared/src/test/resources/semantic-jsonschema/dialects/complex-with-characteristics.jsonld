@@ -48,6 +48,16 @@
       "meta:base": "anypoint://vocabulary/policy.yaml#"
     },
     {
+      "@id": "/externals/semantics",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "semantics",
+      "meta:base": "https://a.ml/semantic-json-schema#"
+    },
+    {
       "@id": "#/documents/root",
       "@type": [
         "meta:DocumentMapping",
@@ -84,6 +94,9 @@
         },
         {
           "@id": "/externals/ns0"
+        },
+        {
+          "@id": "/externals/semantics"
         }
       ],
       "meta:documents": {

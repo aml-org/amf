@@ -6,13 +6,13 @@ nodeMappings:
     mapping:
       thisApiName:
         range: string
-        propertyTerm: semantics.thisApiName
+        propertyTerm: semantics.thisApiName_1
         mandatory: true
         pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
         default: "#[p('applicationName')]"
       thisApiVersion:
         range: string
-        propertyTerm: semantics.thisApiVersion
+        propertyTerm: semantics.thisApiVersion_2
         mandatory: true
         pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
         default: "#[p('applicationVersion')]"
@@ -52,10 +52,13 @@ documents:
 #%Vocabulary 1.0
 external:
   security: anypoint://vocabulary/policy.yaml#
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: anypoint://vocabulary/policy.yaml#
+  semantics: https://a.ml/semantic-json-schema#
 base: https://a.ml/semantic-json-schema#
 vocabulary: Semantic JSON Schema Vocabulary
 propertyTerms:
-  thisApiName:
-    extends: security.dataweaveExpression
-  thisApiVersion:
-    extends: security.dataweaveExpression
+  thisApiName_1:
+    extends: ns0.dataweaveExpression
+  thisApiVersion_2:
+    extends: ns0.dataweaveExpression

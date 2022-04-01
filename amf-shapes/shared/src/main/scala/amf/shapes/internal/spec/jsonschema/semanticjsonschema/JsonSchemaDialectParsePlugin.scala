@@ -1,7 +1,5 @@
 package amf.shapes.internal.spec.jsonschema.semanticjsonschema
 
-import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.domain.{DocumentMapping, DocumentsModel, External}
 import amf.core.client.common.{HighPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
@@ -21,16 +19,13 @@ import amf.shapes.internal.spec.contexts.parser.JsonSchemaContext
 import amf.shapes.internal.spec.jsonschema.ref.JsonSchemaParser
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.reference.SemanticContextReferenceHandler
 import amf.shapes.internal.spec.jsonschema.semanticjsonschema.transform.{
+  DialectWrapper,
   SchemaTransformer,
-  SchemaTransformerOptions,
-  TransformationResult
+  SchemaTransformerOptions
 }
 import org.yaml.model.YMap
 
 object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
-
-  private val SEMANTIC_JSON_DIALECT_NAME    = "amf-json-schema-generated-dialect"
-  private val SEMANTIC_JSON_DIALECT_VERSION = "1.0"
 
   override val id: String = "JSON Schema Dialect"
 
@@ -47,46 +42,15 @@ object JsonSchemaDialectParsePlugin extends AMFParsePlugin {
   override def withIdAdoption: Boolean = false
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    val newCtx = context(ctx.copyWithSonsReferences().copy(refs = document.references))
-    val parsed = new JsonSchemaParser().parse(document, newCtx, ctx.parsingOptions)
+    val options = SchemaTransformerOptions.DEFAULT
+    val newCtx  = context(ctx.copyWithSonsReferences().copy(refs = document.references))
+    val parsed  = new JsonSchemaParser().parse(document, newCtx, ctx.parsingOptions)
     new IdAdopter(parsed, document.location).adoptFromRelative()
-    val transformed = SchemaTransformer(parsed, SchemaTransformerOptions.DEFAULT)(ctx.eh).transform()
-    wrapTransformationResult(document.location, transformed)
-  }
-
-  private def wrapTransformationResult(location: String, transformed: TransformationResult): BaseUnit = {
-    val documentMapping: DocumentsModel = createDocumentMapping(location, transformed)
-    createDialectWith(location, transformed, documentMapping)
-      .withReferences(transformed.vocab.toList)
-  }
-
-  private def createDialectWith(location: String, transformed: TransformationResult, documentMapping: DocumentsModel) = {
-    val dialect = Dialect()
-      .withId(location)
-      .withName(SEMANTIC_JSON_DIALECT_NAME)
-      .withVersion(SEMANTIC_JSON_DIALECT_VERSION)
-      .withDocuments(documentMapping)
-      .withDeclares(transformed.declared)
-      .withRoot(true)
-
-    if (transformed.externals.nonEmpty) {
-      val externals = extractExternals(transformed, location)
-      dialect.withExternals(externals)
-    }
+    val transformed = SchemaTransformer(parsed, options)(ctx.eh).transform()
+    val dialect     = DialectWrapper(transformed, options, document.location).wrapTransformationResult()
+    val vocabulary  = transform.VocabularyGenerator(dialect, transformed.terms, options).generateVocabulary()
+    vocabulary.foreach(vocab => dialect.withReferences(Seq(vocab)))
     dialect
-  }
-
-  private def extractExternals(transformed: TransformationResult, location: String) = {
-    transformed.externals.map {
-      case (ns, prefix) =>
-        External().withId(location + "/external/" + prefix).withBase(prefix).withAlias(ns)
-    }.toList
-  }
-
-  private def createDocumentMapping(location: String, transformed: TransformationResult) = {
-    DocumentsModel()
-      .withId(location + "/documents")
-      .withRoot(DocumentMapping().withId("#/documents/root").withEncoded(transformed.encoded.id))
   }
 
   private def context(wrapped: ParserContext): ShapeParserContext =

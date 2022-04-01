@@ -4,7 +4,7 @@ nodeMappings:
     mapping:
       key:
         range: string
-        propertyTerm: semantics.key
+        propertyTerm: semantics.key_1
         mandatory: true
         pattern: ^[A-Za-z]*$
       info:
@@ -24,10 +24,12 @@ documents:
 #%Vocabulary 1.0
 external:
   security: https://test.com/security#
+  ns0: http://test.com/vocab#
+  semantics: https://a.ml/semantic-json-schema#
 base: https://a.ml/semantic-json-schema#
 vocabulary: Semantic JSON Schema Vocabulary
 propertyTerms:
-  key:
+  key_1:
     extends:
-      - security.sensitive
-      - security.dataweaveExpression
+      - security:sensitive
+      - security:dataweaveExpression
