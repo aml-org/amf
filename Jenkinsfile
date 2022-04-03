@@ -12,11 +12,6 @@ pipeline {
     timeout(time: 30, unit: 'MINUTES')
     ansiColor('xterm')
   }
-  node {
-    dockerLogin {
-      sh "docker pull artifacts.msap.io/mulesoft/amf-ci-tools-base-image"
-    }
-  }
   agent {
     dockerfile {
       filename 'Dockerfile'
