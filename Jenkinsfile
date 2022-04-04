@@ -16,7 +16,7 @@ pipeline {
     dockerfile {
       filename 'Dockerfile'
       label 'gn-8-16-1'
-      registryCredentialsId 'dockerhub-pro-credentials'
+      registryCredentialsId 'harbor-docker-registry-ro'
     }
   }
   environment {
