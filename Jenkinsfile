@@ -16,6 +16,7 @@ pipeline {
     dockerfile {
       filename 'Dockerfile'
       label 'gn-8-16-1'
+      registryUrl 'https://artifacts.msap.io/'
       registryCredentialsId 'harbor-docker-registry-ro'
     }
   }
