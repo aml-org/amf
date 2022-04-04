@@ -1,6 +1,19 @@
 #%Dialect 1.0
 nodeMappings:
-  changeheaders:
+  testname:
+    mapping:
+      testprop:
+        range: 1Thisshouldbegood
+        mandatory: false
+    additionalProperties: true
+  1Thisshouldbegood:
+    mapping:
+      key:
+        range: string
+        mandatory: true
+      value:
+        range: string
+        mandatory: true
     additionalProperties: true
 external:
   security: anypoint://vocabulary/policy.yaml#
@@ -11,4 +24,4 @@ dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:
   root:
-    encodes: changeheaders
+    encodes: testname

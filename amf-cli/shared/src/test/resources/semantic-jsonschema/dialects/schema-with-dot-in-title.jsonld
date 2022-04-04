@@ -65,7 +65,7 @@
       ],
       "meta:encodedNode": [
         {
-          "@id": "#/declarations/changeheaders"
+          "@id": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider"
         }
       ]
     },
@@ -73,7 +73,7 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#/declarations/changeheaders"
+          "@id": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider"
         }
       ],
       "@type": [
@@ -108,18 +108,37 @@
       }
     },
     {
-      "@id": "#/declarations/changeheaders",
+      "@id": "#/declarations/OAuth20accesstokenenforcementusingMuleOAuthprovider",
       "@type": [
         "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "core:name": "changeheaders",
+      "core:name": "OAuth20accesstokenenforcementusingMuleOAuthprovider",
+      "shacl:property": [
+        {
+          "@id": "/property/property/scopes"
+        }
+      ],
       "shacl:closed": false
+    },
+    {
+      "@id": "/property/property/scopes",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "scopes",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:minCount": 0
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/empty-object.json",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/schema-with-dot-in-title.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",

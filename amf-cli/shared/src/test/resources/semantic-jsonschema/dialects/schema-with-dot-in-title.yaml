@@ -1,6 +1,10 @@
 #%Dialect 1.0
 nodeMappings:
-  changeheaders:
+  OAuth20accesstokenenforcementusingMuleOAuthprovider:
+    mapping:
+      scopes:
+        range: string
+        mandatory: false
     additionalProperties: true
 external:
   security: anypoint://vocabulary/policy.yaml#
@@ -11,4 +15,4 @@ dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:
   root:
-    encodes: changeheaders
+    encodes: OAuth20accesstokenenforcementusingMuleOAuthprovider
