@@ -23,6 +23,7 @@ class Oas20CompatibilityPipeline private (override val name: String)
       new CleanParameterExamples(),
       new CleanIdenticalExamples(),
       new CleanRepeatedOperationIds(),
+      new FixConsumesAndProduces(),
       new SetValidConsumesForFileParam(),
       new DeclareUndeclaredSecuritySchemes()
     )
