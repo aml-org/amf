@@ -94,6 +94,13 @@ class FixConsumesAndProducesTest extends AsyncFunSuite with Matchers {
     }
   }
 
+  test("accepts should include only allowed mediaTypes when request has parameter with type file in body") {
+    val api = basePath + "request-with-file-parameter.raml"
+    assertOperationSatisfy(api) { op =>
+      assert(mediaTypes(op.accepts) == Seq("multipart/form-data", "application/x-www-form-urlencoded"))
+    }
+  }
+
   private def mediaTypes(set: Seq[StrField]) = set.map(_.value())
 
   private def assertOperationSatisfy(api: String)(assertion: Operation => scalatest.Assertion) = {
