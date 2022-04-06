@@ -1,6 +1,6 @@
 package amf.maker
 
-import amf.apicontract.client.scala.WebAPIConfiguration
+import amf.apicontract.client.scala.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.apicontract.client.scala.model.domain._
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.common.AmfObjectTestMatcher
@@ -11,14 +11,15 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
-import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
+import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, CreativeWork, ScalarShape, XMLSerializer}
 import org.mulesoft.common.test.ListAssertions
 import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAssertions with AmfObjectTestMatcher {
+trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAssertions with Matchers with AmfObjectTestMatcher {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -656,6 +657,105 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("items")
 
     assertFixture(api, "example-types.json", Oas20JsonHint)
+  }
+
+  test("Endpoint with no path") {
+    val endpoints = List(EndPoint())
+
+    val api = WebApi()
+      .withName("API")
+      .withEndPoints(endpoints)
+
+    val doc = Document()
+    doc.withEncodes(api)
+
+    noException should be thrownBy RAMLConfiguration.RAML10().baseUnitClient().render(doc)
+    noException should be thrownBy OASConfiguration.OAS30().baseUnitClient().render(doc)
+  }
+
+  test("Operation with no method in RAML") {
+    val endPoint = EndPoint()
+      .withPath("/aPath")
+    val endpoints = List(endPoint)
+
+    endPoint.withOperations(List(Operation().withName("Some title")
+      .withDescription("Some description")
+      .withSchemes(List("http", "https"))))
+
+    val api = WebApi()
+      .withName("API")
+      .withEndPoints(endpoints)
+
+    val doc = Document()
+    doc.withEncodes(api)
+
+    noException should be thrownBy RAMLConfiguration.RAML10().baseUnitClient().render(doc)
+    noException should be thrownBy OASConfiguration.OAS30().baseUnitClient().render(doc)
+  }
+
+  test("Response without status code") {
+    val endPoint = EndPoint()
+      .withPath("/aPath")
+
+    endPoint.withOperation("get")
+      .withResponses(List(Response()))
+
+    val endpoints = List(endPoint)
+
+    val api = WebApi()
+      .withName("API")
+      .withEndPoints(endpoints)
+
+    val doc = Document()
+    doc.withEncodes(api)
+
+    noException should be thrownBy RAMLConfiguration.RAML10().baseUnitClient().render(doc)
+  }
+
+
+  test("Parameter with no name") {
+    val endPoint = EndPoint()
+      .withPath("/aPath")
+    val endpoints = List(endPoint)
+
+    endPoint.withOperations(List(Operation()
+      .withResponses(List(
+        Response()
+          .withStatusCode("200")
+          .withHeaders(
+            List(
+              Parameter()
+            ))))))
+
+    val api = WebApi()
+      .withName("API")
+      .withEndPoints(endpoints)
+
+    val doc = Document()
+    doc.withEncodes(api)
+
+    noException should be thrownBy RAMLConfiguration.RAML08().baseUnitClient().render(doc)
+    noException should be thrownBy RAMLConfiguration.RAML10().baseUnitClient().render(doc)
+    noException should be thrownBy OASConfiguration.OAS30().baseUnitClient().render(doc)
+  }
+
+  test("Array with no items") {
+    val endPoint = EndPoint()
+      .withPath("/aPath")
+    val endpoints = List(endPoint)
+
+    endPoint.withOperations(List(Operation()
+      .withRequest(Request().withPayloads(Seq(Payload().withSchema(
+        ArrayShape()))))))
+
+    val api = WebApi()
+      .withName("API")
+      .withEndPoints(endpoints)
+
+    val doc = Document()
+    doc.withEncodes(api)
+
+    noException should be thrownBy RAMLConfiguration.RAML08().baseUnitClient().render(doc)
   }
 
   private def assertField(field: Field, actual: Any, expected: Any): Unit =

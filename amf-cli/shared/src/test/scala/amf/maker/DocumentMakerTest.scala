@@ -5,13 +5,12 @@ import amf.apicontract.client.scala.model.document.APIContractProcessingData
 import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.{BaseUnitSourceInformation, Document}
+import amf.core.client.scala.model.document.Document
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.remote._
 import amf.shapes.client.scala.model.domain.DomainExtensions.propertyShapeToPropertyShape
-import amf.shapes.client.scala.model.domain.NodeShape
-import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future
@@ -37,7 +36,6 @@ class DocumentMakerTest extends WebApiMakerTest {
 
     assertFixture(doc, "declared-types.json", Oas20JsonHint)
   }
-
   test("Raml inherits declared types ") {
     val location = "file://amf-cli/shared/src/test/resources/maker/inherits-declared-types.raml"
     val doc = documentWithInheritsTypes(Raml10)

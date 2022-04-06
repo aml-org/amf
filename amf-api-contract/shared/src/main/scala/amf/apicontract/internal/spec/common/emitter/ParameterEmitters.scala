@@ -30,7 +30,6 @@ import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.TransformationValidation
 import amf.shapes.client.scala.model.domain._
-import amf.shapes.client.scala.model.domain.{AnyShape, ArrayShape, FileShape, NodeShape, ScalarShape}
 import amf.shapes.internal.domain.metamodel.{AnyShapeModel, FileShapeModel}
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
@@ -104,7 +103,7 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
     if (!explicit && !parameter.required.value()) {
       ScalarEmitter(AmfScalar(parameter.name.value() + "?")).emit(b)
     } else {
-      ScalarEmitter(fs.entry(ParameterModel.Name).get.scalar).emit(b)
+      ScalarEmitter(fs.entry(ParameterModel.Name).map(_.scalar).getOrElse(AmfScalar(""))).emit(b)
     }
   }
 
@@ -179,8 +178,9 @@ case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
     )
   }
 
-  override protected def emitParameterKey(fields: Fields, builder: PartBuilder): Unit =
-    ScalarEmitter(fields.entry(ParameterModel.Name).get.scalar).emit(builder)
+  override protected def emitParameterKey(fields: Fields, builder: PartBuilder): Unit = {
+    ScalarEmitter(fields.entry(ParameterModel.Name).map(_.scalar).getOrElse(AmfScalar(""))).emit(builder)
+  }
 }
 
 case class Raml08ParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -210,7 +210,9 @@ case class Raml08ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
             .map(f => result += RamlScalarEmitter("required", f))
           traverse(ordering.sorted(result), eb)
         })
-      case other => CommentEmitter(other, s"Cannot emit ${other.getClass.toString} type of shape in raml 08").emit(b)
+      case other =>
+        val shapeType = if (other != null) other.getClass.toString else "null"
+        CommentEmitter(other, s"Cannot emit ${shapeType} type of shape in raml 08").emit(b)
     }
 
   }
@@ -347,10 +349,8 @@ case class OasParametersEmitter(key: String,
   }
 }
 
-case class ParameterEmitter(parameter: Parameter,
-                            ordering: SpecOrdering,
-                            references: Seq[BaseUnit],
-                            asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
+case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit], asHeader: Boolean)(
+    implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
@@ -454,7 +454,7 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
 
   protected def emitParameter(b: EntryBuilder): Unit = {
     b.entry(
-      parameter.name.option().get,
+      if (parameter.name.nonNull) parameter.name.value() else "",
       b => {
         if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
           ParameterEmitter(parameter, ordering, references, asHeader = true).emit(b)
@@ -495,7 +495,7 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
   }
 
   protected def emitParameterKey(fs: Fields, b: PartBuilder): Unit = {
-    ScalarEmitter(fs.entry(ParameterModel.Name).get.scalar).emit(b)
+    ScalarEmitter(fs.entry(ParameterModel.Name).map(_.scalar).getOrElse(AmfScalar(""))).emit(b)
   }
 
   private def emitLink(b: EntryBuilder): Unit = {

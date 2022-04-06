@@ -130,7 +130,7 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
         b => {
           endpoint.parent match {
             case Some(_) => ScalarEmitter(AmfScalar(endpoint.relativePath)).emit(b)
-            case None    => ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit(b)
+            case None    => ScalarEmitter(fs.entry(EndPointModel.Path).map(_.scalar).getOrElse(AmfScalar(""))).emit(b)
           }
         },
         emit
