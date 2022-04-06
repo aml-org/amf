@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: "Some title"
+version: "1.0"
+protocols:
+  - "HTTP"
+mediaType:
+  - "*/*"
+
+/anEndpoint:
+  post:
+    body:
+      application/vnd.adobe.xfdf:
+        type: file
