@@ -1,11 +1,8 @@
 #%RAML 1.0
 title: Something
-annotationTypes:
-  pageSize:
-    type: any
 /sample:
   get:
     responses:
-      "200":
-        (pageSize): 5
+      200:
+        (pagination): 5
         description: A Response

@@ -10,7 +10,7 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/semantic/validation/api.raml#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/201
   Property: http://a.ml/vocab#pagination
-  Range: [(10,22)-(10,25)]
+  Range: [(13,22)-(13,25)]
   Location: file://amf-cli/shared/src/test/resources/semantic/validation/api.raml
 
 - Constraint: http://a.ml/vocabularies/data#file://amf-cli/shared/src/test/resources/semantic/validation/dialect.yaml#/declarations/PaginationAnnotation_pagination_maximum_validation
@@ -18,5 +18,5 @@ Level: Violation
   Severity: Violation
   Target: file://amf-cli/shared/src/test/resources/semantic/validation/api.raml#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/203
   Property: http://a.ml/vocab#pagination
-  Range: [(13,22)-(13,24)]
+  Range: [(16,22)-(16,24)]
   Location: file://amf-cli/shared/src/test/resources/semantic/validation/api.raml

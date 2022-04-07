@@ -4,6 +4,7 @@ import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFa
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
 import amf.core.client.scala.parse.document.{ErrorHandlingContext, ParserContext}
+import amf.core.internal.annotations.{LexicalInformation, SourceAST}
 import amf.core.internal.datanode.{DataNodeParser, DataNodeParserContext}
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties

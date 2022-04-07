@@ -3,19 +3,22 @@ package amf.apicontract.internal.spec.common.parser
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.internal.parse.common.DeclarationContext
 import amf.aml.internal.registries.AMLRegistry
-import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
+import amf.aml.internal.semantic.{AnnotationSchemaValidator, SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.apicontract.internal.spec.common.emitter.SpecAwareContext
 import amf.apicontract.internal.spec.common.{OasParameter, WebApiDeclarations}
 import amf.apicontract.internal.spec.oas.parser.context.OasWebApiContext
 import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
+  AnnotationSchemaMustBeAny,
   ClosedShapeSpecification,
-  ClosedShapeSpecificationWarning
+  ClosedShapeSpecificationWarning,
+  MissingAnnotationSchema
 }
 import amf.core.client.scala.config.ParsingOptions
 import amf.core.client.scala.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.model.domain.{AmfObject, Shape}
 import amf.core.client.scala.parse.document.{ParsedReference, ParserContext}
+import amf.core.internal.annotations.SourceAST
 import amf.core.internal.datanode.DataNodeParserContext
 import amf.core.internal.parser._
 import amf.core.internal.parser.domain.{Annotations, FragmentRef, SearchScope}
@@ -23,7 +26,9 @@ import amf.core.internal.plugins.syntax.{SYamlAMFParserErrorHandler, SyamlAMFErr
 import amf.core.internal.remote.Spec
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.utils.{AliasCounter, IdCounter, QName}
+import amf.core.internal.validation.core.ValidationSpecification
 import amf.shapes.client.scala.model.domain.AnyShape
+import amf.shapes.internal.domain.metamodel.AnyShapeModel
 import amf.shapes.internal.spec.common.parser.{SpecSyntax, YMapEntryLike}
 import amf.shapes.internal.spec.common.{JSONSchemaDraft4SchemaVersion, SchemaVersion}
 import amf.shapes.internal.spec.contexts.JsonSchemaRefGuide
@@ -86,7 +91,8 @@ abstract class WebApiContext(loc: String,
   val syntax: SpecSyntax
   val spec: Spec
 
-  val extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = WebApiSemanticExtensionsFacadeBuilder()
+  val extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = WebApiSemanticExtensionsFacadeBuilder(
+    DeclaredAnnotationSchemaValidatorBuilder)
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
@@ -220,15 +226,27 @@ abstract class WebApiContext(loc: String,
     if (isWarning) eh.warning(ClosedShapeSpecificationWarning, node, message, entry.location)
     else eh.violation(ClosedShapeSpecification, node, message, entry.location)
 
-  case class WebApiSemanticExtensionsFacadeBuilder() extends SemanticExtensionsFacadeBuilder {
+  case class WebApiSemanticExtensionsFacadeBuilder(annotationSchemaValidatorBuilder: AnnotationSchemaValidatorBuilder)
+      extends SemanticExtensionsFacadeBuilder {
     override def extensionName(name: String): SemanticExtensionsFacade = {
       val fqn = QName(name)
-      val dialect = if (fqn.isQualified) {
+      val facadeBuilder = if (fqn.isQualified) {
         val maybeDeclarations: Option[WebApiDeclarations] =
           declarations.libraries.get(fqn.qualification).collectFirst({ case w: WebApiDeclarations => w })
-        maybeDeclarations.flatMap(_.extensions.get(fqn.name))
-      } else declarations.extensions.get(name)
-      dialect.map(SemanticExtensionsFacade(fqn.name, _)).getOrElse(SemanticExtensionsFacade(name, wrapped.config))
+        maybeDeclarations.flatMap(
+          d =>
+            (d.extensions
+              .get(fqn.name))
+              .map(SemanticExtensionsFacade(fqn.name, _, annotationSchemaValidatorBuilder.build(d.annotations))))
+      } else
+        declarations.extensions
+          .get(name)
+          .map(d =>
+            SemanticExtensionsFacade(name, d, annotationSchemaValidatorBuilder.build(declarations.annotations)))
+      facadeBuilder.getOrElse(
+        SemanticExtensionsFacade(name,
+                                 wrapped.config,
+                                 annotationSchemaValidatorBuilder.build(declarations.annotations)))
     }
   }
 }
