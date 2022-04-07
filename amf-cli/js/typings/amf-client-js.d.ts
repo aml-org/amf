@@ -901,7 +901,7 @@ declare module 'amf-client-js' {
 
     withId(id: string): this
 
-
+    annotations(): Annotations
   }
   export interface JsTransformationStep  {
     transform(model: BaseUnit, errorHandler: ClientErrorHandler, configuration: AMFGraphConfiguration): BaseUnit
@@ -5625,6 +5625,7 @@ declare module 'amf-client-js' {
 
     withId(id: string): this
 
+    annotations(): Annotations
 
   }
   export class Amqp091Queue implements DomainElement  {
