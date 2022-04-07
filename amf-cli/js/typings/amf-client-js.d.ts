@@ -879,7 +879,13 @@ declare module 'amf-client-js' {
     position: Range
     extendsNode: Array<DomainElement>
 
+    annotations(): Annotations
+
+    withIfMapping(ifMapping: string): AnyMapping
+
     or(): Array<StrField>
+
+    ifMapping(): StrField
 
     and(): Array<StrField>
 
@@ -889,9 +895,17 @@ declare module 'amf-client-js' {
 
     graph(): Graph
 
+    thenMapping(): StrField
+
     withOr(orMappings: Array<string>): AnyMapping
 
     withIsExternalLink(isExternalLink: boolean): DomainElement
+
+    withThenMapping(thenMapping: string): AnyMapping
+
+    elseMapping(): StrField
+
+    withElseMapping(elseMapping: string): AnyMapping
 
     withExtendsNode(extension: Array<ParametrizedDeclaration>): this
 
@@ -4890,57 +4904,6 @@ declare module 'amf-client-js' {
 
 
   }
-  export class ConditionalNodeMapping extends AnyMapping implements Linkable  {
-    name: StrField
-    customDomainProperties: Array<DomainExtension>
-    linkTarget: undefined | DomainElement
-    isLink: boolean
-    isExternalLink: BoolField
-    id: string
-    position: Range
-    linkLabel: StrField
-    extendsNode: Array<DomainElement>
-
-    constructor()
-
-    annotations(): Annotations
-
-    withIfMapping(ifMapping: string): ConditionalNodeMapping
-
-    link<T>(label: string): T
-
-    linkCopy(): ConditionalNodeMapping
-
-    withName(name: string): ConditionalNodeMapping
-
-    ifMapping(): StrField
-
-    graph(): Graph
-
-    thenMapping(): StrField
-
-    withIsExternalLink(isExternalLink: boolean): DomainElement
-
-    withLinkLabel(label: string): this
-
-    withThenMapping(thenMapping: string): ConditionalNodeMapping
-
-    elseMapping(): StrField
-
-    withElseMapping(elseMapping: string): ConditionalNodeMapping
-
-    withExtendsNode(extension: Array<ParametrizedDeclaration>): this
-
-    withCustomDomainProperties(extensions: Array<DomainExtension>): this
-
-    link<T>(): T
-
-    withLinkTarget(target: undefined): this
-
-    withId(id: string): this
-
-
-  }
   export class CorrelationId implements DomainElement, Linkable  {
     name: StrField
     customDomainProperties: Array<DomainExtension>
@@ -5337,6 +5300,8 @@ declare module 'amf-client-js' {
 
     withRequest(): Request
 
+    withRequests(requests: Array<Request>): this
+
     withDocumentation(documentation: CreativeWork): this
 
     withDeprecated(deprecated: boolean): this
@@ -5600,6 +5565,8 @@ declare module 'amf-client-js' {
     extendsNode: Array<DomainElement>
 
     constructor()
+
+    annotations(): Annotations
 
     withContentType(contentType: string): this
 
