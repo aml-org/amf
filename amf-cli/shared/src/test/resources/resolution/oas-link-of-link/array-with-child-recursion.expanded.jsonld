@@ -43,6 +43,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -55,6 +56,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -78,6 +80,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/web-api/endpoint/%2FendPoint/supportedOperation/get/returns/resp/200/payload/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [

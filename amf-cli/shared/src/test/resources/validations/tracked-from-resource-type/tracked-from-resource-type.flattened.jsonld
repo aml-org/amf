@@ -58,6 +58,7 @@
       "@id": "#34",
       "@type": [
         "apiContract:Operation",
+        "core:Operation ",
         "doc:DomainElement"
       ],
       "apiContract:method": "delete",
@@ -100,6 +101,7 @@
       "@id": "#35",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -167,6 +169,7 @@
       "@id": "#10",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -183,6 +186,7 @@
       "@id": "#11",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/xml",

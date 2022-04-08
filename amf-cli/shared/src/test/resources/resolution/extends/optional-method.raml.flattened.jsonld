@@ -89,6 +89,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/optional-method.raml#/web-api/endpoint/%2Fservers/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -102,6 +103,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/optional-method.raml#/web-api/endpoint/%2Fservers/supportedOperation/post",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "post",
@@ -135,6 +137,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/optional-method.raml#/web-api/endpoint/%2Fqueues/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -183,6 +186,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/optional-method.raml#/web-api/endpoint/%2Fservers/supportedOperation/post/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -248,6 +252,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/optional-method.raml#/web-api/endpoint/%2Fservers/supportedOperation/post/request/parameter/header/X-Chargeback",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "X-Chargeback",

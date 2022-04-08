@@ -89,6 +89,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/channel-parameters.yaml#/async-api/endpoint/some-channel/supportedOperation/publish",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "publish",
@@ -107,6 +108,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/channel-parameters.yaml#/async-api/endpoint/some-channel/parameter/parameter/%24message.payload%23%2Fuser%2Fid/userId",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "userId",
@@ -175,6 +177,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/channel-parameters.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -271,6 +274,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/validations/async20/channel-parameters.yaml#/async-api/endpoint/some-channel/supportedOperation/publish/expects/request/payload/default",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#schema": {

@@ -38,6 +38,7 @@
                 "@id": "#13",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation ",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -50,6 +51,7 @@
                     "@id": "#14",
                     "@type": [
                       "apiContract:Request",
+                      "core:Request",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -58,6 +60,7 @@
                         "@id": "#15",
                         "@type": [
                           "apiContract:Parameter",
+                          "core:Parameter",
                           "doc:DomainElement"
                         ],
                         "core:name": [

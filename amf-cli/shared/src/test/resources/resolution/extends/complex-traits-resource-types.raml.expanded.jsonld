@@ -38,6 +38,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -55,6 +56,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -63,6 +65,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/request/parameter/query/get-a-beta",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -212,6 +215,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/request/parameter/query/get-b-beta",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -376,6 +380,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/request/parameter/query/get-b-alpha",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -540,6 +545,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/request/parameter/query/get-c-alpha",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -676,6 +682,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/request/parameter/query/get-d",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -812,6 +819,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/request/parameter/query/get-f",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -948,6 +956,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/request/parameter/query/get-e",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1084,6 +1093,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/get/request/parameter/query/get-g-head",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1270,6 +1280,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -1287,6 +1298,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -1295,6 +1307,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post/request/parameter/query/post-a-beta",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1444,6 +1457,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post/request/parameter/query/post-b-beta",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1608,6 +1622,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post/request/parameter/query/post-b-alpha",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1772,6 +1787,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post/request/parameter/query/post-c-alpha",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1908,6 +1924,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post/request/parameter/query/post-d",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -2044,6 +2061,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post/request/parameter/query/post-e",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -2180,6 +2198,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/supportedOperation/post/request/parameter/query/post-g-head",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -2366,6 +2385,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/put",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -2383,6 +2403,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/put/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2391,6 +2412,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/put/request/parameter/query/put-b-alpha",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -2555,6 +2577,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/put/request/parameter/query/put-c-alpha",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -2691,6 +2714,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/put/request/parameter/query/put-d",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -2827,6 +2851,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/put/request/parameter/query/put-e",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -2963,6 +2988,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/put/request/parameter/query/put-g-head",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -3149,6 +3175,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/head",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -3166,6 +3193,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/head/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -3174,6 +3202,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/head/request/parameter/query/head-b-alpha",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -3338,6 +3367,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/head/request/parameter/query/head-c-alpha",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -3474,6 +3504,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/head/request/parameter/query/head-d",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -3610,6 +3641,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/head/request/parameter/query/head-e",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -3746,6 +3778,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/endpoint/%2Fendpoint/head/request/parameter/query/head-g-head",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [

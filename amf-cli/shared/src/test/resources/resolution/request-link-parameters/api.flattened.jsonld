@@ -55,6 +55,7 @@
       "@id": "#17",
       "@type": [
         "apiContract:Operation",
+        "core:Operation ",
         "doc:DomainElement"
       ],
       "apiContract:method": "post",
@@ -79,6 +80,7 @@
       "@id": "#21",
       "@type": [
         "apiContract:Request",
+        "core:Request",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -118,6 +120,7 @@
       "@id": "#18",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -142,6 +145,7 @@
       "@id": "#4",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "queryParam",
@@ -176,6 +180,7 @@
       "@id": "#8",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "pathParam",
@@ -208,6 +213,7 @@
       "@id": "#10",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "cookieParam",
@@ -240,6 +246,7 @@
       "@id": "#13",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -258,6 +265,7 @@
       "@id": "#6",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "headerParam",
@@ -290,6 +298,7 @@
       "@id": "#19",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -569,6 +578,7 @@
       "@id": "#12",
       "@type": [
         "apiContract:Request",
+        "core:Request",
         "apiContract:Message",
         "doc:DomainElement"
       ],

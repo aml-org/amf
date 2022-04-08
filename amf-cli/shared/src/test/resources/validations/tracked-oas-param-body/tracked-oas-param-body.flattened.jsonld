@@ -57,6 +57,7 @@
       "@id": "#4",
       "@type": [
         "apiContract:Operation",
+        "core:Operation ",
         "doc:DomainElement"
       ],
       "apiContract:method": "post",
@@ -76,6 +77,7 @@
       "@id": "#5",
       "@type": [
         "apiContract:Request",
+        "core:Request",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -95,6 +97,7 @@
       "@id": "#6",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:name": "generated",

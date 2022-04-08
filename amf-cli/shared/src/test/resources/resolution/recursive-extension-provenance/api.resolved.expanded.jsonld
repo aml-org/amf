@@ -38,6 +38,7 @@
                 "@id": "#30",
                 "@type": [
                   "apiContract:Operation",
+                  "core:Operation ",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
@@ -50,6 +51,7 @@
                     "@id": "#31",
                     "@type": [
                       "apiContract:Request",
+                      "core:Request",
                       "apiContract:Message",
                       "doc:DomainElement"
                     ],
@@ -58,6 +60,7 @@
                         "@id": "#32",
                         "@type": [
                           "apiContract:Payload",
+                          "core:Payload",
                           "doc:DomainElement"
                         ],
                         "core:mediaType": [

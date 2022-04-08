@@ -43,6 +43,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/endpoint/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -55,6 +56,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/endpoint/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/supportedOperation/post/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -63,6 +65,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/endpoint/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/supportedOperation/post/expects/request/uri%20parameter/parameter/path/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -362,6 +365,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/endpoint/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/supportedOperation/post/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -385,6 +389,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/endpoint/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/supportedOperation/post/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -681,6 +686,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/endpoint/%2F%E5%B8%B8%E3%81%AB%E5%8F%96%E5%BE%97%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -693,6 +699,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/endpoint/%2F%E5%B8%B8%E3%81%AB%E5%8F%96%E5%BE%97%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -716,6 +723,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/endpoint/%2F%E5%B8%B8%E3%81%AB%E5%8F%96%E5%BE%97%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [

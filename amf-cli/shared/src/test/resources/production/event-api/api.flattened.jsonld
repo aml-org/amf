@@ -78,6 +78,7 @@
       "@id": "#38",
       "@type": [
         "apiContract:Operation",
+        "core:Operation ",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -126,6 +127,7 @@
       "@id": "#45",
       "@type": [
         "apiContract:Request",
+        "core:Request",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -139,6 +141,7 @@
       "@id": "#39",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -160,6 +163,7 @@
       "@id": "#41",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -181,6 +185,7 @@
       "@id": "#43",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -230,6 +235,7 @@
       "@id": "#46",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "id",
@@ -255,6 +261,7 @@
       "@id": "#40",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -271,6 +278,7 @@
       "@id": "#42",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
@@ -287,6 +295,7 @@
       "@id": "#44",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",

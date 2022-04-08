@@ -76,6 +76,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "post",
@@ -130,6 +131,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/endpoint/%2Fpets%2F%7Bid%7D/supportedOperation/post/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -170,6 +172,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/declares/resp/r1/payload/default",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#schema": {

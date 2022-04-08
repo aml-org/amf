@@ -114,6 +114,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -133,6 +134,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "str1",
@@ -152,6 +154,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/parameter/parameter/path/str2",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "str2",
@@ -188,6 +191,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -226,6 +230,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -274,6 +279,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -412,6 +418,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -433,6 +440,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -480,6 +488,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -501,6 +510,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -548,6 +558,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests%2F%7Bstr1%7D%2F%7Bstr2%7D/supportedOperation/get/returns/resp/200/payload/default",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#schema": {
@@ -713,6 +724,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "str1",
@@ -732,6 +744,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/expects/request/parameter/parameter/query/str2",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "str2",
@@ -762,6 +775,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests/supportedOperation/get/returns/resp/200/payload/default",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#schema": {
@@ -806,6 +820,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "str1",
@@ -825,6 +840,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/expects/request/header/parameter/header/str2",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "str2",
@@ -855,6 +871,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/raml10/nillable-type-in-parameter/api.raml#/web-api/endpoint/%2Ftests2/supportedOperation/get/returns/resp/200/payload/default",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#schema": {

@@ -106,6 +106,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -173,6 +174,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -259,6 +261,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/parameter/query/nextPageToken",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "nextPageToken",
@@ -279,6 +282,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/parameter/parameter/query/optional",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "optional",
@@ -306,6 +310,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/parameter/parameter/query/requiredProperty",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "requiredProperty",
@@ -325,6 +330,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/parameter/parameter/query/x-union",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "x-union",
@@ -344,6 +350,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/parameter/parameter/query/x-number",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "x-number",
@@ -364,6 +371,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/parameter/parameter/query/basic",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "basic",
@@ -391,6 +399,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/parameter/parameter/query/repeatable",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "repeatable",
@@ -410,6 +419,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/parameter/query/limit",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "limit",
@@ -430,6 +440,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/supportedOperation/get/expects/request/parameter/parameter/query/enumable",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "enumable",
@@ -449,6 +460,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/server/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/variable/parameter/path/version",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "version",
@@ -467,6 +479,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/parameter/path/fileType",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "fileType",
@@ -487,6 +500,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/web-api/endpoint/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/parameter/path/fileId",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "fileId",
@@ -1939,6 +1953,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/unions-example.raml#/declares/scheme/oauth2/parameter/parameter/query/access_token",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "access_token",
