@@ -10,6 +10,7 @@ import amf.shapes.client.scala.ShapesConfiguration
 import amf.shapes.client.scala.config.{AMFSemanticSchemaResult, SemanticJsonSchemaConfiguration}
 import amf.shapes.client.platform.config.{AMFSemanticSchemaResult => ClientAMFSemanticSchemaResult}
 import amf.shapes.client.scala.model.domain._
+import amf.shapes.client.scala.model.domain.operations.{ShapeOperation, ShapeParameter, ShapePayload, ShapeRequest, ShapeResponse}
 
 trait ShapesBaseConverter
     extends VocabulariesBaseConverter
@@ -32,6 +33,11 @@ trait ShapesBaseConverter
     with ShapesConfigurationConverter
     with SemanticSchemaConfigurationConverter
     with AMFSemanticSchemaResultConverter
+    with ShapeOperationConverter
+    with ShapeRequestConverter
+    with ShapeResponseConverter
+    with ShapeParameterConverter
+    with ShapePayloadConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -195,5 +201,45 @@ trait AMFSemanticSchemaResultConverter {
 
     override def asClient(from: AMFSemanticSchemaResult): ClientAMFSemanticSchemaResult =
       new ClientAMFSemanticSchemaResult(from)
+  }
+}
+
+trait ShapeOperationConverter extends PlatformSecrets {
+  implicit object ShapeOperationMatcher extends BidirectionalMatcher[ShapeOperation, domain.operations.ShapeOperation] {
+    override def asClient(from: ShapeOperation): domain.operations.ShapeOperation =
+      platform.wrap[domain.operations.ShapeOperation](from)
+    override def asInternal(from: domain.operations.ShapeOperation): ShapeOperation = from._internal
+  }
+}
+
+trait ShapeRequestConverter extends PlatformSecrets {
+  implicit object ShapeRequestMatcher extends BidirectionalMatcher[ShapeRequest, domain.operations.ShapeRequest] {
+    override def asClient(from: ShapeRequest): domain.operations.ShapeRequest =
+      platform.wrap[domain.operations.ShapeRequest](from)
+    override def asInternal(from: domain.operations.ShapeRequest): ShapeRequest = from._internal
+  }
+}
+
+trait ShapeResponseConverter extends PlatformSecrets {
+  implicit object ShapeResponseMatcher extends BidirectionalMatcher[ShapeResponse, domain.operations.ShapeResponse] {
+    override def asClient(from: ShapeResponse): domain.operations.ShapeResponse =
+      platform.wrap[domain.operations.ShapeResponse](from)
+    override def asInternal(from: domain.operations.ShapeResponse): ShapeResponse = from._internal
+  }
+}
+
+trait ShapeParameterConverter extends PlatformSecrets {
+  implicit object ShapeParameterMatcher extends BidirectionalMatcher[ShapeParameter, domain.operations.ShapeParameter] {
+    override def asClient(from: ShapeParameter): domain.operations.ShapeParameter =
+      platform.wrap[domain.operations.ShapeParameter](from)
+    override def asInternal(from: domain.operations.ShapeParameter): ShapeParameter = from._internal
+  }
+}
+
+trait ShapePayloadConverter extends PlatformSecrets {
+  implicit object ShapePayloadMatcher extends BidirectionalMatcher[ShapePayload, domain.operations.ShapePayload] {
+    override def asClient(from: ShapePayload): domain.operations.ShapePayload =
+      platform.wrap[domain.operations.ShapePayload](from)
+    override def asInternal(from: domain.operations.ShapePayload): ShapePayload = from._internal
   }
 }

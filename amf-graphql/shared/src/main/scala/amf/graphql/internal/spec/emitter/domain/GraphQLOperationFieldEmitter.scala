@@ -17,7 +17,7 @@ case class GraphQLOperationFieldEmitter(operation: ShapeOperation, ctx: GraphQLE
       GraphQLArgumentGenerator(toApiContractParameter(arg), ctx).generate()
     }
     val isMultiLine = arguments.exists(_.documentation.nonEmpty)
-    val range = operation.response.payload.schema
+    val range = operation.responses.head.payload.schema
     val returnedType = typeTarget(range)
 
     b.fixed { f =>

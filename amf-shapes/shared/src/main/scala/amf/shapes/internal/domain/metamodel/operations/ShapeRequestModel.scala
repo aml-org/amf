@@ -1,28 +1,24 @@
 package amf.shapes.internal.domain.metamodel.operations
 
-import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Shapes}
+import amf.core.client.scala.vocabulary.Namespace.{Core, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Array, Bool}
-import amf.core.internal.metamodel.domain.common.NameFieldSchema
+import amf.core.internal.metamodel.Type.Array
 import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.internal.metamodel.domain.templates.KeyField
 import amf.shapes.client.scala.model.domain.operations.ShapeRequest
 
-object ShapeRequestModel extends DomainElementModel with KeyField with NameFieldSchema {
+object ShapeRequestModel extends AbstractRequestModel {
 
-  val QueryParameters = Field(
+  override val QueryParameters: Field = Field(
     Array(ShapeParameterModel),
-    ApiContract + "parameter",
-    ModelDoc(ModelVocabularies.ApiContract, "parameter", "Parameters associated to the communication model")
+    Shapes + "parameter",
+    ModelDoc(ModelVocabularies.Shapes, "parameter", "Parameters associated to the communication model")
   )
 
-  override val `type`: List[ValueType] = List(Shapes + "Request")
+  override val `type`: List[ValueType] = Shapes + "Request" :: Core + "Request" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
     List(QueryParameters)
-
-  override def modelInstance = ShapeRequest()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
@@ -30,4 +26,7 @@ object ShapeRequestModel extends DomainElementModel with KeyField with NameField
     "Request information for an operation"
   )
   override val key: Field = Name
+
+  override def modelInstance: ShapeRequest = ShapeRequest()
+
 }

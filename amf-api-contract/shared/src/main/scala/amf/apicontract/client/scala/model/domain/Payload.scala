@@ -3,54 +3,32 @@ package amf.apicontract.client.scala.model.domain
 import amf.apicontract.internal.metamodel.domain.PayloadModel.{Encoding => EncodingModel, _}
 import amf.apicontract.internal.metamodel.domain.{ParameterModel, PayloadModel}
 import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
+import amf.core.client.scala.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
-import amf.shapes.client.scala.model.domain.{ArrayShape, ExemplifiedDomainElement, NodeShape, ScalarShape}
+import amf.shapes.client.scala.model.domain.ExemplifiedDomainElement
+import amf.shapes.client.scala.model.domain.operations.AbstractPayload
 import amf.shapes.internal.domain.resolution.ExampleTracking
 import org.yaml.model.YPart
 
 /**
   * Payload internal model.
   */
-case class Payload(fields: Fields, annotations: Annotations)
-    extends NamedDomainElement
-    with Linkable
+case class Payload(override val fields: Fields, override val annotations: Annotations)
+  extends AbstractPayload(fields, annotations)
     with SchemaContainer
     with ExemplifiedDomainElement {
 
-  def mediaType: StrField       = fields.field(MediaType)
   def schemaMediaType: StrField = fields.field(SchemaMediaType)
-  def schema: Shape             = fields.field(Schema)
   def encodings: Seq[Encoding]  = fields.field(EncodingModel)
 
-  def withMediaType(mediaType: String): this.type       = set(MediaType, mediaType)
   def withSchemaMediaType(mediaType: String): this.type = set(SchemaMediaType, mediaType)
-  def withSchema(schema: Shape): this.type              = set(Schema, schema)
   def withEncodings(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
 
   override def setSchema(shape: Shape): Shape = {
     set(ParameterModel.Schema, shape)
     shape
-  }
-
-  def withObjectSchema(name: String): NodeShape = {
-    val node = NodeShape().withName(name)
-    set(PayloadModel.Schema, node)
-    node
-  }
-
-  def withScalarSchema(name: String): ScalarShape = {
-    val scalar = ScalarShape().withName(name)
-    set(PayloadModel.Schema, scalar)
-    scalar
-  }
-
-  def withArraySchema(name: String): ArrayShape = {
-    val array = ArrayShape().withName(name)
-    set(PayloadModel.Schema, array)
-    array
   }
 
   def withEncoding(name: String): Encoding = {

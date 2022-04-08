@@ -8,13 +8,17 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils.AmfStrings
 import amf.shapes.client.scala.model.domain.Example
+import amf.shapes.client.scala.model.domain.operations.AbstractResponse
 import org.yaml.model.YMapEntry
 
 /**
   * Response internal model.
   */
 class Response(override val fields: Fields, override val annotations: Annotations)
-    extends Message(fields: Fields, annotations: Annotations) {
+  extends Message(fields: Fields, annotations: Annotations)
+    with AbstractResponse {
+
+  override type PayloadType = Payload
 
   def statusCode: StrField      = fields.field(StatusCode)
   def links: Seq[TemplatedLink] = fields.field(Links)
