@@ -95,6 +95,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -157,6 +158,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -170,6 +172,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -219,6 +222,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/expects/request/application%2Fxml",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/xml",
@@ -235,6 +239,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/media-type/media-type-override.raml#/web-api/endpoint/%2Flevelzero%2Flevel-one/supportedOperation/get/returns/resp/404/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",

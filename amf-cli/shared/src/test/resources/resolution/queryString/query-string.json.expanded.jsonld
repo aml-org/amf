@@ -38,6 +38,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -50,6 +51,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/endpoint/%2Flocations/supportedOperation/get/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],

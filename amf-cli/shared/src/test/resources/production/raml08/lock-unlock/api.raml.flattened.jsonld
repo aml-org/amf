@@ -142,6 +142,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -179,6 +180,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -197,6 +199,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/parameter/parameter/path/storeNumber",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "storeNumber",
@@ -235,6 +238,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -315,6 +319,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -333,6 +338,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores/supportedOperation/get/returns/resp/200",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -377,6 +383,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -465,6 +472,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount/supportedOperation/get/expects/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -517,6 +525,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores/supportedOperation/get/expects/request/parameter/parameter/query/period",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "period",
@@ -547,6 +556,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/json",
@@ -587,6 +597,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2F%7BstoreNumber%7D/supportedOperation/get/expects/request/parameter/parameter/query/period",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "period",
@@ -652,6 +663,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount/supportedOperation/get/expects/request/parameter/parameter/query/from",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "from",
@@ -671,6 +683,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/production/raml08/lock-unlock/api.raml#/web-api/endpoint/%2Fstores%2Fcount/supportedOperation/get/expects/request/parameter/parameter/query/to",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "to",

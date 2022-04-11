@@ -100,6 +100,7 @@
       "@id": "#7",
       "@type": [
         "apiContract:Operation",
+        "core:Operation ",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -113,6 +114,7 @@
       "@id": "#10",
       "@type": [
         "apiContract:Operation",
+        "core:Operation ",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -139,6 +141,7 @@
       "@id": "#16",
       "@type": [
         "apiContract:Request",
+        "core:Request",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -152,6 +155,7 @@
       "@id": "#11",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -173,6 +177,7 @@
       "@id": "#17",
       "@type": [
         "apiContract:Parameter",
+        "core:Parameter",
         "doc:DomainElement"
       ],
       "core:name": "songId",
@@ -198,6 +203,7 @@
       "@id": "#12",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/octet-stream",

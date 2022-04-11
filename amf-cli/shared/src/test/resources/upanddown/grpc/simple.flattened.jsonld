@@ -160,6 +160,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "post",
@@ -185,6 +186,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "publish",
@@ -210,6 +212,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "subscribe",
@@ -235,6 +238,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "pubsub",
@@ -315,6 +319,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -328,6 +333,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/resp/",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -354,6 +360,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -367,6 +374,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/resp/",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -393,6 +401,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -406,6 +415,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/resp/",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -432,6 +442,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/request",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/core#Request",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -445,6 +456,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/resp/",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -496,6 +508,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/request/application%2Fgrpc",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/grpc",
@@ -507,6 +520,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/post/SayHello1/resp/application%2Fprotobuf",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/protobuf",
@@ -523,6 +537,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/request/application%2Fgrpc",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/grpc",
@@ -534,6 +549,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/publish/SayHello2/resp/application%2Fprotobuf",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/protobuf",
@@ -550,6 +566,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/request/application%2Fgrpc",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/grpc",
@@ -561,6 +578,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/subscribe/SayHello3/resp/application%2Fprotobuf",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/protobuf",
@@ -577,6 +595,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/request/application%2Fgrpc",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/grpc",
@@ -588,6 +607,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/upanddown/grpc/simple.proto/web-api/Greeter/pubsub/SayHello4/resp/application%2Fprotobuf",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/core#Payload",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "application/protobuf",

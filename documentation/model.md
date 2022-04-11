@@ -4,6 +4,11 @@ AMF Model Documentation
 ## Table of Contents
 * [APIContractProcessingData](#apicontractprocessingdata)
 * [AbstractDeclaration](#abstractdeclaration)
+* [AbstractOperation](#abstractoperation)
+* [AbstractParameter](#abstractparameter)
+* [AbstractPayload](#abstractpayload)
+* [AbstractRequest](#abstractrequest)
+* [AbstractResponse](#abstractresponse)
 * [Amqp091ChannelBinding](#amqp091channelbinding)
 * [Amqp091ChannelExchange](#amqp091channelexchange)
 * [Amqp091MessageBinding](#amqp091messagebinding)
@@ -179,6 +184,77 @@ Types:
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## AbstractOperation
+Action that can be executed over the data of a particular shape
+Types:
+* http://a.ml/vocabularies/core#Operation
+* http://a.ml/vocabularies/document#DomainElement
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
+ | expects | [[AbstractRequest](#abstractrequest)] | Request information required by the operation | http://a.ml/vocabularies/core#expects |
+ | returns | [[AbstractResponse](#abstractresponse)] | Response data returned by the operation | http://a.ml/vocabularies/core#returns |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## AbstractParameter
+Piece of data required or returned by an Operation
+Types:
+* http://a.ml/vocabularies/core#Parameter
+* http://a.ml/vocabularies/document#DomainElement
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | paramName | string | Name of a parameter | http://a.ml/vocabularies/core#paramName |
+ | binding | string | Part of the Request model where the parameter can be encoded (header, path, query param, etc.) | http://a.ml/vocabularies/core#binding |
+ | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
+ | required | boolean | Marks the parameter as required | http://a.ml/vocabularies/core#required |
+ | schema | [Shape](#shape) | Schema the parameter value must validate | http://a.ml/vocabularies/shapes#schema |
+ | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
+ | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
+ | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## AbstractPayload
+Encoded payload using certain media-type
+Types:
+* http://a.ml/vocabularies/core#Payload
+* http://a.ml/vocabularies/document#DomainElement
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | schema | [Shape](#shape) | Schema associated to this payload | http://a.ml/vocabularies/shapes#schema |
+ | mediaType | string | Media types supported in the payload | http://a.ml/vocabularies/core#mediaType |
+ | examples | [[Example](#example)] | Examples for a particular domain element | http://a.ml/vocabularies/apiContract#examples |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+ | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
+ | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
+ | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
+
+## AbstractRequest
+Request information for an operation
+Types:
+* http://a.ml/vocabularies/core#Request
+* http://a.ml/vocabularies/document#DomainElement
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | parameter | [[AbstractParameter](#abstractparameter)] | Parameters associated to the communication model | http://a.ml/vocabularies/core#parameter |
+
+## AbstractResponse
+Response information for an operation
+Types:
+* http://a.ml/vocabularies/core#Response
+* http://a.ml/vocabularies/document#DomainElement
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | payload | [AbstractPayload](#abstractpayload) | Payload for a Request/Response | http://a.ml/vocabularies/core#payload |
 
 ## Amqp091ChannelBinding
 
@@ -1835,6 +1911,7 @@ Types:
 Action that can be executed using a particular HTTP invocation
 Types:
 * http://a.ml/vocabularies/apiContract#Operation
+* http://a.ml/vocabularies/core#Operation 
 * http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
@@ -1928,6 +2005,7 @@ Types:
 Piece of data required or returned by an Operation
 Types:
 * http://a.ml/vocabularies/apiContract#Parameter
+* http://a.ml/vocabularies/core#Parameter
 * http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
@@ -2008,6 +2086,7 @@ Types:
 Encoded payload using certain media-type
 Types:
 * http://a.ml/vocabularies/apiContract#Payload
+* http://a.ml/vocabularies/core#Payload
 * http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
@@ -2177,6 +2256,7 @@ Types:
 Request information for an operation
 Types:
 * http://a.ml/vocabularies/apiContract#Request
+* http://a.ml/vocabularies/core#Request
 * http://a.ml/vocabularies/apiContract#Message
 * http://a.ml/vocabularies/document#DomainElement
 
@@ -2248,6 +2328,7 @@ Types:
 Response information for an operation
 Types:
 * http://a.ml/vocabularies/apiContract#Response
+* http://a.ml/vocabularies/core#Response
 * http://a.ml/vocabularies/apiContract#Message
 * http://a.ml/vocabularies/document#DomainElement
 
@@ -2592,29 +2673,31 @@ Types:
 Action that can be executed over the data of a particular shape
 Types:
 * http://a.ml/vocabularies/shapes#Operation
+* http://a.ml/vocabularies/core#Operation
 * http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
- | expects | [ShapeRequest](#shaperequest) | Request information required by the operation | http://a.ml/vocabularies/shapes#expects |
- | returns | [ShapeResponse](#shaperesponse) | Response data returned by the operation | http://a.ml/vocabularies/shapes#returns |
+ | expects | [[ShapeRequest](#shaperequest)] | Request information required by the operation | http://a.ml/vocabularies/shapes#expects |
+ | returns | [[ShapeResponse](#shaperesponse)] | Response data returned by the operation | http://a.ml/vocabularies/shapes#returns |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## ShapeParameter
 Piece of data required or returned by an Operation
 Types:
 * http://a.ml/vocabularies/shapes#Parameter
+* http://a.ml/vocabularies/core#Parameter
 * http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
- | paramName | string | Name of a parameter | http://a.ml/vocabularies/apiContract#paramName |
- | binding | string | Part of the Request model where the parameter can be encoded (header, path, query param, etc.) | http://a.ml/vocabularies/apiContract#binding |
+ | paramName | string | Name of a parameter | http://a.ml/vocabularies/shapes#paramName |
+ | binding | string | Part of the Request model where the parameter can be encoded (header, path, query param, etc.) | http://a.ml/vocabularies/shapes#binding |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
- | required | boolean | Marks the parameter as required | http://a.ml/vocabularies/apiContract#required |
+ | required | boolean | Marks the parameter as required | http://a.ml/vocabularies/shapes#required |
  | schema | [Shape](#shape) | Schema the parameter value must validate | http://a.ml/vocabularies/shapes#schema |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
@@ -2625,12 +2708,14 @@ Types:
 Encoded payload using certain media-type
 Types:
 * http://a.ml/vocabularies/shapes#Payload
+* http://a.ml/vocabularies/core#Payload
 * http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
  | schema | [Shape](#shape) | Schema associated to this payload | http://a.ml/vocabularies/shapes#schema |
+ | mediaType | string | Media types supported in the payload | http://a.ml/vocabularies/core#mediaType |
  | examples | [[Example](#example)] | Examples for a particular domain element | http://a.ml/vocabularies/apiContract#examples |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
@@ -2641,21 +2726,24 @@ Types:
 Request information for an operation
 Types:
 * http://a.ml/vocabularies/shapes#Request
+* http://a.ml/vocabularies/core#Request
+* http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | parameter | [[ShapeParameter](#shapeparameter)] | Parameters associated to the communication model | http://a.ml/vocabularies/apiContract#parameter |
+ | parameter | [[ShapeParameter](#shapeparameter)] | Parameters associated to the communication model | http://a.ml/vocabularies/shapes#parameter |
 
 ## ShapeResponse
 Response information for an operation
 Types:
 * http://a.ml/vocabularies/shapes#Response
+* http://a.ml/vocabularies/core#Response
 * http://a.ml/vocabularies/document#DomainElement
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
- | payload | [ShapePayload](#shapepayload) | Payload for a Request/Response | http://a.ml/vocabularies/apiContract#payload |
+ | payload | [ShapePayload](#shapepayload) | Payload for a Request/Response | http://a.ml/vocabularies/shapes#payload |
 
 ## SourceMap
 SourceMaps include tags with syntax specific information obtained when parsing a particular specification syntax like RAML or OpenAPI.

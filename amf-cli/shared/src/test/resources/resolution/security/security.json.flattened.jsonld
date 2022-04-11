@@ -85,6 +85,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/security/security.json#/web-api/endpoint/%2Fusers/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -117,6 +118,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/security/security.json#/web-api/endpoint/%2Fusers%2F%7Buserid%7D%2Fgists/supportedOperation/get",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/core#Operation ",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/apiContract#method": "get",
@@ -485,6 +487,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/security/security.json#/declares/scheme/oauth_2_0/header/parameter/header/Authorization",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "Authorization",
@@ -505,6 +508,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/security/security.json#/declares/scheme/oauth_2_0/parameter/parameter/query/access_token",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "access_token",
@@ -525,6 +529,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/security/security.json#/declares/scheme/oauth_2_0/response/resp/401",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -627,6 +632,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/security/security.json#/declares/scheme/oauth_1_0/header/parameter/header/Authorization",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "Authorization",
@@ -647,6 +653,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/security/security.json#/declares/scheme/oauth_1_0/parameter/parameter/query/access_token",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
+        "http://a.ml/vocabularies/core#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "access_token",
@@ -667,6 +674,7 @@
       "@id": "file://amf-cli/shared/src/test/resources/resolution/security/security.json#/declares/scheme/oauth_1_0/response/resp/401",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/core#Response",
         "http://a.ml/vocabularies/apiContract#Message",
         "http://a.ml/vocabularies/document#DomainElement"
       ],

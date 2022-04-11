@@ -56,6 +56,7 @@
       "@id": "#4",
       "@type": [
         "apiContract:Operation",
+        "core:Operation ",
         "doc:DomainElement"
       ],
       "apiContract:method": "publish",
@@ -75,6 +76,7 @@
       "@id": "#5",
       "@type": [
         "apiContract:Request",
+        "core:Request",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -97,6 +99,7 @@
       "@id": "#15",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "raml-shapes:schema": {

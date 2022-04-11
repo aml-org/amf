@@ -38,6 +38,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations/supportedOperation/put",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -50,6 +51,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations/supportedOperation/put/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -58,6 +60,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations/supportedOperation/put/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1213,6 +1216,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -1230,6 +1234,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -1248,6 +1253,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -2492,6 +2498,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations%2F%7Borganization_id%7D/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -2509,6 +2516,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations%2F%7Borganization_id%7D/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -2527,6 +2535,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations%2F%7Borganization_id%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -3384,6 +3393,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/endpoint/%2Forganizations%2F%7Borganization_id%7D/parameter/parameter/path/organization_id",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [

@@ -41,6 +41,7 @@
       "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get",
       "@type": [
         "apiContract:Operation",
+        "core:Operation ",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -54,6 +55,7 @@
       "@id": "#/web-api/endpoint/%2Fsample/supportedOperation/get/returns/resp/200",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],

@@ -110,6 +110,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -132,6 +133,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -140,6 +142,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request/parameter/parameter/query/data",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -327,6 +330,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request/parameter/query/alt",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -716,6 +720,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request/parameter/query/fields",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -903,6 +908,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request/parameter/query/key",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1090,6 +1096,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request/parameter/query/oauth_token",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1277,6 +1284,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request/parameter/query/prettyPrint",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1571,6 +1579,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request/parameter/query/quotaUser",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1758,6 +1767,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request/parameter/query/userIp",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -1947,6 +1957,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -3618,6 +3629,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -3641,6 +3653,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining/supportedOperation/post/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -4474,6 +4487,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -4496,6 +4510,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -4504,6 +4519,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/expects/request/parameter/query/prettyPrint",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -4798,6 +4814,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/expects/request/parameter/query/quotaUser",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -4985,6 +5002,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/expects/request/parameter/query/key",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -5172,6 +5190,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/expects/request/parameter/query/userIp",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -5359,6 +5378,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/expects/request/parameter/query/oauth_token",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -5546,6 +5566,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/expects/request/parameter/query/alt",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -5935,6 +5956,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/expects/request/parameter/query/fields",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -6124,6 +6146,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/parameter/parameter/path/data",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -6326,6 +6349,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -6949,6 +6973,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -6972,6 +6997,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/put/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -7737,6 +7763,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -7759,6 +7786,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -7767,6 +7795,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/request/parameter/query/prettyPrint",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -8061,6 +8090,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/request/parameter/query/quotaUser",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -8248,6 +8278,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/request/parameter/query/key",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -8435,6 +8466,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/request/parameter/query/userIp",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -8622,6 +8654,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/request/parameter/query/oauth_token",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -8809,6 +8842,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/request/parameter/query/alt",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -9198,6 +9232,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/request/parameter/query/fields",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -9387,6 +9422,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/parameter/parameter/path/data",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -9591,6 +9627,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -9614,6 +9651,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -10379,6 +10417,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -10401,6 +10440,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -10409,6 +10449,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete/request/parameter/query/prettyPrint",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -10703,6 +10744,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete/request/parameter/query/quotaUser",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -10890,6 +10932,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete/request/parameter/query/key",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -11077,6 +11120,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete/request/parameter/query/userIp",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -11264,6 +11308,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete/request/parameter/query/oauth_token",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -11451,6 +11496,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete/request/parameter/query/alt",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -11840,6 +11886,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete/request/parameter/query/fields",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -12029,6 +12076,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/parameter/parameter/path/data",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -12233,6 +12281,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D/supportedOperation/delete/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -13032,6 +13081,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -13054,6 +13104,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -13062,6 +13113,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/prettyPrint",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -13356,6 +13408,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/quotaUser",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -13543,6 +13596,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/key",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -13730,6 +13784,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/userIp",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -13917,6 +13972,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/oauth_token",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -14104,6 +14160,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/alt",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -14493,6 +14550,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/fields",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -14682,6 +14740,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/parameter/path/data",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -14897,6 +14956,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -15488,6 +15548,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -15511,6 +15572,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Ftraining%2F%7Bdata%7D%2Fpredict/supportedOperation/post/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -16383,6 +16445,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -16405,6 +16468,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -16413,6 +16477,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/prettyPrint",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -16707,6 +16772,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/quotaUser",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -16894,6 +16960,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/key",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -17081,6 +17148,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/userIp",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -17268,6 +17336,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/oauth_token",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -17455,6 +17524,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/alt",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -17844,6 +17914,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/expects/request/parameter/query/fields",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -18033,6 +18104,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/parameter/parameter/path/hostedModelName",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
+                          "http://a.ml/vocabularies/core#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
@@ -18161,6 +18233,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/expects/request/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -18752,6 +18825,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -18775,6 +18849,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/endpoint/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/supportedOperation/post/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [

@@ -1,36 +1,31 @@
 package amf.shapes.client.scala.model.domain.operations
 
-import amf.core.client.scala.model.domain.{DomainElement, NamedDomainElement}
-import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.shapes.internal.domain.metamodel.operations.ShapeRequestModel
+import amf.shapes.internal.domain.metamodel.operations.ShapeRequestModel._
 import org.yaml.model.YPart
 
-case class ShapeRequest(fields: Fields, annotations: Annotations) extends NamedDomainElement {
+case class ShapeRequest(override val fields: Fields, override val annotations: Annotations) extends AbstractRequest {
+  override type ParameterType = ShapeParameter
 
-  def queryParameters: Seq[ShapeParameter]  = fields.field(ShapeRequestModel.QueryParameters)
+  override private[amf] def buildQueryParameter: ShapeParameter = ShapeParameter()
 
-  def withQueryParameters(parameters: Seq[ShapeParameter]): this.type = setArray(ShapeRequestModel.QueryParameters, parameters)
+  override def meta: ShapeRequestModel.type = ShapeRequestModel
 
-  def withQueryParameter(name: String): ShapeParameter = {
+  override def queryParameters: Seq[ShapeParameter]                            = fields.field(QueryParameters)
+  override def withQueryParameters(parameters: Seq[ShapeParameter]): this.type = setArray(QueryParameters, parameters)
+  override def withQueryParameter(name: String): ShapeParameter = {
     val result = ShapeParameter().withName(name)
-    add(ShapeRequestModel.QueryParameters, result)
+    add(QueryParameters, result)
     result
   }
 
-  def meta: ShapeRequestModel.type = ShapeRequestModel
-
-  /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] def componentId: String = "/request"
-
-  override def nameField: Field = ShapeRequestModel.Name
 }
-
 
 object ShapeRequest {
-  def apply(): ShapeRequest                                         = apply(Annotations())
-  def apply(ast: YPart): ShapeRequest                               = apply(Annotations(ast))
-  def apply(annotations: Annotations): ShapeRequest                 = new ShapeRequest(Fields(), annotations)
-  def apply(fields: Fields, annotations: Annotations): ShapeRequest = new ShapeRequest(fields, annotations)
-}
+  def apply(): ShapeRequest = apply(Annotations())
 
+  def apply(ast: YPart): ShapeRequest = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): ShapeRequest = new ShapeRequest(Fields(), annotations)
+}

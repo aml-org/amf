@@ -122,6 +122,7 @@
       "@id": "#16",
       "@type": [
         "apiContract:Operation",
+        "core:Operation ",
         "doc:DomainElement"
       ],
       "apiContract:method": "get",
@@ -145,6 +146,7 @@
       "@id": "#17",
       "@type": [
         "apiContract:Response",
+        "core:Response",
         "apiContract:Message",
         "doc:DomainElement"
       ],
@@ -168,6 +170,7 @@
       "@id": "#18",
       "@type": [
         "apiContract:Payload",
+        "core:Payload",
         "doc:DomainElement"
       ],
       "raml-shapes:schema": {

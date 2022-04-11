@@ -1,42 +1,25 @@
 package amf.apicontract.internal.metamodel.domain
 
 import amf.apicontract.client.scala.model.domain.Payload
+import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Core, Shapes}
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Str}
 import amf.core.internal.metamodel.domain._
-import amf.core.internal.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.internal.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.shapes.internal.domain.metamodel.common.ExamplesField
+import amf.core.internal.metamodel.domain.templates.OptionalField
+import amf.shapes.internal.domain.metamodel.operations.AbstractPayloadModel
 
 /**
   * Payload metamodel.
   */
-object PayloadModel
-    extends DomainElementModel
-    with KeyField
-    with OptionalField
-    with NameFieldSchema
-    with DescriptionField
-    with LinkableElementModel
-    with ExamplesField {
-
-  val MediaType = Field(Str,
-                        Core + "mediaType",
-                        ModelDoc(ModelVocabularies.Core, "mediaType", "Media types supported in the payload"))
-
-  val SchemaMediaType = Field(
+object PayloadModel extends AbstractPayloadModel with OptionalField with LinkableElementModel {
+  val SchemaMediaType: Field = Field(
     Str,
     ApiContract + "schemaMediaType",
     ModelDoc(ModelVocabularies.ApiContract, "schemaMediaType", "Defines the format of the payload schema"))
 
-  val Schema =
-    Field(ShapeModel,
-          Shapes + "schema",
-          ModelDoc(ModelVocabularies.Shapes, "schema", "Schema associated to this payload"))
-
-  val Encoding =
+  val Encoding: Field =
     Field(
       Array(EncodingModel),
       ApiContract + "encoding",
@@ -49,12 +32,12 @@ object PayloadModel
 
   override val key: Field = MediaType
 
-  override val `type`: List[ValueType] = ApiContract + "Payload" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "Payload" :: Core + "Payload" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
     Name :: MediaType :: SchemaMediaType :: Schema :: Examples :: Encoding :: (DomainElementModel.fields ++ LinkableElementModel.fields)
 
-  override def modelInstance = Payload()
+  override def modelInstance: AmfObject = Payload()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,

@@ -38,6 +38,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -50,6 +51,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -68,6 +70,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/validations/healthcare_reduced_v2.raml#/web-api/endpoint/%2Fappointment/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [

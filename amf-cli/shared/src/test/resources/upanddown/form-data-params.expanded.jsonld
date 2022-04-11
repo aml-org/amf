@@ -43,6 +43,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/form-data-params.json#/web-api/endpoint/%2Fusers/supportedOperation/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -60,6 +61,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/form-data-params.json#/web-api/endpoint/%2Fusers/supportedOperation/post/expects/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -68,6 +70,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/form-data-params.json#/web-api/endpoint/%2Fusers/supportedOperation/post/expects/request/payload/formData",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [

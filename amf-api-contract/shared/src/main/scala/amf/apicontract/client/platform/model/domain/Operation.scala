@@ -2,12 +2,12 @@ package amf.apicontract.client.platform.model.domain
 
 import amf.apicontract.client.platform.model.domain.bindings.OperationBindings
 import amf.apicontract.client.platform.model.domain.security.SecurityRequirement
-import amf.apicontract.internal.convert.ApiClientConverters.ClientList
-import amf.core.client.platform.model.domain.{DomainElement, Linkable, NamedDomainElement}
-import amf.core.client.platform.model.{BoolField, StrField}
 import amf.apicontract.client.scala.model.domain.{Operation => InternalOperation}
-import amf.apicontract.internal.convert.ApiClientConverters._
+import amf.apicontract.internal.convert.ApiClientConverters.{ClientList, _}
+import amf.core.client.platform.model.domain.Linkable
+import amf.core.client.platform.model.{BoolField, StrField}
 import amf.shapes.client.platform.model.domain.CreativeWork
+import amf.shapes.client.platform.model.domain.operations.AbstractOperation
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -16,23 +16,34 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   */
 @JSExportAll
 case class Operation(override private[amf] val _internal: InternalOperation)
-    extends DomainElement
-    with NamedDomainElement
+    extends AbstractOperation(_internal)
     with Linkable {
+
+  override type RequestType  = Request
+  override type ResponseType = Response
+
+  override def request: RequestType = _internal.request
+
+  override def response: ResponseType = _internal.responses.head
+
+  override private[amf] def buildResponse = _internal.buildResponse
+
+  override private[amf] def buildRequest = _internal.buildRequest
+
+  override def withRequest(request: RequestType): this.type = {
+    _internal.withRequest(request)
+    this
+  }
 
   @JSExportTopLevel("Operation")
   def this() = this(InternalOperation())
 
-  def method: StrField                          = _internal.method
-  override def name: StrField                   = _internal.name
-  def description: StrField                     = _internal.description
   def deprecated: BoolField                     = _internal.deprecated
   def summary: StrField                         = _internal.summary
   def documentation: CreativeWork               = _internal.documentation
   def schemes: ClientList[StrField]             = _internal.schemes.asClient
   def accepts: ClientList[StrField]             = _internal.accepts.asClient
   def contentType: ClientList[StrField]         = _internal.contentType.asClient
-  def request: Request                          = _internal.request
   def requests: ClientList[Request]             = _internal.requests.asClient
   def responses: ClientList[Response]           = _internal.responses.asClient
   def security: ClientList[SecurityRequirement] = _internal.security.asClient
@@ -42,24 +53,6 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   def isAbstract: BoolField                     = _internal.isAbstract
   def bindings: OperationBindings               = _internal.bindings
   def operationId: StrField                     = _internal.operationId
-
-  /** Set method property of this Operation. */
-  def withMethod(method: String): this.type = {
-    _internal.withMethod(method)
-    this
-  }
-
-  /** Set name property of this Operation. */
-  override def withName(name: String): this.type = {
-    _internal.withName(name)
-    this
-  }
-
-  /** Set description property of this Operation. */
-  def withDescription(description: String): this.type = {
-    _internal.withDescription(description)
-    this
-  }
 
   /** Set deprecated property of this Operation. */
   def withDeprecated(deprecated: Boolean): this.type = {
@@ -94,12 +87,6 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   /** Set contentType property of this Operation. */
   def withContentType(contentType: ClientList[String]): this.type = {
     _internal.withContentType(contentType.asInternal)
-    this
-  }
-
-  /** Set request property of this Operation. */
-  def withRequest(request: Request): this.type = {
-    _internal.withRequest(request)
     this
   }
 
@@ -146,12 +133,6 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   }
 
   /**
-    * Adds one Response to the responses property of this Operation and returns it for population.
-    * Name property of the response is required.
-    */
-  def withResponse(name: String): Response = _internal.withResponse(name)
-
-  /**
     * Adds a Request to this Operation and returns it for population.
     */
   def withRequest(): Request = _internal.withRequest()
@@ -179,4 +160,10 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   }
 
   override def linkCopy(): Operation = _internal.linkCopy()
+
+  override def withResponse(name: String): Response = {
+    val result = buildResponse.withName(name)
+    _internal.withResponses(Seq(result))
+    result
+  }
 }

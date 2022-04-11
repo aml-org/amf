@@ -855,6 +855,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-scalars/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation ",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -872,6 +873,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-scalars/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get/returns/resp/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -895,6 +897,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-scalars/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/supportedOperation/get/returns/resp/200/payload/application%2Fjson",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#mediaType": [
@@ -1348,6 +1351,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/upanddown/cycle/raml10/annotations-scalars/api.raml#/web-api/endpoint/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/parameter/path/customer_id",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
+                  "http://a.ml/vocabularies/core#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
