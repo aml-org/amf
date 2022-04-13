@@ -9,16 +9,16 @@ nodeMappings:
     mapping:
       country:
         range: any
-        mandatory: false
         enum:
           - United States of America
+        mandatory: false
     additionalProperties: true
   SchemaNode_1:
     mapping:
       postal_code:
         range: string
-        mandatory: false
         pattern: "[0-9]{5}(-[0-9]{4})?"
+        mandatory: false
     additionalProperties: true
   SchemaNode_2:
     additionalProperties: true

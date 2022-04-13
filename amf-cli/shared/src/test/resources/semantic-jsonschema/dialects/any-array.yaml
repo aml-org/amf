@@ -7,8 +7,9 @@ nodeMappings:
         mandatory: true
       scopelist:
         range: any
-        mandatory: true
         allowMultiple: true
+        minItems: 0
+        mandatory: true
     additionalProperties: true
 external:
   security: anypoint://vocabulary/policy.yaml#

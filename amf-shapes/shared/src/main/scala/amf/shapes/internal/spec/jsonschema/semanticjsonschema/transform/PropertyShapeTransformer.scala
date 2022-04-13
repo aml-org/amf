@@ -19,6 +19,7 @@ class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformation
 
     setMappingName()
     setMappingID()
+    checkMandatoriness()
 
     property.range match {
       case scalar: ScalarShape => transformScalarProperty(scalar)
@@ -26,7 +27,7 @@ class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformation
       case array: ArrayShape   => transformArray(array)
       case any: AnyShape       => transformAnyProperty(any)
     }
-    checkMandatoriness()
+
     checkSemantics()
     transformEnum(property, mapping)
     mapping
@@ -34,6 +35,12 @@ class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformation
 
   private def transformArray(array: ArrayShape): Unit = {
     mapping.withAllowMultiple(true)
+    // I will override the minCount set and use mandatory instead
+    mapping.withMinCount(0)
+    property.minCount.option() match {
+      case Some(minCount) => mapping.withMandatory(minCount == 1)
+      case None           => mapping.withMandatory(false)
+    }
     array.items match {
       case scalar: ScalarShape => transformScalarProperty(scalar)
       case obj: NodeShape      => transformObjectProperty(obj)

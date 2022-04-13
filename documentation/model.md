@@ -2081,6 +2081,7 @@ Types:
  | typeDiscriminatorMap | string | Information about the discriminator values in the source AST for the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorMap |
  | unique | boolean | Marks the values for the property mapping as a primary key for this type of node | http://a.ml/vocabularies/meta#unique |
  | externallyLinkable | boolean | Marks this object property as supporting external links | http://a.ml/vocabularies/meta#externallyLinkable |
+ | mandatory | boolean | Mandatory constraint over the property. Different from minCount because it only checks the presence of property | http://www.w3.org/ns/shacl#mandatory |
  | typeDiscriminatorName | string | Information about the field in the source AST to be used as discrimintaro in the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorName |
  | mergePolicy | string | Indication of how to merge this graph node when applying a patch document | http://a.ml/vocabularies/meta#mergePolicy |
  | defaultValue | [DataNode](#datanode) | Default value parsed for a data shape property | http://www.w3.org/ns/shacl#defaultValue |

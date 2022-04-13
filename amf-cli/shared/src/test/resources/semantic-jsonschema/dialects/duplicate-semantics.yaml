@@ -5,13 +5,13 @@ nodeMappings:
       key_1:
         range: string
         propertyTerm: semantics.key_1_3
-        mandatory: true
         pattern: ^[A-Za-z]*$
+        mandatory: true
       key_2:
         range: string
         propertyTerm: semantics.key_2_4
-        mandatory: false
         pattern: ^[A-Za-z]*$
+        mandatory: false
       info_1:
         range: integer
         propertyTerm: semantics.info_1_1

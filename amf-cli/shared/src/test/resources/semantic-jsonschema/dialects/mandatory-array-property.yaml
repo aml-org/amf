@@ -1,22 +1,21 @@
 #%Dialect 1.0
 nodeMappings:
-  Somesecuritything:
+  Something:
     mapping:
-      key:
+      arrayProperty:
         range: string
-        propertyTerm: security.sensitive
-        pattern: ^[A-Za-z]*$
+        allowMultiple: true
+        minItems: 0
         mandatory: true
-      info:
+      otherProperty:
         range: integer
         mandatory: true
     additionalProperties: true
 external:
-  security: https://anypoint.mulesoft.com/security#
   ns0: http://test.com/vocab#
   semantics: https://a.ml/semantic-json-schema#
 dialect: amf-json-schema-generated-dialect
 version: "1.0"
 documents:
   root:
-    encodes: Somesecuritything
+    encodes: Something
