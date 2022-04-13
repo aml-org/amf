@@ -45,7 +45,7 @@
       ],
       "meta:encodedNode": [
         {
-          "@id": "#/declarations/Person"
+          "@id": "#/declarations/Something"
         }
       ]
     },
@@ -53,10 +53,7 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#/declarations/SchemaNode"
-        },
-        {
-          "@id": "#/declarations/Person"
+          "@id": "#/declarations/Something"
         }
       ],
       "@type": [
@@ -85,109 +82,57 @@
       }
     },
     {
-      "@id": "#/declarations/SchemaNode",
+      "@id": "#/declarations/Something",
       "@type": [
         "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],
-      "core:name": "SchemaNode",
+      "core:name": "Something",
       "shacl:property": [
         {
-          "@id": "/property/property/info/array/info/shape/items/property/property/note"
+          "@id": "/property/property/arrayProperty"
+        },
+        {
+          "@id": "/property/property/otherProperty"
         }
       ],
       "shacl:closed": false
     },
     {
-      "@id": "#/declarations/Person",
-      "@type": [
-        "meta:NodeMapping",
-        "shacl:Shape",
-        "doc:DomainElement"
-      ],
-      "core:name": "Person",
-      "shacl:property": [
-        {
-          "@id": "/property/property/name"
-        },
-        {
-          "@id": "/property/property/age"
-        },
-        {
-          "@id": "/property/property/info"
-        }
-      ],
-      "shacl:closed": false
-    },
-    {
-      "@id": "/property/property/info/array/info/shape/items/property/property/note",
+      "@id": "/property/property/arrayProperty",
       "@type": [
         "meta:NodePropertyMapping",
         "doc:DomainElement"
       ],
-      "core:name": "note",
+      "core:name": "arrayProperty",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:minCount": 0
+      "shacl:minCount": 0,
+      "meta:allowMultiple": true,
+      "shacl:mandatory": true
     },
     {
-      "@id": "/property/property/name",
+      "@id": "/property/property/otherProperty",
       "@type": [
         "meta:NodePropertyMapping",
         "doc:DomainElement"
       ],
-      "core:name": "name",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:minCount": 1
-    },
-    {
-      "@id": "/property/property/age",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "core:name": "age",
+      "core:name": "otherProperty",
       "shacl:datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
       "shacl:minCount": 1
-    },
-    {
-      "@id": "/property/property/info",
-      "@type": [
-        "meta:NodePropertyMapping",
-        "doc:DomainElement"
-      ],
-      "core:name": "info",
-      "shacl:node": {
-        "@id": "/property/property/info/list"
-      },
-      "shacl:minCount": 0,
-      "meta:allowMultiple": true,
-      "shacl:mandatory": false
-    },
-    {
-      "@id": "/property/property/info/list",
-      "@type": "rdfs:Seq",
-      "rdfs:_1": {
-        "@id": "#/declarations/SchemaNode"
-      }
     }
   ],
   "@context": {
-    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/without-schema-key.json",
+    "@base": "file://amf-cli/shared/src/test/resources/semantic-jsonschema/json-schemas/mandatory-array-property.json",
     "shacl": "http://www.w3.org/ns/shacl#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
     "owl": "http://www.w3.org/2002/07/owl#",
