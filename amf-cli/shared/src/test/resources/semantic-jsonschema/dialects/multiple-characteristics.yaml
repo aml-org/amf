@@ -5,8 +5,8 @@ nodeMappings:
       key:
         range: string
         propertyTerm: semantics.key_1
-        mandatory: true
         pattern: ^[A-Za-z]*$
+        mandatory: true
       info:
         range: integer
         mandatory: true

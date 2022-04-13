@@ -10,8 +10,9 @@ nodeMappings:
         mandatory: true
       info:
         range: SchemaNode
-        mandatory: false
         allowMultiple: true
+        minItems: 0
+        mandatory: false
     additionalProperties: true
   SchemaNode:
     mapping:

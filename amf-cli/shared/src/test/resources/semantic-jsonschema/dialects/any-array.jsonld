@@ -151,8 +151,9 @@
           "@id": "http://www.w3.org/2001/XMLSchema#anyType"
         }
       ],
-      "shacl:minCount": 1,
-      "meta:allowMultiple": true
+      "shacl:minCount": 0,
+      "meta:allowMultiple": true,
+      "shacl:mandatory": true
     }
   ],
   "@context": {
