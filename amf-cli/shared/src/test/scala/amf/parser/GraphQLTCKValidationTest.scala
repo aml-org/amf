@@ -1,21 +1,18 @@
 package amf.parser
 
-import amf.apicontract.client.scala.AMFConfiguration
-import amf.core.client.scala.config.RenderOptions
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, IgnoringErrorHandler}
+import amf.core.client.common.validation.GraphQLProfile
+import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.graphql.client.scala.GraphQLConfiguration
-import org.mulesoft.common.io.FileSystem
+import amf.io.FileAssertionTest
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.Future
 
-class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets {
+class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets with FileAssertionTest {
   val tckPath: String  = "amf-cli/shared/src/test/resources/graphql/tck"
   val apisPath: String = s"$tckPath/apis"
-
-  val fs: FileSystem = platform.fs
 
   // Test valid APIs
   fs.syncFile(s"$apisPath/valid").list.foreach { api =>
@@ -23,8 +20,8 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   // Test invalid APIs
-  fs.syncFile(s"$apisPath/invalid").list.foreach { api =>
-    ignore(s"GraphQL TCK > Apis > Invalid > $api: should not conform") { assertNotConforms(s"$apisPath/invalid/$api") }
+  fs.syncFile(s"$apisPath/invalid").list.filter(_.endsWith(".graphql")).foreach { api =>
+    ignore(s"GraphQL TCK > Apis > Invalid > $api: should not conform") { assertReport(s"$apisPath/invalid/$api") }
   }
 
   def assertConforms(api: String): Future[Assertion] = {
@@ -38,14 +35,22 @@ class GraphQLTCKValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  def assertNotConforms(api: String): Future[Assertion] = {
+  def assertReport(api: String): Future[Assertion] = {
     val client = GraphQLConfiguration.GraphQL().baseUnitClient()
+    val apiUri = s"file://$api"
+    val report = api.replace(".graphql", ".report")
     for {
-      parsing        <- client.parse(s"file://$api")
+      parsing        <- client.parse(apiUri)
       transformation <- Future.successful(client.transform(parsing.baseUnit))
       validation     <- client.validate(transformation.baseUnit)
+      actualFile <- {
+        val combinedResults = parsing.results ++ transformation.results ++ validation.results
+        val actual          = AMFValidationReport(apiUri, GraphQLProfile, combinedResults)
+        writeTemporaryFile(report)(actual.toString)
+      }
+      assertion <- assertDifferences(actualFile, report)
     } yield {
-      assert(!parsing.conforms || !transformation.conforms || !validation.conforms)
+      assertion
     }
   }
 
