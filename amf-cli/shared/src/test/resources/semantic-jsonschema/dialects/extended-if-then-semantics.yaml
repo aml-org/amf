@@ -7,14 +7,14 @@ nodeMappings:
       thisApiName:
         range: string
         propertyTerm: semantics.thisApiName_1
-        mandatory: true
         pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+        mandatory: true
         default: "#[p('applicationName')]"
       thisApiVersion:
         range: string
         propertyTerm: semantics.thisApiVersion_2
-        mandatory: true
         pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+        mandatory: true
         default: "#[p('applicationVersion')]"
     additionalProperties: true
   SchemaNode:
@@ -26,9 +26,9 @@ nodeMappings:
     mapping:
       logStatistics:
         range: any
-        mandatory: true
         enum:
           - true
+        mandatory: true
     additionalProperties: true
   SchemaNode_2:
     mapping:

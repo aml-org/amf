@@ -57,6 +57,7 @@ class JsonSchemaToDialectTest extends AsyncFunSuite with PlatformSecrets with Fi
   multiOutputTest("schema-with-dot-in-title")
   multiOutputTest("property-with-dot-in-title")
   multiOutputTest("default-with-dash-value")
+  multiOutputTest("mandatory-array-property")
 
   private def multiOutputTest(filename: String): Unit = {
 

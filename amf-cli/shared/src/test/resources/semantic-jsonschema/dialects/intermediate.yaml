@@ -11,8 +11,9 @@ nodeMappings:
         mandatory: true
       hey:
         range: SchemaNode
-        mandatory: false
         allowMultiple: true
+        minItems: 0
+        mandatory: false
     additionalProperties: true
   SchemaNode:
     classTerm: foaf.Verse

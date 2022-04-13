@@ -4,9 +4,9 @@ nodeMappings:
     mapping:
       name:
         range: string
-        mandatory: false
         enum:
           - 555
+        mandatory: false
     additionalProperties: true
 external:
   ns0: http://test.com/vocab#

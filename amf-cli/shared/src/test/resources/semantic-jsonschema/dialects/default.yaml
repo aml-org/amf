@@ -14,8 +14,9 @@ nodeMappings:
           release: 2021
       nicknames:
         range: string
-        mandatory: false
         allowMultiple: true
+        minItems: 0
+        mandatory: false
         default:
           - Carliños
           - Carl

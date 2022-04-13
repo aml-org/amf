@@ -9,8 +9,8 @@ nodeMappings:
       clientIdExpression:
         range: string
         propertyTerm: ns0.dataweaveExpression
-        mandatory: true
         pattern: "^(\\#\\[[\\w\\W]+\\]|\\$\\{[\\w\\W]+\\})$"
+        mandatory: true
         default: "#[attributes.headers['client_id']]"
       clientSecretExpression:
         range: string
