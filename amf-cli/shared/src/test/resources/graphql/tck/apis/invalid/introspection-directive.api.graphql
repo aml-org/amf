@@ -1,0 +1,9 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+directive @__invalidName on ARGUMENT_DEFINITION
