@@ -1,17 +1,9 @@
 ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql
 Profile: GraphQL
 Conforms: false
-Number of results: 2
+Number of results: 1
 
 Level: Violation
-
-- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
-  Message: Unresolved reference 'Scalar'
-  Severity: Violation
-  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql/union/default-union/unresolved
-  Property: 
-  Range: 
-  Location: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/union-invalid-members.api.graphql
 
 - Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'Union'
