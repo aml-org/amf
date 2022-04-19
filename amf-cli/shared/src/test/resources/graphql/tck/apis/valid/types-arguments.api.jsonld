@@ -43,6 +43,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -60,6 +61,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ]
@@ -70,6 +72,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -88,6 +91,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
@@ -260,6 +264,7 @@
             "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length",
             "@type": [
               "http://a.ml/vocabularies/shapes#Operation",
+              "http://a.ml/vocabularies/core#Operation",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/core#name": [
@@ -271,13 +276,16 @@
               {
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/request",
                 "@type": [
-                  "http://a.ml/vocabularies/shapes#Request"
+                  "http://a.ml/vocabularies/shapes#Request",
+                  "http://a.ml/vocabularies/core#Request",
+                  "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/apiContract#parameter": [
+                "http://a.ml/vocabularies/shapes#parameter": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/request/parameter/unit",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
+                      "http://a.ml/vocabularies/core#Parameter",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/core#name": [
@@ -285,12 +293,12 @@
                         "@value": "unit"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#binding": [
+                    "http://a.ml/vocabularies/shapes#binding": [
                       {
                         "@value": "query"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#required": [
+                    "http://a.ml/vocabularies/shapes#required": [
                       {
                         "@value": false
                       }
@@ -322,6 +330,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/request/parameter/scientificNotation",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Parameter",
+                      "http://a.ml/vocabularies/core#Parameter",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/core#name": [
@@ -329,12 +338,12 @@
                         "@value": "scientificNotation"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#binding": [
+                    "http://a.ml/vocabularies/shapes#binding": [
                       {
                         "@value": "query"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#required": [
+                    "http://a.ml/vocabularies/shapes#required": [
                       {
                         "@value": false
                       }
@@ -365,6 +374,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/response",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#Response",
+                  "http://a.ml/vocabularies/core#Response",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -372,11 +382,12 @@
                     "@value": "default"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#payload": [
+                "http://a.ml/vocabularies/shapes#payload": [
                   {
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/types-arguments.api.graphql#/shape/Starship/length/response/default",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#Payload",
+                      "http://a.ml/vocabularies/core#Payload",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/core#name": [

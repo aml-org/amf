@@ -36,6 +36,11 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
     ModelDoc(ExternalModelVocabularies.Shacl, "additionalPropertiesKeySchema", "Additional properties key schema")
   )
 
+  val InputOnly: Field = Field(
+    Bool,
+    Shapes + "inputOnly",
+    ModelDoc(ModelVocabularies.Shapes, "inputOnly", "Indicates if the shape is used as schema for input data only"))
+
   val Discriminator: Field =
     Field(Str, Shapes + "discriminator", ModelDoc(ModelVocabularies.Shapes, "discriminator", "Discriminator property"))
 
@@ -70,10 +75,9 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
                                    Shacl + "propertyNames",
                                    ModelDoc(ExternalModelVocabularies.Shacl, "propertyNames", "Property names schema"))
 
-  val Dependencies: Field = Field(
-    Array(PropertyDependenciesModel),
-    Shapes + "dependencies",
-    ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint"))
+  val Dependencies: Field = Field(Array(PropertyDependenciesModel),
+                                  Shapes + "dependencies",
+                                  ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint"))
 
   val SchemaDependencies: Field = Field(
     Array(SchemaDependenciesModel),
@@ -128,7 +132,8 @@ trait NodeShapeModel extends AnyShapeModel with ClosedModel {
     SchemaDependencies,
     UnevaluatedProperties,
     UnevaluatedPropertiesSchema,
-    Operations
+    Operations,
+    InputOnly
   )
 
   override val fields: List[Field] =
