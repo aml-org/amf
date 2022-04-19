@@ -48,6 +48,7 @@
                 "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/%2Fquery%2Fname/query",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
@@ -65,6 +66,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/%2Fquery%2Fname/query/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/core#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ]
@@ -75,6 +77,7 @@
                     "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -93,6 +96,7 @@
                         "@id": "file://amf-cli/shared/src/test/resources/graphql/tck/apis/valid/descriptions.api.graphql#/web-api/%2Fquery%2Fname/query/resp/default/default",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/core#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [

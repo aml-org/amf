@@ -7,10 +7,10 @@ type Query{
 }
 
 
-directive @testInputType(input: InputType) on SCHEMA
-directive @testEnum(input: Enum) on SCHEMA
-directive @testScalar(input: String) on SCHEMA
-directive @testCustomScalar(input: Pepe) on SCHEMA
+directive @testInputType(input_: InputType) on SCHEMA
+directive @testEnum(input_: Enum) on SCHEMA
+directive @testScalar(input_: String) on SCHEMA
+directive @testCustomScalar(input_: Pepe) on SCHEMA
 
 
 input InputType {

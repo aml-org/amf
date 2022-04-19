@@ -7,10 +7,10 @@ type Query{
 }
 
 type Object {
-    queryInputType(input: InputType): String
-    queryEnum(input: Enum): String
-    queryScalar(input: String): String
-    queryCustomScalar(input: Pepe): String
+    queryInputType(input_: InputType): String
+    queryEnum(input_: Enum): String
+    queryScalar(input_: String): String
+    queryCustomScalar(input_: Pepe): String
 }
 
 input InputType {
