@@ -1,0 +1,14 @@
+ModelId: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/inexsistent-extension-input-type.api.graphql
+Profile: GraphQL
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'InputType'
+  Severity: Violation
+  Target: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/inexsistent-extension-input-type.api.graphql#/web-api/%2Fmutation%2FchangeUserStatus/post/request/parameter/default-binding/input_/unresolved
+  Property: 
+  Range: [(11,29)-(11,38)]
+  Location: file://amf-cli/shared/src/test/resources/graphql/tck/apis/invalid/inexsistent-extension-input-type.api.graphql

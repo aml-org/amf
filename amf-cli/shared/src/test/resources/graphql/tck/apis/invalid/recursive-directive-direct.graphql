@@ -1,0 +1,9 @@
+schema {
+    query: Query
+}
+
+type Query {
+    name: String
+}
+
+directive @invalidExample(arg: String @invalidExample) on ARGUMENT_DEFINITION

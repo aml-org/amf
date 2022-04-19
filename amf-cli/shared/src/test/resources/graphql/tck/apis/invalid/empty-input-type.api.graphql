@@ -8,10 +8,11 @@ type Query {
 }
 
 type Mutation {
-    changeUserStatus(input: InputType!): OutputType
+    changeUserStatus(input_: InputType!): OutputType
 }
 
 input InputType {
+    # this is empty
 }
 
 type OutputType {

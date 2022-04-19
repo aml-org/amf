@@ -1,0 +1,33 @@
+schema @duplicated @duplicated {
+    query: Query
+}
+
+type Query {
+    text: String
+}
+
+scalar MyScalar @duplicated @duplicated
+
+type MyObject @duplicated @duplicated {
+    myField(myArgument: String @duplicated @duplicated): String! @duplicated @duplicated
+}
+
+interface MyInterface @duplicated @duplicated {
+    myField: String!
+}
+
+type MyObject2 {
+    myField2: String
+}
+
+union MyUnion @duplicated @duplicated = MyObject | MyObject2
+
+enum MyEnum @duplicated @duplicated {
+    MyEnumValue @duplicated @duplicated
+}
+
+input MyInputObject @duplicated @duplicated {
+    myField: String! @duplicated @duplicated
+}
+
+directive @duplicated on SCHEMA | SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION

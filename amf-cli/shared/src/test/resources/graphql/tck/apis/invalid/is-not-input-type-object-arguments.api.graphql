@@ -4,9 +4,9 @@ schema {
 }
 
 type Query {
-    objectArgument(input: Object1): String
-    interfaceArgument(input: Interface): String
-    unionArgument(input: Union): String
+    objectArgument(input_: Object1): String
+    interfaceArgument(input_: Interface): String
+    unionArgument(input_: Union): String
 }
 
 type Object1 {

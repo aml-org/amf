@@ -7,9 +7,9 @@ type Query {
     a: String
 }
 
-directive @testObjectArgument(input: Object1) on SCHEMA
-directive @testInterfaceArgument(input: Interface) on SCHEMA
-directive @testUnionArgument(input: Union) on SCHEMA
+directive @testObjectArgument(input_: Object1) on SCHEMA
+directive @testInterfaceArgument(input_: Interface) on SCHEMA
+directive @testUnionArgument(input_: Union) on SCHEMA
 
 type Object1 {
     success: Boolean
