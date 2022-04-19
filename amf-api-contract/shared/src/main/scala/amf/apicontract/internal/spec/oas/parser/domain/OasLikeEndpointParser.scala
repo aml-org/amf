@@ -8,27 +8,25 @@ import amf.apicontract.internal.spec.async.parser.context.AsyncWebApiContext
 import amf.apicontract.internal.spec.async.parser.domain.AsyncParametersParser
 import amf.apicontract.internal.spec.common.Parameters
 import amf.apicontract.internal.spec.common.parser._
-import amf.apicontract.internal.spec.oas.parser.context.{OasLikeWebApiContext, OasWebApiContext}
+import amf.apicontract.internal.spec.oas.parser.context.{OasLikeWebApiContext, OasWebApiContext, RemoteNodeNavigation}
 import amf.apicontract.internal.spec.raml.parser.domain.ParametrizedDeclarationParser
 import amf.apicontract.internal.spec.spec.toRaml
-import amf.apicontract.internal.validation.definitions.ParserSideValidations.{
-  DuplicatedEndpointPath,
-  InvalidEndpointPath,
-  InvalidEndpointType
-}
+import amf.apicontract.internal.validation.definitions.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, InvalidEndpointType}
 import amf.core.client.scala.model.domain.AmfArray
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import amf.core.internal.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.shapes.internal.spec.common.parser.{AnnotationParser, YMapEntryLike}
 import org.yaml.model._
-
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
     implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {
+
+  type ConcreteContext <: OasLikeWebApiContext
+  def apply(entry: YMapEntry, parentId: String, collector: List[EndPoint])(ctx: ConcreteContext): OasLikeEndpointParser
 
   def parse(): Option[EndPoint] = {
     val path     = ScalarNode(entry.key).text()
@@ -58,22 +56,48 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
   private def parseEndpoint(endpoint: EndPoint): Option[EndPoint] =
     ctx.link(entry.value) match {
       case Left(value) =>
-        ctx.obtainRemoteYNode(value).orElse(ctx.declarations.asts.get(value)) match {
-          case Some(map) if map.tagType == YType.Map => Some(parseEndpointMap(endpoint, map.as[YMap]))
+        ctx.navigateToRemoteYNode(value) match {
+          case Some(result) if isMap(result.remoteNode) =>
+            val node = result.remoteNode.as[YMap]
+            Some(buildNewParser(result).parseEndpointMap(endpoint, node))
           case Some(n) =>
-            ctx.eh.violation(InvalidEndpointType, endpoint, "Invalid node for path item", n.location)
+            invalidNodeViolation(endpoint, n.remoteNode)
             None
-
-          case None =>
-            ctx.eh.violation(InvalidEndpointPath,
-                             endpoint,
-                             s"Cannot find fragment path item ref $value",
-                             entry.value.location)
-            None
-
+          case None => getNodeFromDeclarations(endpoint, value)
         }
       case Right(node) => Some(parseEndpointMap(endpoint, node.as[YMap]))
     }
+
+  private def getNodeFromDeclarations(endpoint: EndPoint, value: String) = {
+    ctx.declarations.asts.get(value) match {
+      case Some(node) if isMap(node) => Some(parseEndpointMap(endpoint, node.as[YMap]))
+      case Some(notMapNode)              =>
+        invalidNodeViolation(endpoint, notMapNode)
+        None
+      case None =>
+        cannotFindReferencedEndPointViolation(endpoint, value)
+        None
+    }
+  }
+
+  private def buildNewParser(result: RemoteNodeNavigation[OasLikeWebApiContext]): OasLikeEndpointParser = {
+    val newCtx            = result.context.asInstanceOf[ConcreteContext]
+    val unreferencedEntry = YMapEntry(entry.key, result.remoteNode)
+    this.apply(unreferencedEntry, parentId, collector)(newCtx)
+  }
+
+  private def isMap(node: YNode) = node.tagType == YType.Map
+
+  private def invalidNodeViolation(endpoint: EndPoint, node: YNode): Unit = {
+    ctx.eh.violation(InvalidEndpointType, endpoint, "Invalid node for path item", node.location)
+  }
+
+  private def cannotFindReferencedEndPointViolation(endpoint: EndPoint, value: String): Unit = {
+    ctx.eh.violation(InvalidEndpointPath,
+      endpoint,
+      s"Cannot find fragment path item ref $value",
+      entry.value.location)
+  }
 
   protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
     ctx.closedShape(endpoint, map, "pathItem")
@@ -181,6 +205,16 @@ case class Oas20EndpointParser(entry: YMapEntry, parentId: String, collector: Li
     override implicit val ctx: OasWebApiContext)
     extends OasEndpointParser(entry, parentId, collector) {
 
+  override type ConcreteContext = OasWebApiContext
+
+
+  override def apply(entry: YMapEntry,
+                     parentId: String,
+                     collector: List[EndPoint])(
+                      ctx: ConcreteContext): Oas20EndpointParser = {
+    Oas20EndpointParser(entry, parentId, collector)(ctx)
+  }
+
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
     super.parseEndpointMap(endpoint, map)
   }
@@ -190,6 +224,15 @@ case class Oas20EndpointParser(entry: YMapEntry, parentId: String, collector: Li
 case class Oas30EndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
     override implicit val ctx: OasWebApiContext)
     extends OasEndpointParser(entry, parentId, collector) {
+
+  override type ConcreteContext = OasWebApiContext
+
+  override def apply(entry: YMapEntry,
+                     parentId: String,
+                     collector: List[EndPoint])(
+                      ctx: ConcreteContext): Oas30EndpointParser = {
+    Oas30EndpointParser(entry, parentId, collector)(ctx)
+  }
 
   /**
     * Verify if two paths are identical.
@@ -214,6 +257,15 @@ case class Oas30EndpointParser(entry: YMapEntry, parentId: String, collector: Li
 case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
     override implicit val ctx: AsyncWebApiContext)
     extends OasLikeEndpointParser(entry, parentId, collector) {
+
+  override type ConcreteContext = AsyncWebApiContext
+
+  override def apply(entry: YMapEntry,
+                     parentId: String,
+                     collector: List[EndPoint])(
+                      ctx: ConcreteContext): AsyncEndpointParser = {
+    AsyncEndpointParser(entry, parentId, collector)(ctx)
+  }
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
 

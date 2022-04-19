@@ -1,0 +1,9 @@
+type: object
+required:
+  - companyId
+properties:
+  companyId:
+    type: number
+    minimum: 1
+    description: The Id of the company.
+additionalProperties: false

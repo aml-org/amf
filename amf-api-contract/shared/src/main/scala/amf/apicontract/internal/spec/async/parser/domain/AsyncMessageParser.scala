@@ -11,7 +11,6 @@ import amf.apicontract.internal.spec.async.{MessageType, Publish, Subscribe}
 import amf.apicontract.internal.spec.common.WebApiDeclarations.ErrorMessage
 import amf.apicontract.internal.spec.common.parser.{SpecParserOps, WebApiShapeParserContextAdapter}
 import amf.apicontract.internal.spec.oas.parser.domain
-import amf.apicontract.internal.spec.oas.parser.domain.OasLikeTagsParser
 import amf.apicontract.internal.spec.spec.OasDefinitions
 import amf.apicontract.internal.validation.definitions.ParserSideValidations
 import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
@@ -20,11 +19,10 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
 import amf.core.internal.utils.IdCounter
 import amf.core.internal.validation.CoreValidations
-import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
-import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.{Example, NodeShape}
+import amf.shapes.internal.domain.resolution.ExampleTracking.tracking
 import amf.shapes.internal.spec.common.JSONSchemaDraft7SchemaVersion
-import amf.shapes.internal.spec.common.parser.{AnnotationParser, ExampleDataParser, Oas3ExampleOptions, OasLikeCreativeWorkParser, YMapEntryLike}
+import amf.shapes.internal.spec.common.parser._
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 
 object AsyncMessageParser {
@@ -79,9 +77,10 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
   }
 
   private def remote(fullRef: String): Message = {
-    ctx.obtainRemoteYNode(fullRef) match {
-      case Some(messageNode) =>
-        val external = AsyncMessageParser(YMapEntryLike(messageNode), parent, messageType, isTrait).parse()
+    ctx.navigateToRemoteYNode(fullRef) match {
+      case Some(result) =>
+        val messageNode = result.remoteNode
+        val external    = AsyncMessageParser(YMapEntryLike(messageNode), parent, messageType, isTrait)(result.context).parse()
         nameAndAdopt(generateLink(fullRef, external, entryLike), entryLike.key)
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference,

@@ -84,9 +84,10 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
   }
 
   private def remote(fullRef: String, map: YMap): Parameter = {
-    ctx.obtainRemoteYNode(fullRef) match {
-      case Some(paramNode) =>
-        val external = AsyncParameterParser(parentId, YMapEntryLike(paramNode)).parse()
+    ctx.navigateToRemoteYNode(fullRef) match {
+      case Some(result) =>
+        val paramNode = result.remoteNode
+        val external  = AsyncParameterParser(parentId, YMapEntryLike(paramNode))(result.context).parse()
         nameAndAdopt(external.link(AmfScalar(fullRef), Annotations(map), Annotations.synthesized()))
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map.location)
