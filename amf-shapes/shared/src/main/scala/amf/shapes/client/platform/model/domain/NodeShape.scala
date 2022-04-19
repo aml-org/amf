@@ -15,6 +15,7 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def this() = this(InternalNodeShape())
 
   def isAbstract: BoolField                                            = _internal.isAbstract
+  def isInputOnly: BoolField                                           = _internal.isInputOnly
   def minProperties: IntField                                          = _internal.minProperties
   def maxProperties: IntField                                          = _internal.maxProperties
   def closed: BoolField                                                = _internal.closed
@@ -33,6 +34,11 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
 
   def withIsAbstract(isAbstract: Boolean): this.type = {
     _internal.withIsAbstract(isAbstract)
+    this
+  }
+
+  def withIsInputOnly(isInputOnly: Boolean): this.type = {
+    _internal.withIsInputOnly(isInputOnly)
     this
   }
 

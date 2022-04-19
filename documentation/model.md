@@ -1783,6 +1783,7 @@ Types:
  | unevaluatedProperties | boolean | Accepts that properties may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedProperties |
  | unevaluatedPropertiesSchema | [Shape](#shape) | Properties that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedPropertiesSchema |
  | supportedOperation | [[ShapeOperation](#shapeoperation)] | Supported operations for this shape | http://a.ml/vocabularies/shapes#supportedOperation |
+ | inputOnly | boolean | Indicates if the shape is used as schema for input data only | http://a.ml/vocabularies/shapes#inputOnly |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
