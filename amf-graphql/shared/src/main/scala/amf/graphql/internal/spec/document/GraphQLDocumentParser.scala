@@ -11,6 +11,7 @@ import amf.core.internal.remote.Spec
 import amf.graphql.internal.spec.context.GraphQLWebApiContext
 import amf.graphql.internal.spec.context.GraphQLWebApiContext.RootTypes
 import amf.graphql.internal.spec.domain.{
+  GraphQLCustomScalarParser,
   GraphQLInputTypeParser,
   GraphQLNestedEnumParser,
   GraphQLNestedTypeParser,
@@ -82,6 +83,11 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
     ctx.declarations += enum
   }
 
+  private def parseCustomScalarTypeDef(customScalarTypeDef: Node): Unit = {
+    val scalar: ScalarShape = new GraphQLCustomScalarParser(customScalarTypeDef).parse(doc.id)
+    ctx.declarations += scalar
+  }
+
   private def processTypes(node: Node): Unit = {
     this.collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, SCHEMA_DEFINITION)).toList match {
       case head :: Nil => parseSchemaNode(head)
@@ -126,6 +132,13 @@ case class GraphQLDocumentParser(root: Root)(implicit val ctx: GraphQLWebApiCont
       .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, ENUM_TYPE_DEFINITION)) foreach {
       case enumTypeDef: Node =>
         parseEnumType(enumTypeDef)
+    }
+
+    // let's parse custom scalars
+    this
+      .collect(node, Seq(DOCUMENT, DEFINITION, TYPE_SYSTEM_DEFINITION, TYPE_DEFINITION, SCALAR_TYPE_DEFINITION)) foreach {
+      case customScalarTypeDef: Node =>
+        parseCustomScalarTypeDef(customScalarTypeDef)
     }
   }
 
