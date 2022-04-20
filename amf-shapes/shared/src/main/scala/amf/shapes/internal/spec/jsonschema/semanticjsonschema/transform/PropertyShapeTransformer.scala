@@ -149,7 +149,8 @@ class PropertyShapeTransformer(property: PropertyShape, ctx: ShapeTransformation
             case List(Nil)     => // ignore
             // If there is more than one, I will collect it to generate a vocab a the end of the process
             case elements =>
-              ctx.termsToExtract += CandidateProperty(mapping, elements)
+              val expandedElements = elements.map(context.expand)
+              ctx.termsToExtract += CandidateProperty(mapping, expandedElements)
           }
         }
 

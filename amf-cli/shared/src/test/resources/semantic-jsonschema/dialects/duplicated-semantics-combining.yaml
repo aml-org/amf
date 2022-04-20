@@ -85,8 +85,8 @@ vocabulary: Semantic JSON Schema Vocabulary
 propertyTerms:
   f_1:
     extends:
-      - config:sensitive
-      - config:dataweaveExpression
+      - config.sensitive
+      - config.dataweaveExpression
   a_2:
     extends: config.sensitive
   b_3:
