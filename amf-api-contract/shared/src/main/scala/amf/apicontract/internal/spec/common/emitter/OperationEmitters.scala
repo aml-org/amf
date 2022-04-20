@@ -11,6 +11,7 @@ import amf.apicontract.internal.spec.raml.emitter.domain.{ExtendsEmitter, RamlRe
 import amf.apicontract.internal.spec.spec.toOas
 import amf.core.client.common.position.Position
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.annotations.SynthesizedField
 import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields}
@@ -19,7 +20,6 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.TransformationValidation
-import amf.shapes.client.scala.model.domain.CreativeWork
 import amf.shapes.client.scala.model.domain.{AnyShape, CreativeWork}
 import amf.shapes.internal.spec.common.emitter.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
@@ -64,7 +64,7 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
     sourceOr(
       operation.annotations,
       b.complexEntry(
-        ScalarEmitter(fs.entry(OperationModel.Method).get.scalar).emit(_),
+        ScalarEmitter(fs.entry(OperationModel.Method).map(_.scalar).getOrElse(AmfScalar(""))).emit(_),
         partEmitter.emit
       )
     )

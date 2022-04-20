@@ -12,7 +12,9 @@ case class CommentEmitter(element: AmfElement, message: String) extends PartEmit
   override def emit(b: PartBuilder): Unit = {
     b += YNode.Empty
     b.comment(message)
-    element.annotations.find(classOf[SourceAST]).map(_.ast).foreach(a => b.comment(YamlRender.render(a)))
+    if (element != null){
+      element.annotations.find(classOf[SourceAST]).map(_.ast).foreach(a => b.comment(YamlRender.render(a)))
+    }
   }
 
   override def position(): Position = Position.ZERO

@@ -2,7 +2,7 @@ package amf.apicontract.internal.spec.oas.emitter.document
 
 import amf.apicontract.client.scala.model.document.{Extension, Overlay}
 import amf.apicontract.client.scala.model.domain._
-import amf.apicontract.client.scala.model.domain.api.{Api, WebApi}
+import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
 import amf.apicontract.internal.metamodel.domain.{EndPointModel, RequestModel}
 import amf.apicontract.internal.spec.common.Parameters
@@ -55,7 +55,9 @@ case class EndPointEmitter(endpoint: EndPoint,
     sourceOr(
       endpoint.annotations,
       b.complexEntry(
-        ScalarEmitter(pathName.map(AmfScalar(_)).getOrElse(fs.entry(EndPointModel.Path).get.scalar)).emit(_),
+        ScalarEmitter(
+          pathName.map(AmfScalar(_)).getOrElse(fs.entry(EndPointModel.Path).map(_.scalar).getOrElse(AmfScalar(""))))
+          .emit(_),
         EndPointPartEmitter(endpoint, ordering, references).emit(_)
       )
     )

@@ -5,7 +5,7 @@ import amf.apicontract.client.scala.model.domain.api.WebApi
 import amf.apicontract.internal.annotations.ExtendsReference
 import amf.apicontract.internal.metamodel.domain.ParameterModel
 import amf.apicontract.internal.metamodel.domain.api.WebApiModel
-import amf.apicontract.internal.spec.common.emitter.{SpecEmitterContext, _}
+import amf.apicontract.internal.spec.common.emitter._
 import amf.apicontract.internal.spec.common.{OasParameter, WebApiDeclarations}
 import amf.apicontract.internal.spec.oas.emitter.document.{OasDeclaredParametersEmitter, OasDeclaredResponsesEmitter}
 import amf.apicontract.internal.spec.oas.emitter.domain.{LicenseEmitter, OrganizationEmitter, TagsEmitter}
@@ -20,7 +20,7 @@ import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, Document, 
 import amf.core.client.scala.model.domain.AmfElement
 import amf.core.client.scala.model.domain.extensions.CustomDomainProperty
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
-import amf.core.internal.annotations.{Aliases, ExplicitField, ReferencedInfo, SourceAST}
+import amf.core.internal.annotations.{Aliases, ExplicitField, SourceAST}
 import amf.core.internal.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.internal.parser.domain.FieldEntry
 import amf.core.internal.remote.{Raml10, Spec}
@@ -164,7 +164,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
   case class NamedParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
-      parameter.fields.get(ParameterModel.Binding).annotations += ExplicitField()
+      parameter.fields.getValueAsOption(ParameterModel.Binding).map(_.annotations += ExplicitField())
       Raml10ParameterEmitter(parameter, ordering, references).emit(b) // todo, only 1.0 parametersdeclared?? move to 1.0 only, with DeclaredParametersEmitters?
     }
 
@@ -400,7 +400,9 @@ case class CommentEmitter(element: AmfElement, message: String) extends PartEmit
   override def emit(b: PartBuilder): Unit = {
     b += YNode.Empty
     b.comment(message)
-    element.annotations.find(classOf[SourceAST]).map(_.ast).foreach(a => b.comment(YamlRender.render(a)))
+    if (element != null) {
+      element.annotations.find(classOf[SourceAST]).map(_.ast).foreach(a => b.comment(YamlRender.render(a)))
+    }
   }
 
   override def position(): Position = Position.ZERO

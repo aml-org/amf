@@ -15,9 +15,8 @@ import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{Emitter, EntryEmitter, PartEmitter}
 import amf.core.internal.validation.CoreValidations.TransformationValidation
-import amf.shapes.internal.annotations.ParsedJSONSchema
-import amf.shapes.client.scala.model.domain.NodeShape
 import amf.shapes.client.scala.model.domain.{AnyShape, NodeShape}
+import amf.shapes.internal.annotations.ParsedJSONSchema
 import amf.shapes.internal.spec.common.emitter.CommentEmitter
 import amf.shapes.internal.spec.common.emitter.annotations.AnnotationsEmitter
 import amf.shapes.internal.spec.raml.emitter.{
@@ -219,10 +218,9 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
                   )
 
                 case other =>
+                  val prop = if (other != null) other.getClass.toString else "null"
                   ob.entry(p.name.value(),
-                           CommentEmitter(
-                             other,
-                             s"Cannot emit property ${other.getClass.toString} in raml 08 form properties").emit(_))
+                           CommentEmitter(other, s"Cannot emit property $prop in raml 08 form properties").emit(_))
               }
 
           }
